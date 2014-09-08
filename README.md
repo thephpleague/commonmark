@@ -50,6 +50,12 @@ This project aims to fully support the entire [CommonMark spec] - other flavors 
 
 This is **not** part of CommonMark, but rather a compatible derivative.
 
+## Stability and Versioning ##
+
+While this package works well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future, which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
+
+Major release 1.0.0 will be reserved for when both CommonMark and this project are considered stable. 0.x.x will be used until that happens.
+
 ## Contributing ##
 
 If you encounter a bug in the spec, please report it to the [jgm/stmd] project.  Any resulting fix will eventually be implemented in this project as well.
