@@ -5,6 +5,8 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+* **0.1.1**
+
  * Updated target spec (now compatible with jgm/stmd:spec.txt @ 2cf0750)
  * Adjust HTML output for fenced code
  * Add anchors to regexes
