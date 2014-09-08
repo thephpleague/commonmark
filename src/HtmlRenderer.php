@@ -210,11 +210,11 @@ class HtmlRenderer
                 $infoWords = preg_split('/ +/', $block->getExtra('info'));
                 $attr = count($infoWords) === 0 || strlen(
                     $infoWords[0]
-                ) === 0 ? array() : array('class' => $this->escape($infoWords[0], true));
+                ) === 0 ? array() : array('class' => 'language-' . $this->escape($infoWords[0], true));
                 return $this->inTags(
                     'pre',
-                    $attr,
-                    $this->inTags('code', array(), $this->escape($block->getStringContent()))
+                    array(),
+                    $this->inTags('code', $attr, $this->escape($block->getStringContent()))
                 );
 
             case BlockElement::TYPE_HTML_BLOCK:
