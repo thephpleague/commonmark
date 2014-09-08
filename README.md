@@ -22,7 +22,7 @@ The `CommonMark` class provides a simple wrapper for converting CommonMark to HT
     use ColinODell\CommonMark\CommonMarkConverter;
 
     $converter = new CommonMarkConverter();
-    echo $converter->convert('# Hello World!');
+    echo $converter->convertToHtml('# Hello World!');
 
     // <h1>Hello World!</h1>
 
