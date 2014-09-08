@@ -91,7 +91,7 @@ class RegexHelper
         $regex[self::REG_CHAR] = '[^\\\\()\x00-\x20]';
         $regex[self::IN_PARENS_NOSP] = '\((' . $regex[self::REG_CHAR] . '|' . $regex[self::ESCAPED_CHAR] . ')*\)';
         $regex[self::TAGNAME] = '[A-Za-z][A-Za-z0-9]*';
-        $regex[self::BLOCKTAGNAME] = '(?:article|header|aside|hgroup|blockquote|hr|body|li|br|map|button|object|canvas|ol|caption|output|col|p|colgroup|pre|dd|progress|div|section|dl|table|td|dt|tbody|embed|textarea|fieldset|tfoot|figcaption|th|figure|thead|footer|footer|tr|form|ul|h1|h2|h3|h4|h5|h6|video|script|style)';
+        $regex[self::BLOCKTAGNAME] = '(?:article|header|aside|hgroup|iframe|blockquote|hr|body|li|map|button|object|canvas|ol|caption|output|col|p|colgroup|pre|dd|progress|div|section|dl|table|td|dt|tbody|embed|textarea|fieldset|tfoot|figcaption|th|figure|thead|footer|footer|tr|form|ul|h1|h2|h3|h4|h5|h6|video|script|style)';
         $regex[self::ATTRIBUTENAME] = '[a-zA-Z_:][a-zA-Z0-9:._-]*';
         $regex[self::UNQUOTEDVALUE] = '[^"\'=<>`\x00-\x20]+';
         $regex[self::SINGLEQUOTEDVALUE] = '\'[^\']*\'';
@@ -160,7 +160,7 @@ class RegexHelper
      */
     public function getLinkDestinationRegex()
     {
-        return '/' . '(?:' . $this->regex[self::REG_CHAR] . '+|' . $this->regex[self::ESCAPED_CHAR] . '|' . $this->regex[self::IN_PARENS_NOSP] . ')*' . '/';
+        return '/^' . '(?:' . $this->regex[self::REG_CHAR] . '+|' . $this->regex[self::ESCAPED_CHAR] . '|' . $this->regex[self::IN_PARENS_NOSP] . ')*' . '/';
     }
 
     /**
@@ -168,7 +168,7 @@ class RegexHelper
      */
     public function getLinkDestinationBracesRegex()
     {
-        return '/' . '[<](?:[^<>\\n\\\\\\x00]' . '|' . $this->regex[self::ESCAPED_CHAR] . '|' . '\\\\)*[>]' . '/';
+        return '/^(?:' . '[<](?:[^<>\\n\\\\\\x00]' . '|' . $this->regex[self::ESCAPED_CHAR] . '|' . '\\\\)*[>]' . ')/';
     }
 
     /**
@@ -187,7 +187,7 @@ class RegexHelper
      */
     public function getMainRegex()
     {
-        return '/[\n`\[\]\\\\!<&*_]|[^\n`\[\]\\\\!<&*_]+/m';
+        return '/^(?:[\n`\[\]\\\\!<&*_]|[^\n`\[\]\\\\!<&*_]+)/m';
     }
 
     /**

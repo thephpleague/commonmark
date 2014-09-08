@@ -17,7 +17,7 @@
         "php": ">=5.3.0"
     },
     "require-dev": {
-        "jgm/stmd": "dev-master#d095c3d",
+        "jgm/stmd": "dev-master#2cf0750",
         "phpunit/phpunit": "~3.7.0"
     },
     "repositories": [

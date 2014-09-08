@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fbacc06fa7097aafb1d5f3a11fb01fcf",
+    "hash": "6cca3189028b3c77ad0c6fed135a32b7",
     "packages": [
 
     ],
@@ -15,10 +15,10 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jgm/stmd.git",
-                "reference": "d095c3d"
+                "reference": "2cf0750"
             },
             "type": "library",
-            "time": "2014-09-05 18:09:32"
+            "time": "2014-09-07 15:06:35"
         },
         {
             "name": "phpunit/php-code-coverage",
