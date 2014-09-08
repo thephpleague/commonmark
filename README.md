@@ -19,12 +19,14 @@ This project can be installed via [Composer]:
 
 The `CommonMark` class provides a simple wrapper for converting CommonMark to HTML:
 
-    use ColinODell\CommonMark\CommonMarkConverter;
+```php
+use ColinODell\CommonMark\CommonMarkConverter;
 
-    $converter = new CommonMarkConverter();
-    echo $converter->convertToHtml('# Hello World!');
+$converter = new CommonMarkConverter();
+echo $converter->convertToHtml('# Hello World!');
 
-    // <h1>Hello World!</h1>
+// <h1>Hello World!</h1>
+```
 
 The actual conversion process requires two steps:
 
@@ -33,19 +35,20 @@ The actual conversion process requires two steps:
 
 You can do this yourself if you wish:
 
-    use ColinODell\CommonMark\DocParser;
-    use ColinODell\CommonMark\HtmlRenderer;
+```php
+use ColinODell\CommonMark\DocParser;
+use ColinODell\CommonMark\HtmlRenderer;
 
-    $parser = new DocParser();
-    $htmlRenderer = new HtmlRenderer();
+$parser = new DocParser();
+$htmlRenderer = new HtmlRenderer();
 
-    $markdown = '# Hello World!';
+$markdown = '# Hello World!';
 
-    $document = $parser->parse($markdown);
-    echo $htmlRenderer ->render($document);
+$document = $parser->parse($markdown);
+echo $htmlRenderer ->render($document);
 
-    // <h1>Hello World!</h1>
-
+// <h1>Hello World!</h1>
+```
 
 ## Compatibility with CommonMark ##
 
