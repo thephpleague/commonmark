@@ -338,11 +338,16 @@ class InlineParser
                 while (true) {
                     $res = $this->scanDelims($c);
                     if ($res['numDelims'] >= 1 && $res['numDelims'] <= 3 && $res['canClose'] && $res['numDelims'] != $firstCloseDelims) {
-                        if ($res['numDelims'] === 3) {
-                            // If we opened with ***, then we interpret *** as * followed by **
+                        if ($firstCloseDelims === 1 && $numDelims > 2) {
+                            $res['numDelims'] = 2;
+                        } elseif ($firstCloseDelims === 2) {
+                            $res['numDelims'] = 1;
+                        } elseif ($res['numDelims'] === 3) {
+                            // If we opened with ***, then we interpret *** as ** followed by *
                             // giving us <strong><em>
                             $res['numDelims'] = 1;
                         }
+
                         $this->pos += $res['numDelims'];
 
                         if ($firstClose > 0) { // if we've already passed the first closer:
