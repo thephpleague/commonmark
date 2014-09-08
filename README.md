@@ -1,0 +1,79 @@
+# commonmark-php #
+
+**commonmark-php** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] ([@jgm]).
+
+## Installation ##
+
+This project can be installed via [Composer]:
+
+    {
+        "require": {
+            "colinodell/commonmark-php": "dev-master"
+        }
+    }
+
+## Usage ##
+
+The `CommonMark` class provides a simple wrapper for converting CommonMark to HTML:
+
+    use ColinODell\CommonMark\CommonMarkConverter;
+
+    $converter = new CommonMarkConverter();
+    echo $converter->convert('# Hello World!');
+
+    // <h1>Hello World!</h1>
+
+The actual conversion process requires two steps:
+
+ 1. Parsing the Markdown input into an AST
+ 2. Rendering the AST document as HTML
+
+You can do this yourself if you wish:
+
+    use ColinODell\CommonMark\DocParser;
+    use ColinODell\CommonMark\HtmlRenderer;
+
+    $parser = new DocParser();
+    $htmlRenderer = new HtmlRenderer();
+
+    $markdown = '# Hello World!';
+
+    $document = $parser->parse($markdown);
+    echo $htmlRenderer ->render($document);
+
+    // <h1>Hello World!</h1>
+
+
+## Compatibility with CommonMark ##
+
+This project aims to fully support the entire [CommonMark spec] - other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [stmd.js] parser should eventually find their way back into this codebase.
+
+This is **not** part of CommonMark, but rather a compatible derivative.
+
+## Contributing ##
+
+If you encounter a bug in the spec, please report it to the [jgm/stmd] project.  Any resulting fix will eventually be implemented in this project as well.
+
+For now, I'd like to maintain similar logic as the [stmd.js] parser until everything is stable.  I'll gladly accept any contributions which:
+
+ * Mirror fixes made to the [jgm/stmd] project
+ * Optimize existing methods or regular expressions
+ * Fix issues with adhering to the spec examples
+
+Major refactoring should be avoided for now so that we can easily follow updates made to [jgm/stmd].  This restriction will likely be lifted once the CommonMark specs and implementations are considered stable.
+
+## Credits & Acknowledgements ##
+
+This code is a port of [stmd.js] which is written, maintained and copyrighted by [John MacFarlane].  This project simply wouldn't exist without his work.
+
+## License ##
+
+**commonmark-php** is licensed under the BSD-3 license.  See the `LICENSE` file for more details.
+
+[CommonMark]: http://commonmark.org/
+[CommonMark spec]: http://spec.commonmark.org/
+[stmd.js]: https://github.com/jgm/stmd/blob/master/js/stmd.js
+[John MacFarlane]: http://johnmacfarlane.net
+[@jgm]: https://github.com/jgm
+[jgm/stmd]: https://github.com/jgm/stmd
+[Composer]: https://getcomposer.org/
