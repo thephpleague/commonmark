@@ -554,7 +554,7 @@ class DocParser
      * @param BlockElement $block
      * @param int          $lineNumber
      */
-    protected function finalize(BlockElement $block, $lineNumber)
+    public function finalize(BlockElement $block, $lineNumber)
     {
         $block->finalize($lineNumber, $this->inlineParser, $this->refMap);
 
