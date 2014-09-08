@@ -160,7 +160,7 @@ class RegexHelper
      */
     public function getLinkDestinationRegex()
     {
-        return '/' . '(?:' . $this->regex[self::REG_CHAR] . '+|' . $this->regex[self::ESCAPED_CHAR] . '|' . $this->regex[self::IN_PARENS_NOSP] . ')*' . '/';
+        return '/^' . '(?:' . $this->regex[self::REG_CHAR] . '+|' . $this->regex[self::ESCAPED_CHAR] . '|' . $this->regex[self::IN_PARENS_NOSP] . ')*' . '/';
     }
 
     /**
@@ -168,7 +168,7 @@ class RegexHelper
      */
     public function getLinkDestinationBracesRegex()
     {
-        return '/' . '[<](?:[^<>\\n\\\\\\x00]' . '|' . $this->regex[self::ESCAPED_CHAR] . '|' . '\\\\)*[>]' . '/';
+        return '/^(?:' . '[<](?:[^<>\\n\\\\\\x00]' . '|' . $this->regex[self::ESCAPED_CHAR] . '|' . '\\\\)*[>]' . ')/';
     }
 
     /**
@@ -187,7 +187,7 @@ class RegexHelper
      */
     public function getMainRegex()
     {
-        return '/[\n`\[\]\\\\!<&*_]|[^\n`\[\]\\\\!<&*_]+/m';
+        return '/^(?:[\n`\[\]\\\\!<&*_]|[^\n`\[\]\\\\!<&*_]+)/m';
     }
 
     /**
