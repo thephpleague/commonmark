@@ -1,6 +1,9 @@
 # commonmark-php #
 
 [![Build Status](https://travis-ci.org/colinodell/commonmark-php.svg?branch=master)](https://travis-ci.org/colinodell/commonmark-php)
+[![Latest Stable Version](https://poser.pugx.org/colinodell/commonmark-php/v/stable.svg)](https://packagist.org/packages/colinodell/commonmark-php)
+[![Total Downloads](https://poser.pugx.org/colinodell/commonmark-php/downloads.svg)](https://packagist.org/packages/colinodell/commonmark-php)
+[![Latest Unstable Version](https://poser.pugx.org/colinodell/commonmark-php/v/unstable.svg)](https://packagist.org/packages/colinodell/commonmark-php)
 [![License](https://poser.pugx.org/colinodell/commonmark-php/license.svg)](https://packagist.org/packages/colinodell/commonmark-php)
 
 **commonmark-php** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] \([@jgm]\).
