@@ -59,6 +59,12 @@ This project aims to fully support the entire [CommonMark spec] - other flavors 
 
 This is **not** part of CommonMark, but rather a compatible derivative.
 
+## Performance Benchmarks ##
+
+You can compare the performance of **commonmark-php** to other popular parsers by running the `tests/benchmark/benchmark.php` tool.
+
+As of version 0.1.1, this parser matches the performance of PHP Markdown Extra.
+
 ## Stability and Versioning ##
 
 While this package works well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future, which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
