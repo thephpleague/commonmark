@@ -61,7 +61,9 @@ This is **not** part of CommonMark, but rather a compatible derivative.
 
 ## Performance Benchmarks ##
 
-You can measure the performance of **commonmark-php** by running the `tests/benchmark/benchmark.php` tool.
+You can compare the performance of **commonmark-php** to other popular parsers by running the `tests/benchmark/benchmark.php` tool.
+
+As of version 0.1.1, this parser matches the performance of PHP Markdown Extra.
 
 ## Stability and Versioning ##
 

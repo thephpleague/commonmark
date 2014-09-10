@@ -12,6 +12,8 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use ColinODell\CommonMark\CommonMarkConverter;
+use Michelf\Markdown;
+use Michelf\MarkdownExtra;
 
 $markdown = file_get_contents(__DIR__ . '/' . 'sample.md');
 
@@ -19,6 +21,16 @@ $parsers = array(
     'commonmark-php' => function ($markdown) {
         $parser = new CommonMarkConverter();
         $parser->convertToHtml($markdown);
+    },
+    'PHP Markdown' => function ($markdown) {
+        Markdown::defaultTransform($markdown);
+    },
+    'PHP Markdown Extra' => function ($markdown) {
+        MarkdownExtra::defaultTransform($markdown);
+    },
+    'Parsedown' => function ($markdown) {
+        $parser = new Parsedown();
+        $parser->text($markdown);
     }
 );
 

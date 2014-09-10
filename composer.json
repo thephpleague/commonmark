@@ -17,7 +17,9 @@
         "php": ">=5.3.0"
     },
     "require-dev": {
+        "erusev/parsedown": "~1.0",
         "jgm/stmd": "dev-master#2cf0750",
+        "michelf/php-markdown": "~1.4",
         "phpunit/phpunit": "~3.7.0"
     },
     "repositories": [
