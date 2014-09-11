@@ -9,7 +9,12 @@ php:
 
 before_script:
   - composer self-update
-  - composer install --no-interaction --prefer-source --dev
+  - composer require --no-update satooshi/php-coveralls:dev-master
+  - composer update --no-interaction --prefer-source --dev
 
 script:
-  - ./vendor/bin/phpunit -c phpunit.xml.dist
+  - mkdir -p build/logs
+  - ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php vendor/bin/coveralls
