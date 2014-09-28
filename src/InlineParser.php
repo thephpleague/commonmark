@@ -90,7 +90,8 @@ class InlineParser
      */
     protected function peek()
     {
-        return substr($this->subject, $this->pos, 1) ? : null;
+        $ch = substr($this->subject, $this->pos, 1);
+        return false !== $ch && strlen($ch) > 0 ? $ch : null;
     }
 
     /**
@@ -456,7 +457,7 @@ class InlineParser
         }
 
         $this->pos++; // Advance past [
-        while (($c = $this->peek()) && ($c != ']' || $nestLevel > 0)) {
+        while (($c = $this->peek()) !== null && ($c != ']' || $nestLevel > 0)) {
             switch ($c) {
                 case '`':
                     $this->parseBackticks(new ArrayCollection());
@@ -488,7 +489,7 @@ class InlineParser
 
             return $this->pos - $startPos;
         } else {
-            if (!$c) {
+            if ($c === null) {
                 $this->labelNestLevel = $nestLevel;
             }
 
