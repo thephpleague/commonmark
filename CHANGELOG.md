@@ -5,7 +5,12 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+* **0.1.2**
+
+ * Fix JS -> PHP null judgement (issue #4)
  * Added performance benchmarking tool (issue #2)
+ * Updated phpunit dependency
+ * Added more badges to the README
 
 * **0.1.1**
 
