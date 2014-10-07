@@ -5,6 +5,8 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+ * Removed composer.lock
+
 * **0.1.2**
 
  * Fix JS -> PHP null judgement (issue #4)
