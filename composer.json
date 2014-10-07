@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "erusev/parsedown": "~1.0",
-        "jgm/stmd": "dev-master#2cf0750",
+        "jgm/stmd": "dev-master",
         "michelf/php-markdown": "~1.4",
         "phpunit/phpunit": "~4.2.5"
     },
@@ -31,7 +31,7 @@
                 "source": {
                     "url": "https://github.com/jgm/stmd.git",
                     "type": "git",
-                    "reference": "dev-master"
+                    "reference": "master"
                 }
             }
         }
