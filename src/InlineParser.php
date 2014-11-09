@@ -22,6 +22,7 @@ use ColinODell\CommonMark\Reference\ReferenceMap;
 use ColinODell\CommonMark\Util\Html5Entities;
 use ColinODell\CommonMark\Util\RegexHelper;
 use ColinODell\CommonMark\Util\ArrayCollection;
+use ColinODell\CommonMark\Util\UrlEncoder;
 
 /**
  * Parses inline elements
@@ -199,12 +200,12 @@ class InlineParser
 
         if ($m = $this->match($emailRegex)) {
             $email = substr($m, 1, -1);
-            $inlines->add(InlineCreator::createLink('mailto:' . $email, $email));
+            $inlines->add(InlineCreator::createLink('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
 
             return strlen($m);
         } elseif ($m = $this->match($otherLinkRegex)) {
             $dest = substr($m, 1, -1);
-            $inlines->add(InlineCreator::createLink($dest, $dest));
+            $inlines->add(InlineCreator::createLink(UrlEncoder::unescapeAndEncode($dest), $dest));
 
             return strlen($m);
         } else {
@@ -423,11 +424,17 @@ class InlineParser
     {
         if ($res = $this->match(RegexHelper::getInstance()->getLinkDestinationBracesRegex())) {
             // Chop off surrounding <..>:
-            return RegexHelper::unescape(substr($res, 1, strlen($res) - 2));
+            return UrlEncoder::unescapeAndEncode(
+                RegexHelper::unescape(
+                    substr($res, 1, strlen($res) - 2)
+                )
+            );
         } else {
             $res = $this->match(RegexHelper::getInstance()->getLinkDestinationRegex());
             if ($res !== null) {
-                return RegexHelper::unescape($res);
+                return UrlEncoder::unescapeAndEncode(
+                    RegexHelper::unescape($res)
+                );
             } else {
                 return null;
             }
