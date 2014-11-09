@@ -19,6 +19,7 @@ use ColinODell\CommonMark\Element\InlineElementInterface;
 use ColinODell\CommonMark\Element\InlineCreator;
 use ColinODell\CommonMark\Reference\Reference;
 use ColinODell\CommonMark\Reference\ReferenceMap;
+use ColinODell\CommonMark\Util\Html5Entities;
 use ColinODell\CommonMark\Util\RegexHelper;
 use ColinODell\CommonMark\Util\ArrayCollection;
 
@@ -599,8 +600,8 @@ class InlineParser
      */
     protected function parseEntity(ArrayCollection $inlines)
     {
-        if ($m = $this->match('/^&(?:#x[a-f0-9]{1,8}|#[0-9]{1,8}|[a-z][a-z0-9]{1,31});/i')) {
-            $inlines->add(InlineCreator::createEntity($m));
+        if ($m = $this->match(RegexHelper::REGEX_ENTITY)) {
+            $inlines->add(InlineCreator::createString(Html5Entities::decodeEntity($m)));
 
             return strlen($m);
         }

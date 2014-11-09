@@ -103,8 +103,6 @@ class HtmlRenderer
                 return $this->inTags('strong', array(), $this->renderInlines($inline->getContents()));
             case InlineElement::TYPE_HTML:
                 return $inline->getContents();
-            case InlineElement::TYPE_ENTITY:
-                return $inline->getContents();
             case InlineElement::TYPE_LINK:
                 $attrs['href'] = $this->escape($inline->getAttribute('destination'), true);
                 if ($title = $inline->getAttribute('title')) {

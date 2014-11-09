@@ -42,16 +42,6 @@ class InlineCreator
     }
 
     /**
-     * @param string $contents
-     *
-     * @return InlineElement
-     */
-    public static function createEntity($contents)
-    {
-        return new InlineElement(InlineElement::TYPE_ENTITY, array('c' => $contents));
-    }
-
-    /**
      * @return InlineElement
      */
     public static function createHardbreak()
