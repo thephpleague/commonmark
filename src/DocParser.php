@@ -592,8 +592,55 @@ class DocParser
             $this->finalize($this->tip, $len - 1);
         }
 
-        $this->doc->processInlines($this->inlineParser, $this->refMap);
+        return $this->processInlines($this->doc);
+    }
 
-        return $this->doc;
+    /**
+     * @param BlockElement $block
+     *
+     * @return BlockElement
+     */
+    public function processInlines(BlockElement $block) {
+        $newBlock = new BlockElement($block->getType(), $block->getStartLine(), $block->getEndLine());
+
+        switch ($block->getType()) {
+            case BlockElement::TYPE_PARAGRAPH:
+                $newBlock->setInlineContent(
+                    $this->inlineParser->parse(trim($block->getStringContent()), $this->refMap)
+                );
+                break;
+            case BlockElement::TYPE_SETEXT_HEADER:
+            case BlockElement::TYPE_ATX_HEADER:
+                $newBlock->setInlineContent(
+                    $this->inlineParser->parse(trim($block->getStringContent()), $this->refMap)
+                );
+                $newBlock->setExtra('level', $block->getExtra('level'));
+                break;
+            case BlockElement::TYPE_LIST:
+                $newBlock->setExtra('list_data', $block->getExtra('list_data'));
+                $newBlock->setExtra('tight', $block->getExtra('tight'));
+                break;
+            case BlockElement::TYPE_FENCED_CODE:
+                $newBlock->setStringContent($block->getStringContent());
+                $newBlock->setExtra('info', $block->getExtra('info'));
+                break;
+            case BlockElement::TYPE_INDENTED_CODE:
+            case BlockElement::TYPE_HTML_BLOCK:
+                $newBlock->setStringContent($block->getStringContent());
+                break;
+            default:
+                break;
+        }
+
+        if ($block->hasChildren()) {
+            $newChildren = array();
+            foreach ($block->getChildren() as $child) {
+                $newChildren[] = $this->processInlines($child);
+            }
+
+            $newBlock->getChildren()->replaceWith($newChildren);
+        }
+
+        return $newBlock;
     }
 }
