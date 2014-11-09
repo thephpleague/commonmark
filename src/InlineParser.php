@@ -161,34 +161,30 @@ class InlineParser
      *
      * @return bool
      */
-    protected function parseEscaped(ArrayCollection $inlines)
+    protected function parseBackslash(ArrayCollection $inlines)
     {
         $subject = $this->subject;
         $pos = $this->pos;
-        if ($subject[$pos] === '\\') {
-            if (isset($subject[$pos + 1]) && $subject[$pos + 1] === "\n") {
-                $inlines->add(InlineCreator::createHardbreak());
-                $this->pos = $this->pos + 2;
-
-                return true;
-            } elseif (isset($subject[$pos + 1]) && preg_match(
-                    '/' . RegexHelper::REGEX_ESCAPABLE . '/',
-                    $subject[$pos + 1]
-                )
-            ) {
-                $inlines->add(InlineCreator::createString($subject[$pos + 1]));
-                $this->pos = $this->pos + 2;
-
-                return true;
-            } else {
-                $this->pos++;
-                $inlines->add(InlineCreator::createString('\\'));
-
-                return true;
-            }
-        } else {
+        if ($subject[$pos] !== '\\') {
             return false;
         }
+
+        if (isset($subject[$pos + 1]) && $subject[$pos + 1] === "\n") {
+            $this->pos += 2;
+            $inlines->add(InlineCreator::createHardbreak());
+        } elseif (isset($subject[$pos + 1]) && preg_match(
+                '/' . RegexHelper::REGEX_ESCAPABLE . '/',
+                $subject[$pos + 1]
+            )
+        ) {
+            $this->pos += 2;
+            $inlines->add(InlineCreator::createString($subject[$pos + 1]));
+        } else {
+            $this->pos++;
+            $inlines->add(InlineCreator::createString('\\'));
+        }
+
+        return true;
     }
 
     /**
@@ -434,7 +430,7 @@ class InlineParser
                     $this->pos++;
                     break;
                 case '\\':
-                    $this->parseEscaped(new ArrayCollection());
+                    $this->parseBackslash(new ArrayCollection());
                     break;
                 default:
                     $this->parseString(new ArrayCollection());
@@ -668,7 +664,7 @@ class InlineParser
                 $res = $this->parseNewline($inlines);
                 break;
             case '\\':
-                $res = $this->parseEscaped($inlines);
+                $res = $this->parseBackslash($inlines);
                 break;
             case '`':
                 $res = $this->parseBackticks($inlines);
