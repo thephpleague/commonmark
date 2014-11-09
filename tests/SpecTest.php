@@ -52,6 +52,9 @@ class SpecTest extends \PHPUnit_Framework_TestCase
         $actualResult = $this->htmlRenderer->render($docBlock);
 
         $failureMessage = sprintf('Unexpected result ("%s" section, example #%d)', $section, $number);
+        $failureMessage .= "\n=== markdown ===============\n" . $markdown;
+        $failureMessage .= "\n=== expected ===============\n" . $html;
+        $failureMessage .= "\n=== got ====================\n" . $actualResult;
 
         $this->assertEquals($html, $actualResult, $failureMessage);
     }
@@ -67,6 +70,8 @@ class SpecTest extends \PHPUnit_Framework_TestCase
         }
 
         $matches = array();
+        // Normalize newlines for platform independence
+        $data = preg_replace('/\r\n?/', "\n", $data);
         $data = preg_replace('/^<!-- END TESTS -->(.|[\n])*/m', '', $data);
         preg_match_all('/^\.\n([\s\S]*?)^\.\n([\s\S]*?)^\.$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
 
