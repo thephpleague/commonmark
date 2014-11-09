@@ -370,7 +370,7 @@ class DocParser
                 } else { // ident > 4 in a lazy paragraph continuation
                     break;
                 }
-            } elseif (!$blank && $ln[$firstNonSpace] === '>') {
+            } elseif (isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>') {
                 // blockquote
                 $offset = $firstNonSpace + 1;
                 // optional following space
@@ -386,13 +386,10 @@ class DocParser
                 $container = $this->addChild(BlockElement::TYPE_ATX_HEADER, $lineNumber, $firstNonSpace);
                 $container->setExtra('level', strlen(trim($match[0]))); // number of #s
                 // remove trailing ###s
-                $container->getStrings()->add(
-                    preg_replace(
-                        '/(?:(\\\\#) *#*| *#+) *$/',
-                        '$1',
-                        substr($ln, $offset)
-                    )
-                );
+                $str = substr($ln, $offset);
+                $str = preg_replace('/^ *#+ *$/', '', $str);
+                $str = preg_replace('/ +#+ *$/', '', $str);
+                $container->getStrings()->add($str);
                 break;
             } elseif ($match = Util\RegexHelper::matchAll('/^`{3,}(?!.*`)|^~{3,}(?!.*~)/', $ln, $firstNonSpace)) {
                 // fenced code block
