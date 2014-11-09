@@ -188,7 +188,7 @@ class RegexHelper
      */
     public function getMainRegex()
     {
-        return '/^(?:[\n`\[\]\\\\!<&*_]|[^\n`\[\]\\\\!<&*_]+)/m';
+        return '/^(?:[_*`\n]+|[\[\]\\\\!<&*_]|(?: *[^\n `\[\]\\\\!<&*_]+)+|[ \n]+)/m';
     }
 
     /**
