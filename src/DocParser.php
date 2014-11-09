@@ -243,8 +243,7 @@ class DocParser
 
             switch ($container->getType()) {
                 case BlockElement::TYPE_BLOCK_QUOTE:
-                    $matched = $indent <= 3 && isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>';
-                    if ($matched) {
+                    if ($indent <= 3 && isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>') {
                         $offset = $firstNonSpace + 1;
                         if (isset($ln[$offset]) && $ln[$offset] === ' ') {
                             $offset++;
@@ -555,7 +554,7 @@ class DocParser
     {
         $block->finalize($lineNumber, $this->inlineParser, $this->refMap);
 
-        $this->tip = $block->getParent(); // typo on 1310?
+        $this->tip = $block->getParent();
     }
 
     /**

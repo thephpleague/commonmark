@@ -98,6 +98,7 @@ class InlineParser
     protected function peek()
     {
         $ch = substr($this->subject, $this->pos, 1);
+
         return false !== $ch && strlen($ch) > 0 ? $ch : null;
     }
 
@@ -419,7 +420,7 @@ class InlineParser
                 case '<':
                     $this->parseAutolink(new ArrayCollection()) || $this->parseHtmlTag(
                         new ArrayCollection()
-                    ) || $this->parseString(new ArrayCollection()); // TODO: Does PHP support this use of "||"?
+                    ) || $this->parseString(new ArrayCollection());
                     break;
                 case '[': // nested []
                     $nestLevel++;
@@ -611,8 +612,8 @@ class InlineParser
     protected function parseImage(ArrayCollection $inlines)
     {
         if ($this->match('/^!/')) {
-            $n = $this->parseLink($inlines);
-            if ($n === 0) {
+            $link = $this->parseLink($inlines);
+            if (!$link) {
                 $inlines->add(InlineCreator::createString('!'));
 
                 return true;
