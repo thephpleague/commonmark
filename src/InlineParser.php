@@ -582,8 +582,7 @@ class InlineParser
     }
 
     /**
-     * Parse a newline.  If it was preceded by two spaces, return a hard
-     * line break; otherwise a soft line break.
+     * Parse a newline.
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
@@ -591,20 +590,10 @@ class InlineParser
      */
     protected function parseNewline(ArrayCollection $inlines)
     {
-        if ($this->peek() == "\n") {
-            $this->pos++;
-            $last = $inlines->last();
-            if ($last && $last->getType() == InlineElement::TYPE_STRING && substr($last->getContents(), -2) == '  ') {
-                $last->setContents(rtrim($last->getContents(), ' '));
+        if ($m = $this->match('/^ *\n/')) {
+            if (strlen($m) > 2) {
                 $inlines->add(InlineCreator::createHardbreak());
-            } else {
-                if ($last && $last->getType() == InlineElement::TYPE_STRING && substr(
-                        $last->getContents(),
-                        -1
-                    ) == ' '
-                ) {
-                    $last->setContents(substr($last->getContents(), 0, -1));
-                }
+            } elseif (strlen($m) > 0) {
                 $inlines->add(InlineCreator::createSoftbreak());
             }
 
@@ -661,6 +650,7 @@ class InlineParser
 
         switch ($c) {
             case "\n":
+            case ' ':
                 $res = $this->parseNewline($inlines);
                 break;
             case '\\':
