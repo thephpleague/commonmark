@@ -118,14 +118,13 @@ class InlineParser
      * literal sequence of backticks to the 'inlines' list.
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int Number of characters parsed
+     * @return bool
      */
     protected function parseBackticks(ArrayCollection $inlines)
     {
-        $startpos = $this->pos;
         $ticks = $this->match('/^`+/');
         if (!$ticks) {
-            return 0;
+            return false;
         }
 
         $afterOpenTicks = $this->pos;
@@ -137,15 +136,15 @@ class InlineParser
                 $c = preg_replace('/[ \n]+/', ' ', $c);
                 $inlines->add(InlineCreator::createCode(trim($c)));
 
-                return ($this->pos - $startpos);
+                return true;
             }
         }
 
         // If we go here, we didn't match a closing backtick sequence
-        $inlines->add(InlineCreator::createString($ticks));
         $this->pos = $afterOpenTicks;
+        $inlines->add(InlineCreator::createString($ticks));
 
-        return ($this->pos - $startpos);
+        return true;
     }
 
     /**
@@ -155,7 +154,7 @@ class InlineParser
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseEscaped(ArrayCollection $inlines)
     {
@@ -166,7 +165,7 @@ class InlineParser
                 $inlines->add(InlineCreator::createHardbreak());
                 $this->pos = $this->pos + 2;
 
-                return 2;
+                return true;
             } elseif (isset($subject[$pos + 1]) && preg_match(
                     '/' . RegexHelper::REGEX_ESCAPABLE . '/',
                     $subject[$pos + 1]
@@ -175,15 +174,15 @@ class InlineParser
                 $inlines->add(InlineCreator::createString($subject[$pos + 1]));
                 $this->pos = $this->pos + 2;
 
-                return 2;
+                return true;
             } else {
                 $this->pos++;
                 $inlines->add(InlineCreator::createString('\\'));
 
-                return 1;
+                return true;
             }
         } else {
-            return 0;
+            return false;
         }
     }
 
@@ -191,7 +190,7 @@ class InlineParser
      * Attempt to parse an autolink (URL or email in pointy brackets)
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseAutolink(ArrayCollection $inlines)
     {
@@ -202,14 +201,14 @@ class InlineParser
             $email = substr($m, 1, -1);
             $inlines->add(InlineCreator::createLink('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
 
-            return strlen($m);
+            return true;
         } elseif ($m = $this->match($otherLinkRegex)) {
             $dest = substr($m, 1, -1);
             $inlines->add(InlineCreator::createLink(UrlEncoder::unescapeAndEncode($dest), $dest));
 
-            return strlen($m);
+            return true;
         } else {
-            return 0;
+            return false;
         }
     }
 
@@ -217,17 +216,17 @@ class InlineParser
      * Attempt to parse a raw HTML tag
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseHtmlTag(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::getInstance()->getHtmlTagRegex())) {
             $inlines->add(InlineCreator::createHtml($m));
 
-            return strlen($m);
-        } else {
-            return 0;
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -269,7 +268,7 @@ class InlineParser
     /**
      * @param ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseEmphasis(ArrayCollection $inlines)
     {
@@ -279,7 +278,7 @@ class InlineParser
         if ($nxt == '*' || $nxt == '_') {
             $c = $nxt;
         } else {
-            return 0;
+            return false;
         }
 
         // Get opening delimiters
@@ -294,7 +293,7 @@ class InlineParser
         $delimPos = $inlines->count() - 1;
 
         if (!$res['canOpen'] || $numDelims === 0) {
-            return 0;
+            return false;
         }
 
         $firstCloseDelims = 0;
@@ -317,7 +316,7 @@ class InlineParser
                     }
                 }
 
-                return ($this->pos - $startPos);
+                return true;
 
             case 2: // We started with ** or __
                 while (true) {
@@ -335,7 +334,7 @@ class InlineParser
                     }
                 }
 
-                return ($this->pos - $startPos);
+                return true;
 
             case 3: // We started with *** or ___
                 while (true) {
@@ -394,10 +393,10 @@ class InlineParser
                     }
                 }
 
-                return ($this->pos - $startPos);
+                return true;
         }
 
-        return 0;
+        return false;
     }
 
     /**
@@ -529,14 +528,14 @@ class InlineParser
      * Attempt to parse a link.  If successful, add the link to inlines.
      * @param ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseLink(ArrayCollection $inlines)
     {
         $startPos = $this->pos;
         $n = $this->parseLinkLabel();
         if ($n === 0) {
-            return 0;
+            return false;
         }
 
         $rawLabel = substr($this->subject, $startPos, $n);
@@ -565,7 +564,7 @@ class InlineParser
 
             $this->pos = $startPos;
 
-            return 0;
+            return false;
         }
 
         // If we're here, it wasn't an explicit link. Try to parse a reference link.
@@ -590,30 +589,30 @@ class InlineParser
                 InlineCreator::createLink($link->getDestination(), $this->parseRawLabel($rawLabel), $link->getTitle())
             );
 
-            return $this->pos - $startPos;
+            return true;
         }
 
         // Nothing worked, rewind:
         $this->pos = $startPos;
 
-        return 0;
+        return false;
     }
 
     /**
      * Attempt to parse an entity, adding to inlines if successful
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseEntity(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::REGEX_ENTITY)) {
             $inlines->add(InlineCreator::createString(Html5Entities::decodeEntity($m)));
 
-            return strlen($m);
+            return true;
         }
 
-        return 0;
+        return false;
     }
 
     /**
@@ -622,17 +621,17 @@ class InlineParser
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseString(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::getInstance()->getMainRegex())) {
             $inlines->add(InlineCreator::createString($m));
 
-            return strlen($m);
+            return true;
         }
 
-        return 0;
+        return false;
     }
 
     /**
@@ -641,7 +640,7 @@ class InlineParser
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseNewline(ArrayCollection $inlines)
     {
@@ -662,18 +661,16 @@ class InlineParser
                 $inlines->add(InlineCreator::createSoftbreak());
             }
 
-            return 1;
+            return true;
         }
 
-        return 0;
+        return false;
     }
 
     /**
      * @param ArrayCollection $inlines
      *
-     * @return int
-     *
-     * @throws \RuntimeException
+     * @return bool
      */
     protected function parseImage(ArrayCollection $inlines)
     {
@@ -682,7 +679,7 @@ class InlineParser
             if ($n === 0) {
                 $inlines->add(InlineCreator::createString('!'));
 
-                return 1;
+                return true;
             }
 
             /** @var InlineElementInterface $last */
@@ -691,14 +688,11 @@ class InlineParser
             if ($last && $last->getType() == InlineElement::TYPE_LINK) {
                 $last->setType(InlineElement::TYPE_IMAGE);
 
-                return $n + 1;
-            } else {
-                // This shouldn't happen
-                throw new \RuntimeException('Unknown error occurred while attempting to parse an image');
+                return true;
             }
-        } else {
-            return 0;
         }
+
+        return false;
     }
 
     /**
@@ -707,11 +701,15 @@ class InlineParser
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseInline(ArrayCollection $inlines)
     {
         $c = $this->peek();
+        if ($c === null) {
+            return false;
+        }
+
         $res = null;
 
         switch ($c) {
@@ -741,10 +739,15 @@ class InlineParser
                 $res = $this->parseEntity($inlines);
                 break;
             default:
-                // Nothing
+                $res = $this->parseString($inlines);
         }
 
-        return $res ? : $this->parseString($inlines);
+        if (!$res) {
+            $this->pos++;
+            $inlines->add(InlineCreator::createString($c));
+        }
+
+        return true;
     }
 
     /**
