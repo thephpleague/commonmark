@@ -32,20 +32,20 @@ class HtmlRenderer
      * @param bool   $preserveEntities
      *
      * @return string
-     *
-     * @todo: Can we use simple find/replace instead?
      */
     protected function escape($string, $preserveEntities = false)
     {
         if ($preserveEntities) {
             $string = preg_replace('/[&](?![#](x[a-f0-9]{1,8}|[0-9]{1,8});|[a-z][a-z0-9]{1,31};)/i', '&amp;', $string);
         } else {
-            $string = preg_replace('/[&]/', '&amp;', $string);
+            $string = str_replace('&', '&amp;', $string);
         }
 
-        $string = preg_replace('/[<]/', '&lt;', $string);
-        $string = preg_replace('/[>]/', '&gt;', $string);
-        $string = preg_replace('/["]/', '&quot;', $string);
+        $string = strtr($string, array(
+            '<' => '&lt;',
+            '>' => '&gt;',
+            '"' => '&quot;'
+        ));
 
         return $string;
     }

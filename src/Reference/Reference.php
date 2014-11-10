@@ -14,8 +14,6 @@
 
 namespace ColinODell\CommonMark\Reference;
 
-use ColinODell\CommonMark\Util;
-
 /**
  * Link reference
  */
