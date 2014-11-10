@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "erusev/parsedown": "~1.0",
-        "jgm/stmd": "dev-master",
+        "jgm/CommonMark": "dev-master",
         "michelf/php-markdown": "~1.4",
         "phpunit/phpunit": "~4.2.5"
     },
@@ -26,10 +26,10 @@
         {
             "type": "package",
             "package": {
-                "name": "jgm/stmd",
+                "name": "jgm/CommonMark",
                 "version": "dev-master",
                 "source": {
-                    "url": "https://github.com/jgm/stmd.git",
+                    "url": "https://github.com/jgm/CommonMark.git",
                     "type": "git",
                     "reference": "master"
                 }

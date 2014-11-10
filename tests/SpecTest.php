@@ -64,7 +64,7 @@ class SpecTest extends \PHPUnit_Framework_TestCase
      */
     public function dataProvider()
     {
-        $filename = __DIR__ . '/../vendor/jgm/stmd/spec.txt';
+        $filename = __DIR__ . '/../vendor/jgm/CommonMark/spec.txt';
         if (($data = file_get_contents($filename)) === false) {
             $this->fail(sprintf('Failed to load spec from %s', $filename));
         }
