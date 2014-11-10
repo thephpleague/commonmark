@@ -5,6 +5,9 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+ * Made renderer options configurable (issue #7)
+ * Protected some of the internal renderer methods which shouldn't have been `public`
+
 * **0.2.1**
 
  * Removed "is" prefix from boolean methods
