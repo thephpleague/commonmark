@@ -50,6 +50,7 @@ class RegexHelper
     const LINK_TITLE = 26;
 
     const REGEX_ESCAPABLE = '[!"#$%&\'()*+,.\/:;<=>?@[\\\\\]^_`{|}~-]';
+    const REGEX_ENTITY = '/&(?:#x[a-f0-9]{1,8}|#[0-9]{1,8}|[a-z][a-z0-9]{1,31});/i';
 
     protected $regex = array();
 
@@ -187,7 +188,7 @@ class RegexHelper
      */
     public function getMainRegex()
     {
-        return '/^(?:[\n`\[\]\\\\!<&*_]|[^\n`\[\]\\\\!<&*_]+)/m';
+        return '/^(?:[_*`\n]+|[\[\]\\\\!<&*_]|(?: *[^\n `\[\]\\\\!<&*_]+)+|[ \n]+)/m';
     }
 
     /**
@@ -248,6 +249,11 @@ class RegexHelper
     {
         $allEscapedChar = '/\\\\(' . self::REGEX_ESCAPABLE . ')/';
 
-        return preg_replace($allEscapedChar, '$1', $string);
+        $escaped = preg_replace($allEscapedChar, '$1', $string);
+        $replaced = preg_replace_callback(self::REGEX_ENTITY, function ($e) {
+            return Html5Entities::decodeEntity($e[0]);
+        }, $escaped);
+
+        return $replaced;
     }
 }

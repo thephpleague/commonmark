@@ -243,8 +243,7 @@ class DocParser
 
             switch ($container->getType()) {
                 case BlockElement::TYPE_BLOCK_QUOTE:
-                    $matched = $indent <= 3 && isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>';
-                    if ($matched) {
+                    if ($indent <= 3 && isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>') {
                         $offset = $firstNonSpace + 1;
                         if (isset($ln[$offset]) && $ln[$offset] === ' ') {
                             $offset++;
@@ -370,7 +369,7 @@ class DocParser
                 } else { // ident > 4 in a lazy paragraph continuation
                     break;
                 }
-            } elseif (!$blank && $ln[$firstNonSpace] === '>') {
+            } elseif (isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>') {
                 // blockquote
                 $offset = $firstNonSpace + 1;
                 // optional following space
@@ -386,13 +385,10 @@ class DocParser
                 $container = $this->addChild(BlockElement::TYPE_ATX_HEADER, $lineNumber, $firstNonSpace);
                 $container->setExtra('level', strlen(trim($match[0]))); // number of #s
                 // remove trailing ###s
-                $container->getStrings()->add(
-                    preg_replace(
-                        '/(?:(\\\\#) *#*| *#+) *$/',
-                        '$1',
-                        substr($ln, $offset)
-                    )
-                );
+                $str = substr($ln, $offset);
+                $str = preg_replace('/^ *#+ *$/', '', $str);
+                $str = preg_replace('/ +#+ *$/', '', $str);
+                $container->getStrings()->add($str);
                 break;
             } elseif ($match = Util\RegexHelper::matchAll('/^`{3,}(?!.*`)|^~{3,}(?!.*~)/', $ln, $firstNonSpace)) {
                 // fenced code block
@@ -558,7 +554,7 @@ class DocParser
     {
         $block->finalize($lineNumber, $this->inlineParser, $this->refMap);
 
-        $this->tip = $block->getParent(); // typo on 1310?
+        $this->tip = $block->getParent();
     }
 
     /**
@@ -592,8 +588,55 @@ class DocParser
             $this->finalize($this->tip, $len - 1);
         }
 
-        $this->doc->processInlines($this->inlineParser, $this->refMap);
+        return $this->processInlines($this->doc);
+    }
 
-        return $this->doc;
+    /**
+     * @param BlockElement $block
+     *
+     * @return BlockElement
+     */
+    public function processInlines(BlockElement $block) {
+        $newBlock = new BlockElement($block->getType(), $block->getStartLine(), $block->getEndLine());
+
+        switch ($block->getType()) {
+            case BlockElement::TYPE_PARAGRAPH:
+                $newBlock->setInlineContent(
+                    $this->inlineParser->parse(trim($block->getStringContent()), $this->refMap)
+                );
+                break;
+            case BlockElement::TYPE_SETEXT_HEADER:
+            case BlockElement::TYPE_ATX_HEADER:
+                $newBlock->setInlineContent(
+                    $this->inlineParser->parse(trim($block->getStringContent()), $this->refMap)
+                );
+                $newBlock->setExtra('level', $block->getExtra('level'));
+                break;
+            case BlockElement::TYPE_LIST:
+                $newBlock->setExtra('list_data', $block->getExtra('list_data'));
+                $newBlock->setExtra('tight', $block->getExtra('tight'));
+                break;
+            case BlockElement::TYPE_FENCED_CODE:
+                $newBlock->setStringContent($block->getStringContent());
+                $newBlock->setExtra('info', $block->getExtra('info'));
+                break;
+            case BlockElement::TYPE_INDENTED_CODE:
+            case BlockElement::TYPE_HTML_BLOCK:
+                $newBlock->setStringContent($block->getStringContent());
+                break;
+            default:
+                break;
+        }
+
+        if ($block->hasChildren()) {
+            $newChildren = array();
+            foreach ($block->getChildren() as $child) {
+                $newChildren[] = $this->processInlines($child);
+            }
+
+            $newBlock->getChildren()->replaceWith($newChildren);
+        }
+
+        return $newBlock;
     }
 }

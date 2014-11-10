@@ -19,8 +19,10 @@ use ColinODell\CommonMark\Element\InlineElementInterface;
 use ColinODell\CommonMark\Element\InlineCreator;
 use ColinODell\CommonMark\Reference\Reference;
 use ColinODell\CommonMark\Reference\ReferenceMap;
+use ColinODell\CommonMark\Util\Html5Entities;
 use ColinODell\CommonMark\Util\RegexHelper;
 use ColinODell\CommonMark\Util\ArrayCollection;
+use ColinODell\CommonMark\Util\UrlEncoder;
 
 /**
  * Parses inline elements
@@ -51,6 +53,11 @@ class InlineParser
      * @var RegexHelper
      */
     protected $regexHelper;
+
+    /**
+     * @var array|null
+     */
+    private $emphasisOpeners;
 
     /**
      * Constrcutor
@@ -91,6 +98,7 @@ class InlineParser
     protected function peek()
     {
         $ch = substr($this->subject, $this->pos, 1);
+
         return false !== $ch && strlen($ch) > 0 ? $ch : null;
     }
 
@@ -116,14 +124,13 @@ class InlineParser
      * literal sequence of backticks to the 'inlines' list.
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int Number of characters parsed
+     * @return bool
      */
     protected function parseBackticks(ArrayCollection $inlines)
     {
-        $startpos = $this->pos;
         $ticks = $this->match('/^`+/');
         if (!$ticks) {
-            return 0;
+            return false;
         }
 
         $afterOpenTicks = $this->pos;
@@ -135,15 +142,15 @@ class InlineParser
                 $c = preg_replace('/[ \n]+/', ' ', $c);
                 $inlines->add(InlineCreator::createCode(trim($c)));
 
-                return ($this->pos - $startpos);
+                return true;
             }
         }
 
         // If we go here, we didn't match a closing backtick sequence
-        $inlines->add(InlineCreator::createString($ticks));
         $this->pos = $afterOpenTicks;
+        $inlines->add(InlineCreator::createString($ticks));
 
-        return ($this->pos - $startpos);
+        return true;
     }
 
     /**
@@ -153,43 +160,39 @@ class InlineParser
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
-    protected function parseEscaped(ArrayCollection $inlines)
+    protected function parseBackslash(ArrayCollection $inlines)
     {
         $subject = $this->subject;
         $pos = $this->pos;
-        if ($subject[$pos] === '\\') {
-            if (isset($subject[$pos + 1]) && $subject[$pos + 1] === "\n") {
-                $inlines->add(InlineCreator::createHardbreak());
-                $this->pos = $this->pos + 2;
-
-                return 2;
-            } elseif (isset($subject[$pos + 1]) && preg_match(
-                    '/' . RegexHelper::REGEX_ESCAPABLE . '/',
-                    $subject[$pos + 1]
-                )
-            ) {
-                $inlines->add(InlineCreator::createString($subject[$pos + 1]));
-                $this->pos = $this->pos + 2;
-
-                return 2;
-            } else {
-                $this->pos++;
-                $inlines->add(InlineCreator::createString('\\'));
-
-                return 1;
-            }
-        } else {
-            return 0;
+        if ($subject[$pos] !== '\\') {
+            return false;
         }
+
+        if (isset($subject[$pos + 1]) && $subject[$pos + 1] === "\n") {
+            $this->pos += 2;
+            $inlines->add(InlineCreator::createHardbreak());
+        } elseif (isset($subject[$pos + 1]) && preg_match(
+                '/' . RegexHelper::REGEX_ESCAPABLE . '/',
+                $subject[$pos + 1]
+            )
+        ) {
+            $this->pos += 2;
+            $inlines->add(InlineCreator::createString($subject[$pos + 1]));
+        } else {
+            $this->pos++;
+            $inlines->add(InlineCreator::createString('\\'));
+        }
+
+        return true;
     }
 
     /**
      * Attempt to parse an autolink (URL or email in pointy brackets)
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseAutolink(ArrayCollection $inlines)
     {
@@ -198,16 +201,16 @@ class InlineParser
 
         if ($m = $this->match($emailRegex)) {
             $email = substr($m, 1, -1);
-            $inlines->add(InlineCreator::createLink('mailto:' . $email, $email));
+            $inlines->add(InlineCreator::createLink('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
 
-            return strlen($m);
+            return true;
         } elseif ($m = $this->match($otherLinkRegex)) {
             $dest = substr($m, 1, -1);
-            $inlines->add(InlineCreator::createLink($dest, $dest));
+            $inlines->add(InlineCreator::createLink(UrlEncoder::unescapeAndEncode($dest), $dest));
 
-            return strlen($m);
+            return true;
         } else {
-            return 0;
+            return false;
         }
     }
 
@@ -215,17 +218,17 @@ class InlineParser
      * Attempt to parse a raw HTML tag
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseHtmlTag(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::getInstance()->getHtmlTagRegex())) {
             $inlines->add(InlineCreator::createHtml($m));
 
-            return strlen($m);
-        } else {
-            return 0;
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -252,8 +255,8 @@ class InlineParser
 
         $charAfter = $this->peek() ? : "\n";
 
-        $canOpen = $numDelims > 0 && $numDelims <= 3 && !preg_match('/\s/', $charAfter);
-        $canClose = $numDelims > 0 && $numDelims <= 3 && !preg_match('/\s/', $charBefore);
+        $canOpen = $numDelims > 0 && !preg_match('/\s/', $charAfter);
+        $canClose = $numDelims > 0 && !preg_match('/\s/', $charBefore);
         if ($char === '_') {
             $canOpen = $canOpen && !preg_match('/[a-z0-9]/i', $charBefore);
             $canClose = $canClose && !preg_match('/[a-z0-9]/i', $charAfter);
@@ -265,137 +268,83 @@ class InlineParser
     }
 
     /**
+     * @param string          $c
      * @param ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
-    protected function parseEmphasis(ArrayCollection $inlines)
+    protected function parseEmphasis($c, ArrayCollection $inlines)
     {
         $startPos = $this->pos;
-        $firstClose = 0;
-        $nxt = $this->peek();
-        if ($nxt == '*' || $nxt == '_') {
-            $c = $nxt;
-        } else {
-            return 0;
-        }
 
         // Get opening delimiters
         $res = $this->scanDelims($c);
         $numDelims = $res['numDelims'];
+
+        if ($numDelims === 0) {
+            $this->pos = $startPos;
+
+            return false;
+        }
+
+        if ($res['canClose']) {
+            $opener = $this->emphasisOpeners;
+            while (!empty($opener)) {
+                if ($opener['c'] === $c) { // we have a match!
+                    if ($numDelims < 3 || $opener['numDelims'] < 3) {
+                        $useDelims = $numDelims <= $opener['numDelims'] ? $numDelims : $opener['numDelims'];
+                    } else {
+                        $useDelims = $numDelims % 2 === 0 ? 2 : 1;
+                    }
+
+                    $type = $useDelims === 1 ? InlineElement::TYPE_EMPH : InlineElement::TYPE_STRONG;
+
+                    if ($opener['numDelims'] == $useDelims) { // all openers used
+                        $this->pos += $useDelims;
+                        $inlines->set($opener['pos'], new InlineElement($type, array('c' => $inlines->slice($opener['pos'] + 1))));
+                        $inlines->splice($opener['pos'] + 1, $inlines->count() - ($opener['pos'] + 1));
+                        // Remove entries after this, to prevent overlapping nesting:
+                        $this->emphasisOpeners = $opener['previous'];
+
+                        return true;
+                    } elseif ($opener['numDelims'] > $useDelims) { // only some openers used
+                        $this->pos += $useDelims;
+                        $opener['numDelims'] -= $useDelims;
+                        /** @var InlineElement $thingToChange */
+                        $thingToChange = $inlines->get($opener['pos']);
+                        $thingToChange->setContents(substr($thingToChange->getContents(), 0, $opener['numDelims']));
+                        $inlines->set(
+                            $opener['pos'] + 1,
+                            new InlineElement($type, array('c' => $inlines->slice($opener['pos'] + 1)))
+                        );
+                        $inlines->splice($opener['pos'] + 2, $inlines->count() - ($opener['pos'] + 2));
+                        // Remove entries after this, to prevent overlapping nesting:
+                        $this->emphasisOpeners = $opener;
+
+                        return true;
+                    } else {
+                        throw new \LogicException('Logic error: usedelims > opener.numdelims');
+                    }
+                }
+
+                $opener = $opener['previous'];
+            }
+        }
+
+        // If we're here, we didn't match a closer
         $this->pos += $numDelims;
+        $inlines->add(InlineCreator::createString(substr($this->subject, $startPos, $numDelims)));
 
-        // We provisionally add a literal string.  If we match appropriate
-        // closing delimiters, we'll change this to Strong or Emph.
-        $inlines->add(InlineCreator::createString(substr($this->subject, $this->pos - $numDelims, $numDelims)));
-        // Record the position of this opening delimiter:
-        $delimPos = $inlines->count() - 1;
-
-        if (!$res['canOpen'] || $numDelims === 0) {
-            return 0;
+        if ($res['canOpen']) {
+            $this->emphasisOpeners = array(
+                'c' => $c,
+                'numDelims' => $numDelims,
+                'pos' => $inlines->count() - 1,
+                'previous' => $this->emphasisOpeners
+            );
         }
 
-        $firstCloseDelims = 0;
-        switch ($numDelims) {
-            case 1: // we started with * or _
-                while (true) {
-                    $res = $this->scanDelims($c);
-                    if ($res['numDelims'] >= 1 && $res['canClose']) {
-                        $this->pos += 1;
-                        // Convert the inline at delimpos, currently a string with the delim,
-                        // into an Emph whose contents are the succeeding inlines
-                        $inlines->get($delimPos)->setType(InlineElement::TYPE_EMPH);
-                        $inlines->get($delimPos)->setContents($inlines->slice($delimPos + 1));
-                        $inlines->splice($delimPos + 1);
-                        break;
-                    } else {
-                        if ($this->parseInline($inlines) === 0) {
-                            break;
-                        }
-                    }
-                }
-
-                return ($this->pos - $startPos);
-
-            case 2: // We started with ** or __
-                while (true) {
-                    $res = $this->scanDelims($c);
-                    if ($res['numDelims'] >= 2 && $res['canClose']) {
-                        $this->pos += 2;
-                        $inlines->get($delimPos)->setType(InlineElement::TYPE_STRONG);
-                        $inlines->get($delimPos)->setContents($inlines->slice($delimPos + 1));
-                        $inlines->splice($delimPos + 1);
-                        break;
-                    } else {
-                        if ($this->parseInline($inlines) === 0) {
-                            break;
-                        }
-                    }
-                }
-
-                return ($this->pos - $startPos);
-
-            case 3: // We started with *** or ___
-                while (true) {
-                    $res = $this->scanDelims($c);
-                    if ($res['numDelims'] >= 1 && $res['numDelims'] <= 3 && $res['canClose'] && $res['numDelims'] != $firstCloseDelims) {
-                        if ($firstCloseDelims === 1 && $numDelims > 2) {
-                            $res['numDelims'] = 2;
-                        } elseif ($firstCloseDelims === 2) {
-                            $res['numDelims'] = 1;
-                        } elseif ($res['numDelims'] === 3) {
-                            // If we opened with ***, then we interpret *** as ** followed by *
-                            // giving us <strong><em>
-                            $res['numDelims'] = 1;
-                        }
-
-                        $this->pos += $res['numDelims'];
-
-                        if ($firstClose > 0) { // if we've already passed the first closer:
-                            $targetInline = $inlines->get($delimPos);
-                            if ($firstCloseDelims === 1) {
-                                $targetInline->setType(InlineElement::TYPE_STRONG);
-                                $targetInline->setContents(
-                                    array(
-                                        InlineCreator::createEmph(
-                                            $inlines->slice($delimPos + 1, $firstClose - $delimPos - 1)
-                                        )
-                                    )
-                                );
-                            } else {
-                                $targetInline->setType(InlineElement::TYPE_EMPH);
-                                $targetInline->setContents(
-                                    array(
-                                        InlineCreator::createStrong(
-                                            $inlines->slice($delimPos + 1, $firstClose - $delimPos - 1)
-                                        )
-                                    )
-                                );
-                            }
-
-                            $targetInline->setContents($targetInline->getContents() + $inlines->slice($firstClose + 1));
-                            $inlines->splice($delimPos + 1);
-                            break;
-                        } else {
-                            // this is the first closer; for now, add literal string;
-                            // we'll change this when he hit the second closer
-                            $str = substr($this->subject, $this->pos - $res['numDelims'], $this->pos);
-                            $inlines->add(InlineCreator::createString($str));
-                            $firstClose = $inlines->count() - 1;
-                            $firstCloseDelims = $res['numDelims'];
-                        }
-                    } else {
-                        // Parse another inline element, til we hit the end
-                        if ($this->parseInline($inlines) === 0) {
-                            break;
-                        }
-                    }
-                }
-
-                return ($this->pos - $startPos);
-        }
-
-        return 0;
+        return true;
     }
 
     /**
@@ -422,11 +371,17 @@ class InlineParser
     {
         if ($res = $this->match(RegexHelper::getInstance()->getLinkDestinationBracesRegex())) {
             // Chop off surrounding <..>:
-            return RegexHelper::unescape(substr($res, 1, strlen($res) - 2));
+            return UrlEncoder::unescapeAndEncode(
+                RegexHelper::unescape(
+                    substr($res, 1, strlen($res) - 2)
+                )
+            );
         } else {
             $res = $this->match(RegexHelper::getInstance()->getLinkDestinationRegex());
             if ($res !== null) {
-                return RegexHelper::unescape($res);
+                return UrlEncoder::unescapeAndEncode(
+                    RegexHelper::unescape($res)
+                );
             } else {
                 return null;
             }
@@ -465,7 +420,7 @@ class InlineParser
                 case '<':
                     $this->parseAutolink(new ArrayCollection()) || $this->parseHtmlTag(
                         new ArrayCollection()
-                    ) || $this->parseString(new ArrayCollection()); // TODO: Does PHP support this use of "||"?
+                    ) || $this->parseString(new ArrayCollection());
                     break;
                 case '[': // nested []
                     $nestLevel++;
@@ -476,7 +431,7 @@ class InlineParser
                     $this->pos++;
                     break;
                 case '\\':
-                    $this->parseEscaped(new ArrayCollection());
+                    $this->parseBackslash(new ArrayCollection());
                     break;
                 default:
                     $this->parseString(new ArrayCollection());
@@ -521,14 +476,14 @@ class InlineParser
      * Attempt to parse a link.  If successful, add the link to inlines.
      * @param ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseLink(ArrayCollection $inlines)
     {
         $startPos = $this->pos;
         $n = $this->parseLinkLabel();
         if ($n === 0) {
-            return 0;
+            return false;
         }
 
         $rawLabel = substr($this->subject, $startPos, $n);
@@ -557,7 +512,7 @@ class InlineParser
 
             $this->pos = $startPos;
 
-            return 0;
+            return false;
         }
 
         // If we're here, it wasn't an explicit link. Try to parse a reference link.
@@ -582,30 +537,30 @@ class InlineParser
                 InlineCreator::createLink($link->getDestination(), $this->parseRawLabel($rawLabel), $link->getTitle())
             );
 
-            return $this->pos - $startPos;
+            return true;
         }
 
         // Nothing worked, rewind:
         $this->pos = $startPos;
 
-        return 0;
+        return false;
     }
 
     /**
      * Attempt to parse an entity, adding to inlines if successful
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseEntity(ArrayCollection $inlines)
     {
-        if ($m = $this->match('/^&(?:#x[a-f0-9]{1,8}|#[0-9]{1,8}|[a-z][a-z0-9]{1,31});/i')) {
-            $inlines->add(InlineCreator::createEntity($m));
+        if ($m = $this->match(RegexHelper::REGEX_ENTITY)) {
+            $inlines->add(InlineCreator::createString(Html5Entities::decodeEntity($m)));
 
-            return strlen($m);
+            return true;
         }
 
-        return 0;
+        return false;
     }
 
     /**
@@ -614,67 +569,54 @@ class InlineParser
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseString(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::getInstance()->getMainRegex())) {
             $inlines->add(InlineCreator::createString($m));
 
-            return strlen($m);
+            return true;
         }
 
-        return 0;
+        return false;
     }
 
     /**
-     * Parse a newline.  If it was preceded by two spaces, return a hard
-     * line break; otherwise a soft line break.
+     * Parse a newline.
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseNewline(ArrayCollection $inlines)
     {
-        if ($this->peek() == "\n") {
-            $this->pos++;
-            $last = $inlines->last();
-            if ($last && $last->getType() == InlineElement::TYPE_STRING && substr($last->getContents(), -2) == '  ') {
-                $last->setContents(rtrim($last->getContents(), ' '));
+        if ($m = $this->match('/^ *\n/')) {
+            if (strlen($m) > 2) {
                 $inlines->add(InlineCreator::createHardbreak());
-            } else {
-                if ($last && $last->getType() == InlineElement::TYPE_STRING && substr(
-                        $last->getContents(),
-                        -1
-                    ) == ' '
-                ) {
-                    $last->setContents(substr($last->getContents(), 0, -1));
-                }
+            } elseif (strlen($m) > 0) {
                 $inlines->add(InlineCreator::createSoftbreak());
             }
 
-            return 1;
+            return true;
         }
 
-        return 0;
+        return false;
     }
 
     /**
      * @param ArrayCollection $inlines
      *
-     * @return int
-     *
-     * @throws \RuntimeException
+     * @return bool
      */
     protected function parseImage(ArrayCollection $inlines)
     {
         if ($this->match('/^!/')) {
-            $n = $this->parseLink($inlines);
-            if ($n === 0) {
+            $link = $this->parseLink($inlines);
+            if (!$link) {
                 $inlines->add(InlineCreator::createString('!'));
 
-                return 1;
+                return true;
             }
 
             /** @var InlineElementInterface $last */
@@ -683,14 +625,11 @@ class InlineParser
             if ($last && $last->getType() == InlineElement::TYPE_LINK) {
                 $last->setType(InlineElement::TYPE_IMAGE);
 
-                return $n + 1;
-            } else {
-                // This shouldn't happen
-                throw new \RuntimeException('Unknown error occurred while attempting to parse an image');
+                return true;
             }
-        } else {
-            return 0;
         }
+
+        return false;
     }
 
     /**
@@ -699,26 +638,31 @@ class InlineParser
      *
      * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
      *
-     * @return int
+     * @return bool
      */
     protected function parseInline(ArrayCollection $inlines)
     {
         $c = $this->peek();
+        if ($c === null) {
+            return false;
+        }
+
         $res = null;
 
         switch ($c) {
             case "\n":
+            case ' ':
                 $res = $this->parseNewline($inlines);
                 break;
             case '\\':
-                $res = $this->parseEscaped($inlines);
+                $res = $this->parseBackslash($inlines);
                 break;
             case '`':
                 $res = $this->parseBackticks($inlines);
                 break;
             case '*':
             case '_':
-                $res = $this->parseEmphasis($inlines);
+                $res = $this->parseEmphasis($c, $inlines);
                 break;
             case '[':
                 $res = $this->parseLink($inlines);
@@ -733,10 +677,15 @@ class InlineParser
                 $res = $this->parseEntity($inlines);
                 break;
             default:
-                // Nothing
+                $res = $this->parseString($inlines);
         }
 
-        return $res ? : $this->parseString($inlines);
+        if (!$res) {
+            $this->pos++;
+            $inlines->add(InlineCreator::createString($c));
+        }
+
+        return true;
     }
 
     /**
@@ -752,6 +701,7 @@ class InlineParser
         $this->subject = $s;
         $this->pos = 0;
         $this->refmap = $refMap;
+        $this->emphasisOpeners = null;
         $inlines = new ArrayCollection();
         while ($this->parseInline($inlines)) {
             ;

@@ -105,16 +105,17 @@ class BlockElement
     /**
      * Constrcutor
      *
-     * @param string $type        Block type (see TYPE_ constants)
-     * @param int    $startLine   Line where the block element starts
-     * @param int    $startColumn Column where the block element starts
+     * @param string   $type        Block type (see TYPE_ constants)
+     * @param int      $startLine   Line where the block element starts
+     * @param int      $startColumn Column where the block element starts
+     * @param int|null $endLine     Line where the block element ends
      */
-    public function __construct($type, $startLine, $startColumn)
+    public function __construct($type, $startLine, $startColumn, $endLine = null)
     {
         $this->type = $type;
         $this->startLine = $startLine;
         $this->startColumn = $startColumn;
-        $this->endLine = $startLine;
+        $this->endLine = $endLine ?: $startLine;
 
         $this->children = new ArrayCollection();
         $this->strings = new ArrayCollection();
@@ -295,6 +296,26 @@ class BlockElement
     }
 
     /**
+     * @return int
+     */
+    public function getEndLine()
+    {
+        return $this->endLine;
+    }
+
+    /**
+     * @param ArrayCollection $inlines
+     *
+     * @return $this
+     */
+    public function setInlineContent(ArrayCollection $inlines)
+    {
+        $this->inlineContent = $inlines;
+
+        return $this;
+    }
+
+    /**
      * @return ArrayCollection|InlineElementInterface[]
      */
     public function getInlineContent()
@@ -331,6 +352,18 @@ class BlockElement
     public function getStringContent()
     {
         return $this->stringContent;
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setStringContent($content)
+    {
+        $this->stringContent = $content;
+
+        return $this;
     }
 
     /**
@@ -454,30 +487,6 @@ class BlockElement
 
             default:
                 break;
-        }
-    }
-
-    /**
-     * @param InlineParser $inlineParser
-     * @param ReferenceMap $refMap
-     */
-    public function processInlines(InlineParser $inlineParser, ReferenceMap $refMap)
-    {
-        switch ($this->getType()) {
-            case self::TYPE_PARAGRAPH:
-            case self::TYPE_SETEXT_HEADER:
-            case self::TYPE_ATX_HEADER:
-                $this->inlineContent = $inlineParser->parse(trim($this->stringContent), $refMap);
-                $this->stringContent = '';
-                break;
-            default:
-                break;
-        }
-
-        if ($this->hasChildren()) {
-            foreach ($this->getChildren() as $child) {
-                $child->processInlines($inlineParser, $refMap);
-            }
         }
     }
 }

@@ -103,8 +103,6 @@ class HtmlRenderer
                 return $this->inTags('strong', array(), $this->renderInlines($inline->getContents()));
             case InlineElement::TYPE_HTML:
                 return $inline->getContents();
-            case InlineElement::TYPE_ENTITY:
-                return $inline->getContents();
             case InlineElement::TYPE_LINK:
                 $attrs['href'] = $this->escape($inline->getAttribute('destination'), true);
                 if ($title = $inline->getAttribute('title')) {
@@ -114,7 +112,7 @@ class HtmlRenderer
                 return $this->inTags('a', $attrs, $this->renderInlines($inline->getAttribute('label')));
             case InlineElement::TYPE_IMAGE:
                 $attrs['src'] = $this->escape($inline->getAttribute('destination'), true);
-                $attrs['alt'] = $this->escape($this->renderInlines($inline->getAttribute('label')));
+                $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $this->renderInlines($inline->getAttribute('label')));
                 if ($title = $inline->getAttribute('title')) {
                     $attrs['title'] = $this->escape($title, true);
                 }

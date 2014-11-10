@@ -272,4 +272,9 @@ class RegexHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp($regex, '<h1>');
         $this->assertRegExp($regex, '</p>');
     }
+
+    public function testUnescape()
+    {
+        $this->assertEquals('foo(and(bar))', RegexHelper::unescape('foo(and\\(bar\\))'));
+    }
 }
