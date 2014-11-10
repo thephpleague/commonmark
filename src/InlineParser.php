@@ -734,7 +734,7 @@ class InlineParser
         $this->pos = 0;
         $startPos = $this->pos;
 
-        // label:
+        // label
         $matchChars = $this->parseLinkLabel();
         if ($matchChars === 0) {
             return 0;
@@ -742,7 +742,7 @@ class InlineParser
             $label = substr($this->subject, 0, $matchChars);
         }
 
-        // colon:
+        // colon
         if ($this->peek() === ':') {
             $this->pos++;
         } else {

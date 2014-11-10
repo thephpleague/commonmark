@@ -32,8 +32,6 @@ class HtmlRenderer
      * @param bool   $preserveEntities
      *
      * @return string
-     *
-     * @todo: Can we use simple find/replace instead?
      */
     protected function escape($string, $preserveEntities = false)
     {

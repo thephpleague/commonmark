@@ -473,7 +473,7 @@ class DocParser
             $this->tip->getStrings()->count() > 0
         ) {
             // lazy paragraph continuation
-            $this->lastLineBlank = false; // TODO: really? (see line 1152)
+            $this->lastLineBlank = false;
             $this->addLine($ln, $offset);
         } else { // not a lazy continuation
             //finalize any blocks not matched
@@ -539,8 +539,6 @@ class DocParser
                         // create paragraph container for line
                         $container = $this->addChild(BlockElement::TYPE_PARAGRAPH, $lineNumber, $firstNonSpace);
                         $this->addLine($ln, $firstNonSpace);
-                    } else {
-                        // TODO: throw exception?
                     }
             }
         }
