@@ -112,7 +112,7 @@ class HtmlRenderer
      *
      * @throws \InvalidArgumentException
      */
-    public function renderInline(InlineElementInterface $inline)
+    protected function renderInline(InlineElementInterface $inline)
     {
         $attrs = array();
         switch ($inline->getType()) {
@@ -155,7 +155,7 @@ class HtmlRenderer
      *
      * @return string
      */
-    public function renderInlines($inlines)
+    protected function renderInlines($inlines)
     {
         $result = array();
         foreach ($inlines as $inline) {
@@ -173,7 +173,7 @@ class HtmlRenderer
      *
      * @throws \RuntimeException
      */
-    public function renderBlock(BlockElement $block, $inTightList = false)
+    protected function renderBlock(BlockElement $block, $inTightList = false)
     {
         switch ($block->getType()) {
             case BlockElement::TYPE_DOCUMENT:
@@ -260,7 +260,7 @@ class HtmlRenderer
      *
      * @return string
      */
-    public function renderBlocks($blocks, $inTightList = false)
+    protected function renderBlocks($blocks, $inTightList = false)
     {
         $result = array();
         foreach ($blocks as $block) {
