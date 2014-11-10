@@ -29,7 +29,7 @@ class UrlEncoder
 
     public static function unescapeAndEncode($uri)
     {
-        $decoded = html_entity_decode($uri, ENT_HTML5);
+        $decoded = html_entity_decode($uri);
 
         return strtr(rawurlencode(rawurldecode($decoded)), self::$dontEncode);
     }
