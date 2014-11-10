@@ -11,6 +11,8 @@ This changelog references the changes contained in each release.
  * Made compatible with spec version 0.10
  * Removed composer.lock
  * Removed fixed reference to jgm/stmd@0275f34
+ * Updated location of JGM's repository
+ * Allowed HHVM tests to fail without affecting overall build success
 
 * **0.1.2**
 
