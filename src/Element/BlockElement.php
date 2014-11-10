@@ -218,7 +218,7 @@ class BlockElement
      *
      * @return bool
      */
-    public function getIsOpen()
+    public function isOpen()
     {
         return $this->open;
     }
@@ -246,7 +246,7 @@ class BlockElement
     /**
      * @return bool
      */
-    public function getIsLastLineBlank()
+    public function isLastLineBlank()
     {
         return $this->lastLineBlank;
     }
@@ -256,21 +256,9 @@ class BlockElement
      *
      * @return $this
      */
-    public function setIsLastLineBlank($value)
+    public function setLastLineBlank($value)
     {
         $this->lastLineBlank = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $value
-     *
-     * @return $this
-     */
-    public function setIsOpen($value)
-    {
-        $this->open = $value;
 
         return $this;
     }

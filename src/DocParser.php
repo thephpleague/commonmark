@@ -118,7 +118,7 @@ class DocParser
             $s = '';
         }
 
-        if (!$this->tip->getIsOpen()) {
+        if (!$this->tip->isOpen()) {
             throw new \RuntimeException(sprintf('Attempted to add line (%s) to closed container.', $ln));
         }
 
@@ -224,7 +224,7 @@ class DocParser
         while ($container->hasChildren()) {
             /** @var BlockElement $lastChild */
             $lastChild = $container->getChildren()->last();
-            if (!$lastChild->getIsOpen()) {
+            if (!$lastChild->isOpen()) {
                 break;
             }
 
@@ -299,7 +299,7 @@ class DocParser
 
                 case BlockElement::TYPE_PARAGRAPH:
                     if ($blank) {
-                        $container->setIsLastLineBlank(true);
+                        $container->setLastLineBlank(true);
                         $allMatched = false;
                     }
                     break;
@@ -337,7 +337,7 @@ class DocParser
         };
 
         // Check to see if we've hit 2nd blank line; if so break out of list:
-        if ($blank && $container->getIsLastLineBlank()) {
+        if ($blank && $container->isLastLineBlank()) {
             $this->breakOutOfLists($container, $lineNumber);
         }
 
@@ -483,7 +483,7 @@ class DocParser
             // and we don't count blanks in fenced code for purposes of tight/loose
             // lists or breaking out of lists.  We also don't set last_line_blank
             // on an empty list item.
-            $container->setIsLastLineBlank(
+            $container->setLastLineBlank(
                 $blank &&
                 !(
                     $container->getType() == BlockElement::TYPE_BLOCK_QUOTE ||
@@ -497,7 +497,7 @@ class DocParser
 
             $cont = $container;
             while ($cont->getParent()) {
-                $cont->getParent()->setIsLastLineBlank(false);
+                $cont->getParent()->setLastLineBlank(false);
                 $cont = $cont->getParent();
             }
 
