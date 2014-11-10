@@ -20,7 +20,7 @@
         "erusev/parsedown": "~1.0",
         "jgm/CommonMark": "dev-master",
         "michelf/php-markdown": "~1.4",
-        "phpunit/phpunit": "~4.2.5"
+        "phpunit/phpunit": "~4.3"
     },
     "repositories": [
         {

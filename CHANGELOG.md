@@ -5,6 +5,8 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+ * Updated to latest version of PHPUnit
+
 * **0.2.0**
 
  * Mirrored significant changes and improvements from stmd.js
