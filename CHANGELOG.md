@@ -5,7 +5,12 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+* **0.2.0**
+
+ * Mirrored significant changes and improvements from stmd.js
+ * Made compatible with spec version 0.10
  * Removed composer.lock
+ * Removed fixed reference to jgm/stmd@0275f34
 
 * **0.1.2**
 
