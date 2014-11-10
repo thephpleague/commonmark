@@ -596,7 +596,7 @@ class DocParser
      *
      * @return BlockElement
      */
-    public function processInlines(BlockElement $block) {
+    protected function processInlines(BlockElement $block) {
         $newBlock = new BlockElement($block->getType(), $block->getStartLine(), $block->getEndLine());
 
         switch ($block->getType()) {
