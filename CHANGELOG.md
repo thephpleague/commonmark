@@ -5,6 +5,8 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+ * Made renderer options configurable (issue #7)
+
 * **0.2.1**
 
  * Removed "is" prefix from boolean methods

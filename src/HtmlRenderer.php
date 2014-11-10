@@ -17,15 +17,40 @@ namespace ColinODell\CommonMark;
 use ColinODell\CommonMark\Element\BlockElement;
 use ColinODell\CommonMark\Element\InlineElement;
 use ColinODell\CommonMark\Element\InlineElementInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Renders a parsed AST to HTML
  */
 class HtmlRenderer
 {
-    protected $blockSeparator = "\n";
-    protected $innerSeparator = "\n";
-    protected $softBreak = "\n";
+    /**
+     * @var array
+     */
+    protected $options;
+
+    /**
+     * @param array $options
+     */
+    public function __construct(array $options = array())
+    {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    protected function configureOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'blockSeparator' => "\n",
+            'innerSeparator' => "\n",
+            'softBreak' => "\n"
+        ));
+    }
 
     /**
      * @param string $string
@@ -94,7 +119,7 @@ class HtmlRenderer
             case InlineElement::TYPE_STRING:
                 return $this->escape($inline->getContents());
             case InlineElement::TYPE_SOFTBREAK:
-                return $this->softBreak;
+                return $this->options['softBreak'];
             case InlineElement::TYPE_HARDBREAK:
                 return $this->inTags('br', array(), '', true) . "\n";
             case InlineElement::TYPE_EMPH:
@@ -165,12 +190,12 @@ class HtmlRenderer
             case BlockElement::TYPE_BLOCK_QUOTE:
                 $filling = $this->renderBlocks($block->getChildren());
                 if ($filling === '') {
-                    return $this->inTags('blockquote', array(), $this->innerSeparator);
+                    return $this->inTags('blockquote', array(), $this->options['innerSeparator']);
                 } else {
                     return $this->inTags(
                         'blockquote',
                         array(),
-                        $this->innerSeparator . $filling . $this->innerSeparator
+                        $this->options['innerSeparator'] . $filling . $this->options['innerSeparator']
                     );
                 }
             case BlockElement::TYPE_LIST_ITEM:
@@ -186,10 +211,10 @@ class HtmlRenderer
                 return $this->inTags(
                     $tag,
                     $attr,
-                    $this->innerSeparator . $this->renderBlocks(
+                    $this->options['innerSeparator'] . $this->renderBlocks(
                         $block->getChildren(),
                         $block->getExtra('tight')
-                    ) . $this->innerSeparator
+                    ) . $this->options['innerSeparator']
                 );
             case BlockElement::TYPE_ATX_HEADER:
             case BlockElement::TYPE_SETEXT_HEADER:
@@ -244,7 +269,7 @@ class HtmlRenderer
             }
         }
 
-        return implode($this->blockSeparator, $result);
+        return implode($this->options['blockSeparator'], $result);
     }
 
     /**
