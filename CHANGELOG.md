@@ -5,6 +5,8 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+* **0.2.1**
+
  * Removed "is" prefix from boolean methods
  * Updated to latest version of PHPUnit
  * Added simpler string replacement to a method
