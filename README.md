@@ -1,28 +1,24 @@
-# commonmark-php #
+# commonmark-php
 
-[![Latest Stable Version](https://poser.pugx.org/colinodell/commonmark-php/v/stable.svg)](https://packagist.org/packages/colinodell/commonmark-php)
-[![Total Downloads](https://poser.pugx.org/colinodell/commonmark-php/downloads.svg)](https://packagist.org/packages/colinodell/commonmark-php)
-[![Latest Unstable Version](https://poser.pugx.org/colinodell/commonmark-php/v/unstable.svg)](https://packagist.org/packages/colinodell/commonmark-php)
-[![License](https://poser.pugx.org/colinodell/commonmark-php/license.svg)](https://packagist.org/packages/colinodell/commonmark-php)
+[![Latest Version](https://img.shields.io/github/release/colinodell/commonmark-php.svg?style=flat-square)](https://packagist.org/packages/colinodell/commonmark-php)
+[![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Build Status](https://img.shields.io/travis/colinodell/commonmark-php/master.svg?style=flat-square)](https://travis-ci.org/colinodell/commonmark-php)
+[![Coverage Status](https://img.shields.io/coveralls/coveralls/colinodell/commonmark-php/master.svg?style=flat-square)](https://coveralls.io/r/colinodell/commonmark-php?branch=master)
+[![Total Downloads](https://img.shields.io/packagist/dt/colinodell/commonmark-php.svg?style=flat-square)](https://packagist.org/packages/colinodell/commonmark-php)
 
-[![Build Status](https://travis-ci.org/colinodell/commonmark-php.svg?branch=master)](https://travis-ci.org/colinodell/commonmark-php)
-[![Coverage Status](https://coveralls.io/repos/colinodell/commonmark-php/badge.png?branch=master)](https://coveralls.io/r/colinodell/commonmark-php?branch=master)
-[![Dependency Status](https://www.versioneye.com/user/projects/5411a6c84cd160cf2c000263/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5411a6c84cd160cf2c000263)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b/mini.png)](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b/big.png)](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b)
 
 **commonmark-php** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] \([@jgm]\).
 
-## Installation ##
+## Installation
 
 This project can be installed via [Composer]:
 
-    {
-        "require": {
-            "colinodell/commonmark-php": "dev-master"
-        }
-    }
+``` bash
+$ composer require colinodell/commonmark-php
+```
 
-## Usage ##
+## Usage
 
 The `CommonMark` class provides a simple wrapper for converting CommonMark to HTML:
 
@@ -92,19 +88,29 @@ The following table shows which versions of commonmark-php are compatible with w
 
 This is **not** part of CommonMark, but rather a compatible derivative.
 
-## Performance Benchmarks ##
+## Testing
 
-You can compare the performance of **commonmark-php** to other popular parsers by running the `tests/benchmark/benchmark.php` tool.
+``` bash
+$ ./vendor/bin/phpunit
+```
 
-As of version 0.1.1, this parser matches the performance of PHP Markdown Extra.
+This will also test commonmark-php against the latest supported spec.
 
-## Stability and Versioning ##
+## Performance Benchmarks
+
+You can compare the performance of **commonmark-php** to other popular parsers by running the included benchmark tool:
+ 
+``` bash
+$ ./tests/benchmark/benchmark.php
+```
+
+## Stability and Versioning
 
 While this package works well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future, which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
 
 Major release 1.0.0 will be reserved for when both CommonMark and this project are considered stable. 0.x.x will be used until that happens.
 
-## Contributing ##
+## Contributing
 
 If you encounter a bug in the spec, please report it to the [jgm/stmd] project.  Any resulting fix will eventually be implemented in this project as well.
 
@@ -116,7 +122,11 @@ For now, I'd like to maintain similar logic as the [stmd.js] parser until everyt
 
 Major refactoring should be avoided for now so that we can easily follow updates made to [jgm/stmd].  This restriction will likely be lifted once the CommonMark specs and implementations are considered stable.
 
-## Credits & Acknowledgements ##
+## Credits & Acknowledgements
+
+- [Colin O'Dell][@colinodell]
+- [John MacFarlane][@jgm]
+- [All Contributors]
 
 This code is a port of [stmd.js] which is written, maintained and copyrighted by [John MacFarlane].  This project simply wouldn't exist without his work.
 
@@ -128,6 +138,8 @@ This code is a port of [stmd.js] which is written, maintained and copyrighted by
 [CommonMark spec]: http://spec.commonmark.org/
 [stmd.js]: https://github.com/jgm/stmd/blob/master/js/stmd.js
 [John MacFarlane]: http://johnmacfarlane.net
+[All Contributors]: https://github.com/colinodell/commonmark-php/contributors
+[@colinodell]: https://github.com/colinodell
 [@jgm]: https://github.com/jgm
 [jgm/stmd]: https://github.com/jgm/stmd
 [Composer]: https://getcomposer.org/
