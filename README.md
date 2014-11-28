@@ -3,7 +3,7 @@
 [![Latest Version](https://img.shields.io/packagist/v/colinodell/commonmark-php.svg?style=flat-square)](https://packagist.org/packages/colinodell/commonmark-php)
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/colinodell/commonmark-php/master.svg?style=flat-square)](https://travis-ci.org/colinodell/commonmark-php)
-[![Coverage Status](https://img.shields.io/coveralls/coveralls/colinodell/commonmark-php/master.svg?style=flat-square)](https://coveralls.io/r/colinodell/commonmark-php?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/colinodell/commonmark-php/master.svg?style=flat-square)](https://coveralls.io/r/colinodell/commonmark-php?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/colinodell/commonmark-php.svg?style=flat-square)](https://packagist.org/packages/colinodell/commonmark-php)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b/big.png)](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b)
