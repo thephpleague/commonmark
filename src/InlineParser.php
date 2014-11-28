@@ -148,7 +148,7 @@ class InlineParser
 
         // If we go here, we didn't match a closing backtick sequence
         $this->pos = $afterOpenTicks;
-        $inlines->add(InlineCreator::createString($ticks));
+        $inlines->add(InlineCreator::createText($ticks));
 
         return true;
     }
@@ -179,10 +179,10 @@ class InlineParser
             )
         ) {
             $this->pos += 2;
-            $inlines->add(InlineCreator::createString($subject[$pos + 1]));
+            $inlines->add(InlineCreator::createText($subject[$pos + 1]));
         } else {
             $this->pos++;
-            $inlines->add(InlineCreator::createString('\\'));
+            $inlines->add(InlineCreator::createText('\\'));
         }
 
         return true;
@@ -333,7 +333,7 @@ class InlineParser
 
         // If we're here, we didn't match a closer
         $this->pos += $numDelims;
-        $inlines->add(InlineCreator::createString(substr($this->subject, $startPos, $numDelims)));
+        $inlines->add(InlineCreator::createText(substr($this->subject, $startPos, $numDelims)));
 
         if ($res['canOpen']) {
             $this->emphasisOpeners = array(
@@ -555,7 +555,7 @@ class InlineParser
     protected function parseEntity(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::REGEX_ENTITY)) {
-            $inlines->add(InlineCreator::createString(Html5Entities::decodeEntity($m)));
+            $inlines->add(InlineCreator::createText(Html5Entities::decodeEntity($m)));
 
             return true;
         }
@@ -574,7 +574,7 @@ class InlineParser
     protected function parseString(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::getInstance()->getMainRegex())) {
-            $inlines->add(InlineCreator::createString($m));
+            $inlines->add(InlineCreator::createText($m));
 
             return true;
         }
@@ -614,7 +614,7 @@ class InlineParser
         if ($this->match('/^!/')) {
             $link = $this->parseLink($inlines);
             if (!$link) {
-                $inlines->add(InlineCreator::createString('!'));
+                $inlines->add(InlineCreator::createText('!'));
 
                 return true;
             }
@@ -682,7 +682,7 @@ class InlineParser
 
         if (!$res) {
             $this->pos++;
-            $inlines->add(InlineCreator::createString($c));
+            $inlines->add(InlineCreator::createText($c));
         }
 
         return true;

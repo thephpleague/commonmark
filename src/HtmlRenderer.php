@@ -116,7 +116,7 @@ class HtmlRenderer
     {
         $attrs = array();
         switch ($inline->getType()) {
-            case InlineElement::TYPE_STRING:
+            case InlineElement::TYPE_TEXT:
                 return $this->escape($inline->getContents());
             case InlineElement::TYPE_SOFTBREAK:
                 return $this->options['softBreak'];
