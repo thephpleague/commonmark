@@ -24,10 +24,10 @@ use ColinODell\CommonMark\Util\ArrayCollection;
  */
 class BlockElement
 {
-    const TYPE_ATX_HEADER = 'ATXHeader';
     const TYPE_BLOCK_QUOTE = 'BlockQuote';
     const TYPE_DOCUMENT = 'Document';
     const TYPE_FENCED_CODE = 'FencedCode';
+    const TYPE_HEADER = 'Header';
     const TYPE_HORIZONTAL_RULE = 'HorizontalRule';
     const TYPE_HTML_BLOCK = 'HtmlBlock';
     const TYPE_INDENTED_CODE = 'IndentedCode';
@@ -35,7 +35,6 @@ class BlockElement
     const TYPE_LIST_ITEM = 'ListItem';
     const TYPE_PARAGRAPH = 'Paragraph';
     const TYPE_REFERENCE_DEF = 'ReferenceDef';
-    const TYPE_SETEXT_HEADER = 'SetextHeader';
 
     const LIST_TYPE_ORDERED = 'Outline';
     const LIST_TYPE_UNORDERED = 'Bullet';
@@ -404,8 +403,7 @@ class BlockElement
                 }
                 break;
 
-            case self::TYPE_ATX_HEADER:
-            case self::TYPE_SETEXT_HEADER:
+            case self::TYPE_HEADER:
             case self::TYPE_HTML_BLOCK:
                 $this->stringContent = implode("\n", $this->strings->toArray());
                 break;

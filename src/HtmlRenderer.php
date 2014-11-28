@@ -218,8 +218,7 @@ class HtmlRenderer
                         $block->getExtra('tight')
                     ) . $this->options['innerSeparator']
                 );
-            case BlockElement::TYPE_ATX_HEADER:
-            case BlockElement::TYPE_SETEXT_HEADER:
+            case BlockElement::TYPE_HEADER:
                 $tag = 'h' . $block->getExtra('level');
 
                 return $this->inTags($tag, array(), $this->renderInlines($block->getInlineContent()));
