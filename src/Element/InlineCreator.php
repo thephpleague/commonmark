@@ -66,6 +66,34 @@ class InlineCreator
      *
      * @return InlineElement
      */
+    public static function createImage($destination, $label = null, $title = null)
+    {
+        $attr = array('destination' => $destination);
+
+        if (is_string($label)) {
+            $attr['label'] = array(self::createText($label));
+        } elseif (is_object($label) && $label instanceof ArrayCollection) {
+            $attr['label'] = $label->toArray();
+        } elseif (empty($label)) {
+            $attr['label'] = array(self::createText($destination));
+        } else {
+            $attr['label'] = $label;
+        }
+
+        if ($title) {
+            $attr['title'] = $title;
+        }
+
+        return new InlineElement(InlineElement::TYPE_IMAGE, $attr);
+    }
+
+    /**
+     * @param string                      $destination
+     * @param string|ArrayCollection|null $label
+     * @param string|null                 $title
+     *
+     * @return InlineElement
+     */
     public static function createLink($destination, $label = null, $title = null)
     {
         $attr = array('destination' => $destination);

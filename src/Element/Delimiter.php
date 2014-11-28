@@ -25,6 +25,9 @@ class Delimiter
     /** @var bool */
     protected $canClose;
 
+    /** @var int|null */
+    protected $index;
+
     /**
      * @return boolean
      */
@@ -81,6 +84,26 @@ class Delimiter
     public function setChar($char)
     {
         $this->char = $char;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
+     * @param int|null $index
+     *
+     * @return $this
+     */
+    public function setIndex($index)
+    {
+        $this->index = $index;
 
         return $this;
     }
@@ -165,7 +188,7 @@ class Delimiter
         return $this;
     }
 
-    public static function createNext(Delimiter $current = null, $char, $numDelims, $pos, $canOpen, $canClose)
+    public static function createNext(Delimiter $current = null, $char, $numDelims, $pos, $canOpen, $canClose, $index = null)
     {
         $newDelimiter = new Delimiter();
         $newDelimiter->char = $char;
@@ -174,6 +197,7 @@ class Delimiter
         $newDelimiter->previous = $current;
         $newDelimiter->canOpen = $canOpen;
         $newDelimiter->canClose = $canClose;
+        $newDelimiter->index = $index;
 
         if ($current !== null) {
             $current->next = $newDelimiter;

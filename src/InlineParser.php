@@ -473,23 +473,85 @@ class InlineParser
     }
 
     /**
-     * Attempt to parse a link.  If successful, add the link to inlines.
+     * Add open bracket to delimiter stack and add a Text to inlines
      * @param ArrayCollection $inlines
      *
      * @return bool
      */
-    protected function parseLink(ArrayCollection $inlines)
+    protected function parseOpenBracket(ArrayCollection $inlines)
     {
         $startPos = $this->pos;
-        $n = $this->parseLinkLabel();
-        if ($n === 0) {
-            return false;
+        $this->pos++;
+        $inlines->add(InlineCreator::createText('['));
+
+        // Add entry to stack for this opener
+        $this->delimiters = Delimiter::createNext($this->delimiters, '[', 1, $inlines->count() - 1, true, false, $startPos);
+
+        return true;
+    }
+
+    /**
+     * If next character is [, and ! delimiter to delimiter stack and
+     * add a Text to inlines. Otherwise just add a Text.
+     *
+     * @param ArrayCollection $inlines
+     *
+     * @return bool
+     */
+    protected function parseBang(ArrayCollection $inlines)
+    {
+        $startPos = $this->pos;
+        $this->pos++;
+        if ($this->peek() === '[') {
+            $this->pos++;
+            $inlines->add(InlineCreator::createText('!['));
+            // Add entry to stack for this opener
+            $this->delimiters = Delimiter::createNext($this->delimiters, '!', 1, $inlines->count() - 1, true, false, $startPos + 1);
+        } else {
+            $inlines->add(InlineCreator::createText('!'));
         }
 
-        $rawLabel = substr($this->subject, $startPos, $n);
+        return true;
+    }
 
-        // if we got this far, we've parsed a label.
-        // Try to parse an explicit link: [label](url "title")
+    protected function parseCloseBracket(ArrayCollection $inlines)
+    {
+        $matched = false;
+        $this->pos++;
+        $startPos = $this->pos;
+
+        // Look through stack of delimiters for a [ or !
+        $opener = $this->delimiters;
+        while ($opener !== null) {
+            if ($opener->getChar() === '[' || $opener->getChar() === '!') {
+                break;
+            }
+            $opener = $opener->getPrevious();
+        }
+
+        if ($opener === null) {
+            // No matched opener, just return a literal
+            $inlines->add(InlineCreator::createText(']'));
+
+            return true;
+        }
+
+        // If we got here, open is a potential opener
+        $isImage = $opener->getChar() === '!';
+        // Instead of copying a slice, we null out the
+        // parts of inlines that don't correspond to linkText;
+        // later, we'll collapse them. This is awkways, and coul
+        // be simplified if we made inlines a linked list rather than
+        // and array:
+        $linkText = $inlines->slice(0);
+        for ($i = 0; $i < $opener->getPos() + 1; $i++) {
+            $linkText[$i] = null;
+        }
+        $linkText = new ArrayCollection($linkText);
+
+        // Check to see if we have a link/image
+
+        // Inline link?
         if ($this->peek() == '(') {
             $this->pos++;
             if ($this->spnl() &&
@@ -498,52 +560,82 @@ class InlineParser
             ) {
                 // make sure there's a space before the title:
                 if (preg_match('/^\\s/', $this->subject[$this->pos - 1])) {
-                    $title = $this->parseLinkTitle() ? : '';
+                    $title = $this->parseLinkTitle() ?: '';
                 } else {
                     $title = null;
                 }
 
                 if ($this->spnl() && $this->match('/^\\)/')) {
-                    $inlines->add(InlineCreator::createLink($dest, $this->parseRawLabel($rawLabel), $title));
-
-                    return $this->pos - $startPos;
+                    $matched = true;
                 }
             }
-
-            $this->pos = $startPos;
-
-            return false;
-        }
-
-        // If we're here, it wasn't an explicit link. Try to parse a reference link.
-        // first, see if there's another label
-        $savePos = $this->pos;
-        $this->spnl();
-        $beforeLabel = $this->pos;
-        $n = $this->parseLinkLabel();
-        if ($n == 2) {
-            // empty second label
-            $refLabel = $rawLabel;
-        } elseif ($n > 0) {
-            $refLabel = substr($this->subject, $beforeLabel, $n);
         } else {
-            $this->pos = $savePos;
-            $refLabel = $rawLabel;
+            // Next, see if there's a link label
+            $savePos = $this->pos;
+            $this->spnl();
+            $beforeLabel = $this->pos;
+            $n = $this->parseLinkLabel();
+            if ($n === 0 || $n === 2) {
+                // Empty or missing second label
+                $reflabel = substr($this->subject, $opener->getIndex(), $startPos - $opener->getIndex());
+            } else {
+                $reflabel = substr($this->subject, $beforeLabel, $n);
+            }
+
+            if ($n === 0) {
+                // If shortcut reference link, rewind before spaces we skipped
+                $this->pos = $savePos;
+            }
+
+            // Lookup rawlabel in refmap
+            if ($link = $this->refmap->getReference($reflabel)) {
+                $dest = $link->getDestination();
+                $title = $link->getTitle();
+                $matched = true;
+            }
         }
 
-        // Lookup rawLabel in refmap
-        if ($link = $this->refmap->getReference($refLabel)) {
-            $inlines->add(
-                InlineCreator::createLink($link->getDestination(), $this->parseRawLabel($rawLabel), $link->getTitle())
-            );
+        if ($matched) {
+            $this->processEmphasis($linkText, $opener->getPrevious());
+
+            // Remove the part of inlines that become link_text
+            // See noter above on why we need to do this instead of splice:
+            for ($i = $opener->getPos(); $i < $inlines->count(); $i++) {
+                $inlines->set($i, null);
+            }
+
+            // processEmphasis will remove this and later delimiters.
+            // Now we also remove earlier ones of the same kind (so,
+            // no link in links, no images in images).
+            $opener = $this->delimiters;
+            $closerAbove = null;
+            while ($opener !== null) {
+                if ($opener->getChar() === ($isImage ? '!' : '[')) {
+                    if ($closerAbove) {
+                        $closerAbove->setPrevious($opener->getPrevious());
+                    } else {
+                        $this->delimiters = $opener->getPrevious();
+                    }
+                } else {
+                    $closerAbove = $opener;
+                }
+                $opener = $opener->getPrevious();
+            }
+
+            if ($isImage) {
+                $inlines->add(InlineCreator::createImage($dest, $linkText, $title));
+            } else {
+                $inlines->add(InlineCreator::createLink($dest, $linkText, $title));
+            }
+
+            return true;
+        } else { // No match
+            $this->removeDelimiter($opener); // Remove this opener from stack
+            $this->pos = $startPos;
+            $inlines->add(InlineCreator::createText(']'));
 
             return true;
         }
-
-        // Nothing worked, rewind:
-        $this->pos = $startPos;
-
-        return false;
     }
 
     /**
@@ -605,34 +697,6 @@ class InlineParser
     }
 
     /**
-     * @param ArrayCollection $inlines
-     *
-     * @return bool
-     */
-    protected function parseImage(ArrayCollection $inlines)
-    {
-        if ($this->match('/^!/')) {
-            $link = $this->parseLink($inlines);
-            if (!$link) {
-                $inlines->add(InlineCreator::createText('!'));
-
-                return true;
-            }
-
-            /** @var InlineElementInterface $last */
-            $last = $inlines->last();
-
-            if ($last && $last->getType() == InlineElement::TYPE_LINK) {
-                $last->setType(InlineElement::TYPE_IMAGE);
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Parse the next inline element in subject, advancing subject position
      * and adding the result to 'inlines'.
      *
@@ -665,10 +729,13 @@ class InlineParser
                 $res = $this->parseEmphasis($c, $inlines);
                 break;
             case '[':
-                $res = $this->parseLink($inlines);
+                $res = $this->parseOpenBracket($inlines);
                 break;
             case '!':
-                $res = $this->parseImage($inlines);
+                $res = $this->parseBang($inlines);
+                break;
+            case ']':
+                $res = $this->parseCloseBracket($inlines);
                 break;
             case '<':
                 $res = $this->parseAutolink($inlines) ? : $this->parseHtmlTag($inlines);
