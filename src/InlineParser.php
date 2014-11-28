@@ -605,21 +605,23 @@ class InlineParser
             }
 
             // processEmphasis will remove this and later delimiters.
-            // Now we also remove earlier ones of the same kind (so,
-            // no link in links, no images in images).
-            $opener = $this->delimiters;
-            $closerAbove = null;
-            while ($opener !== null) {
-                if ($opener->getChar() === ($isImage ? '!' : '[')) {
-                    if ($closerAbove) {
-                        $closerAbove->setPrevious($opener->getPrevious());
+            // Now, for a link, we also remove earlier link openers
+            // (no links in links)
+            if (!$isImage) {
+                $opener = $this->delimiters;
+                $closerAbove = null;
+                while ($opener !== null) {
+                    if ($opener->getChar() === '[') {
+                        if ($closerAbove) {
+                            $closerAbove->setPrevious($opener->getPrevious());
+                        } else {
+                            $this->delimiters = $opener->getPrevious();
+                        }
                     } else {
-                        $this->delimiters = $opener->getPrevious();
+                        $closerAbove = $opener;
                     }
-                } else {
-                    $closerAbove = $opener;
+                    $opener = $opener->getPrevious();
                 }
-                $opener = $opener->getPrevious();
             }
 
             if ($isImage) {
