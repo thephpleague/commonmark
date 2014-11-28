@@ -137,7 +137,9 @@ class HtmlRenderer
                 return $this->inTags('a', $attrs, $this->renderInlines($inline->getAttribute('label')));
             case InlineElement::TYPE_IMAGE:
                 $attrs['src'] = $this->escape($inline->getAttribute('destination'), true);
-                $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $this->renderInlines($inline->getAttribute('label')));
+                $alt = $this->renderInlines($inline->getAttribute('label'));
+                $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
+                $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
                 if ($title = $inline->getAttribute('title')) {
                     $attrs['title'] = $this->escape($title, true);
                 }
