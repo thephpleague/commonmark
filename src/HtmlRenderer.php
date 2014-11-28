@@ -116,7 +116,7 @@ class HtmlRenderer
     {
         $attrs = array();
         switch ($inline->getType()) {
-            case InlineElement::TYPE_STRING:
+            case InlineElement::TYPE_TEXT:
                 return $this->escape($inline->getContents());
             case InlineElement::TYPE_SOFTBREAK:
                 return $this->options['softBreak'];
@@ -137,7 +137,9 @@ class HtmlRenderer
                 return $this->inTags('a', $attrs, $this->renderInlines($inline->getAttribute('label')));
             case InlineElement::TYPE_IMAGE:
                 $attrs['src'] = $this->escape($inline->getAttribute('destination'), true);
-                $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $this->renderInlines($inline->getAttribute('label')));
+                $alt = $this->renderInlines($inline->getAttribute('label'));
+                $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
+                $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
                 if ($title = $inline->getAttribute('title')) {
                     $attrs['title'] = $this->escape($title, true);
                 }
@@ -216,8 +218,7 @@ class HtmlRenderer
                         $block->getExtra('tight')
                     ) . $this->options['innerSeparator']
                 );
-            case BlockElement::TYPE_ATX_HEADER:
-            case BlockElement::TYPE_SETEXT_HEADER:
+            case BlockElement::TYPE_HEADER:
                 $tag = 'h' . $block->getExtra('level');
 
                 return $this->inTags($tag, array(), $this->renderInlines($block->getInlineContent()));

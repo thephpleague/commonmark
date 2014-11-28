@@ -14,6 +14,7 @@
 
 namespace ColinODell\CommonMark;
 
+use ColinODell\CommonMark\Element\Delimiter;
 use ColinODell\CommonMark\Element\InlineElement;
 use ColinODell\CommonMark\Element\InlineElementInterface;
 use ColinODell\CommonMark\Element\InlineCreator;
@@ -55,9 +56,9 @@ class InlineParser
     protected $regexHelper;
 
     /**
-     * @var array|null
+     * @var Delimiter|null
      */
-    private $emphasisOpeners;
+    protected $delimiters;
 
     /**
      * Constrcutor
@@ -148,7 +149,7 @@ class InlineParser
 
         // If we go here, we didn't match a closing backtick sequence
         $this->pos = $afterOpenTicks;
-        $inlines->add(InlineCreator::createString($ticks));
+        $inlines->add(InlineCreator::createText($ticks));
 
         return true;
     }
@@ -179,10 +180,10 @@ class InlineParser
             )
         ) {
             $this->pos += 2;
-            $inlines->add(InlineCreator::createString($subject[$pos + 1]));
+            $inlines->add(InlineCreator::createText($subject[$pos + 1]));
         } else {
             $this->pos++;
-            $inlines->add(InlineCreator::createString('\\'));
+            $inlines->add(InlineCreator::createText('\\'));
         }
 
         return true;
@@ -275,76 +276,131 @@ class InlineParser
      */
     protected function parseEmphasis($c, ArrayCollection $inlines)
     {
-        $startPos = $this->pos;
-
         // Get opening delimiters
         $res = $this->scanDelims($c);
         $numDelims = $res['numDelims'];
+        $startPos = $this->pos;
 
         if ($numDelims === 0) {
-            $this->pos = $startPos;
-
             return false;
         }
 
-        if ($res['canClose']) {
-            $opener = $this->emphasisOpeners;
-            while (!empty($opener)) {
-                if ($opener['c'] === $c) { // we have a match!
-                    if ($numDelims < 3 || $opener['numDelims'] < 3) {
-                        $useDelims = $numDelims <= $opener['numDelims'] ? $numDelims : $opener['numDelims'];
-                    } else {
-                        $useDelims = $numDelims % 2 === 0 ? 2 : 1;
+        $this->pos += $numDelims;
+        $inlines->add(
+            InlineCreator::createText(
+                substr($this->subject, $startPos, $this->pos - $startPos)
+            )
+        );
+
+        // Add entry to stack to this opener
+        $this->delimiters = Delimiter::createNext($this->delimiters, $c, $numDelims, $inlines->count() - 1, $res['canOpen'], $res['canClose']);
+
+        return true;
+    }
+
+    protected function removeDelimiter(Delimiter $delimiter)
+    {
+        if ($delimiter->getPrevious() !== null) {
+            $delimiter->getPrevious()->setNext($delimiter->getNext());
+        }
+
+        if ($delimiter->getNext() === null) {
+            // top of stack
+            $this->delimiters = $delimiter->getPrevious();
+        } else {
+            $delimiter->getNext()->setPrevious($delimiter->getPrevious());
+        }
+    }
+
+    protected function processEmphasis(ArrayCollection $inlines, Delimiter $stackBottom = null)
+    {
+        // Find first closer above stackBottom
+        $closer = $this->delimiters;
+        while ($closer !== null && $closer->getPrevious() !== $stackBottom) {
+            $closer = $closer->getPrevious();
+        }
+
+        // Move forward, looking for closers, and handling each
+        while ($closer !== null) {
+            if ($closer->canClose() && (in_array($closer->getChar(), array('_', '*')))) {
+                // Found emphasis closer. Now look back for first matching opener:
+                $opener = $closer->getPrevious();
+                while ($opener !== null && $opener !== $stackBottom) {
+                    if ($opener->getChar() === $closer->getChar() && $opener->canOpen()) {
+                        break;
                     }
-
-                    $type = $useDelims === 1 ? InlineElement::TYPE_EMPH : InlineElement::TYPE_STRONG;
-
-                    if ($opener['numDelims'] == $useDelims) { // all openers used
-                        $this->pos += $useDelims;
-                        $inlines->set($opener['pos'], new InlineElement($type, array('c' => $inlines->slice($opener['pos'] + 1))));
-                        $inlines->splice($opener['pos'] + 1, $inlines->count() - ($opener['pos'] + 1));
-                        // Remove entries after this, to prevent overlapping nesting:
-                        $this->emphasisOpeners = $opener['previous'];
-
-                        return true;
-                    } elseif ($opener['numDelims'] > $useDelims) { // only some openers used
-                        $this->pos += $useDelims;
-                        $opener['numDelims'] -= $useDelims;
-                        /** @var InlineElement $thingToChange */
-                        $thingToChange = $inlines->get($opener['pos']);
-                        $thingToChange->setContents(substr($thingToChange->getContents(), 0, $opener['numDelims']));
-                        $inlines->set(
-                            $opener['pos'] + 1,
-                            new InlineElement($type, array('c' => $inlines->slice($opener['pos'] + 1)))
-                        );
-                        $inlines->splice($opener['pos'] + 2, $inlines->count() - ($opener['pos'] + 2));
-                        // Remove entries after this, to prevent overlapping nesting:
-                        $this->emphasisOpeners = $opener;
-
-                        return true;
-                    } else {
-                        throw new \LogicException('Logic error: usedelims > opener.numdelims');
-                    }
+                    $opener = $opener->getPrevious();
                 }
+                if ($opener !== null && $opener !== $stackBottom) {
+                    // Calculate actual number of delimiters used from this closer
+                    if ($closer->getNumDelims() < 3 || $opener->getNumDelims() < 3) {
+                        $useDelims = $closer->getNumDelims() <= $opener->getNumDelims()
+                            ? $closer->getNumDelims()
+                            : $opener->getNumDelims();
+                    } else {
+                        $useDelims = $closer->getNumDelims() % 2 === 0 ? 2 : 1;
+                    }
 
-                $opener = $opener['previous'];
+                    /** @var InlineElementInterface $openerInline */
+                    $openerInline = $inlines->get($opener->getPos());
+                    /** @var InlineElementInterface $closerInline */
+                    $closerInline = $inlines->get($closer->getPos());
+
+                    // Remove used delimiters from stack elts and inlines
+                    $opener->setNumDelims($opener->getNumDelims() - $useDelims);
+                    $closer->setNumDelims($closer->getNumDelims() - $useDelims);
+
+                    $openerInline->setAttribute('c', substr($openerInline->getAttribute('c'), 0, -$useDelims));
+                    $closerInline->setAttribute('c', substr($closerInline->getAttribute('c'), 0, -$useDelims));
+
+                    // Build contents for new emph element
+                    $start = $opener->getPos() + 1;
+                    $contents = $inlines->slice($start, $closer->getPos() - $start);
+                    $contents = array_filter($contents);
+
+                    $emph = $useDelims === 1 ? InlineCreator::createEmph($contents) : InlineCreator::createStrong($contents);
+
+                    // Insert into list of inlines
+                    $inlines->set($opener->getPos() + 1, $emph);
+                    for ($i = $opener->getPos() + 2; $i < $closer->getPos(); $i++) {
+                        $inlines->set($i, null);
+                    }
+
+                    // Remove elts btw opener and closer in delimiters stack
+                    $tempStack = $closer->getPrevious();
+                    while ($tempStack !== null && $tempStack !== $opener) {
+                        $nextStack = $tempStack->getPrevious();
+                        $this->removeDelimiter($tempStack);
+                        $tempStack = $nextStack;
+                    }
+
+                    // If opener has 0 delims, remove it and the inline
+                    if ($opener->getNumDelims() === 0) {
+                        $inlines->set($opener->getPos(), null);
+                        $this->removeDelimiter($opener);
+                    }
+
+                    if ($closer->getNumDelims() === 0) {
+                        $inlines->set($closer->getPos(), null);
+                        $tempStack = $closer->getNext();
+                        $this->removeDelimiter($closer);
+                        $closer = $tempStack;
+                    }
+                } else {
+                    $closer = $closer->getNext();
+                }
+            } else {
+                $closer = $closer->getNext();
             }
         }
 
-        // If we're here, we didn't match a closer
-        $this->pos += $numDelims;
-        $inlines->add(InlineCreator::createString(substr($this->subject, $startPos, $numDelims)));
+        // Remove gaps
+        $inlines->removeGaps();
 
-        if ($res['canOpen']) {
-            $this->emphasisOpeners = array(
-                'c' => $c,
-                'numDelims' => $numDelims,
-                'pos' => $inlines->count() - 1,
-                'previous' => $this->emphasisOpeners
-            );
+        // Remove all delimiters
+        while ($this->delimiters !== $stackBottom) {
+            $this->removeDelimiter($this->delimiters);
         }
-
-        return true;
     }
 
     /**
@@ -393,65 +449,9 @@ class InlineParser
      */
     protected function parseLinkLabel()
     {
-        if ($this->peek() != '[') {
-            return 0;
-        }
+        $match = $this->match('/^\[(?:[^\\\\\[\]]|\\\\[\[\]]){0,750}\]/');
 
-        $startPos = $this->pos;
-        $nestLevel = 0;
-        if ($this->labelNestLevel > 0) {
-            // If we've already checked to the end of this subject
-            // for a label, even with a different starting [, we
-            // know we won't find one here and we can just return.
-            // This avoids lots of backtracking.
-            // Note:  nest level 1 would be: [foo [bar]
-            //        nest level 2 would be: [foo [bar [baz]
-            $this->labelNestLevel--;
-
-            return 0;
-        }
-
-        $this->pos++; // Advance past [
-        while (($c = $this->peek()) !== null && ($c != ']' || $nestLevel > 0)) {
-            switch ($c) {
-                case '`':
-                    $this->parseBackticks(new ArrayCollection());
-                    break;
-                case '<':
-                    $this->parseAutolink(new ArrayCollection()) || $this->parseHtmlTag(
-                        new ArrayCollection()
-                    ) || $this->parseString(new ArrayCollection());
-                    break;
-                case '[': // nested []
-                    $nestLevel++;
-                    $this->pos++;
-                    break;
-                case ']': //nested []
-                    $nestLevel--;
-                    $this->pos++;
-                    break;
-                case '\\':
-                    $this->parseBackslash(new ArrayCollection());
-                    break;
-                default:
-                    $this->parseString(new ArrayCollection());
-            }
-        }
-
-        if ($c === ']') {
-            $this->labelNestLevel = 0;
-            $this->pos++; // advance past ]
-
-            return $this->pos - $startPos;
-        } else {
-            if ($c === null) {
-                $this->labelNestLevel = $nestLevel;
-            }
-
-            $this->pos = $startPos;
-
-            return 0;
-        }
+        return $match === null ? 0 : strlen($match);
     }
 
     /**
@@ -473,23 +473,85 @@ class InlineParser
     }
 
     /**
-     * Attempt to parse a link.  If successful, add the link to inlines.
+     * Add open bracket to delimiter stack and add a Text to inlines
      * @param ArrayCollection $inlines
      *
      * @return bool
      */
-    protected function parseLink(ArrayCollection $inlines)
+    protected function parseOpenBracket(ArrayCollection $inlines)
     {
         $startPos = $this->pos;
-        $n = $this->parseLinkLabel();
-        if ($n === 0) {
-            return false;
+        $this->pos++;
+        $inlines->add(InlineCreator::createText('['));
+
+        // Add entry to stack for this opener
+        $this->delimiters = Delimiter::createNext($this->delimiters, '[', 1, $inlines->count() - 1, true, false, $startPos);
+
+        return true;
+    }
+
+    /**
+     * If next character is [, and ! delimiter to delimiter stack and
+     * add a Text to inlines. Otherwise just add a Text.
+     *
+     * @param ArrayCollection $inlines
+     *
+     * @return bool
+     */
+    protected function parseBang(ArrayCollection $inlines)
+    {
+        $startPos = $this->pos;
+        $this->pos++;
+        if ($this->peek() === '[') {
+            $this->pos++;
+            $inlines->add(InlineCreator::createText('!['));
+            // Add entry to stack for this opener
+            $this->delimiters = Delimiter::createNext($this->delimiters, '!', 1, $inlines->count() - 1, true, false, $startPos + 1);
+        } else {
+            $inlines->add(InlineCreator::createText('!'));
         }
 
-        $rawLabel = substr($this->subject, $startPos, $n);
+        return true;
+    }
 
-        // if we got this far, we've parsed a label.
-        // Try to parse an explicit link: [label](url "title")
+    protected function parseCloseBracket(ArrayCollection $inlines)
+    {
+        $matched = false;
+        $this->pos++;
+        $startPos = $this->pos;
+
+        // Look through stack of delimiters for a [ or !
+        $opener = $this->delimiters;
+        while ($opener !== null) {
+            if ($opener->getChar() === '[' || $opener->getChar() === '!') {
+                break;
+            }
+            $opener = $opener->getPrevious();
+        }
+
+        if ($opener === null) {
+            // No matched opener, just return a literal
+            $inlines->add(InlineCreator::createText(']'));
+
+            return true;
+        }
+
+        // If we got here, open is a potential opener
+        $isImage = $opener->getChar() === '!';
+        // Instead of copying a slice, we null out the
+        // parts of inlines that don't correspond to linkText;
+        // later, we'll collapse them. This is awkways, and coul
+        // be simplified if we made inlines a linked list rather than
+        // and array:
+        $linkText = $inlines->slice(0);
+        for ($i = 0; $i < $opener->getPos() + 1; $i++) {
+            $linkText[$i] = null;
+        }
+        $linkText = new ArrayCollection($linkText);
+
+        // Check to see if we have a link/image
+
+        // Inline link?
         if ($this->peek() == '(') {
             $this->pos++;
             if ($this->spnl() &&
@@ -498,52 +560,84 @@ class InlineParser
             ) {
                 // make sure there's a space before the title:
                 if (preg_match('/^\\s/', $this->subject[$this->pos - 1])) {
-                    $title = $this->parseLinkTitle() ? : '';
+                    $title = $this->parseLinkTitle() ?: '';
                 } else {
                     $title = null;
                 }
 
                 if ($this->spnl() && $this->match('/^\\)/')) {
-                    $inlines->add(InlineCreator::createLink($dest, $this->parseRawLabel($rawLabel), $title));
+                    $matched = true;
+                }
+            }
+        } else {
+            // Next, see if there's a link label
+            $savePos = $this->pos;
+            $this->spnl();
+            $beforeLabel = $this->pos;
+            $n = $this->parseLinkLabel();
+            if ($n === 0 || $n === 2) {
+                // Empty or missing second label
+                $reflabel = substr($this->subject, $opener->getIndex(), $startPos - $opener->getIndex());
+            } else {
+                $reflabel = substr($this->subject, $beforeLabel, $n);
+            }
 
-                    return $this->pos - $startPos;
+            if ($n === 0) {
+                // If shortcut reference link, rewind before spaces we skipped
+                $this->pos = $savePos;
+            }
+
+            // Lookup rawlabel in refmap
+            if ($link = $this->refmap->getReference($reflabel)) {
+                $dest = $link->getDestination();
+                $title = $link->getTitle();
+                $matched = true;
+            }
+        }
+
+        if ($matched) {
+            $this->processEmphasis($linkText, $opener->getPrevious());
+
+            // Remove the part of inlines that become link_text
+            // See noter above on why we need to do this instead of splice:
+            for ($i = $opener->getPos(); $i < $inlines->count(); $i++) {
+                $inlines->set($i, null);
+            }
+
+            // processEmphasis will remove this and later delimiters.
+            // Now, for a link, we also remove earlier link openers
+            // (no links in links)
+            if (!$isImage) {
+                $opener = $this->delimiters;
+                $closerAbove = null;
+                while ($opener !== null) {
+                    if ($opener->getChar() === '[') {
+                        if ($closerAbove) {
+                            $closerAbove->setPrevious($opener->getPrevious());
+                        } else {
+                            $this->delimiters = $opener->getPrevious();
+                        }
+                    } else {
+                        $closerAbove = $opener;
+                    }
+                    $opener = $opener->getPrevious();
                 }
             }
 
+            if ($isImage) {
+                $inlines->add(InlineCreator::createImage($dest, $linkText, $title));
+            } else {
+                $inlines->add(InlineCreator::createLink($dest, $linkText, $title));
+            }
+
+            return true;
+        } else { // No match
+            $this->removeDelimiter($opener); // Remove this opener from stack
             $this->pos = $startPos;
-
-            return false;
-        }
-
-        // If we're here, it wasn't an explicit link. Try to parse a reference link.
-        // first, see if there's another label
-        $savePos = $this->pos;
-        $this->spnl();
-        $beforeLabel = $this->pos;
-        $n = $this->parseLinkLabel();
-        if ($n == 2) {
-            // empty second label
-            $refLabel = $rawLabel;
-        } elseif ($n > 0) {
-            $refLabel = substr($this->subject, $beforeLabel, $n);
-        } else {
-            $this->pos = $savePos;
-            $refLabel = $rawLabel;
-        }
-
-        // Lookup rawLabel in refmap
-        if ($link = $this->refmap->getReference($refLabel)) {
-            $inlines->add(
-                InlineCreator::createLink($link->getDestination(), $this->parseRawLabel($rawLabel), $link->getTitle())
-            );
+            $inlines->add(InlineCreator::createText(']'));
 
             return true;
         }
-
-        // Nothing worked, rewind:
-        $this->pos = $startPos;
-
-        return false;
     }
 
     /**
@@ -555,7 +649,7 @@ class InlineParser
     protected function parseEntity(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::REGEX_ENTITY)) {
-            $inlines->add(InlineCreator::createString(Html5Entities::decodeEntity($m)));
+            $inlines->add(InlineCreator::createText(Html5Entities::decodeEntity($m)));
 
             return true;
         }
@@ -574,7 +668,7 @@ class InlineParser
     protected function parseString(ArrayCollection $inlines)
     {
         if ($m = $this->match(RegexHelper::getInstance()->getMainRegex())) {
-            $inlines->add(InlineCreator::createString($m));
+            $inlines->add(InlineCreator::createText($m));
 
             return true;
         }
@@ -599,34 +693,6 @@ class InlineParser
             }
 
             return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param ArrayCollection $inlines
-     *
-     * @return bool
-     */
-    protected function parseImage(ArrayCollection $inlines)
-    {
-        if ($this->match('/^!/')) {
-            $link = $this->parseLink($inlines);
-            if (!$link) {
-                $inlines->add(InlineCreator::createString('!'));
-
-                return true;
-            }
-
-            /** @var InlineElementInterface $last */
-            $last = $inlines->last();
-
-            if ($last && $last->getType() == InlineElement::TYPE_LINK) {
-                $last->setType(InlineElement::TYPE_IMAGE);
-
-                return true;
-            }
         }
 
         return false;
@@ -665,10 +731,13 @@ class InlineParser
                 $res = $this->parseEmphasis($c, $inlines);
                 break;
             case '[':
-                $res = $this->parseLink($inlines);
+                $res = $this->parseOpenBracket($inlines);
                 break;
             case '!':
-                $res = $this->parseImage($inlines);
+                $res = $this->parseBang($inlines);
+                break;
+            case ']':
+                $res = $this->parseCloseBracket($inlines);
                 break;
             case '<':
                 $res = $this->parseAutolink($inlines) ? : $this->parseHtmlTag($inlines);
@@ -682,7 +751,7 @@ class InlineParser
 
         if (!$res) {
             $this->pos++;
-            $inlines->add(InlineCreator::createString($c));
+            $inlines->add(InlineCreator::createText($c));
         }
 
         return true;
@@ -701,11 +770,12 @@ class InlineParser
         $this->subject = $s;
         $this->pos = 0;
         $this->refmap = $refMap;
-        $this->emphasisOpeners = null;
+        $this->delimiters = null;
         $inlines = new ArrayCollection();
         while ($this->parseInline($inlines)) {
             ;
         }
+        $this->processEmphasis($inlines, null);
 
         return $inlines;
     }

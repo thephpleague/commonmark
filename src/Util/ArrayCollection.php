@@ -235,4 +235,9 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
         return $this;
     }
+
+    public function removeGaps()
+    {
+        $this->elements = array_filter($this->elements);
+    }
 }

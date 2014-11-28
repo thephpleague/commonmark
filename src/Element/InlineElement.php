@@ -26,7 +26,7 @@ class InlineElement implements InlineElementInterface
     const TYPE_IMAGE = 'Image';
     const TYPE_LINK = 'Link';
     const TYPE_SOFTBREAK = 'Softbreak';
-    const TYPE_STRING = 'Str';
+    const TYPE_TEXT = 'Text';
     const TYPE_STRONG = 'Strong';
 
     /**

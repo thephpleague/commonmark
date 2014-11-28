@@ -275,11 +275,13 @@ class DocParser
                     }
                     break;
 
-                case BlockElement::TYPE_ATX_HEADER:
-                case BlockElement::TYPE_SETEXT_HEADER:
+                case BlockElement::TYPE_HEADER:
                 case BlockElement::TYPE_HORIZONTAL_RULE:
                     // a header can never contain > 1 line, so fail to match:
                     $allMatched = false;
+                    if ($blank) {
+                        $container->setLastLineBlank(true);
+                    }
                     break;
 
                 case BlockElement::TYPE_FENCED_CODE:
@@ -293,6 +295,7 @@ class DocParser
 
                 case BlockElement::TYPE_HTML_BLOCK:
                     if ($blank) {
+                        $container->setLastLineBlank(true);
                         $allMatched = false;
                     }
                     break;
@@ -382,7 +385,7 @@ class DocParser
                 // ATX header
                 $offset = $firstNonSpace + strlen($match[0]);
                 $closeUnmatchedBlocks($this);
-                $container = $this->addChild(BlockElement::TYPE_ATX_HEADER, $lineNumber, $firstNonSpace);
+                $container = $this->addChild(BlockElement::TYPE_HEADER, $lineNumber, $firstNonSpace);
                 $container->setExtra('level', strlen(trim($match[0]))); // number of #s
                 // remove trailing ###s
                 $str = substr($ln, $offset);
@@ -417,7 +420,7 @@ class DocParser
             ) {
                 // setext header line
                 $closeUnmatchedBlocks($this);
-                $container->setType(BlockElement::TYPE_SETEXT_HEADER);
+                $container->setType(BlockElement::TYPE_HEADER);
                 $container->setExtra('level', $match[0][0] === '=' ? 1 : 2);
                 $offset = strlen($ln);
             } elseif (RegexHelper::matchAt(RegexHelper::getInstance()->getHRuleRegex(), $ln, $firstNonSpace) !== null) {
@@ -522,8 +525,7 @@ class DocParser
                     }
                     break;
 
-                case BlockElement::TYPE_ATX_HEADER:
-                case BlockElement::TYPE_SETEXT_HEADER:
+                case BlockElement::TYPE_HEADER:
                 case BlockElement::TYPE_HORIZONTAL_RULE:
                     // nothing to do; we already added the contents.
                     break;
@@ -534,7 +536,7 @@ class DocParser
                     } elseif ($blank) {
                         // do nothing
                     } elseif ($container->getType() != BlockElement::TYPE_HORIZONTAL_RULE && $container->getType(
-                        ) != BlockElement::TYPE_SETEXT_HEADER
+                        ) != BlockElement::TYPE_HEADER
                     ) {
                         // create paragraph container for line
                         $container = $this->addChild(BlockElement::TYPE_PARAGRAPH, $lineNumber, $firstNonSpace);
@@ -603,8 +605,7 @@ class DocParser
                     $this->inlineParser->parse(trim($block->getStringContent()), $this->refMap)
                 );
                 break;
-            case BlockElement::TYPE_SETEXT_HEADER:
-            case BlockElement::TYPE_ATX_HEADER:
+            case BlockElement::TYPE_HEADER:
                 $newBlock->setInlineContent(
                     $this->inlineParser->parse(trim($block->getStringContent()), $this->refMap)
                 );
