@@ -280,6 +280,9 @@ class DocParser
                 case BlockElement::TYPE_HORIZONTAL_RULE:
                     // a header can never contain > 1 line, so fail to match:
                     $allMatched = false;
+                    if ($blank) {
+                        $container->setLastLineBlank(true);
+                    }
                     break;
 
                 case BlockElement::TYPE_FENCED_CODE:
@@ -293,6 +296,7 @@ class DocParser
 
                 case BlockElement::TYPE_HTML_BLOCK:
                     if ($blank) {
+                        $container->setLastLineBlank(true);
                         $allMatched = false;
                     }
                     break;
