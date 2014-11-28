@@ -449,65 +449,9 @@ class InlineParser
      */
     protected function parseLinkLabel()
     {
-        if ($this->peek() != '[') {
-            return 0;
-        }
+        $match = $this->match('/^\[(?:[^\\\\\[\]]|\\\\[\[\]]){0,750}\]/');
 
-        $startPos = $this->pos;
-        $nestLevel = 0;
-        if ($this->labelNestLevel > 0) {
-            // If we've already checked to the end of this subject
-            // for a label, even with a different starting [, we
-            // know we won't find one here and we can just return.
-            // This avoids lots of backtracking.
-            // Note:  nest level 1 would be: [foo [bar]
-            //        nest level 2 would be: [foo [bar [baz]
-            $this->labelNestLevel--;
-
-            return 0;
-        }
-
-        $this->pos++; // Advance past [
-        while (($c = $this->peek()) !== null && ($c != ']' || $nestLevel > 0)) {
-            switch ($c) {
-                case '`':
-                    $this->parseBackticks(new ArrayCollection());
-                    break;
-                case '<':
-                    $this->parseAutolink(new ArrayCollection()) || $this->parseHtmlTag(
-                        new ArrayCollection()
-                    ) || $this->parseString(new ArrayCollection());
-                    break;
-                case '[': // nested []
-                    $nestLevel++;
-                    $this->pos++;
-                    break;
-                case ']': //nested []
-                    $nestLevel--;
-                    $this->pos++;
-                    break;
-                case '\\':
-                    $this->parseBackslash(new ArrayCollection());
-                    break;
-                default:
-                    $this->parseString(new ArrayCollection());
-            }
-        }
-
-        if ($c === ']') {
-            $this->labelNestLevel = 0;
-            $this->pos++; // advance past ]
-
-            return $this->pos - $startPos;
-        } else {
-            if ($c === null) {
-                $this->labelNestLevel = $nestLevel;
-            }
-
-            $this->pos = $startPos;
-
-            return 0;
-        }
+        return $match === null ? 0 : strlen($match);
     }
 
     /**
