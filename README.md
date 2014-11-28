@@ -122,6 +122,8 @@ For now, I'd like to maintain similar logic as the [stmd.js] parser until everyt
 
 Major refactoring should be avoided for now so that we can easily follow updates made to [jgm/stmd].  This restriction will likely be lifted once the CommonMark specs and implementations are considered stable.
 
+Please see [CONTRIBUTING](https://github.com/colinodell/commonmark-php/blob/master/CONTRIBUTING.md) for additional details.
+
 ## Credits & Acknowledgements
 
 - [Colin O'Dell][@colinodell]
