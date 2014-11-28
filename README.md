@@ -74,17 +74,17 @@ The following table shows which versions of commonmark-php are compatible with w
     <tbody>
         <tr>
             <td><strong>0.3.x<strong></td>
-            <td><strong>[0.12](http://spec.commonmark.org/0.12/)</strong></td>
+            <td><strong><a href="http://spec.commonmark.org/0.12/">0.12</a></strong></td>
             <td>current spec (as of Nov 28 '14)</td>
         </tr>
         <tr>
             <td>0.2.x</td>
-            <td>[0.10](http://spec.commonmark.org/0.10/)</td>
+            <td><a href="http://spec.commonmark.org/0.10/">0.10</a></td>
             <td></td>
         </tr>
         <tr>
             <td>0.1.x</td>
-            <td>[0.01](https://github.com/jgm/CommonMark/blob/2cf0750a7a507eded4cf3c9a48fd1f924d0ce538/spec.txt)</td>
+            <td><a href="https://github.com/jgm/CommonMark/blob/2cf0750a7a507eded4cf3c9a48fd1f924d0ce538/spec.txt">0.01</a></td>
             <td></td>
         </tr>
     </tbody>
