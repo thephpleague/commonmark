@@ -61,6 +61,35 @@ echo $htmlRenderer ->render($document);
 
 This project aims to fully support the entire [CommonMark spec] - other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [stmd.js] parser should eventually find their way back into this codebase.
 
+The following table shows which versions of commonmark-php are compatible with which version of the CommonMark spec:
+
+<table>
+    <thead>
+        <tr>
+            <th>commonmark-php</th>
+            <th>CommonMark spec</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>0.3.x<strong></td>
+            <td><strong>[0.12](http://spec.commonmark.org/0.12/)</strong></td>
+            <td>current spec (as of Nov 28 '14)</td>
+        </tr>
+        <tr>
+            <td>0.2.x</td>
+            <td>[0.10](http://spec.commonmark.org/0.10/)</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>0.1.x</td>
+            <td>[0.01](https://github.com/jgm/CommonMark/blob/2cf0750a7a507eded4cf3c9a48fd1f924d0ce538/spec.txt)</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
 This is **not** part of CommonMark, but rather a compatible derivative.
 
 ## Performance Benchmarks ##
