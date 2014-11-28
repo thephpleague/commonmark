@@ -14,6 +14,7 @@
 
 namespace ColinODell\CommonMark;
 
+use ColinODell\CommonMark\Element\Delimiter;
 use ColinODell\CommonMark\Element\InlineElement;
 use ColinODell\CommonMark\Element\InlineElementInterface;
 use ColinODell\CommonMark\Element\InlineCreator;
@@ -55,9 +56,9 @@ class InlineParser
     protected $regexHelper;
 
     /**
-     * @var array|null
+     * @var Delimiter|null
      */
-    private $emphasisOpeners;
+    protected $delimiters;
 
     /**
      * Constrcutor
@@ -275,76 +276,131 @@ class InlineParser
      */
     protected function parseEmphasis($c, ArrayCollection $inlines)
     {
-        $startPos = $this->pos;
-
         // Get opening delimiters
         $res = $this->scanDelims($c);
         $numDelims = $res['numDelims'];
+        $startPos = $this->pos;
 
         if ($numDelims === 0) {
-            $this->pos = $startPos;
-
             return false;
         }
 
-        if ($res['canClose']) {
-            $opener = $this->emphasisOpeners;
-            while (!empty($opener)) {
-                if ($opener['c'] === $c) { // we have a match!
-                    if ($numDelims < 3 || $opener['numDelims'] < 3) {
-                        $useDelims = $numDelims <= $opener['numDelims'] ? $numDelims : $opener['numDelims'];
-                    } else {
-                        $useDelims = $numDelims % 2 === 0 ? 2 : 1;
+        $this->pos += $numDelims;
+        $inlines->add(
+            InlineCreator::createText(
+                substr($this->subject, $startPos, $this->pos - $startPos)
+            )
+        );
+
+        // Add entry to stack to this opener
+        $this->delimiters = Delimiter::createNext($this->delimiters, $c, $numDelims, $inlines->count() - 1, $res['canOpen'], $res['canClose']);
+
+        return true;
+    }
+
+    protected function removeDelimiter(Delimiter $delimiter)
+    {
+        if ($delimiter->getPrevious() !== null) {
+            $delimiter->getPrevious()->setNext($delimiter->getNext());
+        }
+
+        if ($delimiter->getNext() === null) {
+            // top of stack
+            $this->delimiters = $delimiter->getPrevious();
+        } else {
+            $delimiter->getNext()->setPrevious($delimiter->getPrevious());
+        }
+    }
+
+    protected function processEmphasis(ArrayCollection $inlines, Delimiter $stackBottom = null)
+    {
+        // Find first closer above stackBottom
+        $closer = $this->delimiters;
+        while ($closer !== null && $closer->getPrevious() !== $stackBottom) {
+            $closer = $closer->getPrevious();
+        }
+
+        // Move forward, looking for closers, and handling each
+        while ($closer !== null) {
+            if ($closer->canClose() && (in_array($closer->getChar(), array('_', '*')))) {
+                // Found emphasis closer. Now look back for first matching opener:
+                $opener = $closer->getPrevious();
+                while ($opener !== null && $opener !== $stackBottom) {
+                    if ($opener->getChar() === $closer->getChar() && $opener->canOpen()) {
+                        break;
                     }
-
-                    $type = $useDelims === 1 ? InlineElement::TYPE_EMPH : InlineElement::TYPE_STRONG;
-
-                    if ($opener['numDelims'] == $useDelims) { // all openers used
-                        $this->pos += $useDelims;
-                        $inlines->set($opener['pos'], new InlineElement($type, array('c' => $inlines->slice($opener['pos'] + 1))));
-                        $inlines->splice($opener['pos'] + 1, $inlines->count() - ($opener['pos'] + 1));
-                        // Remove entries after this, to prevent overlapping nesting:
-                        $this->emphasisOpeners = $opener['previous'];
-
-                        return true;
-                    } elseif ($opener['numDelims'] > $useDelims) { // only some openers used
-                        $this->pos += $useDelims;
-                        $opener['numDelims'] -= $useDelims;
-                        /** @var InlineElement $thingToChange */
-                        $thingToChange = $inlines->get($opener['pos']);
-                        $thingToChange->setContents(substr($thingToChange->getContents(), 0, $opener['numDelims']));
-                        $inlines->set(
-                            $opener['pos'] + 1,
-                            new InlineElement($type, array('c' => $inlines->slice($opener['pos'] + 1)))
-                        );
-                        $inlines->splice($opener['pos'] + 2, $inlines->count() - ($opener['pos'] + 2));
-                        // Remove entries after this, to prevent overlapping nesting:
-                        $this->emphasisOpeners = $opener;
-
-                        return true;
-                    } else {
-                        throw new \LogicException('Logic error: usedelims > opener.numdelims');
-                    }
+                    $opener = $opener->getPrevious();
                 }
+                if ($opener !== null && $opener !== $stackBottom) {
+                    // Calculate actual number of delimiters used from this closer
+                    if ($closer->getNumDelims() < 3 || $opener->getNumDelims() < 3) {
+                        $useDelims = $closer->getNumDelims() <= $opener->getNumDelims()
+                            ? $closer->getNumDelims()
+                            : $opener->getNumDelims();
+                    } else {
+                        $useDelims = $closer->getNumDelims() % 2 === 0 ? 2 : 1;
+                    }
 
-                $opener = $opener['previous'];
+                    /** @var InlineElementInterface $openerInline */
+                    $openerInline = $inlines->get($opener->getPos());
+                    /** @var InlineElementInterface $closerInline */
+                    $closerInline = $inlines->get($closer->getPos());
+
+                    // Remove used delimiters from stack elts and inlines
+                    $opener->setNumDelims($opener->getNumDelims() - $useDelims);
+                    $closer->setNumDelims($closer->getNumDelims() - $useDelims);
+
+                    $openerInline->setAttribute('c', substr($openerInline->getAttribute('c'), 0, -$useDelims));
+                    $closerInline->setAttribute('c', substr($closerInline->getAttribute('c'), 0, -$useDelims));
+
+                    // Build contents for new emph element
+                    $start = $opener->getPos() + 1;
+                    $contents = $inlines->slice($start, $closer->getPos() - $start);
+                    $contents = array_filter($contents);
+
+                    $emph = $useDelims === 1 ? InlineCreator::createEmph($contents) : InlineCreator::createStrong($contents);
+
+                    // Insert into list of inlines
+                    $inlines->set($opener->getPos() + 1, $emph);
+                    for ($i = $opener->getPos() + 2; $i < $closer->getPos(); $i++) {
+                        $inlines->set($i, null);
+                    }
+
+                    // Remove elts btw opener and closer in delimiters stack
+                    $tempStack = $closer->getPrevious();
+                    while ($tempStack !== null && $tempStack !== $opener) {
+                        $nextStack = $tempStack->getPrevious();
+                        $this->removeDelimiter($tempStack);
+                        $tempStack = $nextStack;
+                    }
+
+                    // If opener has 0 delims, remove it and the inline
+                    if ($opener->getNumDelims() === 0) {
+                        $inlines->set($opener->getPos(), null);
+                        $this->removeDelimiter($opener);
+                    }
+
+                    if ($closer->getNumDelims() === 0) {
+                        $inlines->set($closer->getPos(), null);
+                        $tempStack = $closer->getNext();
+                        $this->removeDelimiter($closer);
+                        $closer = $tempStack;
+                    }
+                } else {
+                    $closer = $closer->getNext();
+                }
+            } else {
+                $closer = $closer->getNext();
             }
         }
 
-        // If we're here, we didn't match a closer
-        $this->pos += $numDelims;
-        $inlines->add(InlineCreator::createText(substr($this->subject, $startPos, $numDelims)));
+        // Remove gaps
+        $inlines->removeGaps();
 
-        if ($res['canOpen']) {
-            $this->emphasisOpeners = array(
-                'c' => $c,
-                'numDelims' => $numDelims,
-                'pos' => $inlines->count() - 1,
-                'previous' => $this->emphasisOpeners
-            );
+        // Remove all delimiters
+        while ($this->delimiters !== $stackBottom) {
+            $this->removeDelimiter($this->delimiters);
         }
-
-        return true;
     }
 
     /**
@@ -701,11 +757,12 @@ class InlineParser
         $this->subject = $s;
         $this->pos = 0;
         $this->refmap = $refMap;
-        $this->emphasisOpeners = null;
+        $this->delimiters = null;
         $inlines = new ArrayCollection();
         while ($this->parseInline($inlines)) {
             ;
         }
+        $this->processEmphasis($inlines, null);
 
         return $inlines;
     }
