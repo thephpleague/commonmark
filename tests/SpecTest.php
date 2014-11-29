@@ -72,7 +72,7 @@ class SpecTest extends \PHPUnit_Framework_TestCase
         $matches = array();
         // Normalize newlines for platform independence
         $data = preg_replace('/\r\n?/', "\n", $data);
-        $data = preg_replace('/^<!-- END TESTS -->(.|[\n])*/m', '', $data);
+        $data = preg_replace('/<!-- END TESTS -->.*$/', '', $data);
         preg_match_all('/^\.\n([\s\S]*?)^\.\n([\s\S]*?)^\.$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
 
         $examples = array();
