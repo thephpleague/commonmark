@@ -29,6 +29,24 @@ class Delimiter
     protected $index;
 
     /**
+     * @param string    $char
+     * @param int       $numDelims
+     * @param int       $pos
+     * @param bool      $canOpen
+     * @param bool      $canClose
+     * @param int|null  $index
+     */
+    public function __construct($char, $numDelims, $pos, $canOpen, $canClose, $index = null)
+    {
+        $this->char = $char;
+        $this->numDelims = $numDelims;
+        $this->pos = $pos;
+        $this->canOpen = $canOpen;
+        $this->canClose = $canClose;
+        $this->index = $index;
+    }
+
+    /**
      * @return boolean
      */
     public function canClose()
@@ -186,34 +204,5 @@ class Delimiter
         $this->previous = $previous;
 
         return $this;
-    }
-
-    /**
-     * @param string    $char
-     * @param int       $numDelims
-     * @param int       $pos
-     * @param bool      $canOpen
-     * @param bool      $canClose
-     * @param Delimiter $current
-     * @param int|null  $index
-     *
-     * @return Delimiter
-     */
-    public static function createNext($char, $numDelims, $pos, $canOpen, $canClose, Delimiter $current = null, $index = null)
-    {
-        $newDelimiter = new Delimiter();
-        $newDelimiter->char = $char;
-        $newDelimiter->numDelims = $numDelims;
-        $newDelimiter->pos = $pos;
-        $newDelimiter->previous = $current;
-        $newDelimiter->canOpen = $canOpen;
-        $newDelimiter->canClose = $canClose;
-        $newDelimiter->index = $index;
-
-        if ($current !== null) {
-            $current->next = $newDelimiter;
-        }
-
-        return $newDelimiter;
     }
 }

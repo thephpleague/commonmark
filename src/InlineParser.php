@@ -15,6 +15,7 @@
 namespace ColinODell\CommonMark;
 
 use ColinODell\CommonMark\Element\Delimiter;
+use ColinODell\CommonMark\Element\DelimiterStack;
 use ColinODell\CommonMark\Element\InlineCreator;
 use ColinODell\CommonMark\Element\InlineElementInterface;
 use ColinODell\CommonMark\Reference\Reference;
@@ -55,9 +56,9 @@ class InlineParser
     protected $regexHelper;
 
     /**
-     * @var Delimiter|null
+     * @var DelimiterStack
      */
-    protected $delimiters;
+    protected $delimiterStack;
 
     /**
      * Constrcutor
@@ -65,6 +66,7 @@ class InlineParser
     public function __construct()
     {
         $this->refmap = new ReferenceMap();
+        $this->delimiterStack = new DelimiterStack();
     }
 
     /**
@@ -290,32 +292,16 @@ class InlineParser
         );
 
         // Add entry to stack to this opener
-        $this->delimiters = Delimiter::createNext($c, $numDelims, $inlines->count() - 1, $res['canOpen'], $res['canClose'], $this->delimiters);
+        $delimiter = new Delimiter($c, $numDelims, $inlines->count() - 1, $res['canOpen'], $res['canClose']);
+        $this->delimiterStack->push($delimiter);
 
         return true;
-    }
-
-    protected function removeDelimiter(Delimiter $delimiter)
-    {
-        if ($delimiter->getPrevious() !== null) {
-            $delimiter->getPrevious()->setNext($delimiter->getNext());
-        }
-
-        if ($delimiter->getNext() === null) {
-            // top of stack
-            $this->delimiters = $delimiter->getPrevious();
-        } else {
-            $delimiter->getNext()->setPrevious($delimiter->getPrevious());
-        }
     }
 
     protected function processEmphasis(ArrayCollection $inlines, Delimiter $stackBottom = null)
     {
         // Find first closer above stackBottom
-        $closer = $this->delimiters;
-        while ($closer !== null && $closer->getPrevious() !== $stackBottom) {
-            $closer = $closer->getPrevious();
-        }
+        $closer = $this->delimiterStack->findEarliest($stackBottom);
 
         // Move forward, looking for closers, and handling each
         while ($closer !== null) {
@@ -367,20 +353,20 @@ class InlineParser
                     $tempStack = $closer->getPrevious();
                     while ($tempStack !== null && $tempStack !== $opener) {
                         $nextStack = $tempStack->getPrevious();
-                        $this->removeDelimiter($tempStack);
+                        $this->delimiterStack->removeDelimiter($tempStack);
                         $tempStack = $nextStack;
                     }
 
                     // If opener has 0 delims, remove it and the inline
                     if ($opener->getNumDelims() === 0) {
                         $inlines->set($opener->getPos(), null);
-                        $this->removeDelimiter($opener);
+                        $this->delimiterStack->removeDelimiter($opener);
                     }
 
                     if ($closer->getNumDelims() === 0) {
                         $inlines->set($closer->getPos(), null);
                         $tempStack = $closer->getNext();
-                        $this->removeDelimiter($closer);
+                        $this->delimiterStack->removeDelimiter($closer);
                         $closer = $tempStack;
                     }
                 } else {
@@ -395,9 +381,7 @@ class InlineParser
         $inlines->removeGaps();
 
         // Remove all delimiters
-        while ($this->delimiters && $this->delimiters !== $stackBottom) {
-            $this->removeDelimiter($this->delimiters);
-        }
+        $this->delimiterStack->removeAll($stackBottom);
     }
 
     /**
@@ -464,7 +448,8 @@ class InlineParser
         $inlines->add(InlineCreator::createText('['));
 
         // Add entry to stack for this opener
-        $this->delimiters = Delimiter::createNext('[', 1, $inlines->count() - 1, true, false, $this->delimiters, $startPos);
+        $delimiter = new Delimiter('[', 1, $inlines->count() - 1, true, false, $startPos);
+        $this->delimiterStack->push($delimiter);
 
         return true;
     }
@@ -485,7 +470,8 @@ class InlineParser
             $this->pos++;
             $inlines->add(InlineCreator::createText('!['));
             // Add entry to stack for this opener
-            $this->delimiters = Delimiter::createNext('!', 1, $inlines->count() - 1, true, false, $this->delimiters, $startPos + 1);
+            $delimiter = new Delimiter('!', 1, $inlines->count() - 1, true, false, $startPos + 1);
+            $this->delimiterStack->push($delimiter);
         } else {
             $inlines->add(InlineCreator::createText('!'));
         }
@@ -500,13 +486,7 @@ class InlineParser
         $startPos = $this->pos;
 
         // Look through stack of delimiters for a [ or !
-        $opener = $this->delimiters;
-        while ($opener !== null) {
-            if ($opener->getChar() === '[' || $opener->getChar() === '!') {
-                break;
-            }
-            $opener = $opener->getPrevious();
-        }
+        $opener = $this->delimiterStack->searchByCharacter(array('[', '!'));
 
         if ($opener === null) {
             // No matched opener, just return a literal
@@ -587,20 +567,7 @@ class InlineParser
             // Now, for a link, we also remove earlier link openers
             // (no links in links)
             if (!$isImage) {
-                $opener = $this->delimiters;
-                $closerAbove = null;
-                while ($opener !== null) {
-                    if ($opener->getChar() === '[') {
-                        if ($closerAbove) {
-                            $closerAbove->setPrevious($opener->getPrevious());
-                        } else {
-                            $this->delimiters = $opener->getPrevious();
-                        }
-                    } else {
-                        $closerAbove = $opener;
-                    }
-                    $opener = $opener->getPrevious();
-                }
+                $this->delimiterStack->removeEarlierMatches('[');
             }
 
             if ($isImage) {
@@ -611,7 +578,7 @@ class InlineParser
 
             return true;
         } else { // No match
-            $this->removeDelimiter($opener); // Remove this opener from stack
+            $this->delimiterStack->removeDelimiter($opener); // Remove this opener from stack
             $this->pos = $startPos;
             $inlines->add(InlineCreator::createText(']'));
 
@@ -748,6 +715,7 @@ class InlineParser
         $this->pos = 0;
         $this->refmap = $refMap;
         $this->delimiters = null;
+        $this->delimiterStack = new DelimiterStack();
         $inlines = new ArrayCollection();
         while ($this->parseInline($inlines)) {
             ;
