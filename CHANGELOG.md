@@ -5,6 +5,10 @@ This changelog references the changes contained in each release.
 
 * Pending changes
 
+ * Moved delimiter stack functionality into seperate class
+ * Fixed regex which caused HHVM tests to fail
+ * Added some missing copyright info
+
 * **0.3.0**
 
  * Made compatible with spec version 0.12
