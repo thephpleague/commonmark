@@ -174,10 +174,8 @@ class InlineParser
         if (isset($subject[$pos + 1]) && $subject[$pos + 1] === "\n") {
             $this->pos += 2;
             $inlines->add(InlineCreator::createHardbreak());
-        } elseif (isset($subject[$pos + 1]) && preg_match(
-                '/' . RegexHelper::REGEX_ESCAPABLE . '/',
-                $subject[$pos + 1]
-            )
+        } elseif (isset($subject[$pos + 1]) &&
+            preg_match('/' . RegexHelper::REGEX_ESCAPABLE . '/', $subject[$pos + 1])
         ) {
             $this->pos += 2;
             $inlines->add(InlineCreator::createText($subject[$pos + 1]));
@@ -293,7 +291,7 @@ class InlineParser
         );
 
         // Add entry to stack to this opener
-        $this->delimiters = Delimiter::createNext($this->delimiters, $c, $numDelims, $inlines->count() - 1, $res['canOpen'], $res['canClose']);
+        $this->delimiters = Delimiter::createNext($c, $numDelims, $inlines->count() - 1, $res['canOpen'], $res['canClose'], $this->delimiters);
 
         return true;
     }
@@ -485,7 +483,7 @@ class InlineParser
         $inlines->add(InlineCreator::createText('['));
 
         // Add entry to stack for this opener
-        $this->delimiters = Delimiter::createNext($this->delimiters, '[', 1, $inlines->count() - 1, true, false, $startPos);
+        $this->delimiters = Delimiter::createNext('[', 1, $inlines->count() - 1, true, false, $this->delimiters, $startPos);
 
         return true;
     }
@@ -506,7 +504,7 @@ class InlineParser
             $this->pos++;
             $inlines->add(InlineCreator::createText('!['));
             // Add entry to stack for this opener
-            $this->delimiters = Delimiter::createNext($this->delimiters, '!', 1, $inlines->count() - 1, true, false, $startPos + 1);
+            $this->delimiters = Delimiter::createNext('!', 1, $inlines->count() - 1, true, false, $this->delimiters, $startPos + 1);
         } else {
             $inlines->add(InlineCreator::createText('!'));
         }

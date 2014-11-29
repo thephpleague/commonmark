@@ -188,7 +188,7 @@ class Delimiter
         return $this;
     }
 
-    public static function createNext(Delimiter $current = null, $char, $numDelims, $pos, $canOpen, $canClose, $index = null)
+    public static function createNext($char, $numDelims, $pos, $canOpen, $canClose, Delimiter $current = null, $index = null)
     {
         $newDelimiter = new Delimiter();
         $newDelimiter->char = $char;

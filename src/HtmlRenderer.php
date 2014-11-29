@@ -200,6 +200,7 @@ class HtmlRenderer
                         $this->options['innerSeparator'] . $filling . $this->options['innerSeparator']
                     );
                 }
+                break;
             case BlockElement::TYPE_LIST_ITEM:
                 return trim($this->inTags('li', array(), $this->renderBlocks($block->getChildren(), $inTightList)));
             case BlockElement::TYPE_LIST:
@@ -286,4 +287,3 @@ class HtmlRenderer
         return $this->renderBlock($block, $inTightList);
     }
 }
-

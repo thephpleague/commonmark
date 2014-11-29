@@ -404,10 +404,10 @@ class DocParser
                 $offset = $firstNonSpace + $fenceLength;
                 break;
             } elseif (Util\RegexHelper::matchAt(
-                    RegexHelper::getInstance()->getHtmlBlockOpenRegex(),
-                    $ln,
-                    $firstNonSpace
-                ) !== null
+                RegexHelper::getInstance()->getHtmlBlockOpenRegex(),
+                $ln,
+                $firstNonSpace
+            ) !== null
             ) {
                 // html block
                 $closeUnmatchedBlocks($this);
@@ -535,8 +535,8 @@ class DocParser
                         $this->addLine($ln, $firstNonSpace);
                     } elseif ($blank) {
                         // do nothing
-                    } elseif ($container->getType() != BlockElement::TYPE_HORIZONTAL_RULE && $container->getType(
-                        ) != BlockElement::TYPE_HEADER
+                    } elseif ($container->getType() != BlockElement::TYPE_HORIZONTAL_RULE &&
+                        $container->getType() != BlockElement::TYPE_HEADER
                     ) {
                         // create paragraph container for line
                         $container = $this->addChild(BlockElement::TYPE_PARAGRAPH, $lineNumber, $firstNonSpace);
@@ -596,7 +596,8 @@ class DocParser
      *
      * @return BlockElement
      */
-    protected function processInlines(BlockElement $block) {
+    protected function processInlines(BlockElement $block)
+    {
         $newBlock = new BlockElement($block->getType(), $block->getStartLine(), $block->getEndLine());
 
         switch ($block->getType()) {
