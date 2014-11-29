@@ -2276,7 +2276,7 @@ class Html5Entities
     }
 
     /**
-     * @param $string $hexChars
+     * @param string $hexChars
      *
      * @return string
      */
