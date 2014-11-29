@@ -109,4 +109,40 @@ class DelimiterStack
 
         return $opener;
     }
+
+    /**
+     * @param string|string[] $characters
+     * @param callable $callback
+     * @param Delimiter $stackBottom
+     */
+    public function iterateByCharacters($characters, $callback, Delimiter $stackBottom = null)
+    {
+        if (!is_array($characters)) {
+            $characters = array($characters);
+        }
+
+        // Find first closer above stackBottom
+        $closer = $this->findEarliest($stackBottom);
+
+        while ($closer !== null) {
+            if ($closer->canClose() && (in_array($closer->getChar(), $characters))) {
+                // Found emphasis closer. Now look back for first matching opener:
+                $opener = $closer->getPrevious();
+                while ($opener !== null && $opener !== $stackBottom) {
+                    if ($opener->getChar() === $closer->getChar() && $opener->canOpen()) {
+                        break;
+                    }
+                    $opener = $opener->getPrevious();
+                }
+
+                if ($opener !== null && $opener !== $stackBottom) {
+                    $closer = $callback($opener, $closer, $this);
+                } else {
+                    $closer = $closer->getNext();
+                }
+            } else {
+                $closer = $closer->getNext();
+            }
+        }
+    }
 }
