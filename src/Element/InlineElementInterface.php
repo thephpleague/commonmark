@@ -17,7 +17,7 @@ namespace ColinODell\CommonMark\Element;
 interface InlineElementInterface
 {
     /**
-     * @return $string
+     * @return string
      */
     public function getType();
 

@@ -331,16 +331,17 @@ class DocParser
             $lineNumber,
             &$closeUnmatchedBlocksAlreadyDone
         ) {
+            $tip = $oldTip;
             // finalize any blocks not matched
-            while (!$closeUnmatchedBlocksAlreadyDone && $oldTip != $lastMatchedContainer && $oldTip !== null) {
-                $self->finalize($oldTip, $lineNumber);
-                $oldTip = $oldTip->getParent();
+            while (!$closeUnmatchedBlocksAlreadyDone && $tip != $lastMatchedContainer && $tip !== null) {
+                $self->finalize($tip, $lineNumber);
+                $tip = $tip->getParent();
             }
             $closeUnmatchedBlocksAlreadyDone = true;
         };
 
         // Check to see if we've hit 2nd blank line; if so break out of list:
-        if ($blank && $container->isLastLineBlank()) {
+        if ($blank && $container && $container->isLastLineBlank()) {
             $this->breakOutOfLists($container, $lineNumber);
         }
 
@@ -476,7 +477,7 @@ class DocParser
             $this->tip->getStrings()->count() > 0
         ) {
             // lazy paragraph continuation
-            $this->lastLineBlank = false;
+            $this->tip->setLastLineBlank(false);
             $this->addLine($ln, $offset);
         } else { // not a lazy continuation
             //finalize any blocks not matched
@@ -517,7 +518,7 @@ class DocParser
                         $ln[$firstNonSpace] == $container->getExtra('fence_char') &&
                         $match = Util\RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $ln, $firstNonSpace)
                     );
-                    if ($test && strlen($match[0]) >= $container->getExtra('fence_length')) {
+                    if ($test && $container && strlen($match[0]) >= $container->getExtra('fence_length')) {
                         // don't add closing fence to container; instead, close it:
                         $this->finalize($container, $lineNumber);
                     } else {
@@ -539,7 +540,7 @@ class DocParser
                         $container->getType() != BlockElement::TYPE_HEADER
                     ) {
                         // create paragraph container for line
-                        $container = $this->addChild(BlockElement::TYPE_PARAGRAPH, $lineNumber, $firstNonSpace);
+                        $this->addChild(BlockElement::TYPE_PARAGRAPH, $lineNumber, $firstNonSpace);
                         $this->addLine($ln, $firstNonSpace);
                     }
             }
