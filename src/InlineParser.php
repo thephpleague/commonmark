@@ -15,14 +15,13 @@
 namespace ColinODell\CommonMark;
 
 use ColinODell\CommonMark\Element\Delimiter;
-use ColinODell\CommonMark\Element\InlineElement;
-use ColinODell\CommonMark\Element\InlineElementInterface;
 use ColinODell\CommonMark\Element\InlineCreator;
+use ColinODell\CommonMark\Element\InlineElementInterface;
 use ColinODell\CommonMark\Reference\Reference;
 use ColinODell\CommonMark\Reference\ReferenceMap;
+use ColinODell\CommonMark\Util\ArrayCollection;
 use ColinODell\CommonMark\Util\Html5Entities;
 use ColinODell\CommonMark\Util\RegexHelper;
-use ColinODell\CommonMark\Util\ArrayCollection;
 use ColinODell\CommonMark\Util\UrlEncoder;
 
 /**

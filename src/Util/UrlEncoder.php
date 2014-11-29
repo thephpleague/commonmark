@@ -27,6 +27,11 @@ class UrlEncoder
         '%7E' => '~'
     );
 
+    /**
+     * @param string $uri
+     *
+     * @return string
+     */
     public static function unescapeAndEncode($uri)
     {
         $decoded = html_entity_decode($uri);

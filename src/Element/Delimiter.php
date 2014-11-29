@@ -188,6 +188,17 @@ class Delimiter
         return $this;
     }
 
+    /**
+     * @param string    $char
+     * @param int       $numDelims
+     * @param int       $pos
+     * @param bool      $canOpen
+     * @param bool      $canClose
+     * @param Delimiter $current
+     * @param int|null  $index
+     *
+     * @return Delimiter
+     */
     public static function createNext($char, $numDelims, $pos, $canOpen, $canClose, Delimiter $current = null, $index = null)
     {
         $newDelimiter = new Delimiter();

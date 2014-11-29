@@ -16,8 +16,8 @@ namespace ColinODell\CommonMark\Element;
 
 use ColinODell\CommonMark\InlineParser;
 use ColinODell\CommonMark\Reference\ReferenceMap;
-use ColinODell\CommonMark\Util\RegexHelper;
 use ColinODell\CommonMark\Util\ArrayCollection;
+use ColinODell\CommonMark\Util\RegexHelper;
 
 /**
  * Block-level element
@@ -124,7 +124,7 @@ class BlockElement
     /**
      * Returns true if parent block can contain child block
      *
-     * @param mixed $childType The type of child block to add (see TYPE_ constants)
+     * @param string $childType The type of child block to add (see TYPE_ constants)
      *
      * @return bool
      */
@@ -185,7 +185,7 @@ class BlockElement
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getType()
     {
@@ -193,7 +193,7 @@ class BlockElement
     }
 
     /**
-     * @param mixed $type
+     * @param string $type
      *
      * @return $this
      */

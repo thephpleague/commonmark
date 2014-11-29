@@ -2230,6 +2230,11 @@ class Html5Entities
         'zwnj' => '‌'
     );
 
+    /**
+     * @param string $entity
+     *
+     * @return string
+     */
     public static function decodeEntity($entity)
     {
         if (substr($entity, -1) !== ';') {
@@ -2252,6 +2257,11 @@ class Html5Entities
         return $entity;
     }
 
+    /**
+     * @param mixed $number
+     *
+     * @return string
+     */
     public static function fromDecimal($number)
     {
         $entity = '&#' . $number . ';';
@@ -2265,6 +2275,11 @@ class Html5Entities
         return $converted;
     }
 
+    /**
+     * @param $string $hexChars
+     *
+     * @return string
+     */
     public static function fromHex($hexChars)
     {
         return self::fromDecimal(hexdec($hexChars));
