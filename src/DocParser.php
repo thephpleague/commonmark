@@ -499,6 +499,7 @@ class DocParser
                 $blank &&
                 !(
                     $container->getType() == BlockElement::TYPE_BLOCK_QUOTE ||
+                    $container->getType() == BlockElement::TYPE_HEADER ||
                     $container->getType() == BlockElement::TYPE_FENCED_CODE ||
                     ($container->getType() == BlockElement::TYPE_LIST_ITEM &&
                         $container->getChildren()->count() === 0 &&
