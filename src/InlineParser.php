@@ -700,7 +700,6 @@ class InlineParser
         $this->subject = $s;
         $this->pos = 0;
         $this->refmap = $refMap;
-        $this->delimiters = null;
         $this->delimiterStack = new DelimiterStack();
         $inlines = new ArrayCollection();
         while ($this->parseInline($inlines)) {
