@@ -13,12 +13,11 @@ matrix:
 
 before_script:
   - composer self-update
-  - composer require --no-update satooshi/php-coveralls:dev-master
   - composer update --no-interaction --prefer-source --dev
 
 script:
-  - mkdir -p build/logs
-  - ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+  - phpunit --coverage-clover=coverage.clover
 
-after_success:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi;'
