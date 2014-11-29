@@ -324,13 +324,12 @@ class DocParser
         // have a lazy paragraph continuation, in which case we don't
         // want to close unmatched blocks.  So we store this closure for
         // use later, when we have more information.
-        $closeUnmatchedBlocksAlreadyDone = false;
         $closeUnmatchedBlocks = function (DocParser $self) use (
             $oldTip,
             $lastMatchedContainer,
-            $lineNumber,
-            &$closeUnmatchedBlocksAlreadyDone
+            $lineNumber
         ) {
+            static $closeUnmatchedBlocksAlreadyDone = false;
             $tip = $oldTip;
             // finalize any blocks not matched
             while (!$closeUnmatchedBlocksAlreadyDone && $tip != $lastMatchedContainer && $tip !== null) {
