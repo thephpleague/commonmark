@@ -32,7 +32,7 @@ class InlineCreator
     }
 
     /**
-     * @param string $contents
+     * @param string|array $contents
      *
      * @return InlineElement
      */
@@ -134,7 +134,7 @@ class InlineCreator
     }
 
     /**
-     * @param string $contents
+     * @param string|array $contents
      *
      * @return InlineElement
      */

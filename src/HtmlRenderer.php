@@ -153,7 +153,7 @@ class HtmlRenderer
     }
 
     /**
-     * @param InlineElement[] $inlines
+     * @param InlineElementInterface[] $inlines
      *
      * @return string
      */
@@ -188,7 +188,6 @@ class HtmlRenderer
                 } else {
                     return $this->inTags('p', array(), $this->renderInlines($block->getInlineContent()));
                 }
-                break;
             case BlockElement::TYPE_BLOCK_QUOTE:
                 $filling = $this->renderBlocks($block->getChildren());
                 if ($filling === '') {
@@ -200,7 +199,6 @@ class HtmlRenderer
                         $this->options['innerSeparator'] . $filling . $this->options['innerSeparator']
                     );
                 }
-                break;
             case BlockElement::TYPE_LIST_ITEM:
                 return trim($this->inTags('li', array(), $this->renderBlocks($block->getChildren(), $inTightList)));
             case BlockElement::TYPE_LIST:

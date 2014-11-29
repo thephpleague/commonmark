@@ -396,7 +396,7 @@ class InlineParser
         $inlines->removeGaps();
 
         // Remove all delimiters
-        while ($this->delimiters !== $stackBottom) {
+        while ($this->delimiters && $this->delimiters !== $stackBottom) {
             $this->removeDelimiter($this->delimiters);
         }
     }
@@ -450,24 +450,6 @@ class InlineParser
         $match = $this->match('/^\[(?:[^\\\\\[\]]|\\\\[\[\]]){0,750}\]/');
 
         return $match === null ? 0 : strlen($match);
-    }
-
-    /**
-     * Parse raw link label, including surrounding [], and return
-     * inline contents.
-     *
-     * @param string $s
-     *
-     * @return ArrayCollection|InlineElementInterface[] Inline contents
-     */
-    private function parseRawLabel($s)
-    {
-        // note:  parse without a refmap; we don't want links to resolve
-        // in nested brackets!
-        $parser = new self();
-        $substring = substr($s, 1, strlen($s) - 2);
-
-        return $parser->parse($substring, new ReferenceMap());
     }
 
     /**
@@ -710,8 +692,6 @@ class InlineParser
         if ($c === null) {
             return false;
         }
-
-        $res = null;
 
         switch ($c) {
             case "\n":

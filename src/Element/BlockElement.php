@@ -86,7 +86,7 @@ class BlockElement
     protected $stringContent = '';
 
     /**
-     * @var string[]
+     * @var ArrayCollection|string[]
      */
     protected $strings;
 
