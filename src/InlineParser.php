@@ -550,7 +550,9 @@ class InlineParser
 
             // Remove the part of inlines that become link_text
             // See noter above on why we need to do this instead of splice:
-            for ($i = $opener->getPos(); $i < $inlines->count(); $i++) {
+            $start = $opener->getPos();
+            $limit =$inlines->count();
+            for ($i = $start; $i < $limit; $i++) {
                 $inlines->set($i, null);
             }
 
