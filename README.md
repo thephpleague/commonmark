@@ -1,11 +1,11 @@
 # commonmark-php
 
-[![Latest Version](https://img.shields.io/packagist/v/colinodell/commonmark-php.svg?style=flat-square)](https://packagist.org/packages/colinodell/commonmark-php)
+[![Latest Version](https://img.shields.io/packagist/v/league/markdown.svg?style=flat-square)](https://packagist.org/packages/league/markdown)
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/colinodell/commonmark-php/master.svg?style=flat-square)](https://travis-ci.org/colinodell/commonmark-php)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/colinodell/commonmark-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/colinodell/commonmark-php/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/colinodell/commonmark-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/colinodell/commonmark-php)
-[![Total Downloads](https://img.shields.io/packagist/dt/colinodell/commonmark-php.svg?style=flat-square)](https://packagist.org/packages/colinodell/commonmark-php)
+[![Build Status](https://img.shields.io/travis/league/markdown/master.svg?style=flat-square)](https://travis-ci.org/league/markdown)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/league/markdown.svg?style=flat-square)](https://scrutinizer-ci.com/g/league/markdown/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/league/markdown.svg?style=flat-square)](https://scrutinizer-ci.com/g/league/markdown)
+[![Total Downloads](https://img.shields.io/packagist/dt/league/markdown.svg?style=flat-square)](https://packagist.org/league/markdown)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b/big.png)](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b)
 
@@ -16,7 +16,7 @@
 This project can be installed via [Composer]:
 
 ``` bash
-$ composer require colinodell/commonmark-php
+$ composer require league/markdown
 ```
 
 ## Usage
