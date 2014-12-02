@@ -334,7 +334,9 @@ class InlineParser
 
             // Insert into list of inlines
             $inlines->set($opener->getPos() + 1, $emph);
-            for ($i = $opener->getPos() + 2; $i < $closer->getPos(); $i++) {
+            $start = $opener->getPos() + 2;
+            $limit = $closer->getPos();
+            for ($i = $start; $i < $limit; $i++) {
                 $inlines->set($i, null);
             }
 
