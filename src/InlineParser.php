@@ -182,7 +182,7 @@ class InlineParser
             $this->pos += 2;
             $inlines->add(InlineCreator::createText($subject[$pos + 1]));
         } else {
-            $this->pos++;
+            ++$this->pos;
             $inlines->add(InlineCreator::createText('\\'));
         }
 
@@ -211,9 +211,9 @@ class InlineParser
             $inlines->add(InlineCreator::createLink(UrlEncoder::unescapeAndEncode($dest), $dest));
 
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
 
     /**
@@ -252,8 +252,8 @@ class InlineParser
         $charBefore = $this->pos === 0 ? "\n" : $this->subject[$this->pos - 1];
 
         while ($this->peek() === $char) {
-            $numDelims++;
-            $this->pos++;
+            ++$numDelims;
+            ++$this->pos;
         }
 
         $charAfter = $this->peek() ? : "\n";
@@ -435,7 +435,7 @@ class InlineParser
     protected function parseOpenBracket(ArrayCollection $inlines)
     {
         $startPos = $this->pos;
-        $this->pos++;
+        ++$this->pos;
         $inlines->add(InlineCreator::createText('['));
 
         // Add entry to stack for this opener
@@ -456,9 +456,9 @@ class InlineParser
     protected function parseBang(ArrayCollection $inlines)
     {
         $startPos = $this->pos;
-        $this->pos++;
+        ++$this->pos;
         if ($this->peek() === '[') {
-            $this->pos++;
+            ++$this->pos;
             $inlines->add(InlineCreator::createText('!['));
             // Add entry to stack for this opener
             $delimiter = new Delimiter('!', 1, $inlines->count() - 1, true, false, $startPos + 1);
@@ -473,8 +473,7 @@ class InlineParser
     protected function parseCloseBracket(ArrayCollection $inlines)
     {
         $matched = false;
-        $this->pos++;
-        $startPos = $this->pos;
+        $startPos = ++$this->pos;
 
         // Look through stack of delimiters for a [ or !
         $opener = $this->delimiterStack->searchByCharacter(array('[', '!'));
@@ -503,7 +502,7 @@ class InlineParser
 
         // Inline link?
         if ($this->peek() == '(') {
-            $this->pos++;
+            ++$this->pos;
             if ($this->spnl() &&
                 (($dest = $this->parseLinkDestination()) !== null) &&
                 $this->spnl()
@@ -688,7 +687,7 @@ class InlineParser
         }
 
         if (!$res) {
-            $this->pos++;
+            ++$this->pos;
             $inlines->add(InlineCreator::createText($c));
         }
 
@@ -752,7 +751,7 @@ class InlineParser
 
         // colon
         if ($this->peek() === ':') {
-            $this->pos++;
+            ++$this->pos;
         } else {
             $this->pos = $startPos;
 

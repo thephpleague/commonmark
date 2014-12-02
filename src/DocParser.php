@@ -51,7 +51,7 @@ class DocParser
      *
      * @return string
      */
-    protected static function detabLine($string)
+    protected function detabLine($string)
     {
         if (strpos($string, "\t") === false) {
             return $string;
@@ -62,8 +62,7 @@ class DocParser
         // Add each part to the resulting line
         // The first one is done here; others are prefixed
         // with the necessary spaces inside the loop below
-        $line = $parts[0];
-        unset($parts[0]);
+        $line = array_shift($parts);
 
         foreach ($parts as $part) {
             // Calculate number of spaces; insert them followed by the non-tab contents
@@ -162,12 +161,12 @@ class DocParser
             return null;
         }
 
-        if ($matches = Util\RegexHelper::matchAll('/^[*+-]( +|$)/', $rest)) {
+        if ($matches = RegexHelper::matchAll('/^[*+-]( +|$)/', $rest)) {
             $spacesAfterMarker = strlen($matches[1]);
             $data['type'] = BlockElement::LIST_TYPE_UNORDERED;
             $data['delimiter'] = null;
             $data['bullet_char'] = $matches[0][0];
-        } elseif ($matches = Util\RegexHelper::matchAll('/^(\d+)([.)])( +|$)/', $rest)) {
+        } elseif ($matches = RegexHelper::matchAll('/^(\d+)([.)])( +|$)/', $rest)) {
             $spacesAfterMarker = strlen($matches[3]);
             $data['type'] = BlockElement::LIST_TYPE_ORDERED;
             $data['start'] = intval($matches[1]);
@@ -177,17 +176,27 @@ class DocParser
             return null;
         }
 
-        $blankItem = strlen($matches[0]) === strlen($rest);
-        if ($spacesAfterMarker >= 5 ||
-            $spacesAfterMarker < 1 ||
-            $blankItem
-        ) {
-            $data['padding'] = strlen($matches[0]) - $spacesAfterMarker + 1;
-        } else {
-            $data['padding'] = strlen($matches[0]);
-        }
+        $data['padding'] = $this->calculateListMarkerPadding($matches[0], $spacesAfterMarker, $rest);
 
         return $data;
+    }
+
+    /**
+     * @param string $marker
+     * @param integer $spacesAfterMarker
+     * @param string $rest
+     *
+     * @return integer
+     */
+    public function calculateListMarkerPadding($marker, $spacesAfterMarker, $rest)
+    {
+        $isBlankItem = strlen($marker) === strlen($rest);
+
+        if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $isBlankItem) {
+            return strlen($marker) - $spacesAfterMarker + 1;
+        }
+
+        return strlen($marker);
     }
 
     /**
@@ -216,7 +225,7 @@ class DocParser
         $oldTip = $this->tip;
 
         // Convert tabs to spaces:
-        $ln = self::detabLine($ln);
+        $ln = $this->detabLine($ln);
 
         // For each containing block, try to parse the associated line start.
         // Bail out on failure: container will point to the last matching block.
@@ -230,7 +239,7 @@ class DocParser
 
             $container = $lastChild;
 
-            $match = Util\RegexHelper::matchAt('/[^ ]/', $ln, $offset);
+            $match = RegexHelper::matchAt('/[^ ]/', $ln, $offset);
             if ($match === null) {
                 $firstNonSpace = strlen($ln);
                 $blank = true;
@@ -246,7 +255,7 @@ class DocParser
                     if ($indent <= 3 && isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>') {
                         $offset = $firstNonSpace + 1;
                         if (isset($ln[$offset]) && $ln[$offset] === ' ') {
-                            $offset++;
+                            ++$offset;
                         }
                     } else {
                         $allMatched = false;
@@ -266,8 +275,8 @@ class DocParser
                     break;
 
                 case BlockElement::TYPE_INDENTED_CODE:
-                    if ($indent >= self::CODE_INDENT) {
-                        $offset += self::CODE_INDENT;
+                    if ($indent >= static::CODE_INDENT) {
+                        $offset += static::CODE_INDENT;
                     } elseif ($blank) {
                         $offset = $firstNonSpace;
                     } else {
@@ -288,8 +297,8 @@ class DocParser
                     // skip optional spaces of fence offset
                     $i = $container->getExtra('fence_offset');
                     while ($i > 0 && $ln[$offset] === ' ') {
-                        $offset++;
-                        $i--;
+                        ++$offset;
+                        --$i;
                     }
                     break;
 
@@ -352,7 +361,7 @@ class DocParser
             // this is a little performance optimization
             RegexHelper::matchAt('/^[ #`~*+_=<>0-9-]/', $ln, $offset) !== null
         ) {
-            $match = Util\RegexHelper::matchAt('/[^ ]/', $ln, $offset);
+            $match = RegexHelper::matchAt('/[^ ]/', $ln, $offset);
             if ($match === null) {
                 $firstNonSpace = strlen($ln);
                 $blank = true;
@@ -363,10 +372,10 @@ class DocParser
 
             $indent = $firstNonSpace - $offset;
 
-            if ($indent >= self::CODE_INDENT) {
+            if ($indent >= static::CODE_INDENT) {
                 // indented code
                 if ($this->tip->getType() != BlockElement::TYPE_PARAGRAPH && !$blank) {
-                    $offset += self::CODE_INDENT;
+                    $offset += static::CODE_INDENT;
                     $closeUnmatchedBlocks($this);
                     $container = $this->addChild(BlockElement::TYPE_INDENTED_CODE, $lineNumber, $offset);
                 } else { // ident > 4 in a lazy paragraph continuation
@@ -377,11 +386,11 @@ class DocParser
                 $offset = $firstNonSpace + 1;
                 // optional following space
                 if (isset($ln[$offset]) && $ln[$offset] === ' ') {
-                    $offset++;
+                    ++$offset;
                 }
                 $closeUnmatchedBlocks($this);
                 $container = $this->addChild(BlockElement::TYPE_BLOCK_QUOTE, $lineNumber, $offset);
-            } elseif ($match = Util\RegexHelper::matchAll('/^#{1,6}(?: +|$)/', $ln, $firstNonSpace)) {
+            } elseif ($match = RegexHelper::matchAll('/^#{1,6}(?: +|$)/', $ln, $firstNonSpace)) {
                 // ATX header
                 $offset = $firstNonSpace + strlen($match[0]);
                 $closeUnmatchedBlocks($this);
@@ -393,7 +402,7 @@ class DocParser
                 $str = preg_replace('/ +#+ *$/', '', $str);
                 $container->getStrings()->add($str);
                 break;
-            } elseif ($match = Util\RegexHelper::matchAll('/^`{3,}(?!.*`)|^~{3,}(?!.*~)/', $ln, $firstNonSpace)) {
+            } elseif ($match = RegexHelper::matchAll('/^`{3,}(?!.*`)|^~{3,}(?!.*~)/', $ln, $firstNonSpace)) {
                 // fenced code block
                 $fenceLength = strlen($match[0]);
                 $closeUnmatchedBlocks($this);
@@ -403,7 +412,7 @@ class DocParser
                 $container->setExtra('fence_offset', $firstNonSpace - $offset);
                 $offset = $firstNonSpace + $fenceLength;
                 break;
-            } elseif (Util\RegexHelper::matchAt(
+            } elseif (RegexHelper::matchAt(
                 RegexHelper::getInstance()->getHtmlBlockOpenRegex(),
                 $ln,
                 $firstNonSpace
@@ -416,7 +425,7 @@ class DocParser
                 break;
             } elseif ($container->getType() === BlockElement::TYPE_PARAGRAPH &&
                 $container->getStrings()->count() === 1 &&
-                ($match = Util\RegexHelper::matchAll('/^(?:=+|-+) *$/', $ln, $firstNonSpace))
+                ($match = RegexHelper::matchAll('/^(?:=+|-+) *$/', $ln, $firstNonSpace))
             ) {
                 // setext header line
                 $closeUnmatchedBlocks($this);
@@ -458,7 +467,7 @@ class DocParser
 
         // What remains at the offset is a text line.  Add the text to the appropriate container.
 
-        $match = Util\RegexHelper::matchAt('/[^ ]/', $ln, $offset);
+        $match = RegexHelper::matchAt('/[^ ]/', $ln, $offset);
         if ($match === null) {
             $firstNonSpace = strlen($ln);
             $blank = true;
@@ -515,7 +524,7 @@ class DocParser
                     $test = ($indent <= 3 &&
                         isset($ln[$firstNonSpace]) &&
                         $ln[$firstNonSpace] == $container->getExtra('fence_char') &&
-                        $match = Util\RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $ln, $firstNonSpace)
+                        $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $ln, $firstNonSpace)
                     );
                     if ($test && $container && strlen($match[0]) >= $container->getExtra('fence_length')) {
                         // don't add closing fence to container; instead, close it:
