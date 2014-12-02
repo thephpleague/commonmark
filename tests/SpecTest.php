@@ -12,10 +12,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark\Tests;
+namespace League\Markdown\Tests;
 
-use ColinODell\CommonMark\DocParser;
-use ColinODell\CommonMark\HtmlRenderer;
+use League\Markdown\DocParser;
+use League\Markdown\HtmlRenderer;
 
 /**
  * Tests the parser against the CommonMark spec

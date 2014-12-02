@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark\Tests\Util;
+namespace League\Markdown\Tests\Util;
 
-use ColinODell\CommonMark\Util\RegexHelper;
+use League\Markdown\Util\RegexHelper;
 
 /**
  * Tests the different regular expressions

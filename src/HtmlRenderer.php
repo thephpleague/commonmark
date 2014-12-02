@@ -12,11 +12,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark;
+namespace League\Markdown;
 
-use ColinODell\CommonMark\Element\BlockElement;
-use ColinODell\CommonMark\Element\InlineElement;
-use ColinODell\CommonMark\Element\InlineElementInterface;
+use League\Markdown\Element\BlockElement;
+use League\Markdown\Element\InlineElement;
+use League\Markdown\Element\InlineElementInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 

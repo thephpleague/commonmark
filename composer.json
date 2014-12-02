@@ -38,8 +38,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "ColinODell\\CommonMark\\": "src/",
-            "ColinODell\\CommonMark\\Tests\\": "tests/"
+            "League\\Markdown\\": "src/",
+            "League\\Markdown\\Tests\\": "tests/"
         }
     }
 }

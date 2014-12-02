@@ -1,6 +1,6 @@
 <?php
 
-namespace ColinODell\CommonMark\Util;
+namespace League\Markdown\Util;
 
 class Html5Entities
 {

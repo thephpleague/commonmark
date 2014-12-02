@@ -12,12 +12,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark\Element;
+namespace League\Markdown\Element;
 
-use ColinODell\CommonMark\InlineParser;
-use ColinODell\CommonMark\Reference\ReferenceMap;
-use ColinODell\CommonMark\Util\ArrayCollection;
-use ColinODell\CommonMark\Util\RegexHelper;
+use League\Markdown\InlineParser;
+use League\Markdown\Reference\ReferenceMap;
+use League\Markdown\Util\ArrayCollection;
+use League\Markdown\Util\RegexHelper;
 
 /**
  * Block-level element

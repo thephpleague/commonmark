@@ -12,7 +12,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark\Util;
+namespace League\Markdown\Util;
 
 /**
  * Provides regular expressions and utilties for parsing Markdown

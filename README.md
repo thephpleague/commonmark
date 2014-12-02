@@ -24,7 +24,7 @@ $ composer require colinodell/commonmark-php
 The `CommonMark` class provides a simple wrapper for converting CommonMark to HTML:
 
 ```php
-use ColinODell\CommonMark\CommonMarkConverter;
+use League\Markdown\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
 echo $converter->convertToHtml('# Hello World!');
@@ -40,8 +40,8 @@ The actual conversion process requires two steps:
 You can do this yourself if you wish:
 
 ```php
-use ColinODell\CommonMark\DocParser;
-use ColinODell\CommonMark\HtmlRenderer;
+use League\Markdown\DocParser;
+use League\Markdown\HtmlRenderer;
 
 $parser = new DocParser();
 $htmlRenderer = new HtmlRenderer();

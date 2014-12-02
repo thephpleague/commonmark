@@ -12,9 +12,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark\Element;
+namespace League\Markdown\Element;
 
-use ColinODell\CommonMark\Util\ArrayCollection;
+use League\Markdown\Util\ArrayCollection;
 
 /**
  * Provides static methods to simplify and standardize the creation of inline elements

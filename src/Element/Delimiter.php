@@ -12,7 +12,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark\Element;
+namespace League\Markdown\Element;
 
 class Delimiter
 {

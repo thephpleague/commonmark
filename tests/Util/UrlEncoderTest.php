@@ -1,8 +1,8 @@
 <?php
 
-namespace ColinODell\CommonMark\Tests\Util;
+namespace League\Markdown\Tests\Util;
 
-use ColinODell\CommonMark\Util\UrlEncoder;
+use League\Markdown\Util\UrlEncoder;
 
 class UrlEncoderTest extends \PHPUnit_Framework_TestCase
 {

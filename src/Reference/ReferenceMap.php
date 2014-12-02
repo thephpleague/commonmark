@@ -12,7 +12,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark\Reference;
+namespace League\Markdown\Reference;
 
 /**
  * A collection of references, indexed by label

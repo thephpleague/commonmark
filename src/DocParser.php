@@ -12,11 +12,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark;
+namespace League\Markdown;
 
-use ColinODell\CommonMark\Element\BlockElement;
-use ColinODell\CommonMark\Reference\ReferenceMap;
-use ColinODell\CommonMark\Util\RegexHelper;
+use League\Markdown\Element\BlockElement;
+use League\Markdown\Reference\ReferenceMap;
+use League\Markdown\Util\RegexHelper;
 
 /**
  * Parses Markdown into an AST

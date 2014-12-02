@@ -12,7 +12,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark;
+namespace League\Markdown;
 
 /**
  * Converts CommonMark-compatible Markdown to HTML

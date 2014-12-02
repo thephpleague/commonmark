@@ -12,18 +12,18 @@
  * file that was distributed with this source code.
  */
 
-namespace ColinODell\CommonMark;
+namespace League\Markdown;
 
-use ColinODell\CommonMark\Element\Delimiter;
-use ColinODell\CommonMark\Element\DelimiterStack;
-use ColinODell\CommonMark\Element\InlineCreator;
-use ColinODell\CommonMark\Element\InlineElementInterface;
-use ColinODell\CommonMark\Reference\Reference;
-use ColinODell\CommonMark\Reference\ReferenceMap;
-use ColinODell\CommonMark\Util\ArrayCollection;
-use ColinODell\CommonMark\Util\Html5Entities;
-use ColinODell\CommonMark\Util\RegexHelper;
-use ColinODell\CommonMark\Util\UrlEncoder;
+use League\Markdown\Element\Delimiter;
+use League\Markdown\Element\DelimiterStack;
+use League\Markdown\Element\InlineCreator;
+use League\Markdown\Element\InlineElementInterface;
+use League\Markdown\Reference\Reference;
+use League\Markdown\Reference\ReferenceMap;
+use League\Markdown\Util\ArrayCollection;
+use League\Markdown\Util\Html5Entities;
+use League\Markdown\Util\RegexHelper;
+use League\Markdown\Util\UrlEncoder;
 
 /**
  * Parses inline elements
@@ -124,7 +124,8 @@ class InlineParser
     /**
      * Attempt to parse backticks, adding either a backtick code span or a
      * literal sequence of backticks to the 'inlines' list.
-     * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
+     *
+     * @param \League\Markdown\Util\ArrayCollection $inlines
      *
      * @return bool
      */
@@ -160,7 +161,7 @@ class InlineParser
      * character, a hard line break (if the backslash is followed by a newline),
      * or a literal backslash to the 'inlines' list.
      *
-     * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
+     * @param \League\Markdown\Util\ArrayCollection $inlines
      *
      * @return bool
      */
@@ -190,7 +191,8 @@ class InlineParser
 
     /**
      * Attempt to parse an autolink (URL or email in pointy brackets)
-     * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
+     *
+     * @param \League\Markdown\Util\ArrayCollection $inlines
      *
      * @return bool
      */
@@ -216,7 +218,8 @@ class InlineParser
 
     /**
      * Attempt to parse a raw HTML tag
-     * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
+     *
+     * @param \League\Markdown\Util\ArrayCollection $inlines
      *
      * @return bool
      */
@@ -574,7 +577,8 @@ class InlineParser
 
     /**
      * Attempt to parse an entity, adding to inlines if successful
-     * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
+     *
+     * @param \League\Markdown\Util\ArrayCollection $inlines
      *
      * @return bool
      */
@@ -593,7 +597,7 @@ class InlineParser
      * Parse a run of ordinary characters, or a single character with
      * a special meaning in markdown, as a plain string, adding to inlines.
      *
-     * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
+     * @param \League\Markdown\Util\ArrayCollection $inlines
      *
      * @return bool
      */
@@ -611,7 +615,7 @@ class InlineParser
     /**
      * Parse a newline.
      *
-     * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
+     * @param \League\Markdown\Util\ArrayCollection $inlines
      *
      * @return bool
      */
@@ -634,7 +638,7 @@ class InlineParser
      * Parse the next inline element in subject, advancing subject position
      * and adding the result to 'inlines'.
      *
-     * @param \ColinODell\CommonMark\Util\ArrayCollection $inlines
+     * @param \League\Markdown\Util\ArrayCollection $inlines
      *
      * @return bool
      */

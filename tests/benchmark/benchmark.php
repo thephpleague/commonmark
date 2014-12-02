@@ -12,7 +12,7 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use ColinODell\CommonMark\CommonMarkConverter;
+use League\Markdown\CommonMarkConverter;
 use Michelf\Markdown;
 use Michelf\MarkdownExtra;
 

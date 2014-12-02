@@ -1,8 +1,8 @@
 <?php
 
-namespace ColinODell\CommonMark\Tests\Util;
+namespace League\Markdown\Tests\Util;
 
-use ColinODell\CommonMark\Util\Html5Entities;
+use League\Markdown\Util\Html5Entities;
 
 class Html5EntitiesTest extends \PHPUnit_Framework_TestCase
 {
