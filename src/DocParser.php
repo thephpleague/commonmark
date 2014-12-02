@@ -14,63 +14,156 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Element\BlockElement;
-use League\CommonMark\Reference\ReferenceMap;
-use League\CommonMark\Util\RegexHelper;
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\AbstractInlineContainer;
+use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Block\Element\ListBlock;
+use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Block\Parser;
+use League\CommonMark\Util\TextHelper;
 
-/**
- * Parses Markdown into an AST
- */
 class DocParser
 {
-    const CODE_INDENT = 4;
+    /**
+     * @var Environment
+     */
+    protected $environment;
 
     /**
-     * @var BlockElement
+     * @var InlineParserEngine
      */
-    protected $tip;
+    private $inlineParserEngine;
 
     /**
-     * @var BlockElement
+     * @param Environment $parsers
      */
-    protected $doc;
-
-    /**
-     * @var InlineParser
-     */
-    protected $inlineParser;
-
-    /**
-     * @var ReferenceMap
-     */
-    protected $refMap;
-
-    /**
-     * Convert tabs to spaces on each line using a 4-space tab stop
-     * @param string $string
-     *
-     * @return string
-     */
-    protected function detabLine($string)
+    public function __construct(Environment $parsers)
     {
-        if (strpos($string, "\t") === false) {
-            return $string;
+        $this->environment = $parsers;
+        $this->inlineParserEngine = new InlineParserEngine($parsers);
+    }
+
+    /**
+     * @return Environment
+     */
+    public function getEnvironment()
+    {
+        return $this->environment;
+    }
+
+    /**
+     * @param string $input
+     *
+     * @return string[]
+     */
+    private function preProcessInput($input)
+    {
+        // Remove any /n which appears at the very end of the string
+        if (substr($input, -1) == "\n") {
+            $input = substr($input, 0, -1);
         }
 
-        // Split into different parts
-        $parts = explode("\t", $string);
-        // Add each part to the resulting line
-        // The first one is done here; others are prefixed
-        // with the necessary spaces inside the loop below
-        $line = array_shift($parts);
+        return preg_split('/\r\n|\n|\r/', $input);
+    }
 
-        foreach ($parts as $part) {
-            // Calculate number of spaces; insert them followed by the non-tab contents
-            $amount = 4 - mb_strlen($line, 'UTF-8') % 4;
-            $line .= str_repeat(' ', $amount) . $part;
+    public function parse($input)
+    {
+        $context = new Context(new Document(), $this->getEnvironment());
+
+        $lines = $this->preProcessInput($input);
+        foreach ($lines as $line) {
+            $context->setNextLine(TextHelper::detabLine($line));
+            $this->incorporateLine($context);
         }
 
-        return $line;
+        while ($context->getTip()) {
+            $context->getTip()->finalize($context);
+        }
+
+        $this->processInlines($context, $context->getDocument());
+
+        return $context->getDocument();
+    }
+
+    private function incorporateLine(ContextInterface $context)
+    {
+        $cursor = new Cursor($context->getLine());
+        $oldTip = $context->getTip();
+
+        $context->setBlocksParsed(false);
+        $context->setContainer($context->getDocument());
+        while ($context->getContainer()->hasChildren()) {
+            $lastChild = $context->getContainer()->getLastChild();
+            if (!$lastChild->isOpen()) {
+                break;
+            }
+
+            $context->setContainer($lastChild);
+            if (!$context->getContainer()->matchesNextLine($cursor)) {
+                $context->setContainer($context->getContainer()->getParent()); // back up to the last matching block
+                break;
+            }
+        }
+
+        $lastMatchedContainer = $context->getContainer();
+
+        $context->setUnmatchedBlockCloser(function() use ($context, $oldTip, $lastMatchedContainer) {
+            while ($oldTip !== $lastMatchedContainer) {
+                $oldTip->finalize($context);
+                $oldTip = $oldTip->getParent();
+            }
+        });
+
+        // Check to see if we've hit 2nd blank line; if so break out of list:
+        if ($cursor->isBlank() && $context->getContainer()->endsWithBlankLine()) {
+            $this->breakOutOfLists($context, $context->getContainer());
+        }
+
+        while (!$context->getContainer()->isCode() && !$context->getBlocksParsed()) {
+            $parsed = false;
+            foreach ($this->environment->getBlockParsers() as $parser) {
+                if ($parser->parse($context, $cursor)) {
+                    $parsed = true;
+                    break;
+                }
+            }
+
+            if (!$parsed || $context->getContainer()->acceptsLines()) {
+                $context->setBlocksParsed(true);
+            }
+        }
+
+        // What remains at the offset is a text line.  Add the text to the appropriate container.
+        // First check for a lazy paragraph continuation:
+        if ($context->getTip() !== $lastMatchedContainer &&
+            !$cursor->isBlank() &&
+            $context->getTip() instanceof Paragraph &&
+            count($context->getTip()->getStrings()) > 0
+        ) {
+            // lazy paragraph continuation
+            $context->getTip()->addLine($cursor->getRemainder());
+        } else { // not a lazy continuation
+            // finalize any blocks not matched
+            $context->closeUnmatchedBlocks();
+
+            // Determine whether the last line is blank, updating parents as needed
+            $context->getContainer()->setLastLineBlank($cursor, $context->getLineNumber());
+
+            // Handle any remaining cursor contents
+            $context->getContainer()->handleRemainingContents($context, $cursor);
+        }
+    }
+
+    private function processInlines(ContextInterface $context, AbstractBlock $block)
+    {
+        if ($block instanceof AbstractInlineContainer) {
+            $cursor = new Cursor(trim($block->getStringContent()));
+            $block->setInlines($this->inlineParserEngine->parse($context, $cursor));
+        }
+
+        foreach ($block->getChildren() as $child) {
+            $this->processInlines($context, $child);
+        }
     }
 
     /**
@@ -79,574 +172,26 @@ class DocParser
      * all the lists.  (This is used to implement the "two blank lines
      * break of of all lists" feature.)
      *
-     * @param BlockElement $block
-     * @param int          $lineNumber
+     * @param ContextInterface $context
+     * @param AbstractBlock $block
      */
-    protected function breakOutOfLists(BlockElement $block, $lineNumber)
+    private function breakOutOfLists(ContextInterface $context, AbstractBlock $block)
     {
         $b = $block;
         $lastList = null;
         do {
-            if ($b->getType() === BlockElement::TYPE_LIST) {
+            if ($b instanceof ListBlock) {
                 $lastList = $b;
             }
-
             $b = $b->getParent();
         } while ($b);
 
         if ($lastList) {
-            while ($block != $lastList) {
-                $this->finalize($block, $lineNumber);
+            while ($block !== $lastList) {
+                $block->finalize($context);
                 $block = $block->getParent();
             }
-            $this->finalize($lastList, $lineNumber);
-            $this->tip = $lastList->getParent();
+            $lastList->finalize($context);
         }
-    }
-
-    /**
-     * @param string $ln
-     * @param int    $offset
-     *
-     * @throws \RuntimeException
-     */
-    protected function addLine($ln, $offset)
-    {
-        $s = substr($ln, $offset);
-        if ($s === false) {
-            $s = '';
-        }
-
-        if (!$this->tip->isOpen()) {
-            throw new \RuntimeException(sprintf('Attempted to add line (%s) to closed container.', $ln));
-        }
-
-        $this->tip->getStrings()->add($s);
-    }
-
-    /**
-     * @param string $tag
-     * @param int    $lineNumber
-     * @param int    $offset
-     *
-     * @return BlockElement
-     */
-    protected function addChild($tag, $lineNumber, $offset)
-    {
-        while (!$this->tip->canContain($tag)) {
-            $this->finalize($this->tip, $lineNumber);
-        }
-
-        $columnNumber = $offset + 1; // offset 0 = column 1
-        $newBlock = new BlockElement($tag, $lineNumber, $columnNumber);
-        $this->tip->getChildren()->add($newBlock);
-        $newBlock->setParent($this->tip);
-        $this->tip = $newBlock;
-
-        return $newBlock;
-    }
-
-    /**
-     * @param string $ln
-     * @param int    $offset
-     *
-     * @return array|null
-     */
-    protected function parseListMarker($ln, $offset)
-    {
-        $rest = substr($ln, $offset);
-        $data = array();
-
-        if (preg_match(RegexHelper::getInstance()->getHRuleRegex(), $rest)) {
-            return null;
-        }
-
-        if ($matches = RegexHelper::matchAll('/^[*+-]( +|$)/', $rest)) {
-            $spacesAfterMarker = strlen($matches[1]);
-            $data['type'] = BlockElement::LIST_TYPE_UNORDERED;
-            $data['delimiter'] = null;
-            $data['bullet_char'] = $matches[0][0];
-        } elseif ($matches = RegexHelper::matchAll('/^(\d+)([.)])( +|$)/', $rest)) {
-            $spacesAfterMarker = strlen($matches[3]);
-            $data['type'] = BlockElement::LIST_TYPE_ORDERED;
-            $data['start'] = intval($matches[1]);
-            $data['delimiter'] = $matches[2];
-            $data['bullet_char'] = null;
-        } else {
-            return null;
-        }
-
-        $data['padding'] = $this->calculateListMarkerPadding($matches[0], $spacesAfterMarker, $rest);
-
-        return $data;
-    }
-
-    /**
-     * @param string $marker
-     * @param integer $spacesAfterMarker
-     * @param string $rest
-     *
-     * @return integer
-     */
-    public function calculateListMarkerPadding($marker, $spacesAfterMarker, $rest)
-    {
-        $isBlankItem = strlen($marker) === strlen($rest);
-
-        if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $isBlankItem) {
-            return strlen($marker) - $spacesAfterMarker + 1;
-        }
-
-        return strlen($marker);
-    }
-
-    /**
-     * @param array $listData
-     * @param array $itemData
-     *
-     * @return bool
-     */
-    protected function listsMatch($listData, $itemData)
-    {
-        return ($listData['type'] === $itemData['type'] &&
-            $listData['delimiter'] === $itemData['delimiter'] &&
-            $listData['bullet_char'] === $itemData['bullet_char']);
-    }
-
-    /**
-     * @param string $ln
-     * @param int    $lineNumber
-     */
-    protected function incorporateLine($ln, $lineNumber)
-    {
-        $allMatched = true;
-        $offset = 0;
-        $blank = false;
-        $container = $this->doc;
-        $oldTip = $this->tip;
-
-        // Convert tabs to spaces:
-        $ln = $this->detabLine($ln);
-
-        // For each containing block, try to parse the associated line start.
-        // Bail out on failure: container will point to the last matching block.
-        // Set all_matched to false if not all containers match.
-        while ($container->hasChildren()) {
-            /** @var BlockElement $lastChild */
-            $lastChild = $container->getChildren()->last();
-            if (!$lastChild->isOpen()) {
-                break;
-            }
-
-            $container = $lastChild;
-
-            $match = RegexHelper::matchAt('/[^ ]/', $ln, $offset);
-            if ($match === null) {
-                $firstNonSpace = strlen($ln);
-                $blank = true;
-            } else {
-                $firstNonSpace = $match;
-                $blank = false;
-            }
-
-            $indent = $firstNonSpace - $offset;
-
-            switch ($container->getType()) {
-                case BlockElement::TYPE_BLOCK_QUOTE:
-                    if ($indent <= 3 && isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>') {
-                        $offset = $firstNonSpace + 1;
-                        if (isset($ln[$offset]) && $ln[$offset] === ' ') {
-                            ++$offset;
-                        }
-                    } else {
-                        $allMatched = false;
-                    }
-                    break;
-
-                case BlockElement::TYPE_LIST_ITEM:
-                    $listData = $container->getExtra('list_data');
-                    $increment = $listData['marker_offset'] + $listData['padding'];
-                    if ($indent >= $increment) {
-                        $offset += $increment;
-                    } elseif ($blank) {
-                        $offset = $firstNonSpace;
-                    } else {
-                        $allMatched = false;
-                    }
-                    break;
-
-                case BlockElement::TYPE_INDENTED_CODE:
-                    if ($indent >= static::CODE_INDENT) {
-                        $offset += static::CODE_INDENT;
-                    } elseif ($blank) {
-                        $offset = $firstNonSpace;
-                    } else {
-                        $allMatched = false;
-                    }
-                    break;
-
-                case BlockElement::TYPE_HEADER:
-                case BlockElement::TYPE_HORIZONTAL_RULE:
-                    // a header can never contain > 1 line, so fail to match:
-                    $allMatched = false;
-                    if ($blank) {
-                        $container->setLastLineBlank(true);
-                    }
-                    break;
-
-                case BlockElement::TYPE_FENCED_CODE:
-                    // skip optional spaces of fence offset
-                    $i = $container->getExtra('fence_offset');
-                    while ($i > 0 && $ln[$offset] === ' ') {
-                        ++$offset;
-                        --$i;
-                    }
-                    break;
-
-                case BlockElement::TYPE_HTML_BLOCK:
-                    if ($blank) {
-                        $container->setLastLineBlank(true);
-                        $allMatched = false;
-                    }
-                    break;
-
-                case BlockElement::TYPE_PARAGRAPH:
-                    if ($blank) {
-                        $container->setLastLineBlank(true);
-                        $allMatched = false;
-                    }
-                    break;
-
-                default:
-                    // Nothing
-            }
-
-            if (!$allMatched) {
-                $container = $container->getParent(); // back up to the last matching block
-                break;
-            }
-        }
-
-        $lastMatchedContainer = $container;
-
-        // This function is used to finalize and close any unmatched
-        // blocks.  We aren't ready to do this now, because we might
-        // have a lazy paragraph continuation, in which case we don't
-        // want to close unmatched blocks.  So we store this closure for
-        // use later, when we have more information.
-        $closeUnmatchedBlocks = function (DocParser $self) use (
-            $oldTip,
-            $lastMatchedContainer,
-            $lineNumber
-        ) {
-            static $closeUnmatchedBlocksAlreadyDone = false;
-            $tip = $oldTip;
-            // finalize any blocks not matched
-            while (!$closeUnmatchedBlocksAlreadyDone && $tip != $lastMatchedContainer && $tip !== null) {
-                $self->finalize($tip, $lineNumber);
-                $tip = $tip->getParent();
-            }
-            $closeUnmatchedBlocksAlreadyDone = true;
-        };
-
-        // Check to see if we've hit 2nd blank line; if so break out of list:
-        if ($blank && $container && $container->isLastLineBlank()) {
-            $this->breakOutOfLists($container, $lineNumber);
-        }
-
-        // Unless last matched container is a code block, try new container starts,
-        // adding children to the last matched container:
-        while ($container->getType() != BlockElement::TYPE_FENCED_CODE &&
-            $container->getType() != BlockElement::TYPE_INDENTED_CODE &&
-            $container->getType() != BlockElement::TYPE_HTML_BLOCK &&
-            // this is a little performance optimization
-            RegexHelper::matchAt('/^[ #`~*+_=<>0-9-]/', $ln, $offset) !== null
-        ) {
-            $match = RegexHelper::matchAt('/[^ ]/', $ln, $offset);
-            if ($match === null) {
-                $firstNonSpace = strlen($ln);
-                $blank = true;
-            } else {
-                $firstNonSpace = $match;
-                $blank = false;
-            }
-
-            $indent = $firstNonSpace - $offset;
-
-            if ($indent >= static::CODE_INDENT) {
-                // indented code
-                if ($this->tip->getType() != BlockElement::TYPE_PARAGRAPH && !$blank) {
-                    $offset += static::CODE_INDENT;
-                    $closeUnmatchedBlocks($this);
-                    $container = $this->addChild(BlockElement::TYPE_INDENTED_CODE, $lineNumber, $offset);
-                } else { // ident > 4 in a lazy paragraph continuation
-                    break;
-                }
-            } elseif (isset($ln[$firstNonSpace]) && $ln[$firstNonSpace] === '>') {
-                // blockquote
-                $offset = $firstNonSpace + 1;
-                // optional following space
-                if (isset($ln[$offset]) && $ln[$offset] === ' ') {
-                    ++$offset;
-                }
-                $closeUnmatchedBlocks($this);
-                $container = $this->addChild(BlockElement::TYPE_BLOCK_QUOTE, $lineNumber, $offset);
-            } elseif ($match = RegexHelper::matchAll('/^#{1,6}(?: +|$)/', $ln, $firstNonSpace)) {
-                // ATX header
-                $offset = $firstNonSpace + strlen($match[0]);
-                $closeUnmatchedBlocks($this);
-                $container = $this->addChild(BlockElement::TYPE_HEADER, $lineNumber, $firstNonSpace);
-                $container->setExtra('level', strlen(trim($match[0]))); // number of #s
-                // remove trailing ###s
-                $str = substr($ln, $offset);
-                $str = preg_replace('/^ *#+ *$/', '', $str);
-                $str = preg_replace('/ +#+ *$/', '', $str);
-                $container->getStrings()->add($str);
-                break;
-            } elseif ($match = RegexHelper::matchAll('/^`{3,}(?!.*`)|^~{3,}(?!.*~)/', $ln, $firstNonSpace)) {
-                // fenced code block
-                $fenceLength = strlen($match[0]);
-                $closeUnmatchedBlocks($this);
-                $container = $this->addChild(BlockElement::TYPE_FENCED_CODE, $lineNumber, $firstNonSpace);
-                $container->setExtra('fence_length', $fenceLength);
-                $container->setExtra('fence_char', $match[0][0]);
-                $container->setExtra('fence_offset', $firstNonSpace - $offset);
-                $offset = $firstNonSpace + $fenceLength;
-                break;
-            } elseif (RegexHelper::matchAt(
-                RegexHelper::getInstance()->getHtmlBlockOpenRegex(),
-                $ln,
-                $firstNonSpace
-            ) !== null
-            ) {
-                // html block
-                $closeUnmatchedBlocks($this);
-                $container = $this->addChild(BlockElement::TYPE_HTML_BLOCK, $lineNumber, $firstNonSpace);
-                // note, we don't adjust offset because the tag is part of the text
-                break;
-            } elseif ($container->getType() === BlockElement::TYPE_PARAGRAPH &&
-                $container->getStrings()->count() === 1 &&
-                ($match = RegexHelper::matchAll('/^(?:=+|-+) *$/', $ln, $firstNonSpace))
-            ) {
-                // setext header line
-                $closeUnmatchedBlocks($this);
-                $container->setType(BlockElement::TYPE_HEADER);
-                $container->setExtra('level', $match[0][0] === '=' ? 1 : 2);
-                $offset = strlen($ln);
-            } elseif (RegexHelper::matchAt(RegexHelper::getInstance()->getHRuleRegex(), $ln, $firstNonSpace) !== null) {
-                // hrule
-                $closeUnmatchedBlocks($this);
-                $container = $this->addChild(BlockElement::TYPE_HORIZONTAL_RULE, $lineNumber, $firstNonSpace);
-                $offset = strlen($ln) - 1;
-                break;
-            } elseif (($data = $this->parseListMarker($ln, $firstNonSpace))) {
-                // list item
-                $closeUnmatchedBlocks($this);
-                $data['marker_offset'] = $indent;
-                $offset = $firstNonSpace + $data['padding'];
-
-                // add the list if needed
-                if ($container->getType() !== BlockElement::TYPE_LIST ||
-                    !($this->listsMatch($container->getExtra('list_data'), $data))
-                ) {
-                    $container = $this->addChild(BlockElement::TYPE_LIST, $lineNumber, $firstNonSpace);
-                    $container->setExtra('list_data', $data);
-                }
-
-                // add the list item
-                $container = $this->addChild(BlockElement::TYPE_LIST_ITEM, $lineNumber, $firstNonSpace);
-                $container->setExtra('list_data', ($data));
-            } else {
-                break;
-            }
-
-            if ($container->acceptsLines()) {
-                // if it's a line container, it can't contain other containers
-                break;
-            }
-        }
-
-        // What remains at the offset is a text line.  Add the text to the appropriate container.
-
-        $match = RegexHelper::matchAt('/[^ ]/', $ln, $offset);
-        if ($match === null) {
-            $firstNonSpace = strlen($ln);
-            $blank = true;
-        } else {
-            $firstNonSpace = $match;
-            $blank = false;
-        }
-
-        $indent = $firstNonSpace - $offset;
-
-        // First check for a lazy paragraph continuation:
-        if ($this->tip !== $lastMatchedContainer &&
-            !$blank &&
-            $this->tip->getType() == BlockElement::TYPE_PARAGRAPH &&
-            $this->tip->getStrings()->count() > 0
-        ) {
-            // lazy paragraph continuation
-            $this->tip->setLastLineBlank(false);
-            $this->addLine($ln, $offset);
-        } else { // not a lazy continuation
-            //finalize any blocks not matched
-            $closeUnmatchedBlocks($this);
-
-            // Block quote lines are never blank as they start with >
-            // and we don't count blanks in fenced code for purposes of tight/loose
-            // lists or breaking out of lists.  We also don't set last_line_blank
-            // on an empty list item.
-            $container->setLastLineBlank(
-                $blank &&
-                !(
-                    $container->getType() == BlockElement::TYPE_BLOCK_QUOTE ||
-                    $container->getType() == BlockElement::TYPE_HEADER ||
-                    $container->getType() == BlockElement::TYPE_FENCED_CODE ||
-                    ($container->getType() == BlockElement::TYPE_LIST_ITEM &&
-                        $container->getChildren()->count() === 0 &&
-                        $container->getStartLine() == $lineNumber
-                    )
-                )
-            );
-
-            $cont = $container;
-            while ($cont->getParent()) {
-                $cont->getParent()->setLastLineBlank(false);
-                $cont = $cont->getParent();
-            }
-
-            switch ($container->getType()) {
-                case BlockElement::TYPE_INDENTED_CODE:
-                case BlockElement::TYPE_HTML_BLOCK:
-                    $this->addLine($ln, $offset);
-                    break;
-
-                case BlockElement::TYPE_FENCED_CODE:
-                    // check for closing code fence
-                    $test = ($indent <= 3 &&
-                        isset($ln[$firstNonSpace]) &&
-                        $ln[$firstNonSpace] == $container->getExtra('fence_char') &&
-                        $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $ln, $firstNonSpace)
-                    );
-                    if ($test && $container && strlen($match[0]) >= $container->getExtra('fence_length')) {
-                        // don't add closing fence to container; instead, close it:
-                        $this->finalize($container, $lineNumber);
-                    } else {
-                        $this->addLine($ln, $offset);
-                    }
-                    break;
-
-                case BlockElement::TYPE_HEADER:
-                case BlockElement::TYPE_HORIZONTAL_RULE:
-                    // nothing to do; we already added the contents.
-                    break;
-
-                default:
-                    if ($container->acceptsLines()) {
-                        $this->addLine($ln, $firstNonSpace);
-                    } elseif ($blank) {
-                        // do nothing
-                    } elseif ($container->getType() != BlockElement::TYPE_HORIZONTAL_RULE &&
-                        $container->getType() != BlockElement::TYPE_HEADER
-                    ) {
-                        // create paragraph container for line
-                        $this->addChild(BlockElement::TYPE_PARAGRAPH, $lineNumber, $firstNonSpace);
-                        $this->addLine($ln, $firstNonSpace);
-                    }
-            }
-        }
-    }
-
-    /**
-     * @param BlockElement $block
-     * @param int          $lineNumber
-     */
-    public function finalize(BlockElement $block, $lineNumber)
-    {
-        $block->finalize($lineNumber, $this->inlineParser, $this->refMap);
-
-        $this->tip = $block->getParent();
-    }
-
-    /**
-     * The main parsing function. Returns a parsed document AST.
-     * @param string $input
-     *
-     * @return BlockElement
-     *
-     * @api
-     */
-    public function parse($input)
-    {
-        $this->doc = new BlockElement(BlockElement::TYPE_DOCUMENT, 1, 1);
-        $this->tip = $this->doc;
-
-        $this->inlineParser = new InlineParser();
-        $this->refMap = new ReferenceMap();
-
-        // Remove any /n which appears at the very end of the string
-        if (substr($input, -1) == "\n") {
-            $input = substr($input, 0, -1);
-        }
-
-        $lines = preg_split('/\r\n|\n|\r/', $input);
-        $len = count($lines);
-        for ($i = 0; $i < $len; $i++) {
-            $this->incorporateLine($lines[$i], $i + 1);
-        }
-
-        while ($this->tip) {
-            $this->finalize($this->tip, $len - 1);
-        }
-
-        return $this->processInlines($this->doc);
-    }
-
-    /**
-     * @param BlockElement $block
-     *
-     * @return BlockElement
-     */
-    protected function processInlines(BlockElement $block)
-    {
-        $newBlock = new BlockElement($block->getType(), $block->getStartLine(), $block->getEndLine());
-
-        switch ($block->getType()) {
-            case BlockElement::TYPE_PARAGRAPH:
-                $newBlock->setInlineContent(
-                    $this->inlineParser->parse(trim($block->getStringContent()), $this->refMap)
-                );
-                break;
-            case BlockElement::TYPE_HEADER:
-                $newBlock->setInlineContent(
-                    $this->inlineParser->parse(trim($block->getStringContent()), $this->refMap)
-                );
-                $newBlock->setExtra('level', $block->getExtra('level'));
-                break;
-            case BlockElement::TYPE_LIST:
-                $newBlock->setExtra('list_data', $block->getExtra('list_data'));
-                $newBlock->setExtra('tight', $block->getExtra('tight'));
-                break;
-            case BlockElement::TYPE_FENCED_CODE:
-                $newBlock->setStringContent($block->getStringContent());
-                $newBlock->setExtra('info', $block->getExtra('info'));
-                break;
-            case BlockElement::TYPE_INDENTED_CODE:
-            case BlockElement::TYPE_HTML_BLOCK:
-                $newBlock->setStringContent($block->getStringContent());
-                break;
-            default:
-                break;
-        }
-
-        if ($block->hasChildren()) {
-            $newChildren = array();
-            foreach ($block->getChildren() as $child) {
-                $newChildren[] = $this->processInlines($child);
-            }
-
-            $newBlock->getChildren()->replaceWith($newChildren);
-        }
-
-        return $newBlock;
     }
 }
