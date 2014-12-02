@@ -9,7 +9,7 @@
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b/big.png)](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b)
 
-**commonmark-php** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] \([@jgm]\).
+**league/markdown** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] \([@jgm]\).
 
 ## Installation
 
@@ -21,7 +21,7 @@ $ composer require league/markdown
 
 ## Usage
 
-The `CommonMark` class provides a simple wrapper for converting CommonMark to HTML:
+The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
 ```php
 use League\Markdown\CommonMarkConverter;
@@ -99,7 +99,7 @@ This will also test commonmark-php against the latest supported spec.
 
 ## Performance Benchmarks
 
-You can compare the performance of **commonmark-php** to other popular parsers by running the included benchmark tool:
+You can compare the performance of **league/markdown** to other popular parsers by running the included benchmark tool:
  
 ``` bash
 $ ./tests/benchmark/benchmark.php
@@ -107,9 +107,11 @@ $ ./tests/benchmark/benchmark.php
 
 ## Stability and Versioning
 
-While this package works well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future, which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
+While this package does work well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future, which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
 
 Major release 1.0.0 will be reserved for when both CommonMark and this project are considered stable. 0.x.x will be used until that happens.
+
+SemVer will be followed [closely](http://semver.org/).
 
 ## Contributing
 
@@ -135,7 +137,7 @@ This code is a port of [stmd.js] which is written, maintained and copyrighted by
 
 ## License ##
 
-**commonmark-php** is licensed under the BSD-3 license.  See the `LICENSE` file for more details.
+**league/markdown** is licensed under the BSD-3 license.  See the `LICENSE` file for more details.
 
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
