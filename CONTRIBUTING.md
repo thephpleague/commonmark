@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [GitHub](https://github.com/colinodell/commonmark-php).
+We accept contributions via Pull Requests on [GitHub](https://github.com/thephpleague/markdown).
 
 
 ## Pull Requests

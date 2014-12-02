@@ -1,4 +1,4 @@
-# League\Markdown
+# Markdown
 
 [![Latest Version](https://img.shields.io/packagist/v/league/markdown.svg?style=flat-square)](https://packagist.org/packages/league/markdown)
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE.md)
@@ -10,6 +10,14 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b/big.png)](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b)
 
 **league/markdown** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] \([@jgm]\).
+
+## Goals
+
+While other Markdown parsers focus on speed, or try to enable a wide range of flavors, this parser will 
+strive to match the C and JavaScript implementations of CommonMark to make a logical and similar API.
+
+We will always focus on CommonMark compliance over speed, but performance improvements will definitely 
+happen during efforts to reach v1.0.0 and afterwards.
 
 ## Installation
 
@@ -125,7 +133,7 @@ For now, I'd like to maintain similar logic as the [stmd.js] parser until everyt
 
 Major refactoring should be avoided for now so that we can easily follow updates made to [jgm/stmd].  This restriction will likely be lifted once the CommonMark specs and implementations are considered stable.
 
-Please see [CONTRIBUTING](https://github.com/colinodell/commonmark-php/blob/master/CONTRIBUTING.md) for additional details.
+Please see [CONTRIBUTING](https://github.com/thephpleague/markdown/blob/master/CONTRIBUTING.md) for additional details.
 
 ## Credits & Acknowledgements
 
@@ -143,7 +151,7 @@ This code is a port of [stmd.js] which is written, maintained and copyrighted by
 [CommonMark spec]: http://spec.commonmark.org/
 [stmd.js]: https://github.com/jgm/stmd/blob/master/js/stmd.js
 [John MacFarlane]: http://johnmacfarlane.net
-[All Contributors]: https://github.com/colinodell/commonmark-php/contributors
+[All Contributors]: https://github.com/thephpleague/markdown/contributors
 [@colinodell]: https://github.com/colinodell
 [@jgm]: https://github.com/jgm
 [jgm/stmd]: https://github.com/jgm/stmd

@@ -1,9 +1,9 @@
 {
-    "name": "colinodell/commonmark-php",
+    "name": "league/markdown",
     "type": "library",
     "description": "Markdown parser for PHP based on the CommonMark spec",
     "keywords": ["markdown","parser","commonmark"],
-    "homepage": "https://github.com/colinodell/commonmark-php",
+    "homepage": "https://github.com/thephpleague/markdown",
     "license": "BSD-3-Clause",
     "authors": [
         {
