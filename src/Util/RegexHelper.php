@@ -54,7 +54,7 @@ class RegexHelper
 
     protected $regex = array();
 
-    static protected $instance;
+    protected static $instance;
 
     /**
      * Constructor

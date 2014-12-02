@@ -91,7 +91,6 @@ class HtmlRenderer
 
         foreach ($attribs as $key => $value) {
             $result .= ' ' . $key . '="' . $value . '"';
-
         }
 
         if ($contents) {
