@@ -17,6 +17,7 @@ namespace League\Markdown;
 use League\Markdown\Element\BlockElement;
 use League\Markdown\Element\InlineElement;
 use League\Markdown\Element\InlineElementInterface;
+use League\Markdown\Util\ArrayCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -152,7 +153,7 @@ class HtmlRenderer
     }
 
     /**
-     * @param InlineElementInterface[] $inlines
+     * @param ArrayCollection|InlineElementInterface[] $inlines
      *
      * @return string
      */
@@ -254,8 +255,8 @@ class HtmlRenderer
     }
 
     /**
-     * @param BlockElement[] $blocks
-     * @param bool           $inTightList
+     * @param ArrayCollection|BlockElement[] $blocks
+     * @param bool                           $inTightList
      *
      * @return string
      */
