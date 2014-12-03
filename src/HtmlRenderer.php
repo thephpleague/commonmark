@@ -14,6 +14,7 @@
 
 namespace League\Markdown;
 
+use League\Markdown\Util\ArrayCollection;
 use League\Markdown\Element\BlockElement;
 use League\Markdown\Element\InlineElement;
 use League\Markdown\Element\InlineElementInterface;
@@ -254,8 +255,8 @@ class HtmlRenderer
     }
 
     /**
-     * @param BlockElement[] $blocks
-     * @param bool           $inTightList
+     * @param ArrayCollection|BlockElement[] $blocks
+     * @param bool                           $inTightList
      *
      * @return string
      */
