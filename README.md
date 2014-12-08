@@ -7,8 +7,6 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark)
 [![Total Downloads](https://img.shields.io/packagist/dt/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b/big.png)](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b)
-
 **league/commonmark** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] \([@jgm]\).
 
 ## Goals
