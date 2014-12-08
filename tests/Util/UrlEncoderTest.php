@@ -1,8 +1,8 @@
 <?php
 
-namespace League\Markdown\Tests\Util;
+namespace League\CommonMark\Tests\Util;
 
-use League\Markdown\Util\UrlEncoder;
+use League\CommonMark\Util\UrlEncoder;
 
 class UrlEncoderTest extends \PHPUnit_Framework_TestCase
 {

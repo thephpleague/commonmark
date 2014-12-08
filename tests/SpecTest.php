@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the commonmark-php package.
+ * This file is part of the league/commonmark package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
@@ -12,10 +12,10 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Markdown\Tests;
+namespace League\CommonMark\Tests;
 
-use League\Markdown\DocParser;
-use League\Markdown\HtmlRenderer;
+use League\CommonMark\DocParser;
+use League\CommonMark\HtmlRenderer;
 
 /**
  * Tests the parser against the CommonMark spec

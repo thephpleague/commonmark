@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the commonmark-php package.
+ * This file is part of the league/commonmark package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
@@ -12,11 +12,11 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Markdown;
+namespace League\CommonMark;
 
-use League\Markdown\Element\BlockElement;
-use League\Markdown\Reference\ReferenceMap;
-use League\Markdown\Util\RegexHelper;
+use League\CommonMark\Element\BlockElement;
+use League\CommonMark\Reference\ReferenceMap;
+use League\CommonMark\Util\RegexHelper;
 
 /**
  * Parses Markdown into an AST

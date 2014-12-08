@@ -1,8 +1,8 @@
 <?php
 
-namespace League\Markdown\Tests\Util;
+namespace League\CommonMark\Tests\Util;
 
-use League\Markdown\Util\Html5Entities;
+use League\CommonMark\Util\Html5Entities;
 
 class Html5EntitiesTest extends \PHPUnit_Framework_TestCase
 {
