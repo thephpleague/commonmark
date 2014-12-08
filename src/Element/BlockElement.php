@@ -440,8 +440,7 @@ class BlockElement
                 $this->setExtra('tight', true); // tight by default
 
                 $numItems = $this->children->count();
-                $i = 0;
-                while ($i < $numItems) {
+                for ($i = 0; $i < $numItems; $i++) {
                     /** @var BlockElement $item */
                     $item = $this->children->get($i);
                     // check for non-final list item ending with blank line:
@@ -454,19 +453,14 @@ class BlockElement
                     // Recurse into children of list item, to see if there are
                     // spaces between any of them:
                     $numSubItems = $item->getChildren()->count();
-                    $j = 0;
-                    while ($j < $numSubItems) {
+                    for ($j = 0; $j < $numSubItems; $j++) {
                         $subItem = $item->getChildren()->get($j);
                         $lastSubItem = $j == $numSubItems - 1;
                         if ($subItem->endsWithBlankLine() && !($lastItem && $lastSubItem)) {
                             $this->setExtra('tight', false);
                             break;
                         }
-
-                        $j++;
                     }
-
-                    $i++;
                 }
 
                 break;

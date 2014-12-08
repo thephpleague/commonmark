@@ -33,7 +33,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function first()
     {
@@ -51,7 +51,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Retrieve an external iterator
      *
-     * @return \Traversable
+     * @return \ArrayIterator
      */
     public function getIterator()
     {
