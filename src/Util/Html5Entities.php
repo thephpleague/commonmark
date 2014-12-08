@@ -1,6 +1,6 @@
 <?php
 
-namespace League\Markdown\Util;
+namespace League\CommonMark\Util;
 
 class Html5Entities
 {

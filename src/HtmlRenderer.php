@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the commonmark-php package.
+ * This file is part of the league/commonmark package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
@@ -12,12 +12,12 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Markdown;
+namespace League\CommonMark;
 
-use League\Markdown\Element\BlockElement;
-use League\Markdown\Element\InlineElement;
-use League\Markdown\Element\InlineElementInterface;
-use League\Markdown\Util\ArrayCollection;
+use League\CommonMark\Element\BlockElement;
+use League\CommonMark\Element\InlineElement;
+use League\CommonMark\Element\InlineElementInterface;
+use League\CommonMark\Util\ArrayCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 

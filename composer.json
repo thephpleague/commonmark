@@ -1,9 +1,9 @@
 {
-    "name": "league/markdown",
+    "name": "league/commonmark",
     "type": "library",
     "description": "Markdown parser for PHP based on the CommonMark spec",
     "keywords": ["markdown","parser","commonmark"],
-    "homepage": "https://github.com/thephpleague/markdown",
+    "homepage": "https://github.com/thephpleague/commonmark",
     "license": "BSD-3-Clause",
     "authors": [
         {
@@ -39,8 +39,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "League\\Markdown\\": "src/",
-            "League\\Markdown\\Tests\\": "tests/"
+            "League\\CommonMark\\": "src/",
+            "League\\CommonMark\\Tests\\": "tests/"
         }
     }
 }

@@ -2,7 +2,7 @@
 <?php
 
 /*
- * This file is part of the commonmark-php package.
+ * This file is part of the league/commonmark package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
@@ -12,14 +12,14 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use League\Markdown\CommonMarkConverter;
+use League\CommonMark\CommonMarkConverter;
 use Michelf\Markdown;
 use Michelf\MarkdownExtra;
 
 $markdown = file_get_contents(__DIR__ . '/' . 'sample.md');
 
 $parsers = array(
-    'commonmark-php' => function ($markdown) {
+    'CommonMark' => function ($markdown) {
         $parser = new CommonMarkConverter();
         $parser->convertToHtml($markdown);
     },

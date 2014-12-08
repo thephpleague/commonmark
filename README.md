@@ -1,15 +1,15 @@
-# Markdown
+# CommonMark
 
-[![Latest Version](https://img.shields.io/packagist/v/league/markdown.svg?style=flat-square)](https://packagist.org/packages/league/markdown)
+[![Latest Version](https://img.shields.io/packagist/v/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/travis/thephpleague/markdown/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/markdown)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/markdown.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/markdown/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/markdown.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/markdown)
-[![Total Downloads](https://img.shields.io/packagist/dt/league/markdown.svg?style=flat-square)](https://packagist.org/packages/league/markdown)
+[![Build Status](https://img.shields.io/travis/thephpleague/commonmark/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/commonmark)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark)
+[![Total Downloads](https://img.shields.io/packagist/dt/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b/big.png)](https://insight.sensiolabs.com/projects/6250954a-f9e8-4e49-bb17-ec24b006e33b)
 
-**league/markdown** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] \([@jgm]\).
+**league/commonmark** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based on [stmd.js] by [John MacFarlane] \([@jgm]\).
 
 ## Goals
 
@@ -24,7 +24,7 @@ happen during efforts to reach v1.0.0 and afterwards.
 This project can be installed via [Composer]:
 
 ``` bash
-$ composer require league/markdown
+$ composer require league/commonmark
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ $ composer require league/markdown
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
 ```php
-use League\Markdown\CommonMarkConverter;
+use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
 echo $converter->convertToHtml('# Hello World!');
@@ -48,8 +48,8 @@ The actual conversion process requires two steps:
 You can do this yourself if you wish:
 
 ```php
-use League\Markdown\DocParser;
-use League\Markdown\HtmlRenderer;
+use League\CommonMark\DocParser;
+use League\CommonMark\HtmlRenderer;
 
 $parser = new DocParser();
 $htmlRenderer = new HtmlRenderer();
@@ -107,7 +107,7 @@ This will also test commonmark-php against the latest supported spec.
 
 ## Performance Benchmarks
 
-You can compare the performance of **league/markdown** to other popular parsers by running the included benchmark tool:
+You can compare the performance of **league/commonmark** to other popular parsers by running the included benchmark tool:
  
 ``` bash
 $ ./tests/benchmark/benchmark.php
@@ -133,7 +133,7 @@ For now, I'd like to maintain similar logic as the [stmd.js] parser until everyt
 
 Major refactoring should be avoided for now so that we can easily follow updates made to [jgm/stmd].  This restriction will likely be lifted once the CommonMark specs and implementations are considered stable.
 
-Please see [CONTRIBUTING](https://github.com/thephpleague/markdown/blob/master/CONTRIBUTING.md) for additional details.
+Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/master/CONTRIBUTING.md) for additional details.
 
 ## Credits & Acknowledgements
 
@@ -145,13 +145,13 @@ This code is a port of [stmd.js] which is written, maintained and copyrighted by
 
 ## License ##
 
-**league/markdown** is licensed under the BSD-3 license.  See the `LICENSE` file for more details.
+**league/commonmark** is licensed under the BSD-3 license.  See the `LICENSE` file for more details.
 
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
 [stmd.js]: https://github.com/jgm/stmd/blob/master/js/stmd.js
 [John MacFarlane]: http://johnmacfarlane.net
-[All Contributors]: https://github.com/thephpleague/markdown/contributors
+[All Contributors]: https://github.com/thephpleague/commonmark/contributors
 [@colinodell]: https://github.com/colinodell
 [@jgm]: https://github.com/jgm
 [jgm/stmd]: https://github.com/jgm/stmd
