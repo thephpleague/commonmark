@@ -83,13 +83,7 @@ class HtmlRenderer
             $string = str_replace('&', '&amp;', $string);
         }
 
-        $string = strtr($string, array(
-            '<' => '&lt;',
-            '>' => '&gt;',
-            '"' => '&quot;'
-        ));
-
-        return $string;
+        return str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $string);
     }
 
     /**
