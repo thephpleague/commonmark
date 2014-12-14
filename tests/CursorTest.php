@@ -203,6 +203,13 @@ class CursorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testAdvanceByZero()
+    {
+        $cursor = new Cursor('foo bar');
+        $this->assertEquals(1, $cursor->advance());
+        $this->assertEquals(0, $cursor->advance(0));
+    }
+
     /**
      * @param $subject
      * @param $startPos
@@ -255,6 +262,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array(' ', 0, 1),
             array('  ', 0, 2),
             array('  ', 1, 1),
+            array('  ', 2, 0),
             array('foo bar', 0, 0),
             array('foo bar', 3, 1),
             array("  \n  \n  ", 0, 5),

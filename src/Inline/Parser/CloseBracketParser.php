@@ -83,17 +83,17 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         // Inline link?
         if ($cursor->getCharacter() == '(') {
             $cursor->advance();
-            if ($cursor->advanceToFirstNonSpace() &&
-                (($dest = LinkParserHelper::parseLinkDestination($cursor)) !== null) &&
-                $cursor->advanceToFirstNonSpace()
-            ) {
+            $cursor->advanceToFirstNonSpace();
+            if (($dest = LinkParserHelper::parseLinkDestination($cursor)) !== null) {
+                $cursor->advanceToFirstNonSpace();
                 // make sure there's a space before the title:
                 if (preg_match('/^\\s/', $cursor->peek(-1))) {
                     $title = LinkParserHelper::parseLinkTitle($cursor) ?: '';
                 } else {
                     $title = null;
                 }
-                if ($cursor->advanceToFirstNonSpace() && $cursor->match('/^\\)/')) {
+                $cursor->advanceToFirstNonSpace();
+                if ($cursor->match('/^\\)/')) {
                     $matched = true;
                 }
             }

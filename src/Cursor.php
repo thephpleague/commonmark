@@ -166,6 +166,10 @@ class Cursor
      */
     public function advance($characters = null)
     {
+        if ($characters === 0) {
+            return 0;
+        }
+
         if ($characters === null) {
             $characters = 1;
         }
