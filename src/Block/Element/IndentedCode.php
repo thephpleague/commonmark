@@ -55,7 +55,7 @@ class IndentedCode extends AbstractBlock
     public function matchesNextLine(Cursor $cursor)
     {
         if ($cursor->getIndent() >= IndentedCodeParser::CODE_INDENT_LEVEL) {
-            $cursor->advance(IndentedCodeParser::CODE_INDENT_LEVEL);
+            $cursor->advanceBy(IndentedCodeParser::CODE_INDENT_LEVEL);
         } elseif ($cursor->isBlank()) {
             $cursor->advanceToFirstNonSpace();
         } else {

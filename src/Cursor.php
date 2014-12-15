@@ -123,29 +123,6 @@ class Cursor
     }
 
     /**
-     * Safely changes the current position
-     *
-     * @param int $newPosition
-     */
-    private function setCurrentPosition($newPosition)
-    {
-        if ($newPosition === $this->currentPosition) {
-            return;
-        }
-
-        $this->previousPosition = $this->currentPosition;
-
-        if ($newPosition >= $this->length) {
-            $this->currentPosition = $this->length;
-        } else {
-            $this->currentPosition = $newPosition;
-        }
-
-        // Clear the cached value
-        $this->firstNonSpaceCache = null;
-    }
-
-    /**
      * Whether the remainder is blank
      *
      * @return bool
@@ -157,26 +134,43 @@ class Cursor
 
     /**
      * Move the cursor forwards
-     *
-     * @param int|null $characters
-     *   Optional number of characters (defaults to 1)
-     *
-     * @return int
-     *   Number of positions moved
      */
-    public function advance($characters = null)
+    public function advance()
+    {
+        if ($this->currentPosition < $this->length) {
+            $this->previousPosition = $this->currentPosition;
+            ++$this->currentPosition;
+            $this->firstNonSpaceCache = null;
+        }
+    }
+
+    /**
+     * Move the cursor forwards
+     *
+     * @param int $characters
+     *   Number of characters to advance by
+     */
+    public function advanceBy($characters)
     {
         if ($characters === 0) {
-            return 0;
+            return;
+        } elseif ($characters === 1) {
+            $this->advance();
+
+            return;
         }
 
-        if ($characters === null) {
-            $characters = 1;
+        $this->previousPosition = $this->currentPosition;
+        $newPosition = $this->currentPosition + $characters;
+
+        if ($newPosition >= $this->length) {
+            $this->currentPosition = $this->length;
+        } else {
+            $this->currentPosition = $newPosition;
         }
 
-        $this->setCurrentPosition($this->currentPosition + $characters);
-
-        return $this->currentPosition - $this->previousPosition;
+        // Clear the cached value
+        $this->firstNonSpaceCache = null;
     }
 
     /**
@@ -205,11 +199,13 @@ class Cursor
             ++$newIndex;
         }
 
-        if ($newIndex > $start) {
-            return $this->advance($newIndex - $start);
-        } else {
+        if ($newIndex <= $start) {
             return 0;
         }
+
+        $this->advanceBy($newIndex - $start);
+
+        return $this->currentPosition - $this->previousPosition;
     }
 
     /**
@@ -229,7 +225,13 @@ class Cursor
         // [0][1] contains the index of that match
         $increment = $matches[0][1] + strlen($matches[0][0]);
 
-        return $this->advance($increment);
+        if ($increment === 0) {
+            return 0;
+        }
+
+        $this->advanceBy($increment);
+
+        return $this->currentPosition - $this->previousPosition;
     }
 
     /**
@@ -278,7 +280,7 @@ class Cursor
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
-        $this->advance($matches[0][1] + strlen($matches[0][0]));
+        $this->advanceBy($matches[0][1] + strlen($matches[0][0]));
 
         return $matches[0][0];
     }

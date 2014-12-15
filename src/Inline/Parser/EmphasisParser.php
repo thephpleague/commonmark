@@ -51,7 +51,7 @@ class EmphasisParser extends AbstractInlineParser
             ++$numDelims;
         }
 
-        $cursor->advance($numDelims);
+        $cursor->advanceBy($numDelims);
 
         $charAfter = $cursor->getCharacter() ?: "\n";
 

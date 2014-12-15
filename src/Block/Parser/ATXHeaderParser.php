@@ -36,7 +36,7 @@ class ATXHeaderParser extends AbstractBlockParser
 
         $cursor->advanceToFirstNonSpace();
 
-        $cursor->advance(strlen($match[0]));
+        $cursor->advanceBy(strlen($match[0]));
 
         $level = strlen(trim($match[0]));
         $str = $cursor->getRemainder();

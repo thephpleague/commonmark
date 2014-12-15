@@ -60,7 +60,7 @@ class ListParser extends AbstractBlockParser
         $data->padding = $this->calculateListMarkerPadding($matches[0], $spacesAfterMarker, $rest);
 
         $cursor->advanceToFirstNonSpace();
-        $cursor->advance($data->padding);
+        $cursor->advanceBy($data->padding);
 
         // list item
         $data->markerOffset = $indent;

@@ -72,7 +72,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     public function testGetIndent($string, $position, $expectedValue)
     {
         $cursor = new Cursor($string);
-        $cursor->advance($position);
+        $cursor->advanceBy($position);
 
         $this->assertEquals($expectedValue, $cursor->getIndent());
     }
@@ -134,7 +134,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     public function testPeek($string, $position, $expectedValue)
     {
         $cursor = new Cursor($string);
-        $cursor->advance($position);
+        $cursor->advanceBy($position);
 
         $this->assertEquals($expectedValue, $cursor->peek());
     }
@@ -176,25 +176,56 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $string
-     * @param $advance
-     * @param $expectedResult
+     * @param $numberOfAdvances
+     * @param $expectedPosition
      *
      * @dataProvider dataForAdvanceTest
      */
-    public function testAdvance($string, $advance, $expectedResult)
+    public function testAdvance($string, $numberOfAdvances, $expectedPosition)
     {
         $cursor = new Cursor($string);
+        while ($numberOfAdvances--) {
+            $cursor->advance();
+        }
 
-        $this->assertEquals($expectedResult, $cursor->advance($advance));
+        $this->assertEquals($expectedPosition, $cursor->getPosition());
     }
 
     public function dataForAdvanceTest()
     {
         return array(
-            array('', null, 0),
             array('', 0, 0),
+            array('', 1, 0),
             array('', 99, 0),
-            array('foo', null, 1),
+            array('foo', 0, 0),
+            array('foo', 1, 1),
+            array('foo', 2, 2),
+            array('foo', 3, 3),
+            array('foo', 9, 3),
+        );
+    }
+
+    /**
+     * @param $string
+     * @param $advance
+     * @param $expectedPosition
+     *
+     * @dataProvider dataForAdvanceTestBy
+     */
+    public function testAdvanceBy($string, $advance, $expectedPosition)
+    {
+        $cursor = new Cursor($string);
+        $cursor->advanceBy($advance);
+
+        $this->assertEquals($expectedPosition, $cursor->getPosition());
+    }
+
+    public function dataForAdvanceTestBy()
+    {
+        return array(
+            array('', 0, 0),
+            array('', 1, 0),
+            array('', 99, 0),
             array('foo', 0, 0),
             array('foo', 1, 1),
             array('foo', 2, 2),
@@ -206,8 +237,10 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     public function testAdvanceByZero()
     {
         $cursor = new Cursor('foo bar');
-        $this->assertEquals(1, $cursor->advance());
-        $this->assertEquals(0, $cursor->advance(0));
+        $cursor->advance();
+        $this->assertEquals(1, $cursor->getPosition());
+        $cursor->advanceBy(0);
+        $this->assertEquals(1, $cursor->getPosition());
     }
 
     /**
@@ -222,7 +255,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     public function testAdvanceWhileMatches($subject, $startPos, $char, $maxChars, $expectedResult)
     {
         $cursor = new Cursor($subject);
-        $cursor->advance($startPos);
+        $cursor->advanceBy($startPos);
 
         $this->assertEquals($expectedResult, $cursor->advanceWhileMatches($char, $maxChars));
     }
@@ -251,7 +284,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     public function testAdvanceToFirstNonSpace($subject, $startPos, $expectedResult)
     {
         $cursor = new Cursor($subject);
-        $cursor->advance($startPos);
+        $cursor->advanceBy($startPos);
 
         $this->assertEquals($expectedResult, $cursor->advanceToFirstNonSpace());
     }
@@ -283,7 +316,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     public function testGetRemainder($string, $position, $expectedResult)
     {
         $cursor = new Cursor($string);
-        $cursor->advance($position);
+        $cursor->advanceBy($position);
 
         $this->assertEquals($expectedResult, $cursor->getRemainder());
     }
@@ -308,8 +341,10 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     public function testIsAtEnd($string, $advanceBy, $expectedValue)
     {
         $cursor = new Cursor($string);
-        if ($advanceBy !== false) {
-            $cursor->advance($advanceBy);
+        if ($advanceBy === null) {
+            $cursor->advance();
+        } elseif ($advanceBy !== false) {
+            $cursor->advanceBy($advanceBy);
         }
 
         $this->assertEquals($expectedValue, $cursor->isAtEnd());

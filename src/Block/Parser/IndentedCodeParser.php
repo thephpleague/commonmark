@@ -43,7 +43,7 @@ class IndentedCodeParser extends AbstractBlockParser
             return false;
         }
 
-        $cursor->advance(self::CODE_INDENT_LEVEL);
+        $cursor->advanceBy(self::CODE_INDENT_LEVEL);
         $context->addBlock(new IndentedCode());
 
         return true;
