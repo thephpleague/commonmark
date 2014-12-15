@@ -200,7 +200,15 @@ class HtmlRenderer
                     );
                 }
             case BlockElement::TYPE_LIST_ITEM:
-                return trim($this->inTags('li', array(), $this->renderBlocks($block->getChildren(), $inTightList)));
+                $contents = $this->renderBlocks($block->getChildren(), $inTightList);
+                if (substr($contents, 0, 1) === '<') {
+                    $contents = "\n" . $contents;
+                }
+                if (substr($contents, -1, 1) === '>') {
+                    $contents .= "\n";
+                }
+
+                return trim($this->inTags('li', array(), $contents));
             case BlockElement::TYPE_LIST:
                 $listData = $block->getExtra('list_data');
                 $start = isset($listData['start']) ? $listData['start'] : null;
