@@ -28,20 +28,20 @@ class InlineParserEngine
     public function parse(ContextInterface $context, Cursor $cursor)
     {
         $inlineParserContext = new InlineParserContext($cursor);
-        while (!$cursor->isAtEnd()) {
+        while (($character = $cursor->getCharacter()) !== null) {
             $res = null;
-            $character = $cursor->getCharacter();
-            $matchingParsers = $this->environment->getInlineParsersForCharacter($character);
-            foreach ($matchingParsers as $parser) {
-                if ($res = $parser->parse($context, $inlineParserContext)) {
-                    break;
+            if ($matchingParsers = $this->environment->getInlineParsersForCharacter($character)) {
+                foreach ($matchingParsers as $parser) {
+                    if ($res = $parser->parse($context, $inlineParserContext)) {
+                        break;
+                    }
                 }
             }
 
             if (!$res) {
                 $cursor->advance();
                 $lastInline = $inlineParserContext->getInlines()->last();
-                if ($lastInline && $lastInline instanceof Text && !isset($lastInline->attributes['delim'])) {
+                if ($lastInline instanceof Text && !isset($lastInline->attributes['delim'])) {
                     $lastInline->append($character);
                 } else {
                     $inlineParserContext->getInlines()->add(new Text($character));

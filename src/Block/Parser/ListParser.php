@@ -86,12 +86,12 @@ class ListParser extends AbstractBlockParser
      */
     private function calculateListMarkerPadding($marker, $spacesAfterMarker, $rest)
     {
-        $isBlankItem = strlen($marker) === strlen($rest);
+        $markerLength = strlen($marker);
 
-        if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $isBlankItem) {
-            return strlen($marker) - $spacesAfterMarker + 1;
+        if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $markerLength === strlen($rest)) {
+            return $markerLength - $spacesAfterMarker + 1;
         }
 
-        return strlen($marker);
+        return $markerLength;
     }
 }
