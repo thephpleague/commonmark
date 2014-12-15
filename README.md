@@ -81,8 +81,8 @@ The following table shows which versions of commonmark-php are compatible with w
             <td>current spec (as of Dec 15 '14)</td>
         </tr>
         <tr>
-            <td><strong>0.3.x<strong></td>
-            <td><strong><a href="http://spec.commonmark.org/0.12/">0.12</a></strong></td>
+            <td>0.3.x</td>
+            <td><a href="http://spec.commonmark.org/0.12/">0.12</a></td>
             <td></td>
         </tr>
         <tr>
