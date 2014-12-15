@@ -43,7 +43,7 @@ class OpenBracketParser extends AbstractInlineParser
         }
 
         $inlineContext->getCursor()->advance();
-        $inlineContext->getInlines()->add(new Text('['));
+        $inlineContext->getInlines()->add(new Text('[', array('delim' => true)));
 
         // Add entry to stack for this opener
         $delimiter = new Delimiter('[', 1, $inlineContext->getInlines()->count() - 1, true, false, $inlineContext->getCursor()->getPosition());

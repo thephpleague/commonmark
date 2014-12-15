@@ -63,7 +63,7 @@ class EmphasisParser extends AbstractInlineParser
         }
 
         $inlineContext->getInlines()->add(
-            new Text($cursor->getPreviousText())
+            new Text($cursor->getPreviousText(), array('delim' => true))
         );
 
         // Add entry to stack to this opener

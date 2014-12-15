@@ -16,4 +16,8 @@ namespace League\CommonMark\Inline\Element;
 
 class Text extends AbstractStringContainer
 {
+    public function append($character)
+    {
+        $this->content .= $character;
+    }
 }

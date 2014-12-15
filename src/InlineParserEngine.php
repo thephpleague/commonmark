@@ -40,7 +40,12 @@ class InlineParserEngine
 
             if (!$res) {
                 $cursor->advance();
-                $inlineParserContext->getInlines()->add(new Text($character));
+                $lastInline = $inlineParserContext->getInlines()->last();
+                if ($lastInline && $lastInline instanceof Text && !isset($lastInline->attributes['delim'])) {
+                    $lastInline->append($character);
+                } else {
+                    $inlineParserContext->getInlines()->add(new Text($character));
+                }
             }
         }
 
