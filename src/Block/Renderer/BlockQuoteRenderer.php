@@ -29,6 +29,10 @@ class BlockQuoteRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
+        if (!($block instanceof BlockQuote)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
         $filling = $htmlRenderer->renderBlocks($block->getChildren());
         if ($filling === '') {
             return $htmlRenderer->inTags('blockquote', array(), $htmlRenderer->getOption('innerSeparator'));

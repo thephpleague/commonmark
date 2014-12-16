@@ -28,6 +28,10 @@ class TextRenderer implements InlineRendererInterface
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
+        if (!($inline instanceof Text)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        }
+
         return $htmlRenderer->escape($inline->getContent());
     }
 }

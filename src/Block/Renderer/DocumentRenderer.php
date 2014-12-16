@@ -28,6 +28,10 @@ class DocumentRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
+        if (!($block instanceof Document)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
         $wholeDoc = $htmlRenderer->renderBlocks($block->getChildren());
 
         return $wholeDoc === '' ? '' : $wholeDoc . "\n";

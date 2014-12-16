@@ -29,6 +29,10 @@ class FencedCodeRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
+        if (!($block instanceof FencedCode)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
         $infoWords = $block->getInfoWords();
         $attr = count($infoWords) === 0 || strlen(
             $infoWords[0]

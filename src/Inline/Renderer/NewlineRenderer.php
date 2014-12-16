@@ -28,6 +28,10 @@ class NewlineRenderer implements InlineRendererInterface
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
+        if (!($inline instanceof Newline)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        }
+
         if ($inline->getType() === Newline::HARDBREAK) {
             return $htmlRenderer->inTags('br', array(), '', true) . "\n";
         } else {

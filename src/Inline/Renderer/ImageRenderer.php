@@ -28,6 +28,10 @@ class ImageRenderer implements InlineRendererInterface
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
+        if (!($inline instanceof Image)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        }
+
         $attrs = array();
 
         $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);

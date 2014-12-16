@@ -29,6 +29,10 @@ class ListBlockRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
+        if (!($block instanceof ListBlock)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
         $listData = $block->getListData();
         $start = $listData->start ?: null;
 

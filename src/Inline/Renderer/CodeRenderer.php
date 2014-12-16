@@ -28,6 +28,10 @@ class CodeRenderer implements InlineRendererInterface
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
+        if (!($inline instanceof Code)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        }
+
         return $htmlRenderer->inTags('code', array(), $htmlRenderer->escape($inline->getContent()));
     }
 }

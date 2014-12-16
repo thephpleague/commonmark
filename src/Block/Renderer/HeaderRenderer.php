@@ -29,6 +29,10 @@ class HeaderRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
+        if (!($block instanceof Header)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
         $tag = 'h' . $block->getLevel();
 
         return $htmlRenderer->inTags($tag, array(), $htmlRenderer->renderInlines($block->getInlines()));

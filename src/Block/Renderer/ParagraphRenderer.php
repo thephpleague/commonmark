@@ -29,6 +29,10 @@ class ParagraphRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
+        if (!($block instanceof Paragraph)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
         if ($inTightList) {
             return $htmlRenderer->renderInlines($block->getInlines());
         } else {

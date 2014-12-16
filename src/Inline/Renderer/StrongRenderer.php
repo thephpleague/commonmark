@@ -28,6 +28,10 @@ class StrongRenderer implements InlineRendererInterface
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
+        if (!($inline instanceof Strong)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        }
+
         return $htmlRenderer->inTags('strong', array(), $htmlRenderer->renderInlines($inline->getInlineContents()));
     }
 }

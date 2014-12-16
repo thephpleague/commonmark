@@ -28,6 +28,10 @@ class LinkRenderer implements InlineRendererInterface
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
+        if (!($inline instanceof Link)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        }
+
         $attrs = array();
 
         $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
