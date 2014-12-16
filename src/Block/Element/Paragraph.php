@@ -66,11 +66,7 @@ class Paragraph extends AbstractInlineContainer
     {
         parent::finalize($context);
 
-        $this->finalStringContents = preg_replace(
-            '/^  */m',
-            '',
-            implode("\n", $this->getStrings())
-        );
+        $this->finalStringContents = preg_replace('/^  */m', '', implode("\n", $this->getStrings()));
 
         // Short-circuit
         if ($this->finalStringContents === '' || $this->finalStringContents[0] !== '[') {
@@ -79,17 +75,30 @@ class Paragraph extends AbstractInlineContainer
 
         $cursor = new Cursor($this->finalStringContents);
 
-        $referenceFound = false;
-        while ($cursor->getCharacter() === '[' && $context->getReferenceParser()->parse($cursor)) {
-            $this->finalStringContents = $cursor->getRemainder();
-            $referenceFound = true;
-        }
+        $referenceFound = $this->parseReferences($context, $cursor);
 
         $this->finalStringContents = $cursor->getRemainder();
 
         if ($referenceFound && $cursor->isAtEnd()) {
             $this->parent->removeChild($this);
         }
+    }
+
+    /**
+     * @param ContextInterface $context
+     * @param Cursor $cursor
+     *
+     * @return bool
+     */
+    private function parseReferences(ContextInterface $context, Cursor $cursor)
+    {
+        $referenceFound = false;
+        while ($cursor->getCharacter() === '[' && $context->getReferenceParser()->parse($cursor)) {
+            $this->finalStringContents = $cursor->getRemainder();
+            $referenceFound = true;
+        }
+
+        return $referenceFound;
     }
 
     /**
