@@ -62,6 +62,33 @@ echo $htmlRenderer ->render($document);
 // <h1>Hello World!</h1>
 ```
 
+## Customization
+
+You can add your own parsers and renderers by calling the respective methods on the `Environment` class.
+
+For example, if you wanted to autolink Twitter handles, you'd need to register a new inline parser to handle the `@` character:
+
+```php
+
+class TwitterHandleParser extends AbstractInlineParser
+{
+    public function getCharacters() {
+        return array('@');
+    }
+
+    public function parse(ContextInterface $context, InlineParserContext $inlineContext) {
+        // TODO: Use $inlineContext->getCursor() to parse through the current line
+        $inlineContext->getInlines()->add(new Link($profileUrl, $handle));
+        return true;
+    }
+}
+
+$environment = Environment::createCommonMarkEnvironment();
+$environment->addInlineParser(new TwitterHandleParser());
+```
+
+The core CommonMark directives use the same functionality internally so feel free to reference those implementations.
+
 ## Compatibility with CommonMark ##
 
 This project aims to fully support the entire [CommonMark spec]. Other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [JS reference implementation][stmd.js] should eventually find their way back into this codebase.
