@@ -194,16 +194,17 @@ class FencedCode extends AbstractBlock
         $container = $context->getContainer();
 
         // check for closing code fence
-        $test = ($cursor->getIndent() <= 3 &&
-            $cursor->getFirstNonSpaceCharacter() == $container->getChar() &&
-            $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition())
-        );
-        if ($test && strlen($match[0]) >= $container->getLength()) {
-            // don't add closing fence to container; instead, close it:
-            $container->finalize($context);
-        } else {
-            $context->getTip()->addLine($cursor->getRemainder());
+        if ($cursor->getIndent() <= 3 && $cursor->getFirstNonSpaceCharacter() == $container->getChar()) {
+            $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
+            if (strlen($match[0]) >= $container->getLength()) {
+                // don't add closing fence to container; instead, close it:
+                $container->finalize($context);
+
+                return;
+            }
         }
+
+        $context->getTip()->addLine($cursor->getRemainder());
     }
 
     /**

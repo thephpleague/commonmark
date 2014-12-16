@@ -121,7 +121,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * @param AbstractBlock $block
+     * @param AbstractBlock|null $block
      *
      * @return $this
      */

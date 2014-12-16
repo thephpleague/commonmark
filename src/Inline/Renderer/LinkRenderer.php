@@ -28,7 +28,10 @@ class LinkRenderer implements InlineRendererInterface
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
+        $attrs = array();
+
         $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
+
         if (isset($inline->attributes['title'])) {
             $attrs['title'] = $htmlRenderer->escape($inline->attributes['title'], true);
         }

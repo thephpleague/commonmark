@@ -34,6 +34,8 @@ class ReferenceParser
      * Attempt to parse a link reference, modifying the refmap.
      *
      * @param Cursor $cursor
+     *
+     * @return bool
      */
     public function parse(Cursor $cursor)
     {

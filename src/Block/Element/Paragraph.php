@@ -80,7 +80,7 @@ class Paragraph extends AbstractInlineContainer
         $cursor = new Cursor($this->finalStringContents);
 
         $referenceFound = false;
-        while ($cursor->getCharacter() === '[' & ($pos = $context->getReferenceParser()->parse($cursor))) {
+        while ($cursor->getCharacter() === '[' && $context->getReferenceParser()->parse($cursor)) {
             $this->finalStringContents = $cursor->getRemainder();
             $referenceFound = true;
         }

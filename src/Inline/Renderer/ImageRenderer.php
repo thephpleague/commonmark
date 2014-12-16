@@ -28,10 +28,14 @@ class ImageRenderer implements InlineRendererInterface
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
+        $attrs = array();
+
         $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
+
         $alt = $htmlRenderer->renderInlines($inline->getAltText()->getInlines());
         $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
+
         if (isset($inline->attributes['title'])) {
             $attrs['title'] = $htmlRenderer->escape($inline->attributes['title'], true);
         }

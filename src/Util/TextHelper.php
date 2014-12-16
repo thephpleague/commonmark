@@ -17,7 +17,7 @@ namespace League\CommonMark\Util;
 class TextHelper
 {
     /**
-     * @param $string $string
+     * @param string $string
      *
      * @return string
      */
