@@ -62,14 +62,14 @@ echo $htmlRenderer ->render($document);
 
 ## Compatibility with CommonMark ##
 
-This project aims to fully support the entire [CommonMark spec] - other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [JS reference implementation][stmd.js] should eventually find their way back into this codebase.
+This project aims to fully support the entire [CommonMark spec]. Other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [JS reference implementation][stmd.js] should eventually find their way back into this codebase.
 
-The following table shows which versions of commonmark-php are compatible with which version of the CommonMark spec:
+The following table shows which versions of league/commonmark are compatible with which version of the CommonMark spec:
 
 <table>
     <thead>
         <tr>
-            <th>commonmark-php</th>
+            <th>league/commonmark</th>
             <th>CommonMark spec</th>
             <th>Notes</th>
         </tr>
@@ -98,7 +98,7 @@ The following table shows which versions of commonmark-php are compatible with w
     </tbody>
 </table>
 
-This is **not** part of CommonMark, but rather a compatible derivative.
+This package is **not** part of CommonMark, but rather a compatible derivative.
 
 ## Testing
 
@@ -106,7 +106,7 @@ This is **not** part of CommonMark, but rather a compatible derivative.
 $ ./vendor/bin/phpunit
 ```
 
-This will also test commonmark-php against the latest supported spec.
+This will also test league/commonmark against the latest supported spec.
 
 ## Performance Benchmarks
 
