@@ -44,9 +44,9 @@ class SetExtHeaderParser extends AbstractBlockParser
         }
 
         $level = $match[0][0] === '=' ? 1 : 2;
-        $content = reset($context->getContainer()->getStrings());
+        $strings = $context->getContainer()->getStrings();
 
-        $context->replaceContainerBlock(new Header($level, $content));
+        $context->replaceContainerBlock(new Header($level, reset($strings)));
 
         return true;
     }
