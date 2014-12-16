@@ -29,11 +29,12 @@ class CommonMarkConverter
      */
     public function convertToHtml($commonMark)
     {
-        $docParser = new DocParser();
-        $renderer = new HtmlRenderer();
+        $environment = Environment::createCommonMarkEnvironment();
+        $docParser = new DocParser($environment);
+        $renderer = new HtmlRenderer($environment);
 
         $documentAST = $docParser->parse($commonMark);
-        $html = $renderer->render($documentAST);
+        $html = $renderer->renderBlock($documentAST);
 
         return $html;
     }

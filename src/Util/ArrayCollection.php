@@ -115,6 +115,26 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     }
 
     /**
+     * @param mixed $element
+     *
+     * @return bool
+     */
+    public function contains($element)
+    {
+        return in_array($element, $this->elements, true);
+    }
+
+    /**
+     * @param mixed $element
+     *
+     * @return mixed|false
+     */
+    public function indexOf($element)
+    {
+        return array_search($element, $this->elements, true);
+    }
+
+    /**
      * @param mixed $key
      *
      * @return bool

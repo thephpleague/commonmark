@@ -14,10 +14,9 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Element\BlockElement;
-use League\CommonMark\Element\InlineElement;
-use League\CommonMark\Element\InlineElementInterface;
-use League\CommonMark\Util\ArrayCollection;
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\ReferenceDefinition;
+use League\CommonMark\Inline\Element\AbstractBaseInline;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -27,6 +26,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class HtmlRenderer
 {
     /**
+     * @var Environment
+     */
+    protected $environment;
+
+    /**
      * @var array
      */
     protected $options;
@@ -34,8 +38,10 @@ class HtmlRenderer
     /**
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct(Environment $environment, array $options = array())
     {
+        $this->environment = $environment;
+
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
         $this->options = $resolver->resolve($options);
@@ -54,12 +60,22 @@ class HtmlRenderer
     }
 
     /**
+     * @param string $option
+     *
+     * @return mixed
+     */
+    public function getOption($option)
+    {
+        return $this->options[$option];
+    }
+
+    /**
      * @param string $string
      * @param bool   $preserveEntities
      *
      * @return string
      */
-    protected function escape($string, $preserveEntities = false)
+    public function escape($string, $preserveEntities = false)
     {
         if ($preserveEntities) {
             $string = preg_replace('/[&](?![#](x[a-f0-9]{1,8}|[0-9]{1,8});|[a-z][a-z0-9]{1,31};)/i', '&amp;', $string);
@@ -67,13 +83,7 @@ class HtmlRenderer
             $string = str_replace('&', '&amp;', $string);
         }
 
-        $string = strtr($string, array(
-            '<' => '&lt;',
-            '>' => '&gt;',
-            '"' => '&quot;'
-        ));
-
-        return $string;
+        return str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $string);
     }
 
     /**
@@ -86,7 +96,7 @@ class HtmlRenderer
      *
      * @return string
      */
-    protected function inTags($tag, $attribs = array(), $contents = null, $selfClosing = false)
+    public function inTags($tag, $attribs = array(), $contents = null, $selfClosing = false)
     {
         $result = '<' . $tag;
 
@@ -106,58 +116,28 @@ class HtmlRenderer
     }
 
     /**
-     * @param InlineElementInterface $inline
+     * @param AbstractBaseInline $inline
      *
      * @return mixed|string
      *
-     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
-    protected function renderInline(InlineElementInterface $inline)
+    protected function renderInline(AbstractBaseInline $inline)
     {
-        $attrs = array();
-        switch ($inline->getType()) {
-            case InlineElement::TYPE_TEXT:
-                return $this->escape($inline->getContents());
-            case InlineElement::TYPE_SOFTBREAK:
-                return $this->options['softBreak'];
-            case InlineElement::TYPE_HARDBREAK:
-                return $this->inTags('br', array(), '', true) . "\n";
-            case InlineElement::TYPE_EMPH:
-                return $this->inTags('em', array(), $this->renderInlines($inline->getContents()));
-            case InlineElement::TYPE_STRONG:
-                return $this->inTags('strong', array(), $this->renderInlines($inline->getContents()));
-            case InlineElement::TYPE_HTML:
-                return $inline->getContents();
-            case InlineElement::TYPE_LINK:
-                $attrs['href'] = $this->escape($inline->getAttribute('destination'), true);
-                if ($title = $inline->getAttribute('title')) {
-                    $attrs['title'] = $this->escape($title, true);
-                }
-
-                return $this->inTags('a', $attrs, $this->renderInlines($inline->getAttribute('label')));
-            case InlineElement::TYPE_IMAGE:
-                $attrs['src'] = $this->escape($inline->getAttribute('destination'), true);
-                $alt = $this->renderInlines($inline->getAttribute('label'));
-                $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
-                $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
-                if ($title = $inline->getAttribute('title')) {
-                    $attrs['title'] = $this->escape($title, true);
-                }
-
-                return $this->inTags('img', $attrs, '', true);
-            case InlineElement::TYPE_CODE:
-                return $this->inTags('code', array(), $this->escape($inline->getContents()));
-            default:
-                throw new \InvalidArgumentException('Unknown inline type: ' . $inline->getType());
+        $renderer = $this->environment->getInlineRendererForClass(get_class($inline));
+        if (!$renderer) {
+            throw new \RuntimeException('Unable to find corresponding renderer for block type ' . get_class($inline));
         }
+
+        return $renderer->render($inline, $this);
     }
 
     /**
-     * @param ArrayCollection|InlineElementInterface[] $inlines
+     * @param AbstractBaseInline[] $inlines
      *
      * @return string
      */
-    protected function renderInlines($inlines)
+    public function renderInlines($inlines)
     {
         $result = array();
         foreach ($inlines as $inline) {
@@ -168,128 +148,38 @@ class HtmlRenderer
     }
 
     /**
-     * @param BlockElement $block
+     * @param AbstractBlock $block
      * @param bool         $inTightList
      *
      * @return string
      *
      * @throws \RuntimeException
      */
-    protected function renderBlock(BlockElement $block, $inTightList = false)
+    public function renderBlock(AbstractBlock $block, $inTightList = false)
     {
-        switch ($block->getType()) {
-            case BlockElement::TYPE_DOCUMENT:
-                $wholeDoc = $this->renderBlocks($block->getChildren());
-
-                return $wholeDoc === '' ? '' : $wholeDoc . "\n";
-            case BlockElement::TYPE_PARAGRAPH:
-                if ($inTightList) {
-                    return $this->renderInlines($block->getInlineContent());
-                } else {
-                    return $this->inTags('p', array(), $this->renderInlines($block->getInlineContent()));
-                }
-            case BlockElement::TYPE_BLOCK_QUOTE:
-                $filling = $this->renderBlocks($block->getChildren());
-                if ($filling === '') {
-                    return $this->inTags('blockquote', array(), $this->options['innerSeparator']);
-                } else {
-                    return $this->inTags(
-                        'blockquote',
-                        array(),
-                        $this->options['innerSeparator'] . $filling . $this->options['innerSeparator']
-                    );
-                }
-            case BlockElement::TYPE_LIST_ITEM:
-                $contents = $this->renderBlocks($block->getChildren(), $inTightList);
-                if (substr($contents, 0, 1) === '<') {
-                    $contents = "\n" . $contents;
-                }
-                if (substr($contents, -1, 1) === '>') {
-                    $contents .= "\n";
-                }
-
-                return trim($this->inTags('li', array(), $contents));
-            case BlockElement::TYPE_LIST:
-                $listData = $block->getExtra('list_data');
-                $start = isset($listData['start']) ? $listData['start'] : null;
-
-                $tag = $listData['type'] == BlockElement::LIST_TYPE_UNORDERED ? 'ul' : 'ol';
-                $attr = (!$start || $start == 1) ?
-                    array() : array('start' => (string)$start);
-
-                return $this->inTags(
-                    $tag,
-                    $attr,
-                    $this->options['innerSeparator'] . $this->renderBlocks(
-                        $block->getChildren(),
-                        $block->getExtra('tight')
-                    ) . $this->options['innerSeparator']
-                );
-            case BlockElement::TYPE_HEADER:
-                $tag = 'h' . $block->getExtra('level');
-
-                return $this->inTags($tag, array(), $this->renderInlines($block->getInlineContent()));
-
-            case BlockElement::TYPE_INDENTED_CODE:
-                return $this->inTags(
-                    'pre',
-                    array(),
-                    $this->inTags('code', array(), $this->escape($block->getStringContent()))
-                );
-
-            case BlockElement::TYPE_FENCED_CODE:
-                $infoWords = preg_split('/ +/', $block->getExtra('info'));
-                $attr = count($infoWords) === 0 || strlen(
-                    $infoWords[0]
-                ) === 0 ? array() : array('class' => 'language-' . $this->escape($infoWords[0], true));
-                return $this->inTags(
-                    'pre',
-                    array(),
-                    $this->inTags('code', $attr, $this->escape($block->getStringContent()))
-                );
-
-            case BlockElement::TYPE_HTML_BLOCK:
-                return $block->getStringContent();
-
-            case BlockElement::TYPE_REFERENCE_DEF:
-                return '';
-
-            case BlockElement::TYPE_HORIZONTAL_RULE:
-                return $this->inTags('hr', array(), '', true);
-
-            default:
-                throw new \RuntimeException('Unknown block type: ' . $block->getType());
+        $renderer = $this->environment->getBlockRendererForClass(get_class($block));
+        if (!$renderer) {
+            throw new \RuntimeException('Unable to find corresponding renderer for block type ' . get_class($block));
         }
+
+        return $renderer->render($block, $this, $inTightList);
     }
 
     /**
-     * @param ArrayCollection|BlockElement[] $blocks
-     * @param bool                           $inTightList
+     * @param AbstractBlock[] $blocks
+     * @param bool            $inTightList
      *
      * @return string
      */
-    protected function renderBlocks($blocks, $inTightList = false)
+    public function renderBlocks($blocks, $inTightList = false)
     {
         $result = array();
         foreach ($blocks as $block) {
-            if ($block->getType() !== 'ReferenceDef') {
+            if (!($block instanceof ReferenceDefinition)) {
                 $result[] = $this->renderBlock($block, $inTightList);
             }
         }
 
         return implode($this->options['blockSeparator'], $result);
-    }
-
-    /**
-     * @param BlockElement $block
-     * @param bool         $inTightList
-     *
-     * @return string
-     *
-     * @api
-     */
-    public function render(BlockElement $block, $inTightList = false)
-    {
-        return $this->renderBlock($block, $inTightList);
     }
 }
