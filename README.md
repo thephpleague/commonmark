@@ -57,7 +57,7 @@ $htmlRenderer = new HtmlRenderer($environment);
 $markdown = '# Hello World!';
 
 $document = $parser->parse($markdown);
-echo $htmlRenderer ->render($document);
+echo $htmlRenderer->render($document);
 
 // <h1>Hello World!</h1>
 ```
