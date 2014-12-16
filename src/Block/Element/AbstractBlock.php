@@ -185,6 +185,11 @@ abstract class AbstractBlock
      */
     abstract public function handleRemainingContents(ContextInterface $context, Cursor $cursor);
 
+    /**
+     * @param int $startLine
+     *
+     * @return $this
+     */
     public function setStartLine($startLine)
     {
         $this->startLine = $startLine;

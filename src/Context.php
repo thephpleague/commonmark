@@ -16,7 +16,6 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Parser;
 
 /**
  * Parses Markdown into an AST

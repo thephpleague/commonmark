@@ -14,11 +14,11 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\ContextInterface;
-use League\CommonMark\Cursor;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\ListData;
 use League\CommonMark\Block\Element\ListItem;
+use League\CommonMark\ContextInterface;
+use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
 class ListParser extends AbstractBlockParser

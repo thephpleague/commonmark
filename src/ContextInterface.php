@@ -79,6 +79,8 @@ interface ContextInterface
 
     /**
      * @param AbstractBlock $replacement
+     *
+     * @return void
      */
     public function replaceContainerBlock(AbstractBlock $replacement);
 

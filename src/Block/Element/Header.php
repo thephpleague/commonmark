@@ -24,6 +24,10 @@ class Header extends AbstractInlineContainer
      */
     protected $level;
 
+    /**
+     * @param int $level
+     * @param string $contents
+     */
     public function __construct($level, $contents)
     {
         parent::__construct();

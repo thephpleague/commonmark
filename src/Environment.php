@@ -194,17 +194,17 @@ class Environment
     }
 
     /**
-     * @param string $blockClass
+     * @param string $inlineClass
      *
-     * @return BlockRendererInterface|null
+     * @return InlineRendererInterface|null
      */
-    public function getInlineRendererForClass($class)
+    public function getInlineRendererForClass($inlineClass)
     {
-        if (!isset($this->inlineRenderersByClass[$class])) {
+        if (!isset($this->inlineRenderersByClass[$inlineClass])) {
             return null;
         }
 
-        return $this->inlineRenderersByClass[$class];
+        return $this->inlineRenderersByClass[$inlineClass];
     }
 
     public function createInlineParserEngine()

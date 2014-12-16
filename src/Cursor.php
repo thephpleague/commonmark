@@ -111,7 +111,7 @@ class Cursor
      *
      * @param int $offset
      *
-     * @return null
+     * @return string|null
      */
     public function peek($offset = 1)
     {

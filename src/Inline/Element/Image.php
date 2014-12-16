@@ -21,6 +21,11 @@ class Image extends AbstractWebResource
      */
     protected $altText;
 
+    /**
+     * @param string $url
+     * @param InlineCollection|string $label
+     * @param string $title
+     */
     public function __construct($url, $label = null, $title = '')
     {
         parent::__construct($url);

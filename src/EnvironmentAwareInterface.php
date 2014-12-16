@@ -15,6 +15,8 @@ interface EnvironmentAwareInterface
 {
     /**
      * @param Environment $environment
+     *
+     * @return void
      */
     public function setEnvironment(Environment $environment);
 }

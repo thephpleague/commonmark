@@ -19,7 +19,6 @@ use League\CommonMark\Block\Element\AbstractInlineContainer;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Block\Parser;
 use League\CommonMark\Util\TextHelper;
 
 class DocParser
@@ -66,6 +65,11 @@ class DocParser
         return preg_split('/\r\n|\n|\r/', $input);
     }
 
+    /**
+     * @param string $input
+     *
+     * @return Document
+     */
     public function parse($input)
     {
         $context = new Context(new Document(), $this->getEnvironment());

@@ -14,10 +14,10 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\ContextInterface;
-use League\CommonMark\Cursor;
 use League\CommonMark\Block\Element\Header;
 use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\ContextInterface;
+use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
 class SetExtHeaderParser extends AbstractBlockParser

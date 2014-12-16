@@ -41,9 +41,9 @@ class FencedCode extends AbstractBlock
     private $offset;
 
     /**
-     * @param $length
-     * @param $char
-     * @param $offset
+     * @param int $length
+     * @param string $char
+     * @param int $offset
      */
     public function __construct($length, $char, $offset)
     {

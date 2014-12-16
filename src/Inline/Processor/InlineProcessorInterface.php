@@ -20,5 +20,12 @@ use League\CommonMark\Util\ArrayCollection;
 
 interface InlineProcessorInterface
 {
+    /**
+     * @param ArrayCollection $inlines
+     * @param DelimiterStack $delimiterStack
+     * @param Delimiter $stackBottom
+     *
+     * @return void
+     */
     public function processInlines(ArrayCollection $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null);
 }

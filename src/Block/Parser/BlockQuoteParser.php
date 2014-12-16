@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Block\Parser;
 
+use League\CommonMark\Block\Element\BlockQuote;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Block\Element\BlockQuote;
 
 class BlockQuoteParser extends AbstractBlockParser
 {

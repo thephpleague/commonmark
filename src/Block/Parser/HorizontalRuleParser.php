@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Block\Parser;
 
+use League\CommonMark\Block\Element\HorizontalRule;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Block\Element\HorizontalRule;
 use League\CommonMark\Util\RegexHelper;
 
 class HorizontalRuleParser extends AbstractBlockParser

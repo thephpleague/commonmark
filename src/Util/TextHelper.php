@@ -16,6 +16,11 @@ namespace League\CommonMark\Util;
 
 class TextHelper
 {
+    /**
+     * @param $string $string
+     *
+     * @return string
+     */
     public static function detabLine($string)
     {
         if (strpos($string, "\t") === false) {

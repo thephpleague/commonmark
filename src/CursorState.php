@@ -38,6 +38,13 @@ class CursorState
      */
     private $firstNonSpaceCache;
 
+    /**
+     * @param string $line
+     * @param int $length
+     * @param int $currentPosition
+     * @param int $previousPosition
+     * @param int|null $firstNonSpaceCache
+     */
     public function __construct($line, $length, $currentPosition, $previousPosition, $firstNonSpaceCache)
     {
         $this->line = $line;

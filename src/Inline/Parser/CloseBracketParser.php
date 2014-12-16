@@ -15,13 +15,13 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
+use League\CommonMark\Environment;
+use League\CommonMark\EnvironmentAwareInterface;
+use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\InlineCollection;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Environment;
-use League\CommonMark\EnvironmentAwareInterface;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\ArrayCollection;
 use League\CommonMark\Util\LinkParserHelper;
 

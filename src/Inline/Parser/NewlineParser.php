@@ -15,8 +15,8 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
-use League\CommonMark\Inline\Element\Newline;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Inline\Element\Newline;
 
 class NewlineParser extends AbstractInlineParser
 {

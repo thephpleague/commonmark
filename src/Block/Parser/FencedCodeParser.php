@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Block\Parser;
 
+use League\CommonMark\Block\Element\FencedCode;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Block\Element\FencedCode;
 
 class FencedCodeParser extends AbstractBlockParser
 {

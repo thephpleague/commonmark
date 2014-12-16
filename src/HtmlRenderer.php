@@ -62,7 +62,7 @@ class HtmlRenderer
     /**
      * @param string $option
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function getOption($option)
     {
@@ -118,7 +118,7 @@ class HtmlRenderer
     /**
      * @param AbstractBaseInline $inline
      *
-     * @return mixed|string
+     * @return string
      *
      * @throws \RuntimeException
      */

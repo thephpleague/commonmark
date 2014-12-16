@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Block\Element;
 
+use League\CommonMark\Block\Parser\IndentedCodeParser;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Block\Parser\IndentedCodeParser;
 
 class IndentedCode extends AbstractBlock
 {

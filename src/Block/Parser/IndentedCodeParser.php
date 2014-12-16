@@ -14,10 +14,10 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\ContextInterface;
-use League\CommonMark\Cursor;
 use League\CommonMark\Block\Element\IndentedCode;
 use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\ContextInterface;
+use League\CommonMark\Cursor;
 
 class IndentedCodeParser extends AbstractBlockParser
 {

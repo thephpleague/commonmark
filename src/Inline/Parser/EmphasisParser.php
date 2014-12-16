@@ -16,8 +16,8 @@ namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Inline\Element\Text;
 
 class EmphasisParser extends AbstractInlineParser
 {

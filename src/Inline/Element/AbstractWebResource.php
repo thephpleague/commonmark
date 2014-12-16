@@ -27,7 +27,7 @@ abstract class AbstractWebResource extends AbstractBaseInline
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getUrl()
     {

@@ -15,8 +15,8 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
-use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Util\UrlEncoder;
 
 class AutolinkParser extends AbstractInlineParser

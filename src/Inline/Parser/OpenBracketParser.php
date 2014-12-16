@@ -15,10 +15,9 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
-use League\CommonMark\Cursor;
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Inline\Element\Text;
 
 class OpenBracketParser extends AbstractInlineParser
 {
@@ -32,9 +31,9 @@ class OpenBracketParser extends AbstractInlineParser
 
     /**
      * @param ContextInterface $context
-     * @param Cursor $cursor
+     * @param InlineParserContext $inlineContext
      *
-     * @return mixed
+     * @return bool
      */
     public function parse(ContextInterface $context, InlineParserContext $inlineContext)
     {
