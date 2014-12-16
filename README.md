@@ -47,10 +47,12 @@ You can do this yourself if you wish:
 
 ```php
 use League\CommonMark\DocParser;
+use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
 
-$parser = new DocParser();
-$htmlRenderer = new HtmlRenderer();
+$environment = Environment::createCommonMarkEnvironment();
+$parser = new DocParser($environment);
+$htmlRenderer = new HtmlRenderer($environment);
 
 $markdown = '# Hello World!';
 
