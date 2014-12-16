@@ -61,10 +61,10 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         // Look through stack of delimiters for a [ or !
         $opener = $inlineContext->getDelimiterStack()->searchByCharacter(array('[', '!'));
         if ($opener === null) {
-            // No matched opener, just return a literal
-            $inlineContext->getInlines()->add(new Text(']'));
+            // No matched opener
+            $cursor->restoreState($previousState);
 
-            return true;
+            return false;
         }
 
         // If we got here, open is a potential opener
