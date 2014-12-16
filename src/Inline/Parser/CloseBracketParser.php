@@ -63,17 +63,13 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
-        // If we got here, open is a potential opener
         $isImage = $opener->getChar() === '!';
-        // Instead of copying a slice, we null out the
-        // parts of inlines that don't correspond to linkText;
-        // later, we'll collapse them. This is awkways, and coul
-        // be simplified if we made inlines a linked list rather than
-        // and array:
-        $linkTextInlines = new ArrayCollection($inlineContext->getInlines()->toArray());
-        for ($i = 0; $i < $opener->getPos() + 1; $i++) {
-            $linkTextInlines->set($i, null);
-        }
+
+        // Instead of copying a slice, we null out the parts of inlines that don't correspond to linkText; later, we'll
+        // collapse them. This is awkward, and could  be simplified if we made inlines a linked list instead
+        $inlines = $inlineContext->getInlines();
+        $labelInlines = new ArrayCollection($inlines->toArray());
+        $this->nullify($labelInlines, 0, $opener->getPos() + 1);
 
         $cursor->advance();
 
@@ -86,27 +82,20 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
-        $dest = $link['dest'];
-        $title = $link['title'];
-
         foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($linkTextInlines, $inlineContext->getDelimiterStack(), $opener->getPrevious());
+            $inlineProcessor->processInlines($labelInlines, $inlineContext->getDelimiterStack(), $opener->getPrevious());
         }
 
         // Remove the part of inlines that become link_text
-        // See noter above on why we need to do this instead of splice:
-        for ($i = $opener->getPos(); $i < $inlineContext->getInlines()->count(); $i++) {
-            $inlineContext->getInlines()->set($i, null);
-        }
+        $this->nullify($inlines, $opener->getPos(), $inlines->count());
+
         // processEmphasis will remove this and later delimiters.
-        // Now, for a link, we also remove earlier link openers
-        // (no links in links)
+        // Now, for a link, we also remove earlier link openers (no links in links)
         if (!$isImage) {
             $inlineContext->getDelimiterStack()->removeEarlierMatches('[');
         }
 
-        $inline = $this->createInline($dest, new InlineCollection($linkTextInlines), $title, $isImage);
-        $inlineContext->getInlines()->add($inline);
+        $inlines->add($this->createInline($link['url'], new InlineCollection($labelInlines), $link['title'], $isImage));
 
         return true;
     }
@@ -117,6 +106,18 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     public function setEnvironment(Environment $environment)
     {
         $this->environment = $environment;
+    }
+
+    /**
+     * @param ArrayCollection $collection
+     * @param int $start
+     * @param int $end
+     */
+    private function nullify(ArrayCollection $collection, $start, $end)
+    {
+        for ($i = $start; $i < $end; $i++) {
+            $collection->set($i, null);
+        }
     }
 
     /**
@@ -136,7 +137,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
                 return $result;
             }
         } elseif ($link = $this->tryParseReference($cursor, $referenceMap, $opener, $startPos)) {
-            return array('dest' => $link->getDestination(), 'title' => $link->getTitle());
+            return array('url' => $link->getDestination(), 'title' => $link->getTitle());
         }
 
         return false;
@@ -157,11 +158,10 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $cursor->advanceToFirstNonSpace();
 
+        $title = null;
         // make sure there's a space before the title:
         if (preg_match('/^\\s/', $cursor->peek(-1))) {
             $title = LinkParserHelper::parseLinkTitle($cursor) ?: '';
-        } else {
-            $title = null;
         }
 
         $cursor->advanceToFirstNonSpace();
@@ -170,7 +170,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
-        return array('dest' => $dest, 'title' => $title);
+        return array('url' => $dest, 'title' => $title);
     }
 
     /**
