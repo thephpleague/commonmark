@@ -19,7 +19,7 @@
     "require": {
         "php": ">=5.3.3",
         "ext-mbstring": "*",
-        "symfony/options-resolver": "~2.5.6"
+        "symfony/options-resolver": "^2.5.6"
     },
     "require-dev": {
         "erusev/parsedown": "~1.0",
