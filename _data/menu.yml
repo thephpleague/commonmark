@@ -1,0 +1,10 @@
+Getting Started:
+    'Introduction': '/'
+    'Installation': '/installation/'
+    'Basic Usage': '/basic-usage/'
+Customization:
+    'Overview': '/customization/overview/'
+    'Environment': '/customization/environment/'
+    'Block parsing': '/customization/block-parsing/'
+    'Inline parsing': '/customization/inline-parsing/'
+    'Rendering': '/customization/rendering/'
