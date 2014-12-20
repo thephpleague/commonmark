@@ -18,7 +18,6 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ReferenceDefinition;
 use League\CommonMark\Inline\Element\AbstractBaseInline;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Renders a parsed AST to HTML
@@ -48,9 +47,9 @@ class HtmlRenderer
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function configureOptions(OptionsResolverInterface $resolver)
+    protected function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'blockSeparator' => "\n",
