@@ -3,11 +3,22 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Added
+ - Support for custom directives, parsers, and renderers
+
 ### Changed
- - Major refactoring to de-couple directives from the parser, support custom directives, and reduce complexity
+ - Major refactoring to de-couple directives from the parser, support custom directive functionality, and reduce complexity
  - Expanded `symfony/options-resolver` compatibility from 2.5ish to 2.3-2.x (fixes #20)
  - Updated references to stmd.js in README and docblocks
  - Modified CHANGELOG formatting
+ - Improved travis configuration
+ - Put tests in autoload-dev
+
+### Fixed
+ - Fixed CommonMarkConverter re-creating object each time new text is converted (#26)
+
+### Removed
+ - Removed dependency on symfony/options-resolver
 
 ## [0.4.0] - 2014-12-15
 ### Added
