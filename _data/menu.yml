@@ -6,5 +6,6 @@ Customization:
     'Overview': '/customization/overview/'
     'Environment': '/customization/environment/'
     'Block parsing': '/customization/block-parsing/'
+    'Block rendering': '/customization/block-rendering/'
     'Inline parsing': '/customization/inline-parsing/'
-    'Rendering': '/customization/rendering/'
+    'Inline rendering': '/customization/inline-rendering'
