@@ -17,8 +17,6 @@ namespace League\CommonMark;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ReferenceDefinition;
 use League\CommonMark\Inline\Element\AbstractBaseInline;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Renders a parsed AST to HTML
@@ -42,21 +40,12 @@ class HtmlRenderer
     {
         $this->environment = $environment;
 
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-        $this->options = $resolver->resolve($options);
-    }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    protected function configureOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
+        $defaults = array(
             'blockSeparator' => "\n",
             'innerSeparator' => "\n",
             'softBreak' => "\n"
-        ));
+        );
+        $this->options = array_merge($defaults, $options);
     }
 
     /**
