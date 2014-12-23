@@ -56,7 +56,11 @@ class Image extends AbstractWebResource
      */
     public function setAltText($label)
     {
-        $this->altText = $label;
+        if (is_string($label)) {
+            $this->altText = new InlineCollection(array(new Text($label)));
+        } else {
+            $this->altText = $label;
+        }
 
         return $this;
     }
