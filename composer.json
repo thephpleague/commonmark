@@ -42,7 +42,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "League\\CommonMark\\": "src/",
+            "League\\CommonMark\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "League\\CommonMark\\Tests\\": "tests/"
         }
     },
