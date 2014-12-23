@@ -21,14 +21,14 @@ class CommonMarkConverter
 {
     /**
      * The document parser instance.
-     * 
+     *
      * @var \League\CommonMark\DocParser
      */
     protected $docParser;
 
     /**
      * The html renderer instance.
-     * 
+     *
      * @var \League\CommonMark\HtmlRenderer
      */
     protected $htmlRenderer;
@@ -55,7 +55,7 @@ class CommonMarkConverter
     public function convertToHtml($commonMark)
     {
         $documentAST = $this->docParser->parse($commonMark);
-        
+
         return $this->htmlRenderer->renderBlock($documentAST);
     }
 }
