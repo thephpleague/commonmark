@@ -26,15 +26,11 @@ class Image extends AbstractWebResource
      * @param InlineCollection|string $label
      * @param string $title
      */
-    public function __construct($url, $label = null, $title = '')
+    public function __construct($url, $label = '', $title = '')
     {
         parent::__construct($url);
 
-        if (is_string($label)) {
-            $this->altText = new InlineCollection(array(new Text($label)));
-        } else {
-            $this->altText = $label;
-        }
+        $this->setAltText($label);
 
         if (!empty($title)) {
             $this->attributes['title'] = $title;
@@ -50,13 +46,17 @@ class Image extends AbstractWebResource
     }
 
     /**
-     * @param InlineCollection $label
+     * @param InlineCollection|string $label
      *
      * @return $this
      */
     public function setAltText($label)
     {
-        $this->altText = $label;
+        if (is_string($label)) {
+            $this->altText = new InlineCollection(array(new Text($label)));
+        } else {
+            $this->altText = $label;
+        }
 
         return $this;
     }
