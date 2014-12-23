@@ -34,6 +34,10 @@ class ImageRenderer implements InlineRendererInterface
 
         $attrs = array();
 
+        foreach ($inline->attributes as $name => $value) {
+            $attrs[$name] = $htmlRenderer->escape($value);
+        }
+
         $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
 
         $alt = $htmlRenderer->renderInlines($inline->getAltText()->getInlines());
