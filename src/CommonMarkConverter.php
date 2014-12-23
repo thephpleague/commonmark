@@ -40,7 +40,7 @@ class CommonMarkConverter
     {
         $environment = Environment::createCommonMarkEnvironment();
         $this->docParser = new DocParser($environment);
-        $this->renderer = new HtmlRenderer($environment);
+        $this->htmlRenderer = new HtmlRenderer($environment);
     }
 
     /**
@@ -56,6 +56,6 @@ class CommonMarkConverter
     {
         $documentAST = $this->docParser->parse($commonMark);
         
-        return $this->renderer->renderBlock($documentAST);
+        return $this->htmlRenderer->renderBlock($documentAST);
     }
 }
