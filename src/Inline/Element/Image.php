@@ -30,11 +30,7 @@ class Image extends AbstractWebResource
     {
         parent::__construct($url);
 
-        if (is_string($label)) {
-            $this->altText = new InlineCollection(array(new Text($label)));
-        } else {
-            $this->altText = $label;
-        }
+        $this->setAltText($label);
 
         if (!empty($title)) {
             $this->attributes['title'] = $title;
@@ -50,7 +46,7 @@ class Image extends AbstractWebResource
     }
 
     /**
-     * @param InlineCollection $label
+     * @param InlineCollection|string $label
      *
      * @return $this
      */
