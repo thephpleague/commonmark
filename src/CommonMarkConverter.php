@@ -15,12 +15,37 @@
 namespace League\CommonMark;
 
 /**
- * Converts CommonMark-compatible Markdown to HTML
+ * Converts CommonMark-compatible Markdown to HTML.
  */
 class CommonMarkConverter
 {
     /**
-     * Converts CommonMark to HTML
+     * The document parser instance.
+     * 
+     * @var \League\CommonMark\DocParser
+     */
+    protected $docParser;
+
+    /**
+     * The html renderer instance.
+     * 
+     * @var \League\CommonMark\HtmlRenderer
+     */
+    protected $htmlRenderer;
+
+    /**
+     * Create a new commonmark converter instance.
+     */
+    public function __construct()
+    {
+        $environment = Environment::createCommonMarkEnvironment();
+        $this->docParser = new DocParser($environment);
+        $this->renderer = new HtmlRenderer($environment);
+    }
+
+    /**
+     * Converts CommonMark to HTML.
+     *
      * @param string $commonMark
      *
      * @return string
@@ -29,13 +54,8 @@ class CommonMarkConverter
      */
     public function convertToHtml($commonMark)
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $docParser = new DocParser($environment);
-        $renderer = new HtmlRenderer($environment);
-
-        $documentAST = $docParser->parse($commonMark);
-        $html = $renderer->renderBlock($documentAST);
-
-        return $html;
+        $documentAST = $this->docParser->parse($commonMark);
+        
+        return $this->renderer->renderBlock($documentAST);
     }
 }
