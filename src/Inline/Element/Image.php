@@ -26,7 +26,7 @@ class Image extends AbstractWebResource
      * @param InlineCollection|string $label
      * @param string $title
      */
-    public function __construct($url, $label = null, $title = '')
+    public function __construct($url, $label = '', $title = '')
     {
         parent::__construct($url);
 
