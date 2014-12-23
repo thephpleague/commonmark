@@ -7,7 +7,7 @@ permalink: /customization/inline-parsing/
 Inline Parsing
 ==============
 
-Inline parsers must extend from `AbstractInlineParser` and implement two methods:
+Inline parsers should extend from `AbstractInlineParser` and implement two methods:
 
 ## getCharacters()
 
