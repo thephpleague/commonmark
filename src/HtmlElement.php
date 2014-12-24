@@ -88,15 +88,15 @@ class HtmlElement
      */
     public function getContents($asString = true)
     {
-        if (!$asString) {
+        if (!$asString || is_string($this->contents)) {
             return $this->contents;
         }
 
         if (is_array($this->contents)) {
             return implode('', $this->contents);
-        } else {
-            return (string) $this->contents;
         }
+
+        return (string) $this->contents;
     }
 
     /**
