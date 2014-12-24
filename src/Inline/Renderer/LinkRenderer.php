@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 use League\CommonMark\Inline\Element\AbstractBaseInline;
 use League\CommonMark\Inline\Element\Link;
@@ -24,7 +25,7 @@ class LinkRenderer implements InlineRendererInterface
      * @param Link $inline
      * @param HtmlRenderer $htmlRenderer
      *
-     * @return string
+     * @return HtmlElement
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
@@ -36,10 +37,10 @@ class LinkRenderer implements InlineRendererInterface
 
         $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
 
-        if (isset($inline->attributes['title'])) {
-            $attrs['title'] = $htmlRenderer->escape($inline->attributes['title'], true);
+        if (isset($inline->data['title'])) {
+            $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
 
-        return $htmlRenderer->inTags('a', $attrs, $htmlRenderer->renderInlines($inline->getLabel()->getInlines()));
+        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->getLabel()->getInlines()));
     }
 }

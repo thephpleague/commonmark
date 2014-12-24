@@ -19,7 +19,7 @@ abstract class AbstractBaseInline
     /**
      * @var array
      *
-     * @todo use an object instead?
+     * Used for storage of arbitrary data
      */
-    public $attributes = array();
+    public $data = array();
 }

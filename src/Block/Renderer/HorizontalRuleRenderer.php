@@ -16,6 +16,7 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\HorizontalRule;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 
 class HorizontalRuleRenderer implements BlockRendererInterface
@@ -25,10 +26,10 @@ class HorizontalRuleRenderer implements BlockRendererInterface
      * @param HtmlRenderer $htmlRenderer
      * @param bool $inTightList
      *
-     * @return string
+     * @return HtmlElement
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
-        return $htmlRenderer->inTags('hr', array(), '', true);
+        return new HtmlElement('hr', array(), '', true);
     }
 }

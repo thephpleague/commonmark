@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 use League\CommonMark\Inline\Element\AbstractBaseInline;
 use League\CommonMark\Inline\Element\Image;
@@ -24,7 +25,7 @@ class ImageRenderer implements InlineRendererInterface
      * @param Image $inline
      * @param HtmlRenderer $htmlRenderer
      *
-     * @return string
+     * @return HtmlElement
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
@@ -40,10 +41,10 @@ class ImageRenderer implements InlineRendererInterface
         $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
 
-        if (isset($inline->attributes['title'])) {
-            $attrs['title'] = $htmlRenderer->escape($inline->attributes['title'], true);
+        if (isset($inline->data['title'])) {
+            $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
 
-        return $htmlRenderer->inTags('img', $attrs, '', true);
+        return new HtmlElement('img', $attrs, '', true);
     }
 }

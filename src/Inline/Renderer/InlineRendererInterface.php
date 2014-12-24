@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 use League\CommonMark\Inline\Element\AbstractBaseInline;
 
@@ -23,7 +24,7 @@ interface InlineRendererInterface
      * @param AbstractBaseInline $inline
      * @param HtmlRenderer $htmlRenderer
      *
-     * @return string
+     * @return HtmlElement|string
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer);
 }

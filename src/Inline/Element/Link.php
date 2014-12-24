@@ -41,7 +41,7 @@ class Link extends AbstractWebResource
         }
 
         if (!empty($title)) {
-            $this->attributes['title'] = $title;
+            $this->data['title'] = $title;
         }
     }
 

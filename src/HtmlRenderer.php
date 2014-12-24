@@ -76,35 +76,6 @@ class HtmlRenderer
     }
 
     /**
-     * Helper function to produce content in a pair of HTML tags.
-     *
-     * @param string      $tag
-     * @param array       $attribs
-     * @param string|null $contents
-     * @param bool        $selfClosing
-     *
-     * @return string
-     */
-    public function inTags($tag, $attribs = array(), $contents = null, $selfClosing = false)
-    {
-        $result = '<' . $tag;
-
-        foreach ($attribs as $key => $value) {
-            $result .= ' ' . $key . '="' . $value . '"';
-        }
-
-        if ($contents) {
-            $result .= '>' . $contents . '</' . $tag . '>';
-        } elseif ($selfClosing) {
-            $result .= ' />';
-        } else {
-            $result .= '></' . $tag . '>';
-        }
-
-        return $result;
-    }
-
-    /**
      * @param AbstractBaseInline $inline
      *
      * @return string
