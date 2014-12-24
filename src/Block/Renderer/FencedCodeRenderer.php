@@ -16,6 +16,7 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\FencedCode;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 
 class FencedCodeRenderer implements BlockRendererInterface
@@ -38,10 +39,10 @@ class FencedCodeRenderer implements BlockRendererInterface
             $infoWords[0]
         ) === 0 ? array() : array('class' => 'language-' . $htmlRenderer->escape($infoWords[0], true));
 
-        return $htmlRenderer->inTags(
+        return new HtmlElement(
             'pre',
             array(),
-            $htmlRenderer->inTags('code', $attr, $htmlRenderer->escape($block->getStringContent()))
+            new HtmlElement('code', $attr, $htmlRenderer->escape($block->getStringContent()))
         );
     }
 }

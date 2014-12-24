@@ -16,6 +16,7 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 
 class ParagraphRenderer implements BlockRendererInterface
@@ -25,7 +26,7 @@ class ParagraphRenderer implements BlockRendererInterface
      * @param HtmlRenderer $htmlRenderer
      * @param bool $inTightList
      *
-     * @return string
+     * @return HtmlElement|string
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
@@ -36,7 +37,7 @@ class ParagraphRenderer implements BlockRendererInterface
         if ($inTightList) {
             return $htmlRenderer->renderInlines($block->getInlines());
         } else {
-            return $htmlRenderer->inTags('p', array(), $htmlRenderer->renderInlines($block->getInlines()));
+            return new HtmlElement('p', array(), $htmlRenderer->renderInlines($block->getInlines()));
         }
     }
 }

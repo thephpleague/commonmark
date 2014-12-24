@@ -16,6 +16,7 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ListBlock;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 
 class ListBlockRenderer implements BlockRendererInterface
@@ -25,7 +26,7 @@ class ListBlockRenderer implements BlockRendererInterface
      * @param HtmlRenderer $htmlRenderer
      * @param bool $inTightList
      *
-     * @return string
+     * @return HtmlElement
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
@@ -40,7 +41,7 @@ class ListBlockRenderer implements BlockRendererInterface
         $attr = (!$start || $start == 1) ?
             array() : array('start' => (string)$start);
 
-        return $htmlRenderer->inTags(
+        return new HtmlElement(
             $tag,
             $attr,
             $htmlRenderer->getOption('innerSeparator') . $htmlRenderer->renderBlocks(

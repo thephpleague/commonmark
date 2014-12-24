@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 use League\CommonMark\Inline\Element\AbstractBaseInline;
 use League\CommonMark\Inline\Element\Emphasis;
@@ -24,7 +25,7 @@ class EmphasisRenderer implements InlineRendererInterface
      * @param Emphasis $inline
      * @param HtmlRenderer $htmlRenderer
      *
-     * @return string
+     * @return HtmlElement
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
@@ -32,6 +33,6 @@ class EmphasisRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        return $htmlRenderer->inTags('em', array(), $htmlRenderer->renderInlines($inline->getInlineContents()));
+        return new HtmlElement('em', array(), $htmlRenderer->renderInlines($inline->getInlineContents()));
     }
 }

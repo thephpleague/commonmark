@@ -16,6 +16,7 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\BlockQuote;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 
 class BlockQuoteRenderer implements BlockRendererInterface
@@ -25,7 +26,7 @@ class BlockQuoteRenderer implements BlockRendererInterface
      * @param HtmlRenderer $htmlRenderer
      * @param bool $inTightList
      *
-     * @return string
+     * @return HtmlElement
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
@@ -35,10 +36,10 @@ class BlockQuoteRenderer implements BlockRendererInterface
 
         $filling = $htmlRenderer->renderBlocks($block->getChildren());
         if ($filling === '') {
-            return $htmlRenderer->inTags('blockquote', array(), $htmlRenderer->getOption('innerSeparator'));
+            return new HtmlElement('blockquote', array(), $htmlRenderer->getOption('innerSeparator'));
         }
 
-        return $htmlRenderer->inTags(
+        return new HtmlElement(
             'blockquote',
             array(),
             $htmlRenderer->getOption('innerSeparator') . $filling . $htmlRenderer->getOption('innerSeparator')

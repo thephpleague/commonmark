@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 use League\CommonMark\Inline\Element\AbstractBaseInline;
 use League\CommonMark\Inline\Element\Newline;
@@ -24,7 +25,7 @@ class NewlineRenderer implements InlineRendererInterface
      * @param Newline $inline
      * @param HtmlRenderer $htmlRenderer
      *
-     * @return string
+     * @return HtmlElement|string
      */
     public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
     {
@@ -33,7 +34,7 @@ class NewlineRenderer implements InlineRendererInterface
         }
 
         if ($inline->getType() === Newline::HARDBREAK) {
-            return $htmlRenderer->inTags('br', array(), '', true) . "\n";
+            return new HtmlElement('br', array(), '', true) . "\n";
         } else {
             return $htmlRenderer->getOption('softBreak');
         }

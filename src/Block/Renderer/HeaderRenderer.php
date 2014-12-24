@@ -16,6 +16,7 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Header;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 
 class HeaderRenderer implements BlockRendererInterface
@@ -25,7 +26,7 @@ class HeaderRenderer implements BlockRendererInterface
      * @param HtmlRenderer $htmlRenderer
      * @param bool $inTightList
      *
-     * @return string
+     * @return HtmlElement
      */
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
@@ -35,6 +36,6 @@ class HeaderRenderer implements BlockRendererInterface
 
         $tag = 'h' . $block->getLevel();
 
-        return $htmlRenderer->inTags($tag, array(), $htmlRenderer->renderInlines($block->getInlines()));
+        return new HtmlElement($tag, array(), $htmlRenderer->renderInlines($block->getInlines()));
     }
 }

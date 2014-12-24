@@ -16,6 +16,7 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ListItem;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
 
 class ListItemRenderer implements BlockRendererInterface
@@ -41,6 +42,8 @@ class ListItemRenderer implements BlockRendererInterface
             $contents .= "\n";
         }
 
-        return trim($htmlRenderer->inTags('li', array(), $contents));
+        $li = new HtmlElement('li', array(), $contents);
+
+        return trim($li);
     }
 }
