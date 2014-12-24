@@ -89,7 +89,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.4.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.5.0...HEAD
+[0.5.0]: https://github.com/thephpleague/commonmark/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/thephpleague/commonmark/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/thephpleague/commonmark/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/thephpleague/commonmark/compare/0.2.0...0.2.1
