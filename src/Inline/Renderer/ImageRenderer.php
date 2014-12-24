@@ -16,7 +16,7 @@ namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
-use League\CommonMark\Inline\Element\AbstractBaseInline;
+use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Image;
 
 class ImageRenderer implements InlineRendererInterface
@@ -27,7 +27,7 @@ class ImageRenderer implements InlineRendererInterface
      *
      * @return HtmlElement
      */
-    public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
+    public function render(AbstractInline $inline, HtmlRenderer $htmlRenderer)
     {
         if (!($inline instanceof Image)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));

@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Inline\Element;
 
-abstract class AbstractWebResource extends AbstractBaseInline
+abstract class AbstractWebResource extends AbstractInline
 {
     /**
      * @var string

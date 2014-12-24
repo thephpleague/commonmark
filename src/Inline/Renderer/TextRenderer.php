@@ -15,7 +15,7 @@
 namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\HtmlRenderer;
-use League\CommonMark\Inline\Element\AbstractBaseInline;
+use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Text;
 
 class TextRenderer implements InlineRendererInterface
@@ -26,7 +26,7 @@ class TextRenderer implements InlineRendererInterface
      *
      * @return string
      */
-    public function render(AbstractBaseInline $inline, HtmlRenderer $htmlRenderer)
+    public function render(AbstractInline $inline, HtmlRenderer $htmlRenderer)
     {
         if (!($inline instanceof Text)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));

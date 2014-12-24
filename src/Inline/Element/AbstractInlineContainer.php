@@ -14,15 +14,15 @@
 
 namespace League\CommonMark\Inline\Element;
 
-class AbstractInlineContainer extends AbstractBaseInline
+class AbstractInlineContainer extends AbstractInline
 {
     /**
-     * @var AbstractBaseInline[]
+     * @var AbstractInline[]
      */
     protected $inlineContents = array();
 
     /**
-     * @param AbstractBaseInline[] $contents
+     * @param AbstractInline[] $contents
      */
     public function __construct(array $contents = array())
     {
@@ -30,7 +30,7 @@ class AbstractInlineContainer extends AbstractBaseInline
     }
 
     /**
-     * @return AbstractBaseInline[]
+     * @return AbstractInline[]
      */
     public function getInlineContents()
     {
@@ -38,7 +38,7 @@ class AbstractInlineContainer extends AbstractBaseInline
     }
 
     /**
-     * @param AbstractBaseInline[] $contents
+     * @param AbstractInline[] $contents
      *
      * @return $this
      */

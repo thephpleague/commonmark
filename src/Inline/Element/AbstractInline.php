@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Inline\Element;
 
-abstract class AbstractBaseInline
+abstract class AbstractInline
 {
     /**
      * @var array

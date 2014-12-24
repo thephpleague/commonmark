@@ -16,7 +16,7 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ReferenceDefinition;
-use League\CommonMark\Inline\Element\AbstractBaseInline;
+use League\CommonMark\Inline\Element\AbstractInline;
 
 /**
  * Renders a parsed AST to HTML
@@ -76,13 +76,13 @@ class HtmlRenderer
     }
 
     /**
-     * @param AbstractBaseInline $inline
+     * @param AbstractInline $inline
      *
      * @return string
      *
      * @throws \RuntimeException
      */
-    protected function renderInline(AbstractBaseInline $inline)
+    protected function renderInline(AbstractInline $inline)
     {
         $renderer = $this->environment->getInlineRendererForClass(get_class($inline));
         if (!$renderer) {
@@ -93,7 +93,7 @@ class HtmlRenderer
     }
 
     /**
-     * @param AbstractBaseInline[] $inlines
+     * @param AbstractInline[] $inlines
      *
      * @return string
      */

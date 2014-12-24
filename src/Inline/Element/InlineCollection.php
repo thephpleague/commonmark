@@ -16,10 +16,10 @@ namespace League\CommonMark\Inline\Element;
 
 use League\CommonMark\Util\ArrayCollection;
 
-class InlineCollection extends AbstractBaseInline
+class InlineCollection extends AbstractInline
 {
     /**
-     * @var ArrayCollection|AbstractBaseInline[]
+     * @var ArrayCollection|AbstractInline[]
      */
     private $inlines;
 
@@ -29,7 +29,7 @@ class InlineCollection extends AbstractBaseInline
     }
 
     /**
-     * @return ArrayCollection|AbstractBaseInline[]
+     * @return ArrayCollection|AbstractInline[]
      */
     public function getInlines()
     {

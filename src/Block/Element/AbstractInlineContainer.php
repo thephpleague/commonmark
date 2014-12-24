@@ -14,13 +14,13 @@
 
 namespace League\CommonMark\Block\Element;
 
-use League\CommonMark\Inline\Element\AbstractBaseInline;
+use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Util\ArrayCollection;
 
 abstract class AbstractInlineContainer extends AbstractBlock
 {
     /**
-     * @var ArrayCollection|AbstractBaseInline[]
+     * @var ArrayCollection|AbstractInline[]
      */
     protected $inlines;
 
@@ -32,7 +32,7 @@ abstract class AbstractInlineContainer extends AbstractBlock
     }
 
     /**
-     * @return ArrayCollection|AbstractBaseInline[]
+     * @return ArrayCollection|AbstractInline[]
      */
     public function getInlines()
     {
@@ -40,7 +40,7 @@ abstract class AbstractInlineContainer extends AbstractBlock
     }
 
     /**
-     * @param ArrayCollection|AbstractBaseInline[] $inlines
+     * @param ArrayCollection|AbstractInline[] $inlines
      *
      * @return $this
      */
