@@ -25,7 +25,7 @@ This project can be installed via [Composer]:
 $ composer require league/commonmark
 ```
 
-## Usage
+## Usage & Customization
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
@@ -56,38 +56,17 @@ $htmlRenderer = new HtmlRenderer($environment);
 
 $markdown = '# Hello World!';
 
-$document = $parser->parse($markdown);
-echo $htmlRenderer->render($document);
+$documentAST = $parser->parse($markdown);
+echo $htmlRenderer->render($documentAST);
 
 // <h1>Hello World!</h1>
 ```
 
-## Customization
+This approach allows you to access (and possibly modify) the AST before it's rendered.
 
-You can add your own parsers and renderers by calling the respective methods on the `Environment` class.
+You can add your own parsers and renderers by [registering them with the `Environment` class](http://commonmark.thephpleague.com/customization/environment/).
 
-For example, if you wanted to autolink Twitter handles, you'd need to register a new inline parser to handle the `@` character:
-
-```php
-
-class TwitterHandleParser extends AbstractInlineParser
-{
-    public function getCharacters() {
-        return array('@');
-    }
-
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext) {
-        // TODO: Use $inlineContext->getCursor() to parse through the current line
-        $inlineContext->getInlines()->add(new Link($profileUrl, $handle));
-        return true;
-    }
-}
-
-$environment = Environment::createCommonMarkEnvironment();
-$environment->addInlineParser(new TwitterHandleParser());
-```
-
-The core CommonMark directives use the same functionality internally so feel free to reference those implementations.
+The [documentation][docs] contains additional details and some helpful examples to get you started.  You can also reference the core CommonMark parsers/renderers as they use the same functionality available to you.
 
 ## Compatibility with CommonMark ##
 
@@ -128,6 +107,10 @@ The following table shows which versions of league/commonmark are compatible wit
 </table>
 
 This package is **not** part of CommonMark, but rather a compatible derivative.
+
+## Documentation
+
+Documentation can be found at [commonmark.thephpleague.com][docs].
 
 ## Testing
 
@@ -183,6 +166,7 @@ This code is a port of the [CommonMark JS reference implementation][stmd.js] whi
 [CommonMark spec]: http://spec.commonmark.org/
 [stmd.js]: https://github.com/jgm/CommonMark/tree/master/js
 [John MacFarlane]: http://johnmacfarlane.net
+[docs]: http://commonmark.thephpleague.com/
 [All Contributors]: https://github.com/thephpleague/commonmark/contributors
 [@colinodell]: https://github.com/colinodell
 [@jgm]: https://github.com/jgm
