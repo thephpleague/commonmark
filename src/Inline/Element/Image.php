@@ -33,7 +33,7 @@ class Image extends AbstractWebResource
         $this->setAltText($label);
 
         if (!empty($title)) {
-            $this->attributes['title'] = $title;
+            $this->data['title'] = $title;
         }
     }
 

@@ -41,8 +41,8 @@ class ImageRenderer implements InlineRendererInterface
         $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
 
-        if (isset($inline->attributes['title'])) {
-            $attrs['title'] = $htmlRenderer->escape($inline->attributes['title'], true);
+        if (isset($inline->data['title'])) {
+            $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
 
         return new HtmlElement('img', $attrs, '', true);

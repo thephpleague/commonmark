@@ -37,8 +37,8 @@ class LinkRenderer implements InlineRendererInterface
 
         $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
 
-        if (isset($inline->attributes['title'])) {
-            $attrs['title'] = $htmlRenderer->escape($inline->attributes['title'], true);
+        if (isset($inline->data['title'])) {
+            $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
 
         return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->getLabel()->getInlines()));

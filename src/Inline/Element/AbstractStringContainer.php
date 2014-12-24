@@ -24,10 +24,10 @@ class AbstractStringContainer extends AbstractBaseInline
     /**
      * @param string $contents
      */
-    public function __construct($contents = '', array $attributes = array())
+    public function __construct($contents = '', array $data = array())
     {
         $this->content = $contents;
-        $this->attributes = $attributes;
+        $this->data = $data;
     }
 
     /**
