@@ -123,7 +123,7 @@ class HtmlElement
         }
 
         if ($this->contents) {
-            $result .= '>' . $this->contents . '</' . $this->tagName . '>';
+            $result .= '>' . $this->getContents(true) . '</' . $this->tagName . '>';
         } elseif ($this->selfClosing) {
             $result .= ' />';
         } else {

@@ -68,4 +68,17 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $p->getAttribute('id'));
         $this->assertEquals('foo', $p->getAttribute('class'));
     }
+
+    public function testToString()
+    {
+        $img = new HtmlElement('img', [], null, true);
+        $p = new HtmlElement('p');
+        $div = new HtmlElement('div');
+        $div->setContents([$p, $img]);
+
+        $this->assertInternalType('string', $div->getContents(true));
+        $this->assertEquals('<p></p><img />', $div->getContents(true));
+
+        $this->assertEquals('<div><p></p><img /></div>', $div->__toString());
+    }
 }
