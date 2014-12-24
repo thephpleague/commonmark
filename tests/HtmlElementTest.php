@@ -74,7 +74,7 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
         $img = new HtmlElement('img', [], null, true);
         $p = new HtmlElement('p');
         $div = new HtmlElement('div');
-        $div->setContents([$p, $img]);
+        $div->setContents(array($p, $img));
 
         $this->assertInternalType('string', $div->getContents(true));
         $this->assertEquals('<p></p><img />', $div->getContents(true));
