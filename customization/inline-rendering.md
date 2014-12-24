@@ -24,8 +24,9 @@ If the method can only handle certain inline types, be sure to verify that you'v
 
 ### Return value
 
-The method must return the final, raw HTML represenation of the entire inline and any contents.  You are responsible for handling any
-escaping that may be necessary.
+The method must return the final HTML represenation of the entire inline and any contents. This can be an `HtmlElement` object (preferred; castable to a string) or a string of raw HTML.
+
+You are responsible for handling any escaping that may be necessary.
 
 ## Designating Inline Renderers
 
@@ -71,7 +72,7 @@ class MyCustomLinkRenderer implements BlockRendererInterface
             $attr['class'] = 'external-link';
         }
 
-        return $htmlRenderer->inTags('a', $attrs, $htmlRenderer->renderInlines($inline->getLabel()->getInlines()));
+        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->getLabel()->getInlines()));
     }
 
     private function isExternalUrl($url)
@@ -86,6 +87,6 @@ $environment->addInlineRenderer('Link', new MyCustomLinkRenderer());
 
 ## Tips
 
-* Take advantage of `$htmlRenderer->inTags()` to simplify HTML tag creation
+* Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
 * Some inlines can contain other inlines - don't forget to render those too!
 

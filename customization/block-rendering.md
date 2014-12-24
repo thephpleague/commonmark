@@ -25,8 +25,9 @@ If the method can only handle certain block types, be sure to verify that you've
 
 ### Return value
 
-The method must return the final, raw HTML represenation of the block and any of its contents.  You are responsible for handling any
-escaping that may be necessary.
+The method must return the final HTML represenation of the block and any of its contents. This can be an `HtmlElement` object (preferred; castable to a string) or a string of raw HTML.
+
+You are responsible for handling any escaping that may be necessary.
 
 ## Designating Block Renderers
 
@@ -62,7 +63,7 @@ class TextDividerRenderer implements BlockRendererInterface
 {
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
     {
-        return $htmlRenderer->inTags('pre', array('class' => 'divider'), '==============================');
+        return new HtmlElement('pre', array('class' => 'divider'), '==============================');
     }
 }
 
@@ -72,6 +73,6 @@ $environment->addBlockRenderer('HorizontalRule', new TextDividerRenderer());
 
 ## Tips
 
-* Take advantage of `$htmlRenderer->inTags()` to simplify HTML tag creation
+* Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
 * Don't forget to render any inlines your block might contain!
 
