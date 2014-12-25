@@ -33,24 +33,24 @@ You are responsible for handling any escaping that may be necessary.
 
 When registering your render, you must tell the `Environment` which block element class your renderer should handle. For example:
 
-```php
+~~~php
 $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the block class type that should use our renderer
 // Second param - instance of the block renderer
 $environment->addBlockRenderer('FencedCode', new MyCustomCodeRenderer());
-```
+~~~
 
 A single renderer could even be used for multiple block types:
 
-```php
+~~~php
 $environment = Environment::createCommonMarkEnvironment();
 
 $myRenderer = new MyCustomCodeRenderer();
 
 $environment->addBlockRenderer('FencedCode', $myRenderer);
 $environment->addBlockRenderer('IndentedCode', $myRenderer);
-```
+~~~
 
 Only one renderer can be assigned per element type.  If multiple renderers are assigned to the same block class, only the last one will be used.
 
@@ -58,7 +58,7 @@ Only one renderer can be assigned per element type.  If multiple renderers are a
 
 Here's a custom renderer which renders horizontal rules using text instead:
 
-```php
+~~~php
 class TextDividerRenderer implements BlockRendererInterface
 {
     public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
@@ -69,7 +69,7 @@ class TextDividerRenderer implements BlockRendererInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addBlockRenderer('HorizontalRule', new TextDividerRenderer());
-```
+~~~
 
 ## Tips
 

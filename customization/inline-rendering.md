@@ -32,19 +32,19 @@ You are responsible for handling any escaping that may be necessary.
 
 When registering your render, you must tell the `Environment` which inline element class your renderer should handle. For example:
 
-```php
+~~~php
 $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the inline class type that should use our renderer
 // Second param - instance of the block renderer
 $environment->addBlockRenderer('Link', new MyCustomLinkRenderer());
-```
+~~~
 
 ## Example
 
 Here's a custom renderer which puts a special class on links to external sites:
 
-```php
+~~~php
 class MyCustomLinkRenderer implements BlockRendererInterface
 {
     private $host;
@@ -83,10 +83,9 @@ class MyCustomLinkRenderer implements BlockRendererInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineRenderer('Link', new MyCustomLinkRenderer());
-```
+~~~
 
 ## Tips
 
 * Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
 * Some inlines can contain other inlines - don't forget to render those too!
-
