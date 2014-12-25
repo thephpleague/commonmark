@@ -19,6 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Fixed CommonMarkConverter re-creating object each time new text is converted (#26)
 
 ### Removed
+ - Removed HtmlRenderer::render() (use the renderBlock method instead)
  - Removed dependency on symfony/options-resolver (fixes #20)
 
 ## [0.4.0] - 2014-12-15
