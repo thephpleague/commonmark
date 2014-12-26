@@ -36,7 +36,7 @@ class TextHelper
 
         foreach ($parts as $part) {
             // Calculate number of spaces; insert them followed by the non-tab contents
-            $lineLength = preg_match_all('(.)su', $line);
+            $lineLength = strlen(utf8_decode($line));
             $amount = 4 - $lineLength % 4;
             $line .= str_repeat(' ', $amount) . $part;
         }
