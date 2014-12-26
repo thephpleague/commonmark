@@ -2276,6 +2276,11 @@ class Html5Entities
      */
     public static function fromDecimal($number)
     {
+        // Only convert code points within planes 0-2
+        if ($number > 0x2FFFF) {
+            return self::fromHex('fffd');
+        }
+
         $entity = '&#' . $number . ';';
 
         $converted = html_entity_decode($entity, ENT_COMPAT, 'UTF-8');
