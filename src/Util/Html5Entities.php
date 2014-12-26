@@ -2278,9 +2278,9 @@ class Html5Entities
     {
         $entity = '&#' . $number . ';';
 
-        $converted = mb_decode_numericentity($entity, array(0x0, 0x2FFFF, 0, 0xFFFF), 'UTF-8');
+        $converted = html_entity_decode($entity, ENT_COMPAT, 'UTF-8');
 
-        if ($converted == $entity) {
+        if ($converted === $entity) {
             return self::fromHex('fffd');
         }
 
