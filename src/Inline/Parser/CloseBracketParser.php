@@ -63,6 +63,13 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
+        if (!$opener->isActive()) {
+            // no matched opener; remove from emphasis stack
+            $inlineContext->getDelimiterStack()->removeDelimiter($opener);
+
+            return false;
+        }
+
         $isImage = $opener->getChar() === '!';
 
         // Instead of copying a slice, we null out the parts of inlines that don't correspond to linkText; later, we'll
