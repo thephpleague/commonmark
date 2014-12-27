@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Removed
+ - Removed hard dependency on mbstring extension; workaround used if not installed (#38)
 
 ## [0.5.0] - 2014-12-24
 ### Added
