@@ -14,6 +14,8 @@
 
 namespace League\CommonMark\Reference;
 
+use League\CommonMark\Util\UnicodeCaseFolder;
+
 /**
  * Link reference
  */
@@ -86,6 +88,12 @@ class Reference
         // Collapse internal whitespace to single space and remove
         // leading/trailing whitespace
         $string = preg_replace('/\s+/', '', trim($string));
+
+        // Convert to upper-case using Unicode case folding
+        // Use an alternate method if mb_strtoupper isn't available
+        if (!function_exists('mb_strtoupper')) {
+            return UnicodeCaseFolder::toUpperCase($string);
+        }
 
         return mb_strtoupper($string, 'UTF-8');
     }
