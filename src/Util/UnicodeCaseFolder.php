@@ -1163,8 +1163,9 @@ class UnicodeCaseFolder
      *
      * @return int Unicode code point
      */
-    private static function ordutf8($char) {
+    protected static function ordutf8($char) {
         $code = ord(substr($char, 0, 1));
+        $bytesnumber = 1;
         if ($code >= 128) {        //otherwise 0xxxxxxx
             if ($code < 224) $bytesnumber = 2;                //110xxxxx
             else if ($code < 240) $bytesnumber = 3;        //1110xxxx
