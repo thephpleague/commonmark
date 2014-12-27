@@ -85,17 +85,11 @@ class DelimiterStack
     public function removeEarlierMatches($character)
     {
         $opener = $this->top;
-        $closerAbove = null;
         while ($opener !== null) {
             if ($opener->getChar() === $character) {
-                if ($closerAbove) {
-                    $closerAbove->setPrevious($opener->getPrevious());
-                } else {
-                    $this->top = $opener->getPrevious();
-                }
-            } else {
-                $closerAbove = $opener;
+                $opener->setActive(false);
             }
+
             $opener = $opener->getPrevious();
         }
     }

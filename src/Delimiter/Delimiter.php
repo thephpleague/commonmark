@@ -37,6 +37,9 @@ class Delimiter
     /** @var bool */
     protected $canClose;
 
+    /** @var bool */
+    protected $active;
+
     /** @var int|null */
     protected $index;
 
@@ -55,6 +58,7 @@ class Delimiter
         $this->pos = $pos;
         $this->canOpen = $canOpen;
         $this->canClose = $canClose;
+        $this->active = true;
         $this->index = $index;
     }
 
@@ -94,6 +98,26 @@ class Delimiter
     public function setCanOpen($canOpen)
     {
         $this->canOpen = $canOpen;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     *
+     * @return $this
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
 
         return $this;
     }
