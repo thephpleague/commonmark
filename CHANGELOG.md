@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Fixed
+ - Fixed infinite loop and link-in-link-in-image parsing (#37)
+
 ### Removed
  - Removed hard dependency on mbstring extension; workaround used if not installed (#38)
 
