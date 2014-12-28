@@ -23,6 +23,8 @@
         <link rel="apple-touch-icon-precomposed" href="http://theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
     {% endif %}
     <link rel="stylesheet" href="http://theme.thephpleague.com/css/all.css">
+    <link rel="stylesheet" href="/css/header-links.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -83,6 +85,21 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://theme.thephpleague.com/js/scripts.js"></script>
 <script src="http://theme.thephpleague.com/js/prism.js"></script>
+
+<script>
+    // Header anchor links (based on http://ben.balter.com/2014/03/13/pages-anchor-links/)
+    $(function() {
+        return $("h2, h3, h4, h5, h6", "main").each(function(i, el) {
+            var $el, icon, id;
+            $el = $(el);
+            id = $el.attr('id');
+            icon = '<i class="fa fa-link"></i>';
+            if (id) {
+                return $el.append($("<a />").addClass("header-link").attr("href", "#" + id).html(icon));
+            }
+        });
+    });
+</script>
 
 {% if site.data.project.google_analytics_tracking_id %}
     <script>
