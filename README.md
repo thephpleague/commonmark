@@ -25,7 +25,7 @@ This project can be installed via [Composer]:
 $ composer require league/commonmark
 ```
 
-## Usage & Customization
+## Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
@@ -64,7 +64,10 @@ echo $htmlRenderer->renderBlock($documentAST);
 
 This approach allows you to access (and possibly modify) the AST before it's rendered.
 
-You can add your own parsers and renderers by [registering them with the `Environment` class](http://commonmark.thephpleague.com/customization/environment/).  The [documentation][docs] provides several [customization examples][docs-examples] such as:
+## Customization
+
+You can add your own parsers and renderers by [registering them with the `Environment` class](http://commonmark.thephpleague.com/customization/environment/) (see second example above).
+The [documentation][docs] provides several [customization examples][docs-examples] such as:
 
 - [Parse Twitter handles into profile links][docs-example-twitter]
 - [Convert smilies into emoticon images][docs-example-smilies]
