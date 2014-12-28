@@ -64,9 +64,12 @@ echo $htmlRenderer->renderBlock($documentAST);
 
 This approach allows you to access (and possibly modify) the AST before it's rendered.
 
-You can add your own parsers and renderers by [registering them with the `Environment` class](http://commonmark.thephpleague.com/customization/environment/).
+You can add your own parsers and renderers by [registering them with the `Environment` class](http://commonmark.thephpleague.com/customization/environment/).  The [documentation][docs] provides several [customization examples][docs-examples] such as:
 
-The [documentation][docs] contains additional details and some helpful examples to get you started.  You can also reference the core CommonMark parsers/renderers as they use the same functionality available to you.
+- [Parse Twitter handles into profile links][docs-example-twitter]
+- [Convert smilies into emoticon images][docs-example-smilies]
+
+You can also reference the core CommonMark parsers/renderers as they use the same functionality available to you.
 
 ## Compatibility with CommonMark ##
 
@@ -167,6 +170,9 @@ This code is a port of the [CommonMark JS reference implementation][stmd.js] whi
 [stmd.js]: https://github.com/jgm/CommonMark/tree/master/js
 [John MacFarlane]: http://johnmacfarlane.net
 [docs]: http://commonmark.thephpleague.com/
+[docs-examples]: http://commonmark.thephpleague.com/customization/overview/#examples
+[docs-example-twitter]: http://commonmark.thephpleague.com/customization/inline-parsing#example-1---twitter-handles
+[docs-example-smilies]: http://commonmark.thephpleague.com/customization/inline-parsing#example-2---emoticons
 [All Contributors]: https://github.com/thephpleague/commonmark/contributors
 [@colinodell]: https://github.com/colinodell
 [@jgm]: https://github.com/jgm
