@@ -41,3 +41,5 @@ echo $htmlRenderer->renderBlock($document);
 
 // <h1>Hello World!</h1>
 ~~~
+
+[Additional customization](/customization/overview/) is also possible.
