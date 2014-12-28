@@ -25,7 +25,7 @@ This project can be installed via [Composer]:
 $ composer require league/commonmark
 ```
 
-## Usage
+## Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
@@ -38,39 +38,52 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
+## Advanced Usage & Customization
+
 The actual conversion process requires two steps:
 
  1. Parsing the Markdown input into an AST
  2. Rendering the AST document as HTML
 
-You can do this yourself if you wish:
+Although the `CommonMarkConverter` wrapper simplifies this process for you, advanced users will likely want to do this themselves:
 
 ```php
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
 
+// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
+
+// Optional: Add your own parsers/renderers here, if desired
+// For example:  $environment->addInlineParser(new TwitterHandleParser());
+
+// Create the document parser and HTML renderer engines
 $parser = new DocParser($environment);
 $htmlRenderer = new HtmlRenderer($environment);
 
+// Here's our sample input
 $markdown = '# Hello World!';
 
+// 1. Parse the Markdown to AST
 $documentAST = $parser->parse($markdown);
+
+// Optional: If you want to access/modify the AST before rendering, do it here
+
+// 2. Render the AST as HTML
 echo $htmlRenderer->renderBlock($documentAST);
 
+// The output should be:
 // <h1>Hello World!</h1>
 ```
 
-This approach allows you to access (and possibly modify) the AST before it's rendered.
+This approach allows you to access/modify the AST before rendering it.
 
-## Customization
-
-You can add your own parsers and renderers by [registering them with the `Environment` class](http://commonmark.thephpleague.com/customization/environment/) (see second example above).
+You can also add custom parsers/renderers by [registering them with the `Environment` class](http://commonmark.thephpleague.com/customization/environment/).
 The [documentation][docs] provides several [customization examples][docs-examples] such as:
 
-- [Parse Twitter handles into profile links][docs-example-twitter]
-- [Convert smilies into emoticon images][docs-example-smilies]
+- [Parsing Twitter handles into profile links][docs-example-twitter]
+- [Converting smilies into emoticon images][docs-example-smilies]
 
 You can also reference the core CommonMark parsers/renderers as they use the same functionality available to you.
 
