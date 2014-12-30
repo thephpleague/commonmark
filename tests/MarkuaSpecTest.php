@@ -53,7 +53,7 @@ class MarkuaSpecTest extends \PHPUnit_Framework_TestCase {
                 if (preg_match('/=== (.*?) ===/', trim($line), $matches)) {
                     $section = $matches[1];
                     if (strtolower($section) == 'end') {
-                        yield $test;
+                        $tests[] = $test;
                         $test = array();
                         continue;
                     }
@@ -62,7 +62,8 @@ class MarkuaSpecTest extends \PHPUnit_Framework_TestCase {
                     $test[$section] .= $line;
                 }
             }
-
         }
+
+        return $tests;
     }
 }
