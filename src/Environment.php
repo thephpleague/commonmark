@@ -22,7 +22,6 @@ use League\CommonMark\Environment\CommonMark;
 use League\CommonMark\Environment\Markua;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\Inline\Processor\EmphasisProcessor;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer as InlineRenderer;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
