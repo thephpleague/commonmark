@@ -13,6 +13,7 @@
  */
 
 namespace League\CommonMark;
+
 use League\CommonMark\Environment\Markua;
 
 /**
