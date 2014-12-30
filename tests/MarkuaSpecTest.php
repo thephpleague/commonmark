@@ -3,8 +3,8 @@ namespace League\CommonMark\Tests;
 
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
 use League\CommonMark\Environment\Markua;
+use League\CommonMark\HtmlRenderer;
 
 /**
  * Tests the parser against the Markua spec

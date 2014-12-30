@@ -2,8 +2,8 @@
 namespace League\CommonMark\Environment;
 
 use League\CommonMark\Block\Parser as BlockParser;
-use League\CommonMark\Markua\Block\Parser as MarkuaBlockParser;
 use League\CommonMark\Block\Renderer as BlockRenderer;
+use League\CommonMark\Markua\Block\Parser as MarkuaBlockParser;
 use League\CommonMark\Markua\Block\Renderer as MarkuaBlockRenderer;
 
 class Markua extends CommonMark {

@@ -17,9 +17,9 @@ namespace League\CommonMark\Markua\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
-use League\CommonMark\Markua\Block\Element\Aside;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRenderer;
+use League\CommonMark\Markua\Block\Element\Aside;
 
 class AsideRenderer implements BlockRendererInterface
 {

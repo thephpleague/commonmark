@@ -1,9 +1,9 @@
 <?php
 namespace League\CommonMark\Environment;
 
-use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Renderer as BlockRenderer;
+use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Processor\EmphasisProcessor;
 use League\CommonMark\Inline\Renderer as InlineRenderer;

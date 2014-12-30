@@ -16,9 +16,9 @@
 namespace League\CommonMark\Markua\Block\Parser;
 
 use League\CommonMark\Block\Parser\AbstractBlockParser;
-use League\CommonMark\Markua\Block\Element\Aside;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Markua\Block\Element\Aside;
 
 class AsideParser extends AbstractBlockParser
 {
