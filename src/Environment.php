@@ -18,6 +18,8 @@ use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer as BlockRenderer;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\Extension\CommonMarkCoreExtension;
+use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\EmphasisProcessor;
@@ -213,80 +215,47 @@ class Environment
     }
 
     /**
+     * Add a single extension
+     *
+     * @param ExtensionInterface $extension
+     *
+     * @return $this
+     */
+    public function addExtension(ExtensionInterface $extension)
+    {
+        // Block parsers
+        foreach ($extension->getBlockParsers() as $blockParser) {
+            $this->addBlockParser($blockParser);
+        }
+
+        // Block renderers
+        foreach ($extension->getBlockRenderers() as $class => $blockRenderer) {
+            $this->addBlockRenderer($class, $blockRenderer);
+        }
+
+        // Inline parsers
+        foreach ($extension->getInlineParsers() as $inlineParser) {
+            $this->addInlineParser($inlineParser);
+        }
+
+        // Inline processors
+        foreach ($extension->getInlineProcessors() as $inlineProcessor) {
+            $this->addInlineProcessor($inlineProcessor);
+        }
+
+        // Inline renderers
+        foreach ($extension->getInlineRenderers() as $class => $inlineRenderer) {
+            $this->addInlineRenderer($class, $inlineRenderer);
+        }
+    }
+
+    /**
      * @return Environment
      */
     public static function createCommonMarkEnvironment()
     {
         $environment = new static();
-
-        $blockParsers = array(
-            // This order is important
-            new BlockParser\IndentedCodeParser(),
-            new BlockParser\LazyParagraphParser(),
-            new BlockParser\BlockQuoteParser(),
-            new BlockParser\ATXHeaderParser(),
-            new BlockParser\FencedCodeParser(),
-            new BlockParser\HtmlBlockParser(),
-            new BlockParser\SetExtHeaderParser(),
-            new BlockParser\HorizontalRuleParser(),
-            new BlockParser\ListParser(),
-        );
-
-        foreach ($blockParsers as $blockParser) {
-            $environment->addBlockParser($blockParser);
-        }
-
-        $inlineParsers = array(
-            new InlineParser\NewlineParser(),
-            new InlineParser\BacktickParser(),
-            new InlineParser\EscapableParser(),
-            new InlineParser\EntityParser(),
-            new InlineParser\EmphasisParser(),
-            new InlineParser\AutolinkParser(),
-            new InlineParser\RawHtmlParser(),
-            new InlineParser\CloseBracketParser(),
-            new InlineParser\OpenBracketParser(),
-            new InlineParser\BangParser(),
-        );
-
-        foreach ($inlineParsers as $inlineParser) {
-            $environment->addInlineParser($inlineParser);
-        }
-
-        $environment->addInlineProcessor(new EmphasisProcessor());
-
-        $blockRenderers = array(
-            'League\CommonMark\Block\Element\BlockQuote'          => new BlockRenderer\BlockQuoteRenderer(),
-            'League\CommonMark\Block\Element\Document'            => new BlockRenderer\DocumentRenderer(),
-            'League\CommonMark\Block\Element\FencedCode'          => new BlockRenderer\FencedCodeRenderer(),
-            'League\CommonMark\Block\Element\Header'              => new BlockRenderer\HeaderRenderer(),
-            'League\CommonMark\Block\Element\HorizontalRule'      => new BlockRenderer\HorizontalRuleRenderer(),
-            'League\CommonMark\Block\Element\HtmlBlock'           => new BlockRenderer\HtmlBlockRenderer(),
-            'League\CommonMark\Block\Element\IndentedCode'        => new BlockRenderer\IndentedCodeRenderer(),
-            'League\CommonMark\Block\Element\ListBlock'           => new BlockRenderer\ListBlockRenderer(),
-            'League\CommonMark\Block\Element\ListItem'            => new BlockRenderer\ListItemRenderer(),
-            'League\CommonMark\Block\Element\Paragraph'           => new BlockRenderer\ParagraphRenderer(),
-            'League\CommonMark\Block\Element\ReferenceDefinition' => new BlockRenderer\ReferenceDefinitionRenderer(),
-        );
-
-        foreach ($blockRenderers as $class => $renderer) {
-            $environment->addBlockRenderer($class, $renderer);
-        }
-
-        $inlineRenderers = array(
-            'League\CommonMark\Inline\Element\Code'     => new InlineRenderer\CodeRenderer(),
-            'League\CommonMark\Inline\Element\Emphasis' => new InlineRenderer\EmphasisRenderer(),
-            'League\CommonMark\Inline\Element\Html'     => new InlineRenderer\RawHtmlRenderer(),
-            'League\CommonMark\Inline\Element\Image'    => new InlineRenderer\ImageRenderer(),
-            'League\CommonMark\Inline\Element\Link'     => new InlineRenderer\LinkRenderer(),
-            'League\CommonMark\Inline\Element\Newline'  => new InlineRenderer\NewlineRenderer(),
-            'League\CommonMark\Inline\Element\Strong'   => new InlineRenderer\StrongRenderer(),
-            'League\CommonMark\Inline\Element\Text'     => new InlineRenderer\TextRenderer(),
-        );
-
-        foreach ($inlineRenderers as $class => $renderer) {
-            $environment->addInlineRenderer($class, $renderer);
-        }
+        $environment->addExtension(new CommonMarkCoreExtension());
 
         return $environment;
     }
