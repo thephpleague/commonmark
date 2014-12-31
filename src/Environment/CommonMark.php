@@ -8,7 +8,7 @@ use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Processor\EmphasisProcessor;
 use League\CommonMark\Inline\Renderer as InlineRenderer;
 
-class CommonMark implements EnvironmentInterface{
+class CommonMark implements EnvironmentInterface {
 
     public function getBlockParsers()
     {
