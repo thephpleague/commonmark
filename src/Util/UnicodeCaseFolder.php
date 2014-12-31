@@ -24,7 +24,7 @@ class UnicodeCaseFolder
      *
      * Manually generated from http://www.unicode.org/Public/UNIDATA/CaseFolding.txt
      */
-    private static $map = array(
+    protected static $map = array(
         0x0041 => 0x0061, // LATIN CAPITAL LETTER A
         0x0042 => 0x0062, // LATIN CAPITAL LETTER B
         0x0043 => 0x0063, // LATIN CAPITAL LETTER C

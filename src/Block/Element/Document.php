@@ -23,7 +23,7 @@ class Document extends AbstractBlock
     /***
      * @var ReferenceMap
      */
-    private $referenceMap;
+    protected $referenceMap;
 
     public function __construct()
     {
