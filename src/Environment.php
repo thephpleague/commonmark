@@ -25,6 +25,11 @@ use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 class Environment
 {
     /**
+     * @var ExtensionInterface[]
+     */
+    protected $extensions;
+    
+    /**
      * @var BlockParserInterface[]
      */
     protected $blockParsers = array();
@@ -218,6 +223,8 @@ class Environment
      */
     public function addExtension(ExtensionInterface $extension)
     {
+        $this->extensions[] = $extension;
+        
         // Block parsers
         foreach ($extension->getBlockParsers() as $blockParser) {
             $this->addBlockParser($blockParser);
@@ -242,6 +249,14 @@ class Environment
         foreach ($extension->getInlineRenderers() as $class => $inlineRenderer) {
             $this->addInlineRenderer($class, $inlineRenderer);
         }
+    }
+
+    /**
+     * @return ExtensionInterface[]
+     */
+    public function getExtensions()
+    {
+        return $this->extensions;
     }
 
     /**

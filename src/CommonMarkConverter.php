@@ -58,4 +58,20 @@ class CommonMarkConverter
 
         return $this->htmlRenderer->renderBlock($documentAST);
     }
+
+    /**
+     * @return DocParser
+     */
+    public function getDocParser()
+    {
+        return $this->docParser;
+    }
+
+    /**
+     * @return HtmlRenderer
+     */
+    public function getHtmlRenderer()
+    {
+        return $this->htmlRenderer;
+    }
 }
