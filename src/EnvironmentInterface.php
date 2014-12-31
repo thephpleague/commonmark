@@ -1,29 +1,35 @@
 <?php
 namespace League\CommonMark;
 
+use League\CommonMark\Block\Parser\BlockParserInterface;
+use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\Inline\Parser\InlineParserInterface;
+use League\CommonMark\Inline\Processor\InlineProcessorInterface;
+use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+
 interface EnvironmentInterface {
     /**
-     * @return array
+     * @return BlockParserInterface[]
      */
     public function getBlockParsers();
 
     /**
-     * @return array
+     * @return InlineParserInterface[]
      */
     public function getInlineParsers();
 
     /**
-     * @return array
+     * @return InlineProcessorInterface[]
      */
     public function getInlineProcessors();
 
     /**
-     * @return array
+     * @return BlockRendererInterface[]
      */
     public function getBlockRenderers();
 
     /**
-     * @return array
+     * @return InlineRendererInterface[]
      */
     public function getInlineRenderers();
 }
