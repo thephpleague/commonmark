@@ -11,11 +11,11 @@ A> An aside
 === Name ===
 Multi-line Aside
 === Markdown ===
-A> An aside
+A> An aside  
 A> With multiple lines
 === Result ===
 <aside>
-<p>An aside
+<p>An aside<br />
 With multiple lines</p>
 </aside>
 === End ===
