@@ -14,17 +14,12 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Parser\BlockParserInterface;
-use League\CommonMark\Block\Renderer as BlockRenderer;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Extension\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\Inline\Processor\EmphasisProcessor;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
-use League\CommonMark\Inline\Renderer as InlineRenderer;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
 class Environment
