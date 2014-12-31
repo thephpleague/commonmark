@@ -19,7 +19,6 @@ use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer as BlockRenderer;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Environment\CommonMark;
-use League\CommonMark\Environment\Markua;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
@@ -246,10 +245,5 @@ class Environment
     public static function createCommonMarkEnvironment()
     {
         return static::createEnvironment(new CommonMark());
-    }
-
-    public static function createMarkuaEnvironment()
-    {
-        return static::createEnvironment(new Markua());
     }
 }
