@@ -62,7 +62,7 @@ class Context implements ContextInterface
     /**
      * @var callable|null
      */
-    private $unmatchedBlockCloser;
+    protected $unmatchedBlockCloser;
 
     public function __construct(Document $document, Environment $environment)
     {

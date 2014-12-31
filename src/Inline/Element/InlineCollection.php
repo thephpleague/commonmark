@@ -21,7 +21,7 @@ class InlineCollection extends AbstractInline
     /**
      * @var ArrayCollection|AbstractInline[]
      */
-    private $inlines;
+    protected $inlines;
 
     public function __construct($inlines)
     {

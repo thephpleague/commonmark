@@ -31,7 +31,7 @@ class DocParser
     /**
      * @var InlineParserEngine
      */
-    private $inlineParserEngine;
+    protected $inlineParserEngine;
 
     /**
      * @param Environment $parsers
@@ -55,7 +55,7 @@ class DocParser
      *
      * @return string[]
      */
-    private function preProcessInput($input)
+    protected function preProcessInput($input)
     {
         // Remove any /n which appears at the very end of the string
         if (substr($input, -1) == "\n") {
@@ -89,7 +89,7 @@ class DocParser
         return $context->getDocument();
     }
 
-    private function incorporateLine(ContextInterface $context)
+    protected function incorporateLine(ContextInterface $context)
     {
         $cursor = new Cursor($context->getLine());
         $oldTip = $context->getTip();
@@ -158,7 +158,7 @@ class DocParser
         }
     }
 
-    private function processInlines(ContextInterface $context, AbstractBlock $block)
+    protected function processInlines(ContextInterface $context, AbstractBlock $block)
     {
         if ($block instanceof AbstractInlineContainer) {
             $cursor = new Cursor(trim($block->getStringContent()));
@@ -179,7 +179,7 @@ class DocParser
      * @param ContextInterface $context
      * @param AbstractBlock $block
      */
-    private function breakOutOfLists(ContextInterface $context, AbstractBlock $block)
+    protected function breakOutOfLists(ContextInterface $context, AbstractBlock $block)
     {
         $b = $block;
         $lastList = null;

@@ -7,22 +7,22 @@ class HtmlElement
     /**
      * @var string
      */
-    private $tagName;
+    protected $tagName;
 
     /**
      * @var string[]
      */
-    private $attributes = array();
+    protected $attributes = array();
 
     /**
      * @var HtmlElement|HtmlElement[]|string
      */
-    private $contents;
+    protected $contents;
 
     /**
      * @var bool
      */
-    private $selfClosing = false;
+    protected $selfClosing = false;
 
     /**
      * @param string $tagName

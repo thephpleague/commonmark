@@ -34,7 +34,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     /**
      * @var Environment
      */
-    private $environment;
+    protected $environment;
 
     /**
      * @return string[]
@@ -120,7 +120,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      * @param int $start
      * @param int $end
      */
-    private function nullify(ArrayCollection $collection, $start, $end)
+    protected function nullify(ArrayCollection $collection, $start, $end)
     {
         for ($i = $start; $i < $end; $i++) {
             $collection->set($i, null);
@@ -135,7 +135,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      *
      * @return array|bool
      */
-    private function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, $startPos)
+    protected function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, $startPos)
     {
         // Check to see if we have a link/image
         // Inline link?
@@ -155,7 +155,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      *
      * @return array|bool
      */
-    private function tryParseInlineLinkAndTitle(Cursor $cursor)
+    protected function tryParseInlineLinkAndTitle(Cursor $cursor)
     {
         $cursor->advance();
         $cursor->advanceToFirstNonSpace();
@@ -188,7 +188,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      *
      * @return Reference|null
      */
-    private function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, $startPos)
+    protected function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, $startPos)
     {
         $savePos = $cursor->saveState();
         $cursor->advanceToFirstNonSpace();
@@ -217,7 +217,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      *
      * @return AbstractWebResource
      */
-    private function createInline($url, InlineCollection $labelInlines, $title, $isImage)
+    protected function createInline($url, InlineCollection $labelInlines, $title, $isImage)
     {
         if ($isImage) {
             return new Image($url, $labelInlines, $title);

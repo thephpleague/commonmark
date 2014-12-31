@@ -22,7 +22,7 @@ class ListItem extends AbstractBlock
     /**
      * @var ListData
      */
-    private $data;
+    protected $data;
 
     public function __construct(ListData $listData)
     {

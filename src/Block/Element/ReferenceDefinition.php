@@ -23,7 +23,7 @@ class ReferenceDefinition extends AbstractBlock
     /**
      * @var Reference
      */
-    private $reference;
+    protected $reference;
 
     public function __construct(Reference $reference)
     {

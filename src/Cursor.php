@@ -18,12 +18,12 @@ class Cursor
     /**
      * @var string
      */
-    private $line;
+    protected $line;
 
     /**
      * @var int
      */
-    private $length;
+    protected $length;
 
     /**
      * @var int
@@ -31,17 +31,17 @@ class Cursor
      * It's possible for this to be 1 char past the end, meaning we've parsed all chars and have
      * reached the end.  In this state, any character-returning method MUST return null.
      */
-    private $currentPosition = 0;
+    protected $currentPosition = 0;
 
     /**
      * @var int
      */
-    private $previousPosition = 0;
+    protected $previousPosition = 0;
 
     /**
      * @var int|null
      */
-    private $firstNonSpaceCache;
+    protected $firstNonSpaceCache;
 
     /**
      * @param string $line

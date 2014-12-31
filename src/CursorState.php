@@ -16,27 +16,27 @@ class CursorState
     /**
      * @var string
      */
-    private $line;
+    protected $line;
 
     /**
      * @var int
      */
-    private $length;
+    protected $length;
 
     /**
      * @var int
      */
-    private $currentPosition;
+    protected $currentPosition;
 
     /**
      * @var int
      */
-    private $previousPosition;
+    protected $previousPosition;
 
     /**
      * @var int|null
      */
-    private $firstNonSpaceCache;
+    protected $firstNonSpaceCache;
 
     /**
      * @param string $line
