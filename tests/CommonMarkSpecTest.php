@@ -21,7 +21,7 @@ use League\CommonMark\HtmlRenderer;
 /**
  * Tests the parser against the CommonMark spec
  */
-class SpecTest extends \PHPUnit_Framework_TestCase
+class CommonMarkSpecTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var DocParser

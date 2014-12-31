@@ -14,6 +14,8 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Environment\CommonMark;
+
 /**
  * Converts CommonMark-compatible Markdown to HTML.
  */
@@ -38,7 +40,7 @@ class CommonMarkConverter
      */
     public function __construct()
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = Environment::createEnvironment(new CommonMark());
         $this->docParser = new DocParser($environment);
         $this->htmlRenderer = new HtmlRenderer($environment);
     }
