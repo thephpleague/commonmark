@@ -17,10 +17,8 @@
         "colinodell/commonmark-php": "*"
     },
     "require": {
-        "php": ">=5.3.3"
-    },
-    "suggest": {
-        "ext-mbstring": "Enables faster performance when normalizing link references"
+        "php": ">=5.3.3",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "erusev/parsedown": "~1.0",
