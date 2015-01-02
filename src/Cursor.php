@@ -49,7 +49,7 @@ class Cursor
     public function __construct($line)
     {
         $this->line = $line;
-        $this->length = strlen($line);
+        $this->length = mb_strlen($line, 'utf-8');
     }
 
     /**
@@ -103,7 +103,7 @@ class Cursor
             return null;
         }
 
-        return $this->line[$index];
+        return mb_substr($this->line, $index, 1, 'utf-8');
     }
 
     /**
@@ -115,11 +115,7 @@ class Cursor
      */
     public function peek($offset = 1)
     {
-        if (!isset($this->line[$this->currentPosition + $offset])) {
-            return null;
-        }
-
-        return $this->line[$this->currentPosition + $offset];
+        return $this->getCharacter($this->currentPosition + $offset);
     }
 
     /**
@@ -195,7 +191,7 @@ class Cursor
 
         $max = min($start + $maximumCharactersToAdvance, $this->length);
 
-        while ($newIndex < $max && $this->line[$newIndex] === $character) {
+        while ($newIndex < $max && $this->getCharacter($newIndex) === $character) {
             ++$newIndex;
         }
 
@@ -242,7 +238,7 @@ class Cursor
         if ($this->isAtEnd()) {
             return '';
         } else {
-            return substr($this->line, $this->currentPosition);
+            return mb_substr($this->line, $this->currentPosition, $this->length, 'utf-8');
         }
     }
 
@@ -280,7 +276,7 @@ class Cursor
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
-        $this->advanceBy($matches[0][1] + strlen($matches[0][0]));
+        $this->advanceBy($matches[0][1] + mb_strlen($matches[0][0], 'utf-8'));
 
         return $matches[0][0];
     }
@@ -318,6 +314,6 @@ class Cursor
      */
     public function getPreviousText()
     {
-        return substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition);
+        return mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, 'utf-8');
     }
 }

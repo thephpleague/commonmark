@@ -51,7 +51,7 @@ class LinkParserHelper
     {
         $match = $cursor->match('/^\[(?:[^\\\\\[\]]|\\\\[\[\]]){0,750}\]/');
 
-        return $match === null ? 0 : strlen($match);
+        return $match === null ? 0 : mb_strlen($match, 'utf-8');
     }
 
     /**
