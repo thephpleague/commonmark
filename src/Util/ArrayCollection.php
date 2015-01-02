@@ -21,7 +21,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @var array
      */
-    private $elements;
+    protected $elements;
 
     /**
      * Constructor

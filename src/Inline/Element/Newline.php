@@ -19,7 +19,7 @@ class Newline extends AbstractInline
     const HARDBREAK = 0;
     const SOFTBREAK = 1;
 
-    private $type;
+    protected $type;
 
     /**
      * @param int $breakType

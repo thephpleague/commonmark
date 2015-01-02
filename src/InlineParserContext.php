@@ -19,9 +19,9 @@ use League\CommonMark\Util\ArrayCollection;
 
 class InlineParserContext
 {
-    private $cursor;
-    private $inlines;
-    private $delimiterStack;
+    protected $cursor;
+    protected $inlines;
+    protected $delimiterStack;
 
     public function __construct(Cursor $cursor)
     {

@@ -97,7 +97,7 @@ interface ContextInterface
     public function setBlocksParsed($bool);
 
     /**
-     * @return ReferenceParser
+     * @return ReferenceParserInterface[]
      */
-    public function getReferenceParser();
+    public function getReferenceParsers();
 }

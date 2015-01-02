@@ -57,12 +57,12 @@ class Context implements ContextInterface
      */
     protected $blocksParsed = false;
 
-    protected $referenceParser;
+    protected $referenceParsers;
 
     /**
      * @var callable|null
      */
-    private $unmatchedBlockCloser;
+    protected $unmatchedBlockCloser;
 
     public function __construct(Document $document, Environment $environment)
     {
@@ -72,7 +72,7 @@ class Context implements ContextInterface
 
         $this->environment = $environment;
 
-        $this->referenceParser = new ReferenceParser($document->getReferenceMap());
+        $this->setReferenceParsers($this->environment->getReferenceParsers());
     }
 
     /**
@@ -241,8 +241,16 @@ class Context implements ContextInterface
     /**
      * @return ReferenceParser
      */
-    public function getReferenceParser()
+    public function getReferenceParsers()
     {
-        return $this->referenceParser;
+        return $this->referenceParsers;
+    }
+    
+    public function setReferenceParsers(array $parsers)
+    {
+        foreach ($parsers as &$parser) {
+            $parser->setReferenceMap($this->getDocument()->getReferenceMap());
+        }
+        $this->referenceParsers = $parsers;
     }
 }

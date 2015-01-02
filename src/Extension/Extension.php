@@ -61,4 +61,12 @@ abstract class Extension implements ExtensionInterface
     {
         return array();
     }
+
+    /**
+     * @return ReferenceParserInterface[]
+     */
+    public function getReferenceParsers()
+    {
+        return array();
+    }
 }

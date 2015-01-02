@@ -19,6 +19,7 @@ use League\CommonMark\Block\Renderer as BlockRenderer;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Processor as InlineProcessor;
 use League\CommonMark\Inline\Renderer as InlineRenderer;
+use League\CommonMark\ReferenceParser;
 
 class CommonMarkCoreExtension extends Extension
 {
@@ -104,6 +105,13 @@ class CommonMarkCoreExtension extends Extension
             'League\CommonMark\Inline\Element\Newline'  => new InlineRenderer\NewlineRenderer(),
             'League\CommonMark\Inline\Element\Strong'   => new InlineRenderer\StrongRenderer(),
             'League\CommonMark\Inline\Element\Text'     => new InlineRenderer\TextRenderer(),
+        );
+    }
+    
+    public function getReferenceParsers()
+    {
+        return array(
+            new ReferenceParser()
         );
     }
 

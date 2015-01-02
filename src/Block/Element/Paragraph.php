@@ -69,8 +69,8 @@ class Paragraph extends AbstractInlineContainer
         $this->finalStringContents = preg_replace('/^  */m', '', implode("\n", $this->getStrings()));
 
         // Short-circuit
-        if ($this->finalStringContents === '' || $this->finalStringContents[0] !== '[') {
-            return;
+        if ($this->finalStringContents === '') {
+            return false;
         }
 
         $cursor = new Cursor($this->finalStringContents);
@@ -90,12 +90,26 @@ class Paragraph extends AbstractInlineContainer
      *
      * @return bool
      */
-    private function parseReferences(ContextInterface $context, Cursor $cursor)
+    protected function parseReferences(ContextInterface $context, Cursor $cursor)
     {
         $referenceFound = false;
-        while ($cursor->getCharacter() === '[' && $context->getReferenceParser()->parse($cursor)) {
-            $this->finalStringContents = $cursor->getRemainder();
-            $referenceFound = true;
+        $parsers = array();
+        $prefixes = array();
+        
+        foreach ($context->getReferenceParsers() as $referenceParser) {
+            $prefix = $referenceParser->getPrefix();
+            $parsers[$prefix] = $referenceParser;
+            $prefixes[] = preg_quote($prefix, '/');
+        }
+
+        while ($prefix = $cursor->match('/^(' .implode('|', $prefixes). ')/')) {
+            $cursor->advanceBy(strlen($prefix) * -1);
+            if ($parsers[$prefix]->parse($cursor)) {
+                $this->finalStringContents = $cursor->getRemainder();
+                $referenceFound = true;
+            } else {
+                break;
+            }
         }
 
         return $referenceFound;

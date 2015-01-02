@@ -84,7 +84,7 @@ class ListParser extends AbstractBlockParser
      *
      * @return int
      */
-    private function calculateListMarkerPadding($marker, $spacesAfterMarker, $rest)
+    protected function calculateListMarkerPadding($marker, $spacesAfterMarker, $rest)
     {
         $markerLength = strlen($marker);
 

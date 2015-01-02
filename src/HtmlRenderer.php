@@ -142,4 +142,12 @@ class HtmlRenderer
 
         return implode($this->options['blockSeparator'], $result);
     }
+
+    /**
+     * @return Environment
+     */
+    public function getEnvironment()
+    {
+        return $this->environment;
+    }
 }
