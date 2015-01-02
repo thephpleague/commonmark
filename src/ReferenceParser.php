@@ -18,14 +18,17 @@ use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Util\LinkParserHelper;
 
-class ReferenceParser
+class ReferenceParser implements ReferenceParserInterface
 {
     /**
      * @var ReferenceMap
      */
     protected $referenceMap;
 
-    public function __construct(ReferenceMap $referenceMap)
+    /**
+     * @param ReferenceMap $referenceMap
+     */
+    public function setReferenceMap(ReferenceMap $referenceMap)
     {
         $this->referenceMap = $referenceMap;
     }
@@ -96,5 +99,10 @@ class ReferenceParser
         }
 
         return true;
+    }
+
+    public function getPrefix()
+    {
+        return '[';
     }
 }

@@ -60,6 +60,11 @@ class Environment
     protected $inlineRenderersByClass = array();
 
     /**
+     * @var ReferenceParserInterface[]
+     */
+    protected $referenceParsers = array();
+
+    /**
      * @param BlockParserInterface $parser
      *
      * @return $this
@@ -209,6 +214,14 @@ class Environment
         return $this->inlineRenderersByClass[$inlineClass];
     }
 
+    /**
+     * @return ReferenceParserInterface[]
+     */
+    public function getReferenceParsers()
+    {
+        return $this->referenceParsers;
+    }
+
     public function createInlineParserEngine()
     {
         return new InlineParserEngine($this);
@@ -249,6 +262,8 @@ class Environment
         foreach ($extension->getInlineRenderers() as $class => $inlineRenderer) {
             $this->addInlineRenderer($class, $inlineRenderer);
         }
+
+        $this->referenceParsers = $extension->getReferenceParsers();
     }
 
     /**

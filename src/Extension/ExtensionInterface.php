@@ -62,6 +62,13 @@ interface ExtensionInterface
     public function getInlineRenderers();
 
     /**
+     * Returns a list of reference parsers to add to the existing list
+     * 
+     * @return ReferenceParserInterface[]
+     */
+    public function getReferenceParsers();
+
+    /**
      * Returns the name of the extension
      *
      * @return string
