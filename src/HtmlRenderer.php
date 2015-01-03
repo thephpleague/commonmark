@@ -15,7 +15,6 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\ReferenceDefinition;
 use League\CommonMark\Inline\Element\AbstractInline;
 
 /**
@@ -135,9 +134,7 @@ class HtmlRenderer
     {
         $result = array();
         foreach ($blocks as $block) {
-            if (!($block instanceof ReferenceDefinition)) {
-                $result[] = $this->renderBlock($block, $inTightList);
-            }
+            $result[] = $this->renderBlock($block, $inTightList);
         }
 
         return implode($this->options['blockSeparator'], $result);

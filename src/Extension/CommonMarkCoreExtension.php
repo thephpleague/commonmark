@@ -57,7 +57,6 @@ class CommonMarkCoreExtension extends Extension
             'League\CommonMark\Block\Element\ListBlock'           => new BlockRenderer\ListBlockRenderer(),
             'League\CommonMark\Block\Element\ListItem'            => new BlockRenderer\ListItemRenderer(),
             'League\CommonMark\Block\Element\Paragraph'           => new BlockRenderer\ParagraphRenderer(),
-            'League\CommonMark\Block\Element\ReferenceDefinition' => new BlockRenderer\ReferenceDefinitionRenderer(),
         );
     }
 
