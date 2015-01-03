@@ -321,22 +321,43 @@ class Environment
      */
     protected function initializeExtension(ExtensionInterface $extension)
     {
-        // Block parsers
-        foreach ($extension->getBlockParsers() as $blockParser) {
+        $this->initalizeBlockParsers($extension->getBlockParsers());
+        $this->initializeBlockRenderers($extension->getBlockRenderers());
+        $this->initializeInlineParsers($extension->getInlineParsers());
+        $this->initializeInlineProcessors($extension->getInlineProcessors());
+        $this->initializeInlineRenderers($extension->getInlineRenderers());
+    }
+
+    /**
+     * @param BlockParserInterface[] $blockParsers
+     */
+    private function initalizeBlockParsers($blockParsers)
+    {
+        foreach ($blockParsers as $blockParser) {
             if ($blockParser instanceof EnvironmentAwareInterface) {
                 $blockParser->setEnvironment($this);
             }
 
             $this->blockParsers[$blockParser->getName()] = $blockParser;
         }
+    }
 
-        // Block renderers
-        foreach ($extension->getBlockRenderers() as $class => $blockRenderer) {
+    /**
+     * @param BlockRendererInterface[] $blockRenderers
+     */
+    private function initializeBlockRenderers($blockRenderers)
+    {
+        foreach ($blockRenderers as $class => $blockRenderer) {
             $this->blockRenderersByClass[$class] = $blockRenderer;
         }
+    }
 
-        // Inline parsers
-        foreach ($extension->getInlineParsers() as $inlineParser) {
+    /**
+     * @param InlineParserInterface[] $inlineParsers
+     */
+    private function initializeInlineParsers($inlineParsers)
+    {
+        foreach ($inlineParsers as $inlineParser) {
             if ($inlineParser instanceof EnvironmentAwareInterface) {
                 $inlineParser->setEnvironment($this);
             }
@@ -347,14 +368,24 @@ class Environment
                 $this->inlineParsersByCharacter[$character][] = $inlineParser;
             }
         }
+    }
 
-        // Inline processors
-        foreach ($extension->getInlineProcessors() as $inlineProcessor) {
+    /**
+     * @param InlineProcessorInterface[] $inlineProcessors
+     */
+    private function initializeInlineProcessors($inlineProcessors)
+    {
+        foreach ($inlineProcessors as $inlineProcessor) {
             $this->inlineProcessors[] = $inlineProcessor;
         }
+    }
 
-        // Inline renderers
-        foreach ($extension->getInlineRenderers() as $class => $inlineRenderer) {
+    /**
+     * @param InlineRendererInterface[] $inlineRenderers
+     */
+    private function initializeInlineRenderers($inlineRenderers)
+    {
+        foreach ($inlineRenderers as $class => $inlineRenderer) {
             $this->inlineRenderersByClass[$class] = $inlineRenderer;
         }
     }
