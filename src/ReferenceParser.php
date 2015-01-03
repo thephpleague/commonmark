@@ -23,7 +23,7 @@ class ReferenceParser
     /**
      * @var ReferenceMap
      */
-    private $referenceMap;
+    protected $referenceMap;
 
     public function __construct(ReferenceMap $referenceMap)
     {

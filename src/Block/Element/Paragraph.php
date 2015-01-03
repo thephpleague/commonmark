@@ -90,7 +90,7 @@ class Paragraph extends AbstractInlineContainer
      *
      * @return bool
      */
-    private function parseReferences(ContextInterface $context, Cursor $cursor)
+    protected function parseReferences(ContextInterface $context, Cursor $cursor)
     {
         $referenceFound = false;
         while ($cursor->getCharacter() === '[' && $context->getReferenceParser()->parse($cursor)) {

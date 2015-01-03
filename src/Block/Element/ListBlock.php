@@ -25,12 +25,12 @@ class ListBlock extends AbstractBlock
     /**
      * @var bool
      */
-    private $tight = false;
+    protected $tight = false;
 
     /**
      * @var ListData
      */
-    private $data;
+    protected $data;
 
     public function __construct(ListData $listData)
     {

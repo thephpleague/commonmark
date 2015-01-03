@@ -23,22 +23,22 @@ class FencedCode extends AbstractBlock
     /**
      * @var string
      */
-    private $info;
+    protected $info;
 
     /**
      * @var int
      */
-    private $length;
+    protected $length;
 
     /**
      * @var string
      */
-    private $char;
+    protected $char;
 
     /**
      * @var int
      */
-    private $offset;
+    protected $offset;
 
     /**
      * @param int $length
