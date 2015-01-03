@@ -271,6 +271,16 @@ class Environment
     }
 
     /**
+     * Get all registered extensions
+     *
+     * @return ExtensionInterface[]
+     */
+    public function getExtensions()
+    {
+        return $this->extensions;
+    }
+
+    /**
      * Add a single extension
      *
      * @param ExtensionInterface $extension
