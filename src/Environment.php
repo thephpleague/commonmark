@@ -31,7 +31,7 @@ class Environment
     protected $extensions = array();
 
     /**
-     * @var ExtensionInterface
+     * @var MiscExtension
      */
     protected $miscExtension;
 
