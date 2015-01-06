@@ -196,9 +196,9 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $n = LinkParserHelper::parseLinkLabel($cursor);
         if ($n === 0 || $n === 2) {
             // Empty or missing second label
-            $reflabel = substr($cursor->getLine(), $opener->getIndex(), $startPos - $opener->getIndex());
+            $reflabel = mb_substr($cursor->getLine(), $opener->getIndex(), $startPos - $opener->getIndex(), 'utf-8');
         } else {
-            $reflabel = substr($cursor->getLine(), $beforeLabel + 1, $n - 2);
+            $reflabel = mb_substr($cursor->getLine(), $beforeLabel + 1, $n - 2, 'utf-8');
         }
 
         if ($n === 0) {
