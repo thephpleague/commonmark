@@ -71,7 +71,7 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 
     public function testToString()
     {
-        $img = new HtmlElement('img', array(), null, true);
+        $img = new HtmlElement('img', array(), '', true);
         $p = new HtmlElement('p');
         $div = new HtmlElement('div');
         $div->setContents(array($p, $img));
