@@ -81,4 +81,17 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('<div><p></p><img /></div>', $div->__toString());
     }
+
+    public function testNullContentConstructor()
+    {
+        $img = new HtmlElement('img', array(), null);
+        $this->assertTrue($img->getContents(false) === '');
+    }
+
+    public function testNullContentSetter()
+    {
+        $img = new HtmlElement('img');
+        $img->setContents(null);
+        $this->assertTrue($img->getContents(false) === '');
+    }
 }

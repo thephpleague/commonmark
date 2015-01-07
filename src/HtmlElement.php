@@ -34,8 +34,9 @@ class HtmlElement
     {
         $this->tagName = $tagName;
         $this->attributes = $attributes;
-        $this->contents = $contents;
         $this->selfClosing = $selfClosing;
+
+        $this->setContents($contents);
     }
 
     /**
@@ -106,7 +107,7 @@ class HtmlElement
      */
     public function setContents($contents)
     {
-        $this->contents = $contents;
+        $this->contents = !is_null($contents) ? $contents : '';
 
         return $this;
     }
