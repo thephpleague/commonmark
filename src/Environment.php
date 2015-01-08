@@ -461,6 +461,13 @@ class Environment
     {
         $environment = new static();
         $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->mergeConfig(array(
+            'renderer' => array(
+                'blockSeparator' => "\n",
+                'innerSeparator' => "\n",
+                'softBreak' => "\n",
+            )
+        ));
 
         return $environment;
     }

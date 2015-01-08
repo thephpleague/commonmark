@@ -29,32 +29,44 @@ class HtmlRenderer
 
     /**
      * @var array
+     *
+     * @deprecated
      */
     protected $options;
 
     /**
-     * @param array $options
+     * @param Environment $environment
      */
-    public function __construct(Environment $environment, array $options = array())
+    public function __construct(Environment $environment)
     {
         $this->environment = $environment;
 
-        $defaults = array(
-            'blockSeparator' => "\n",
-            'innerSeparator' => "\n",
-            'softBreak' => "\n"
-        );
-        $this->options = array_merge($defaults, $options);
+        if (func_num_args() > 1) {
+            trigger_error('The $options parameter has been deprecated - configure the Environment instead', E_USER_DEPRECATED);
+
+            $defaults = array(
+                'blockSeparator' => "\n",
+                'innerSeparator' => "\n",
+                'softBreak' => "\n"
+            );
+            $this->options = array_merge($defaults, func_get_arg(1));
+        }
     }
 
     /**
      * @param string $option
+     * @param mixed|null $default
      *
      * @return mixed|null
      */
-    public function getOption($option)
+    public function getOption($option, $default = null)
     {
-        return $this->options[$option];
+        // Deprecated retrieval method
+        if (isset($this->options[$option])) {
+            return $this->options[$option];
+        }
+
+        return $this->environment->getConfig('renderer/' . $option, $default);
     }
 
     /**
@@ -137,6 +149,8 @@ class HtmlRenderer
             $result[] = $this->renderBlock($block, $inTightList);
         }
 
-        return implode($this->options['blockSeparator'], $result);
+        $separator = $this->getOption('blockSeparator', "\n");
+
+        return implode($separator, $result);
     }
 }
