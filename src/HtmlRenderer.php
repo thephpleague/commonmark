@@ -61,6 +61,19 @@ class HtmlRenderer
      */
     public function getOption($option, $default = null)
     {
+        // Handle deprecated config names
+        $configNames = array(
+            'blockSeparator' => 'block_separator',
+            'innerSeparator' => 'inner_separator',
+            'softBreak' => 'soft_break',
+        );
+        if (isset($configNames[$option])) {
+            $msg = sprintf('The "%s" option name has been deprecated - use "%s" instead.', $option, $configNames[$option]);
+            trigger_error($msg, E_USER_DEPRECATED);
+
+            $option = $configNames[$option];
+        }
+
         // Deprecated retrieval method
         if (isset($this->options[$option])) {
             return $this->options[$option];
@@ -149,7 +162,7 @@ class HtmlRenderer
             $result[] = $this->renderBlock($block, $inTightList);
         }
 
-        $separator = $this->getOption('blockSeparator', "\n");
+        $separator = $this->getOption('block_separator', "\n");
 
         return implode($separator, $result);
     }

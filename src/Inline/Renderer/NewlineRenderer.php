@@ -36,7 +36,7 @@ class NewlineRenderer implements InlineRendererInterface
         if ($inline->getType() === Newline::HARDBREAK) {
             return new HtmlElement('br', array(), '', true) . "\n";
         } else {
-            return $htmlRenderer->getOption('softBreak', "\n");
+            return $htmlRenderer->getOption('soft_break', "\n");
         }
     }
 }

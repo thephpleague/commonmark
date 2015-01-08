@@ -44,10 +44,10 @@ class ListBlockRenderer implements BlockRendererInterface
         return new HtmlElement(
             $tag,
             $attr,
-            $htmlRenderer->getOption('innerSeparator', "\n") . $htmlRenderer->renderBlocks(
+            $htmlRenderer->getOption('inner_separator', "\n") . $htmlRenderer->renderBlocks(
                 $block->getChildren(),
                 $block->isTight()
-            ) . $htmlRenderer->getOption('innerSeparator', "\n")
+            ) . $htmlRenderer->getOption('inner_separator', "\n")
         );
     }
 }

@@ -463,9 +463,9 @@ class Environment
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->mergeConfig(array(
             'renderer' => array(
-                'blockSeparator' => "\n",
-                'innerSeparator' => "\n",
-                'softBreak' => "\n",
+                'block_separator' => "\n",
+                'inner_separator' => "\n",
+                'soft_break' => "\n",
             )
         ));
 
