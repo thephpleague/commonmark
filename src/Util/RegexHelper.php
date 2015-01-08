@@ -108,7 +108,7 @@ class RegexHelper
         $regex[self::HTMLCOMMENT] = '<!---->|<!--(?:-?[^>-])(?:-?[^-])*-->';
         $regex[self::PROCESSINGINSTRUCTION] = '[<][?].*?[?][>]';
         $regex[self::DECLARATION] = '<![A-Z]+' . '\s+[^>]*>';
-        $regex[self::CDATA] = '<!\[CDATA\[([^\]]+|\][^\]]|\]\][^>])*\]\]>';
+        $regex[self::CDATA] = '<!\[CDATA\[[\s\S]*?]\]>';
         $regex[self::HTMLTAG] = '(?:' . $regex[self::OPENTAG] . '|' . $regex[self::CLOSETAG] . '|' . $regex[self::HTMLCOMMENT] . '|' .
             $regex[self::PROCESSINGINSTRUCTION] . '|' . $regex[self::DECLARATION] . '|' . $regex[self::CDATA] . ')';
         $regex[self::HTMLBLOCKOPEN] = '<(?:' . $regex[self::BLOCKTAGNAME] . '[\s\/>]' . '|' .
