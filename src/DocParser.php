@@ -154,7 +154,14 @@ class DocParser
             $context->getContainer()->setLastLineBlank($cursor, $context->getLineNumber());
 
             // Handle any remaining cursor contents
-            $context->getContainer()->handleRemainingContents($context, $cursor);
+            if ($context->getContainer()->isOpen()) {
+                $context->getContainer()->handleRemainingContents($context, $cursor);
+            } elseif (!$cursor->isBlank()) {
+                // Create paragraph container for line
+                $context->addBlock(new Paragraph());
+                $cursor->advanceToFirstNonSpace();
+                $context->getTip()->addLine($cursor->getRemainder());
+            }
         }
     }
 
