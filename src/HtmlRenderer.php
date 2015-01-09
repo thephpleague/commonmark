@@ -28,29 +28,11 @@ class HtmlRenderer
     protected $environment;
 
     /**
-     * @var array
-     *
-     * @deprecated
-     */
-    protected $options;
-
-    /**
      * @param Environment $environment
      */
     public function __construct(Environment $environment)
     {
         $this->environment = $environment;
-
-        if (func_num_args() > 1) {
-            trigger_error('The $options parameter has been deprecated - configure the Environment instead', E_USER_DEPRECATED);
-
-            $defaults = array(
-                'blockSeparator' => "\n",
-                'innerSeparator' => "\n",
-                'softBreak' => "\n"
-            );
-            $this->options = array_merge($defaults, func_get_arg(1));
-        }
     }
 
     /**
@@ -61,24 +43,6 @@ class HtmlRenderer
      */
     public function getOption($option, $default = null)
     {
-        // Handle deprecated config names
-        $configNames = array(
-            'blockSeparator' => 'block_separator',
-            'innerSeparator' => 'inner_separator',
-            'softBreak' => 'soft_break',
-        );
-        if (isset($configNames[$option])) {
-            $msg = sprintf('The "%s" option name has been deprecated - use "%s" instead.', $option, $configNames[$option]);
-            trigger_error($msg, E_USER_DEPRECATED);
-
-            $option = $configNames[$option];
-        }
-
-        // Deprecated retrieval method
-        if (isset($this->options[$option])) {
-            return $this->options[$option];
-        }
-
         return $this->environment->getConfig('renderer/' . $option, $default);
     }
 
