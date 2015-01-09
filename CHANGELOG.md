@@ -4,6 +4,29 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.6.0] - 2015-01-09
+### Added
+ - Bulk registration of parsers/renderers via extensions (#45)
+ - Proper UTF-8 support, especially in the Cursor; mbstring extension is now required (#49)
+ - Environment is now configurable; options can be accessed in its parsers/renderers (#56)
+ - Added some unit tests 
+
+### Changed
+ - Bumped spec target version to 0.15 (#50)
+ - Parsers/renderers are now lazy-initialized (#52)
+ - Some private elements are now protected for easier extending, especially on Element classes (#53)
+ - Renderer option names changed from underscore_case to camelCase (#56) 
+
+### Fixed
+ - Improved parsing of emphasis around punctuation
+ - Improved regexes for CDATA and HTML comments
+ - Fixed issue with HTML content that is considered false in loose comparisons, like `'0'` (#55)
+ - Fixed DocParser trying to add empty strings to closed containers (#58)
+ - Fixed incorrect use of a null parameter value in the HtmlElementTest
+
+### Removed
+ - Removed unused ReferenceDefinition* classes (#51)
+
 ## [0.5.1] - 2014-12-27
 ### Fixed
  - Fixed infinite loop and link-in-link-in-image parsing (#37)
@@ -97,7 +120,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.5.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.6.0...HEAD
+[0.6.0]: https://github.com/thephpleague/commonmark/compare/0.5.1...0.6.0
 [0.5.1]: https://github.com/thephpleague/commonmark/compare/0.5.0...0.5.1
 [0.5.0]: https://github.com/thephpleague/commonmark/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/thephpleague/commonmark/compare/0.3.0...0.4.0
