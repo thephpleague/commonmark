@@ -28,33 +28,22 @@ class HtmlRenderer
     protected $environment;
 
     /**
-     * @var array
+     * @param Environment $environment
      */
-    protected $options;
-
-    /**
-     * @param array $options
-     */
-    public function __construct(Environment $environment, array $options = array())
+    public function __construct(Environment $environment)
     {
         $this->environment = $environment;
-
-        $defaults = array(
-            'blockSeparator' => "\n",
-            'innerSeparator' => "\n",
-            'softBreak' => "\n"
-        );
-        $this->options = array_merge($defaults, $options);
     }
 
     /**
      * @param string $option
+     * @param mixed|null $default
      *
      * @return mixed|null
      */
-    public function getOption($option)
+    public function getOption($option, $default = null)
     {
-        return $this->options[$option];
+        return $this->environment->getConfig('renderer/' . $option, $default);
     }
 
     /**
@@ -137,6 +126,8 @@ class HtmlRenderer
             $result[] = $this->renderBlock($block, $inTightList);
         }
 
-        return implode($this->options['blockSeparator'], $result);
+        $separator = $this->getOption('block_separator', "\n");
+
+        return implode($separator, $result);
     }
 }

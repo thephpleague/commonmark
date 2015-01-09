@@ -70,9 +70,73 @@ class Environment
      */
     protected $inlineRenderersByClass = array();
 
-    public function __construct()
+    /**
+     * @var array
+     */
+    protected $config;
+
+    public function __construct(array $config = array())
     {
         $this->miscExtension = new MiscExtension();
+        $this->config = $config;
+    }
+
+    /**
+     * @param array $config
+     */
+    public function mergeConfig(array $config = array())
+    {
+        if ($this->extensionsInitialized) {
+            throw new \RuntimeException('Failed to modify configuration - extensions have already been initialized');
+        }
+
+        $this->config = array_replace_recursive($this->config, $config);
+    }
+
+    /**
+     * @param array $config
+     */
+    public function setConfig(array $config = array())
+    {
+        if ($this->extensionsInitialized) {
+            throw new \RuntimeException('Failed to modify configuration - extensions have already been initialized');
+        }
+
+        $this->config = $config;
+    }
+
+    /**
+     * @param string|null $key
+     * @param mixed|null $default
+     *
+     * @return mixed|null
+     */
+    public function getConfig($key = null, $default = null)
+    {
+        // accept a/b/c as ['a']['b']['c']
+        if (strpos($key, '/')) {
+            $keyArr = explode('/', $key);
+            $data = $this->config;
+            foreach ($keyArr as $k) {
+                if (!is_array($data) || !isset($data[$k])) {
+                    return $default;
+                }
+
+                $data = $data[$k];
+            }
+
+            return $data;
+        }
+
+        if ($key === null) {
+            return $this->config;
+        }
+
+        if (!isset($this->config[$key])) {
+            return $default;
+        }
+
+        return $this->config[$key];
     }
 
     /**
@@ -397,6 +461,13 @@ class Environment
     {
         $environment = new static();
         $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->mergeConfig(array(
+            'renderer' => array(
+                'block_separator' => "\n",
+                'inner_separator' => "\n",
+                'soft_break' => "\n",
+            )
+        ));
 
         return $environment;
     }
