@@ -55,8 +55,11 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         // No arguments should return the whole thing
         $this->assertEquals($config, $environment->getConfig());
 
-        // Test getting a single element
+        // Test getting a single scalar element
         $this->assertEquals('bar', $environment->getConfig('foo'));
+
+        // Test getting a single array element
+        $this->assertEquals($config['a'], $environment->getConfig('a'));
 
         // Test getting an element by path
         $this->assertEquals('c', $environment->getConfig('a/b'));
