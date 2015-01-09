@@ -16,6 +16,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Parsers/renderers are now lazy-initialized (#52)
  - Some private elements are now protected for easier extending, especially on Element classes (#53)
  - Renderer option names changed from underscore_case to camelCase (#56) 
+ - Moved CommonMark parser/render definitions into CommonMarkCoreExtension
 
 ### Fixed
  - Improved parsing of emphasis around punctuation
@@ -26,6 +27,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Removed
  - Removed unused ReferenceDefinition* classes (#51)
+ - Removed UnicodeCaseFolder in favor of mb_strtoupper
 
 ## [0.5.1] - 2014-12-27
 ### Fixed
