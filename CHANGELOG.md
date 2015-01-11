@@ -15,7 +15,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Bumped spec target version to 0.15 (#50)
  - Parsers/renderers are now lazy-initialized (#52)
  - Some private elements are now protected for easier extending, especially on Element classes (#53)
- - Renderer option names changed from underscore_case to camelCase (#56) 
+ - Renderer option keys changed from camelCase to underscore_case (#56) 
  - Moved CommonMark parser/render definitions into CommonMarkCoreExtension
 
 ### Fixed
