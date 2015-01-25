@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.6.1] - 2015-01-25
+### Changed
+ - Bumped spec target version to 0.17
+ - Updated emphasis parsing for underscores to prevent intra-word emphasis
+ - Defered closing of fenced code blocks
+
 ## [0.6.0] - 2015-01-09
 ### Added
  - Bulk registration of parsers/renderers via extensions (#45)
@@ -122,7 +128,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.6.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.6.1...HEAD
+[0.6.1]: https://github.com/thephpleague/commonmark/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/thephpleague/commonmark/compare/0.5.1...0.6.0
 [0.5.1]: https://github.com/thephpleague/commonmark/compare/0.5.0...0.5.1
 [0.5.0]: https://github.com/thephpleague/commonmark/compare/0.4.0...0.5.0

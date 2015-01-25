@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "erusev/parsedown": "~1.0",
-        "jgm/CommonMark": "0.16",
+        "jgm/CommonMark": "0.17",
         "michelf/php-markdown": "~1.4",
         "phpunit/phpunit": "~4.3"
     },
@@ -31,9 +31,9 @@
             "type": "package",
             "package": {
                 "name": "jgm/CommonMark",
-                "version": "0.16",
+                "version": "0.17",
                 "dist": {
-                    "url": "http://spec.commonmark.org/0.16/spec.txt",
+                    "url": "http://spec.commonmark.org/0.17/spec.txt",
                     "type": "file"
                 }
             }

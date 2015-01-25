@@ -56,19 +56,22 @@ class EmphasisParser extends AbstractInlineParser
 
         $charAfter = $cursor->getCharacter() ?: "\n";
 
-        $canOpen = $numDelims > 0 && !preg_match('/\pZ|\s/u', $charAfter) &&
+        $leftFlanking = $numDelims > 0 && !preg_match('/\pZ|\s/u', $charAfter) &&
             !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter) &&
             !preg_match('/\pZ|\s/u', $charBefore) &&
             !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore)));
 
-        $canClose = $numDelims > 0 && !preg_match('/\pZ|\s/u', $charBefore) &&
+        $rightFlanking = $numDelims > 0 && !preg_match('/\pZ|\s/u', $charBefore) &&
             !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore) &&
             !preg_match('/\pZ|\s/u', $charAfter) &&
             !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter)));
 
         if ($character === '_') {
-            $canOpen = $canOpen && !preg_match('/[a-z0-9]/i', $charBefore);
-            $canClose = $canClose && !preg_match('/[a-z0-9]/i', $charAfter);
+            $canOpen = $leftFlanking && !$rightFlanking;
+            $canClose = $rightFlanking && !$leftFlanking;
+        } else {
+            $canOpen = $leftFlanking;
+            $canClose = $rightFlanking;
         }
 
         $inlineContext->getInlines()->add(
