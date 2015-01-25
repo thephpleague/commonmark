@@ -164,6 +164,14 @@ class FencedCode extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor)
     {
+        if ($this->length === -1) {
+            if ($cursor->isBlank()) {
+                $this->lastLineBlank = true;
+            }
+
+            return false;
+        }
+
         // Skip optional spaces of fence offset
         $cursor->advanceWhileMatches(' ', $this->offset);
 
@@ -198,7 +206,7 @@ class FencedCode extends AbstractBlock
             $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
             if (strlen($match[0]) >= $container->getLength()) {
                 // don't add closing fence to container; instead, close it:
-                $container->finalize($context);
+                $this->setLength(-1); // -1 means we've passed closer
 
                 return;
             }
