@@ -179,6 +179,10 @@ Major refactoring should be avoided for now so that we can easily follow updates
 
 Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/master/CONTRIBUTING.md) for additional details.
 
+## Security
+
+If you discover any security related issues, please email colinodell@gmail.com instead of using the issue tracker.
+
 ## Credits & Acknowledgements
 
 - [Colin O'Dell][@colinodell]
