@@ -5,6 +5,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased][unreleased]
 ### Changed
  - Moved closeUnmatchedBlocks into its own class
+ - Image and link elements now extend AbstractInlineContainer; label data is stored via $inlineContents instead
+
+### Removed
+ - Removed the InlineCollection class
 
 ## [0.6.1] - 2015-01-25
 ### Changed
