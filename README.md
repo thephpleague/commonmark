@@ -103,7 +103,7 @@ The following table shows which versions of league/commonmark are compatible wit
     </thead>
     <tbody>
         <tr>
-            <td><strong>0.6.1</strong></td>
+            <td><strong>0.7.0</strong><br>0.6.1</td>
             <td><strong><a href="http://spec.commonmark.org/0.17/">0.17</a></strong></td>
             <td>current spec (as of Jan 25 '15)</td>
         </tr>
