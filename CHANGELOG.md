@@ -18,6 +18,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Removed the unused ArrayCollection::splice() method
  - Removed impossible-to-reach code in Cursor::advanceToFirstNonSpace
  - Removed unnecessary test from the InlineParserEngine
+ - Removed unnecessary/unused RegexHelper::getMainRegex() method
 
 ## [0.6.1] - 2015-01-25
 ### Changed

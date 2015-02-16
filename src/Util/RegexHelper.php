@@ -182,17 +182,6 @@ class RegexHelper
     }
 
     /**
-     * Matches a character with a special meaning in markdown,
-     * or a string of non-special characters.
-     *
-     * @return string
-     */
-    public function getMainRegex()
-    {
-        return '/^(?:[_*`\n]+|[\[\]\\\\!<&*_]|(?: *[^\n `\[\]\\\\!<&*_]+)+|[ \n]+)/m';
-    }
-
-    /**
      * Attempt to match a regex in string s at offset offset
      * @param string $regex
      * @param string $string
