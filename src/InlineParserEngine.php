@@ -37,12 +37,20 @@ class InlineParserEngine
                 }
             }
 
-            $cursor->advance();
+            // We reach here if none of the parsers can handle the input
+            // Attempt to match multiple non-special characters at once
+            $text = $cursor->match($this->environment->getInlineParserCharacterRegex());
+            // This might fail if we're currently at a special character which wasn't parsed; if so, just add that character
+            if (!$text) {
+                $cursor->advance();
+                $text = $character;
+            }
+
             $lastInline = $inlineParserContext->getInlines()->last();
             if ($lastInline instanceof Text && !isset($lastInline->data['delim'])) {
-                $lastInline->append($character);
+                $lastInline->append($text);
             } else {
-                $inlineParserContext->getInlines()->add(new Text($character));
+                $inlineParserContext->getInlines()->add(new Text($text));
             }
         }
 

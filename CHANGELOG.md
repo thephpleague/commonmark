@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - More unit tests to increase code coverage
 
 ### Changed
+ - Enabled the InlineParserEngine to parse several non-special characters at once (performance boost)
  - Moved closeUnmatchedBlocks into its own class
  - Image and link elements now extend AbstractInlineContainer; label data is stored via $inlineContents instead
  - Renamed AbstractInlineContainer::$inlineContents and its getter/setter

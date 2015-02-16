@@ -75,6 +75,11 @@ class Environment
      */
     protected $config;
 
+    /**
+     * @var string
+     */
+    protected $inlineParserCharacterRegex;
+
     public function __construct(array $config = array())
     {
         $this->miscExtension = new MiscExtension();
@@ -378,6 +383,10 @@ class Environment
 
         // Also initialize those one-off classes
         $this->initializeExtension($this->miscExtension);
+
+        // Lastly, let's build a regex which matches all inline characters
+        // This will enable a huge performance boost with inline parsing
+        $this->buildInlineParserCharacterRegex();
     }
 
     /**
@@ -470,5 +479,22 @@ class Environment
         ));
 
         return $environment;
+    }
+
+    /**
+     * Regex which matches any character that an inline parser might be interested in
+     *
+     * @return string
+     */
+    public function getInlineParserCharacterRegex()
+    {
+        return $this->inlineParserCharacterRegex;
+    }
+
+    private function buildInlineParserCharacterRegex()
+    {
+        $chars = array_keys($this->inlineParsersByCharacter);
+
+        $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/';
     }
 }
