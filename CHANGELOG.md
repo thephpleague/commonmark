@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Added
+ - More unit tests to increase code coverage
+
 ### Changed
  - Moved closeUnmatchedBlocks into its own class
  - Image and link elements now extend AbstractInlineContainer; label data is stored via $inlineContents instead
