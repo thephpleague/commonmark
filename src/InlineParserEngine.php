@@ -41,7 +41,7 @@ class InlineParserEngine
             // Attempt to match multiple non-special characters at once
             $text = $cursor->match($this->environment->getInlineParserCharacterRegex());
             // This might fail if we're currently at a special character which wasn't parsed; if so, just add that character
-            if (!$text) {
+            if ($text === null) {
                 $cursor->advance();
                 $text = $character;
             }
