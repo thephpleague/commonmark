@@ -14,9 +14,7 @@
 
 namespace League\CommonMark\Tests;
 
-use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\CommonMarkConverter;
 
 /**
  * Tests the parser against the CommonMark spec
@@ -24,20 +22,13 @@ use League\CommonMark\HtmlRenderer;
 class SpecTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var DocParser
+     * @var CommonMarkConverter
      */
-    protected $docParser;
-
-    /**
-     * @var HtmlRenderer
-     */
-    protected $htmlRenderer;
+    protected $converter;
 
     protected function setUp()
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $this->docParser = new DocParser($environment);
-        $this->htmlRenderer = new HtmlRenderer($environment);
+        $this->converter = new CommonMarkConverter();
     }
 
     /**
@@ -50,8 +41,7 @@ class SpecTest extends \PHPUnit_Framework_TestCase
      */
     public function testExample($markdown, $html, $section, $number)
     {
-        $docBlock = $this->docParser->parse($markdown);
-        $actualResult = $this->htmlRenderer->renderBlock($docBlock);
+        $actualResult = $this->converter->convertToHtml($markdown);
 
         $failureMessage = sprintf('Unexpected result ("%s" section, example #%d)', $section, $number);
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;
