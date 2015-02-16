@@ -5,7 +5,7 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmarkjs)
+ * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmark-js)
  *  - (c) John MacFarlane
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,16 +14,13 @@
 
 namespace League\CommonMark\Inline\Element;
 
+use League\CommonMark\Util\ArrayCollection;
+
 class Link extends AbstractWebResource
 {
     /**
-     * @var InlineCollection
-     */
-    protected $label;
-
-    /**
      * @param string $url
-     * @param InlineCollection|string|null $label
+     * @param ArrayCollection|string|null $label
      * @param string $title
      */
     public function __construct($url, $label = null, $title = '')
@@ -35,33 +32,15 @@ class Link extends AbstractWebResource
         }
 
         if (is_string($label)) {
-            $this->label = new InlineCollection(array(new Text($label)));
+            $this->children = new ArrayCollection(array(new Text($label)));
+        } elseif (is_null($label)) {
+            $this->children = new ArrayCollection();
         } else {
-            $this->label = $label;
+            $this->children = $label;
         }
 
         if (!empty($title)) {
             $this->data['title'] = $title;
         }
-    }
-
-    /**
-     * @return InlineCollection
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    /**
-     * @param InlineCollection $label
-     *
-     * @return $this
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
     }
 }

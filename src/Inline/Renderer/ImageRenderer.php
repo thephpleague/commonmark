@@ -5,7 +5,7 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmarkjs)
+ * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmark-js)
  *  - (c) John MacFarlane
  *
  * For the full copyright and license information, please view the LICENSE
@@ -37,7 +37,7 @@ class ImageRenderer implements InlineRendererInterface
 
         $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
 
-        $alt = $htmlRenderer->renderInlines($inline->getAltText()->getInlines());
+        $alt = $htmlRenderer->renderInlines($inline->getChildren());
         $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
 

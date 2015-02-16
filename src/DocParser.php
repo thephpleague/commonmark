@@ -5,7 +5,7 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmarkjs)
+ * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmark-js)
  *  - (c) John MacFarlane
  *
  * For the full copyright and license information, please view the LICENSE
@@ -92,7 +92,7 @@ class DocParser
     private function incorporateLine(ContextInterface $context)
     {
         $cursor = new Cursor($context->getLine());
-        $oldTip = $context->getTip();
+        $context->getBlockCloser()->resetTip();
 
         $context->setBlocksParsed(false);
         $context->setContainer($context->getDocument());
@@ -109,14 +109,7 @@ class DocParser
             }
         }
 
-        $lastMatchedContainer = $context->getContainer();
-
-        $context->setUnmatchedBlockCloser(function() use ($context, $oldTip, $lastMatchedContainer) {
-            while ($oldTip !== $lastMatchedContainer) {
-                $oldTip->finalize($context);
-                $oldTip = $oldTip->getParent();
-            }
-        });
+        $context->getBlockCloser()->setLastMatchedContainer($context->getContainer());
 
         // Check to see if we've hit 2nd blank line; if so break out of list:
         if ($cursor->isBlank() && $context->getContainer()->endsWithBlankLine()) {
@@ -139,7 +132,7 @@ class DocParser
 
         // What remains at the offset is a text line.  Add the text to the appropriate container.
         // First check for a lazy paragraph continuation:
-        if ($context->getTip() !== $lastMatchedContainer &&
+        if (!$context->getBlockCloser()->areAllClosed() &&
             !$cursor->isBlank() &&
             $context->getTip() instanceof Paragraph &&
             count($context->getTip()->getStrings()) > 0
@@ -148,7 +141,7 @@ class DocParser
             $context->getTip()->addLine($cursor->getRemainder());
         } else { // not a lazy continuation
             // finalize any blocks not matched
-            $context->closeUnmatchedBlocks();
+            $context->getBlockCloser()->closeUnmatchedBlocks();
 
             // Determine whether the last line is blank, updating parents as needed
             $context->getContainer()->setLastLineBlank($cursor, $context->getLineNumber());

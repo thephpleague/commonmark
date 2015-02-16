@@ -5,7 +5,7 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmarkjs)
+ * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmark-js)
  *  - (c) John MacFarlane
  *
  * For the full copyright and license information, please view the LICENSE
@@ -19,22 +19,22 @@ class AbstractInlineContainer extends AbstractInline
     /**
      * @var AbstractInline[]
      */
-    protected $inlineContents = array();
+    protected $children = array();
 
     /**
      * @param AbstractInline[] $contents
      */
     public function __construct(array $contents = array())
     {
-        $this->inlineContents = $contents;
+        $this->children = $contents;
     }
 
     /**
      * @return AbstractInline[]
      */
-    public function getInlineContents()
+    public function getChildren()
     {
-        return $this->inlineContents;
+        return $this->children;
     }
 
     /**
@@ -42,9 +42,9 @@ class AbstractInlineContainer extends AbstractInline
      *
      * @return $this
      */
-    public function setInlineContents($contents)
+    public function setChildren($contents)
     {
-        $this->inlineContents = $contents;
+        $this->children = $contents;
 
         return $this;
     }

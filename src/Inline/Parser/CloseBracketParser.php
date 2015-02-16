@@ -5,7 +5,7 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmarkjs)
+ * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmark-js)
  *  - (c) John MacFarlane
  *
  * For the full copyright and license information, please view the LICENSE
@@ -22,7 +22,6 @@ use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Inline\Element\AbstractWebResource;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Image;
-use League\CommonMark\Inline\Element\InlineCollection;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
@@ -102,7 +101,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             $inlineContext->getDelimiterStack()->removeEarlierMatches('[');
         }
 
-        $inlines->add($this->createInline($link['url'], new InlineCollection($labelInlines), $link['title'], $isImage));
+        $inlines->add($this->createInline($link['url'], $labelInlines, $link['title'], $isImage));
 
         return true;
     }
@@ -211,13 +210,13 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
     /**
      * @param string $url
-     * @param InlineCollection $labelInlines
+     * @param ArrayCollection $labelInlines
      * @param string $title
      * @param bool $isImage
      *
      * @return AbstractWebResource
      */
-    protected function createInline($url, InlineCollection $labelInlines, $title, $isImage)
+    protected function createInline($url, ArrayCollection $labelInlines, $title, $isImage)
     {
         if ($isImage) {
             return new Image($url, $labelInlines, $title);

@@ -5,7 +5,7 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmarkjs)
+ * Original code based on the CommonMark JS reference parser (http://bitly.com/commonmark-js)
  *  - (c) John MacFarlane
  *
  * For the full copyright and license information, please view the LICENSE
@@ -47,9 +47,11 @@ interface ContextInterface
     public function getLine();
 
     /**
-     * @return void
+     * Finalize and close any unmatched blocks
+     *
+     * @return UnmatchedBlockCloser
      */
-    public function closeUnmatchedBlocks();
+    public function getBlockCloser();
 
     /**
      * @return AbstractBlock
@@ -62,13 +64,6 @@ interface ContextInterface
      * @return $this
      */
     public function setContainer($getDocument);
-
-    /**
-     * @param callable $callable
-     *
-     * @return $this
-     */
-    public function setUnmatchedBlockCloser($callable);
 
     /**
      * @param AbstractBlock $block
