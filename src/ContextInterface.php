@@ -47,9 +47,11 @@ interface ContextInterface
     public function getLine();
 
     /**
-     * @return void
+     * Finalize and close any unmatched blocks
+     *
+     * @return UnmatchedBlockCloser
      */
-    public function closeUnmatchedBlocks();
+    public function getBlockCloser();
 
     /**
      * @return AbstractBlock
@@ -62,13 +64,6 @@ interface ContextInterface
      * @return $this
      */
     public function setContainer($getDocument);
-
-    /**
-     * @param callable $callable
-     *
-     * @return $this
-     */
-    public function setUnmatchedBlockCloser($callable);
 
     /**
      * @param AbstractBlock $block

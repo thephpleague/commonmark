@@ -53,16 +53,16 @@ class Context implements ContextInterface
     protected $line;
 
     /**
+     * @var UnmatchedBlockCloser
+     */
+    protected $blockCloser;
+
+    /**
      * @var bool
      */
     protected $blocksParsed = false;
 
     protected $referenceParser;
-
-    /**
-     * @var callable|null
-     */
-    private $unmatchedBlockCloser;
 
     public function __construct(Document $document, Environment $environment)
     {
@@ -73,6 +73,8 @@ class Context implements ContextInterface
         $this->environment = $environment;
 
         $this->referenceParser = new ReferenceParser($document->getReferenceMap());
+
+        $this->blockCloser = new UnmatchedBlockCloser($this);
     }
 
     /**
@@ -91,7 +93,7 @@ class Context implements ContextInterface
      */
     protected function addChild(AbstractBlock $newBlock)
     {
-        $this->closeUnmatchedBlocks();
+        $this->getBlockCloser()->closeUnmatchedBlocks();
         $newBlock->setStartLine($this->lineNumber);
         while (!$this->tip->canContain($newBlock)) {
             $this->tip->finalize($this);
@@ -148,24 +150,14 @@ class Context implements ContextInterface
         return $this->line;
     }
 
-    public function closeUnmatchedBlocks()
-    {
-        if (($closer = $this->unmatchedBlockCloser) !== null) {
-            $closer();
-            $this->unmatchedBlockCloser = null;
-        }
-    }
-
     /**
-     * @param callable $callable
+     * Finalize and close any unmatched blocks
      *
-     * @return $this
+     * @return UnmatchedBlockCloser
      */
-    public function setUnmatchedBlockCloser($callable)
+    public function getBlockCloser()
     {
-        $this->unmatchedBlockCloser = $callable;
-
-        return $this;
+        return $this->blockCloser;
     }
 
     /**
@@ -195,7 +187,7 @@ class Context implements ContextInterface
      */
     public function addBlock(AbstractBlock $block)
     {
-        $this->closeUnmatchedBlocks();
+        $this->getBlockCloser()->closeUnmatchedBlocks();
         $block->setStartLine($this->lineNumber);
         while (!$this->tip->canContain($block)) {
             $this->tip->finalize($this);
@@ -213,7 +205,7 @@ class Context implements ContextInterface
      */
     public function replaceContainerBlock(AbstractBlock $replacement)
     {
-        $this->closeUnmatchedBlocks();
+        $this->getBlockCloser()->closeUnmatchedBlocks();
         $this->getContainer()->getParent()->replaceChild($this, $this->getContainer(), $replacement);
         $this->setContainer($replacement);
     }
