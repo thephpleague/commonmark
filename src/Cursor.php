@@ -213,9 +213,7 @@ class Cursor
     public function advanceToFirstNonSpace()
     {
         $matches = array();
-        if (!preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE)) {
-            return 0;
-        }
+        preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE);
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match

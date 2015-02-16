@@ -217,26 +217,6 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     }
 
     /**
-     * Remove a subset of the array
-     *
-     * The removed part will be returned
-     *
-     * @param int      $offset
-     * @param int|null $length
-     * @param array    $replacement
-     *
-     * @return array The removed subset
-     */
-    public function splice($offset, $length = null, $replacement = array())
-    {
-        if ($length === null) {
-            $length = count($this->elements);
-        }
-
-        return array_splice($this->elements, $offset, $length, $replacement);
-    }
-
-    /**
      * @return array
      */
     public function toArray()
