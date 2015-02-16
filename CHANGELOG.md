@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Removed
  - Removed the InlineCollection class
  - Removed the unused ArrayCollection::splice() method
+ - Removed impossible-to-reach code in Cursor::advanceToFirstNonSpace
 
 ## [0.6.1] - 2015-01-25
 ### Changed

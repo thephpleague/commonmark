@@ -292,7 +292,9 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     public function dataForAdvanceToFirstNonSpaceTest()
     {
         return array(
+            array('', 0, 0),
             array(' ', 0, 1),
+            array(' ', 1, 0),
             array('  ', 0, 2),
             array('  ', 1, 1),
             array('  ', 2, 0),
