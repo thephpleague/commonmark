@@ -41,6 +41,6 @@ class LinkRenderer implements InlineRendererInterface
             $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
 
-        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->getInlineContents()));
+        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->getChildren()));
     }
 }

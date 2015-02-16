@@ -28,9 +28,9 @@ class Image extends AbstractWebResource
         parent::__construct($url);
 
         if (is_string($label)) {
-            $this->inlineContents = new ArrayCollection(array(new Text($label)));
+            $this->children = new ArrayCollection(array(new Text($label)));
         } else {
-            $this->inlineContents = $label;
+            $this->children = $label;
         }
 
         if (!empty($title)) {

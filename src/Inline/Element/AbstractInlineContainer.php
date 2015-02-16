@@ -19,22 +19,22 @@ class AbstractInlineContainer extends AbstractInline
     /**
      * @var AbstractInline[]
      */
-    protected $inlineContents = array();
+    protected $children = array();
 
     /**
      * @param AbstractInline[] $contents
      */
     public function __construct(array $contents = array())
     {
-        $this->inlineContents = $contents;
+        $this->children = $contents;
     }
 
     /**
      * @return AbstractInline[]
      */
-    public function getInlineContents()
+    public function getChildren()
     {
-        return $this->inlineContents;
+        return $this->children;
     }
 
     /**
@@ -42,9 +42,9 @@ class AbstractInlineContainer extends AbstractInline
      *
      * @return $this
      */
-    public function setInlineContents($contents)
+    public function setChildren($contents)
     {
-        $this->inlineContents = $contents;
+        $this->children = $contents;
 
         return $this;
     }
