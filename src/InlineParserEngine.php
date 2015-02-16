@@ -29,23 +29,28 @@ class InlineParserEngine
     {
         $inlineParserContext = new InlineParserContext($cursor);
         while (($character = $cursor->getCharacter()) !== null) {
-            $res = null;
             if ($matchingParsers = $this->environment->getInlineParsersForCharacter($character)) {
                 foreach ($matchingParsers as $parser) {
-                    if ($res = $parser->parse($context, $inlineParserContext)) {
-                        break;
+                    if ($parser->parse($context, $inlineParserContext)) {
+                        continue 2;
                     }
                 }
             }
 
-            if (!$res) {
+            // We reach here if none of the parsers can handle the input
+            // Attempt to match multiple non-special characters at once
+            $text = $cursor->match($this->environment->getInlineParserCharacterRegex());
+            // This might fail if we're currently at a special character which wasn't parsed; if so, just add that character
+            if ($text === null) {
                 $cursor->advance();
-                $lastInline = $inlineParserContext->getInlines()->last();
-                if ($lastInline instanceof Text && !isset($lastInline->data['delim'])) {
-                    $lastInline->append($character);
-                } else {
-                    $inlineParserContext->getInlines()->add(new Text($character));
-                }
+                $text = $character;
+            }
+
+            $lastInline = $inlineParserContext->getInlines()->last();
+            if ($lastInline instanceof Text && !isset($lastInline->data['delim'])) {
+                $lastInline->append($text);
+            } else {
+                $inlineParserContext->getInlines()->add(new Text($text));
             }
         }
 
