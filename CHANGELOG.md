@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
  - Enabled the InlineParserEngine to parse several non-special characters at once (performance boost)
+ - NewlineParser no longer attempts to parse spaces; look-behind is used instead (major performance boost)
  - Moved closeUnmatchedBlocks into its own class
  - Image and link elements now extend AbstractInlineContainer; label data is stored via $inlineContents instead
  - Renamed AbstractInlineContainer::$inlineContents and its getter/setter

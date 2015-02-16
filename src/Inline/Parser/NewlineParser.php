@@ -15,6 +15,7 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
+use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Newline;
 
@@ -25,7 +26,7 @@ class NewlineParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return array("\n", ' ');
+        return array("\n");
     }
 
     /**
@@ -36,18 +37,25 @@ class NewlineParser extends AbstractInlineParser
      */
     public function parse(ContextInterface $context, InlineParserContext $inlineContext)
     {
-        if ($m = $inlineContext->getCursor()->match('/^ *\n/')) {
-            if (strlen($m) > 2) {
-                $inlineContext->getInlines()->add(new Newline(Newline::HARDBREAK));
+        $inlineContext->getCursor()->advance();
 
-                return true;
-            } elseif (strlen($m) > 0) {
-                $inlineContext->getInlines()->add(new Newline(Newline::SOFTBREAK));
-
-                return true;
+        // Check previous inline for trailing spaces
+        $spaces = 0;
+        $lastInline = $inlineContext->getInlines()->last();
+        if ($lastInline && $lastInline instanceof Text) {
+            $trimmed = rtrim($lastInline->getContent(), ' ');
+            $spaces = strlen($lastInline->getContent()) - strlen($trimmed);
+            if ($spaces) {
+                $lastInline->setContent($trimmed);
             }
         }
 
-        return false;
+        if ($spaces >= 2 ) {
+            $inlineContext->getInlines()->add(new Newline(Newline::HARDBREAK));
+        } else {
+            $inlineContext->getInlines()->add(new Newline(Newline::SOFTBREAK));
+        }
+
+        return true;
     }
 }
