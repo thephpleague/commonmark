@@ -87,6 +87,10 @@ The [documentation][docs] provides several [customization examples][docs-example
 
 You can also reference the core CommonMark parsers/renderers as they use the same functionality available to you.
 
+## Community Extensions
+
+Custom parsers/renderers can be bundled into extensions which extend CommonMark.  The wiki lists such [community extensions](https://github.com/thephpleague/commonmark/wiki/Community-Extensions) that you may find interesting.
+
 ## Compatibility with CommonMark ##
 
 This project aims to fully support the entire [CommonMark spec]. Other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [JS reference implementation][commonmark.js] should eventually find their way back into this codebase.
