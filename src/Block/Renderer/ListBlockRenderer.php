@@ -38,7 +38,7 @@ class ListBlockRenderer implements BlockRendererInterface
         $start = $listData->start ?: null;
 
         $tag = $listData->type == ListBlock::TYPE_UNORDERED ? 'ul' : 'ol';
-        $attr = (!$start || $start == 1) ?
+        $attr = (is_null($start) || $start == 1) ?
             array() : array('start' => (string)$start);
 
         return new HtmlElement(
