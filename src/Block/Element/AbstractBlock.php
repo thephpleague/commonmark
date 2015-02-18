@@ -278,9 +278,7 @@ abstract class AbstractBlock
             $this->endLine = $context->getLineNumber();
         }
 
-        if (!is_null($context->getTip()->getParent())) {
-            $context->setTip($context->getTip()->getParent());
-        }
+        $context->setTip($context->getTip()->getParent());
     }
 
     /**
