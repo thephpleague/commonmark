@@ -64,4 +64,14 @@ class ReferenceMap
             return null;
         }
     }
+
+    /**
+     * Lists all registered references.
+     *
+     * @return Reference[]
+     */
+    public function listReferences()
+    {
+        return array_values($this->references);
+    }
 }
