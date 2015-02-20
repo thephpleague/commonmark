@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Added
+ - All references can now be obtained from the `ReferenceMap` via `listReferences()` (#73)
 
 ## [0.7.0] - 2015-02-16
 ### Added
