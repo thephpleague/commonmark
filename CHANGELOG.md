@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
  - ListData::$start now defaults to null instead of 0 (#74)
+ - Replace references to HtmlRenderer with new HtmlRendererInterface
 
 ### Fixed
  - Fix 0-based ordered lists starting at 1 instead of 0 (#74)
