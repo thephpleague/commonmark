@@ -15,7 +15,7 @@
 namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Emphasis;
 
@@ -23,11 +23,11 @@ class EmphasisRenderer implements InlineRendererInterface
 {
     /**
      * @param Emphasis $inline
-     * @param HtmlRenderer $htmlRenderer
+     * @param HtmlRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, HtmlRenderer $htmlRenderer)
+    public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Emphasis)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));

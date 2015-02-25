@@ -16,18 +16,18 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\HtmlRendererInterface;
 
 class IndentedCodeRenderer implements BlockRendererInterface
 {
     /**
      * @param AbstractBlock $block
-     * @param HtmlRenderer $htmlRenderer
+     * @param HtmlRendererInterface $htmlRenderer
      * @param bool $inTightList
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
     {
         return new HtmlElement(
             'pre',

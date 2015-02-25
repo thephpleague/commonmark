@@ -16,7 +16,7 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\HtmlRendererInterface;
 
 class DocumentRenderer implements BlockRendererInterface
 {
@@ -26,7 +26,7 @@ class DocumentRenderer implements BlockRendererInterface
      *
      * @return string
      */
-    public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof Document)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));

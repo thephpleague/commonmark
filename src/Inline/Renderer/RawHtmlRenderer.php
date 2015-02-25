@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Html;
 
@@ -22,11 +22,11 @@ class RawHtmlRenderer implements InlineRendererInterface
 {
     /**
      * @param Html $inline
-     * @param HtmlRenderer $htmlRenderer
+     * @param HtmlRendererInterface $htmlRenderer
      *
      * @return string
      */
-    public function render(AbstractInline $inline, HtmlRenderer $htmlRenderer)
+    public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Html)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
