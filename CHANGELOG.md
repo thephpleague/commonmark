@@ -5,6 +5,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased][unreleased]
 ### Added
  - All references can now be obtained from the `ReferenceMap` via `listReferences()` (#73)
+ - Test against PHP 7.0 (nightly) but allow failures
 
 ### Changed
  - ListData::$start now defaults to null instead of 0 (#74)
