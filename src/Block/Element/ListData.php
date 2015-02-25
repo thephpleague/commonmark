@@ -17,9 +17,9 @@ namespace League\CommonMark\Block\Element;
 class ListData
 {
     /**
-     * @var int
+     * @var int|null
      */
-    public $start = 0;
+    public $start;
 
     /**
      * @var int
