@@ -39,9 +39,7 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
     public function testOrderedListStartingNumber($listStart = null, $expectedAttributeValue = null)
     {
         $list = $this->createOrderedListBlock($listStart);
-        $rendererStub = $this->getMockBuilder('League\CommonMark\HtmlRenderer')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $rendererStub = $this->getMock('League\CommonMark\HtmlRendererInterface');
 
         $htmlElement = $this->renderer->render($list, $rendererStub);
 

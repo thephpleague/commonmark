@@ -15,7 +15,7 @@
 namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Newline;
 
@@ -23,11 +23,11 @@ class NewlineRenderer implements InlineRendererInterface
 {
     /**
      * @param Newline $inline
-     * @param HtmlRenderer $htmlRenderer
+     * @param HtmlRendererInterface $htmlRenderer
      *
      * @return HtmlElement|string
      */
-    public function render(AbstractInline $inline, HtmlRenderer $htmlRenderer)
+    public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Newline)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));

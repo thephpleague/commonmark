@@ -29,7 +29,7 @@ class CommonMarkConverter
     /**
      * The html renderer instance.
      *
-     * @var \League\CommonMark\HtmlRenderer
+     * @var \League\CommonMark\HtmlRendererInterface
      */
     protected $htmlRenderer;
 

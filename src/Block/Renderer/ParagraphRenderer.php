@@ -17,18 +17,18 @@ namespace League\CommonMark\Block\Renderer;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\HtmlRendererInterface;
 
 class ParagraphRenderer implements BlockRendererInterface
 {
     /**
      * @param Paragraph $block
-     * @param HtmlRenderer $htmlRenderer
+     * @param HtmlRendererInterface $htmlRenderer
      * @param bool $inTightList
      *
      * @return HtmlElement|string
      */
-    public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof Paragraph)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));

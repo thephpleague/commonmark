@@ -20,7 +20,7 @@ use League\CommonMark\Inline\Element\AbstractInline;
 /**
  * Renders a parsed AST to HTML
  */
-class HtmlRenderer
+class HtmlRenderer implements HtmlRendererInterface
 {
     /**
      * @var Environment
