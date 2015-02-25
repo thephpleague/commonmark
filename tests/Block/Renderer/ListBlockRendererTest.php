@@ -17,7 +17,6 @@ namespace League\CommonMark\Tests\Block\Renderer;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\ListData;
 use League\CommonMark\Block\Renderer\ListBlockRenderer;
-use League\CommonMark\Tests\EmptyStringHtmlRenderer;
 
 class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
 {
