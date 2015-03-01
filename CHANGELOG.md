@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+
+## [0.7.1] - 2015-03-01
 ### Added
  - All references can now be obtained from the `ReferenceMap` via `listReferences()` (#73)
  - Test against PHP 7.0 (nightly) but allow failures
@@ -157,7 +159,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.7.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.7.1...HEAD
+[0.7.1]: https://github.com/thephpleague/commonmark/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/thephpleague/commonmark/compare/0.6.1...0.7.0
 [0.6.1]: https://github.com/thephpleague/commonmark/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/thephpleague/commonmark/compare/0.5.1...0.6.0
