@@ -192,12 +192,15 @@ class RegexHelper
     public static function matchAt($regex, $string, $offset)
     {
         $matches = array();
-        $string = substr($string, $offset);
+        $string = mb_substr($string, $offset, mb_strlen($string), 'utf-8');
         if (!preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
             return null;
         }
 
-        return $offset + $matches[0][1];
+        // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
+        $charPos = mb_strlen(mb_strcut($string, 0, $matches[0][1], 'utf-8'), 'utf-8');
+
+        return $offset + $charPos;
     }
 
     /**

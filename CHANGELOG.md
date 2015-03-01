@@ -12,7 +12,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Replace references to HtmlRenderer with new HtmlRendererInterface
 
 ### Fixed
- - Fix 0-based ordered lists starting at 1 instead of 0 (#74)
+ - Fixed 0-based ordered lists starting at 1 instead of 0 (#74)
+ - Fixed errors parsing multi-byte characters (#78 and #79)
 
 ## [0.7.0] - 2015-02-16
 ### Added

@@ -59,6 +59,8 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('foo', 0, 'f'),
             array(' foo', 1, 'f'),
             array('  foo', 2, 'f'),
+            array('тест', 0, 'т'),
+            array(' т', 1, 'т'),
         );
     }
 
@@ -95,6 +97,10 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('  foo', 1, 1),
             array('  foo', 2, 0),
             array('  foo', 3, 0),
+            array('тест', 0, 0),
+            array('тест', 1, 0),
+            array(' тест', 0, 1),
+            array(' тест', 1, 0),
         );
     }
 
@@ -121,6 +127,12 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('foo', null, 'f'),
             array('foo', 0, 'f'),
             array('foo', 1, 'o'),
+            array(' тест ', 0, ' '),
+            array(' тест ', 1, 'т'),
+            array(' тест ', 2, 'е'),
+            array(' тест ', 3, 'с'),
+            array(' тест ', 4, 'т'),
+            array(' тест ', 5, ' '),
         );
     }
 
@@ -147,6 +159,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('', 99, ''),
             array('foo', 0, 'o'),
             array('bar', 1, 'r'),
+            array('тест ', 1, 'с'),
         );
     }
 
@@ -171,6 +184,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('      ', true),
             array('foo', false),
             array('   foo', false),
+            array('тест', false),
         );
     }
 
@@ -202,6 +216,12 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('foo', 2, 2),
             array('foo', 3, 3),
             array('foo', 9, 3),
+            array('тест', 0, 0),
+            array('тест', 1, 1),
+            array('тест', 2, 2),
+            array('тест', 3, 3),
+            array('тест', 4, 4),
+            array('тест', 9, 4),
         );
     }
 
@@ -231,6 +251,12 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('foo', 2, 2),
             array('foo', 3, 3),
             array('foo', 9, 3),
+            array('тест', 0, 0),
+            array('тест', 1, 1),
+            array('тест', 2, 2),
+            array('тест', 3, 3),
+            array('тест', 4, 4),
+            array('тест', 9, 4),
         );
     }
 
@@ -271,6 +297,13 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('foo', 1, 'o', 2, 2),
             array('foo', 1, 'o', 3, 2),
             array('foo', 1, 'o', 99, 2),
+            array('Россия', 0, 'Р', null, 1),
+            array('Россия', 1, 'Р', null, 0),
+            array('Россия', 2, 'с', null, 2),
+            array('Россия', 2, 'с', 0, 0),
+            array('Россия', 2, 'с', 1, 1),
+            array('Россия', 2, 'с', 2, 2),
+            array('Россия', 2, 'с', 3, 2),
         );
     }
 
@@ -300,6 +333,10 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('  ', 2, 0),
             array('foo bar', 0, 0),
             array('foo bar', 3, 1),
+            array('foo bar', 4, 0),
+            array('это тест', 0, 0),
+            array('это тест', 3, 1),
+            array('это тест', 4, 0),
             array("  \n  \n  ", 0, 5),
             array("  \n  \n  ", 1, 4),
             array("  \n  \n  ", 2, 3),
@@ -330,6 +367,9 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array(' ', 0, ' '),
             array('  ', 0, '  '),
             array('  ', 1, ' '),
+            array('foo bar', 0, 'foo bar'),
+            array('foo bar', 2, 'o bar'),
+            array('это тест', 1, 'то тест'),
         );
     }
 
@@ -358,7 +398,46 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array('', false, true),
             array(' ', 0, false),
             array(' ', null, true),
-            array(' ', 1, true)
+            array(' ', 1, true),
+            array('foo', 2, false),
+            array('foo', 3, true),
+            array('тест', 4, true),
+        );
+    }
+
+    /**
+     * @param string $string
+     * @param string $regex
+     * @param int    $initialPosition
+     * @param int    $expectedPosition
+     * @param string $expectedResult
+     *
+     * @dataProvider dataForTestMatch
+     */
+    public function testMatch($string, $regex, $initialPosition, $expectedPosition, $expectedResult)
+    {
+        $cursor = new Cursor($string);
+        $cursor->advanceBy($initialPosition);
+
+        $result = $cursor->match($regex);
+
+        $this->assertEquals($expectedResult, $result);
+        $this->assertEquals($expectedPosition, $cursor->getPosition());
+    }
+
+    /**
+     * @return array
+     */
+    public function dataForTestMatch()
+    {
+        return array(
+            array('this is a test', '/[aeiou]s/', 0, 4, 'is'),
+            array('this is a test', '/[aeiou]s/', 2, 4, 'is'),
+            array('this is a test', '/[aeiou]s/', 3, 7, 'is'),
+            array('this is a test', '/[aeiou]s/', 9, 13, 'es'),
+            array('Это тест', '/т/u', 0, 2, 'т'),
+            array('Это тест', '/т/u', 1, 2, 'т'),
+            array('Это тест', '/т/u', 2, 5, 'т'),
         );
     }
 }
