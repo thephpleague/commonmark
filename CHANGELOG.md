@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
  - Dropped support for PHP 5.3 (#64 and #76)
 
+### Removed
+ - Removed PHP 5.3 workaround (see commit 5747822)
+
 ## [0.7.1] - 2015-03-01
 ### Added
  - All references can now be obtained from the `ReferenceMap` via `listReferences()` (#73)
