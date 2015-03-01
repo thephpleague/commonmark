@@ -361,4 +361,40 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             array(' ', 1, true)
         );
     }
+
+    /**
+     * @param string $string
+     * @param string $regex
+     * @param int    $initialPosition
+     * @param int    $expectedPosition
+     * @param string $expectedResult
+     *
+     * @dataProvider dataForTestMatch
+     */
+    public function testMatch($string, $regex, $initialPosition, $expectedPosition, $expectedResult)
+    {
+        $cursor = new Cursor($string);
+        $cursor->advanceBy($initialPosition);
+
+        $result = $cursor->match($regex);
+
+        $this->assertEquals($expectedResult, $result);
+        $this->assertEquals($expectedPosition, $cursor->getPosition());
+    }
+
+    /**
+     * @return array
+     */
+    public function dataForTestMatch()
+    {
+        return array(
+            array('this is a test', '/[aeiou]s/', 0, 4, 'is'),
+            array('this is a test', '/[aeiou]s/', 2, 4, 'is'),
+            array('this is a test', '/[aeiou]s/', 3, 7, 'is'),
+            array('this is a test', '/[aeiou]s/', 9, 13, 'es'),
+            array('Это тест', '/т/u', 0, 2, 'т'),
+            array('Это тест', '/т/u', 1, 2, 'т'),
+            array('Это тест', '/т/u', 2, 5, 'т'),
+        );
+    }
 }
