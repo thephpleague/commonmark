@@ -277,4 +277,33 @@ class RegexHelperTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('foo(and(bar))', RegexHelper::unescape('foo(and\\(bar\\))'));
     }
+
+    /**
+     * @param $regex
+     * @param $string
+     * @param $offset
+     * @param $expectedResult
+     *
+     * @dataProvider dataForTestMatchAt
+     */
+    public function testMatchAt($regex, $string, $offset, $expectedResult)
+    {
+        $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string, $offset));
+    }
+
+    /**
+     * @return array
+     */
+    public function dataForTestMatchAt()
+    {
+        return array(
+            array('/ /', 'foo bar', null, 3),
+            array('/ /', 'foo bar', 0, 3),
+            array('/ /', 'foo bar', 1, 3),
+            array('/ /', 'это тест', null, 3),
+            array('/ /', 'это тест', 0, 3),
+            array('/ /', 'это тест', 1, 3),
+        );
+    }
+
 }
