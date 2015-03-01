@@ -267,14 +267,19 @@ class Cursor
      */
     public function match($regex)
     {
+        $subject = $this->getRemainder();
+
         $matches = array();
-        if (!preg_match($regex, $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE)) {
+        if (!preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
             return null;
         }
 
+        // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
+        $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], 'utf-8'), 'utf-8');
+
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
-        $this->advanceBy($matches[0][1] + mb_strlen($matches[0][0], 'utf-8'));
+        $this->advanceBy($offset + mb_strlen($matches[0][0], 'utf-8'));
 
         return $matches[0][0];
     }
