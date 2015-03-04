@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Changed
+ - Dropped support for PHP 5.3 (#64 and #76)
+
+### Removed
+ - Removed PHP 5.3 workaround (see commit 5747822)
 
 ## [0.7.1] - 2015-03-01
 ### Added

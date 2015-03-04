@@ -192,7 +192,7 @@ class RegexHelper
     public static function matchAt($regex, $string, $offset)
     {
         $matches = array();
-        $string = mb_substr($string, $offset, mb_strlen($string), 'utf-8');
+        $string = mb_substr($string, $offset, null, 'utf-8');
         if (!preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
             return null;
         }
