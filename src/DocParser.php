@@ -95,20 +95,8 @@ class DocParser
         $context->getBlockCloser()->resetTip();
 
         $context->setBlocksParsed(false);
-        $context->setContainer($context->getDocument());
-        while ($context->getContainer()->hasChildren()) {
-            $lastChild = $context->getContainer()->getLastChild();
-            if (!$lastChild->isOpen()) {
-                break;
-            }
 
-            $context->setContainer($lastChild);
-            if (!$context->getContainer()->matchesNextLine($cursor)) {
-                $context->setContainer($context->getContainer()->getParent()); // back up to the last matching block
-                break;
-            }
-        }
-
+        $this->resetContainer($context, $cursor);
         $context->getBlockCloser()->setLastMatchedContainer($context->getContainer());
 
         // Check to see if we've hit 2nd blank line; if so break out of list:
@@ -116,45 +104,32 @@ class DocParser
             $this->breakOutOfLists($context, $context->getContainer());
         }
 
-        while (!$context->getContainer()->isCode() && !$context->getBlocksParsed()) {
-            $parsed = false;
-            foreach ($this->environment->getBlockParsers() as $parser) {
-                if ($parser->parse($context, $cursor)) {
-                    $parsed = true;
-                    break;
-                }
-            }
-
-            if (!$parsed || $context->getContainer()->acceptsLines()) {
-                $context->setBlocksParsed(true);
-            }
-        }
+        $this->parseBlocks($context, $cursor);
 
         // What remains at the offset is a text line.  Add the text to the appropriate container.
         // First check for a lazy paragraph continuation:
-        if (!$context->getBlockCloser()->areAllClosed() &&
-            !$cursor->isBlank() &&
-            $context->getTip() instanceof Paragraph &&
-            count($context->getTip()->getStrings()) > 0
-        ) {
+        if ($this->isLazyParagraphContinuation($context, $cursor)) {
             // lazy paragraph continuation
             $context->getTip()->addLine($cursor->getRemainder());
-        } else { // not a lazy continuation
-            // finalize any blocks not matched
-            $context->getBlockCloser()->closeUnmatchedBlocks();
 
-            // Determine whether the last line is blank, updating parents as needed
-            $context->getContainer()->setLastLineBlank($cursor, $context->getLineNumber());
+            return;
+        }
 
-            // Handle any remaining cursor contents
-            if ($context->getContainer()->isOpen()) {
-                $context->getContainer()->handleRemainingContents($context, $cursor);
-            } elseif (!$cursor->isBlank()) {
-                // Create paragraph container for line
-                $context->addBlock(new Paragraph());
-                $cursor->advanceToFirstNonSpace();
-                $context->getTip()->addLine($cursor->getRemainder());
-            }
+        // not a lazy continuation
+        // finalize any blocks not matched
+        $context->getBlockCloser()->closeUnmatchedBlocks();
+
+        // Determine whether the last line is blank, updating parents as needed
+        $context->getContainer()->setLastLineBlank($cursor, $context->getLineNumber());
+
+        // Handle any remaining cursor contents
+        if ($context->getContainer()->isOpen()) {
+            $context->getContainer()->handleRemainingContents($context, $cursor);
+        } elseif (!$cursor->isBlank()) {
+            // Create paragraph container for line
+            $context->addBlock(new Paragraph());
+            $cursor->advanceToFirstNonSpace();
+            $context->getTip()->addLine($cursor->getRemainder());
         }
     }
 
@@ -197,5 +172,66 @@ class DocParser
             }
             $lastList->finalize($context);
         }
+    }
+
+    /**
+     * Sets the container to the last open child (or its parent)
+     *
+     * @param ContextInterface $context
+     * @param Cursor           $cursor
+     */
+    private function resetContainer(ContextInterface $context, Cursor $cursor)
+    {
+        $context->setContainer($context->getDocument());
+
+        while ($context->getContainer()->hasChildren()) {
+            $lastChild = $context->getContainer()->getLastChild();
+            if (!$lastChild->isOpen()) {
+                break;
+            }
+
+            $context->setContainer($lastChild);
+            if (!$context->getContainer()->matchesNextLine($cursor)) {
+                $context->setContainer($context->getContainer()->getParent()); // back up to the last matching block
+                break;
+            }
+        }
+    }
+
+    /**
+     * Parse blocks
+     *
+     * @param ContextInterface $context
+     * @param Cursor           $cursor
+     */
+    private function parseBlocks(ContextInterface $context, Cursor $cursor)
+    {
+        while (!$context->getContainer()->isCode() && !$context->getBlocksParsed()) {
+            $parsed = false;
+            foreach ($this->environment->getBlockParsers() as $parser) {
+                if ($parser->parse($context, $cursor)) {
+                    $parsed = true;
+                    break;
+                }
+            }
+
+            if (!$parsed || $context->getContainer()->acceptsLines()) {
+                $context->setBlocksParsed(true);
+            }
+        }
+    }
+
+    /**
+     * @param ContextInterface $context
+     * @param Cursor           $cursor
+     *
+     * @return bool
+     */
+    private function isLazyParagraphContinuation(ContextInterface $context, Cursor $cursor)
+    {
+        return !$context->getBlockCloser()->areAllClosed() &&
+            !$cursor->isBlank() &&
+            $context->getTip() instanceof Paragraph &&
+            count($context->getTip()->getStrings()) > 0;
     }
 }
