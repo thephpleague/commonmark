@@ -91,9 +91,7 @@ class Environment
      */
     public function mergeConfig(array $config = array())
     {
-        if ($this->extensionsInitialized) {
-            throw new \RuntimeException('Failed to modify configuration - extensions have already been initialized');
-        }
+        $this->assertUninitialized('Failed to modify configuration - extensions have already been initialized');
 
         $this->config = array_replace_recursive($this->config, $config);
     }
@@ -103,9 +101,7 @@ class Environment
      */
     public function setConfig(array $config = array())
     {
-        if ($this->extensionsInitialized) {
-            throw new \RuntimeException('Failed to modify configuration - extensions have already been initialized');
-        }
+        $this->assertUninitialized('Failed to modify configuration - extensions have already been initialized');
 
         $this->config = $config;
     }
@@ -151,9 +147,7 @@ class Environment
      */
     public function addBlockParser(BlockParserInterface $parser)
     {
-        if ($this->extensionsInitialized) {
-            throw new \RuntimeException('Failed to add block parser - extensions have already been initialized');
-        }
+        $this->assertUninitialized('Failed to add block parser - extensions have already been initialized');
 
         $this->miscExtension->addBlockParser($parser);
 
@@ -168,9 +162,7 @@ class Environment
      */
     public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
     {
-        if ($this->extensionsInitialized) {
-            throw new \RuntimeException('Failed to add block renderer - extensions have already been initialized');
-        }
+        $this->assertUninitialized('Failed to add block renderer - extensions have already been initialized');
 
         $this->miscExtension->addBlockRenderer($blockClass, $blockRenderer);
 
@@ -184,9 +176,7 @@ class Environment
      */
     public function addInlineParser(InlineParserInterface $parser)
     {
-        if ($this->extensionsInitialized) {
-            throw new \RuntimeException('Failed to add inline parser - extensions have already been initialized');
-        }
+        $this->assertUninitialized('Failed to add inline parser - extensions have already been initialized');
 
         $this->miscExtension->addInlineParser($parser);
 
@@ -200,9 +190,7 @@ class Environment
      */
     public function addInlineProcessor(InlineProcessorInterface $processor)
     {
-        if ($this->extensionsInitialized) {
-            throw new \RuntimeException('Failed to add inline processor - extensions have already been initialized');
-        }
+        $this->assertUninitialized('Failed to add inline processor - extensions have already been initialized');
 
         $this->miscExtension->addInlineProcessor($processor);
 
@@ -217,9 +205,7 @@ class Environment
      */
     public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer)
     {
-        if ($this->extensionsInitialized) {
-            throw new \RuntimeException('Failed to add inline renderer - extensions have already been initialized');
-        }
+        $this->assertUninitialized('Failed to add inline renderer - extensions have already been initialized');
 
         $this->miscExtension->addInlineRenderer($inlineClass, $renderer);
 
@@ -358,9 +344,7 @@ class Environment
      */
     public function addExtension(ExtensionInterface $extension)
     {
-        if ($this->extensionsInitialized) {
-            throw new \RuntimeException('Failed to add extension - extensions have already been initialized');
-        }
+        $this->assertUninitialized('Failed to add extension - extensions have already been initialized');
 
         $this->extensions[$extension->getName()] = $extension;
 
@@ -496,5 +480,17 @@ class Environment
         $chars = array_keys($this->inlineParsersByCharacter);
 
         $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/';
+    }
+
+    /**
+     * @param string $message
+     *
+     * @throws \RuntimeException
+     */
+    private function assertUninitialized($message = 'The environment cannot be modified after initialization')
+    {
+        if ($this->extensionsInitialized) {
+            throw new \RuntimeException($message);
+        }
     }
 }
