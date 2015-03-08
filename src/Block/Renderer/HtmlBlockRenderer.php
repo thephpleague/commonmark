@@ -29,6 +29,10 @@ class HtmlBlockRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
     {
+        if (!($block instanceof HtmlBlock)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
         return $block->getStringContent();
     }
 }

@@ -30,6 +30,10 @@ class HorizontalRuleRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
     {
+        if (!($block instanceof HorizontalRule)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
         return new HtmlElement('hr', array(), '', true);
     }
 }
