@@ -204,6 +204,30 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($parser, $environment->getInlineParser('test'));
     }
 
+    public function testGetInlineParsersForCharacter()
+    {
+        $environment = new Environment();
+
+        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('test'));
+        $parser->expects($this->any())
+            ->method('getCharacters')
+            ->will($this->returnValue(['a']));
+
+        $environment->addInlineParser($parser);
+
+        $this->assertContains($parser, $environment->getInlineParsersForCharacter('a'));
+    }
+
+    public function testGetInlineParsersForNonExistantCharacter()
+    {
+        $environment = new Environment();
+
+        $this->assertNull($environment->getInlineParsersForCharacter('a'));
+    }
+
     public function testAddInlineProcessor()
     {
         $environment = new Environment();
@@ -277,5 +301,29 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $engine = $environment->createInlineParserEngine();
 
         $this->assertTrue($engine instanceof InlineParserEngine);
+    }
+
+    public function testAddExtensionAndGetter()
+    {
+        $environment = new Environment();
+
+        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $environment->addExtension($extension);
+
+        $this->assertContains($extension, $environment->getExtensions());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddExtensionFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getInlineRendererForClass('MyClass');
+
+        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $environment->addExtension($extension);
     }
 }
