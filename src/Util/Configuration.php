@@ -50,23 +50,13 @@ class Configuration
      */
     public function getConfig($key = null, $default = null)
     {
-        // accept a/b/c as ['a']['b']['c']
-        if (strpos($key, '/')) {
-            $keyArr = explode('/', $key);
-            $data = $this->config;
-            foreach ($keyArr as $k) {
-                if (!is_array($data) || !isset($data[$k])) {
-                    return $default;
-                }
-
-                $data = $data[$k];
-            }
-
-            return $data;
-        }
-
         if ($key === null) {
             return $this->config;
+        }
+
+        // accept a/b/c as ['a']['b']['c']
+        if (strpos($key, '/')) {
+            return $this->getConfigByPath($key, $default);
         }
 
         if (!isset($this->config[$key])) {
@@ -74,5 +64,26 @@ class Configuration
         }
 
         return $this->config[$key];
+    }
+
+    /**
+     * @param string      $keyPath
+     * @param string|null $default
+     *
+     * @return mixed|null
+     */
+    protected function getConfigByPath($keyPath, $default = null)
+    {
+        $keyArr = explode('/', $keyPath);
+        $data = $this->config;
+        foreach ($keyArr as $k) {
+            if (!is_array($data) || !isset($data[$k])) {
+                return $default;
+            }
+
+            $data = $data[$k];
+        }
+
+        return $data;
     }
 }
