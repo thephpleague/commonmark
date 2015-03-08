@@ -5,10 +5,16 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased][unreleased]
 ### Changed
  - Dropped support for PHP 5.3 (#64 and #76)
- - Bumped spec target version to 0.18
 
 ### Removed
  - Removed PHP 5.3 workaround (see commit 5747822)
+
+## [0.7.2] - 2015-03-08
+### Changed
+ - Bumped spec target version to 0.18
+
+### Fixed
+ - Fixed broken parsing of emphasized text ending with a '0' character (#81)
 
 ## [0.7.1] - 2015-03-01
 ### Added
@@ -165,7 +171,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.7.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.7.2...HEAD
+[0.7.2]: https://github.com/thephpleague/commonmark/compare/0.7.1...0.7.2
 [0.7.1]: https://github.com/thephpleague/commonmark/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/thephpleague/commonmark/compare/0.6.1...0.7.0
 [0.6.1]: https://github.com/thephpleague/commonmark/compare/0.6.0...0.6.1
