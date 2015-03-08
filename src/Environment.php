@@ -195,9 +195,7 @@ class Environment
      */
     public function getBlockParsers()
     {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
+        $this->initializeExtensions();
 
         return $this->blockParsers;
     }
@@ -209,9 +207,7 @@ class Environment
      */
     public function getBlockRendererForClass($blockClass)
     {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
+        $this->initializeExtensions();
 
         if (!isset($this->blockRenderersByClass[$blockClass])) {
             return null;
@@ -227,9 +223,7 @@ class Environment
      */
     public function getInlineParser($name)
     {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
+        $this->initializeExtensions();
 
         return $this->inlineParsers[$name];
     }
@@ -239,9 +233,7 @@ class Environment
      */
     public function getInlineParsers()
     {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
+        $this->initializeExtensions();
 
         return $this->inlineParsers;
     }
@@ -253,9 +245,7 @@ class Environment
      */
     public function getInlineParsersForCharacter($character)
     {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
+        $this->initializeExtensions();
 
         if (!isset($this->inlineParsersByCharacter[$character])) {
             return null;
@@ -269,9 +259,7 @@ class Environment
      */
     public function getInlineProcessors()
     {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
+        $this->initializeExtensions();
 
         return $this->inlineProcessors;
     }
@@ -283,9 +271,7 @@ class Environment
      */
     public function getInlineRendererForClass($inlineClass)
     {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
+        $this->initializeExtensions();
 
         if (!isset($this->inlineRenderersByClass[$inlineClass])) {
             return null;
@@ -296,9 +282,7 @@ class Environment
 
     public function createInlineParserEngine()
     {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
+        $this->initializeExtensions();
 
         return new InlineParserEngine($this);
     }
