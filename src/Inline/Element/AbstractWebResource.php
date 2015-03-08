@@ -33,16 +33,4 @@ abstract class AbstractWebResource extends AbstractInlineContainer
     {
         return $this->url;
     }
-
-    /**
-     * @param mixed $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
-    }
 }
