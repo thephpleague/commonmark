@@ -22,6 +22,7 @@ use League\CommonMark\Extension\MiscExtension;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Util\Configuration;
 
 class Environment
 {
@@ -71,7 +72,7 @@ class Environment
     protected $inlineRenderersByClass = array();
 
     /**
-     * @var array
+     * @var Configuration
      */
     protected $config;
 
@@ -83,7 +84,7 @@ class Environment
     public function __construct(array $config = array())
     {
         $this->miscExtension = new MiscExtension();
-        $this->config = $config;
+        $this->config = new Configuration($config);
     }
 
     /**
@@ -93,7 +94,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to modify configuration - extensions have already been initialized');
 
-        $this->config = array_replace_recursive($this->config, $config);
+        $this->config->mergeConfig($config);
     }
 
     /**
@@ -103,7 +104,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to modify configuration - extensions have already been initialized');
 
-        $this->config = $config;
+        $this->config->setConfig($config);
     }
 
     /**
@@ -114,30 +115,7 @@ class Environment
      */
     public function getConfig($key = null, $default = null)
     {
-        // accept a/b/c as ['a']['b']['c']
-        if (strpos($key, '/')) {
-            $keyArr = explode('/', $key);
-            $data = $this->config;
-            foreach ($keyArr as $k) {
-                if (!is_array($data) || !isset($data[$k])) {
-                    return $default;
-                }
-
-                $data = $data[$k];
-            }
-
-            return $data;
-        }
-
-        if ($key === null) {
-            return $this->config;
-        }
-
-        if (!isset($this->config[$key])) {
-            return $default;
-        }
-
-        return $this->config[$key];
+        return $this->config->getConfig($key, $default);
     }
 
     /**
