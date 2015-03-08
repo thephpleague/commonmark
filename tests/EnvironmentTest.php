@@ -15,6 +15,7 @@
 namespace League\CommonMark\Tests;
 
 use League\CommonMark\Environment;
+use League\CommonMark\InlineParserEngine;
 
 class EnvironmentTest extends \PHPUnit_Framework_TestCase
 {
@@ -64,6 +65,9 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         // Test getting an element by path
         $this->assertEquals('c', $environment->getConfig('a/b'));
 
+        // Test getting a path that's one level too deep
+        $this->assertNull($environment->getConfig('a/b/c'));
+
         // Test getting a non-existent element
         $this->assertNull($environment->getConfig('test'));
 
@@ -106,4 +110,220 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $environment->getBlockParsers();
         $environment->mergeConfig(array('foo' => 'bar'));
     }
-} 
+
+    public function testAddBlockParserAndGetter()
+    {
+        $environment = new Environment();
+
+        $parser = $this->getMock('League\CommonMark\Block\Parser\BlockParserInterface');
+        $environment->addBlockParser($parser);
+
+        $this->assertContains($parser, $environment->getBlockParsers());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddBlockParserFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getBlockParsers();
+
+        $parser = $this->getMock('League\CommonMark\Block\Parser\BlockParserInterface');
+        $environment->addBlockParser($parser);
+    }
+
+    public function testAddBlockRenderer()
+    {
+        $environment = new Environment();
+
+        $renderer = $this->getMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
+        $environment->addBlockRenderer('MyClass', $renderer);
+
+        $this->assertEquals($renderer, $environment->getBlockRendererForClass('MyClass'));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddBlockRendererFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getBlockRendererForClass('MyClass');
+
+        $renderer = $this->getMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
+        $environment->addBlockRenderer('MyClass', $renderer);
+    }
+
+    public function testAddInlineParserAndGetter()
+    {
+        $environment = new Environment();
+
+        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser->expects($this->any())
+            ->method('getCharacters')
+            ->will($this->returnValue(['a']));
+
+        $environment->addInlineParser($parser);
+
+        $this->assertContains($parser, $environment->getInlineParsers());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddInlineParserFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getInlineParsers();
+
+        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $environment->addInlineParser($parser);
+    }
+
+    public function testGetInlineParserByName()
+    {
+        $environment = new Environment();
+
+        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('test'));
+        $parser->expects($this->any())
+            ->method('getCharacters')
+            ->will($this->returnValue(['a']));
+
+        $environment->addInlineParser($parser);
+
+        $this->assertEquals($parser, $environment->getInlineParser('test'));
+    }
+
+    public function testGetInlineParsersForCharacter()
+    {
+        $environment = new Environment();
+
+        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('test'));
+        $parser->expects($this->any())
+            ->method('getCharacters')
+            ->will($this->returnValue(['a']));
+
+        $environment->addInlineParser($parser);
+
+        $this->assertContains($parser, $environment->getInlineParsersForCharacter('a'));
+    }
+
+    public function testGetInlineParsersForNonExistantCharacter()
+    {
+        $environment = new Environment();
+
+        $this->assertNull($environment->getInlineParsersForCharacter('a'));
+    }
+
+    public function testAddInlineProcessor()
+    {
+        $environment = new Environment();
+
+        $processor = $this->getMock('League\CommonMark\Inline\Processor\InlineProcessorInterface');
+        $environment->addInlineProcessor($processor);
+
+        $this->assertContains($processor, $environment->getInlineProcessors());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddInlineProcessorFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getInlineProcessors();
+
+        $processor = $this->getMock('League\CommonMark\Inline\Processor\InlineProcessorInterface');
+        $environment->addInlineProcessor($processor);
+    }
+
+    public function testAddInlineRenderer()
+    {
+        $environment = new Environment();
+
+        $renderer = $this->getMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
+        $environment->addInlineRenderer('MyClass', $renderer);
+
+        $this->assertEquals($renderer, $environment->getInlineRendererForClass('MyClass'));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddInlineRendererFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getInlineRendererForClass('MyClass');
+
+        $renderer = $this->getMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
+        $environment->addInlineRenderer('MyClass', $renderer);
+    }
+
+    public function testGetBlockRendererForNonExistantClass()
+    {
+        $environment = new Environment();
+
+        $renderer = $environment->getBlockRendererForClass('MyClass');
+
+        $this->assertNull($renderer);
+    }
+
+    public function testGetInlineRendererForNonExistantClass()
+    {
+        $environment = new Environment();
+
+        $renderer = $environment->getInlineRendererForClass('MyClass');
+
+        $this->assertNull($renderer);
+    }
+
+    public function testCreateInlineParserEngine()
+    {
+        $environment = new Environment();
+
+        $engine = $environment->createInlineParserEngine();
+
+        $this->assertTrue($engine instanceof InlineParserEngine);
+    }
+
+    public function testAddExtensionAndGetter()
+    {
+        $environment = new Environment();
+
+        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $environment->addExtension($extension);
+
+        $this->assertContains($extension, $environment->getExtensions());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddExtensionFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getInlineRendererForClass('MyClass');
+
+        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $environment->addExtension($extension);
+    }
+}

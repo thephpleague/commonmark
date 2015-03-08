@@ -17,6 +17,8 @@ namespace League\CommonMark\Tests\Block\Renderer;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\ListData;
 use League\CommonMark\Block\Renderer\ListBlockRenderer;
+use League\CommonMark\HtmlElement;
+use League\CommonMark\Tests\FakeHtmlRenderer;
 
 class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,14 +38,17 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider dataForTestOrderedListStartingNumber
      */
-    public function testOrderedListStartingNumber($listStart = null, $expectedAttributeValue = null)
+    public function testRenderOrderedList($listStart = null, $expectedAttributeValue = null)
     {
         $list = $this->createOrderedListBlock($listStart);
-        $rendererStub = $this->getMock('League\CommonMark\HtmlRendererInterface');
+        $fakeRenderer = new FakeHtmlRenderer();
 
-        $htmlElement = $this->renderer->render($list, $rendererStub);
+        $result = $this->renderer->render($list, $fakeRenderer);
 
-        $this->assertSame($expectedAttributeValue, $htmlElement->getAttribute('start'));
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertEquals('ol', $result->getTagName());
+        $this->assertSame($expectedAttributeValue, $result->getAttribute('start'));
+        $this->assertContains('::blocks::', $result->getContents(true));
     }
 
     public function dataForTestOrderedListStartingNumber()
@@ -55,6 +60,29 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
             array(2, '2'),
             array(42, '42'),
         );
+    }
+
+    public function testRenderUnorderedList()
+    {
+        $list = $this->createUnorderedListBlock();
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($list, $fakeRenderer);
+
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertEquals('ul', $result->getTagName());
+        $this->assertContains('::blocks::', $result->getContents(true));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testRenderWithInvalidType()
+    {
+        $inline = $this->getMockForAbstractClass('League\CommonMark\Block\Element\AbstractBlock');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $this->renderer->render($inline, $fakeRenderer);
     }
 
     /**
@@ -70,4 +98,15 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
 
         return new ListBlock($data);
     }
-} 
+
+    /**
+     * @return ListBlock
+     */
+    protected function createUnorderedListBlock()
+    {
+        $data = new ListData();
+        $data->type = ListBlock::TYPE_UNORDERED;
+
+        return new ListBlock($data);
+    }
+}
