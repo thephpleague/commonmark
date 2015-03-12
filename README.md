@@ -1,4 +1,4 @@
-# CommonMark
+# league\commonmark
 
 [![Latest Version](https://img.shields.io/packagist/v/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE)
@@ -7,15 +7,14 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark)
 [![Total Downloads](https://img.shields.io/packagist/dt/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
 
-**league/commonmark** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is directly based the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
+**league/commonmark** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
 
 ## Goals
 
-While other Markdown parsers focus on speed, or try to enable a wide range of flavors, this parser will 
-strive to match the C and JavaScript implementations of CommonMark to make a logical and similar API.
-
-We will always focus on CommonMark compliance over speed, but performance improvements will definitely 
-happen during efforts to reach v1.0.0 and afterwards.
+* Fully support the CommonMark spec (100% compliance)
+* Match the C and JavaScript implementations of CommonMark to make a logical and similar API
+* Continously improve performance without sacrficing quality or compliance
+* Provide an extensible parser/renderer which users may customize as needed
 
 ## Installation
 
