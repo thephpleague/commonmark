@@ -145,6 +145,67 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($renderer, $environment->getBlockRendererForClass('MyClass'));
     }
 
+    public function testSwapBuiltInBlockRenderer()
+    {
+        $environment = new Environment();
+
+        $mockRenderer = $this->getMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
+
+        $builtInClasses = [
+            'BlockQuote'     => 'League\CommonMark\Block\Element\BlockQuote',
+            'Document'       => 'League\CommonMark\Block\Element\Document',
+            'FencedCode'     => 'League\CommonMark\Block\Element\FencedCode',
+            'Header'         => 'League\CommonMark\Block\Element\Header',
+            'HorizontalRule' => 'League\CommonMark\Block\Element\HorizontalRule',
+            'HtmlBlock'      => 'League\CommonMark\Block\Element\HtmlBlock',
+            'IndentedCode'   => 'League\CommonMark\Block\Element\IndentedCode',
+            'ListBlock'      => 'League\CommonMark\Block\Element\ListBlock',
+            'ListItem'       => 'League\CommonMark\Block\Element\ListItem',
+            'Paragraph'      => 'League\CommonMark\Block\Element\Paragraph',
+        ];
+
+        foreach ($builtInClasses as $name => $fullyQualifiedName){
+            $environment->addBlockRenderer($name, $mockRenderer);
+        }
+
+        foreach ($builtInClasses as $name => $fullyQualifiedName){
+            $this->assertEquals(
+                $mockRenderer,
+                $environment->getBlockRendererForClass($fullyQualifiedName)
+            );
+        }
+    }
+
+    public function testSwapBuiltInInlineRenderer()
+    {
+        $environment = new Environment();
+
+        $mockRenderer = $this->getMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
+
+        $builtInClasses = [
+            'Code'     => 'League\CommonMark\Inline\Element\Code',
+            'Emphasis' => 'League\CommonMark\Inline\Element\Emphasis',
+            'Html'     => 'League\CommonMark\Inline\Element\Html',
+            'Image'    => 'League\CommonMark\Inline\Element\Image',
+            'Link'     => 'League\CommonMark\Inline\Element\Link',
+            'Newline'  => 'League\CommonMark\Inline\Element\Newline',
+            'Strong'   => 'League\CommonMark\Inline\Element\Strong',
+            'Text'     => 'League\CommonMark\Inline\Element\Text',
+        ];
+
+        foreach ($builtInClasses as $name => $fullyQualifiedName){
+            $environment->addInlineRenderer($name, $mockRenderer);
+        }
+
+        foreach ($builtInClasses as $name => $fullyQualifiedName){
+            $this->assertEquals(
+                $mockRenderer,
+                $environment->getInlineRendererForClass($fullyQualifiedName)
+            );
+        }
+    }
+
+
     /**
      * @expectedException \RuntimeException
      */
