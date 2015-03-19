@@ -89,20 +89,7 @@ class MiscExtension implements ExtensionInterface
      */
     public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
     {
-        $builtInClasses = [
-            'BlockQuote',
-            'Document',
-            'FencedCode',
-            'Header',
-            'HorizontalRule',
-            'HtmlBlock',
-            'IndentedCode',
-            'ListBlock',
-            'ListItem',
-            'Paragraph'
-        ];
-
-        if (in_array($blockClass, $builtInClasses)) {
+        if (class_exists('League\CommonMark\Block\Element\\' . $blockClass)) {
             $blockClass = 'League\CommonMark\Block\Element\\' . $blockClass;
         }
 
@@ -171,18 +158,7 @@ class MiscExtension implements ExtensionInterface
      */
     public function addInlineRenderer($inlineClass, InlineRendererInterface $inlineRenderer)
     {
-        $builtInClasses = [
-            'Code',
-            'Emphasis',
-            'Html',
-            'Image',
-            'Link',
-            'Newline',
-            'Strong',
-            'Text'
-        ];
-
-        if (in_array($inlineClass, $builtInClasses)) {
+        if (class_exists('League\CommonMark\Inline\Element\\' . $inlineClass)) {
             $inlineClass = 'League\CommonMark\Inline\Element\\' . $inlineClass;
         }
 
