@@ -4,6 +4,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 ### Added
+ - Allow swapping built-in renderers without using their fully qualified names (#84)
  - Lots of unit tests (for existing code)
 
 ### Changed
