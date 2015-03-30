@@ -15,6 +15,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Removed
  - Removed PHP 5.3 workaround (see commit 5747822)
  - Removed unused AbstractWebResource::setUrl() method
+ - Removed unnecessary check for hrule when parsing lists (#85)
 
 ## [0.7.2] - 2015-03-08
 ### Changed
