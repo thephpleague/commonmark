@@ -36,10 +36,6 @@ class ListParser extends AbstractBlockParser
 
         $rest = $tmpCursor->getRemainder();
 
-        if (preg_match(RegexHelper::getInstance()->getHRuleRegex(), $rest)) {
-            return false;
-        }
-
         $data = new ListData();
 
         if ($matches = RegexHelper::matchAll('/^[*+-]( +|$)/', $rest)) {
