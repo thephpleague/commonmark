@@ -25,7 +25,7 @@ If the method can only handle certain block types, be sure to verify that you've
 
 ### Return value
 
-The method must return the final HTML represenation of the block and any of its contents. This can be an `HtmlElement` object (preferred; castable to a string) or a string of raw HTML.
+The method must return the final HTML representation of the block and any of its contents. This can be an `HtmlElement` object (preferred; castable to a string) or a string of raw HTML.
 
 You are responsible for handling any escaping that may be necessary.
 
