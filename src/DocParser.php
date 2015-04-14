@@ -34,12 +34,12 @@ class DocParser
     private $inlineParserEngine;
 
     /**
-     * @param Environment $parsers
+     * @param Environment $environment
      */
-    public function __construct(Environment $parsers)
+    public function __construct(Environment $environment)
     {
-        $this->environment = $parsers;
-        $this->inlineParserEngine = new InlineParserEngine($parsers);
+        $this->environment = $environment;
+        $this->inlineParserEngine = new InlineParserEngine($environment);
     }
 
     /**
