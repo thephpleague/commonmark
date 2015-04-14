@@ -241,6 +241,9 @@ abstract class AbstractBlock
         return $this->strings->toArray();
     }
 
+    /**
+     * @param string $line
+     */
     public function addLine($line)
     {
         if (!$this->acceptsLines()) {

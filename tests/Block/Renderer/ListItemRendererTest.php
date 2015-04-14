@@ -17,7 +17,6 @@ namespace League\CommonMark\Tests\Block\Renderer;
 use League\CommonMark\Block\Element\ListData;
 use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\Block\Renderer\ListItemRenderer;
-use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\FakeHtmlRenderer;
 
 class ListItemRendererTest extends \PHPUnit_Framework_TestCase

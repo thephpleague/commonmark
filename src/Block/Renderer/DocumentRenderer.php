@@ -21,9 +21,9 @@ use League\CommonMark\HtmlRendererInterface;
 class DocumentRenderer implements BlockRendererInterface
 {
     /**
-     * @param Document $block
+     * @param AbstractBlock|Document $block
+     * @param HtmlRendererInterface $htmlRenderer
      * @param bool $inTightList
-     *
      * @return string
      */
     public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)

@@ -21,6 +21,7 @@ class LinkParserHelper
     /**
      * Attempt to parse link destination
      *
+     * @param Cursor $cursor
      * @return null|string The string, or null if no match
      */
     public static function parseLinkDestination(Cursor $cursor)
@@ -45,6 +46,7 @@ class LinkParserHelper
     }
 
     /**
+     * @param Cursor $cursor
      * @return int
      */
     public static function parseLinkLabel(Cursor $cursor)
@@ -57,6 +59,7 @@ class LinkParserHelper
     /**
      * Attempt to parse link title (sans quotes)
      *
+     * @param Cursor $cursor
      * @return null|string The string, or null if no match
      */
     public static function parseLinkTitle(Cursor $cursor)

@@ -274,7 +274,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
      * @param $startPos
      * @param $char
      * @param $maxChars
-     * @param $expectedPos
+     * @param $expectedResult
      *
      * @dataProvider dataForAdvanceWhileMatchesTest
      */
