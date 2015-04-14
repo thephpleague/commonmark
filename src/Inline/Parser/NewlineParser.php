@@ -50,7 +50,7 @@ class NewlineParser extends AbstractInlineParser
             }
         }
 
-        if ($spaces >= 2 ) {
+        if ($spaces >= 2) {
             $inlineContext->getInlines()->add(new Newline(Newline::HARDBREAK));
         } else {
             $inlineContext->getInlines()->add(new Newline(Newline::SOFTBREAK));

@@ -23,6 +23,7 @@ class AbstractStringContainer extends AbstractInline
 
     /**
      * @param string $contents
+     * @param array $data
      */
     public function __construct($contents = '', array $data = array())
     {

@@ -23,7 +23,8 @@ use League\CommonMark\Util\ArrayCollection;
 
 class EmphasisProcessor implements InlineProcessorInterface
 {
-    public function processInlines(ArrayCollection $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null) {
+    public function processInlines(ArrayCollection $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
+    {
         $callback = function (Delimiter $opener, Delimiter $closer, DelimiterStack $stack) use ($inlines) {
             // Calculate actual number of delimiters used from this closer
             if ($closer->getNumDelims() < 3 || $opener->getNumDelims() < 3) {
