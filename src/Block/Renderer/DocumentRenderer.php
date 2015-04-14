@@ -24,6 +24,7 @@ class DocumentRenderer implements BlockRendererInterface
      * @param AbstractBlock|Document $block
      * @param HtmlRendererInterface $htmlRenderer
      * @param bool $inTightList
+     *
      * @return string
      */
     public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
