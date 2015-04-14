@@ -24,7 +24,8 @@
         "erusev/parsedown": "~1.0",
         "jgm/CommonMark": "0.18",
         "michelf/php-markdown": "~1.4",
-        "phpunit/phpunit": "~4.3"
+        "phpunit/phpunit": "~4.3",
+        "phpunit/phpunit-mock-objects": "2.3.0"
     },
     "repositories": [
         {
