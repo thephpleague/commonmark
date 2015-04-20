@@ -13,7 +13,7 @@
 
 * Fully support the CommonMark spec (100% compliance)
 * Match the C and JavaScript implementations of CommonMark to make a logical and similar API
-* Continously improve performance without sacrficing quality or compliance
+* Continuously improve performance without sacrificing quality or compliance
 * Provide an extensible parser/renderer which users may customize as needed
 
 ## Installation
