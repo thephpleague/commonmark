@@ -47,7 +47,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "League\\CommonMark\\Tests\\": "tests/"
+            "League\\CommonMark\\Tests\\Unit\\": "tests/unit",
+            "League\\CommonMark\\Tests\\Functional\\": "tests/functional"
         }
     },
     "extra": {
