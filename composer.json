@@ -25,7 +25,8 @@
         "jgm/CommonMark": "0.18",
         "michelf/php-markdown": "~1.4",
         "phpunit/phpunit": "~4.3",
-        "phpunit/phpunit-mock-objects": "2.3.0"
+        "phpunit/phpunit-mock-objects": "2.3.0",
+        "symfony/finder": "~2.3"
     },
     "repositories": [
         {
