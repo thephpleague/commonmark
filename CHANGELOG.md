@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
  - Dropped support for PHP 5.3 (#64 and #76)
+ - Bumped spec target version to 0.19
  - Made the AbstractInlineContainer be abstract
  - Moved environment config. logic into separate class
 
