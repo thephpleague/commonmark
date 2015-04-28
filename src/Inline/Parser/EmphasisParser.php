@@ -73,8 +73,8 @@ class EmphasisParser extends AbstractInlineParser
             !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter)));
 
         if ($character === '_') {
-            $canOpen = $leftFlanking && !$rightFlanking;
-            $canClose = $rightFlanking && !$leftFlanking;
+            $canOpen = $leftFlanking && (!$rightFlanking || preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore));
+            $canClose = $rightFlanking && (!$leftFlanking || preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter));
         } else {
             $canOpen = $leftFlanking;
             $canClose = $rightFlanking;
