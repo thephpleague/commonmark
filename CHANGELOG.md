@@ -3,9 +3,12 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+
+## [0.8.0] - 2015-04-29
 ### Added
  - Allow swapping built-in renderers without using their fully qualified names (#84)
  - Lots of unit tests (for existing code)
+ - Ability to include arbitrary functional tests in addition to spec-based tests
 
 ### Changed
  - Dropped support for PHP 5.3 (#64 and #76)
