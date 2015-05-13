@@ -30,13 +30,13 @@ class ListBlock extends AbstractBlock
     /**
      * @var ListData
      */
-    protected $data;
+    protected $listData;
 
     public function __construct(ListData $listData)
     {
         parent::__construct();
 
-        $this->data = $listData;
+        $this->listData = $listData;
     }
 
     /**
@@ -44,7 +44,7 @@ class ListBlock extends AbstractBlock
      */
     public function getListData()
     {
-        return $this->data;
+        return $this->listData;
     }
 
     /**
