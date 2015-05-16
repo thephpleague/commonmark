@@ -22,13 +22,13 @@ class ListItem extends AbstractBlock
     /**
      * @var ListData
      */
-    protected $data;
+    protected $listData;
 
     public function __construct(ListData $listData)
     {
         parent::__construct();
 
-        $this->data = $listData;
+        $this->listData = $listData;
     }
 
     /**
@@ -65,8 +65,8 @@ class ListItem extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor)
     {
-        if ($cursor->getIndent() >= $this->data->markerOffset + $this->data->padding) {
-            $cursor->advanceBy($this->data->markerOffset + $this->data->padding);
+        if ($cursor->getIndent() >= $this->listData->markerOffset + $this->listData->padding) {
+            $cursor->advanceBy($this->listData->markerOffset + $this->listData->padding);
         } elseif ($cursor->isBlank()) {
             $cursor->advanceToFirstNonSpace();
         } else {
