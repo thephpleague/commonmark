@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Added
+ - Added public $data array to block elements (#95)
+
+### Changed
+ - Renamed ListBlock::$data and ListItem::$data to $listData
 
 ## [0.8.0] - 2015-04-29
 ### Added
