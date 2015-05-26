@@ -1,0 +1,32 @@
+{
+    "name": "webuni/commonmark-table-extension",
+    "type": "library",
+    "description": "The table extension for CommonMark PHP implementation",
+    "keywords": ["markdown","table","commonmark"],
+    "homepage": "https://github.com/webuni/commonmark-table-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Hasoň",
+            "email": "martin.hason@gmail.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "league/commonmark": ">=0.7"
+    },
+    "require-dev": {
+        "league/commonmark": "@dev",
+        "phpunit/phpunit": "~4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webuni\\CommonMark\\TableExtension\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
