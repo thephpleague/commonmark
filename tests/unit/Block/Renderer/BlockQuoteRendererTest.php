@@ -35,6 +35,7 @@ class BlockQuoteRendererTest extends \PHPUnit_Framework_TestCase
     public function testRenderEmptyBlockQuote()
     {
         $block = new BlockQuote();
+        $block->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeEmptyHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -42,11 +43,13 @@ class BlockQuoteRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('blockquote', $result->getTagName());
         $this->assertEmpty($result->getContents(true));
+        $this->assertEquals(['id' => ''], $result->getAllAttributes());
     }
 
     public function testRenderBlockQuote()
     {
         $block = new BlockQuote();
+        $block->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -54,6 +57,7 @@ class BlockQuoteRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('blockquote', $result->getTagName());
         $this->assertContains('::blocks::', $result->getContents(true));
+        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
     }
 
     /**

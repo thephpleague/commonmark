@@ -34,6 +34,7 @@ class ImageRendererTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithTitle()
     {
         $inline = new Image('http://example.com/foo.jpg', '::label::', '::title::');
+        $inline->data['attributes'] = ['id' => '::id::', 'title' => '::title2::', 'label' => '::label2::', 'alt' => '::alt2::'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -44,6 +45,7 @@ class ImageRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('::escape::', $result->getAttribute('src'));
         $this->assertContains('::inlines::', $result->getAttribute('alt'));
         $this->assertContains('::title::', $result->getAttribute('title'));
+        $this->assertContains('::id::', $result->getAttribute('id'));
     }
 
     public function testRenderWithoutTitle()

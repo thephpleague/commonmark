@@ -34,6 +34,9 @@ class LinkRenderer implements InlineRendererInterface
         }
 
         $attrs = array();
+        foreach ((array) $inline->getData('attributes', array()) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
 
         $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
 

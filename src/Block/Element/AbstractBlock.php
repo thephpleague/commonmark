@@ -317,4 +317,9 @@ abstract class AbstractBlock
 
         return $this;
     }
+
+    public function getData($name, $default = null)
+    {
+        return array_key_exists($name, $this->data) ? $this->data[$name] : $default;
+    }
 }

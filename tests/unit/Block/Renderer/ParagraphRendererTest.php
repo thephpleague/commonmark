@@ -34,6 +34,7 @@ class ParagraphRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $block = new Paragraph();
+        $block->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -41,6 +42,7 @@ class ParagraphRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('p', $result->getTagName());
         $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
     }
 
     /**
