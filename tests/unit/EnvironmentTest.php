@@ -387,4 +387,34 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
         $environment->addExtension($extension);
     }
+
+    public function testAddElementVisitor()
+    {
+        $environment = new Environment();
+
+        $visitor = $this->getMock('League\CommonMark\ElementVisitorInterface');
+        $environment->addElementVisitor($visitor);
+
+        $this->assertContains($visitor, $environment->getElementVisitors());
+    }
+
+    public function testGetSortedElementVisitor()
+    {
+        $environment = new Environment();
+
+        $visitor1 = $this->getMock('League\CommonMark\ElementVisitorInterface');
+        $visitor1->expects($this->once())->method('getPriority')->willReturn(3);
+
+        $visitor2 = $this->getMock('League\CommonMark\ElementVisitorInterface');
+        $visitor2->expects($this->once())->method('getPriority')->willReturn(3);
+
+        $visitor3 = $this->getMock('League\CommonMark\ElementVisitorInterface');
+        $visitor3->expects($this->once())->method('getPriority')->willReturn(0);
+
+        $environment->addElementVisitor($visitor1);
+        $environment->addElementVisitor($visitor2);
+        $environment->addElementVisitor($visitor3);
+
+        $this->assertSame([$visitor3, $visitor1, $visitor2], $environment->getElementVisitors());
+    }
 }

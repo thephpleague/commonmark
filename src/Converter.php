@@ -34,15 +34,22 @@ class Converter
     protected $htmlRenderer;
 
     /**
+     * @var \League\CommonMark\ElementTraverser|null
+     */
+    protected $elementTraverser;
+
+    /**
      * Create a new commonmark converter instance.
      *
      * @param DocParser $docParser
      * @param HtmlRendererInterface $htmlRenderer
+     * @param ElementTraverser|null $elementTraverser
      */
-    public function __construct(DocParser $docParser, HtmlRendererInterface $htmlRenderer)
+    public function __construct(DocParser $docParser, HtmlRendererInterface $htmlRenderer, ElementTraverser $elementTraverser = null)
     {
         $this->docParser = $docParser;
         $this->htmlRenderer = $htmlRenderer;
+        $this->elementTraverser = $elementTraverser;
     }
 
     /**
@@ -57,6 +64,10 @@ class Converter
     public function convertToHtml($commonMark)
     {
         $documentAST = $this->docParser->parse($commonMark);
+
+        if (null !== $this->elementTraverser) {
+            $documentAST = $this->elementTraverser->traverseBlock($documentAST);
+        }
 
         return $this->htmlRenderer->renderBlock($documentAST);
     }

@@ -16,11 +16,12 @@ namespace League\CommonMark\Extension;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\ElementVisitorInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
-abstract class Extension implements ExtensionInterface
+abstract class Extension implements ExtensionInterface, ElementVisitorExtensionInterface
 {
     /**
      * @return BlockParserInterface[]
@@ -58,6 +59,14 @@ abstract class Extension implements ExtensionInterface
      * @return InlineRendererInterface[]
      */
     public function getInlineRenderers()
+    {
+        return [];
+    }
+
+    /**
+     * @return ElementVisitorInterface[]
+     */
+    public function getElementVisitors()
     {
         return [];
     }
