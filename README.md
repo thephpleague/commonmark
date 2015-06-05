@@ -148,6 +148,11 @@ This package is **not** part of CommonMark, but rather a compatible derivative.
 
 Documentation can be found at [commonmark.thephpleague.com][docs].
 
+## Integrations
+
+- [CakePHP 3](https://github.com/gourmet/commonmark)
+- [Laravel 5](https://github.com/GrahamCampbell/Laravel-Markdown)
+
 ## Testing
 
 ``` bash
@@ -159,7 +164,7 @@ This will also test league/commonmark against the latest supported spec.
 ## Performance Benchmarks
 
 You can compare the performance of **league/commonmark** to other popular parsers by running the included benchmark tool:
- 
+
 ``` bash
 $ ./tests/benchmark/benchmark.php
 ```
