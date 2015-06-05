@@ -86,6 +86,23 @@ The [documentation][docs] provides several [customization examples][docs-example
 
 You can also reference the core CommonMark parsers/renderers as they use the same functionality available to you.
 
+## Documentation
+
+Documentation can be found at [commonmark.thephpleague.com][docs].
+
+## Integrations
+
+- [CakePHP 3](https://github.com/gourmet/commonmark)
+- [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
+- [Twig](https://github.com/webuni/commonmark-twig-renderer)
+
+## Community Extensions
+
+Custom parsers/renderers can be bundled into extensions which extend CommonMark.  Here are some that you may find interesting:
+
+ - [Markua](https://github.com/dshafik/markua) - Markdown parser for PHP which intends to support the full Markua spec.
+ - [CommonMark Table Extension](https://github.com/webuni/commonmark-table-extension) - Adds the ability to create tables in CommonMark documents.
+
 ## Compatibility with CommonMark ##
 
 This project aims to fully support the entire [CommonMark spec]. Other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [JS reference implementation][commonmark.js] should eventually find their way back into this codebase.
@@ -139,23 +156,6 @@ The following table shows which versions of league/commonmark are compatible wit
 </table>
 
 This package is **not** part of CommonMark, but rather a compatible derivative.
-
-## Documentation
-
-Documentation can be found at [commonmark.thephpleague.com][docs].
-
-## Integrations
-
-- [CakePHP 3](https://github.com/gourmet/commonmark)
-- [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
-- [Twig](https://github.com/webuni/commonmark-twig-renderer)
-
-## Community Extensions
-
-Custom parsers/renderers can be bundled into extensions which extend CommonMark.  Here are some that you may find interesting:
-
- - [Markua](https://github.com/dshafik/markua) - Markdown parser for PHP which intends to support the full Markua spec.
- - [CommonMark Table Extension](https://github.com/webuni/commonmark-table-extension) - Adds the ability to create tables in CommonMark documents.
 
 ## Testing
 
