@@ -37,13 +37,22 @@ class CommonMarkConverter
      * Create a new commonmark converter instance.
      *
      * @param array $config
+     * @param DocParser $docParser
+     * @param HtmlRendererInterface $htmlRenderer
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config = array(), DocParser $docParser = null, HtmlRendererInterface $htmlRenderer = null)
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->mergeConfig($config);
-        $this->docParser = new DocParser($environment);
-        $this->htmlRenderer = new HtmlRenderer($environment);
+        $this->docParser = $docParser;
+        if (null === $docParser) {
+            $environment = Environment::createCommonMarkEnvironment();
+            $environment->mergeConfig($config);
+            $this->docParser = new DocParser($environment);
+        }
+
+        $this->htmlRenderer = $htmlRenderer;
+        if (null === $htmlRenderer) {
+            $this->htmlRenderer = new HtmlRenderer($this->docParser->getEnvironment());
+        }
     }
 
     /**
