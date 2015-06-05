@@ -151,7 +151,7 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 ## Integrations
 
 - [CakePHP 3](https://github.com/gourmet/commonmark)
-- [Laravel 5](https://github.com/GrahamCampbell/Laravel-Markdown)
+- [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
 
 ## Testing
 
