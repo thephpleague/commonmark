@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
  - Renamed ListBlock::$data and ListItem::$data to $listData
+ - Require link labels to contain non-whitespace (jgm/CommonMark#322)
 
 ## [0.8.0] - 2015-04-29
 ### Added
