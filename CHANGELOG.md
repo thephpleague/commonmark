@@ -11,6 +11,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Require link labels to contain non-whitespace (jgm/CommonMark#322)
  - Use U+FFFD for entities resolving to 0 (jgm/CommonMark#323)
 
+### Fixed
+ - Fixed open block tag followed by newline not being recognized (jgm/CommonMark#324)
+
 ## [0.8.0] - 2015-04-29
 ### Added
  - Allow swapping built-in renderers without using their fully qualified names (#84)

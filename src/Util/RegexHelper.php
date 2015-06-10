@@ -111,8 +111,8 @@ class RegexHelper
         $regex[self::CDATA] = '<!\[CDATA\[[\s\S]*?]\]>';
         $regex[self::HTMLTAG] = '(?:' . $regex[self::OPENTAG] . '|' . $regex[self::CLOSETAG] . '|' . $regex[self::HTMLCOMMENT] . '|' .
             $regex[self::PROCESSINGINSTRUCTION] . '|' . $regex[self::DECLARATION] . '|' . $regex[self::CDATA] . ')';
-        $regex[self::HTMLBLOCKOPEN] = '<(?:' . $regex[self::BLOCKTAGNAME] . '[\s\/>]' . '|' .
-            '\/' . $regex[self::BLOCKTAGNAME] . '[\s>]' . '|' . '[?!])';
+        $regex[self::HTMLBLOCKOPEN] = '<(?:' . $regex[self::BLOCKTAGNAME] . '(?:[\s\/>]|$)' . '|' .
+            '\/' . $regex[self::BLOCKTAGNAME] . '(?:[\s>]|$)' . '|' . '[?!])';
         $regex[self::LINK_TITLE] = '^(?:"(' . $regex[self::ESCAPED_CHAR] . '|[^"\x00])*"' .
             '|' . '\'(' . $regex[self::ESCAPED_CHAR] . '|[^\'\x00])*\'' .
             '|' . '\((' . $regex[self::ESCAPED_CHAR] . '|[^)\x00])*\))';
