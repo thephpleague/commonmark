@@ -29,6 +29,10 @@ class ATXHeaderParser extends AbstractBlockParser
      */
     public function parse(ContextInterface $context, Cursor $cursor)
     {
+        if ($cursor->isIndented()) {
+            return false;
+        }
+
         $match = RegexHelper::matchAll('/^#{1,6}(?: +|$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
         if (!$match) {
             return false;
