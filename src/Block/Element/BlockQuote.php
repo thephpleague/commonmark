@@ -53,7 +53,7 @@ class BlockQuote extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor)
     {
-        if ($cursor->getIndent() <= 3 && $cursor->getFirstNonSpaceCharacter() === '>') {
+        if (!$cursor->isIndented() && $cursor->getFirstNonSpaceCharacter() === '>') {
             $cursor->advanceToFirstNonSpace();
             $cursor->advance();
             if ($cursor->getCharacter() === ' ') {

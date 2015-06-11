@@ -21,8 +21,6 @@ use League\CommonMark\Cursor;
 
 class IndentedCodeParser extends AbstractBlockParser
 {
-    const CODE_INDENT_LEVEL = 4;
-
     /**
      * @param ContextInterface $context
      * @param Cursor $cursor
@@ -31,7 +29,7 @@ class IndentedCodeParser extends AbstractBlockParser
      */
     public function parse(ContextInterface $context, Cursor $cursor)
     {
-        if ($cursor->getIndent() < self::CODE_INDENT_LEVEL) {
+        if (!$cursor->isIndented()) {
             return false;
         }
 
@@ -43,7 +41,7 @@ class IndentedCodeParser extends AbstractBlockParser
             return false;
         }
 
-        $cursor->advanceBy(self::CODE_INDENT_LEVEL);
+        $cursor->advanceBy(Cursor::INDENT_LEVEL);
         $context->addBlock(new IndentedCode());
 
         return true;

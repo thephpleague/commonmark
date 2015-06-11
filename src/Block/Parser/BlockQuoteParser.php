@@ -28,6 +28,10 @@ class BlockQuoteParser extends AbstractBlockParser
      */
     public function parse(ContextInterface $context, Cursor $cursor)
     {
+        if ($cursor->isIndented()) {
+            return false;
+        }
+
         if ($cursor->getFirstNonSpaceCharacter() !== '>') {
             return false;
         }

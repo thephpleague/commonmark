@@ -15,6 +15,8 @@ use League\CommonMark\Util\RegexHelper;
 
 class Cursor
 {
+    const INDENT_LEVEL = 4;
+
     /**
      * @var string
      */
@@ -85,6 +87,16 @@ class Cursor
     public function getIndent()
     {
         return $this->getFirstNonSpacePosition() - $this->currentPosition;
+    }
+
+    /**
+     * Whether the cursor is indented to INDENT_LEVEL
+     *
+     * @return bool
+     */
+    public function isIndented()
+    {
+        return $this->getIndent() >= self::INDENT_LEVEL;
     }
 
     /**

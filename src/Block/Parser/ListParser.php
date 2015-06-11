@@ -32,7 +32,7 @@ class ListParser extends AbstractBlockParser
     public function parse(ContextInterface $context, Cursor $cursor)
     {
         $tmpCursor = clone $cursor;
-        $indent = $tmpCursor->advanceWhileMatches(' ', 3);
+        $indent = $tmpCursor->advanceToFirstNonSpace();
 
         $rest = $tmpCursor->getRemainder();
 
@@ -54,6 +54,10 @@ class ListParser extends AbstractBlockParser
         }
 
         $data->padding = $this->calculateListMarkerPadding($matches[0], $spacesAfterMarker, $rest);
+
+        if ($cursor->isIndented() && !($context->getContainer() instanceof ListBlock)) {
+            return false;
+        }
 
         $cursor->advanceToFirstNonSpace();
         $cursor->advanceBy($data->padding);

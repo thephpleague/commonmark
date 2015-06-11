@@ -29,8 +29,6 @@ class CommonMarkCoreExtension extends Extension
     {
         return array(
             // This order is important
-            new BlockParser\IndentedCodeParser(),
-            new BlockParser\LazyParagraphParser(),
             new BlockParser\BlockQuoteParser(),
             new BlockParser\ATXHeaderParser(),
             new BlockParser\FencedCodeParser(),
@@ -38,6 +36,8 @@ class CommonMarkCoreExtension extends Extension
             new BlockParser\SetExtHeaderParser(),
             new BlockParser\HorizontalRuleParser(),
             new BlockParser\ListParser(),
+            new BlockParser\IndentedCodeParser(),
+            new BlockParser\LazyParagraphParser(),
         );
     }
 

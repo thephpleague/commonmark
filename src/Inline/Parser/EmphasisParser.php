@@ -62,19 +62,24 @@ class EmphasisParser extends AbstractInlineParser
             $charAfter = "\n";
         }
 
-        $leftFlanking = $numDelims > 0 && !preg_match('/\pZ|\s/u', $charAfter) &&
-            !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter) &&
-            !preg_match('/\pZ|\s/u', $charBefore) &&
-            !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore)));
+        $afterIsWhitespace = preg_match('/\pZ|\s/u', $charAfter);
+        $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
+        $beforeIsWhitespace = preg_match('/\pZ|\s/u', $charBefore);
+        $beforeIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
 
-        $rightFlanking = $numDelims > 0 && !preg_match('/\pZ|\s/u', $charBefore) &&
-            !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore) &&
-            !preg_match('/\pZ|\s/u', $charAfter) &&
-            !(preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter)));
+        $leftFlanking = $numDelims > 0 && !$afterIsWhitespace &&
+            !($afterIsPunctuation &&
+            !$beforeIsWhitespace &&
+            !$beforeIsPunctuation);
+
+        $rightFlanking = $numDelims > 0 && !$beforeIsWhitespace &&
+            !($beforeIsPunctuation &&
+            !$afterIsWhitespace &&
+            !$afterIsPunctuation);
 
         if ($character === '_') {
-            $canOpen = $leftFlanking && (!$rightFlanking || preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore));
-            $canClose = $rightFlanking && (!$leftFlanking || preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter));
+            $canOpen = $leftFlanking && (!$rightFlanking || $beforeIsPunctuation);
+            $canClose = $rightFlanking && (!$leftFlanking || $afterIsPunctuation);
         } else {
             $canOpen = $leftFlanking;
             $canClose = $rightFlanking;

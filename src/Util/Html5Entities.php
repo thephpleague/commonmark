@@ -2276,8 +2276,8 @@ class Html5Entities
      */
     public static function fromDecimal($number)
     {
-        // Only convert code points within planes 0-2
-        if ($number > 0x2FFFF) {
+        // Only convert code points within planes 0-2, excluding NULL
+        if ($number == 0 || $number > 0x2FFFF) {
             return self::fromHex('fffd');
         }
 

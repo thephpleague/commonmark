@@ -29,6 +29,10 @@ class HtmlBlockParser extends AbstractBlockParser
      */
     public function parse(ContextInterface $context, Cursor $cursor)
     {
+        if ($cursor->isIndented()) {
+            return false;
+        }
+
         $match = RegexHelper::matchAt(RegexHelper::getInstance()->getHtmlBlockOpenRegex(), $cursor->getLine(), $cursor->getFirstNonSpacePosition());
         if ($match === null) {
             return false;
