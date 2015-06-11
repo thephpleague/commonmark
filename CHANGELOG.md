@@ -15,6 +15,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Fixed
  - Fixed open block tag followed by newline not being recognized (jgm/CommonMark#324)
+ - Fixed indented lists sometimes being parsed incorrectly (jgm/commonmark.js#42)
 
 ## [0.8.0] - 2015-04-29
 ### Added
