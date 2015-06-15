@@ -26,7 +26,7 @@ class BacktickParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return array('`');
+        return ['`'];
     }
 
     /**

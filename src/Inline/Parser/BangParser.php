@@ -26,7 +26,7 @@ class BangParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return array('!');
+        return ['!'];
     }
 
     /**
@@ -40,7 +40,7 @@ class BangParser extends AbstractInlineParser
         $cursor = $inlineContext->getCursor();
         if ($cursor->peek() === '[') {
             $cursor->advanceBy(2);
-            $inlineContext->getInlines()->add(new Text('![', array('delim' => true)));
+            $inlineContext->getInlines()->add(new Text('![', ['delim' => true]));
 
             // Add entry to stack for this opener
             $delimiter = new Delimiter('!', 1, $inlineContext->getInlines()->count() - 1, true, false, $cursor->getPosition());

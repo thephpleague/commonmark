@@ -36,8 +36,8 @@ class IndentedCodeRenderer implements BlockRendererInterface
 
         return new HtmlElement(
             'pre',
-            array(),
-            new HtmlElement('code', array(), $htmlRenderer->escape($block->getStringContent()))
+            [],
+            new HtmlElement('code', [], $htmlRenderer->escape($block->getStringContent()))
         );
     }
 }

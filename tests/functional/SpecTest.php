@@ -61,13 +61,13 @@ class SpecTest extends \PHPUnit_Framework_TestCase
             $this->fail(sprintf('Failed to load spec from %s', $filename));
         }
 
-        $matches = array();
+        $matches = [];
         // Normalize newlines for platform independence
         $data = preg_replace('/\r\n?/', "\n", $data);
         $data = preg_replace('/<!-- END TESTS -->.*$/', '', $data);
         preg_match_all('/^\.\n([\s\S]*?)^\.\n([\s\S]*?)^\.$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
 
-        $examples = array();
+        $examples = [];
         $currentSection = "";
         $exampleNumber = 0;
 
@@ -80,12 +80,12 @@ class SpecTest extends \PHPUnit_Framework_TestCase
                 $markdown = $match[1];
                 $markdown = str_replace('→', "\t", $markdown);
 
-                $examples[] = array(
+                $examples[] = [
                     'markdown' => $markdown,
                     'html' => $match[2],
                     'section' => $currentSection,
                     'number' => $exampleNumber
-                );
+                ];
             }
         }
 

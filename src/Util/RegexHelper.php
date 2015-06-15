@@ -53,7 +53,7 @@ class RegexHelper
     const REGEX_ENTITY = '/&(?:#x[a-f0-9]{1,8}|#[0-9]{1,8}|[a-z][a-z0-9]{1,31});/i';
     const REGEX_PUNCTUATION = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
 
-    protected $regex = array();
+    protected $regex = [];
 
     protected static $instance;
 
@@ -84,7 +84,7 @@ class RegexHelper
      */
     protected function buildRegexPatterns()
     {
-        $regex = array();
+        $regex = [];
         $regex[self::ESCAPABLE] = self::REGEX_ESCAPABLE;
         $regex[self::ESCAPED_CHAR] = '\\\\' . $regex[self::ESCAPABLE];
         $regex[self::IN_DOUBLE_QUOTES] = '"(' . $regex[self::ESCAPED_CHAR] . '|[^"\x00])*"';
@@ -191,7 +191,7 @@ class RegexHelper
      */
     public static function matchAt($regex, $string, $offset)
     {
-        $matches = array();
+        $matches = [];
         $string = mb_substr($string, $offset, null, 'utf-8');
         if (!preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
             return null;
@@ -214,7 +214,7 @@ class RegexHelper
      */
     public static function matchAll($pattern, $subject, $offset = 0)
     {
-        $matches = array();
+        $matches = [];
         $subject = substr($subject, $offset);
         preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
 

@@ -21,5 +21,5 @@ abstract class AbstractInline
      *
      * Used for storage of arbitrary data
      */
-    public $data = array();
+    public $data = [];
 }

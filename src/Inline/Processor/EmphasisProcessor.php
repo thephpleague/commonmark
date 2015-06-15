@@ -81,7 +81,7 @@ class EmphasisProcessor implements InlineProcessorInterface
         };
 
         // Process the emphasis characters
-        $delimiterStack->iterateByCharacters(array('_', '*'), $callback, $stackBottom);
+        $delimiterStack->iterateByCharacters(['_', '*'], $callback, $stackBottom);
         // Remove gaps
         $inlines->removeGaps();
         // Remove all delimiters

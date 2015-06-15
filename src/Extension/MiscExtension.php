@@ -25,27 +25,27 @@ class MiscExtension implements ExtensionInterface
     /**
      * @var BlockParserInterface[]
      */
-    protected $blockParsers = array();
+    protected $blockParsers = [];
 
     /**
      * @var BlockRendererInterface[]
      */
-    protected $blockRenderers = array();
+    protected $blockRenderers = [];
 
     /**
      * @var InlineParserInterface[]
      */
-    protected $inlineParsers = array();
+    protected $inlineParsers = [];
 
     /**
      * @var InlineProcessorInterface[]
      */
-    protected $inlineProcessers = array();
+    protected $inlineProcessers = [];
 
     /**
      * @var InlineRendererInterface[]
      */
-    protected $inlineRenderers = array();
+    protected $inlineRenderers = [];
 
     /**
      * Returns a list of block parsers to add to the existing list

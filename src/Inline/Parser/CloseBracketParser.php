@@ -40,7 +40,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      */
     public function getCharacters()
     {
-        return array(']');
+        return [']'];
     }
 
     /**
@@ -57,7 +57,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $previousState = $cursor->saveState();
 
         // Look through stack of delimiters for a [ or !
-        $opener = $inlineContext->getDelimiterStack()->searchByCharacter(array('[', '!'));
+        $opener = $inlineContext->getDelimiterStack()->searchByCharacter(['[', '!']);
         if ($opener === null) {
             return false;
         }
@@ -143,7 +143,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
                 return $result;
             }
         } elseif ($link = $this->tryParseReference($cursor, $referenceMap, $opener, $startPos)) {
-            return array('url' => $link->getDestination(), 'title' => $link->getTitle());
+            return ['url' => $link->getDestination(), 'title' => $link->getTitle()];
         }
 
         return false;
@@ -176,7 +176,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
-        return array('url' => $dest, 'title' => $title);
+        return ['url' => $dest, 'title' => $title];
     }
 
     /**

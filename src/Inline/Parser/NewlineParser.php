@@ -26,7 +26,7 @@ class NewlineParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return array("\n");
+        return ["\n"];
     }
 
     /**

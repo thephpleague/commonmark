@@ -296,14 +296,14 @@ class RegexHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function dataForTestMatchAt()
     {
-        return array(
-            array('/ /', 'foo bar', null, 3),
-            array('/ /', 'foo bar', 0, 3),
-            array('/ /', 'foo bar', 1, 3),
-            array('/ /', 'это тест', null, 3),
-            array('/ /', 'это тест', 0, 3),
-            array('/ /', 'это тест', 1, 3),
-        );
+        return [
+            ['/ /', 'foo bar', null, 3],
+            ['/ /', 'foo bar', 0, 3],
+            ['/ /', 'foo bar', 1, 3],
+            ['/ /', 'это тест', null, 3],
+            ['/ /', 'это тест', 0, 3],
+            ['/ /', 'это тест', 1, 3],
+        ];
     }
 
 }

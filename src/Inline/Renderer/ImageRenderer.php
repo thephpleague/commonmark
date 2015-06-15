@@ -33,7 +33,7 @@ class ImageRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        $attrs = array();
+        $attrs = [];
 
         $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
 

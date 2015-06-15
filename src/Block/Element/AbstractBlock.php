@@ -28,7 +28,7 @@ abstract class AbstractBlock
      *
      * @var array
      */
-    public $data = array();
+    public $data = [];
 
     /**
      * @var ArrayCollection|AbstractBlock[]

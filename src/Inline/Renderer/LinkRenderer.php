@@ -33,7 +33,7 @@ class LinkRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        $attrs = array();
+        $attrs = [];
 
         $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
 

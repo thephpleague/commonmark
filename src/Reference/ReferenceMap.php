@@ -22,7 +22,7 @@ class ReferenceMap
     /**
      * @var Reference[]
      */
-    protected $references = array();
+    protected $references = [];
 
     /**
      * @param Reference $reference

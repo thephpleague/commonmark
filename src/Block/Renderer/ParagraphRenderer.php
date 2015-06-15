@@ -37,7 +37,7 @@ class ParagraphRenderer implements BlockRendererInterface
         if ($inTightList) {
             return $htmlRenderer->renderInlines($block->getInlines());
         } else {
-            return new HtmlElement('p', array(), $htmlRenderer->renderInlines($block->getInlines()));
+            return new HtmlElement('p', [], $htmlRenderer->renderInlines($block->getInlines()));
         }
     }
 }

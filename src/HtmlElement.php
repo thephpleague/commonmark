@@ -12,7 +12,7 @@ class HtmlElement
     /**
      * @var string[]
      */
-    protected $attributes = array();
+    protected $attributes = [];
 
     /**
      * @var HtmlElement|HtmlElement[]|string
@@ -30,7 +30,7 @@ class HtmlElement
      * @param HtmlElement|HtmlElement[]|string $contents
      * @param bool $selfClosing
      */
-    public function __construct($tagName, $attributes = array(), $contents = '', $selfClosing = false)
+    public function __construct($tagName, $attributes = [], $contents = '', $selfClosing = false)
     {
         $this->tagName = $tagName;
         $this->attributes = $attributes;

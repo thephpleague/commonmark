@@ -28,7 +28,7 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorTwoArguments()
     {
-        $img = new HtmlElement('img', array('src' => 'foo.jpg'));
+        $img = new HtmlElement('img', ['src' => 'foo.jpg']);
         $this->assertEquals('img', $img->getTagName());
         $this->assertCount(1, $img->getAllAttributes());
         $this->assertEquals('foo.jpg', $img->getAttribute('src'));
@@ -37,7 +37,7 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorThreeArguments()
     {
-        $li = new HtmlElement('li', array('class' => 'odd'), 'Foo');
+        $li = new HtmlElement('li', ['class' => 'odd'], 'Foo');
         $this->assertEquals('li', $li->getTagName());
         $this->assertCount(1, $li->getAllAttributes());
         $this->assertEquals('odd', $li->getAttribute('class'));
@@ -46,21 +46,21 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 
     public function testNonSelfClosingElement()
     {
-        $p = new HtmlElement('p', array(), '', false);
+        $p = new HtmlElement('p', [], '', false);
 
         $this->assertEquals('<p></p>', (string) $p);
     }
 
     public function testSelfClosingElement()
     {
-        $hr = new HtmlElement('hr', array(), '', true);
+        $hr = new HtmlElement('hr', [], '', true);
 
         $this->assertEquals('<hr />', (string) $hr);
     }
 
     public function testGetSetExistingAttribute()
     {
-        $p = new HtmlElement('p', array('class' => 'foo'));
+        $p = new HtmlElement('p', ['class' => 'foo']);
         $this->assertCount(1, $p->getAllAttributes());
         $this->assertEquals('foo', $p->getAttribute('class'));
 
@@ -71,7 +71,7 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetNonExistingAttribute()
     {
-        $p = new HtmlElement('p', array('class' => 'foo'));
+        $p = new HtmlElement('p', ['class' => 'foo']);
         $this->assertCount(1, $p->getAllAttributes());
         $this->assertNull($p->getAttribute('id'));
 
@@ -83,10 +83,10 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 
     public function testToString()
     {
-        $img = new HtmlElement('img', array(), '', true);
+        $img = new HtmlElement('img', [], '', true);
         $p = new HtmlElement('p');
         $div = new HtmlElement('div');
-        $div->setContents(array($p, $img));
+        $div->setContents([$p, $img]);
 
         $this->assertInternalType('string', $div->getContents(true));
         $this->assertEquals('<p></p><img />', $div->getContents(true));
@@ -96,7 +96,7 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 
     public function testNullContentConstructor()
     {
-        $img = new HtmlElement('img', array(), null);
+        $img = new HtmlElement('img', [], null);
         $this->assertTrue($img->getContents(false) === '');
     }
 

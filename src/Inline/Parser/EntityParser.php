@@ -27,7 +27,7 @@ class EntityParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return array('&');
+        return ['&'];
     }
 
     /**

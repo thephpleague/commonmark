@@ -19,10 +19,10 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     public function testDefaultMethodBehavior()
     {
         $extension = $this->getMockForAbstractClass('League\CommonMark\Extension\Extension');
-        $this->assertEquals(array(), $extension->getBlockParsers());
-        $this->assertEquals(array(), $extension->getBlockRenderers());
-        $this->assertEquals(array(), $extension->getInlineParsers());
-        $this->assertEquals(array(), $extension->getInlineProcessors());
-        $this->assertEquals(array(), $extension->getInlineRenderers());
+        $this->assertEquals([], $extension->getBlockParsers());
+        $this->assertEquals([], $extension->getBlockRenderers());
+        $this->assertEquals([], $extension->getInlineParsers());
+        $this->assertEquals([], $extension->getInlineProcessors());
+        $this->assertEquals([], $extension->getInlineRenderers());
     }
 }

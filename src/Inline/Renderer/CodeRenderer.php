@@ -33,6 +33,6 @@ class CodeRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        return new HtmlElement('code', array(), $htmlRenderer->escape($inline->getContent()));
+        return new HtmlElement('code', [], $htmlRenderer->escape($inline->getContent()));
     }
 }

@@ -60,7 +60,7 @@ class HtmlRenderer implements HtmlRendererInterface
             $string = str_replace('&', '&amp;', $string);
         }
 
-        return str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $string);
+        return str_replace(['<', '>', '"'], ['&lt;', '&gt;', '&quot;'], $string);
     }
 
     /**
@@ -87,7 +87,7 @@ class HtmlRenderer implements HtmlRendererInterface
      */
     public function renderInlines($inlines)
     {
-        $result = array();
+        $result = [];
         foreach ($inlines as $inline) {
             $result[] = $this->renderInline($inline);
         }
@@ -121,7 +121,7 @@ class HtmlRenderer implements HtmlRendererInterface
      */
     public function renderBlocks($blocks, $inTightList = false)
     {
-        $result = array();
+        $result = [];
         foreach ($blocks as $block) {
             $result[] = $this->renderBlock($block, $inTightList);
         }
