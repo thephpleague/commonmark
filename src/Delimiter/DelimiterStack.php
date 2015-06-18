@@ -127,24 +127,41 @@ class DelimiterStack
             $characters = [$characters];
         }
 
+        $potentialOpeners = array_fill_keys($characters, $stackBottom);
+
         // Find first closer above stackBottom
         $closer = $this->findEarliest($stackBottom);
 
         while ($closer !== null) {
-            if ($closer->canClose() && (in_array($closer->getChar(), $characters))) {
+            $closerChar = $closer->getChar();
+            if ($closer->canClose() && (in_array($closerChar, $characters))) {
                 // Found emphasis closer. Now look back for first matching opener:
                 $opener = $closer->getPrevious();
-                while ($opener !== null && $opener !== $stackBottom) {
-                    if ($opener->getChar() === $closer->getChar() && $opener->canOpen()) {
+                $openerFound = false;
+                while ($opener !== null && $opener !== $potentialOpeners[$closerChar]) {
+                    if ($opener->getChar() === $closerChar && $opener->canOpen()) {
+                        $openerFound = true;
                         break;
                     }
                     $opener = $opener->getPrevious();
                 }
 
-                if ($opener !== null && $opener !== $stackBottom) {
+                $oldCloser = $closer;
+
+                if ($openerFound) {
                     $closer = $callback($opener, $closer, $this);
                 } else {
                     $closer = $closer->getNext();
+                }
+
+                if (!$openerFound) {
+                    // Set lower bound for future searches for openers:
+                    $potentialOpeners[$closerChar] = $closer;
+                    if (!$oldCloser->canOpen()) {
+                        // We can remove a closer that can't be an opener,
+                        // once we've seen there's no matching opener:
+                        $this->removeDelimiter($oldCloser);
+                    }
                 }
             } else {
                 $closer = $closer->getNext();

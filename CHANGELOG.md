@@ -15,6 +15,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Use U+FFFD for entities resolving to 0 (jgm/CommonMark#323)
  - Moved `IndentedCodeParser::CODE_INDENT_LEVEL` to `Cursor::INDENT_LEVEL`
  - Changed arrays to short syntax (#116)
+ - Improved efficiency of DelimiterStack iteration (jgm/commonmark.js#43)
 
 ### Fixed
  - Fixed open block tag followed by newline not being recognized (jgm/CommonMark#324)
