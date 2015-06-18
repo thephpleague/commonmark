@@ -136,25 +136,14 @@ class DelimiterStack
             $closerChar = $closer->getChar();
             if ($closer->canClose() && (in_array($closerChar, $characters))) {
                 // Found emphasis closer. Now look back for first matching opener:
-                $opener = $closer->getPrevious();
-                $openerFound = false;
-                while ($opener !== null && $opener !== $potentialOpeners[$closerChar]) {
-                    if ($opener->getChar() === $closerChar && $opener->canOpen()) {
-                        $openerFound = true;
-                        break;
-                    }
-                    $opener = $opener->getPrevious();
-                }
+                $opener = $this->findFirstMatchingOpener($closer, $potentialOpeners, $closerChar);
 
                 $oldCloser = $closer;
 
-                if ($openerFound) {
+                if ($opener !== null) {
                     $closer = $callback($opener, $closer, $this);
                 } else {
                     $closer = $closer->getNext();
-                }
-
-                if (!$openerFound) {
                     // Set lower bound for future searches for openers:
                     $potentialOpeners[$closerChar] = $closer;
                     if (!$oldCloser->canOpen()) {
@@ -168,4 +157,28 @@ class DelimiterStack
             }
         }
     }
+
+    /**
+     * @param Delimiter $closer
+     * @param array     $potentialOpeners
+     * @param string    $closerChar
+     *
+     * @return Delimiter|null
+     */
+    protected function findFirstMatchingOpener(Delimiter $closer, $potentialOpeners, $closerChar)
+    {
+        $opener = $closer->getPrevious();
+
+        while ($opener !== null && $opener !== $potentialOpeners[$closerChar]) {
+            if ($opener->getChar() === $closerChar && $opener->canOpen()) {
+                return $opener;
+            }
+
+            $opener = $opener->getPrevious();
+        }
+
+        return null;
+    }
+
+
 }
