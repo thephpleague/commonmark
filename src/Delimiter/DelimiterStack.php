@@ -127,7 +127,7 @@ class DelimiterStack
             $characters = [$characters];
         }
 
-        $potentialOpeners = array_fill_keys($characters, $stackBottom);
+        $openersBottom = array_fill_keys($characters, $stackBottom);
 
         // Find first closer above stackBottom
         $closer = $this->findEarliest($stackBottom);
@@ -136,7 +136,7 @@ class DelimiterStack
             $closerChar = $closer->getChar();
             if ($closer->canClose() && (in_array($closerChar, $characters))) {
                 // Found emphasis closer. Now look back for first matching opener:
-                $opener = $this->findFirstMatchingOpener($closer, $potentialOpeners, $stackBottom);
+                $opener = $this->findFirstMatchingOpener($closer, $openersBottom, $stackBottom);
 
                 $oldCloser = $closer;
 
@@ -145,7 +145,7 @@ class DelimiterStack
                 } else {
                     $closer = $closer->getNext();
                     // Set lower bound for future searches for openers:
-                    $potentialOpeners[$closerChar] = $closer;
+                    $openersBottom[$closerChar] = $oldCloser->getPrevious();
                     if (!$oldCloser->canOpen()) {
                         // We can remove a closer that can't be an opener,
                         // once we've seen there's no matching opener:
@@ -160,17 +160,17 @@ class DelimiterStack
 
     /**
      * @param Delimiter      $closer
-     * @param array          $potentialOpeners
+     * @param array          $openersBottom
      * @param Delimiter|null $stackBottom
      *
      * @return Delimiter|null
      */
-    protected function findFirstMatchingOpener(Delimiter $closer, $potentialOpeners, Delimiter $stackBottom = null)
+    protected function findFirstMatchingOpener(Delimiter $closer, $openersBottom, Delimiter $stackBottom = null)
     {
         $closerChar = $closer->getChar();
         $opener = $closer->getPrevious();
 
-        while ($opener !== null && $opener !== $stackBottom && $opener !== $potentialOpeners[$closerChar]) {
+        while ($opener !== null && $opener !== $stackBottom && $opener !== $openersBottom[$closerChar]) {
             if ($opener->getChar() === $closerChar && $opener->canOpen()) {
                 return $opener;
             }
