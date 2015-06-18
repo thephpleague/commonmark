@@ -127,28 +127,59 @@ class DelimiterStack
             $characters = [$characters];
         }
 
+        $openersBottom = array_fill_keys($characters, $stackBottom);
+
         // Find first closer above stackBottom
         $closer = $this->findEarliest($stackBottom);
 
         while ($closer !== null) {
-            if ($closer->canClose() && (in_array($closer->getChar(), $characters))) {
+            $closerChar = $closer->getChar();
+            if ($closer->canClose() && (in_array($closerChar, $characters))) {
                 // Found emphasis closer. Now look back for first matching opener:
-                $opener = $closer->getPrevious();
-                while ($opener !== null && $opener !== $stackBottom) {
-                    if ($opener->getChar() === $closer->getChar() && $opener->canOpen()) {
-                        break;
-                    }
-                    $opener = $opener->getPrevious();
-                }
+                $opener = $this->findFirstMatchingOpener($closer, $openersBottom, $stackBottom);
 
-                if ($opener !== null && $opener !== $stackBottom) {
+                $oldCloser = $closer;
+
+                if ($opener !== null) {
                     $closer = $callback($opener, $closer, $this);
                 } else {
                     $closer = $closer->getNext();
+                    // Set lower bound for future searches for openers:
+                    $openersBottom[$closerChar] = $oldCloser->getPrevious();
+                    if (!$oldCloser->canOpen()) {
+                        // We can remove a closer that can't be an opener,
+                        // once we've seen there's no matching opener:
+                        $this->removeDelimiter($oldCloser);
+                    }
                 }
             } else {
                 $closer = $closer->getNext();
             }
         }
     }
+
+    /**
+     * @param Delimiter      $closer
+     * @param array          $openersBottom
+     * @param Delimiter|null $stackBottom
+     *
+     * @return Delimiter|null
+     */
+    protected function findFirstMatchingOpener(Delimiter $closer, $openersBottom, Delimiter $stackBottom = null)
+    {
+        $closerChar = $closer->getChar();
+        $opener = $closer->getPrevious();
+
+        while ($opener !== null && $opener !== $stackBottom && $opener !== $openersBottom[$closerChar]) {
+            if ($opener->getChar() === $closerChar && $opener->canOpen()) {
+                return $opener;
+            }
+
+            $opener = $opener->getPrevious();
+        }
+
+        return null;
+    }
+
+
 }
