@@ -6,12 +6,15 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Added public $data array to block elements (#95)
  - Added `isIndented` helper method to `Cursor`
+ - Added a new `Converter` base class which `CommonMarkConverter` extends from (#105)
 
 ### Changed
+ - Bumped spec target version to 0.20 (#112)
  - Renamed ListBlock::$data and ListItem::$data to $listData
  - Require link labels to contain non-whitespace (jgm/CommonMark#322)
  - Use U+FFFD for entities resolving to 0 (jgm/CommonMark#323)
  - Moved `IndentedCodeParser::CODE_INDENT_LEVEL` to `Cursor::INDENT_LEVEL`
+ - Changed arrays to short syntax (#116)
 
 ### Fixed
  - Fixed open block tag followed by newline not being recognized (jgm/CommonMark#324)
