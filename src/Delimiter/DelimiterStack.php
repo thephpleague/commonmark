@@ -136,7 +136,7 @@ class DelimiterStack
             $closerChar = $closer->getChar();
             if ($closer->canClose() && (in_array($closerChar, $characters))) {
                 // Found emphasis closer. Now look back for first matching opener:
-                $opener = $this->findFirstMatchingOpener($closer, $potentialOpeners, $closerChar);
+                $opener = $this->findFirstMatchingOpener($closer, $potentialOpeners);
 
                 $oldCloser = $closer;
 
@@ -161,12 +161,12 @@ class DelimiterStack
     /**
      * @param Delimiter $closer
      * @param array     $potentialOpeners
-     * @param string    $closerChar
      *
      * @return Delimiter|null
      */
-    protected function findFirstMatchingOpener(Delimiter $closer, $potentialOpeners, $closerChar)
+    protected function findFirstMatchingOpener(Delimiter $closer, $potentialOpeners)
     {
+        $closerChar = $closer->getChar();
         $opener = $closer->getPrevious();
 
         while ($opener !== null && $opener !== $potentialOpeners[$closerChar]) {
