@@ -19,12 +19,12 @@ abstract class AbstractInlineContainer extends AbstractInline
     /**
      * @var AbstractInline[]
      */
-    protected $children = array();
+    protected $children = [];
 
     /**
      * @param AbstractInline[] $contents
      */
-    public function __construct(array $contents = array())
+    public function __construct(array $contents = [])
     {
         $this->children = $contents;
     }

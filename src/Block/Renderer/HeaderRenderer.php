@@ -36,6 +36,6 @@ class HeaderRenderer implements BlockRendererInterface
 
         $tag = 'h' . $block->getLevel();
 
-        return new HtmlElement($tag, array(), $htmlRenderer->renderInlines($block->getInlines()));
+        return new HtmlElement($tag, [], $htmlRenderer->renderInlines($block->getInlines()));
     }
 }

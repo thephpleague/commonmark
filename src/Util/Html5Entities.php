@@ -16,7 +16,7 @@ namespace League\CommonMark\Util;
 
 class Html5Entities
 {
-    public static $entitiesByName = array(
+    public static $entitiesByName = [
         'Aacute' => 'Á',
         'Aacut' => 'Á',
         'aacute' => 'á',
@@ -2240,7 +2240,7 @@ class Html5Entities
         'zscr' => '𝓏',
         'zwj' => '‍',
         'zwnj' => '‌'
-    );
+    ];
 
     /**
      * @param string $entity
@@ -2283,7 +2283,7 @@ class Html5Entities
 
         $entity = '&#' . $number . ';';
 
-        $converted = mb_decode_numericentity($entity, array(0x0, 0x2FFFF, 0, 0xFFFF), 'UTF-8');
+        $converted = mb_decode_numericentity($entity, [0x0, 0x2FFFF, 0, 0xFFFF], 'UTF-8');
 
         if ($converted === $entity) {
             return self::fromHex('fffd');

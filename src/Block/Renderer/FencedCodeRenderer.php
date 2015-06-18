@@ -37,11 +37,11 @@ class FencedCodeRenderer implements BlockRendererInterface
         $infoWords = $block->getInfoWords();
         $attr = count($infoWords) === 0 || strlen(
             $infoWords[0]
-        ) === 0 ? array() : array('class' => 'language-' . $htmlRenderer->escape($infoWords[0], true));
+        ) === 0 ? [] : ['class' => 'language-' . $htmlRenderer->escape($infoWords[0], true)];
 
         return new HtmlElement(
             'pre',
-            array(),
+            [],
             new HtmlElement('code', $attr, $htmlRenderer->escape($block->getStringContent()))
         );
     }

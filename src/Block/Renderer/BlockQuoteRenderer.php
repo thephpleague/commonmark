@@ -36,12 +36,12 @@ class BlockQuoteRenderer implements BlockRendererInterface
 
         $filling = $htmlRenderer->renderBlocks($block->getChildren());
         if ($filling === '') {
-            return new HtmlElement('blockquote', array(), $htmlRenderer->getOption('inner_separator', "\n"));
+            return new HtmlElement('blockquote', [], $htmlRenderer->getOption('inner_separator', "\n"));
         }
 
         return new HtmlElement(
             'blockquote',
-            array(),
+            [],
             $htmlRenderer->getOption('inner_separator', "\n") . $filling . $htmlRenderer->getOption('inner_separator', "\n")
         );
     }

@@ -27,7 +27,7 @@ class EmphasisParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return array('*', '_');
+        return ['*', '_'];
     }
 
     /**
@@ -86,7 +86,7 @@ class EmphasisParser extends AbstractInlineParser
         }
 
         $inlineContext->getInlines()->add(
-            new Text($cursor->getPreviousText(), array('delim' => true))
+            new Text($cursor->getPreviousText(), ['delim' => true])
         );
 
         // Add entry to stack to this opener

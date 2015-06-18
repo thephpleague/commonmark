@@ -53,13 +53,13 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
 
     public function dataForTestOrderedListStartingNumber()
     {
-        return array(
-            array(null, null),
-            array(0, '0'),
-            array(1, null),
-            array(2, '2'),
-            array(42, '42'),
-        );
+        return [
+            [null, null],
+            [0, '0'],
+            [1, null],
+            [2, '2'],
+            [42, '42'],
+        ];
     }
 
     public function testRenderUnorderedList()

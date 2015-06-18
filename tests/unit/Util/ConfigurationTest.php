@@ -10,9 +10,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $data = [
             'foo' => 'bar',
-            'a' => array(
+            'a' => [
                 'b' => 'c',
-            ),
+            ],
         ];
 
         $config = new Configuration($data);
@@ -41,8 +41,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testSetConfig()
     {
-        $config = new Configuration(array('foo' => 'bar'));
-        $config->setConfig(array('test' => '123'));
+        $config = new Configuration(['foo' => 'bar']);
+        $config->setConfig(['test' => '123']);
 
         $this->assertNull($config->getConfig('foo'));
         $this->assertEquals('123', $config->getConfig('test'));
@@ -50,8 +50,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testMergeConfig()
     {
-        $config = new Configuration(array('foo' => 'bar', 'test' => '123'));
-        $config->mergeConfig(array('test' => '456'));
+        $config = new Configuration(['foo' => 'bar', 'test' => '123']);
+        $config->mergeConfig(['test' => '456']);
 
         $this->assertEquals('bar', $config->getConfig('foo'));
         $this->assertEquals('456', $config->getConfig('test'));

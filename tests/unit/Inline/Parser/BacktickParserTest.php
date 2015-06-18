@@ -55,10 +55,10 @@ class BacktickParserTest extends \PHPUnit_Framework_TestCase
      */
     public function dataForTestParse()
     {
-        return array(
-            array('This is `just` a test', 'just'),
-            array('Из: твоя `feature` ветка', 'feature'),
-            array('Из: твоя `тест` ветка', 'тест'),
-        );
+        return [
+            ['This is `just` a test', 'just'],
+            ['Из: твоя `feature` ветка', 'feature'],
+            ['Из: твоя `тест` ветка', 'тест'],
+        ];
     }
 }

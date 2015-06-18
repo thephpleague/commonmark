@@ -27,7 +27,7 @@ class EscapableParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return array('\\');
+        return ['\\'];
     }
 
     /**

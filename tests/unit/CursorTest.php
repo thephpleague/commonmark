@@ -52,16 +52,16 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForTestingFirstNonSpaceMethods()
     {
-        return array(
-            array('', 0, null),
-            array(' ', 1, null),
-            array('  ', 2, null),
-            array('foo', 0, 'f'),
-            array(' foo', 1, 'f'),
-            array('  foo', 2, 'f'),
-            array('тест', 0, 'т'),
-            array(' т', 1, 'т'),
-        );
+        return [
+            ['', 0, null],
+            [' ', 1, null],
+            ['  ', 2, null],
+            ['foo', 0, 'f'],
+            [' foo', 1, 'f'],
+            ['  foo', 2, 'f'],
+            ['тест', 0, 'т'],
+            [' т', 1, 'т'],
+        ];
     }
 
     /**
@@ -81,27 +81,27 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForGetIndentTest()
     {
-        return array(
-            array('', 0, 0),
-            array(' ', 0, 1),
-            array(' ', 1, 0),
-            array('    ', 0, 4),
-            array('    ', 1, 3),
-            array('    ', 2, 2),
-            array('    ', 3, 1),
-            array('foo', 0, 0),
-            array('foo', 1, 0),
-            array(' foo', 0, 1),
-            array(' foo', 1, 0),
-            array('  foo', 0, 2),
-            array('  foo', 1, 1),
-            array('  foo', 2, 0),
-            array('  foo', 3, 0),
-            array('тест', 0, 0),
-            array('тест', 1, 0),
-            array(' тест', 0, 1),
-            array(' тест', 1, 0),
-        );
+        return [
+            ['', 0, 0],
+            [' ', 0, 1],
+            [' ', 1, 0],
+            ['    ', 0, 4],
+            ['    ', 1, 3],
+            ['    ', 2, 2],
+            ['    ', 3, 1],
+            ['foo', 0, 0],
+            ['foo', 1, 0],
+            [' foo', 0, 1],
+            [' foo', 1, 0],
+            ['  foo', 0, 2],
+            ['  foo', 1, 1],
+            ['  foo', 2, 0],
+            ['  foo', 3, 0],
+            ['тест', 0, 0],
+            ['тест', 1, 0],
+            [' тест', 0, 1],
+            [' тест', 1, 0],
+        ];
     }
 
     /**
@@ -120,20 +120,20 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForGetCharacterTest()
     {
-        return array(
-            array('', null, ''),
-            array('', 0, ''),
-            array('', 1, ''),
-            array('foo', null, 'f'),
-            array('foo', 0, 'f'),
-            array('foo', 1, 'o'),
-            array(' тест ', 0, ' '),
-            array(' тест ', 1, 'т'),
-            array(' тест ', 2, 'е'),
-            array(' тест ', 3, 'с'),
-            array(' тест ', 4, 'т'),
-            array(' тест ', 5, ' '),
-        );
+        return [
+            ['', null, ''],
+            ['', 0, ''],
+            ['', 1, ''],
+            ['foo', null, 'f'],
+            ['foo', 0, 'f'],
+            ['foo', 1, 'o'],
+            [' тест ', 0, ' '],
+            [' тест ', 1, 'т'],
+            [' тест ', 2, 'е'],
+            [' тест ', 3, 'с'],
+            [' тест ', 4, 'т'],
+            [' тест ', 5, ' '],
+        ];
     }
 
     /**
@@ -153,14 +153,14 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForPeekTest()
     {
-        return array(
-            array('', 0, ''),
-            array(' ', 0, ''),
-            array('', 99, ''),
-            array('foo', 0, 'o'),
-            array('bar', 1, 'r'),
-            array('тест ', 1, 'с'),
-        );
+        return [
+            ['', 0, ''],
+            [' ', 0, ''],
+            ['', 99, ''],
+            ['foo', 0, 'o'],
+            ['bar', 1, 'r'],
+            ['тест ', 1, 'с'],
+        ];
     }
 
     /**
@@ -178,14 +178,14 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForIsLineBlankTest()
     {
-        return array(
-            array('', true),
-            array(' ', true),
-            array('      ', true),
-            array('foo', false),
-            array('   foo', false),
-            array('тест', false),
-        );
+        return [
+            ['', true],
+            [' ', true],
+            ['      ', true],
+            ['foo', false],
+            ['   foo', false],
+            ['тест', false],
+        ];
     }
 
     /**
@@ -207,22 +207,22 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForAdvanceTest()
     {
-        return array(
-            array('', 0, 0),
-            array('', 1, 0),
-            array('', 99, 0),
-            array('foo', 0, 0),
-            array('foo', 1, 1),
-            array('foo', 2, 2),
-            array('foo', 3, 3),
-            array('foo', 9, 3),
-            array('тест', 0, 0),
-            array('тест', 1, 1),
-            array('тест', 2, 2),
-            array('тест', 3, 3),
-            array('тест', 4, 4),
-            array('тест', 9, 4),
-        );
+        return [
+            ['', 0, 0],
+            ['', 1, 0],
+            ['', 99, 0],
+            ['foo', 0, 0],
+            ['foo', 1, 1],
+            ['foo', 2, 2],
+            ['foo', 3, 3],
+            ['foo', 9, 3],
+            ['тест', 0, 0],
+            ['тест', 1, 1],
+            ['тест', 2, 2],
+            ['тест', 3, 3],
+            ['тест', 4, 4],
+            ['тест', 9, 4],
+        ];
     }
 
     /**
@@ -242,22 +242,22 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForAdvanceTestBy()
     {
-        return array(
-            array('', 0, 0),
-            array('', 1, 0),
-            array('', 99, 0),
-            array('foo', 0, 0),
-            array('foo', 1, 1),
-            array('foo', 2, 2),
-            array('foo', 3, 3),
-            array('foo', 9, 3),
-            array('тест', 0, 0),
-            array('тест', 1, 1),
-            array('тест', 2, 2),
-            array('тест', 3, 3),
-            array('тест', 4, 4),
-            array('тест', 9, 4),
-        );
+        return [
+            ['', 0, 0],
+            ['', 1, 0],
+            ['', 99, 0],
+            ['foo', 0, 0],
+            ['foo', 1, 1],
+            ['foo', 2, 2],
+            ['foo', 3, 3],
+            ['foo', 9, 3],
+            ['тест', 0, 0],
+            ['тест', 1, 1],
+            ['тест', 2, 2],
+            ['тест', 3, 3],
+            ['тест', 4, 4],
+            ['тест', 9, 4],
+        ];
     }
 
     public function testAdvanceByZero()
@@ -288,23 +288,23 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForAdvanceWhileMatchesTest()
     {
-        return array(
-            array(' ', 0, ' ', null, 1),
-            array('foo', 0, 'o', null, 0),
-            array('foo', 1, 'o', null, 2),
-            array('foo', 1, 'o', 0, 0),
-            array('foo', 1, 'o', 1, 1),
-            array('foo', 1, 'o', 2, 2),
-            array('foo', 1, 'o', 3, 2),
-            array('foo', 1, 'o', 99, 2),
-            array('Россия', 0, 'Р', null, 1),
-            array('Россия', 1, 'Р', null, 0),
-            array('Россия', 2, 'с', null, 2),
-            array('Россия', 2, 'с', 0, 0),
-            array('Россия', 2, 'с', 1, 1),
-            array('Россия', 2, 'с', 2, 2),
-            array('Россия', 2, 'с', 3, 2),
-        );
+        return [
+            [' ', 0, ' ', null, 1],
+            ['foo', 0, 'o', null, 0],
+            ['foo', 1, 'o', null, 2],
+            ['foo', 1, 'o', 0, 0],
+            ['foo', 1, 'o', 1, 1],
+            ['foo', 1, 'o', 2, 2],
+            ['foo', 1, 'o', 3, 2],
+            ['foo', 1, 'o', 99, 2],
+            ['Россия', 0, 'Р', null, 1],
+            ['Россия', 1, 'Р', null, 0],
+            ['Россия', 2, 'с', null, 2],
+            ['Россия', 2, 'с', 0, 0],
+            ['Россия', 2, 'с', 1, 1],
+            ['Россия', 2, 'с', 2, 2],
+            ['Россия', 2, 'с', 3, 2],
+        ];
     }
 
     /**
@@ -324,25 +324,25 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForAdvanceToFirstNonSpaceTest()
     {
-        return array(
-            array('', 0, 0),
-            array(' ', 0, 1),
-            array(' ', 1, 0),
-            array('  ', 0, 2),
-            array('  ', 1, 1),
-            array('  ', 2, 0),
-            array('foo bar', 0, 0),
-            array('foo bar', 3, 1),
-            array('foo bar', 4, 0),
-            array('это тест', 0, 0),
-            array('это тест', 3, 1),
-            array('это тест', 4, 0),
-            array("  \n  \n  ", 0, 5),
-            array("  \n  \n  ", 1, 4),
-            array("  \n  \n  ", 2, 3),
-            array("  \n  \n  ", 3, 5),
-            array("  \n  \n  ", 4, 4),
-        );
+        return [
+            ['', 0, 0],
+            [' ', 0, 1],
+            [' ', 1, 0],
+            ['  ', 0, 2],
+            ['  ', 1, 1],
+            ['  ', 2, 0],
+            ['foo bar', 0, 0],
+            ['foo bar', 3, 1],
+            ['foo bar', 4, 0],
+            ['это тест', 0, 0],
+            ['это тест', 3, 1],
+            ['это тест', 4, 0],
+            ["  \n  \n  ", 0, 5],
+            ["  \n  \n  ", 1, 4],
+            ["  \n  \n  ", 2, 3],
+            ["  \n  \n  ", 3, 5],
+            ["  \n  \n  ", 4, 4],
+        ];
     }
 
     /**
@@ -362,15 +362,15 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForGetRemainderTest()
     {
-        return array(
-            array('', null, ''),
-            array(' ', 0, ' '),
-            array('  ', 0, '  '),
-            array('  ', 1, ' '),
-            array('foo bar', 0, 'foo bar'),
-            array('foo bar', 2, 'o bar'),
-            array('это тест', 1, 'то тест'),
-        );
+        return [
+            ['', null, ''],
+            [' ', 0, ' '],
+            ['  ', 0, '  '],
+            ['  ', 1, ' '],
+            ['foo bar', 0, 'foo bar'],
+            ['foo bar', 2, 'o bar'],
+            ['это тест', 1, 'то тест'],
+        ];
     }
 
     /**
@@ -394,15 +394,15 @@ class CursorTest extends \PHPUnit_Framework_TestCase
 
     public function dataForIsAtEndTest()
     {
-        return array(
-            array('', false, true),
-            array(' ', 0, false),
-            array(' ', null, true),
-            array(' ', 1, true),
-            array('foo', 2, false),
-            array('foo', 3, true),
-            array('тест', 4, true),
-        );
+        return [
+            ['', false, true],
+            [' ', 0, false],
+            [' ', null, true],
+            [' ', 1, true],
+            ['foo', 2, false],
+            ['foo', 3, true],
+            ['тест', 4, true],
+        ];
     }
 
     /**
@@ -430,14 +430,14 @@ class CursorTest extends \PHPUnit_Framework_TestCase
      */
     public function dataForTestMatch()
     {
-        return array(
-            array('this is a test', '/[aeiou]s/', 0, 4, 'is'),
-            array('this is a test', '/[aeiou]s/', 2, 4, 'is'),
-            array('this is a test', '/[aeiou]s/', 3, 7, 'is'),
-            array('this is a test', '/[aeiou]s/', 9, 13, 'es'),
-            array('Это тест', '/т/u', 0, 2, 'т'),
-            array('Это тест', '/т/u', 1, 2, 'т'),
-            array('Это тест', '/т/u', 2, 5, 'т'),
-        );
+        return [
+            ['this is a test', '/[aeiou]s/', 0, 4, 'is'],
+            ['this is a test', '/[aeiou]s/', 2, 4, 'is'],
+            ['this is a test', '/[aeiou]s/', 3, 7, 'is'],
+            ['this is a test', '/[aeiou]s/', 9, 13, 'es'],
+            ['Это тест', '/т/u', 0, 2, 'т'],
+            ['Это тест', '/т/u', 1, 2, 'т'],
+            ['Это тест', '/т/u', 2, 5, 'т'],
+        ];
     }
 }

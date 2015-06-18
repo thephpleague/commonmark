@@ -24,7 +24,7 @@ class CommonMarkConverter extends Converter
      *
      * @param array $config
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->mergeConfig($config);

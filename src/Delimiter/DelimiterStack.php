@@ -102,7 +102,7 @@ class DelimiterStack
     public function searchByCharacter($characters)
     {
         if (!is_array($characters)) {
-            $characters = array($characters);
+            $characters = [$characters];
         }
 
         $opener = $this->top;
@@ -124,7 +124,7 @@ class DelimiterStack
     public function iterateByCharacters($characters, $callback, Delimiter $stackBottom = null)
     {
         if (!is_array($characters)) {
-            $characters = array($characters);
+            $characters = [$characters];
         }
 
         // Find first closer above stackBottom

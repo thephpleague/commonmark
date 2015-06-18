@@ -16,7 +16,7 @@ namespace League\CommonMark\Util;
 
 class UrlEncoder
 {
-    protected static $dontEncode = array(
+    protected static $dontEncode = [
         '%21' => '!',
         '%23' => '#',
         '%24' => '$',
@@ -37,7 +37,7 @@ class UrlEncoder
         '%40' => '@',
         '%5F' => '_',
         '%7E' => '~'
-    );
+    ];
 
     /**
      * @param string $uri

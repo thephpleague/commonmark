@@ -27,7 +27,7 @@ class CommonMarkCoreExtension extends Extension
      */
     public function getBlockParsers()
     {
-        return array(
+        return [
             // This order is important
             new BlockParser\BlockQuoteParser(),
             new BlockParser\ATXHeaderParser(),
@@ -38,7 +38,7 @@ class CommonMarkCoreExtension extends Extension
             new BlockParser\ListParser(),
             new BlockParser\IndentedCodeParser(),
             new BlockParser\LazyParagraphParser(),
-        );
+        ];
     }
 
     /**
@@ -46,7 +46,7 @@ class CommonMarkCoreExtension extends Extension
      */
     public function getBlockRenderers()
     {
-        return array(
+        return [
             'League\CommonMark\Block\Element\BlockQuote'          => new BlockRenderer\BlockQuoteRenderer(),
             'League\CommonMark\Block\Element\Document'            => new BlockRenderer\DocumentRenderer(),
             'League\CommonMark\Block\Element\FencedCode'          => new BlockRenderer\FencedCodeRenderer(),
@@ -57,7 +57,7 @@ class CommonMarkCoreExtension extends Extension
             'League\CommonMark\Block\Element\ListBlock'           => new BlockRenderer\ListBlockRenderer(),
             'League\CommonMark\Block\Element\ListItem'            => new BlockRenderer\ListItemRenderer(),
             'League\CommonMark\Block\Element\Paragraph'           => new BlockRenderer\ParagraphRenderer(),
-        );
+        ];
     }
 
     /**
@@ -65,7 +65,7 @@ class CommonMarkCoreExtension extends Extension
      */
     public function getInlineParsers()
     {
-        return array(
+        return [
             new InlineParser\NewlineParser(),
             new InlineParser\BacktickParser(),
             new InlineParser\EscapableParser(),
@@ -76,7 +76,7 @@ class CommonMarkCoreExtension extends Extension
             new InlineParser\CloseBracketParser(),
             new InlineParser\OpenBracketParser(),
             new InlineParser\BangParser(),
-        );
+        ];
     }
 
     /**
@@ -84,9 +84,9 @@ class CommonMarkCoreExtension extends Extension
      */
     public function getInlineProcessors()
     {
-        return array(
+        return [
             new InlineProcessor\EmphasisProcessor()
-        );
+        ];
     }
 
     /**
@@ -94,7 +94,7 @@ class CommonMarkCoreExtension extends Extension
      */
     public function getInlineRenderers()
     {
-        return array(
+        return [
             'League\CommonMark\Inline\Element\Code'     => new InlineRenderer\CodeRenderer(),
             'League\CommonMark\Inline\Element\Emphasis' => new InlineRenderer\EmphasisRenderer(),
             'League\CommonMark\Inline\Element\Html'     => new InlineRenderer\RawHtmlRenderer(),
@@ -103,7 +103,7 @@ class CommonMarkCoreExtension extends Extension
             'League\CommonMark\Inline\Element\Newline'  => new InlineRenderer\NewlineRenderer(),
             'League\CommonMark\Inline\Element\Strong'   => new InlineRenderer\StrongRenderer(),
             'League\CommonMark\Inline\Element\Text'     => new InlineRenderer\TextRenderer(),
-        );
+        ];
     }
 
     /**

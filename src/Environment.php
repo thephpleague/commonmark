@@ -29,7 +29,7 @@ class Environment
     /**
      * @var ExtensionInterface[]
      */
-    protected $extensions = array();
+    protected $extensions = [];
 
     /**
      * @var MiscExtension
@@ -44,32 +44,32 @@ class Environment
     /**
      * @var BlockParserInterface[]
      */
-    protected $blockParsers = array();
+    protected $blockParsers = [];
 
     /**
      * @var BlockRendererInterface[]
      */
-    protected $blockRenderersByClass = array();
+    protected $blockRenderersByClass = [];
 
     /**
      * @var InlineParserInterface[]
      */
-    protected $inlineParsers = array();
+    protected $inlineParsers = [];
 
     /**
      * @var array
      */
-    protected $inlineParsersByCharacter = array();
+    protected $inlineParsersByCharacter = [];
 
     /**
      * @var InlineProcessorInterface[]
      */
-    protected $inlineProcessors = array();
+    protected $inlineProcessors = [];
 
     /**
      * @var InlineRendererInterface[]
      */
-    protected $inlineRenderersByClass = array();
+    protected $inlineRenderersByClass = [];
 
     /**
      * @var Configuration
@@ -81,7 +81,7 @@ class Environment
      */
     protected $inlineParserCharacterRegex;
 
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         $this->miscExtension = new MiscExtension();
         $this->config = new Configuration($config);
@@ -90,7 +90,7 @@ class Environment
     /**
      * @param array $config
      */
-    public function mergeConfig(array $config = array())
+    public function mergeConfig(array $config = [])
     {
         $this->assertUninitialized('Failed to modify configuration - extensions have already been initialized');
 
@@ -100,7 +100,7 @@ class Environment
     /**
      * @param array $config
      */
-    public function setConfig(array $config = array())
+    public function setConfig(array $config = [])
     {
         $this->assertUninitialized('Failed to modify configuration - extensions have already been initialized');
 
@@ -416,13 +416,13 @@ class Environment
     {
         $environment = new static();
         $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->mergeConfig(array(
-            'renderer' => array(
+        $environment->mergeConfig([
+            'renderer' => [
                 'block_separator' => "\n",
                 'inner_separator' => "\n",
                 'soft_break' => "\n",
-            )
-        ));
+            ]
+        ]);
 
         return $environment;
     }

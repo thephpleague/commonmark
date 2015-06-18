@@ -29,7 +29,7 @@ class AutolinkParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return array('<');
+        return ['<'];
     }
 
     /**

@@ -18,7 +18,7 @@ use Michelf\MarkdownExtra;
 
 $markdown = file_get_contents(__DIR__ . '/' . 'sample.md');
 
-$parsers = array(
+$parsers = [
     'CommonMark' => function ($markdown) {
         $parser = new CommonMarkConverter();
         $parser->convertToHtml($markdown);
@@ -33,10 +33,10 @@ $parsers = array(
         $parser = new Parsedown();
         $parser->text($markdown);
     }
-);
+];
 
 $iterations = 20;
-$results = array();
+$results = [];
 foreach ($parsers as $name => $parser) {
     $start = microtime(true);
     for ($i = 0; $i <= $iterations; $i++) {

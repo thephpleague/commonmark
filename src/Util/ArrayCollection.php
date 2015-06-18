@@ -27,7 +27,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * Constructor
      * @param array $elements
      */
-    public function __construct(array $elements = array())
+    public function __construct(array $elements = [])
     {
         $this->elements = $elements;
     }

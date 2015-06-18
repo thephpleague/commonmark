@@ -21,59 +21,59 @@ class MiscExtensionTest extends \PHPUnit_Framework_TestCase
     public function testBlockParsers()
     {
         $extension = new MiscExtension();
-        $this->assertEquals(array(), $extension->getBlockParsers());
+        $this->assertEquals([], $extension->getBlockParsers());
 
         $parser = $this->getMockForAbstractClass('League\CommonMark\Block\Parser\BlockParserInterface');
         $extension->addBlockParser($parser);
-        $this->assertEquals(array($parser), $extension->getBlockParsers());
+        $this->assertEquals([$parser], $extension->getBlockParsers());
     }
 
     public function testBlockRenderers()
     {
         $extension = new MiscExtension();
-        $this->assertEquals(array(), $extension->getBlockRenderers());
+        $this->assertEquals([], $extension->getBlockRenderers());
 
         $renderer = $this->getMockForAbstractClass('League\CommonMark\Block\Renderer\BlockRendererInterface');
         $extension->addBlockRenderer('foo', $renderer);
-        $this->assertEquals(array('foo' => $renderer), $extension->getBlockRenderers());
+        $this->assertEquals(['foo' => $renderer], $extension->getBlockRenderers());
 
         $renderer2 = $this->getMockForAbstractClass('League\CommonMark\Block\Renderer\BlockRendererInterface');
         $extension->addBlockRenderer('foo', $renderer2);
-        $this->assertEquals(array('foo' => $renderer2), $extension->getBlockRenderers());
+        $this->assertEquals(['foo' => $renderer2], $extension->getBlockRenderers());
     }
 
     public function testInlineParsers()
     {
         $extension = new MiscExtension();
-        $this->assertEquals(array(), $extension->getInlineParsers());
+        $this->assertEquals([], $extension->getInlineParsers());
 
         $parser = $this->getMockForAbstractClass('League\CommonMark\Inline\Parser\InlineParserInterface');
         $extension->addInlineParser($parser);
-        $this->assertEquals(array($parser), $extension->getInlineParsers());
+        $this->assertEquals([$parser], $extension->getInlineParsers());
     }
 
     public function testInlineProcessors()
     {
         $extension = new MiscExtension();
-        $this->assertEquals(array(), $extension->getInlineProcessors());
+        $this->assertEquals([], $extension->getInlineProcessors());
 
         $parser = $this->getMockForAbstractClass('League\CommonMark\Inline\Processor\InlineProcessorInterface');
         $extension->addInlineProcessor($parser);
-        $this->assertEquals(array($parser), $extension->getInlineProcessors());
+        $this->assertEquals([$parser], $extension->getInlineProcessors());
     }
 
     public function testInlineRenderers()
     {
         $extension = new MiscExtension();
-        $this->assertEquals(array(), $extension->getInlineRenderers());
+        $this->assertEquals([], $extension->getInlineRenderers());
 
         $renderer = $this->getMockForAbstractClass('League\CommonMark\Inline\Renderer\InlineRendererInterface');
         $extension->addInlineRenderer('foo', $renderer);
-        $this->assertEquals(array('foo' => $renderer), $extension->getInlineRenderers());
+        $this->assertEquals(['foo' => $renderer], $extension->getInlineRenderers());
 
         $renderer2 = $this->getMockForAbstractClass('League\CommonMark\Inline\Renderer\InlineRendererInterface');
         $extension->addInlineRenderer('foo', $renderer2);
-        $this->assertEquals(array('foo' => $renderer2), $extension->getInlineRenderers());
+        $this->assertEquals(['foo' => $renderer2], $extension->getInlineRenderers());
     }
 
     public function testGetName()

@@ -38,19 +38,19 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
-        $config = array('foo' => 'bar');
+        $config = ['foo' => 'bar'];
         $environment = new Environment($config);
         $this->assertEquals('bar', $environment->getConfig('foo'));
     }
 
     public function testGetConfig()
     {
-        $config = array(
+        $config = [
             'foo' => 'bar',
-            'a' => array(
+            'a' => [
                 'b' => 'c'
-            )
-        );
+            ]
+        ];
         $environment = new Environment($config);
 
         // No arguments should return the whole thing
@@ -77,8 +77,8 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
     public function testSetConfig()
     {
-        $environment = new Environment(array('foo' => 'bar'));
-        $environment->setConfig(array('test' => '123'));
+        $environment = new Environment(['foo' => 'bar']);
+        $environment->setConfig(['test' => '123']);
         $this->assertNull($environment->getConfig('foo'));
         $this->assertEquals('123', $environment->getConfig('test'));
     }
@@ -90,13 +90,13 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $environment = new Environment();
         // This triggers the initialization
         $environment->getBlockParsers();
-        $environment->setConfig(array('foo' => 'bar'));
+        $environment->setConfig(['foo' => 'bar']);
     }
 
     public function testMergeConfig()
     {
-        $environment = new Environment(array('foo' => 'bar', 'test' => '123'));
-        $environment->mergeConfig(array('test' => '456'));
+        $environment = new Environment(['foo' => 'bar', 'test' => '123']);
+        $environment->mergeConfig(['test' => '456']);
         $this->assertEquals('bar', $environment->getConfig('foo'));
         $this->assertEquals('456', $environment->getConfig('test'));
     }
@@ -108,7 +108,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $environment = new Environment();
         // This triggers the initialization
         $environment->getBlockParsers();
-        $environment->mergeConfig(array('foo' => 'bar'));
+        $environment->mergeConfig(['foo' => 'bar']);
     }
 
     public function testAddBlockParserAndGetter()

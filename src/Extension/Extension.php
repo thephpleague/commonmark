@@ -27,7 +27,7 @@ abstract class Extension implements ExtensionInterface
      */
     public function getBlockParsers()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -35,7 +35,7 @@ abstract class Extension implements ExtensionInterface
      */
     public function getBlockRenderers()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class Extension implements ExtensionInterface
      */
     public function getInlineParsers()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -51,7 +51,7 @@ abstract class Extension implements ExtensionInterface
      */
     public function getInlineProcessors()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -59,6 +59,6 @@ abstract class Extension implements ExtensionInterface
      */
     public function getInlineRenderers()
     {
-        return array();
+        return [];
     }
 }
