@@ -49,6 +49,7 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('ol', $result->getTagName());
         $this->assertSame($expectedAttributeValue, $result->getAttribute('start'));
         $this->assertContains('::blocks::', $result->getContents(true));
+        $this->assertEquals('::escape::id', $result->getAttribute('id'));
     }
 
     public function dataForTestOrderedListStartingNumber()
@@ -72,6 +73,7 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('ul', $result->getTagName());
         $this->assertContains('::blocks::', $result->getContents(true));
+        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
     }
 
     /**
@@ -96,7 +98,10 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
         $data->type = ListBlock::TYPE_ORDERED;
         $data->start = $start;
 
-        return new ListBlock($data);
+        $block = new ListBlock($data);
+        $block->data['attributes'] = ['id' => 'id'];
+
+        return $block;
     }
 
     /**
@@ -107,6 +112,9 @@ class ListBlockRendererTest extends \PHPUnit_Framework_TestCase
         $data = new ListData();
         $data->type = ListBlock::TYPE_UNORDERED;
 
-        return new ListBlock($data);
+        $block = new ListBlock($data);
+        $block->data['attributes'] = ['id' => 'id'];
+
+        return $block;
     }
 }

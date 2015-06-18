@@ -42,7 +42,12 @@ class ListItemRenderer implements BlockRendererInterface
             $contents .= "\n";
         }
 
-        $li = new HtmlElement('li', array(), $contents);
+        $attrs = array();
+        foreach ((array) $block->getData('attributes', array()) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
+        $li = new HtmlElement('li', $attrs, $contents);
 
         return trim($li);
     }

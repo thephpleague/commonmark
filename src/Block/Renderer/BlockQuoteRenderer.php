@@ -34,14 +34,19 @@ class BlockQuoteRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
+        $attrs = array();
+        foreach ((array) $block->getData('attributes', array()) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
         $filling = $htmlRenderer->renderBlocks($block->getChildren());
         if ($filling === '') {
-            return new HtmlElement('blockquote', array(), $htmlRenderer->getOption('inner_separator', "\n"));
+            return new HtmlElement('blockquote', $attrs, $htmlRenderer->getOption('inner_separator', "\n"));
         }
 
         return new HtmlElement(
             'blockquote',
-            array(),
+            $attrs,
             $htmlRenderer->getOption('inner_separator', "\n") . $filling . $htmlRenderer->getOption('inner_separator', "\n")
         );
     }

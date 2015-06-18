@@ -34,6 +34,7 @@ class StrongRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $inline = new Strong();
+        $inline->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -41,6 +42,7 @@ class StrongRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('strong', $result->getTagName());
         $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
     }
 
     /**

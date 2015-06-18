@@ -34,6 +34,7 @@ class CodeRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $inline = new Code('echo "hello world";');
+        $inline->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -41,6 +42,7 @@ class CodeRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('code', $result->getTagName());
         $this->assertContains('echo "hello world";', $result->getContents(true));
+        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
     }
 
     /**

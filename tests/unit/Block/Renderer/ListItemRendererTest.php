@@ -34,12 +34,13 @@ class ListItemRendererTest extends \PHPUnit_Framework_TestCase
     public function testRenderUnorderedList()
     {
         $block = new ListItem(new ListData());
+        $block->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertInternalType('string', $result);
-        $this->assertContains('<li>::blocks::</li>', $result);
+        $this->assertContains('<li id="::escape::id">::blocks::</li>', $result);
     }
 
     /**

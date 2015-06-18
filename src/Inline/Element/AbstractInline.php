@@ -22,4 +22,9 @@ abstract class AbstractInline
      * Used for storage of arbitrary data
      */
     public $data = array();
+
+    public function getData($name, $default = null)
+    {
+        return array_key_exists($name, $this->data) ? $this->data[$name] : $default;
+    }
 }
