@@ -32,11 +32,9 @@ class Link extends AbstractWebResource
         }
 
         if (is_string($label)) {
-            $this->children = new ArrayCollection([new Text($label)]);
-        } elseif (is_null($label)) {
-            $this->children = new ArrayCollection();
-        } else {
-            $this->children = $label;
+            $this->setChildren(new ArrayCollection([new Text($label)]));
+        } elseif (null !== $label) {
+            $this->setChildren($label);
         }
 
         if (!empty($title)) {

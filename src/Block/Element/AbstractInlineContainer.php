@@ -54,6 +54,10 @@ abstract class AbstractInlineContainer extends AbstractBlock
             throw new \InvalidArgumentException();
         }
 
+        foreach ($this->inlines as $inline) {
+            $inline->setParent($this);
+        }
+
         return $this;
     }
 }
