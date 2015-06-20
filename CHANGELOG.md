@@ -5,6 +5,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased][unreleased]
 ### Fixed
  - Fixed link reference definition edge case (#120)
+ - Allow literal (non-escaping) backslashes in link destinations (#118)
+ - Allow backslash-escaped backslashes in link labels (#119)
+ - Allow link labels up to 999 characters (per the spec)
 
 ## [0.9.0] - 2015-06-18
 ### Added
