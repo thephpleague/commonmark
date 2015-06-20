@@ -90,7 +90,23 @@ class ReferenceParser
         }
 
         // Make sure we're at line end:
+        $atLineEnd = true;
         if ($cursor->match('/^ *(?:\n|$)/') === null) {
+            if ($title === '') {
+                $atLineEnd = false;
+            } else {
+                // The potential title we found is not at the line end,
+                // but it could still be a legal link reference if we
+                // discard the title
+                $title = '';
+                // rewind before spaces
+                $cursor->restoreState($previousState);
+                // and instead check if the link URL is at the line end
+                $atLineEnd = $cursor->match('/^ *(?:\n|$)/') !== null;
+            }
+        }
+
+        if (!$atLineEnd) {
             $cursor->restoreState($initialState);
 
             return false;
