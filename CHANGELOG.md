@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Fixed
+ - Fixed link reference definition edge case (#120)
 
 ## [0.9.0] - 2015-06-18
 ### Added
