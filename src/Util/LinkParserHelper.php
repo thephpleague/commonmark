@@ -53,7 +53,8 @@ class LinkParserHelper
      */
     public static function parseLinkLabel(Cursor $cursor)
     {
-        $match = $cursor->match('/^\[(?:[^\\\\\[\]]|\\\\[\[\]]){0,750}\]/');
+        $escapedChar = RegexHelper::getInstance()->getPartialRegex(RegexHelper::ESCAPED_CHAR);
+        $match = $cursor->match('/^\[(?:[^\\\\\[\]]|' . $escapedChar . '|\\\\){0,750}\]/');
 
         return $match === null ? 0 : mb_strlen($match, 'utf-8');
     }
