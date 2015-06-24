@@ -21,15 +21,11 @@ class TableRenderer implements BlockRendererInterface
     public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof Table)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+            throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
         }
 
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 
-        return new HtmlElement(
-            'table',
-            array(),
-            $separator . $htmlRenderer->renderBlocks($block->getChildren()) . $separator
-        );
+        return new HtmlElement('table', [], $separator.$htmlRenderer->renderBlocks($block->getChildren()).$separator);
     }
 }

@@ -17,19 +17,19 @@ class TableExtension extends Extension
 {
     public function getBlockParsers()
     {
-        return array(
+        return [
             new TableParser(),
-        );
+        ];
     }
 
     public function getBlockRenderers()
     {
-        return array(
-            __NAMESPACE__.'\\Table' => new TableRenderer(),
+        return [
+            __NAMESPACE__.'\\Table'     => new TableRenderer(),
             __NAMESPACE__.'\\TableRows' => new TableRowsRenderer(),
-            __NAMESPACE__.'\\TableRow' => new TableRowRenderer(),
+            __NAMESPACE__.'\\TableRow'  => new TableRowRenderer(),
             __NAMESPACE__.'\\TableCell' => new TableCellRenderer(),
-        );
+        ];
     }
 
     public function getName()

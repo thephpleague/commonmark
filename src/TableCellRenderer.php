@@ -21,13 +21,9 @@ class TableCellRenderer implements BlockRendererInterface
     public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof TableCell)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+            throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
         }
 
-        return new HtmlElement(
-            $block->type,
-            null === $block->align ? array() : array('align' => $block->align),
-            $htmlRenderer->renderInlines($block->getInlines())
-        );
+        return new HtmlElement($block->type, null === $block->align ? [] : ['align' => $block->align], $htmlRenderer->renderInlines($block->getInlines()));
     }
 }

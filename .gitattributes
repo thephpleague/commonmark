@@ -1,5 +1,6 @@
-/tests export-ignore
-/.formatter.yml export-ignore
 /.gitattributes export-ignore
 /.gitignore export-ignore
+/.php_cs export-ignore
+/.php_cs.cache export-ignore
 /phpunit.xml.dist export-ignore
+/tests export-ignore

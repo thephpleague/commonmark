@@ -21,7 +21,7 @@ class TableRowsRenderer implements BlockRendererInterface
     public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof TableRows)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+            throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
         }
 
         if (!$block->hasChildren()) {
@@ -30,10 +30,6 @@ class TableRowsRenderer implements BlockRendererInterface
 
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 
-        return new HtmlElement(
-            $block->type,
-            array(),
-            $separator . $htmlRenderer->renderBlocks($block->getChildren()) . $separator
-        );
+        return new HtmlElement($block->type, [], $separator.$htmlRenderer->renderBlocks($block->getChildren()).$separator);
     }
 }

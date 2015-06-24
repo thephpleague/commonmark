@@ -76,7 +76,7 @@ class TableParser extends AbstractBlockParser
 
     private function parseColumns(array $match)
     {
-        $columns = array();
+        $columns = [];
         foreach ((array) $match[0] as $i => $column) {
             if (isset($match[1][$i]) && $match[1][$i] && isset($match[2][$i]) && $match[2][$i]) {
                 $columns[] = TableCell::ALIGN_CENTER;
@@ -96,7 +96,7 @@ class TableParser extends AbstractBlockParser
     {
         $cells = RegexHelper::matchAll(self::REGEXP_CELLS, $line);
         if (null === $cells || !is_array($cells[0])) {
-            return null;
+            return;
         }
 
         $row = new TableRow();
@@ -104,7 +104,7 @@ class TableParser extends AbstractBlockParser
             $row->addChild(new TableCell(trim($cell), $type, isset($columns[$i]) ? $columns[$i] : null));
         }
 
-        for ($j = count($columns) - 1; $j > $i; $j--) {
+        for ($j = count($columns) - 1; $j > $i; --$j) {
             $row->addChild(new TableCell('', $type, null));
         }
 
