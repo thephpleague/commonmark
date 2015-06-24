@@ -13,11 +13,10 @@
         }
     ],
     "require": {
-        "league/commonmark": ">=0.7"
+        "league/commonmark": ">=0.9"
     },
     "require-dev": {
-        "league/commonmark": "@dev",
-        "phpunit/phpunit": "~4.3"
+        "phpunit/phpunit": "^4.3"
     },
     "autoload": {
         "psr-4": {

@@ -14,6 +14,7 @@ Usage
 -----
 
 ```php
+use League\CommonMark\Converter;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
@@ -22,14 +23,9 @@ use Webuni\CommonMark\TableExtension\TableExtension;
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new TableExtension());
 
-$parser = new DocParser($environment);
-$renderer = new HtmlRenderer($environment);
+$converter = new Converter(new DocParser($environment), new HtmlRenderer($environment));
 
-// Here's our sample input
-$markdown = '# Hello World!';
-
-$documentAST = $parser->parse($markdown);
-echo $renderer->renderBlock($documentAST);
+echo $converter->convertToHtml('# Hello World!');
 ```
 
 Syntax

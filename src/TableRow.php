@@ -17,9 +17,6 @@ use League\CommonMark\Cursor;
 
 class TableRow extends AbstractBlock
 {
-    const REGEXP_DEFINITION = '/(?: *(:?) *-+ *(:?) *)+(?=\||$)/';
-    const REGEXP_CELLS = '/(?:`[^`]*`|\\\\\\\\|\\\\\||[^|`\\\\]+|`)+(?=\||$)/';
-
     public function canContain(AbstractBlock $block)
     {
         return $block instanceof TableCell;

@@ -19,23 +19,63 @@ use League\CommonMark\Util\RegexHelper;
 
 class TableParser extends AbstractBlockParser
 {
+    const REGEXP_DEFINITION = '/(?: *(:?) *-+ *(:?) *)+(?=\||$)/';
+    const REGEXP_CELLS = '/(?:`[^`]*`|\\\\\\\\|\\\\\||[^|`\\\\]+)+(?=\||$)/';
+
     public function parse(ContextInterface $context, Cursor $cursor)
     {
         $container = $context->getContainer();
+
         if (!$container instanceof Paragraph) {
             return false;
         }
 
-        $lines = $context->getContainer()->getStrings();
+        $lines = $container->getStrings();
         if (count($lines) < 1) {
             return false;
         }
 
-        $match = RegexHelper::matchAll(TableRow::REGEXP_DEFINITION, $cursor->getLine(), $cursor->getFirstNonSpacePosition());
-        if ($match === null) {
+        $match = RegexHelper::matchAll(self::REGEXP_DEFINITION, $cursor->getLine(), $cursor->getFirstNonSpacePosition());
+        if (null === $match) {
             return false;
         }
 
+        $columns = $this->parseColumns($match);
+        $row = $this->parseRow(trim(array_pop($lines)), $columns, TableCell::TYPE_HEAD);
+        if (null === $row) {
+            return false;
+        }
+
+        $table = new Table(function (Cursor $cursor) use (&$table, $columns) {
+            $row = $this->parseRow($cursor->getLine(), $columns);
+            if (null === $row) {
+                return false;
+            }
+
+            $table->getBody()->addChild($row);
+
+            return true;
+        });
+
+        $table->getHead()->addChild($row);
+
+        if (count($lines) >= 1) {
+            $paragraph = new Paragraph();
+            foreach ($lines as $line) {
+                $paragraph->addLine($line);
+            }
+
+            $context->replaceContainerBlock($paragraph);
+            $context->addBlock($table);
+        } else {
+            $context->replaceContainerBlock($table);
+        }
+
+        return true;
+    }
+
+    private function parseColumns(array $match)
+    {
         $columns = array();
         foreach ((array) $match[0] as $i => $column) {
             if (isset($match[1][$i]) && $match[1][$i] && isset($match[2][$i]) && $match[2][$i]) {
@@ -49,41 +89,25 @@ class TableParser extends AbstractBlockParser
             }
         }
 
-        $table = new Table($columns);
-        $table->addLine(trim(array_pop($lines)));
+        return $columns;
+    }
 
-        if (count($lines) >= 1) {
-            $paragraph = new Paragraph();
-            foreach ($lines as $line) {
-                $paragraph->addLine($line);
-            }
-
-            $context->replaceContainerBlock($paragraph);
-            $container->addChild($table);
-        } else {
-            $context->replaceContainerBlock($table);
+    private function parseRow($line, array $columns, $type = TableCell::TYPE_BODY)
+    {
+        $cells = RegexHelper::matchAll(self::REGEXP_CELLS, $line);
+        if (null === $cells || !is_array($cells[0])) {
+            return null;
         }
 
-        return true;
+        $row = new TableRow();
+        foreach ($cells[0] as $i => $cell) {
+            $row->addChild(new TableCell(trim($cell), $type, isset($columns[$i]) ? $columns[$i] : null));
+        }
+
+        for ($j = count($columns) - 1; $j > $i; $j--) {
+            $row->addChild(new TableCell('', $type, null));
+        }
+
+        return $row;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
