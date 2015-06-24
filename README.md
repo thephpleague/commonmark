@@ -1,6 +1,8 @@
 CommonMark Table Extension
 ==========================
 
+[![Build Status](https://img.shields.io/travis/webuni/commonmark-table-extension.svg?style=flat-square)](https://travis-ci.org/webuni/commonmark-table-extension)
+
 The Table extension adds the ability to create tables in CommonMark documents.
 
 Installation

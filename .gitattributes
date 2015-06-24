@@ -2,5 +2,6 @@
 /.gitignore export-ignore
 /.php_cs export-ignore
 /.php_cs.cache export-ignore
+/.travis.yml export-ignore
 /phpunit.xml.dist export-ignore
 /tests export-ignore
