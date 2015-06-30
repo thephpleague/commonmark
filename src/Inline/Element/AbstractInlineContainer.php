@@ -26,7 +26,7 @@ abstract class AbstractInlineContainer extends AbstractInline
      */
     public function __construct(array $contents = [])
     {
-        $this->children = $contents;
+        $this->setChildren($contents);
     }
 
     /**
@@ -45,6 +45,9 @@ abstract class AbstractInlineContainer extends AbstractInline
     public function setChildren($contents)
     {
         $this->children = $contents;
+        foreach ($contents as $content) {
+            $content->setParent($this);
+        }
 
         return $this;
     }

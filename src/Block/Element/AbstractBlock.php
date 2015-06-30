@@ -38,7 +38,7 @@ abstract class AbstractBlock
     /**
      * @var AbstractBlock|null
      */
-    protected $parent = null;
+    protected $parent;
 
     /**
      * @var ArrayCollection|string[]
@@ -84,7 +84,7 @@ abstract class AbstractBlock
      */
     public function getParent()
     {
-        return $this->parent ? : null;
+        return $this->parent;
     }
 
     /**
