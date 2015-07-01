@@ -94,7 +94,7 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 
 ## Integrations
 
-- [CakePHP 3](https://github.com/gourmet/commonmark)
+- [CakePHP 3](https://github.com/gourmet/common-mark)
 - [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
 - [Sculpin](https://github.com/bcremer/sculpin-commonmark-bundle)
 - [Twig](https://github.com/webuni/commonmark-twig-renderer)
