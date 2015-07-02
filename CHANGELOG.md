@@ -90,7 +90,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
  - Bumped spec target version to 0.17
  - Updated emphasis parsing for underscores to prevent intra-word emphasis
- - Defered closing of fenced code blocks
+ - Deferred closing of fenced code blocks
 
 ## [0.6.0] - 2015-01-09
 ### Added
