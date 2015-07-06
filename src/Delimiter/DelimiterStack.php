@@ -180,6 +180,4 @@ class DelimiterStack
 
         return null;
     }
-
-
 }

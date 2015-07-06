@@ -48,7 +48,9 @@ abstract class AbstractInline
         if (!$parent instanceof AbstractBlock && !$parent instanceof AbstractInline) {
             throw new \InvalidArgumentException(sprintf(
                 'Argument 1 passed to %s() must be an instance of %s or %s, instance of %s given',
-                __METHOD__, 'League\CommonMark\Block\Element\AbstractBlock', 'League\CommonMark\Block\Element\AbstractInline',
+                __METHOD__,
+                'League\CommonMark\Block\Element\AbstractBlock',
+                'League\CommonMark\Block\Element\AbstractInline',
                 is_object($parent) ? get_class($parent) : gettype($parent)
             ));
         }
