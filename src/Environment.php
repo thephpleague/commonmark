@@ -441,7 +441,7 @@ class Environment
     {
         $chars = array_keys($this->inlineParsersByCharacter);
 
-        $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/';
+        $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/u';
     }
 
     /**
