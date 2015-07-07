@@ -18,16 +18,37 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\RegexHelper;
 
 class EmphasisParser extends AbstractInlineParser
 {
+    protected $config;
+
+    public function __construct(array $newConfig = array())
+    {
+        $this->config = new Configuration([
+            'use_asterisk' => true,
+            'use_underscore' => true,
+            'enable_emphasis' => true,
+            'enable_strong' => true,
+        ]);
+        $this->config->mergeConfig($newConfig);
+    }
+
     /**
      * @return string[]
      */
     public function getCharacters()
     {
-        return ['*', '_'];
+        $chars = [];
+        if ($this->config->getConfig("use_asterisk", true)) {
+            $chars[] = '*';
+        }
+        if ($this->config->getConfig("use_underscore", true)) {
+            $chars[] = '_';
+        }
+        return $chars;
     }
 
     /**
@@ -53,6 +74,11 @@ class EmphasisParser extends AbstractInlineParser
 
         while ($cursor->peek($numDelims) === $character) {
             ++$numDelims;
+        }
+
+        // Skip single delims if emphasis is disabled
+        if ($numDelims === 1 && !$this->config->getConfig("enable_emphasis")) {
+            return false;
         }
 
         $cursor->advanceBy($numDelims);
@@ -86,7 +112,10 @@ class EmphasisParser extends AbstractInlineParser
         }
 
         $inlineContext->getInlines()->add(
-            new Text($cursor->getPreviousText(), ['delim' => true])
+            new Text($cursor->getPreviousText(), [
+                'delim' => true,
+                'emphasis_config' => $this->config,
+            ])
         );
 
         // Add entry to stack to this opener

@@ -48,10 +48,12 @@ class EmphasisProcessor implements InlineProcessorInterface
             $contents = $inlines->slice($start, $closer->getPos() - $start);
             $contents = array_filter($contents);
 
-            if ($useDelims === 1) {
+            if ($useDelims === 1 && $openerInline->data['emphasis_config']->getConfig('enable_emphasis')) {
                 $emph = new Emphasis($contents);
-            } else {
+            } elseif($useDelims > 1 && $openerInline->data['emphasis_config']->getConfig('enable_strong')) {
                 $emph = new Strong($contents);
+            } else {
+                return $closer->getNext();
             }
 
             // Insert into list of inlines
