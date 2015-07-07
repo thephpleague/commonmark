@@ -17,6 +17,7 @@ namespace League\CommonMark\Inline\Parser;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterStack;
 use League\CommonMark\Environment;
 use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Inline\Element\AbstractWebResource;
@@ -88,8 +89,13 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
+        $delimiterStack = $inlineContext->getDelimiterStack();
+        $stackBottom = $opener->getPrevious();
         foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($labelInlines, $inlineContext->getDelimiterStack(), $opener->getPrevious());
+            $inlineProcessor->processInlines($labelInlines, $delimiterStack, $stackBottom);
+        }
+        if($delimiterStack instanceof DelimiterStack){
+            $delimiterStack->removeAll($stackBottom);
         }
 
         // Remove the part of inlines that become link_text
