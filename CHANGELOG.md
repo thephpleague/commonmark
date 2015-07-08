@@ -12,6 +12,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Allow backslash-escaped backslashes in link labels (#119)
  - Allow link labels up to 999 characters (per the spec)
  - Properly split on whitespace when determining code block class (jgm/commonmark.js#54)
+ - Fixed some code style issues (#132)
+ - Fixed wording for invalid inline exception (#136)
 
 ## [0.9.0] - 2015-06-18
 ### Added
