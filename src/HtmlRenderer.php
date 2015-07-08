@@ -74,7 +74,7 @@ class HtmlRenderer implements HtmlRendererInterface
     {
         $renderer = $this->environment->getInlineRendererForClass(get_class($inline));
         if (!$renderer) {
-            throw new \RuntimeException('Unable to find corresponding renderer for block type ' . get_class($inline));
+            throw new \RuntimeException('Unable to find corresponding renderer for inline type ' . get_class($inline));
         }
 
         return $renderer->render($inline, $this);
