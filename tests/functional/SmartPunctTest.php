@@ -15,10 +15,7 @@
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\Environment;
-use League\CommonMark\Inline\Parser\SmartPunctParser;
-use League\CommonMark\Inline\Parser\QuoteParser;
-use League\CommonMark\Inline\Processor\QuoteProcessor;
-use League\CommonMark\Inline\Renderer\TextRenderer;
+use League\CommonMark\Extension\SmartPunctExtension;
 use League\CommonMark\Converter;
 use League\CommonMark\DocParser;
 use League\CommonMark\HtmlRenderer;
@@ -36,9 +33,7 @@ class SmartPunctTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $environment = Environment::createCommonMarkEnvironment();
-        $environment->addInlineParser(new SmartPunctParser());
-        $environment->addInlineParser(new QuoteParser());
-        $environment->addInlineProcessor(new QuoteProcessor());
+        $environment->addExtension(new SmartPunctExtension());
         $this->converter = new Converter(
             new DocParser($environment),
             new HtmlRenderer($environment)
