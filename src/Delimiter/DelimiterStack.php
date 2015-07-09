@@ -134,27 +134,27 @@ class DelimiterStack
 
         while ($closer !== null) {
             $closerChar = $closer->getChar();
-            if ($closer->canClose() && (in_array($closerChar, $characters))) {
-                // Found emphasis closer. Now look back for first matching opener:
-                $opener = $this->findFirstMatchingOpener($closer, $openersBottom, $stackBottom);
 
-                $oldCloser = $closer;
-
-                if ($opener !== null) {
-                    $closer = $callback($opener, $closer, $this);
-                } else {
-                    $closer = $closer->getNext();
-                    // Set lower bound for future searches for openers:
-                    $openersBottom[$closerChar] = $oldCloser->getPrevious();
-                    if (!$oldCloser->canOpen()) {
-                        // We can remove a closer that can't be an opener,
-                        // once we've seen there's no matching opener:
-                        $this->removeDelimiter($oldCloser);
-                    }
-                }
-            } else {
+            if (!$closer->canClose() || !in_array($closerChar, $characters)) {
                 $closer = $closer->getNext();
+                continue;
             }
+
+            $opener = $this->findFirstMatchingOpener($closer, $openersBottom, $stackBottom);
+            if (!$opener) {
+                $oldCloser = $closer;
+                $closer = $closer->getNext();
+                // Set lower bound for future searches for openers:
+                $openersBottom[$closerChar] = $oldCloser->getPrevious();
+                if (!$oldCloser->canOpen()) {
+                    // We can remove a closer that can't be an opener,
+                    // once we've seen there's no matching opener:
+                    $this->removeDelimiter($oldCloser);
+                }
+                continue;
+            }
+
+            $closer = $callback($opener, $closer, $this);
         }
     }
 

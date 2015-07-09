@@ -23,6 +23,7 @@
     "require-dev": {
         "erusev/parsedown": "~1.0",
         "jgm/CommonMark": "0.20",
+        "jgm/SmartPunct": "0.20",
         "michelf/php-markdown": "~1.4",
         "phpunit/phpunit": "~4.3",
         "phpunit/phpunit-mock-objects": "2.3.0",
@@ -36,6 +37,17 @@
                 "version": "0.20",
                 "dist": {
                     "url": "http://spec.commonmark.org/0.20/spec.txt",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jgm/SmartPunct",
+                "version": "0.20",
+                "dist": {
+                    "url": "https://raw.githubusercontent.com/jgm/commonmark.js/0.20.0/test/smart_punct.txt",
                     "type": "file"
                 }
             }
