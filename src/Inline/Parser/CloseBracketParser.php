@@ -94,7 +94,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
             $inlineProcessor->processInlines($labelInlines, $delimiterStack, $stackBottom);
         }
-        if($delimiterStack instanceof DelimiterStack){
+        if ($delimiterStack instanceof DelimiterStack) {
             $delimiterStack->removeAll($stackBottom);
         }
 
