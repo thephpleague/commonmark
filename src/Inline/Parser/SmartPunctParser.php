@@ -50,24 +50,19 @@ class SmartPunctParser extends AbstractInlineParser
         elseif ($ch === '-' && $matched = $cursor->match('/^(?<!-)(-{2,})/'))
         {
             $count = strlen($matched);
-            $en_dash = '–';
-            $en_count = 0;
+
+            $em_count = floor($count / 3);
+            $count -= $em_count * 3;
+
+            $en_count = floor($count / 2);
+            $count -= $en_count * 2;
+
             $em_dash = '—';
-            $em_count = 0;
-            if ($count % 3 === 0) {
-                $em_count = $count / 3;
-            } elseif ($count % 2 === 0) {
-                $en_count = $count / 2;
-            } elseif (($count - 2) % 3 === 0) {
-                $em_count = floor(($count - 2) / 3);
-                $en_count = 1;
-            } else {
-                $em_count = floor(($count - 4) / 3);
-                $en_count = 2;
-            }
+            $en_dash = '–';
             $inlineContext->getInlines()->add(new Text(
                 str_repeat($em_dash, $em_count).
-                str_repeat($en_dash, $en_count)
+                str_repeat($en_dash, $en_count).
+                str_repeat("-", $count)
             ));
             return true;
         }
