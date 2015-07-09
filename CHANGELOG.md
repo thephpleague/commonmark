@@ -5,6 +5,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased][unreleased]
 ### Added
  - Added parent references to inline elements (#124)
+ - Added smart punctuation extension (#134)
 
 ### Fixed
  - Fixed link reference definition edge case (#120)
