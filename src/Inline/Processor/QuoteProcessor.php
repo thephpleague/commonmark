@@ -40,7 +40,5 @@ class QuoteProcessor implements InlineProcessorInterface
 
         // Process the emphasis characters
         $delimiterStack->iterateByCharacters(['“', "’"], $callback, $stackBottom);
-        // Remove gaps
-        $inlines->removeGaps();
     }
 }
