@@ -50,19 +50,24 @@ class SmartPunctParser extends AbstractInlineParser
         elseif ($ch === '-' && $matched = $cursor->match('/^(?<!-)(-{2,})/'))
         {
             $count = strlen($matched);
-
-            $em_count = floor($count / 3);
-            $count -= $em_count * 3;
-
-            $en_count = floor($count / 2);
-            $count -= $en_count * 2;
-
-            $em_dash = '—';
             $en_dash = '–';
+            $en_count = 0;
+            $em_dash = '—';
+            $em_count = 0;
+            if ($count % 3 === 0) { // If divisible by 3, use all em dashes
+                $em_count = $count / 3;
+            } elseif ($count % 2 === 0) { // If divisible by 2, use all en dashes
+                $en_count = $count / 2;
+            } elseif ($count % 3 === 2) { // If 2 extra dashes, use en dash for last 2; em dashes for rest
+                $em_count = ($count - 2) / 3;
+                $en_count = 1;
+            } else { // Use en dashes for last 4 hyphens; em dashes for rest
+                $em_count = ($count - 4) / 3;
+                $en_count = 2;
+            }
             $inlineContext->getInlines()->add(new Text(
                 str_repeat($em_dash, $em_count).
-                str_repeat($en_dash, $en_count).
-                str_repeat("-", $count)
+                str_repeat($en_dash, $en_count)
             ));
             return true;
         }
