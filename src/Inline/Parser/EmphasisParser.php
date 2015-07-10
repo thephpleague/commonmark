@@ -25,7 +25,7 @@ class EmphasisParser extends AbstractInlineParser
 {
     protected $config;
 
-    public function __construct(array $newConfig = array())
+    public function __construct(array $newConfig = [])
     {
         $this->config = new Configuration([
             'use_asterisk' => true,
