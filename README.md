@@ -106,6 +106,7 @@ Custom parsers/renderers can be bundled into extensions which extend CommonMark.
  - [Markua](https://github.com/dshafik/markua) - Markdown parser for PHP which intends to support the full Markua spec.
  - [CommonMark Table Extension](https://github.com/webuni/commonmark-table-extension) - Adds the ability to create tables in CommonMark documents.
  - [CommonMark Attributes Extension](https://github.com/webuni/commonmark-attributes-extension) - Adds a syntax to define attributes on the various HTML elements.
+ - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark, that intgrates with [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown).
 
 ## Compatibility with CommonMark ##
 
