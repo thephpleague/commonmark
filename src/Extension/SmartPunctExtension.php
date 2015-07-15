@@ -36,8 +36,8 @@ class SmartPunctExtension extends Extension
     public function getBlockRenderers()
     {
         return [
-            'League\CommonMark\Block\Element\Document'            => new BlockRenderer\DocumentRenderer(),
-            'League\CommonMark\Block\Element\Paragraph'           => new BlockRenderer\ParagraphRenderer(),
+            'League\CommonMark\Block\Element\Document'  => new BlockRenderer\DocumentRenderer(),
+            'League\CommonMark\Block\Element\Paragraph' => new BlockRenderer\ParagraphRenderer(),
         ];
     }
 
