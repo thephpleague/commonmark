@@ -16,11 +16,12 @@ namespace League\CommonMark\Extension;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\ElementVisitorInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
-class MiscExtension implements ExtensionInterface
+class MiscExtension implements ExtensionInterface, ElementVisitorExtensionInterface
 {
     /**
      * @var BlockParserInterface[]
@@ -46,6 +47,11 @@ class MiscExtension implements ExtensionInterface
      * @var InlineRendererInterface[]
      */
     protected $inlineRenderers = [];
+
+    /**
+     * @var ElementVisitorInterface[]
+     */
+    protected $elementVisitors = [];
 
     /**
      * Returns a list of block parsers to add to the existing list
@@ -163,6 +169,30 @@ class MiscExtension implements ExtensionInterface
         }
 
         $this->inlineRenderers[$inlineClass] = $inlineRenderer;
+
+        return $this;
+    }
+
+    /**
+     * Returns a list of element visitors.
+     *
+     * @return ElementVisitorInterface[]
+     */
+    public function getElementVisitors()
+    {
+        return $this->elementVisitors;
+    }
+
+    /**
+     * Adds a visitor.
+     *
+     * @param ElementVisitorInterface $elementVisitor
+     *
+     * @return $this
+     */
+    public function addElementVisitor(ElementVisitorInterface $elementVisitor)
+    {
+        $this->elementVisitors[] = $elementVisitor;
 
         return $this;
     }

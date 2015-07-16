@@ -17,6 +17,7 @@ namespace League\CommonMark;
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Extension\CommonMarkCoreExtension;
+use League\CommonMark\Extension\ElementVisitorExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\MiscExtension;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
@@ -65,6 +66,16 @@ class Environment
      * @var InlineProcessorInterface[]
      */
     protected $inlineProcessors = [];
+
+    /**
+     * @var ElementVisitorInterface[][]
+     */
+    protected $elementVisitors = [];
+
+    /**
+     * @var ElementVisitorInterface[]
+     */
+    protected $sortedElementVisitors = [];
 
     /**
      * @var InlineRendererInterface[]
@@ -191,6 +202,22 @@ class Environment
     }
 
     /**
+     * Adds a visitor.
+     *
+     * @param ElementVisitorInterface $elementVisitor
+     *
+     * @return $this
+     */
+    public function addElementVisitor(ElementVisitorInterface $elementVisitor)
+    {
+        $this->assertUninitialized('Failed to add element visitor - extensions have already been initialized');
+
+        $this->miscExtension->addElementVisitor($elementVisitor);
+
+        return $this;
+    }
+
+    /**
      * @return BlockParserInterface[]
      */
     public function getBlockParsers()
@@ -265,6 +292,18 @@ class Environment
     }
 
     /**
+     * Returns a list of element visitors.
+     *
+     * @return InlineProcessorInterface[]
+     */
+    public function getElementVisitors()
+    {
+        $this->initializeExtensions();
+
+        return $this->sortedElementVisitors;
+    }
+
+    /**
      * @param string $inlineClass
      *
      * @return InlineRendererInterface|null
@@ -333,6 +372,8 @@ class Environment
         // Lastly, let's build a regex which matches all inline characters
         // This will enable a huge performance boost with inline parsing
         $this->buildInlineParserCharacterRegex();
+
+        $this->sortElementVisitors();
     }
 
     /**
@@ -345,6 +386,10 @@ class Environment
         $this->initializeInlineParsers($extension->getInlineParsers());
         $this->initializeInlineProcessors($extension->getInlineProcessors());
         $this->initializeInlineRenderers($extension->getInlineRenderers());
+
+        if ($extension instanceof ElementVisitorExtensionInterface) {
+            $this->initializeElementVisitors($extension->getElementVisitors());
+        }
     }
 
     /**
@@ -410,6 +455,21 @@ class Environment
     }
 
     /**
+     * @param ElementVisitorInterface[] $elementVisitors
+     */
+    private function initializeElementVisitors($elementVisitors)
+    {
+        foreach ($elementVisitors as $elementVisitor) {
+            $priority = $elementVisitor->getPriority();
+            if (!isset($this->elementVisitors[$priority])) {
+                $this->elementVisitors[$priority] = [];
+            }
+
+            $this->elementVisitors[$priority][] = $elementVisitor;
+        }
+    }
+
+    /**
      * @return Environment
      */
     public static function createCommonMarkEnvironment()
@@ -453,6 +513,16 @@ class Environment
     {
         if ($this->extensionsInitialized) {
             throw new \RuntimeException($message);
+        }
+    }
+
+    private function sortElementVisitors()
+    {
+        if (empty($this->elementVisitors)) {
+            $this->sortedElementVisitors = [];
+        } else {
+            ksort($this->elementVisitors);
+            $this->sortedElementVisitors = call_user_func_array('array_merge', $this->elementVisitors);
         }
     }
 }
