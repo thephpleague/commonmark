@@ -14,6 +14,8 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Util\ArrayCollection;
 
@@ -28,11 +30,12 @@ class InlineParserEngine
 
     /**
      * @param ContextInterface $context
-     * @param Cursor $cursor
+     * @param Cursor           $cursor
+     * @param AbstractBlock    $block
      *
      * @return ArrayCollection
      */
-    public function parse(ContextInterface $context, Cursor $cursor)
+    public function parse(ContextInterface $context, Cursor $cursor, AbstractBlock $block = null)
     {
         $inlineParserContext = new InlineParserContext($cursor);
         while (($character = $cursor->getCharacter()) !== null) {
@@ -41,7 +44,7 @@ class InlineParserEngine
             }
         }
 
-        $this->processInlines($inlineParserContext);
+        $this->processInlines($inlineParserContext, $block);
 
         return $inlineParserContext->getInlines();
     }
@@ -71,10 +74,18 @@ class InlineParserEngine
 
     /**
      * @param InlineParserContext $inlineParserContext
+     * @param AbstractBlock       $block
      */
-    protected function processInlines(InlineParserContext $inlineParserContext)
+    protected function processInlines(InlineParserContext $inlineParserContext, AbstractBlock $block = null)
     {
         $delimiterStack = $inlineParserContext->getDelimiterStack();
+
+        foreach ($inlineParserContext->getInlines() as $inline) {
+            if (!$inline instanceof AbstractInline) {
+                continue;
+            }
+            $inline->setParent($block);
+        }
 
         foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
             $inlineProcessor->processInlines($inlineParserContext->getInlines(), $delimiterStack);
