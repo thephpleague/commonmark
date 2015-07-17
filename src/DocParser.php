@@ -137,7 +137,7 @@ class DocParser
     {
         if ($block instanceof AbstractInlineContainer) {
             $cursor = new Cursor(trim($block->getStringContent()));
-            $block->setInlines($this->inlineParserEngine->parse($context, $cursor));
+            $block->setInlines($this->inlineParserEngine->parse($context, $cursor, $block));
         }
 
         foreach ($block->getChildren() as $child) {
