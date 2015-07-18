@@ -41,11 +41,6 @@ class Cursor
     private $previousPosition = 0;
 
     /**
-     * @var int|null
-     */
-    private $firstNonSpaceCache;
-
-    /**
      * @param string $line
      */
     public function __construct($line)
@@ -61,12 +56,10 @@ class Cursor
      */
     public function getFirstNonSpacePosition()
     {
-        if ($this->firstNonSpaceCache === null) {
-            $match = RegexHelper::matchAt('/[^ ]/', $this->line, $this->currentPosition);
-            $this->firstNonSpaceCache = ($match === null) ? $this->length : $match;
-        }
+        $match = RegexHelper::matchAt('/[^ ]/', $this->line, $this->currentPosition);
+        $firstNonSpace = ($match === null) ? $this->length : $match;
 
-        return $this->firstNonSpaceCache;
+        return $firstNonSpace;
     }
 
     /**
@@ -148,7 +141,6 @@ class Cursor
         if ($this->currentPosition < $this->length) {
             $this->previousPosition = $this->currentPosition;
             ++$this->currentPosition;
-            $this->firstNonSpaceCache = null;
         }
     }
 
@@ -176,9 +168,6 @@ class Cursor
         } else {
             $this->currentPosition = $newPosition;
         }
-
-        // Clear the cached value
-        $this->firstNonSpaceCache = null;
     }
 
     /**
@@ -301,7 +290,7 @@ class Cursor
      */
     public function saveState()
     {
-        return new CursorState($this->line, $this->length, $this->currentPosition, $this->previousPosition, $this->firstNonSpaceCache);
+        return new CursorState($this->line, $this->length, $this->currentPosition, $this->previousPosition);
     }
 
     /**
@@ -313,7 +302,6 @@ class Cursor
         $this->length = $state->getLength();
         $this->currentPosition = $state->getCurrentPosition();
         $this->previousPosition = $state->getPreviousPosition();
-        $this->firstNonSpaceCache = $state->getFirstNonSpaceCache();
     }
 
     /**

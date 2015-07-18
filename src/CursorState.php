@@ -34,24 +34,17 @@ class CursorState
     private $previousPosition;
 
     /**
-     * @var int|null
-     */
-    private $firstNonSpaceCache;
-
-    /**
      * @param string $line
      * @param int $length
      * @param int $currentPosition
      * @param int $previousPosition
-     * @param int|null $firstNonSpaceCache
      */
-    public function __construct($line, $length, $currentPosition, $previousPosition, $firstNonSpaceCache)
+    public function __construct($line, $length, $currentPosition, $previousPosition)
     {
         $this->line = $line;
         $this->length = $length;
         $this->currentPosition = $currentPosition;
         $this->previousPosition = $previousPosition;
-        $this->firstNonSpaceCache = $firstNonSpaceCache;
     }
 
     /**
@@ -60,14 +53,6 @@ class CursorState
     public function getCurrentPosition()
     {
         return $this->currentPosition;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFirstNonSpaceCache()
-    {
-        return $this->firstNonSpaceCache;
     }
 
     /**
