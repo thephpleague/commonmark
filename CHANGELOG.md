@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
  - Bumped spec target version to 0.21
+ - Imposed 9-digit limit on ordered list markers, per spec
 
 ### Fixed
  - Fixed link reference definition edge case (#120)
