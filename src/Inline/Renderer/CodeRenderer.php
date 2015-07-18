@@ -14,8 +14,8 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Code;
 
@@ -23,11 +23,11 @@ class CodeRenderer implements InlineRendererInterface
 {
     /**
      * @param Code $inline
-     * @param HtmlRendererInterface $htmlRenderer
+     * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Code)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));

@@ -12,67 +12,54 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit;
+namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 
-class FakeEmptyHtmlRenderer implements ElementRendererInterface
+/**
+ * Renders a parsed AST to a string representation
+ */
+interface ElementRendererInterface
 {
     /**
-     * @param string $option
+     * @param string     $option
      * @param mixed|null $default
      *
      * @return mixed|null
      */
-    public function getOption($option, $default = null)
-    {
-        return null;
-    }
+    public function getOption($option, $default = null);
 
     /**
      * @param string $string
-     * @param bool $preserveEntities
+     * @param bool   $preserveEntities
      *
      * @return string
      */
-    public function escape($string, $preserveEntities = false)
-    {
-        return '';
-    }
+    public function escape($string, $preserveEntities = false);
 
     /**
      * @param AbstractInline[] $inlines
      *
      * @return string
      */
-    public function renderInlines($inlines)
-    {
-        return '';
-    }
+    public function renderInlines($inlines);
 
     /**
      * @param AbstractBlock $block
-     * @param bool $inTightList
+     * @param bool          $inTightList
      *
      * @return string
      *
      * @throws \RuntimeException
      */
-    public function renderBlock(AbstractBlock $block, $inTightList = false)
-    {
-        return '';
-    }
+    public function renderBlock(AbstractBlock $block, $inTightList = false);
 
     /**
      * @param AbstractBlock[] $blocks
-     * @param bool $inTightList
+     * @param bool            $inTightList
      *
      * @return string
      */
-    public function renderBlocks($blocks, $inTightList = false)
-    {
-        return '';
-    }
+    public function renderBlocks($blocks, $inTightList = false);
 }

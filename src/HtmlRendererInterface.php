@@ -14,52 +14,11 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Inline\Element\AbstractInline;
-
 /**
  * Renders a parsed AST to HTML
+ *
+ * @deprecated Use ElementRendererInterface instead
  */
-interface HtmlRendererInterface
+interface HtmlRendererInterface extends ElementRendererInterface
 {
-    /**
-     * @param string $option
-     * @param mixed|null $default
-     *
-     * @return mixed|null
-     */
-    public function getOption($option, $default = null);
-
-    /**
-     * @param string $string
-     * @param bool   $preserveEntities
-     *
-     * @return string
-     */
-    public function escape($string, $preserveEntities = false);
-
-    /**
-     * @param AbstractInline[] $inlines
-     *
-     * @return string
-     */
-    public function renderInlines($inlines);
-
-    /**
-     * @param AbstractBlock $block
-     * @param bool         $inTightList
-     *
-     * @return string
-     *
-     * @throws \RuntimeException
-     */
-    public function renderBlock(AbstractBlock $block, $inTightList = false);
-
-    /**
-     * @param AbstractBlock[] $blocks
-     * @param bool            $inTightList
-     *
-     * @return string
-     */
-    public function renderBlocks($blocks, $inTightList = false);
 }

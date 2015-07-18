@@ -15,10 +15,10 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\HtmlRendererInterface;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 
-class FakeHtmlRenderer implements HtmlRendererInterface
+class FakeHtmlRenderer implements ElementRendererInterface
 {
     protected $options;
 

@@ -18,6 +18,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Changed tab/indentation handling to meet the new spec behavior
  - Modified spec tests to show spaces and tabs in test results
 
+### Deprecated
+ - Deprecated `HtmlRendererInterface` - use new ElementRendererInterface instead (#141)
+
 ### Fixed
  - Fixed link reference definition edge case (#120)
  - Allow literal (non-escaping) backslashes in link destinations (#118)

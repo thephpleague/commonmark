@@ -29,7 +29,7 @@ class Converter
     /**
      * The html renderer instance.
      *
-     * @var \League\CommonMark\HtmlRendererInterface
+     * @var \League\CommonMark\ElementRendererInterface
      */
     protected $htmlRenderer;
 
@@ -37,9 +37,9 @@ class Converter
      * Create a new commonmark converter instance.
      *
      * @param DocParser $docParser
-     * @param HtmlRendererInterface $htmlRenderer
+     * @param ElementRendererInterface $htmlRenderer
      */
-    public function __construct(DocParser $docParser, HtmlRendererInterface $htmlRenderer)
+    public function __construct(DocParser $docParser, ElementRendererInterface $htmlRenderer)
     {
         $this->docParser = $docParser;
         $this->htmlRenderer = $htmlRenderer;
