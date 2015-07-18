@@ -41,12 +41,16 @@ class SpecTest extends \PHPUnit_Framework_TestCase
      */
     public function testExample($markdown, $html, $section, $number)
     {
+        // Replace visible tabs in spec
+        $markdown = str_replace("→", "\t", $markdown);
+        $html = str_replace("→", "\t", $html);
+
         $actualResult = $this->converter->convertToHtml($markdown);
 
         $failureMessage = sprintf('Unexpected result ("%s" section, example #%d)', $section, $number);
-        $failureMessage .= "\n=== markdown ===============\n" . $markdown;
-        $failureMessage .= "\n=== expected ===============\n" . $html;
-        $failureMessage .= "\n=== got ====================\n" . $actualResult;
+        $failureMessage .= "\n=== markdown ===============\n" . $this->showSpaces($markdown);
+        $failureMessage .= "\n=== expected ===============\n" . $this->showSpaces($html);
+        $failureMessage .= "\n=== got ====================\n" . $this->showSpaces($actualResult);
 
         $this->assertEquals($html, $actualResult, $failureMessage);
     }
@@ -90,5 +94,18 @@ class SpecTest extends \PHPUnit_Framework_TestCase
         }
 
         return $examples;
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return string
+     */
+    protected function showSpaces($str)
+    {
+        $str = str_replace("\t", '→', $str);
+        $str = str_replace(' ', '␣', $str);
+
+        return $str;
     }
 }
