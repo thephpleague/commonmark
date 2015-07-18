@@ -138,10 +138,7 @@ class Cursor
      */
     public function advance()
     {
-        if ($this->currentPosition < $this->length) {
-            $this->previousPosition = $this->currentPosition;
-            ++$this->currentPosition;
-        }
+        $this->advanceBy(1);
     }
 
     /**
@@ -154,10 +151,7 @@ class Cursor
     {
         if ($characters === 0) {
             return;
-        } elseif ($characters === 1) {
-            $this->advance();
 
-            return;
         }
 
         $this->previousPosition = $this->currentPosition;
