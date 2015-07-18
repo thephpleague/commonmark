@@ -93,7 +93,7 @@ class RegexHelper
         $regex[self::REG_CHAR] = '[^\\\\()\x00-\x20]';
         $regex[self::IN_PARENS_NOSP] = '\((' . $regex[self::REG_CHAR] . '|' . $regex[self::ESCAPED_CHAR] . '|\\\\)*\)';
         $regex[self::TAGNAME] = '[A-Za-z][A-Za-z0-9-]*';
-        $regex[self::BLOCKTAGNAME] = '(?:article|header|aside|hgroup|iframe|blockquote|hr|body|li|map|button|object|canvas|ol|caption|output|col|p|colgroup|pre|dd|progress|div|section|dl|table|td|dt|tbody|embed|textarea|fieldset|tfoot|figcaption|th|figure|thead|footer|footer|tr|form|ul|h1|h2|h3|h4|h5|h6|video|script|style)';
+        $regex[self::BLOCKTAGNAME] = '(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h1|head|header|hr|html|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|pre|section|source|title|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)';
         $regex[self::ATTRIBUTENAME] = '[a-zA-Z_:][a-zA-Z0-9:._-]*';
         $regex[self::UNQUOTEDVALUE] = '[^"\'=<>`\x00-\x20]+';
         $regex[self::SINGLEQUOTEDVALUE] = '\'[^\']*\'';

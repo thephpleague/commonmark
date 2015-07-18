@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Bumped spec target version to 0.21
  - Imposed 9-digit limit on ordered list markers, per spec
  - Allow non-initial hyphens in html tag names (jgm/CommonMark#239)
+ - Updated list of block tag names
 
 ### Fixed
  - Fixed link reference definition edge case (#120)
