@@ -34,17 +34,31 @@ class CursorState
     private $previousPosition;
 
     /**
+     * @var int
+     */
+    private $indent;
+
+    /**
+     * @var int
+     */
+    private $column;
+
+    /**
      * @param string $line
      * @param int $length
      * @param int $currentPosition
      * @param int $previousPosition
+     * @param int $indent
+     * @param int $column
      */
-    public function __construct($line, $length, $currentPosition, $previousPosition)
+    public function __construct($line, $length, $currentPosition, $previousPosition, $indent, $column)
     {
         $this->line = $line;
         $this->length = $length;
         $this->currentPosition = $currentPosition;
         $this->previousPosition = $previousPosition;
+        $this->indent = $indent;
+        $this->column = $column;
     }
 
     /**
@@ -77,5 +91,21 @@ class CursorState
     public function getPreviousPosition()
     {
         return $this->previousPosition;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIndent()
+    {
+        return $this->indent;
+    }
+
+    /**
+     * @return int
+     */
+    public function getColumn()
+    {
+        return $this->column;
     }
 }

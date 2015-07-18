@@ -38,6 +38,16 @@ class Cursor
     /**
      * @var int
      */
+    private $column = 0;
+
+    /**
+     * @var int
+     */
+    private $indent = 0;
+
+    /**
+     * @var int
+     */
     private $previousPosition = 0;
 
     /**
@@ -56,10 +66,25 @@ class Cursor
      */
     public function getFirstNonSpacePosition()
     {
-        $match = RegexHelper::matchAt('/[^ ]/', $this->line, $this->currentPosition);
-        $firstNonSpace = ($match === null) ? $this->length : $match;
+        $i = $this->currentPosition;
+        $cols = $this->column;
 
-        return $firstNonSpace;
+        while (($c = $this->getCharacter($i)) !== null) {
+            if ($c === ' ') {
+                $i++;
+                $cols++;
+            } elseif ($c === "\t") {
+                $i++;
+                $cols += (4 - ($cols % 4));
+            } else {
+                break;
+            }
+        }
+
+        $nextNonSpace = ($c === null) ? $this->length : $i;
+        $this->indent = $cols - $this->column;
+
+        return $nextNonSpace;
     }
 
     /**
@@ -79,7 +104,9 @@ class Cursor
      */
     public function getIndent()
     {
-        return $this->getFirstNonSpacePosition() - $this->currentPosition;
+        $this->getFirstNonSpacePosition();
+
+        return $this->indent;
     }
 
     /**
@@ -147,15 +174,28 @@ class Cursor
      * @param int $characters
      *   Number of characters to advance by
      */
-    public function advanceBy($characters)
+    public function advanceBy($characters, $advanceByColumns = false)
     {
         if ($characters === 0) {
             return;
+        }
 
+        $i = 0;
+        $cols = 0;
+        while ($advanceByColumns ? ($cols < $characters) : ($i < $characters)) {
+            if ($this->peek($i) === "\t") {
+                $cols += (4 - ($this->column % 4));
+            } else {
+                $cols++;
+            }
+
+            $i++;
         }
 
         $this->previousPosition = $this->currentPosition;
-        $newPosition = $this->currentPosition + $characters;
+        $newPosition = $this->currentPosition + $i;
+
+        $this->column += $cols;
 
         if ($newPosition >= $this->length) {
             $this->currentPosition = $this->length;
@@ -284,7 +324,14 @@ class Cursor
      */
     public function saveState()
     {
-        return new CursorState($this->line, $this->length, $this->currentPosition, $this->previousPosition);
+        return new CursorState(
+            $this->line,
+            $this->length,
+            $this->currentPosition,
+            $this->previousPosition,
+            $this->indent,
+            $this->column
+        );
     }
 
     /**
@@ -296,6 +343,8 @@ class Cursor
         $this->length = $state->getLength();
         $this->currentPosition = $state->getCurrentPosition();
         $this->previousPosition = $state->getPreviousPosition();
+        $this->column = $state->getColumn();
+        $this->indent = $state->getIndent();
     }
 
     /**
@@ -312,5 +361,13 @@ class Cursor
     public function getPreviousText()
     {
         return mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, 'utf-8');
+    }
+
+    /**
+     * @return int
+     */
+    public function getColumn()
+    {
+        return $this->column;
     }
 }
