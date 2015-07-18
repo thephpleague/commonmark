@@ -51,6 +51,11 @@ class Cursor
     private $previousPosition = 0;
 
     /**
+     * @var int|null
+     */
+    private $firstNonSpaceCache;
+
+    /**
      * @param string $line
      */
     public function __construct($line)
@@ -66,6 +71,10 @@ class Cursor
      */
     public function getFirstNonSpacePosition()
     {
+        if ($this->firstNonSpaceCache !== null) {
+            return $this->firstNonSpaceCache;
+        }
+
         $i = $this->currentPosition;
         $cols = $this->column;
 
@@ -84,7 +93,7 @@ class Cursor
         $nextNonSpace = ($c === null) ? $this->length : $i;
         $this->indent = $cols - $this->column;
 
-        return $nextNonSpace;
+        return $this->firstNonSpaceCache = $nextNonSpace;
     }
 
     /**
@@ -179,6 +188,8 @@ class Cursor
         if ($characters === 0) {
             return;
         }
+
+        $this->firstNonSpaceCache = null;
 
         $i = 0;
         $cols = 0;
@@ -329,6 +340,7 @@ class Cursor
             $this->length,
             $this->currentPosition,
             $this->previousPosition,
+            $this->firstNonSpaceCache,
             $this->indent,
             $this->column
         );
@@ -343,6 +355,7 @@ class Cursor
         $this->length = $state->getLength();
         $this->currentPosition = $state->getCurrentPosition();
         $this->previousPosition = $state->getPreviousPosition();
+        $this->firstNonSpaceCache = $state->getFirstNonSpaceCache();
         $this->column = $state->getColumn();
         $this->indent = $state->getIndent();
     }
