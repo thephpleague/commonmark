@@ -7,6 +7,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added parent references to inline elements (#124)
  - Added smart punctuation extension (#134)
 
+### Changed
+ - Bumped spec target version to 0.21
+
 ### Fixed
  - Fixed link reference definition edge case (#120)
  - Allow literal (non-escaping) backslashes in link destinations (#118)
