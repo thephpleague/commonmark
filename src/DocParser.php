@@ -76,7 +76,7 @@ class DocParser
 
         $lines = $this->preProcessInput($input);
         foreach ($lines as $line) {
-            $context->setNextLine(TextHelper::detabLine($line));
+            $context->setNextLine($line);
             $this->incorporateLine($context);
         }
 
