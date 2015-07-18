@@ -16,9 +16,49 @@ namespace League\CommonMark\Block\Element;
 
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Util\RegexHelper;
 
 class HtmlBlock extends AbstractBlock
 {
+    const TYPE_1_CODE_CONTAINER = 1;
+    const TYPE_2_COMMENT = 2;
+    const TYPE_3 = 3;
+    const TYPE_4 = 4;
+    const TYPE_5_CDATA = 5;
+    const TYPE_6_BLOCK_ELEMENT = 6;
+    const TYPE_7_MISC_ELEMENT = 7;
+
+    /**
+     * @var int
+     */
+    protected $type;
+
+    /**
+     * @param int $type
+     */
+    public function __construct($type)
+    {
+        parent::__construct();
+
+        $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
     /**
      * Returns true if this block can contain the given block as a child node
      *
@@ -53,7 +93,11 @@ class HtmlBlock extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor)
     {
-        return !$cursor->isBlank();
+        if ($cursor->isBlank() && ($this->type === self::TYPE_6_BLOCK_ELEMENT || $this->type === self::TYPE_7_MISC_ELEMENT)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function finalize(ContextInterface $context)
@@ -70,5 +114,12 @@ class HtmlBlock extends AbstractBlock
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
         $context->getTip()->addLine($cursor->getRemainder());
+
+        // Check for end condition
+        if ($this->type >= self::TYPE_1_CODE_CONTAINER && $this->type <= self::TYPE_5_CDATA) {
+            if ($cursor->match(RegexHelper::getHtmlBlockCloseRegex($this->type))) {
+                $this->finalize($context);
+            }
+        }
     }
 }

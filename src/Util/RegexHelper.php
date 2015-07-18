@@ -14,6 +14,8 @@
 
 namespace League\CommonMark\Util;
 
+use League\CommonMark\Block\Element\HtmlBlock;
+
 /**
  * Provides regular expressions and utilties for parsing Markdown
  *
@@ -144,14 +146,6 @@ class RegexHelper
     /**
      * @return string
      */
-    public function getHtmlBlockOpenRegex()
-    {
-        return '/^' . $this->regex[self::HTMLBLOCKOPEN] . '/i';
-    }
-
-    /**
-     * @return string
-     */
     public function getLinkTitleRegex()
     {
         return '/' . $this->regex[self::LINK_TITLE] . '/';
@@ -189,7 +183,7 @@ class RegexHelper
      *
      * @return int|null Index of match, or null
      */
-    public static function matchAt($regex, $string, $offset)
+    public static function matchAt($regex, $string, $offset = 0)
     {
         $matches = [];
         $string = mb_substr($string, $offset, null, 'utf-8');
@@ -248,5 +242,57 @@ class RegexHelper
         }, $escaped);
 
         return $replaced;
+    }
+
+    /**
+     * @param int $type HTML block type
+     *
+     * @return string|null
+     */
+    public static function getHtmlBlockOpenRegex($type)
+    {
+        switch ($type) {
+            case HtmlBlock::TYPE_1_CODE_CONTAINER:
+                return '/^<(?:script|pre|style)(?:\s|>|$)/i';
+            case HtmlBlock::TYPE_2_COMMENT:
+                return '/^<!--/';
+            case HtmlBlock::TYPE_3:
+                return '/^<[?]/';
+            case HtmlBlock::TYPE_4:
+                return '/^<![A-Z]/';
+            case HtmlBlock::TYPE_5_CDATA:
+                return '/^<!\[CDATA\[/';
+            case HtmlBlock::TYPE_6_BLOCK_ELEMENT:
+                return '%^<[/]?(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h1|head|header|hr|html|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|pre|section|source|title|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)(?:\s|[/]?[>]|$)%i';
+            case HtmlBlock::TYPE_7_MISC_ELEMENT:
+                $self = self::getInstance();
+
+                return '/^(?:' . $self->getPartialRegex(self::OPENTAG) . '|' . $self->getPartialRegex(self::CLOSETAG) . ')\\s*$/i';
+        }
+
+        return null;
+    }
+
+    /**
+     * @param int $type HTML block type
+     *
+     * @return string|null
+     */
+    public static function getHtmlBlockCloseRegex($type)
+    {
+        switch ($type) {
+            case HtmlBlock::TYPE_1_CODE_CONTAINER:
+                return '%<\/(?:script|pre|style)>%i';
+            case HtmlBlock::TYPE_2_COMMENT:
+                return '/-->/';
+            case HtmlBlock::TYPE_3:
+                return '/\?>/';
+            case HtmlBlock::TYPE_4:
+                return '/>/';
+            case HtmlBlock::TYPE_5_CDATA:
+                return '/\]\]>/';
+        }
+
+        return null;
     }
 }
