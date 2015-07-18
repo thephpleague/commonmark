@@ -33,7 +33,9 @@ class HtmlBlockRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMock('League\CommonMark\Block\Element\HtmlBlock');
+        $block = $this->getMockBuilder('League\CommonMark\Block\Element\HtmlBlock')
+            ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
+            ->getMock();
         $block->expects($this->any())
             ->method('getStringContent')
             ->will($this->returnValue('<button>Test</button>'));

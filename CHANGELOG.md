@@ -6,6 +6,17 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Added parent references to inline elements (#124)
  - Added smart punctuation extension (#134)
+ - Added HTML block types
+ - Added indentation caching to the cursor
+
+### Changed
+ - Bumped spec target version to 0.21
+ - Revised HTML block parsing to conform to new spec (jgm/commonmark.js@99bd473)
+ - Imposed 9-digit limit on ordered list markers, per spec
+ - Allow non-initial hyphens in html tag names (jgm/CommonMark#239)
+ - Updated list of block tag names
+ - Changed tab/indentation handling to meet the new spec behavior
+ - Modified spec tests to show spaces and tabs in test results
 
 ### Fixed
  - Fixed link reference definition edge case (#120)
@@ -15,6 +26,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Properly split on whitespace when determining code block class (jgm/commonmark.js#54)
  - Fixed some code style issues (#132)
  - Fixed wording for invalid inline exception (#136)
+
+### Removed
+ - Removed the advance-by-one optimization due to added cursor complexity
 
 ## [0.9.0] - 2015-06-18
 ### Added
