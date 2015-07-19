@@ -17,9 +17,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Updated list of block tag names
  - Changed tab/indentation handling to meet the new spec behavior
  - Modified spec tests to show spaces and tabs in test results
-
-### Deprecated
- - Deprecated `HtmlRendererInterface` - use new ElementRendererInterface instead (#141)
+ - Replaced `HtmlRendererInterface` with `ElementRendererInterface` (#141)
 
 ### Fixed
  - Fixed link reference definition edge case (#120)
@@ -121,13 +119,13 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Bulk registration of parsers/renderers via extensions (#45)
  - Proper UTF-8 support, especially in the Cursor; mbstring extension is now required (#49)
  - Environment is now configurable; options can be accessed in its parsers/renderers (#56)
- - Added some unit tests 
+ - Added some unit tests
 
 ### Changed
  - Bumped spec target version to 0.15 (#50)
  - Parsers/renderers are now lazy-initialized (#52)
  - Some private elements are now protected for easier extending, especially on Element classes (#53)
- - Renderer option keys changed from camelCase to underscore_case (#56) 
+ - Renderer option keys changed from camelCase to underscore_case (#56)
  - Moved CommonMark parser/render definitions into CommonMarkCoreExtension
 
 ### Fixed
