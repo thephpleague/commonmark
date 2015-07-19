@@ -65,8 +65,7 @@ class SmartPunctParser extends AbstractInlineParser
                 $en_count = 2;
             }
             $inlineContext->getInlines()->add(new Text(
-                str_repeat($em_dash, $em_count) .
-                str_repeat($en_dash, $en_count)
+                str_repeat($em_dash, $em_count) . str_repeat($en_dash, $en_count)
             ));
 
             return true;
