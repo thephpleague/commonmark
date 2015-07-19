@@ -177,7 +177,5 @@ class DelimiterStack
 
             $opener = $opener->getPrevious();
         }
-
-        return;
     }
 }
