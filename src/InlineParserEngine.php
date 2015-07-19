@@ -14,6 +14,7 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Util\ArrayCollection;
 
@@ -38,6 +39,14 @@ class InlineParserEngine
         while (($character = $cursor->getCharacter()) !== null) {
             if (!$this->parseCharacter($character, $context, $inlineParserContext)) {
                 $this->addPlainText($character, $inlineParserContext);
+            }
+        }
+
+        // Set the parent before processing occurs, as the processors may want to know
+        // which block element the inlines reside inside of.
+        foreach ($inlineParserContext->getInlines() as $inline) {
+            if ($inline instanceof AbstractInline) {
+                $inline->setParent($context->getContainer());
             }
         }
 
