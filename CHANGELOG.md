@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added smart punctuation extension (#134)
  - Added HTML block types
  - Added indentation caching to the cursor
+ - Added automated code style checks (#133)
 
 ### Changed
  - Bumped spec target version to 0.21
@@ -25,7 +26,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Allow backslash-escaped backslashes in link labels (#119)
  - Allow link labels up to 999 characters (per the spec)
  - Properly split on whitespace when determining code block class (jgm/commonmark.js#54)
- - Fixed some code style issues (#132)
+ - Fixed code style issues (#132, #133, #151, #152)
  - Fixed wording for invalid inline exception (#136)
 
 ### Removed
