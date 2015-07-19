@@ -225,7 +225,9 @@ class RegexHelper
             }
         }
 
-        return !empty($matches) ? $matches : null;
+        if (!empty($matches)) {
+            return $matches;
+        }
     }
 
     /**
@@ -272,8 +274,6 @@ class RegexHelper
 
                 return '/^(?:' . $self->getPartialRegex(self::OPENTAG) . '|' . $self->getPartialRegex(self::CLOSETAG) . ')\\s*$/i';
         }
-
-        return;
     }
 
     /**
@@ -295,7 +295,5 @@ class RegexHelper
             case HtmlBlock::TYPE_5_CDATA:
                 return '/\]\]>/';
         }
-
-        return;
     }
 }
