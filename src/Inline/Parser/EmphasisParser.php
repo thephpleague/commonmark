@@ -16,8 +16,8 @@ namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 class EmphasisParser extends AbstractInlineParser
@@ -31,7 +31,7 @@ class EmphasisParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
+     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool

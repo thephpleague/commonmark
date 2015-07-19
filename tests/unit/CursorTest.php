@@ -12,7 +12,6 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Cursor;
-use Symfony\Component\Yaml\Parser;
 
 class CursorTest extends \PHPUnit_Framework_TestCase
 {

@@ -22,7 +22,7 @@ use League\CommonMark\Inline\Element\Strong;
 class StrongRenderer implements InlineRendererInterface
 {
     /**
-     * @param Strong $inline
+     * @param Strong                   $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement

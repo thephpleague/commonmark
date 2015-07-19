@@ -16,14 +16,14 @@ namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 class QuoteParser extends AbstractInlineParser
 {
-    protected $double = ['"', "“", "”"];
-    protected $single = ["'", "‘", "’"];
+    protected $double = ['"', '“', '”'];
+    protected $single = ["'", '‘', '’'];
 
     /**
      * @return string[]
@@ -34,7 +34,7 @@ class QuoteParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
+     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
@@ -45,7 +45,7 @@ class QuoteParser extends AbstractInlineParser
         if (in_array($character, $this->double)) {
             $character = '“';
         } elseif (in_array($character, $this->single)) {
-            $character = "’";
+            $character = '’';
         } else {
             return false;
         }

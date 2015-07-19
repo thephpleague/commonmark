@@ -123,7 +123,6 @@ abstract class AbstractBlock
         return $this->children->last();
     }
 
-
     public function addChild(AbstractBlock $childBlock)
     {
         $this->children->add($childBlock);
@@ -301,7 +300,7 @@ abstract class AbstractBlock
 
     /**
      * @param Cursor $cursor
-     * @param int $currentLineNumber
+     * @param int    $currentLineNumber
      *
      * @return $this
      */

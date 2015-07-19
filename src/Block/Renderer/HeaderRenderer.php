@@ -22,9 +22,9 @@ use League\CommonMark\HtmlElement;
 class HeaderRenderer implements BlockRendererInterface
 {
     /**
-     * @param Header $block
+     * @param Header                   $block
      * @param ElementRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param bool                     $inTightList
      *
      * @return HtmlElement
      */

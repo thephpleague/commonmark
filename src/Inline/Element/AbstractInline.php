@@ -45,7 +45,7 @@ abstract class AbstractInline
      */
     public function setParent($parent)
     {
-        if (!$parent instanceof AbstractBlock && !$parent instanceof AbstractInline) {
+        if (!$parent instanceof AbstractBlock && !$parent instanceof self) {
             throw new \InvalidArgumentException(sprintf(
                 'Argument 1 passed to %s() must be an instance of %s or %s, instance of %s given',
                 __METHOD__,

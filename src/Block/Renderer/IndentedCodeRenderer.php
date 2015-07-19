@@ -22,9 +22,9 @@ use League\CommonMark\HtmlElement;
 class IndentedCodeRenderer implements BlockRendererInterface
 {
     /**
-     * @param AbstractBlock $block
+     * @param AbstractBlock            $block
      * @param ElementRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param bool                     $inTightList
      *
      * @return HtmlElement
      */

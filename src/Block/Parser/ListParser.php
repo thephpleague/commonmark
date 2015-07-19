@@ -25,7 +25,7 @@ class ListParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
-     * @param Cursor $cursor
+     * @param Cursor           $cursor
      *
      * @return bool
      */
@@ -79,7 +79,7 @@ class ListParser extends AbstractBlockParser
 
     /**
      * @param string $marker
-     * @param int $spacesAfterMarker
+     * @param int    $spacesAfterMarker
      * @param string $rest
      *
      * @return int

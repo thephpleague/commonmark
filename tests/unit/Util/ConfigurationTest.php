@@ -10,7 +10,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $data = [
             'foo' => 'bar',
-            'a' => [
+            'a'   => [
                 'b' => 'c',
             ],
         ];

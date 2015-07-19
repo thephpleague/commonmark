@@ -73,7 +73,7 @@ class RegexHelper
     public static function getInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new RegexHelper();
+            self::$instance = new self();
         }
 
         return self::$instance;
@@ -126,6 +126,7 @@ class RegexHelper
      * Returns a partial regex
      *
      * It'll need to be wrapped with /.../ before use
+     *
      * @param int $const
      *
      * @return string
@@ -177,6 +178,7 @@ class RegexHelper
 
     /**
      * Attempt to match a regex in string s at offset offset
+     *
      * @param string $regex
      * @param string $string
      * @param int    $offset
@@ -188,7 +190,7 @@ class RegexHelper
         $matches = [];
         $string = mb_substr($string, $offset, null, 'utf-8');
         if (!preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
-            return null;
+            return;
         }
 
         // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
@@ -214,10 +216,10 @@ class RegexHelper
 
         $fullMatches = reset($matches);
         if (empty($fullMatches)) {
-            return null;
+            return;
         }
 
-        if (count($fullMatches) == 1) {
+        if (count($fullMatches) === 1) {
             foreach ($matches as &$match) {
                 $match = reset($match);
             }
@@ -228,6 +230,7 @@ class RegexHelper
 
     /**
      * Replace backslash escapes with literal characters
+     *
      * @param string $string
      *
      * @return string
@@ -270,7 +273,7 @@ class RegexHelper
                 return '/^(?:' . $self->getPartialRegex(self::OPENTAG) . '|' . $self->getPartialRegex(self::CLOSETAG) . ')\\s*$/i';
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -293,6 +296,6 @@ class RegexHelper
                 return '/\]\]>/';
         }
 
-        return null;
+        return;
     }
 }

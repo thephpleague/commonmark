@@ -11,8 +11,6 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Util\RegexHelper;
-
 class Cursor
 {
     const INDENT_LEVEL = 4;
@@ -141,7 +139,7 @@ class Cursor
 
         // Index out-of-bounds, or we're at the end
         if ($index < 0 || $index >= $this->length) {
-            return null;
+            return;
         }
 
         return mb_substr($this->line, $index, 1, 'utf-8');
@@ -180,8 +178,7 @@ class Cursor
     /**
      * Move the cursor forwards
      *
-     * @param int $characters
-     *   Number of characters to advance by
+     * @param int $characters Number of characters to advance by
      */
     public function advanceBy($characters, $advanceByColumns = false)
     {
@@ -218,13 +215,10 @@ class Cursor
     /**
      * Advances the cursor while the given character is matched
      *
-     * @param string $character
-     *   Character to match
-     * @param int|null $maximumCharactersToAdvance
-     *   Maximum number of characters to advance before giving up
+     * @param string   $character                  Character to match
+     * @param int|null $maximumCharactersToAdvance Maximum number of characters to advance before giving up
      *
-     * @return int
-     *   Number of positions moved (0 if unsuccessful)
+     * @return int Number of positions moved (0 if unsuccessful)
      */
     public function advanceWhileMatches($character, $maximumCharactersToAdvance = null)
     {
@@ -253,8 +247,7 @@ class Cursor
     /**
      * Parse zero or more space characters, including at most one newline
      *
-     * @return int
-     *   Number of positions moved
+     * @return int Number of positions moved
      */
     public function advanceToFirstNonSpace()
     {
@@ -317,7 +310,7 @@ class Cursor
 
         $matches = [];
         if (!preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
-            return null;
+            return;
         }
 
         // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying

@@ -36,7 +36,7 @@ class Converter
     /**
      * Create a new commonmark converter instance.
      *
-     * @param DocParser $docParser
+     * @param DocParser                $docParser
      * @param ElementRendererInterface $htmlRenderer
      */
     public function __construct(DocParser $docParser, ElementRendererInterface $htmlRenderer)

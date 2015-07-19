@@ -41,9 +41,9 @@ class FencedCode extends AbstractBlock
     protected $offset;
 
     /**
-     * @param int $length
+     * @param int    $length
      * @param string $char
-     * @param int $offset
+     * @param int    $offset
      */
     public function __construct($length, $char, $offset)
     {
@@ -185,7 +185,7 @@ class FencedCode extends AbstractBlock
         // first line becomes info string
         $this->info = RegexHelper::unescape(trim($this->strings->first()));
 
-        if ($this->strings->count() == 1) {
+        if ($this->strings->count() === 1) {
             $this->finalStringContents = '';
         } else {
             $this->finalStringContents = implode("\n", $this->strings->slice(1)) . "\n";
@@ -202,7 +202,7 @@ class FencedCode extends AbstractBlock
         $container = $context->getContainer();
 
         // check for closing code fence
-        if ($cursor->getIndent() <= 3 && $cursor->getFirstNonSpaceCharacter() == $container->getChar()) {
+        if ($cursor->getIndent() <= 3 && $cursor->getFirstNonSpaceCharacter() === $container->getChar()) {
             $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
             if (strlen($match[0]) >= $container->getLength()) {
                 // don't add closing fence to container; instead, close it:
@@ -217,7 +217,7 @@ class FencedCode extends AbstractBlock
 
     /**
      * @param Cursor $cursor
-     * @param int $currentLineNumber
+     * @param int    $currentLineNumber
      *
      * @return $this
      */

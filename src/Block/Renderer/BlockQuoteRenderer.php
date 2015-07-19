@@ -22,9 +22,9 @@ use League\CommonMark\HtmlElement;
 class BlockQuoteRenderer implements BlockRendererInterface
 {
     /**
-     * @param BlockQuote $block
+     * @param BlockQuote               $block
      * @param ElementRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param bool                     $inTightList
      *
      * @return HtmlElement
      */

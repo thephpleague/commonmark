@@ -21,7 +21,7 @@ use League\CommonMark\Inline\Element\Text;
 class TextRenderer implements InlineRendererInterface
 {
     /**
-     * @param Text $inline
+     * @param Text                     $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return string

@@ -21,19 +21,19 @@ use League\CommonMark\Inline\Element\AbstractInline;
 class FakeEmptyHtmlRenderer implements ElementRendererInterface
 {
     /**
-     * @param string $option
+     * @param string     $option
      * @param mixed|null $default
      *
      * @return mixed|null
      */
     public function getOption($option, $default = null)
     {
-        return null;
+        return;
     }
 
     /**
      * @param string $string
-     * @param bool $preserveEntities
+     * @param bool   $preserveEntities
      *
      * @return string
      */
@@ -54,11 +54,11 @@ class FakeEmptyHtmlRenderer implements ElementRendererInterface
 
     /**
      * @param AbstractBlock $block
-     * @param bool $inTightList
-     *
-     * @return string
+     * @param bool          $inTightList
      *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function renderBlock(AbstractBlock $block, $inTightList = false)
     {
@@ -67,7 +67,7 @@ class FakeEmptyHtmlRenderer implements ElementRendererInterface
 
     /**
      * @param AbstractBlock[] $blocks
-     * @param bool $inTightList
+     * @param bool            $inTightList
      *
      * @return string
      */

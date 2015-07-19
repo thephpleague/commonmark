@@ -14,10 +14,10 @@
 
 namespace League\CommonMark\Tests\Functional;
 
-use League\CommonMark\Environment;
-use League\CommonMark\Extension\SmartPunctExtension;
 use League\CommonMark\Converter;
 use League\CommonMark\DocParser;
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\SmartPunctExtension;
 use League\CommonMark\HtmlRenderer;
 
 /**
@@ -77,7 +77,7 @@ class SmartPunctTest extends \PHPUnit_Framework_TestCase
         preg_match_all('/^\.\n([\s\S]*?)^\.\n([\s\S]*?)^\.$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
 
         $examples = [];
-        $currentSection = "";
+        $currentSection = '';
         $exampleNumber = 0;
 
         foreach ($matches as $match) {
@@ -91,9 +91,9 @@ class SmartPunctTest extends \PHPUnit_Framework_TestCase
 
                 $examples[] = [
                     'markdown' => $markdown,
-                    'html' => $match[2],
-                    'section' => $currentSection,
-                    'number' => $exampleNumber
+                    'html'     => $match[2],
+                    'section'  => $currentSection,
+                    'number'   => $exampleNumber,
                 ];
             }
         }

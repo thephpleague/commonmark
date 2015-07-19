@@ -16,8 +16,8 @@ namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\InlineParserContext;
 
 class BangParser extends AbstractInlineParser
 {
@@ -30,7 +30,7 @@ class BangParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
+     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool

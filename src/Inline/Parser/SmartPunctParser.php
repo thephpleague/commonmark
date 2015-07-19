@@ -15,8 +15,8 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\InlineParserContext;
 
 class SmartPunctParser extends AbstractInlineParser
 {
@@ -29,7 +29,7 @@ class SmartPunctParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
+     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
@@ -40,15 +40,14 @@ class SmartPunctParser extends AbstractInlineParser
         $ch = $cursor->getCharacter();
 
         // Ellipses
-        if ($ch === '.' && $matched = $cursor->match('/^\\.( ?\\.)\\1/'))
-        {
-            $inlineContext->getInlines()->add(new Text("…"));
+        if ($ch === '.' && $matched = $cursor->match('/^\\.( ?\\.)\\1/')) {
+            $inlineContext->getInlines()->add(new Text('…'));
+
             return true;
         }
 
         // Em/En-dashes
-        elseif ($ch === '-' && $matched = $cursor->match('/^(?<!-)(-{2,})/'))
-        {
+        elseif ($ch === '-' && $matched = $cursor->match('/^(?<!-)(-{2,})/')) {
             $count = strlen($matched);
             $en_dash = '–';
             $en_count = 0;
@@ -66,9 +65,10 @@ class SmartPunctParser extends AbstractInlineParser
                 $en_count = 2;
             }
             $inlineContext->getInlines()->add(new Text(
-                str_repeat($em_dash, $em_count).
+                str_repeat($em_dash, $em_count) .
                 str_repeat($en_dash, $en_count)
             ));
+
             return true;
         }
 

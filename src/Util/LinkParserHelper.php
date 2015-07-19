@@ -41,7 +41,7 @@ class LinkParserHelper
                     RegexHelper::unescape($res)
                 );
             } else {
-                return null;
+                return;
             }
         }
     }
@@ -77,7 +77,7 @@ class LinkParserHelper
             // Chop off quotes from title and unescape
             return RegexHelper::unescape(substr($title, 1, strlen($title) - 2));
         } else {
-            return null;
+            return;
         }
     }
 }

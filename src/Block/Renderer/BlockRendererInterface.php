@@ -21,9 +21,9 @@ use League\CommonMark\HtmlElement;
 interface BlockRendererInterface
 {
     /**
-     * @param AbstractBlock $block
+     * @param AbstractBlock            $block
      * @param ElementRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param bool                     $inTightList
      *
      * @return HtmlElement|string
      */

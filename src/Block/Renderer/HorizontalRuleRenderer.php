@@ -22,9 +22,9 @@ use League\CommonMark\HtmlElement;
 class HorizontalRuleRenderer implements BlockRendererInterface
 {
     /**
-     * @param HorizontalRule $block
+     * @param HorizontalRule           $block
      * @param ElementRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param bool                     $inTightList
      *
      * @return HtmlElement
      */

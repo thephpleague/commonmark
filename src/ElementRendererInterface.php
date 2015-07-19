@@ -49,9 +49,9 @@ interface ElementRendererInterface
      * @param AbstractBlock $block
      * @param bool          $inTightList
      *
-     * @return string
-     *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function renderBlock(AbstractBlock $block, $inTightList = false);
 

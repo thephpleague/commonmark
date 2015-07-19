@@ -22,7 +22,7 @@ use League\CommonMark\Inline\Element\Link;
 class LinkRenderer implements InlineRendererInterface
 {
     /**
-     * @param Link $inline
+     * @param Link                     $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement

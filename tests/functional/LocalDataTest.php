@@ -59,7 +59,7 @@ class LocalDataTest extends \PHPUnit_Framework_TestCase
     {
         $finder = new Finder();
         $finder->files()
-            ->in(__DIR__.'/data')
+            ->in(__DIR__ . '/data')
             ->name('*.md');
 
         $ret = [];
@@ -68,7 +68,7 @@ class LocalDataTest extends \PHPUnit_Framework_TestCase
         foreach ($finder as $markdownFile) {
             $testName = $markdownFile->getBasename('.md');
             $markdown = $markdownFile->getContents();
-            $html = file_get_contents(__DIR__.'/data/'.$testName.'.html');
+            $html = file_get_contents(__DIR__ . '/data/' . $testName . '.html');
 
             $ret[] = [$markdown, $html, $testName];
         }
