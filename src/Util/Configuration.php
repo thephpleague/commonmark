@@ -44,7 +44,7 @@ class Configuration
 
     /**
      * @param string|null $key
-     * @param mixed|null $default
+     * @param mixed|null  $default
      *
      * @return mixed|null
      */

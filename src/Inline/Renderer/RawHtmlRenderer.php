@@ -21,7 +21,7 @@ use League\CommonMark\Inline\Element\Html;
 class RawHtmlRenderer implements InlineRendererInterface
 {
     /**
-     * @param Html $inline
+     * @param Html                     $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return string

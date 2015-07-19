@@ -19,9 +19,9 @@ use League\CommonMark\Util\ArrayCollection;
 class Link extends AbstractWebResource
 {
     /**
-     * @param string $url
+     * @param string                      $url
      * @param ArrayCollection|string|null $label
-     * @param string $title
+     * @param string                      $title
      */
     public function __construct($url, $label = null, $title = '')
     {

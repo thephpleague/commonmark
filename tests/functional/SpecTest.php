@@ -42,8 +42,8 @@ class SpecTest extends \PHPUnit_Framework_TestCase
     public function testExample($markdown, $html, $section, $number)
     {
         // Replace visible tabs in spec
-        $markdown = str_replace("→", "\t", $markdown);
-        $html = str_replace("→", "\t", $html);
+        $markdown = str_replace('→', "\t", $markdown);
+        $html = str_replace('→', "\t", $html);
 
         $actualResult = $this->converter->convertToHtml($markdown);
 
@@ -72,7 +72,7 @@ class SpecTest extends \PHPUnit_Framework_TestCase
         preg_match_all('/^\.\n([\s\S]*?)^\.\n([\s\S]*?)^\.$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
 
         $examples = [];
-        $currentSection = "";
+        $currentSection = '';
         $exampleNumber = 0;
 
         foreach ($matches as $match) {
@@ -86,9 +86,9 @@ class SpecTest extends \PHPUnit_Framework_TestCase
 
                 $examples[] = [
                     'markdown' => $markdown,
-                    'html' => $match[2],
-                    'section' => $currentSection,
-                    'number' => $exampleNumber
+                    'html'     => $match[2],
+                    'section'  => $currentSection,
+                    'number'   => $exampleNumber,
                 ];
             }
         }

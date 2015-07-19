@@ -47,9 +47,9 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     {
         $config = [
             'foo' => 'bar',
-            'a' => [
-                'b' => 'c'
-            ]
+            'a'   => [
+                'b' => 'c',
+            ],
         ];
         $environment = new Environment($config);
 
@@ -164,11 +164,11 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
             'Paragraph'      => 'League\CommonMark\Block\Element\Paragraph',
         ];
 
-        foreach ($builtInClasses as $name => $fullyQualifiedName){
+        foreach ($builtInClasses as $name => $fullyQualifiedName) {
             $environment->addBlockRenderer($name, $mockRenderer);
         }
 
-        foreach ($builtInClasses as $name => $fullyQualifiedName){
+        foreach ($builtInClasses as $name => $fullyQualifiedName) {
             $this->assertEquals(
                 $mockRenderer,
                 $environment->getBlockRendererForClass($fullyQualifiedName)
@@ -193,18 +193,17 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
             'Text'     => 'League\CommonMark\Inline\Element\Text',
         ];
 
-        foreach ($builtInClasses as $name => $fullyQualifiedName){
+        foreach ($builtInClasses as $name => $fullyQualifiedName) {
             $environment->addInlineRenderer($name, $mockRenderer);
         }
 
-        foreach ($builtInClasses as $name => $fullyQualifiedName){
+        foreach ($builtInClasses as $name => $fullyQualifiedName) {
             $this->assertEquals(
                 $mockRenderer,
                 $environment->getInlineRendererForClass($fullyQualifiedName)
             );
         }
     }
-
 
     /**
      * @expectedException \RuntimeException

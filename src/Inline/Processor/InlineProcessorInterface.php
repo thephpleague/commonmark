@@ -22,8 +22,8 @@ interface InlineProcessorInterface
 {
     /**
      * @param ArrayCollection $inlines
-     * @param DelimiterStack $delimiterStack
-     * @param Delimiter $stackBottom
+     * @param DelimiterStack  $delimiterStack
+     * @param Delimiter       $stackBottom
      *
      * @return void
      */

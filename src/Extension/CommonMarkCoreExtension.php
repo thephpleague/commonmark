@@ -85,7 +85,7 @@ class CommonMarkCoreExtension extends Extension
     public function getInlineProcessors()
     {
         return [
-            new InlineProcessor\EmphasisProcessor()
+            new InlineProcessor\EmphasisProcessor(),
         ];
     }
 

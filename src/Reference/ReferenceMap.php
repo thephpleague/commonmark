@@ -61,7 +61,7 @@ class ReferenceMap
         if (isset($this->references[$label])) {
             return $this->references[$label];
         } else {
-            return null;
+            return;
         }
     }
 

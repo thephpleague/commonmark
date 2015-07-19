@@ -77,7 +77,6 @@ class FencedCodeRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('::escape::', $code->getContents(true));
     }
 
-
     /**
      * @expectedException \InvalidArgumentException
      */

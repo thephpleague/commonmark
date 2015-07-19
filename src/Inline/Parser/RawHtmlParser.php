@@ -15,8 +15,8 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Html;
+use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 class RawHtmlParser extends AbstractInlineParser
@@ -30,7 +30,7 @@ class RawHtmlParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
+     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool

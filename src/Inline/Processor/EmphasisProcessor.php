@@ -75,8 +75,10 @@ class EmphasisProcessor implements InlineProcessorInterface
                 $inlines->set($closer->getPos(), null);
                 $tempStack = $closer->getNext();
                 $stack->removeDelimiter($closer);
+
                 return $tempStack;
             }
+
             return $closer;
         };
 

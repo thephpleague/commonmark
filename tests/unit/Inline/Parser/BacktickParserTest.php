@@ -16,8 +16,8 @@ namespace League\CommonMark\Tests\Unit\Inline\Parser;
 
 use League\CommonMark\Cursor;
 use League\CommonMark\Inline\Element\Code;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Parser\BacktickParser;
+use League\CommonMark\InlineParserContext;
 
 class BacktickParserTest extends \PHPUnit_Framework_TestCase
 {

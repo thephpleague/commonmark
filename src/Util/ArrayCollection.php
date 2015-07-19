@@ -25,6 +25,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
     /**
      * Constructor
+     *
      * @param array $elements
      */
     public function __construct(array $elements = [])
@@ -97,7 +98,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     public function remove($key)
     {
         if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
-            return null;
+            return;
         }
 
         $removed = $this->elements[$key];
@@ -159,7 +160,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @param mixed $offset An offset to check for.
      *
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      */
     public function offsetExists($offset)
     {
@@ -168,6 +169,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
     /**
      * Offset to retrieve
+     *
      * @param mixed $offset The offset to retrieve.
      *
      * @return mixed|null
@@ -179,8 +181,9 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
     /**
      * Offset to set
+     *
      * @param mixed $offset The offset to assign the value to.
-     * @param mixed $value The value to set.
+     * @param mixed $value  The value to set.
      *
      * @return void
      */
@@ -195,6 +198,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
     /**
      * Offset to unset
+     *
      * @param mixed $offset The offset to unset.
      *
      * @return void
@@ -206,6 +210,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
     /**
      * Returns a subset of the array
+     *
      * @param int      $offset
      * @param int|null $length
      *

@@ -305,5 +305,4 @@ class RegexHelperTest extends \PHPUnit_Framework_TestCase
             ['/ /', 'это тест', 1, 3],
         ];
     }
-
 }

@@ -83,7 +83,7 @@ class BlockQuote extends AbstractBlock
 
     /**
      * @param Cursor $cursor
-     * @param int $currentLineNumber
+     * @param int    $currentLineNumber
      *
      * @return $this
      */

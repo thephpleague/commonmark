@@ -49,13 +49,13 @@ class CursorState
     private $column;
 
     /**
-     * @param string $line
-     * @param int $length
-     * @param int $currentPosition
-     * @param int $previousPosition
+     * @param string   $line
+     * @param int      $length
+     * @param int      $currentPosition
+     * @param int      $previousPosition
      * @param int|null $firstNonSpaceCache
-     * @param int $indent
-     * @param int $column
+     * @param int      $indent
+     * @param int      $column
      */
     public function __construct($line, $length, $currentPosition, $previousPosition, $firstNonSpaceCache, $indent, $column)
     {

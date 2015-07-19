@@ -22,9 +22,9 @@ use League\CommonMark\HtmlElement;
 class ListBlockRenderer implements BlockRendererInterface
 {
     /**
-     * @param ListBlock $block
+     * @param ListBlock                $block
      * @param ElementRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param bool                     $inTightList
      *
      * @return HtmlElement
      */
@@ -36,9 +36,9 @@ class ListBlockRenderer implements BlockRendererInterface
 
         $listData = $block->getListData();
 
-        $tag = $listData->type == ListBlock::TYPE_UNORDERED ? 'ul' : 'ol';
+        $tag = $listData->type === ListBlock::TYPE_UNORDERED ? 'ul' : 'ol';
         $attr = ($listData->start === null || $listData->start === 1) ?
-            [] : ['start' => (string)$listData->start];
+            [] : ['start' => (string) $listData->start];
 
         return new HtmlElement(
             $tag,

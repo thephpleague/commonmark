@@ -109,7 +109,7 @@ class Environment
 
     /**
      * @param string|null $key
-     * @param mixed|null $default
+     * @param mixed|null  $default
      *
      * @return mixed|null
      */
@@ -133,7 +133,7 @@ class Environment
     }
 
     /**
-     * @param string $blockClass
+     * @param string                 $blockClass
      * @param BlockRendererInterface $blockRenderer
      *
      * @return $this
@@ -176,7 +176,7 @@ class Environment
     }
 
     /**
-     * @param string $inlineClass
+     * @param string                  $inlineClass
      * @param InlineRendererInterface $renderer
      *
      * @return $this
@@ -210,7 +210,7 @@ class Environment
         $this->initializeExtensions();
 
         if (!isset($this->blockRenderersByClass[$blockClass])) {
-            return null;
+            return;
         }
 
         return $this->blockRenderersByClass[$blockClass];
@@ -248,7 +248,7 @@ class Environment
         $this->initializeExtensions();
 
         if (!isset($this->inlineParsersByCharacter[$character])) {
-            return null;
+            return;
         }
 
         return $this->inlineParsersByCharacter[$character];
@@ -274,7 +274,7 @@ class Environment
         $this->initializeExtensions();
 
         if (!isset($this->inlineRenderersByClass[$inlineClass])) {
-            return null;
+            return;
         }
 
         return $this->inlineRenderersByClass[$inlineClass];
@@ -420,8 +420,8 @@ class Environment
             'renderer' => [
                 'block_separator' => "\n",
                 'inner_separator' => "\n",
-                'soft_break' => "\n",
-            ]
+                'soft_break'      => "\n",
+            ],
         ]);
 
         return $environment;

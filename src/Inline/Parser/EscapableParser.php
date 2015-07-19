@@ -15,9 +15,9 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Newline;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 class EscapableParser extends AbstractInlineParser
@@ -31,8 +31,9 @@ class EscapableParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
+     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
+     *
      * @return bool
      */
     public function parse(ContextInterface $context, InlineParserContext $inlineContext)
@@ -57,7 +58,6 @@ class EscapableParser extends AbstractInlineParser
 
             return true;
         }
-
 
         $cursor->advance();
         $inlineContext->getInlines()->add(new Text('\\'));

@@ -118,8 +118,8 @@ class DelimiterStack
 
     /**
      * @param string|string[] $characters
-     * @param callable $callback
-     * @param Delimiter $stackBottom
+     * @param callable        $callback
+     * @param Delimiter       $stackBottom
      */
     public function iterateByCharacters($characters, $callback, Delimiter $stackBottom = null)
     {
@@ -178,6 +178,6 @@ class DelimiterStack
             $opener = $opener->getPrevious();
         }
 
-        return null;
+        return;
     }
 }

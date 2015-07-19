@@ -22,7 +22,7 @@ use League\CommonMark\Inline\Element\Newline;
 class NewlineRenderer implements InlineRendererInterface
 {
     /**
-     * @param Newline $inline
+     * @param Newline                  $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement|string

@@ -94,7 +94,7 @@ class ListItem extends AbstractBlock
 
     /**
      * @param Cursor $cursor
-     * @param int $currentLineNumber
+     * @param int    $currentLineNumber
      *
      * @return $this
      */

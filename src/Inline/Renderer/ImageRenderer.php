@@ -22,7 +22,7 @@ use League\CommonMark\Inline\Element\Image;
 class ImageRenderer implements InlineRendererInterface
 {
     /**
-     * @param Image $inline
+     * @param Image                    $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement

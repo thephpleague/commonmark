@@ -82,7 +82,7 @@ class MiscExtension implements ExtensionInterface
     }
 
     /**
-     * @param string $blockClass
+     * @param string                 $blockClass
      * @param BlockRendererInterface $blockRenderer
      *
      * @return $this
@@ -151,7 +151,7 @@ class MiscExtension implements ExtensionInterface
     }
 
     /**
-     * @param string $inlineClass
+     * @param string                  $inlineClass
      * @param InlineRendererInterface $inlineRenderer
      *
      * @return $this

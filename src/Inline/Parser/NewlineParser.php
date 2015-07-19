@@ -15,9 +15,9 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\ContextInterface;
+use League\CommonMark\Inline\Element\Newline;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
-use League\CommonMark\Inline\Element\Newline;
 
 class NewlineParser extends AbstractInlineParser
 {
@@ -30,7 +30,7 @@ class NewlineParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
+     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool

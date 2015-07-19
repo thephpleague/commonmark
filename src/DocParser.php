@@ -19,7 +19,6 @@ use League\CommonMark\Block\Element\AbstractInlineContainer;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Util\TextHelper;
 
 class DocParser
 {
@@ -58,7 +57,7 @@ class DocParser
     private function preProcessInput($input)
     {
         // Remove any /n which appears at the very end of the string
-        if (substr($input, -1) == "\n") {
+        if (substr($input, -1) === "\n") {
             $input = substr($input, 0, -1);
         }
 
@@ -152,7 +151,7 @@ class DocParser
      * break of of all lists" feature.)
      *
      * @param ContextInterface $context
-     * @param AbstractBlock $block
+     * @param AbstractBlock    $block
      */
     private function breakOutOfLists(ContextInterface $context, AbstractBlock $block)
     {

@@ -21,7 +21,7 @@ use League\CommonMark\Inline\Element\AbstractInline;
 interface InlineRendererInterface
 {
     /**
-     * @param AbstractInline $inline
+     * @param AbstractInline           $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement|string

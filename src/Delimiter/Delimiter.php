@@ -44,12 +44,12 @@ class Delimiter
     protected $index;
 
     /**
-     * @param string    $char
-     * @param int       $numDelims
-     * @param int       $pos
-     * @param bool      $canOpen
-     * @param bool      $canClose
-     * @param int|null  $index
+     * @param string   $char
+     * @param int      $numDelims
+     * @param int      $pos
+     * @param bool     $canOpen
+     * @param bool     $canClose
+     * @param int|null $index
      */
     public function __construct($char, $numDelims, $pos, $canOpen, $canClose, $index = null)
     {
@@ -63,7 +63,7 @@ class Delimiter
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function canClose()
     {
@@ -71,7 +71,7 @@ class Delimiter
     }
 
     /**
-     * @param boolean $canClose
+     * @param bool $canClose
      *
      * @return $this
      */
@@ -83,7 +83,7 @@ class Delimiter
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function canOpen()
     {
@@ -91,7 +91,7 @@ class Delimiter
     }
 
     /**
-     * @param boolean $canOpen
+     * @param bool $canOpen
      *
      * @return $this
      */
