@@ -17,7 +17,11 @@ namespace League\CommonMark\Inline\Parser;
 abstract class AbstractInlineParser implements InlineParserInterface
 {
     /**
-     * @return string Name of the parser (must be unique within its block type)
+     * Get the name of the parser
+     *
+     * Note that this must be unique within its block type.
+     *
+     * @return string 
      */
     public function getName()
     {
