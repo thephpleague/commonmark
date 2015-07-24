@@ -78,7 +78,7 @@ class QuoteParser extends AbstractInlineParser
             !$afterIsWhitespace &&
             !$afterIsPunctuation);
 
-        $canOpen = $leftFlanking && ($character !== '’' || !$rightFlanking);
+        $canOpen = $leftFlanking && !$rightFlanking;
         $canClose = $rightFlanking;
 
         $inlineContext->getInlines()->add(
