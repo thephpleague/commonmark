@@ -49,6 +49,6 @@ class ListItemRenderer implements BlockRendererInterface
 
         $li = new HtmlElement('li', $attrs, $contents);
 
-        return trim($li);
+        return $li;
     }
 }

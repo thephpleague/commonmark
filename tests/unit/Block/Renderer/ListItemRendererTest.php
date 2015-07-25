@@ -17,6 +17,7 @@ namespace League\CommonMark\Tests\Unit\Block\Renderer;
 use League\CommonMark\Block\Element\ListData;
 use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\Block\Renderer\ListItemRenderer;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 
 class ListItemRendererTest extends \PHPUnit_Framework_TestCase
@@ -39,8 +40,9 @@ class ListItemRendererTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('<li id="::escape::id">::blocks::</li>', $result);
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertEquals('li', $result->getTagName());
+        $this->assertEquals('<li id="::escape::id">::blocks::</li>', $result->__toString());
     }
 
     /**

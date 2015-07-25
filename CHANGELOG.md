@@ -20,6 +20,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Changed tab/indentation handling to meet the new spec behavior
  - Modified spec tests to show spaces and tabs in test results
  - Replaced `HtmlRendererInterface` with `ElementRendererInterface` (#141)
+ - Removed the unnecessary `trim()` and string cast from `ListItemRenderer`
 
 ### Fixed
  - Fixed link reference definition edge case (#120)
