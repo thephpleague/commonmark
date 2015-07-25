@@ -106,7 +106,7 @@ class ListBlock extends AbstractBlock
 
         $this->tight = true; // tight by default
 
-        foreach ($this->children as $item) {
+        foreach ($this->getChildren() as $item) {
             // check for non-final list item ending with blank line:
             if ($item->endsWithBlankLine() && $item !== $this->getLastChild()) {
                 $this->tight = false;

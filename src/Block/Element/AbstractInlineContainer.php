@@ -20,23 +20,26 @@ use League\CommonMark\Util\ArrayCollection;
 abstract class AbstractInlineContainer extends AbstractBlock
 {
     /**
-     * @var ArrayCollection|AbstractInline[]
+     * @var AbstractInline
      */
-    protected $inlines;
+    protected $firstInline;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->inlines = new ArrayCollection();
-    }
+    /**
+     * @var AbstractInline
+     */
+    protected $lastInline;
 
     /**
      * @return ArrayCollection|AbstractInline[]
      */
     public function getInlines()
     {
-        return $this->inlines;
+        $inlines = [];
+        for($current = $this->firstInline;$current;$current = $current->next) {
+            $inlines[] = $current;
+        }
+
+        return $inlines;
     }
 
     /**
@@ -46,16 +49,26 @@ abstract class AbstractInlineContainer extends AbstractBlock
      */
     public function setInlines($inlines)
     {
-        if (is_array($inlines)) {
-            $this->inlines = new ArrayCollection($inlines);
-        } elseif (is_object($inlines) && $inlines instanceof ArrayCollection) {
-            $this->inlines = $inlines;
-        } else {
-            throw new \InvalidArgumentException();
+        if (!is_array($inlines) && !(is_object($inlines) && $inlines instanceof ArrayCollection)) {
+            throw new \InvalidArgumentException(sprintf('Expect iterable, got %s', get_class($inlines)));
         }
 
-        foreach ($this->inlines as $inline) {
-            $inline->setParent($this);
+        foreach ($this->getInlines() as $inline) {
+            $inline->unlink();
+        }
+
+        foreach ($inlines as $inline) {
+            $inline->parent = $this;
+            if (!$this->lastInline) {
+                $this->firstInline = $this->lastInline = $inline;
+            } else {
+                $inline->previous = $this->lastInline;
+                $this->lastInline->next = $inline;
+
+                if (!$inline->next) {
+                    $this->lastInline = $inline;
+                }
+            }
         }
 
         return $this;

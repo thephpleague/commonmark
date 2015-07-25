@@ -16,12 +16,13 @@ namespace League\CommonMark\Block\Element;
 
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\ArrayCollection;
 
 /**
  * Block-level element
  */
-abstract class AbstractBlock
+abstract class AbstractBlock extends Node
 {
     /**
      * Used for storage of arbitrary data.
@@ -29,16 +30,6 @@ abstract class AbstractBlock
      * @var array
      */
     public $data = [];
-
-    /**
-     * @var ArrayCollection|AbstractBlock[]
-     */
-    protected $children;
-
-    /**
-     * @var AbstractBlock|null
-     */
-    protected $parent;
 
     /**
      * @var ArrayCollection|string[]
@@ -75,28 +66,7 @@ abstract class AbstractBlock
      */
     public function __construct()
     {
-        $this->children = new ArrayCollection();
         $this->strings = new ArrayCollection();
-    }
-
-    /**
-     * @return AbstractBlock|null
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param AbstractBlock $parent
-     *
-     * @return $this
-     */
-    protected function setParent(AbstractBlock $parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
     }
 
     /**
@@ -104,35 +74,18 @@ abstract class AbstractBlock
      */
     public function hasChildren()
     {
-        return !$this->children->isEmpty();
-    }
-
-    /**
-     * @return AbstractBlock[]
-     */
-    public function getChildren()
-    {
-        return $this->children->toArray();
-    }
-
-    /**
-     * @return AbstractBlock|null
-     */
-    public function getLastChild()
-    {
-        return $this->children->last();
+        return !is_null($this->firstChild);
     }
 
     public function addChild(AbstractBlock $childBlock)
     {
-        $this->children->add($childBlock);
-        $childBlock->setParent($this);
+        $this->appendChild($childBlock);
     }
 
     public function removeChild(AbstractBlock $childBlock)
     {
-        if (($index = $this->children->indexOf($childBlock)) !== false) {
-            $this->children->remove($index);
+        if ($childBlock->parent === $this) {
+            $childBlock->unlink();
 
             return true;
         }
@@ -142,12 +95,10 @@ abstract class AbstractBlock
 
     public function replaceChild(ContextInterface $context, AbstractBlock $original, AbstractBlock $replacement)
     {
-        if (($index = $this->children->indexOf($original)) !== false) {
-            $this->children->remove($index);
-            $replacement->setParent($this);
-            $this->children->set($index, $replacement);
+        if ($original->parent === $this) {
+            $original->replaceWith($replacement);
         } else {
-            $this->addChild($replacement);
+            $this->appendChild($replacement);
         }
 
         if ($context->getTip() === $original) {

@@ -30,23 +30,17 @@ abstract class AbstractInlineContainer extends AbstractInline
     }
 
     /**
-     * @return AbstractInline[]
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
      * @param AbstractInline[] $contents
      *
      * @return $this
      */
     public function setChildren($contents)
     {
-        $this->children = $contents;
-        foreach ($contents as $content) {
-            $content->setParent($this);
+        foreach ($this->getChildren() as $children) {
+            $children->unlink();
+        }
+        foreach ($contents as $children) {
+            $this->appendChild($children);
         }
 
         return $this;
