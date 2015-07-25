@@ -61,10 +61,10 @@ abstract class AbstractInline
     }
 
     /**
-     * @param string     $key
-     * @param mixed|null $default
+     * @param string $key
+     * @param mixed  $default
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function getData($key, $default = null)
     {

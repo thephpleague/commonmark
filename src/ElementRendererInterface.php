@@ -23,10 +23,10 @@ use League\CommonMark\Inline\Element\AbstractInline;
 interface ElementRendererInterface
 {
     /**
-     * @param string     $option
-     * @param mixed|null $default
+     * @param string $option
+     * @param mixed  $default
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function getOption($option, $default = null);
 
