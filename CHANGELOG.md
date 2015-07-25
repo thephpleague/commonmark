@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+
+## [0.10.0] - 2015-07-25
 ### Added
  - Added parent references to inline elements (#124)
  - Added smart punctuation extension (#134)
@@ -235,7 +237,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.9.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.10.0...HEAD
+[0.10.0]: https://github.com/thephpleague/commonmark/compare/0.9.0...0.10.0
 [0.9.0]: https://github.com/thephpleague/commonmark/compare/0.8.0...0.9.0
 [0.8.0]: https://github.com/thephpleague/commonmark/compare/0.7.2...0.8.0
 [0.7.2]: https://github.com/thephpleague/commonmark/compare/0.7.1...0.7.2
