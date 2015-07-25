@@ -316,4 +316,15 @@ abstract class AbstractBlock
 
         return $this;
     }
+
+    /**
+     * @param string     $key
+     * @param mixed|null $default
+     *
+     * @return mixed|null
+     */
+    public function getData($key, $default = null)
+    {
+        return array_key_exists($key, $this->data) ? $this->data[$key] : $default;
+    }
 }

@@ -33,6 +33,11 @@ class StrongRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        return new HtmlElement('strong', [], $htmlRenderer->renderInlines($inline->getChildren()));
+        $attrs = [];
+        foreach ($inline->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
+        return new HtmlElement('strong', $attrs, $htmlRenderer->renderInlines($inline->getChildren()));
     }
 }

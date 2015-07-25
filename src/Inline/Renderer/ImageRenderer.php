@@ -34,6 +34,9 @@ class ImageRenderer implements InlineRendererInterface
         }
 
         $attrs = [];
+        foreach ($inline->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
 
         $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
 

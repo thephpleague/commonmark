@@ -34,6 +34,7 @@ class IndentedCodeRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $block = new IndentedCode();
+        $block->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -45,6 +46,7 @@ class IndentedCodeRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($code instanceof HtmlElement);
         $this->assertEquals('code', $code->getTagName());
         $this->assertNull($code->getAttribute('class'));
+        $this->assertEquals(['id' => '::escape::id'], $code->getAllAttributes());
         $this->assertContains('::escape::', $code->getContents(true));
     }
 
