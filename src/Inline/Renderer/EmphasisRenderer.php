@@ -33,6 +33,11 @@ class EmphasisRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        return new HtmlElement('em', [], $htmlRenderer->renderInlines($inline->getChildren()));
+        $attrs = [];
+        foreach ($inline->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
+        return new HtmlElement('em', $attrs, $htmlRenderer->renderInlines($inline->getChildren()));
     }
 }

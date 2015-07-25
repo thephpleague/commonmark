@@ -34,6 +34,7 @@ class LinkRendererTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithTitle()
     {
         $inline = new Link('http://example.com/foo.html', '::label::', '::title::');
+        $inline->data['attributes'] = ['id' => '::id::', 'title' => '::title2::', 'href' => '::href2::'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -44,6 +45,7 @@ class LinkRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('::escape::', $result->getAttribute('href'));
         $this->assertContains('::title::', $result->getAttribute('title'));
         $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertContains('::id::', $result->getAttribute('id'));
     }
 
     public function testRenderWithoutTitle()

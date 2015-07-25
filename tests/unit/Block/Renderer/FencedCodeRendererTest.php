@@ -41,6 +41,10 @@ class FencedCodeRendererTest extends \PHPUnit_Framework_TestCase
         $block->expects($this->any())
             ->method('getInfoWords')
             ->will($this->returnValue(['php']));
+        $block->expects($this->any())
+            ->method('getData')
+            ->with($this->equalTo('attributes'))
+            ->will($this->returnValue(['id' => 'id', 'class' => 'foo']));
         $block->addLine('echo "hello world!";');
 
         $fakeRenderer = new FakeHtmlRenderer();
@@ -53,7 +57,7 @@ class FencedCodeRendererTest extends \PHPUnit_Framework_TestCase
         $code = $result->getContents(false);
         $this->assertTrue($code instanceof HtmlElement);
         $this->assertEquals('code', $code->getTagName());
-        $this->assertContains('language-::escape::php', $code->getAttribute('class'));
+        $this->assertContains('::escape::foo language-::escape::php', $code->getAttribute('class'));
         $this->assertContains('::escape::', $code->getContents(true));
     }
 
@@ -62,6 +66,7 @@ class FencedCodeRendererTest extends \PHPUnit_Framework_TestCase
         /** @var FencedCode|\PHPUnit_Framework_MockObject_MockObject $block */
         $block = new FencedCode(3, '~', 0);
         $block->addLine('echo "hello world!";');
+        $block->data['attributes'] = ['id' => 'id', 'class' => 'foo'];
 
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -73,7 +78,7 @@ class FencedCodeRendererTest extends \PHPUnit_Framework_TestCase
         $code = $result->getContents(false);
         $this->assertTrue($code instanceof HtmlElement);
         $this->assertEquals('code', $code->getTagName());
-        $this->assertNull($code->getAttribute('class'));
+        $this->assertEquals('::escape::foo', $code->getAttribute('class'));
         $this->assertContains('::escape::', $code->getContents(true));
     }
 

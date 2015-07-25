@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added HTML block types
  - Added indentation caching to the cursor
  - Added automated code style checks (#133)
+ - Added support for tag attributes in renderers (#101, #165)
 
 ### Changed
  - Bumped spec target version to 0.21

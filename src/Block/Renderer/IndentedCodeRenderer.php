@@ -34,10 +34,15 @@ class IndentedCodeRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
         return new HtmlElement(
             'pre',
             [],
-            new HtmlElement('code', [], $htmlRenderer->escape($block->getStringContent()))
+            new HtmlElement('code', $attrs, $htmlRenderer->escape($block->getStringContent()))
         );
     }
 }

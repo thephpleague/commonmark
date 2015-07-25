@@ -34,6 +34,11 @@ class HorizontalRuleRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
-        return new HtmlElement('hr', [], '', true);
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
+        return new HtmlElement('hr', $attrs, '', true);
     }
 }
