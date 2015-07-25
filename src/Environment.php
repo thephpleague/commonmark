@@ -109,9 +109,9 @@ class Environment
 
     /**
      * @param string|null $key
-     * @param mixed|null  $default
+     * @param mixed       $default
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function getConfig($key = null, $default = null)
     {

@@ -83,7 +83,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @param mixed $key
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function get($key)
     {
@@ -93,7 +93,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @param mixed $key
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function remove($key)
     {
@@ -172,7 +172,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @param mixed $offset The offset to retrieve.
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function offsetGet($offset)
     {
