@@ -36,9 +36,7 @@ abstract class AbstractInlineContainer extends AbstractInline
      */
     public function setChildren($contents)
     {
-        foreach ($this->getChildren() as $children) {
-            $children->unlink();
-        }
+        $this->unlinkChildren();
         foreach ($contents as $children) {
             $this->appendChild($children);
         }

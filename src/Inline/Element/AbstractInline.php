@@ -26,10 +26,6 @@ abstract class AbstractInline extends Node
      */
     public $data = [];
 
-    public function setParent()
-    {
-
-    }
 
     /**
      * @param string $key

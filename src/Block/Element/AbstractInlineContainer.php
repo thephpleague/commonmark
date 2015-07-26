@@ -19,27 +19,28 @@ use League\CommonMark\Util\ArrayCollection;
 
 abstract class AbstractInlineContainer extends AbstractBlock
 {
-    /**
-     * @var AbstractInline
-     */
-    protected $firstInline;
 
-    /**
-     * @var AbstractInline
-     */
-    protected $lastInline;
+    public function hasChildren()
+    {
+        return false;
+    }
+
+    public function getChildren()
+    {
+        return [];
+    }
 
     /**
      * @return ArrayCollection|AbstractInline[]
      */
     public function getInlines()
     {
-        $inlines = [];
-        for($current = $this->firstInline;$current;$current = $current->next) {
-            $inlines[] = $current;
+        $children = [];
+        for($current = $this->firstChild;null !== $current;$current = $current->next) {
+            $children[] = $current;
         }
 
-        return $inlines;
+        return $children;
     }
 
     /**
@@ -53,22 +54,9 @@ abstract class AbstractInlineContainer extends AbstractBlock
             throw new \InvalidArgumentException(sprintf('Expect iterable, got %s', get_class($inlines)));
         }
 
-        foreach ($this->getInlines() as $inline) {
-            $inline->unlink();
-        }
-
+        $this->unlinkChildren();
         foreach ($inlines as $inline) {
-            $inline->parent = $this;
-            if (!$this->lastInline) {
-                $this->firstInline = $this->lastInline = $inline;
-            } else {
-                $inline->previous = $this->lastInline;
-                $this->lastInline->next = $inline;
-
-                if (!$inline->next) {
-                    $this->lastInline = $inline;
-                }
-            }
+            $this->appendChild($inline);
         }
 
         return $this;

@@ -195,4 +195,12 @@ abstract class Node
         }
     }
 
+    public function unlinkChildren()
+    {
+        foreach ($this->getChildren() as $children) {
+            $children->parent = null;
+        }
+        $this->firstChild = $this->lastChild = null;
+    }
+
 }
