@@ -24,6 +24,15 @@ class TableCellRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
         }
 
-        return new HtmlElement($block->type, null === $block->align ? [] : ['align' => $block->align], $htmlRenderer->renderInlines($block->getInlines()));
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
+        if ($block->align) {
+            $attrs['align'] = $block->align;
+        }
+
+        return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->getInlines()));
     }
 }

@@ -24,8 +24,13 @@ class TableRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
         }
 
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 
-        return new HtmlElement('table', [], $separator.$htmlRenderer->renderBlocks($block->getChildren()).$separator);
+        return new HtmlElement('table', $attrs, $separator.$htmlRenderer->renderBlocks($block->getChildren()).$separator);
     }
 }

@@ -28,8 +28,13 @@ class TableRowsRenderer implements BlockRendererInterface
             return;
         }
 
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 
-        return new HtmlElement($block->type, [], $separator.$htmlRenderer->renderBlocks($block->getChildren()).$separator);
+        return new HtmlElement($block->type, $attrs, $separator.$htmlRenderer->renderBlocks($block->getChildren()).$separator);
     }
 }
