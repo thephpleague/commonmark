@@ -54,7 +54,7 @@ abstract class AbstractInlineContainer extends AbstractBlock
             throw new \InvalidArgumentException(sprintf('Expect iterable, got %s', get_class($inlines)));
         }
 
-        $this->unlinkChildren();
+        $this->detachChildren();
         foreach ($inlines as $inline) {
             $this->appendChild($inline);
         }

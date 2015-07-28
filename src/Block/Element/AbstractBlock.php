@@ -70,6 +70,27 @@ abstract class AbstractBlock extends Node
     }
 
     /**
+     * @return AbstractBlock|null
+     */
+    public function getParent()
+    {
+        return parent::getParent();
+    }
+
+    /**
+     * @param Node $node
+     */
+    protected function setParent(Node $node)
+    {
+        if ($node && !$node instanceof self) {
+            throw new \InvalidArgumentException('Parent of block must also be block (can not be inline)');
+        }
+
+        parent::setParent($node);
+    }
+
+
+    /**
      * @return bool
      */
     public function hasChildren()
@@ -77,15 +98,24 @@ abstract class AbstractBlock extends Node
         return !is_null($this->firstChild);
     }
 
+    /**
+     * @param AbstractBlock $childBlock
+     * @deprecated Instead of it use appendChild, prependChild or insertAfter, insertBefore of node itself.
+     */
     public function addChild(AbstractBlock $childBlock)
     {
         $this->appendChild($childBlock);
     }
 
+    /**
+     * @param AbstractBlock $childBlock
+     * @return bool
+     * @deprecated Use detach method of node instead.
+     */
     public function removeChild(AbstractBlock $childBlock)
     {
         if ($childBlock->parent === $this) {
-            $childBlock->unlink();
+            $childBlock->detach();
 
             return true;
         }
@@ -93,6 +123,12 @@ abstract class AbstractBlock extends Node
         return false;
     }
 
+    /**
+     * @param ContextInterface $context
+     * @param AbstractBlock $original
+     * @param AbstractBlock $replacement
+     * @deprecated Use replaceWith method of original node
+     */
     public function replaceChild(ContextInterface $context, AbstractBlock $original, AbstractBlock $replacement)
     {
         if ($original->parent === $this) {

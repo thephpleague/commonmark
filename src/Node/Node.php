@@ -2,7 +2,7 @@
 
 namespace League\CommonMark\Node;
 
-use League\CommonMark\Cursor;
+use League\CommonMark\Util\ArrayCollection;
 
 abstract class Node
 {
@@ -32,21 +32,6 @@ abstract class Node
     protected $lastChild;
 
     /**
-     * @var int
-     */
-    protected $startLine;
-
-    /**
-     * @var int
-     */
-    protected $endLine;
-
-    /**
-     * @var bool
-     */
-    protected $lastLineBlank = false;
-
-    /**
      * @return Node|null
      */
     public function getPrevious()
@@ -70,12 +55,17 @@ abstract class Node
         return $this->parent;
     }
 
+    protected function setParent(Node $node)
+    {
+        $this->parent = $node;
+    }
+
     /**
      * @param Node $sibling
      */
     public function insertAfter(Node $sibling)
     {
-        $sibling->unlink();
+        $sibling->detach();
         $sibling->next = $this->next;
 
         if ($sibling->next) {
@@ -84,7 +74,7 @@ abstract class Node
 
         $sibling->previous = $this;
         $this->next = $sibling;
-        $sibling->parent = $this->parent;
+        $sibling->setParent($this->parent);
 
         if (!$sibling->next) {
             $sibling->parent->lastChild = $sibling;
@@ -96,7 +86,7 @@ abstract class Node
      */
     public function insertBefore(Node $sibling)
     {
-        $sibling->unlink();
+        $sibling->detach();
         $sibling->previous = $this->previous;
 
         if ($sibling->previous) {
@@ -105,7 +95,7 @@ abstract class Node
 
         $sibling->next = $this;
         $this->previous = $sibling;
-        $sibling->parent = $this->parent;
+        $sibling->setParent($this->parent);
 
         if (!$sibling->previous) {
             $sibling->parent->firstChild = $sibling;
@@ -114,12 +104,12 @@ abstract class Node
 
     public function replaceWith(Node $replacement)
     {
-        $replacement->unlink();
+        $replacement->detach();
         $this->insertAfter($replacement);
-        $this->unlink();
+        $this->detach();
     }
 
-    public function unlink()
+    public function detach()
     {
         if ($this->previous) {
             $this->previous->next = $this->next;
@@ -175,8 +165,8 @@ abstract class Node
         if ($this->lastChild) {
             $this->lastChild->insertAfter($child);
         } else {
-            $child->unlink();
-            $child->parent = $this;
+            $child->detach();
+            $child->setParent($this);
             $this->lastChild = $this->firstChild = $child;
         }
     }
@@ -189,18 +179,35 @@ abstract class Node
         if ($this->firstChild) {
             $this->firstChild->insertBefore($child);
         } else {
-            $child->unlink();
-            $child->parent = $this;
+            $child->detach();
+            $child->setParent($this);
             $this->lastChild = $this->firstChild = $child;
         }
     }
 
-    public function unlinkChildren()
+    /**
+     * Detaches all child nodes of given node
+     */
+    public function detachChildren()
     {
         foreach ($this->getChildren() as $children) {
-            $children->parent = null;
+            $children->setParent(null);
         }
         $this->firstChild = $this->lastChild = null;
+    }
+
+    public function replaceChildren(array $children)
+    {
+        if (!is_array($children) && !(is_object($children) && $children instanceof ArrayCollection)) {
+            throw new \InvalidArgumentException(sprintf('Expect iterable, got %s', get_class($children)));
+        }
+
+        $this->detachChildren();
+        foreach ($children as $item) {
+            $this->appendChild($item);
+        }
+
+        return $this;
     }
 
 }
