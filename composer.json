@@ -1,0 +1,19 @@
+{
+    "name": "uafrica/commonmark-ext",
+    "description": "Extended parsers and renders for The PHP League CommonMark parser",
+    "require": {
+        "league/commonmark": "^0.10.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johan Meiring",
+            "email": "johan@uafrica.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CommonMarkExt\\": "src/"
+        }
+    }
+}
