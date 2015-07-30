@@ -2,7 +2,8 @@
     "name": "uafrica/commonmark-ext",
     "description": "Extended parsers and renders for The PHP League CommonMark parser",
     "require": {
-        "league/commonmark": "^0.10.0"
+        "league/commonmark": "^0.10.0",
+        "phpunit/phpunit": "^4.7"
     },
     "license": "MIT",
     "authors": [
@@ -15,5 +16,10 @@
         "psr-4": {
             "CommonMarkExt\\": "src/"
         }
-    }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CommonMarkExt\\Tests\\": "tests/"
+        }
+    },
 }
