@@ -80,7 +80,7 @@ class Paragraph extends AbstractInlineContainer
         $this->finalStringContents = $cursor->getRemainder();
 
         if ($referenceFound && $cursor->isAtEnd()) {
-            $this->parent->removeChild($this);
+            $this->detach();
         }
     }
 

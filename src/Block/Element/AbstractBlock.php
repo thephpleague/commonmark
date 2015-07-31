@@ -99,50 +99,6 @@ abstract class AbstractBlock extends Node
     }
 
     /**
-     * @param AbstractBlock $childBlock
-     * @deprecated Instead of it use appendChild, prependChild or insertAfter, insertBefore of node itself.
-     */
-    public function addChild(AbstractBlock $childBlock)
-    {
-        $this->appendChild($childBlock);
-    }
-
-    /**
-     * @param AbstractBlock $childBlock
-     * @return bool
-     * @deprecated Use detach method of node instead.
-     */
-    public function removeChild(AbstractBlock $childBlock)
-    {
-        if ($childBlock->parent === $this) {
-            $childBlock->detach();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param ContextInterface $context
-     * @param AbstractBlock $original
-     * @param AbstractBlock $replacement
-     * @deprecated Use replaceWith method of original node
-     */
-    public function replaceChild(ContextInterface $context, AbstractBlock $original, AbstractBlock $replacement)
-    {
-        if ($original->parent === $this) {
-            $original->replaceWith($replacement);
-        } else {
-            $this->appendChild($replacement);
-        }
-
-        if ($context->getTip() === $original) {
-            $context->setTip($replacement);
-        }
-    }
-
-    /**
      * Returns true if this block can contain the given block as a child node
      *
      * @param AbstractBlock $block
