@@ -205,6 +205,7 @@ abstract class Node
      * Replace all children of given node with collection of another
      *
      * @param array $children
+     *
      * @return $this
      */
     public function replaceChildren(array $children)
