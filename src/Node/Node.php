@@ -215,7 +215,7 @@ abstract class Node
         return $this;
     }
 
-    public function walk()
+    public function walker()
     {
         return new NodeWalker($this);
     }
