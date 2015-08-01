@@ -16,7 +16,6 @@ namespace League\CommonMark\Inline\Element;
 
 abstract class AbstractInlineContainer extends AbstractInline
 {
-
     /**
      * @param AbstractInline[] $contents
      */

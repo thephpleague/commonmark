@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Inline\Element;
 
-use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Node\Node;
 
 abstract class AbstractInline extends Node

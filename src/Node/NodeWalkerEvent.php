@@ -19,7 +19,7 @@ final class NodeWalkerEvent
      * @param Node $node
      * @param bool $isEntering
      */
-    public function __construct(Node $node=null, $isEntering=true)
+    public function __construct(Node $node = null, $isEntering = true)
     {
         $this->node = $node;
         $this->isEntering = $isEntering;
@@ -41,5 +41,4 @@ final class NodeWalkerEvent
     {
         return $this->isEntering;
     }
-
 }

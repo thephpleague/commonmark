@@ -129,9 +129,9 @@ abstract class Node
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    abstract function isContainer();
+    abstract public function isContainer();
 
     /**
      * @return Node|null
@@ -155,7 +155,7 @@ abstract class Node
     public function getChildren()
     {
         $children = [];
-        for($current = $this->firstChild;null !== $current;$current = $current->next) {
+        for ($current = $this->firstChild;null !== $current;$current = $current->next) {
             $children[] = $current;
         }
 

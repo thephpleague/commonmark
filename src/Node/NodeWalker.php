@@ -2,8 +2,6 @@
 
 namespace League\CommonMark\Node;
 
-use League\CommonMark\Inline\Element\Text;
-
 class NodeWalker
 {
 
@@ -27,7 +25,7 @@ class NodeWalker
     {
         $current = $this->current;
         if (null === $current) {
-            return null;
+            return;
         }
 
         if ($this->entering && $current->isContainer()) {
@@ -37,9 +35,9 @@ class NodeWalker
             } else {
                 $this->entering = false;
             }
-        } else if ($current === $this->root) {
+        } elseif ($current === $this->root) {
             $this->current = null;
-        } else if (null === $current->getNext()) {
+        } elseif (null === $current->getNext()) {
             $this->current = $current->getParent();
             $this->entering = false;
         } else {
