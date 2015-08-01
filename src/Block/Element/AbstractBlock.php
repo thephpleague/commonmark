@@ -89,6 +89,13 @@ abstract class AbstractBlock extends Node
         parent::setParent($node);
     }
 
+    /**
+     * @return bool
+     */
+    public function isContainer()
+    {
+        return true;
+    }
 
     /**
      * @return bool

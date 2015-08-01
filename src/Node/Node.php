@@ -129,6 +129,11 @@ abstract class Node
     }
 
     /**
+     * @return boolean
+     */
+    abstract function isContainer();
+
+    /**
      * @return Node|null
      */
     public function getFirstChild()
@@ -208,6 +213,11 @@ abstract class Node
         }
 
         return $this;
+    }
+
+    public function walk()
+    {
+        return new NodeWalker($this);
     }
 
 }

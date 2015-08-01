@@ -16,10 +16,6 @@ namespace League\CommonMark\Inline\Element;
 
 abstract class AbstractInlineContainer extends AbstractInline
 {
-    /**
-     * @var AbstractInline[]
-     */
-    protected $children = [];
 
     /**
      * @param AbstractInline[] $contents
@@ -27,6 +23,14 @@ abstract class AbstractInlineContainer extends AbstractInline
     public function __construct(array $contents = [])
     {
         $this->setChildren($contents);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isContainer()
+    {
+        return true;
     }
 
     /**
