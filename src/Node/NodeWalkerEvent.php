@@ -4,7 +4,6 @@ namespace League\CommonMark\Node;
 
 final class NodeWalkerEvent
 {
-
     /**
      * @var Node
      */
@@ -24,7 +23,6 @@ final class NodeWalkerEvent
         $this->node = $node;
         $this->isEntering = $isEntering;
     }
-
 
     /**
      * @return Node

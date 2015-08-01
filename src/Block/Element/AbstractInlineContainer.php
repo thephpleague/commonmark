@@ -19,7 +19,6 @@ use League\CommonMark\Util\ArrayCollection;
 
 abstract class AbstractInlineContainer extends AbstractBlock
 {
-
     public function hasChildren()
     {
         return false;

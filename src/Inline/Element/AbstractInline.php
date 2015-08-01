@@ -33,7 +33,6 @@ abstract class AbstractInline extends Node
         return false;
     }
 
-
     /**
      * @param string $key
      * @param mixed  $default

@@ -201,6 +201,12 @@ abstract class Node
         $this->firstChild = $this->lastChild = null;
     }
 
+    /**
+     * Replace all children of given node with collection of another
+     *
+     * @param array $children
+     * @return $this
+     */
     public function replaceChildren(array $children)
     {
         if (!is_array($children) && !(is_object($children) && $children instanceof ArrayCollection)) {
@@ -215,9 +221,11 @@ abstract class Node
         return $this;
     }
 
+    /**
+     * @return NodeWalker
+     */
     public function walker()
     {
         return new NodeWalker($this);
     }
-
 }

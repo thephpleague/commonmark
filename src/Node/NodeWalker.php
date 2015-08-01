@@ -4,13 +4,24 @@ namespace League\CommonMark\Node;
 
 class NodeWalker
 {
-
+    /**
+     * @var Node
+     */
     private $root;
 
+    /**
+     * @var Node
+     */
     private $current;
 
+    /**
+     * @var bool
+     */
     private $entering;
 
+    /**
+     * @param Node $root
+     */
     public function __construct(Node $root)
     {
         $this->root = $root;
@@ -19,6 +30,10 @@ class NodeWalker
     }
 
     /**
+     * Returns an event which contains node and entering flag
+     * (entering is true when we enter a Node from a parent or sibling,
+     * and false when we reenter it from child)
+     *
      * @return NodeWalkerEvent|null
      */
     public function next()
@@ -48,10 +63,15 @@ class NodeWalker
         return new NodeWalkerEvent($current, $this->entering);
     }
 
+    /**
+     * Resets the iterator to resume at the specified node
+     *
+     * @param Node $node
+     * @param bool $entering
+     */
     public function resumeAt(Node $node, $entering = true)
     {
         $this->current = $node;
         $this->entering = $entering;
     }
-
 }
