@@ -39,11 +39,12 @@ class NodeWalker
     public function next()
     {
         $current = $this->current;
+        $entering = $this->entering;
         if (null === $current) {
-            return;
+            return null;
         }
 
-        if ($this->entering && $current->isContainer()) {
+        if ($entering && $current->isContainer()) {
             if ($current->getFirstChild()) {
                 $this->current = $current->getFirstChild();
                 $this->entering = true;
@@ -60,7 +61,7 @@ class NodeWalker
             $this->entering = true;
         }
 
-        return new NodeWalkerEvent($current, $this->entering);
+        return new NodeWalkerEvent($current, $entering);
     }
 
     /**
