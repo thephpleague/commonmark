@@ -50,7 +50,7 @@ class BacktickParser extends AbstractInlineParser
             if ($matchingTicks === $ticks) {
                 $code = mb_substr($cursor->getLine(), $previousState->getCurrentPosition(), $cursor->getPosition() - $previousState->getCurrentPosition() - strlen($ticks), 'utf-8');
                 $c = preg_replace('/[ \n]+/', ' ', $code);
-                $inlineContext->getInlines()->add(new Code(trim($c)));
+                $context->getContainer()->appendChild(new Code(trim($c)));
 
                 return true;
             }
@@ -58,7 +58,7 @@ class BacktickParser extends AbstractInlineParser
 
         // If we got here, we didn't match a closing backtick sequence
         $cursor->restoreState($previousState);
-        $inlineContext->getInlines()->add(new Text($ticks));
+        $context->getContainer()->appendChild(new Text($ticks));
 
         return true;
     }

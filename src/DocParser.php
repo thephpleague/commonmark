@@ -15,10 +15,12 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\AbstractInlineContainer;
 use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Block\Element\Header;
+use League\CommonMark\Block\Element\InlineContainer;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Node\NodeWalker;
 
 class DocParser
 {
@@ -83,7 +85,7 @@ class DocParser
             $context->getTip()->finalize($context);
         }
 
-        $this->processInlines($context, $context->getDocument());
+        $this->processInlines($context, $context->getDocument()->walker());
 
         return $context->getDocument();
     }
@@ -132,16 +134,21 @@ class DocParser
         }
     }
 
-    private function processInlines(ContextInterface $context, AbstractBlock $block)
+    private function processInlines(ContextInterface $context, NodeWalker $walker)
     {
-        if ($block instanceof AbstractInlineContainer) {
-            $cursor = new Cursor(trim($block->getStringContent()));
-            $block->setInlines($this->inlineParserEngine->parse($context, $cursor));
+        while (($event = $walker->next()) !== null) {
+            if (!$event->isEntering()) {
+                continue;
+            }
+
+            $node = $event->getNode();
+            if ($node instanceof InlineContainer) {
+                $context->setContainer($node);
+                $cursor = new Cursor(trim($node->getStringContent()));
+                $this->inlineParserEngine->parse($context, $cursor);
+            }
         }
 
-        foreach ($block->getChildren() as $child) {
-            $this->processInlines($context, $child);
-        }
     }
 
     /**

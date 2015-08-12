@@ -39,7 +39,7 @@ class RawHtmlParser extends AbstractInlineParser
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(RegexHelper::getInstance()->getHtmlTagRegex())) {
-            $inlineContext->getInlines()->add(new Html($m));
+            $context->getContainer()->appendChild(new Html($m));
 
             return true;
         }

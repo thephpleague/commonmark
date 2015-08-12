@@ -36,18 +36,19 @@ class BacktickParserTest extends \PHPUnit_Framework_TestCase
         $cursor->advanceBy($firstBacktickPos);
 
         $inlineContext = new InlineParserContext($cursor);
+        $nodeStub = $this->getMock('League\CommonMark\Node\Node');
+        $nodeStub
+            ->expects($this->once())
+            ->method('appendChild')
+            ->with($this->callback(function (Code $code) use ($expectedContents) {
+                return $code instanceof Code && $expectedContents === $code->getContent();
+            }))
+        ;
         $contextStub = $this->getMock('League\CommonMark\ContextInterface');
+        $contextStub->expects($this->any())->method('getContainer')->willReturn($nodeStub);
 
         $parser = new BacktickParser();
-
         $parser->parse($contextStub, $inlineContext);
-
-        $inlines = $inlineContext->getInlines();
-        $this->assertCount(1, $inlines);
-        $this->assertTrue($inlines->first() instanceof Code);
-        /** @var Code $code */
-        $code = $inlines->first();
-        $this->assertEquals($expectedContents, $code->getContent());
     }
 
     /**

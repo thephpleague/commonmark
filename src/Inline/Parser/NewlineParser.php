@@ -41,7 +41,7 @@ class NewlineParser extends AbstractInlineParser
 
         // Check previous inline for trailing spaces
         $spaces = 0;
-        $lastInline = $inlineContext->getInlines()->last();
+        $lastInline = $context->getContainer()->getLastChild();
         if ($lastInline && $lastInline instanceof Text) {
             $trimmed = rtrim($lastInline->getContent(), ' ');
             $spaces = strlen($lastInline->getContent()) - strlen($trimmed);
@@ -51,9 +51,9 @@ class NewlineParser extends AbstractInlineParser
         }
 
         if ($spaces >= 2) {
-            $inlineContext->getInlines()->add(new Newline(Newline::HARDBREAK));
+            $context->getContainer()->appendChild(new Newline(Newline::HARDBREAK));
         } else {
-            $inlineContext->getInlines()->add(new Newline(Newline::SOFTBREAK));
+            $context->getContainer()->appendChild(new Newline(Newline::SOFTBREAK));
         }
 
         return true;

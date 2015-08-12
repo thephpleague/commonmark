@@ -39,7 +39,7 @@ class EntityParser extends AbstractInlineParser
     public function parse(ContextInterface $context, InlineParserContext $inlineContext)
     {
         if ($m = $inlineContext->getCursor()->match(RegexHelper::REGEX_ENTITY)) {
-            $inlineContext->getInlines()->add(new Text(Html5Entities::decodeEntity($m)));
+            $context->getContainer()->appendChild(new Text(Html5Entities::decodeEntity($m)));
 
             return true;
         }

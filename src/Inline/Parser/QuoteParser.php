@@ -81,13 +81,13 @@ class QuoteParser extends AbstractInlineParser
         $canOpen = $leftFlanking && !$rightFlanking;
         $canClose = $rightFlanking;
 
-        $inlineContext->getInlines()->add(
-            new Text($character, ['delim' => true])
+        $node = new Text($character, ['delim' => true]);
+        $context->getContainer()->appendChild(
+            $node
         );
 
         // Add entry to stack to this opener
-        $delimiter = new Delimiter($character, 1, $inlineContext->getInlines()->count() - 1, $canOpen, $canClose);
-        $inlineContext->getDelimiterStack()->push($delimiter);
+        $inlineContext->getDelimiterStack()->push(new Delimiter($character, 1, $node, $canOpen, $canClose));
 
         return true;
     }

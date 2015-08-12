@@ -35,14 +35,14 @@ class ParagraphRenderer implements BlockRendererInterface
         }
 
         if ($inTightList) {
-            return $htmlRenderer->renderInlines($block->getInlines());
+            return $htmlRenderer->renderInlines($block->getChildren());
         } else {
             $attrs = [];
             foreach ($block->getData('attributes', []) as $key => $value) {
                 $attrs[$key] = $htmlRenderer->escape($value, true);
             }
 
-            return new HtmlElement('p', $attrs, $htmlRenderer->renderInlines($block->getInlines()));
+            return new HtmlElement('p', $attrs, $htmlRenderer->renderInlines($block->getChildren()));
         }
     }
 }

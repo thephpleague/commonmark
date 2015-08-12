@@ -47,20 +47,20 @@ class EscapableParser extends AbstractInlineParser
 
         if ($nextChar === "\n") {
             $cursor->advanceBy(2);
-            $inlineContext->getInlines()->add(new Newline(Newline::HARDBREAK));
+            $context->getContainer()->appendChild(new Newline(Newline::HARDBREAK));
 
             return true;
         } elseif ($nextChar !== null &&
             preg_match('/' . RegexHelper::REGEX_ESCAPABLE . '/', $nextChar)
         ) {
             $cursor->advanceBy(2);
-            $inlineContext->getInlines()->add(new Text($nextChar));
+            $context->getContainer()->appendChild(new Text($nextChar));
 
             return true;
         }
 
         $cursor->advance();
-        $inlineContext->getInlines()->add(new Text('\\'));
+        $context->getContainer()->appendChild(new Text('\\'));
 
         return true;
     }

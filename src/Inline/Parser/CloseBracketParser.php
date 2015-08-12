@@ -24,6 +24,7 @@ use League\CommonMark\Inline\Element\AbstractWebResource;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Util\ArrayCollection;
@@ -72,12 +73,6 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $isImage = $opener->getChar() === '!';
 
-        // Instead of copying a slice, we null out the parts of inlines that don't correspond to linkText; later, we'll
-        // collapse them. This is awkward, and could  be simplified if we made inlines a linked list instead
-        $inlines = $inlineContext->getInlines();
-        $labelInlines = new ArrayCollection($inlines->toArray());
-        $this->nullify($labelInlines, 0, $opener->getPos() + 1);
-
         $cursor->advance();
 
         // Check to see if we have a link/image
@@ -89,25 +84,28 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
+        $node = $this->createInline($link['url'], $link['title'], $isImage);
+        $openerNode = $opener->getInlineNode();
+        $openerNode->insertBefore($node);
+        while(($inline = $openerNode->getNext()) !== null) {
+            $node->appendChild($inline);
+        }
+        $openerNode->detach();
+
         $delimiterStack = $inlineContext->getDelimiterStack();
         $stackBottom = $opener->getPrevious();
         foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($labelInlines, $delimiterStack, $stackBottom);
+            $inlineProcessor->processInlines($node->walker(), $delimiterStack, $stackBottom);
         }
         if ($delimiterStack instanceof DelimiterStack) {
             $delimiterStack->removeAll($stackBottom);
         }
-
-        // Remove the part of inlines that become link_text
-        $this->nullify($inlines, $opener->getPos(), $inlines->count());
 
         // processEmphasis will remove this and later delimiters.
         // Now, for a link, we also remove earlier link openers (no links in links)
         if (!$isImage) {
             $inlineContext->getDelimiterStack()->removeEarlierMatches('[');
         }
-
-        $inlines->add($this->createInline($link['url'], $labelInlines, $link['title'], $isImage));
 
         return true;
     }
@@ -118,18 +116,6 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     public function setEnvironment(Environment $environment)
     {
         $this->environment = $environment;
-    }
-
-    /**
-     * @param ArrayCollection $collection
-     * @param int             $start
-     * @param int             $end
-     */
-    protected function nullify(ArrayCollection $collection, $start, $end)
-    {
-        for ($i = $start; $i < $end; $i++) {
-            $collection->set($i, null);
-        }
     }
 
     /**
@@ -216,18 +202,17 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
     /**
      * @param string          $url
-     * @param ArrayCollection $labelInlines
      * @param string          $title
      * @param bool            $isImage
      *
      * @return AbstractWebResource
      */
-    protected function createInline($url, ArrayCollection $labelInlines, $title, $isImage)
+    protected function createInline($url, $title, $isImage)
     {
         if ($isImage) {
-            return new Image($url, $labelInlines, $title);
+            return new Image($url, [], $title);
         } else {
-            return new Link($url, $labelInlines, $title);
+            return new Link($url, [], $title);
         }
     }
 }

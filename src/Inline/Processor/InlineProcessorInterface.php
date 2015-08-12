@@ -16,16 +16,17 @@ namespace League\CommonMark\Inline\Processor;
 
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\DelimiterStack;
+use League\CommonMark\Node\NodeWalker;
 use League\CommonMark\Util\ArrayCollection;
 
 interface InlineProcessorInterface
 {
     /**
-     * @param ArrayCollection $inlines
+     * @param NodeWalker      $inlines
      * @param DelimiterStack  $delimiterStack
      * @param Delimiter       $stackBottom
      *
      * @return void
      */
-    public function processInlines(ArrayCollection $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null);
+    public function processInlines(NodeWalker $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null);
 }

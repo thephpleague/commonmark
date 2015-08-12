@@ -17,7 +17,7 @@ namespace League\CommonMark\Block\Element;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class Paragraph extends AbstractInlineContainer
+class Paragraph extends AbstractBlock implements InlineContainer
 {
     /**
      * Returns true if this block can contain the given block as a child node

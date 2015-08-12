@@ -85,12 +85,11 @@ class EmphasisParser extends AbstractInlineParser
             $canClose = $rightFlanking;
         }
 
-        $inlineContext->getInlines()->add(
-            new Text($cursor->getPreviousText(), ['delim' => true])
-        );
+        $node = new Text($cursor->getPreviousText(), ['delim' => true]);
+        $context->getContainer()->appendChild($node);
 
         // Add entry to stack to this opener
-        $delimiter = new Delimiter($character, $numDelims, $inlineContext->getInlines()->count() - 1, $canOpen, $canClose);
+        $delimiter = new Delimiter($character, $numDelims, $node, $canOpen, $canClose);
         $inlineContext->getDelimiterStack()->push($delimiter);
 
         return true;

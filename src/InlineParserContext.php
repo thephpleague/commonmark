@@ -20,13 +20,11 @@ use League\CommonMark\Util\ArrayCollection;
 class InlineParserContext
 {
     private $cursor;
-    private $inlines;
     private $delimiterStack;
 
     public function __construct(Cursor $cursor)
     {
         $this->cursor = $cursor;
-        $this->inlines = new ArrayCollection();
         $this->delimiterStack = new DelimiterStack();
     }
 
@@ -36,14 +34,6 @@ class InlineParserContext
     public function getCursor()
     {
         return $this->cursor;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getInlines()
-    {
-        return $this->inlines;
     }
 
     /**

@@ -16,21 +16,22 @@ namespace League\CommonMark\Inline\Processor;
 
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\DelimiterStack;
+use League\CommonMark\Node\NodeWalker;
 use League\CommonMark\Util\ArrayCollection;
 
 class QuoteProcessor implements InlineProcessorInterface
 {
-    public function processInlines(ArrayCollection $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
+    public function processInlines(NodeWalker $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
     {
         $callback = function (Delimiter $opener, Delimiter $closer, DelimiterStack $stack) use ($inlines) {
             // Open quote
-            $openerInline = $inlines->get($opener->getPos());
+            $openerInline = $opener->getInlineNode();
             $openerInline->setContent(
                 $openerInline->getContent() === '“' ? '“' : '‘'
             );
 
             // Close quote
-            $closerInline = $inlines->get($closer->getPos());
+            $closerInline = $closer->getInlineNode();
             $closerInline->setContent(
                 $closerInline->getContent() === '“' ? '”' : '’'
             );

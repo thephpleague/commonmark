@@ -43,12 +43,12 @@ class AutolinkParser extends AbstractInlineParser
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(self::EMAIL_REGEX)) {
             $email = substr($m, 1, -1);
-            $inlineContext->getInlines()->add(new Link('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
+            $context->getContainer()->appendChild(new Link('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
 
             return true;
         } elseif ($m = $cursor->match(self::OTHER_LINK_REGEX)) {
             $dest = substr($m, 1, -1);
-            $inlineContext->getInlines()->add(new Link(UrlEncoder::unescapeAndEncode($dest), $dest));
+            $context->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($dest), $dest));
 
             return true;
         }

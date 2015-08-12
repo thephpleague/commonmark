@@ -32,7 +32,7 @@ class Link extends AbstractWebResource
         }
 
         if (is_string($label)) {
-            $this->setChildren(new ArrayCollection([new Text($label)]));
+            $this->appendChild(new Text($label));
         } elseif (null !== $label) {
             $this->setChildren($label);
         }

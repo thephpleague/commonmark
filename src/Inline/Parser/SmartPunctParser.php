@@ -41,7 +41,7 @@ class SmartPunctParser extends AbstractInlineParser
 
         // Ellipses
         if ($ch === '.' && $matched = $cursor->match('/^\\.( ?\\.)\\1/')) {
-            $inlineContext->getInlines()->add(new Text('…'));
+            $context->getContainer()->appendChild(new Text('…'));
 
             return true;
         }
@@ -64,7 +64,7 @@ class SmartPunctParser extends AbstractInlineParser
                 $em_count = ($count - 4) / 3;
                 $en_count = 2;
             }
-            $inlineContext->getInlines()->add(new Text(
+            $context->getContainer()->appendChild(new Text(
                 str_repeat($em_dash, $em_count) . str_repeat($en_dash, $en_count)
             ));
 
