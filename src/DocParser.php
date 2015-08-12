@@ -16,7 +16,6 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\Header;
 use League\CommonMark\Block\Element\InlineContainer;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\Paragraph;
@@ -148,7 +147,6 @@ class DocParser
                 $this->inlineParserEngine->parse($context, $cursor);
             }
         }
-
     }
 
     /**

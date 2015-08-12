@@ -42,8 +42,7 @@ class BacktickParserTest extends \PHPUnit_Framework_TestCase
             ->method('appendChild')
             ->with($this->callback(function (Code $code) use ($expectedContents) {
                 return $code instanceof Code && $expectedContents === $code->getContent();
-            }))
-        ;
+            }));
         $contextStub = $this->getMock('League\CommonMark\ContextInterface');
         $contextStub->expects($this->any())->method('getContainer')->willReturn($nodeStub);
 

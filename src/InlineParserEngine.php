@@ -14,7 +14,6 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Block\Element\InlineContainer;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Node\NodeWalker;

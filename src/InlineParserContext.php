@@ -15,7 +15,6 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Delimiter\DelimiterStack;
-use League\CommonMark\Util\ArrayCollection;
 
 class InlineParserContext
 {

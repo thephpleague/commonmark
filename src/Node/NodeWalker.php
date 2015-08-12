@@ -41,7 +41,7 @@ class NodeWalker
         $current = $this->current;
         $entering = $this->entering;
         if (null === $current) {
-            return null;
+            return;
         }
 
         if ($entering && $current->isContainer()) {

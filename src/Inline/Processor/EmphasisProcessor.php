@@ -20,7 +20,6 @@ use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Element\Strong;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\NodeWalker;
-use League\CommonMark\Util\ArrayCollection;
 
 class EmphasisProcessor implements InlineProcessorInterface
 {
@@ -54,7 +53,7 @@ class EmphasisProcessor implements InlineProcessorInterface
             }
 
             $openerInline->insertAfter($emph);
-            while(($node = $emph->getNext()) !== $closerInline) {
+            while (($node = $emph->getNext()) !== $closerInline) {
                 $emph->appendChild($node);
             }
 

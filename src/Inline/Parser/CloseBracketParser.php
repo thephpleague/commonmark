@@ -24,10 +24,8 @@ use League\CommonMark\Inline\Element\AbstractWebResource;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
-use League\CommonMark\Util\ArrayCollection;
 use League\CommonMark\Util\LinkParserHelper;
 
 class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwareInterface
@@ -87,7 +85,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $node = $this->createInline($link['url'], $link['title'], $isImage);
         $openerNode = $opener->getInlineNode();
         $openerNode->insertBefore($node);
-        while(($inline = $openerNode->getNext()) !== null) {
+        while (($inline = $openerNode->getNext()) !== null) {
             $node->appendChild($inline);
         }
         $openerNode->detach();
@@ -201,9 +199,9 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     }
 
     /**
-     * @param string          $url
-     * @param string          $title
-     * @param bool            $isImage
+     * @param string $url
+     * @param string $title
+     * @param bool   $isImage
      *
      * @return AbstractWebResource
      */
