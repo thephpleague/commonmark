@@ -14,8 +14,6 @@
 
 namespace League\CommonMark\Inline\Element;
 
-use League\CommonMark\Util\ArrayCollection;
-
 class Link extends AbstractWebResource
 {
     /**

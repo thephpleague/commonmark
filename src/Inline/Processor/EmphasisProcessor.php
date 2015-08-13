@@ -19,7 +19,6 @@ use League\CommonMark\Delimiter\DelimiterStack;
 use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Element\Strong;
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Node\NodeWalker;
 
 class EmphasisProcessor implements InlineProcessorInterface
 {

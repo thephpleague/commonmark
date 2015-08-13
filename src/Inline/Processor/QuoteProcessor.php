@@ -16,7 +16,6 @@ namespace League\CommonMark\Inline\Processor;
 
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\DelimiterStack;
-use League\CommonMark\Node\NodeWalker;
 
 class QuoteProcessor implements InlineProcessorInterface
 {

@@ -14,14 +14,12 @@
 
 namespace League\CommonMark\Inline\Element;
 
-use League\CommonMark\Util\ArrayCollection;
-
 class Image extends AbstractWebResource
 {
     /**
-     * @param string                 $url
+     * @param string $url
      * @param string $label
-     * @param string                 $title
+     * @param string $title
      */
     public function __construct($url, $label = '', $title = '')
     {
