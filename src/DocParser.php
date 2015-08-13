@@ -142,9 +142,7 @@ class DocParser
 
             $node = $event->getNode();
             if ($node instanceof InlineContainer) {
-                $context->setContainer($node);
-                $cursor = new Cursor(trim($node->getStringContent()));
-                $this->inlineParserEngine->parse($context, $cursor);
+                $this->inlineParserEngine->parse($node, $context->getDocument()->getReferenceMap());
             }
         }
     }

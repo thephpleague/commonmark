@@ -18,6 +18,7 @@ use League\CommonMark\Cursor;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Parser\BacktickParser;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Reference\ReferenceMap;
 
 class BacktickParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,25 +30,23 @@ class BacktickParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParse($string, $expectedContents)
     {
-        $cursor = new Cursor($string);
 
-        // Move to just before the first backtick
-        $firstBacktickPos = mb_strpos($string, '`', null, 'utf-8');
-        $cursor->advanceBy($firstBacktickPos);
-
-        $inlineContext = new InlineParserContext($cursor);
-        $nodeStub = $this->getMock('League\CommonMark\Node\Node');
+        $nodeStub = $this->getMock('League\CommonMark\Block\Element\AbstractBlock');
+        $nodeStub->expects($this->any())->method('getStringContent')->willReturn($string);
         $nodeStub
             ->expects($this->once())
             ->method('appendChild')
             ->with($this->callback(function (Code $code) use ($expectedContents) {
                 return $code instanceof Code && $expectedContents === $code->getContent();
             }));
-        $contextStub = $this->getMock('League\CommonMark\ContextInterface');
-        $contextStub->expects($this->any())->method('getContainer')->willReturn($nodeStub);
+        $inlineContext = new InlineParserContext($nodeStub, new ReferenceMap());
+
+        // Move to just before the first backtick
+        $firstBacktickPos = mb_strpos($string, '`', null, 'utf-8');
+        $inlineContext->getCursor()->advanceBy($firstBacktickPos);
 
         $parser = new BacktickParser();
-        $parser->parse($contextStub, $inlineContext);
+        $parser->parse($inlineContext);
     }
 
     /**

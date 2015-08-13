@@ -20,7 +20,7 @@ class Image extends AbstractWebResource
 {
     /**
      * @param string                 $url
-     * @param ArrayCollection|string $label
+     * @param string $label
      * @param string                 $title
      */
     public function __construct($url, $label = '', $title = '')
@@ -29,8 +29,6 @@ class Image extends AbstractWebResource
 
         if (is_string($label)) {
             $this->appendChild(new Text($label));
-        } else {
-            $this->setChildren($label);
         }
 
         if (!empty($title)) {

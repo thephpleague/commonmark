@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Inline\Element\Newline;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
@@ -31,12 +30,11 @@ class EscapableParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
         if ($cursor->getCharacter() !== '\\') {
@@ -47,20 +45,20 @@ class EscapableParser extends AbstractInlineParser
 
         if ($nextChar === "\n") {
             $cursor->advanceBy(2);
-            $context->getContainer()->appendChild(new Newline(Newline::HARDBREAK));
+            $inlineContext->getContainer()->appendChild(new Newline(Newline::HARDBREAK));
 
             return true;
         } elseif ($nextChar !== null &&
             preg_match('/' . RegexHelper::REGEX_ESCAPABLE . '/', $nextChar)
         ) {
             $cursor->advanceBy(2);
-            $context->getContainer()->appendChild(new Text($nextChar));
+            $inlineContext->getContainer()->appendChild(new Text($nextChar));
 
             return true;
         }
 
         $cursor->advance();
-        $context->getContainer()->appendChild(new Text('\\'));
+        $inlineContext->getContainer()->appendChild(new Text('\\'));
 
         return true;
     }

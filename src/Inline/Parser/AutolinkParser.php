@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\UrlEncoder;
@@ -33,22 +32,21 @@ class AutolinkParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(self::EMAIL_REGEX)) {
             $email = substr($m, 1, -1);
-            $context->getContainer()->appendChild(new Link('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
+            $inlineContext->getContainer()->appendChild(new Link('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
 
             return true;
         } elseif ($m = $cursor->match(self::OTHER_LINK_REGEX)) {
             $dest = substr($m, 1, -1);
-            $context->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($dest), $dest));
+            $inlineContext->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($dest), $dest));
 
             return true;
         }

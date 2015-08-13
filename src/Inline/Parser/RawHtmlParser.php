@@ -35,11 +35,11 @@ class RawHtmlParser extends AbstractInlineParser
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(RegexHelper::getInstance()->getHtmlTagRegex())) {
-            $context->getContainer()->appendChild(new Html($m));
+            $inlineContext->getContainer()->appendChild(new Html($m));
 
             return true;
         }

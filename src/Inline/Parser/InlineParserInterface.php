@@ -11,7 +11,6 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\InlineParserContext;
 
 interface InlineParserInterface
@@ -31,10 +30,9 @@ interface InlineParserInterface
     public function getCharacters();
 
     /**
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext);
+    public function parse(InlineParserContext $inlineContext);
 }

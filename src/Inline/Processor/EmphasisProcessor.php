@@ -23,9 +23,9 @@ use League\CommonMark\Node\NodeWalker;
 
 class EmphasisProcessor implements InlineProcessorInterface
 {
-    public function processInlines(NodeWalker $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
+    public function processInlines(DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
     {
-        $callback = function (Delimiter $opener, Delimiter $closer, DelimiterStack $stack) use ($inlines) {
+        $callback = function (Delimiter $opener, Delimiter $closer, DelimiterStack $stack) {
             // Calculate actual number of delimiters used from this closer
             if ($closer->getNumDelims() < 3 || $opener->getNumDelims() < 3) {
                 $useDelims = $closer->getNumDelims() <= $opener->getNumDelims()

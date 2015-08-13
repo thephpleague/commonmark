@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
@@ -34,12 +33,11 @@ class QuoteParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $character = $inlineContext->getCursor()->getCharacter();
         if (in_array($character, $this->double)) {
@@ -82,7 +80,7 @@ class QuoteParser extends AbstractInlineParser
         $canClose = $rightFlanking;
 
         $node = new Text($character, ['delim' => true]);
-        $context->getContainer()->appendChild(
+        $inlineContext->getContainer()->appendChild(
             $node
         );
 

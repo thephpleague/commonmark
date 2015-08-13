@@ -20,9 +20,9 @@ use League\CommonMark\Node\NodeWalker;
 
 class QuoteProcessor implements InlineProcessorInterface
 {
-    public function processInlines(NodeWalker $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
+    public function processInlines(DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
     {
-        $callback = function (Delimiter $opener, Delimiter $closer, DelimiterStack $stack) use ($inlines) {
+        $callback = function (Delimiter $opener, Delimiter $closer, DelimiterStack $stack) {
             // Open quote
             $openerInline = $opener->getInlineNode();
             $openerInline->setContent(

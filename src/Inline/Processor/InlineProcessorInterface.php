@@ -21,11 +21,10 @@ use League\CommonMark\Node\NodeWalker;
 interface InlineProcessorInterface
 {
     /**
-     * @param NodeWalker     $inlines
      * @param DelimiterStack $delimiterStack
      * @param Delimiter      $stackBottom
      *
      * @return void
      */
-    public function processInlines(NodeWalker $inlines, DelimiterStack $delimiterStack, Delimiter $stackBottom = null);
+    public function processInlines(DelimiterStack $delimiterStack, Delimiter $stackBottom = null);
 }

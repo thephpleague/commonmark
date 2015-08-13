@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
@@ -30,18 +29,17 @@ class BangParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
         if ($cursor->peek() === '[') {
             $cursor->advanceBy(2);
             $node = new Text('![', ['delim' => true]);
-            $context->getContainer()->appendChild($node);
+            $inlineContext->getContainer()->appendChild($node);
 
             // Add entry to stack for this opener
             $delimiter = new Delimiter('!', 1, $node, true, false, $cursor->getPosition());

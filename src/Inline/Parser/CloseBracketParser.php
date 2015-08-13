@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\DelimiterStack;
@@ -44,12 +43,11 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     }
 
     /**
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
 
@@ -74,7 +72,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $cursor->advance();
 
         // Check to see if we have a link/image
-        if (!($link = $this->tryParseLink($cursor, $context->getDocument()->getReferenceMap(), $opener, $startPos))) {
+        if (!($link = $this->tryParseLink($cursor, $inlineContext->getReferenceMap(), $opener, $startPos))) {
             // No match
             $inlineContext->getDelimiterStack()->removeDelimiter($opener); // Remove this opener from stack
             $cursor->restoreState($previousState);
@@ -93,7 +91,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $delimiterStack = $inlineContext->getDelimiterStack();
         $stackBottom = $opener->getPrevious();
         foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($node->walker(), $delimiterStack, $stackBottom);
+            $inlineProcessor->processInlines($delimiterStack, $stackBottom);
         }
         if ($delimiterStack instanceof DelimiterStack) {
             $delimiterStack->removeAll($stackBottom);
@@ -208,9 +206,9 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     protected function createInline($url, $title, $isImage)
     {
         if ($isImage) {
-            return new Image($url, [], $title);
+            return new Image($url, null, $title);
         } else {
-            return new Link($url, [], $title);
+            return new Link($url, null, $title);
         }
     }
 }

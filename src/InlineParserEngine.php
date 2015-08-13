@@ -14,10 +14,10 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
-use League\CommonMark\Node\NodeWalker;
-use League\CommonMark\Util\ArrayCollection;
+use League\CommonMark\Reference\ReferenceMap;
 
 class InlineParserEngine
 {
@@ -29,31 +29,28 @@ class InlineParserEngine
     }
 
     /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     *
-     * @return ArrayCollection
+     * @param Node          $container
+     * @param ReferenceMap  $referenceMap
      */
-    public function parse(ContextInterface $context, Cursor $cursor)
+    public function parse(Node $container, ReferenceMap $referenceMap)
     {
-        $inlineParserContext = new InlineParserContext($cursor);
-        while (($character = $cursor->getCharacter()) !== null) {
-            if (!$this->parseCharacter($character, $context, $inlineParserContext)) {
-                $this->addPlainText($character, $context->getContainer(), $inlineParserContext);
+        $inlineParserContext = new InlineParserContext($container, $referenceMap);
+        while (($character = $inlineParserContext->getCursor()->getCharacter()) !== null) {
+            if (!$this->parseCharacter($character, $inlineParserContext)) {
+                $this->addPlainText($character, $container, $inlineParserContext);
             }
         }
 
-        $this->processInlines($context->getContainer()->walker(), $inlineParserContext);
+        $this->processInlines($inlineParserContext);
     }
 
     /**
      * @param string              $character
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineParserContext
      *
      * @return bool Whether we successfully parsed a character at that position
      */
-    protected function parseCharacter($character, ContextInterface $context, InlineParserContext $inlineParserContext)
+    protected function parseCharacter($character, InlineParserContext $inlineParserContext)
     {
         $matchingParsers = $this->environment->getInlineParsersForCharacter($character);
         if (empty($matchingParsers)) {
@@ -61,7 +58,7 @@ class InlineParserEngine
         }
 
         foreach ($matchingParsers as $parser) {
-            if ($parser->parse($context, $inlineParserContext)) {
+            if ($parser->parse($inlineParserContext)) {
                 return true;
             }
         }
@@ -72,12 +69,12 @@ class InlineParserEngine
     /**
      * @param InlineParserContext $inlineParserContext
      */
-    protected function processInlines(NodeWalker $nodeWalker, InlineParserContext $inlineParserContext)
+    protected function processInlines(InlineParserContext $inlineParserContext)
     {
         $delimiterStack = $inlineParserContext->getDelimiterStack();
 
         foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($nodeWalker, $delimiterStack);
+            $inlineProcessor->processInlines($delimiterStack);
         }
 
         // Remove all delimiters
