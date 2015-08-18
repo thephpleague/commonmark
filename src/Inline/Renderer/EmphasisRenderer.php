@@ -38,6 +38,6 @@ class EmphasisRenderer implements InlineRendererInterface
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        return new HtmlElement('em', $attrs, $htmlRenderer->renderInlines($inline->getChildren()));
+        return new HtmlElement('em', $attrs, $htmlRenderer->renderInlines($inline->children()));
     }
 }

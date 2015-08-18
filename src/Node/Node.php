@@ -34,7 +34,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function getPrevious()
+    public function previous()
     {
         return $this->previous;
     }
@@ -42,7 +42,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function getNext()
+    public function next()
     {
         return $this->next;
     }
@@ -50,7 +50,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function getParent()
+    public function parent()
     {
         return $this->parent;
     }
@@ -136,7 +136,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function getFirstChild()
+    public function firstChild()
     {
         return $this->firstChild;
     }
@@ -144,7 +144,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function getLastChild()
+    public function lastChild()
     {
         return $this->lastChild;
     }
@@ -152,7 +152,7 @@ abstract class Node
     /**
      * @return Node[]
      */
-    public function getChildren()
+    public function children()
     {
         $children = [];
         for ($current = $this->firstChild;null !== $current;$current = $current->next) {
@@ -195,7 +195,7 @@ abstract class Node
      */
     public function detachChildren()
     {
-        foreach ($this->getChildren() as $children) {
+        foreach ($this->children() as $children) {
             $children->setParent(null);
         }
         $this->firstChild = $this->lastChild = null;

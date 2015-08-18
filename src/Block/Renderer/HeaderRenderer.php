@@ -41,6 +41,6 @@ class HeaderRenderer implements BlockRendererInterface
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        return new HtmlElement($tag, $attrs, $htmlRenderer->renderInlines($block->getChildren()));
+        return new HtmlElement($tag, $attrs, $htmlRenderer->renderInlines($block->children()));
     }
 }

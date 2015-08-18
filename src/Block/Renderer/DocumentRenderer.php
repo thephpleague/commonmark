@@ -33,7 +33,7 @@ class DocumentRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
-        $wholeDoc = $htmlRenderer->renderBlocks($block->getChildren());
+        $wholeDoc = $htmlRenderer->renderBlocks($block->children());
 
         return $wholeDoc === '' ? '' : $wholeDoc . "\n";
     }

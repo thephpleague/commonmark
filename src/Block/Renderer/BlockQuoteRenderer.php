@@ -39,7 +39,7 @@ class BlockQuoteRenderer implements BlockRendererInterface
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        $filling = $htmlRenderer->renderBlocks($block->getChildren());
+        $filling = $htmlRenderer->renderBlocks($block->children());
         if ($filling === '') {
             return new HtmlElement('blockquote', $attrs, $htmlRenderer->getOption('inner_separator', "\n"));
         }

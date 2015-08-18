@@ -52,7 +52,7 @@ class EmphasisProcessor implements InlineProcessorInterface
             }
 
             $openerInline->insertAfter($emph);
-            while (($node = $emph->getNext()) !== $closerInline) {
+            while (($node = $emph->next()) !== $closerInline) {
                 $emph->appendChild($node);
             }
 

@@ -164,13 +164,13 @@ class DocParser
             if ($b instanceof ListBlock) {
                 $lastList = $b;
             }
-            $b = $b->getParent();
+            $b = $b->parent();
         } while ($b);
 
         if ($lastList) {
             while ($block !== $lastList) {
                 $block->finalize($context);
-                $block = $block->getParent();
+                $block = $block->parent();
             }
             $lastList->finalize($context);
         }
@@ -187,14 +187,14 @@ class DocParser
         $context->setContainer($context->getDocument());
 
         while ($context->getContainer()->hasChildren()) {
-            $lastChild = $context->getContainer()->getLastChild();
+            $lastChild = $context->getContainer()->lastChild();
             if (!$lastChild->isOpen()) {
                 break;
             }
 
             $context->setContainer($lastChild);
             if (!$context->getContainer()->matchesNextLine($cursor)) {
-                $context->setContainer($context->getContainer()->getParent()); // back up to the last matching block
+                $context->setContainer($context->getContainer()->parent()); // back up to the last matching block
                 break;
             }
         }

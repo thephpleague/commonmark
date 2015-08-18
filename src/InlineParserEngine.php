@@ -96,7 +96,7 @@ class InlineParserEngine
             $text = $character;
         }
 
-        $lastInline = $container->getLastChild();
+        $lastInline = $container->lastChild();
         if ($lastInline instanceof Text && !isset($lastInline->data['delim'])) {
             $lastInline->append($text);
         } else {

@@ -72,9 +72,9 @@ abstract class AbstractBlock extends Node
     /**
      * @return AbstractBlock|null
      */
-    public function getParent()
+    public function parent()
     {
-        return parent::getParent();
+        return parent::parent();
     }
 
     /**
@@ -237,7 +237,7 @@ abstract class AbstractBlock extends Node
             $this->endLine = $context->getLineNumber();
         }
 
-        $context->setTip($context->getTip()->getParent());
+        $context->setTip($context->getTip()->parent());
     }
 
     /**
@@ -259,8 +259,8 @@ abstract class AbstractBlock extends Node
         $this->lastLineBlank = $cursor->isBlank();
 
         $container = $this;
-        while ($container->getParent()) {
-            $container = $container->getParent();
+        while ($container->parent()) {
+            $container = $container->parent();
             $container->lastLineBlank = false;
         }
 

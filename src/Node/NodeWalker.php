@@ -45,19 +45,19 @@ class NodeWalker
         }
 
         if ($entering && $current->isContainer()) {
-            if ($current->getFirstChild()) {
-                $this->current = $current->getFirstChild();
+            if ($current->firstChild()) {
+                $this->current = $current->firstChild();
                 $this->entering = true;
             } else {
                 $this->entering = false;
             }
         } elseif ($current === $this->root) {
             $this->current = null;
-        } elseif (null === $current->getNext()) {
-            $this->current = $current->getParent();
+        } elseif (null === $current->next()) {
+            $this->current = $current->parent();
             $this->entering = false;
         } else {
-            $this->current = $current->getNext();
+            $this->current = $current->next();
             $this->entering = true;
         }
 

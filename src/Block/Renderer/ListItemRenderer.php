@@ -34,7 +34,7 @@ class ListItemRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
-        $contents = $htmlRenderer->renderBlocks($block->getChildren(), $inTightList);
+        $contents = $htmlRenderer->renderBlocks($block->children(), $inTightList);
         if (substr($contents, 0, 1) === '<') {
             $contents = "\n" . $contents;
         }

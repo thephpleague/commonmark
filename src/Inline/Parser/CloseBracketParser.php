@@ -82,7 +82,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $inline = $this->createInline($link['url'], $link['title'], $isImage);
         $opener->getInlineNode()->replaceWith($inline);
-        while (($label = $inline->getNext()) !== null) {
+        while (($label = $inline->next()) !== null) {
             $inline->appendChild($label);
         }
 
