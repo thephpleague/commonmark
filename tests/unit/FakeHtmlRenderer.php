@@ -82,7 +82,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
 
     /**
      * @param BlockElement[] $blocks
-     * @param bool            $inTightList
+     * @param bool           $inTightList
      *
      * @return string
      */

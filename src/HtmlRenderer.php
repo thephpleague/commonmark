@@ -97,7 +97,7 @@ class HtmlRenderer implements ElementRendererInterface
 
     /**
      * @param BlockElement $block
-     * @param bool          $inTightList
+     * @param bool         $inTightList
      *
      * @throws \RuntimeException
      *
@@ -115,7 +115,7 @@ class HtmlRenderer implements ElementRendererInterface
 
     /**
      * @param BlockElement[] $blocks
-     * @param bool            $inTightList
+     * @param bool           $inTightList
      *
      * @return string
      */

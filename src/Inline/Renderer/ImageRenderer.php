@@ -16,8 +16,8 @@ namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element\InlineElement;
 use League\CommonMark\Inline\Element\Image;
+use League\CommonMark\Inline\Element\InlineElement;
 
 class ImageRenderer implements InlineRendererInterface
 {

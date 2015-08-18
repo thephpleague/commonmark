@@ -15,8 +15,8 @@
 namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\Inline\Element\InlineElement;
 use League\CommonMark\Inline\Element\Html;
+use League\CommonMark\Inline\Element\InlineElement;
 
 class RawHtmlRenderer implements InlineRendererInterface
 {

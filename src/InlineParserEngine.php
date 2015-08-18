@@ -15,7 +15,6 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Node\NodeContainer;
 use League\CommonMark\Reference\ReferenceMap;
 

@@ -16,7 +16,6 @@ namespace League\CommonMark\Block\Element;
 
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Node\NodeContainer;
 use League\CommonMark\Util\ArrayCollection;
 

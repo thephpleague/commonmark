@@ -47,7 +47,7 @@ interface ElementRendererInterface
 
     /**
      * @param BlockElement $block
-     * @param bool          $inTightList
+     * @param bool         $inTightList
      *
      * @throws \RuntimeException
      *
@@ -57,7 +57,7 @@ interface ElementRendererInterface
 
     /**
      * @param BlockElement[] $blocks
-     * @param bool            $inTightList
+     * @param bool           $inTightList
      *
      * @return string
      */

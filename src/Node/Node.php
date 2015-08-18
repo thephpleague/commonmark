@@ -2,8 +2,6 @@
 
 namespace League\CommonMark\Node;
 
-use League\CommonMark\Util\ArrayCollection;
-
 abstract class Node
 {
     /**

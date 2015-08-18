@@ -16,8 +16,8 @@ namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element\InlineElement;
 use League\CommonMark\Inline\Element\Code;
+use League\CommonMark\Inline\Element\InlineElement;
 
 class CodeRenderer implements InlineRendererInterface
 {
