@@ -14,8 +14,8 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Block\Element\BlockElement;
+use League\CommonMark\Inline\Element\InlineElement;
 
 /**
  * Renders a parsed AST to a string representation
@@ -39,24 +39,24 @@ interface ElementRendererInterface
     public function escape($string, $preserveEntities = false);
 
     /**
-     * @param AbstractInline[] $inlines
+     * @param InlineElement[] $inlines
      *
      * @return string
      */
     public function renderInlines($inlines);
 
     /**
-     * @param AbstractBlock $block
+     * @param BlockElement $block
      * @param bool          $inTightList
      *
      * @throws \RuntimeException
      *
      * @return string
      */
-    public function renderBlock(AbstractBlock $block, $inTightList = false);
+    public function renderBlock(BlockElement $block, $inTightList = false);
 
     /**
-     * @param AbstractBlock[] $blocks
+     * @param BlockElement[] $blocks
      * @param bool            $inTightList
      *
      * @return string

@@ -45,11 +45,11 @@ class Document extends AbstractBlock
     /**
      * Returns true if this block can contain the given block as a child node
      *
-     * @param AbstractBlock $block
+     * @param BlockElement $block
      *
      * @return bool
      */
-    public function canContain(AbstractBlock $block)
+    public function canContain(BlockElement $block)
     {
         return true;
     }

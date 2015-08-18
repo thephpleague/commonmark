@@ -14,6 +14,8 @@
 
 namespace League\CommonMark\Inline\Element;
 
-class Strong extends AbstractInlineContainer
+use League\CommonMark\Node\NodeContainer;
+
+class Strong extends NodeContainer implements InlineElement
 {
 }

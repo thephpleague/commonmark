@@ -14,8 +14,8 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Block\Element\BlockElement;
+use League\CommonMark\Inline\Element\InlineElement;
 
 /**
  * Renders a parsed AST to HTML
@@ -64,13 +64,13 @@ class HtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param AbstractInline $inline
+     * @param InlineElement $inline
      *
      * @throws \RuntimeException
      *
      * @return string
      */
-    protected function renderInline(AbstractInline $inline)
+    protected function renderInline(InlineElement $inline)
     {
         $renderer = $this->environment->getInlineRendererForClass(get_class($inline));
         if (!$renderer) {
@@ -81,7 +81,7 @@ class HtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param AbstractInline[] $inlines
+     * @param InlineElement[] $inlines
      *
      * @return string
      */
@@ -96,14 +96,14 @@ class HtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param AbstractBlock $block
+     * @param BlockElement $block
      * @param bool          $inTightList
      *
      * @throws \RuntimeException
      *
      * @return string
      */
-    public function renderBlock(AbstractBlock $block, $inTightList = false)
+    public function renderBlock(BlockElement $block, $inTightList = false)
     {
         $renderer = $this->environment->getBlockRendererForClass(get_class($block));
         if (!$renderer) {
@@ -114,7 +114,7 @@ class HtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param AbstractBlock[] $blocks
+     * @param BlockElement[] $blocks
      * @param bool            $inTightList
      *
      * @return string

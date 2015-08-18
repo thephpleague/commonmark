@@ -49,10 +49,13 @@ foreach ($parsers as $name => $parser) {
 
 asort($results);
 
+$min = current($results);
+
 printf("\n\n");
 printf("===================================\n");
 printf("Here are the average parsing times:\n", $iterations);
 printf("===================================\n");
 foreach ($results as $name => $ms) {
-    printf("%-18s | %4d ms\n", $name, $ms);
+    $relative = round(($ms / $min)*100);
+    printf("%-18s | %4d ms | %3d rel\n", $name, $ms, $relative);
 }

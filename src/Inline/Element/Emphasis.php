@@ -14,6 +14,8 @@
 
 namespace League\CommonMark\Inline\Element;
 
-class Emphasis extends AbstractInlineContainer
+use League\CommonMark\Node\NodeContainer;
+
+class Emphasis extends NodeContainer implements InlineElement
 {
 }

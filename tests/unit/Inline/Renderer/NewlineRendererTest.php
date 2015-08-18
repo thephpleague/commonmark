@@ -58,7 +58,7 @@ class NewlineRendererTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass('League\CommonMark\Inline\Element\AbstractInline');
+        $inline = $this->getMockForAbstractClass('League\CommonMark\Inline\Element\InlineElement');
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

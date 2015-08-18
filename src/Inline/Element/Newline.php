@@ -14,7 +14,9 @@
 
 namespace League\CommonMark\Inline\Element;
 
-class Newline extends AbstractInline
+use League\CommonMark\Node\Node;
+
+class Newline extends Node implements InlineElement
 {
     const HARDBREAK = 0;
     const SOFTBREAK = 1;

@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Delimiter;
 
+use League\CommonMark\Inline\Element\InlineElement;
 use League\CommonMark\Node\Node;
 
 class Delimiter
@@ -24,7 +25,7 @@ class Delimiter
     /** @var int */
     protected $numDelims;
 
-    /** @var Node */
+    /** @var InlineElement */
     protected $inlineNode;
 
     /** @var Delimiter|null */

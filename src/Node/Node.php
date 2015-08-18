@@ -7,7 +7,7 @@ use League\CommonMark\Util\ArrayCollection;
 abstract class Node
 {
     /**
-     * @var Node|null
+     * @var NodeContainer|null
      */
     protected $parent;
 
@@ -22,14 +22,22 @@ abstract class Node
     protected $next;
 
     /**
-     * @var Node|null
+     * @var array
+     *
+     * Used for storage of arbitrary data
      */
-    protected $firstChild;
+    public $data = [];
 
     /**
-     * @var Node|null
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
      */
-    protected $lastChild;
+    public function getData($key, $default = null)
+    {
+        return array_key_exists($key, $this->data) ? $this->data[$key] : $default;
+    }
 
     /**
      * @return Node|null
@@ -48,14 +56,14 @@ abstract class Node
     }
 
     /**
-     * @return Node|null
+     * @return NodeContainer|null
      */
     public function parent()
     {
         return $this->parent;
     }
 
-    protected function setParent(Node $node)
+    protected function setParent(NodeContainer $node)
     {
         $this->parent = $node;
     }
@@ -126,100 +134,6 @@ abstract class Node
         $this->parent = null;
         $this->next = null;
         $this->previous = null;
-    }
-
-    /**
-     * @return bool
-     */
-    abstract public function isContainer();
-
-    /**
-     * @return Node|null
-     */
-    public function firstChild()
-    {
-        return $this->firstChild;
-    }
-
-    /**
-     * @return Node|null
-     */
-    public function lastChild()
-    {
-        return $this->lastChild;
-    }
-
-    /**
-     * @return Node[]
-     */
-    public function children()
-    {
-        $children = [];
-        for ($current = $this->firstChild;null !== $current;$current = $current->next) {
-            $children[] = $current;
-        }
-
-        return $children;
-    }
-
-    /**
-     * @param Node $child
-     */
-    public function appendChild(Node $child)
-    {
-        if ($this->lastChild) {
-            $this->lastChild->insertAfter($child);
-        } else {
-            $child->detach();
-            $child->setParent($this);
-            $this->lastChild = $this->firstChild = $child;
-        }
-    }
-
-    /**
-     * @param Node $child
-     */
-    public function prependChild(Node $child)
-    {
-        if ($this->firstChild) {
-            $this->firstChild->insertBefore($child);
-        } else {
-            $child->detach();
-            $child->setParent($this);
-            $this->lastChild = $this->firstChild = $child;
-        }
-    }
-
-    /**
-     * Detaches all child nodes of given node
-     */
-    public function detachChildren()
-    {
-        foreach ($this->children() as $children) {
-            $children->setParent(null);
-        }
-        $this->firstChild = $this->lastChild = null;
-    }
-
-    /**
-     * Replace all children of given node with collection of another
-     *
-     * @param array $children
-     *
-     * @return $this
-     */
-    public function replaceChildren(array $children)
-    {
-        if (!is_array($children) && !(is_object($children) && $children instanceof ArrayCollection)) {
-            throw new \InvalidArgumentException(sprintf('Expect iterable, got %s', get_class($children)));
-        }
-
-        $this->detachChildren();
-        foreach ($children as $item) {
-            $this->appendChild($item);
-        }
-
-        return $this;
     }
 
     /**
