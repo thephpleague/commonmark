@@ -16,7 +16,7 @@ namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element\InlineElement;
+use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Strong;
 
 class StrongRenderer implements InlineRendererInterface
@@ -27,7 +27,7 @@ class StrongRenderer implements InlineRendererInterface
      *
      * @return HtmlElement
      */
-    public function render(InlineElement $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Strong)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));

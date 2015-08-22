@@ -14,7 +14,7 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Block\Element\BlockElement;
+use League\CommonMark\Block\Element\AbstractBlock;
 
 class UnmatchedBlockCloser
 {
@@ -24,12 +24,12 @@ class UnmatchedBlockCloser
     private $context;
 
     /**
-     * @var BlockElement
+     * @var AbstractBlock
      */
     private $oldTip;
 
     /**
-     * @var BlockElement
+     * @var AbstractBlock
      */
     private $lastMatchedContainer;
 
@@ -44,9 +44,9 @@ class UnmatchedBlockCloser
     }
 
     /**
-     * @param BlockElement $block
+     * @param AbstractBlock $block
      */
-    public function setLastMatchedContainer(BlockElement $block)
+    public function setLastMatchedContainer(AbstractBlock $block)
     {
         $this->lastMatchedContainer = $block;
     }

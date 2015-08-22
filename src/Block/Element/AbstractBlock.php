@@ -16,13 +16,13 @@ namespace League\CommonMark\Block\Element;
 
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Node\NodeContainer;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\ArrayCollection;
 
 /**
  * Block-level element
  */
-abstract class AbstractBlock extends NodeContainer implements BlockElement
+abstract class AbstractBlock extends Node
 {
     /**
      * Used for storage of arbitrary data.
@@ -70,9 +70,17 @@ abstract class AbstractBlock extends NodeContainer implements BlockElement
     }
 
     /**
-     * @param NodeContainer $node
+     * @return AbstractBlock|null
      */
-    protected function setParent(NodeContainer $node)
+    public function parent()
+    {
+        return parent::parent();
+    }
+
+    /**
+     * @param Node $node
+     */
+    protected function setParent(Node $node)
     {
         if ($node && !$node instanceof self) {
             throw new \InvalidArgumentException('Parent of block must also be block (can not be inline)');
@@ -80,6 +88,58 @@ abstract class AbstractBlock extends NodeContainer implements BlockElement
 
         parent::setParent($node);
     }
+
+    /**
+     * @return bool
+     */
+    public function isContainer()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasChildren()
+    {
+        return !is_null($this->firstChild);
+    }
+
+    /**
+     * Returns true if this block can contain the given block as a child node
+     *
+     * @param AbstractBlock $block
+     *
+     * @return bool
+     */
+    abstract public function canContain(AbstractBlock $block);
+
+    /**
+     * Returns true if block type can accept lines of text
+     *
+     * @return bool
+     */
+    abstract public function acceptsLines();
+
+    /**
+     * Whether this is a code block
+     *
+     * @return bool
+     */
+    abstract public function isCode();
+
+    /**
+     * @param Cursor $cursor
+     *
+     * @return bool
+     */
+    abstract public function matchesNextLine(Cursor $cursor);
+
+    /**
+     * @param ContextInterface $context
+     * @param Cursor           $cursor
+     */
+    abstract public function handleRemainingContents(ContextInterface $context, Cursor $cursor);
 
     /**
      * @param int $startLine

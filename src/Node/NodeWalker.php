@@ -44,7 +44,7 @@ class NodeWalker
             return;
         }
 
-        if ($entering && $current instanceof NodeContainer) {
+        if ($entering && $current->isContainer()) {
             if ($current->firstChild()) {
                 $this->current = $current->firstChild();
                 $this->entering = true;

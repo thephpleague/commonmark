@@ -186,7 +186,7 @@ class DocParser
     {
         $context->setContainer($context->getDocument());
 
-        while ($context->getContainer()->lastChild()) {
+        while ($context->getContainer()->hasChildren()) {
             $lastChild = $context->getContainer()->lastChild();
             if (!$lastChild->isOpen()) {
                 break;

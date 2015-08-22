@@ -15,7 +15,7 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Node\NodeContainer;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\ReferenceMap;
 
 class InlineParserEngine
@@ -28,10 +28,10 @@ class InlineParserEngine
     }
 
     /**
-     * @param NodeContainer $container
-     * @param ReferenceMap  $referenceMap
+     * @param Node         $container
+     * @param ReferenceMap $referenceMap
      */
-    public function parse(NodeContainer $container, ReferenceMap $referenceMap)
+    public function parse(Node $container, ReferenceMap $referenceMap)
     {
         $inlineParserContext = new InlineParserContext($container, $referenceMap);
         while (($character = $inlineParserContext->getCursor()->getCharacter()) !== null) {
@@ -82,10 +82,10 @@ class InlineParserEngine
 
     /**
      * @param string              $character
-     * @param NodeContainer       $container
+     * @param Node                $container
      * @param InlineParserContext $inlineParserContext
      */
-    private function addPlainText($character, NodeContainer $container, InlineParserContext $inlineParserContext)
+    private function addPlainText($character, Node $container, InlineParserContext $inlineParserContext)
     {
         // We reach here if none of the parsers can handle the input
         // Attempt to match multiple non-special characters at once

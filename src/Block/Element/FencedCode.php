@@ -133,11 +133,11 @@ class FencedCode extends AbstractBlock
     /**
      * Returns true if this block can contain the given block as a child node
      *
-     * @param BlockElement $block
+     * @param AbstractBlock $block
      *
      * @return bool
      */
-    public function canContain(BlockElement $block)
+    public function canContain(AbstractBlock $block)
     {
         return false;
     }

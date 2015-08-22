@@ -46,7 +46,7 @@ class RawHtmlRendererTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass('League\CommonMark\Inline\Element\InlineElement');
+        $inline = $this->getMockForAbstractClass('League\CommonMark\Inline\Element\AbstractInline');
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

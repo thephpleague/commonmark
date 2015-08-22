@@ -56,7 +56,7 @@ class ListBlock extends AbstractBlock
             return true;
         }
 
-        if ($this->lastChild()) {
+        if ($this->hasChildren()) {
             return $this->lastChild()->endsWithBlankLine();
         }
 
@@ -66,11 +66,11 @@ class ListBlock extends AbstractBlock
     /**
      * Returns true if this block can contain the given block as a child node
      *
-     * @param BlockElement $block
+     * @param AbstractBlock $block
      *
      * @return bool
      */
-    public function canContain(BlockElement $block)
+    public function canContain(AbstractBlock $block)
     {
         return $block instanceof ListItem;
     }

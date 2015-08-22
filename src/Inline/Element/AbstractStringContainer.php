@@ -14,9 +14,7 @@
 
 namespace League\CommonMark\Inline\Element;
 
-use League\CommonMark\Node\Node;
-
-class AbstractStringContainer extends Node implements InlineElement
+class AbstractStringContainer extends AbstractInline
 {
     /**
      * @var string

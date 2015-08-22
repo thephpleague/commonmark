@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Tests\Unit;
 
-use League\CommonMark\Block\Element\BlockElement;
+use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\Inline\Element\InlineElement;
+use League\CommonMark\Inline\Element\AbstractInline;
 
 class FakeHtmlRenderer implements ElementRendererInterface
 {
@@ -58,7 +58,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param InlineElement[] $inlines
+     * @param AbstractInline[] $inlines
      *
      * @return string
      */
@@ -68,21 +68,21 @@ class FakeHtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param BlockElement $block
-     * @param bool         $inTightList
+     * @param AbstractBlock $block
+     * @param bool          $inTightList
      *
      * @throws \RuntimeException
      *
      * @return string
      */
-    public function renderBlock(BlockElement $block, $inTightList = false)
+    public function renderBlock(AbstractBlock $block, $inTightList = false)
     {
         return '::block::';
     }
 
     /**
-     * @param BlockElement[] $blocks
-     * @param bool           $inTightList
+     * @param AbstractBlock[] $blocks
+     * @param bool            $inTightList
      *
      * @return string
      */
