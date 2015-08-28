@@ -45,6 +45,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Removed the `ContextInterface` argument from `AbstractInlineParser::parse()` and `InlineParserEngine::parseCharacter`
  - Removed the first `ArrayCollection $inlines` argument from `InlineProcessorInterface::processInlines()`
  - Removed `CloseBracketParser::nullify()`
+ - Removed `pre` from rule 6 of HTML blocks (see jgm/CommonMark#355)
 
 ## [0.10.0] - 2015-07-25
 ### Added
