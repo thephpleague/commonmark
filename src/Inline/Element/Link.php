@@ -14,27 +14,19 @@
 
 namespace League\CommonMark\Inline\Element;
 
-use League\CommonMark\Util\ArrayCollection;
-
 class Link extends AbstractWebResource
 {
     /**
-     * @param string                      $url
-     * @param ArrayCollection|string|null $label
-     * @param string                      $title
+     * @param string      $url
+     * @param string|null $label
+     * @param string      $title
      */
     public function __construct($url, $label = null, $title = '')
     {
         parent::__construct($url);
 
-        if ($label === null) {
-            $label = $url;
-        }
-
         if (is_string($label)) {
-            $this->setChildren(new ArrayCollection([new Text($label)]));
-        } elseif (null !== $label) {
-            $this->setChildren($label);
+            $this->appendChild(new Text($label));
         }
 
         if (!empty($title)) {

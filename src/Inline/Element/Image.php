@@ -14,23 +14,19 @@
 
 namespace League\CommonMark\Inline\Element;
 
-use League\CommonMark\Util\ArrayCollection;
-
 class Image extends AbstractWebResource
 {
     /**
-     * @param string                 $url
-     * @param ArrayCollection|string $label
-     * @param string                 $title
+     * @param string $url
+     * @param string $label
+     * @param string $title
      */
     public function __construct($url, $label = '', $title = '')
     {
         parent::__construct($url);
 
         if (is_string($label)) {
-            $this->setChildren(new ArrayCollection([new Text($label)]));
-        } else {
-            $this->setChildren($label);
+            $this->appendChild(new Text($label));
         }
 
         if (!empty($title)) {

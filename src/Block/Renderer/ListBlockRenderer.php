@@ -51,7 +51,7 @@ class ListBlockRenderer implements BlockRendererInterface
             $tag,
             $attrs,
             $htmlRenderer->getOption('inner_separator', "\n") . $htmlRenderer->renderBlocks(
-                $block->getChildren(),
+                $block->children(),
                 $block->isTight()
             ) . $htmlRenderer->getOption('inner_separator', "\n")
         );

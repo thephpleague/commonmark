@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Inline\Element;
 
-use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Node\Node;
 
-abstract class AbstractInline
+abstract class AbstractInline extends Node
 {
     /**
      * @var array
@@ -26,38 +26,11 @@ abstract class AbstractInline
     public $data = [];
 
     /**
-     * @var AbstractInline|null
+     * @return bool
      */
-    protected $parent;
-
-    /**
-     * @return AbstractBlock|AbstractInline|null
-     */
-    public function getParent()
+    public function isContainer()
     {
-        return $this->parent;
-    }
-
-    /**
-     * @param AbstractBlock|AbstractInline $parent
-     *
-     * @return $this
-     */
-    public function setParent($parent)
-    {
-        if (!$parent instanceof AbstractBlock && !$parent instanceof self) {
-            throw new \InvalidArgumentException(sprintf(
-                'Argument 1 passed to %s() must be an instance of %s or %s, instance of %s given',
-                __METHOD__,
-                'League\CommonMark\Block\Element\AbstractBlock',
-                'League\CommonMark\Block\Element\AbstractInline',
-                is_object($parent) ? get_class($parent) : gettype($parent)
-            ));
-        }
-
-        $this->parent = $parent;
-
-        return $this;
+        return false;
     }
 
     /**

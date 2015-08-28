@@ -57,7 +57,7 @@ class ListBlock extends AbstractBlock
         }
 
         if ($this->hasChildren()) {
-            return $this->getLastChild()->endsWithBlankLine();
+            return $this->lastChild()->endsWithBlankLine();
         }
 
         return false;
@@ -106,17 +106,17 @@ class ListBlock extends AbstractBlock
 
         $this->tight = true; // tight by default
 
-        foreach ($this->children as $item) {
+        foreach ($this->children() as $item) {
             // check for non-final list item ending with blank line:
-            if ($item->endsWithBlankLine() && $item !== $this->getLastChild()) {
+            if ($item->endsWithBlankLine() && $item !== $this->lastChild()) {
                 $this->tight = false;
                 break;
             }
 
             // Recurse into children of list item, to see if there are
             // spaces between any of them:
-            foreach ($item->getChildren() as $subItem) {
-                if ($subItem->endsWithBlankLine() && ($item !== $this->getLastChild() || $subItem !== $item->getLastChild())) {
+            foreach ($item->children() as $subItem) {
+                if ($subItem->endsWithBlankLine() && ($item !== $this->lastChild() || $subItem !== $item->lastChild())) {
                     $this->tight = false;
                     break;
                 }

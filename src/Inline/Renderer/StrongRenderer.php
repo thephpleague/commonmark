@@ -38,6 +38,6 @@ class StrongRenderer implements InlineRendererInterface
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        return new HtmlElement('strong', $attrs, $htmlRenderer->renderInlines($inline->getChildren()));
+        return new HtmlElement('strong', $attrs, $htmlRenderer->renderInlines($inline->children()));
     }
 }

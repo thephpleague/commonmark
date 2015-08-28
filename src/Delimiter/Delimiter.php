@@ -14,6 +14,8 @@
 
 namespace League\CommonMark\Delimiter;
 
+use League\CommonMark\Node\Node;
+
 class Delimiter
 {
     /** @var String */
@@ -22,8 +24,8 @@ class Delimiter
     /** @var int */
     protected $numDelims;
 
-    /** @var int */
-    protected $pos;
+    /** @var Node */
+    protected $inlineNode;
 
     /** @var Delimiter|null */
     protected $previous;
@@ -46,16 +48,16 @@ class Delimiter
     /**
      * @param string   $char
      * @param int      $numDelims
-     * @param int      $pos
+     * @param Node     $node
      * @param bool     $canOpen
      * @param bool     $canClose
      * @param int|null $index
      */
-    public function __construct($char, $numDelims, $pos, $canOpen, $canClose, $index = null)
+    public function __construct($char, $numDelims, Node $node, $canOpen, $canClose, $index = null)
     {
         $this->char = $char;
         $this->numDelims = $numDelims;
-        $this->pos = $pos;
+        $this->inlineNode = $node;
         $this->canOpen = $canOpen;
         $this->canClose = $canClose;
         $this->active = true;
@@ -203,21 +205,21 @@ class Delimiter
     }
 
     /**
-     * @return int
+     * @return Node
      */
-    public function getPos()
+    public function getInlineNode()
     {
-        return $this->pos;
+        return $this->inlineNode;
     }
 
     /**
-     * @param int $pos
+     * @param Node $node
      *
      * @return $this
      */
-    public function setPos($pos)
+    public function setInlineNode(Node $node)
     {
-        $this->pos = $pos;
+        $this->inlineNode = $node;
 
         return $this;
     }

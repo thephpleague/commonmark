@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
@@ -30,12 +29,11 @@ class BacktickParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
 
@@ -50,7 +48,7 @@ class BacktickParser extends AbstractInlineParser
             if ($matchingTicks === $ticks) {
                 $code = mb_substr($cursor->getLine(), $previousState->getCurrentPosition(), $cursor->getPosition() - $previousState->getCurrentPosition() - strlen($ticks), 'utf-8');
                 $c = preg_replace('/[ \n]+/', ' ', $code);
-                $inlineContext->getInlines()->add(new Code(trim($c)));
+                $inlineContext->getContainer()->appendChild(new Code(trim($c)));
 
                 return true;
             }
@@ -58,7 +56,7 @@ class BacktickParser extends AbstractInlineParser
 
         // If we got here, we didn't match a closing backtick sequence
         $cursor->restoreState($previousState);
-        $inlineContext->getInlines()->add(new Text($ticks));
+        $inlineContext->getContainer()->appendChild(new Text($ticks));
 
         return true;
     }

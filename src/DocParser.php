@@ -15,10 +15,11 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\AbstractInlineContainer;
 use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Block\Element\InlineContainer;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Node\NodeWalker;
 
 class DocParser
 {
@@ -83,7 +84,7 @@ class DocParser
             $context->getTip()->finalize($context);
         }
 
-        $this->processInlines($context, $context->getDocument());
+        $this->processInlines($context, $context->getDocument()->walker());
 
         return $context->getDocument();
     }
@@ -132,15 +133,17 @@ class DocParser
         }
     }
 
-    private function processInlines(ContextInterface $context, AbstractBlock $block)
+    private function processInlines(ContextInterface $context, NodeWalker $walker)
     {
-        if ($block instanceof AbstractInlineContainer) {
-            $cursor = new Cursor(trim($block->getStringContent()));
-            $block->setInlines($this->inlineParserEngine->parse($context, $cursor));
-        }
+        while (($event = $walker->next()) !== null) {
+            if (!$event->isEntering()) {
+                continue;
+            }
 
-        foreach ($block->getChildren() as $child) {
-            $this->processInlines($context, $child);
+            $node = $event->getNode();
+            if ($node instanceof InlineContainer) {
+                $this->inlineParserEngine->parse($node, $context->getDocument()->getReferenceMap());
+            }
         }
     }
 
@@ -161,13 +164,13 @@ class DocParser
             if ($b instanceof ListBlock) {
                 $lastList = $b;
             }
-            $b = $b->getParent();
+            $b = $b->parent();
         } while ($b);
 
         if ($lastList) {
             while ($block !== $lastList) {
                 $block->finalize($context);
-                $block = $block->getParent();
+                $block = $block->parent();
             }
             $lastList->finalize($context);
         }
@@ -184,14 +187,14 @@ class DocParser
         $context->setContainer($context->getDocument());
 
         while ($context->getContainer()->hasChildren()) {
-            $lastChild = $context->getContainer()->getLastChild();
+            $lastChild = $context->getContainer()->lastChild();
             if (!$lastChild->isOpen()) {
                 break;
             }
 
             $context->setContainer($lastChild);
             if (!$context->getContainer()->matchesNextLine($cursor)) {
-                $context->setContainer($context->getContainer()->getParent()); // back up to the last matching block
+                $context->setContainer($context->getContainer()->parent()); // back up to the last matching block
                 break;
             }
         }

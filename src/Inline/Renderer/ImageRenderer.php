@@ -40,7 +40,7 @@ class ImageRenderer implements InlineRendererInterface
 
         $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
 
-        $alt = $htmlRenderer->renderInlines($inline->getChildren());
+        $alt = $htmlRenderer->renderInlines($inline->children());
         $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
 

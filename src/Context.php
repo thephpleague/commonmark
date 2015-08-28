@@ -99,7 +99,7 @@ class Context implements ContextInterface
             $this->tip->finalize($this);
         }
 
-        $this->tip->addChild($newBlock);
+        $this->tip->appendChild($newBlock);
         $this->tip = $newBlock;
         $this->container = $newBlock;
 
@@ -193,7 +193,7 @@ class Context implements ContextInterface
             $this->tip->finalize($this);
         }
 
-        $this->tip->addChild($block);
+        $this->tip->appendChild($block);
         $this->tip = $block;
         $this->container = $block;
 
@@ -206,7 +206,12 @@ class Context implements ContextInterface
     public function replaceContainerBlock(AbstractBlock $replacement)
     {
         $this->getBlockCloser()->closeUnmatchedBlocks();
-        $this->getContainer()->getParent()->replaceChild($this, $this->getContainer(), $replacement);
+        $this->getContainer()->replaceWith($replacement);
+
+        if ($this->getTip() === $this->getContainer()) {
+            $this->setTip($replacement);
+        }
+
         $this->setContainer($replacement);
     }
 
