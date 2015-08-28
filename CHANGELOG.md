@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added a `NodeWalker` and `NodeWalkerEvent` to traverse the AST without using recursion
  - Added new `InlineContainer` interface for blocks
  - Added new `getContainer()` and `getReferenceMap()` methods to `InlineParserContext`
+ - Added `iframe` to whitelist of HTML block tags (as per spec)
 
 ### Changed
  - Bumped spec target version to 0.22
