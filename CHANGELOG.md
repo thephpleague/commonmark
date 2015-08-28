@@ -3,6 +3,46 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Added
+ - Added new `Node` class, which both `AbstractBlock` and `AbstractInline` extend from (#169)
+ - Added a `NodeWalker` and `NodeWalkerEvent` to traverse the AST without using recursion
+ - Added new `InlineContainer` interface for blocks
+ - Added new `getContainer()` and `getReferenceMap()` methods to `InlineParserContext`
+
+### Changed
+ - Revised AST to use a double-linked list (#169)
+ - `AbstractBlock` and `AbstractInline` both extend from `Node`
+   - Sub-classes must implement new `isContainer()` method
+ - Other major changes to `AbstractBlock`:
+   - `getParent()` is now `parent()`
+   - `setParent()` now expects a `Node` instead of an `AbstractBlock`
+   - `getChildren()` is now `children()`
+   - `getLastChild()` is now `lastChild()`
+   - `addChild()` is now `appendChild()`
+ - `InlineParserContext` is constructed using the container `AbstractBlock` and the document's `RefereceMap`
+   - The constructor will automatically create the `Cursor` using the container's string contents
+ - `InlineParserEngine::parse` now requires the `Node` container and the document's `ReferenceMap` instead of a `ContextInterface` and `Cursor`
+ - Changed `Delimiter` to reference the actual inline `Node` instead of the position
+   - The `int $pos` protected member and constructor arg is now `Node $node`
+   - Use `getInlineNode()` and `setInlineNode()` instead of `getPos()` and `setPos()`
+ - Changed `DocParser::processInlines` to use a `NodeWalker` to iterate through inlines
+   - Walker passed as second argument instead of `AbstractBlock`
+   - Uses a `while` loop instead of recursion to traverse the AST
+ - `Image` and `Link` now only accept a string as their second argument
+ - Refactored how `CloseBracketParser::parse()` works internally
+ - `CloseBracketParser::createInline` no longer accepts label inlines
+ 
+### Removed
+ - Removed `Block\Element\AbstractInlineContainer`
+   - Extend `AbstractBlock` and implement `InlineContainer` instead
+   - Use child methods instead of `getInlines` and `setInlines`
+ - Removed `AbstractBlock::replaceChild()`
+   - Call `Node::replaceWith()` directly the child node instead
+ - Removed the `getInlines()` method from `InlineParserContext`
+   - Add parsed inlines using `$inlineContext->getContainer()->appendChild()` instead of `$inlineContext->getInlines()->add()`
+ - Removed the `ContextInterface` argument from `AbstractInlineParser::parse()` and `InlineParserEngine::parseCharacter`
+ - Removed the first `ArrayCollection $inlines` argument from `InlineProcessorInterface::processInlines()`
+ - Removed `CloseBracketParser::nullify()`
 
 ## [0.10.0] - 2015-07-25
 ### Added
