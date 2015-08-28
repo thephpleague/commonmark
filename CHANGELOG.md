@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added new `getContainer()` and `getReferenceMap()` methods to `InlineParserContext`
 
 ### Changed
+ - Bumped spec target version to 0.22
  - Revised AST to use a double-linked list (#169)
  - `AbstractBlock` and `AbstractInline` both extend from `Node`
    - Sub-classes must implement new `isContainer()` method
