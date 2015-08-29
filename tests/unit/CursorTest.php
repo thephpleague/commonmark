@@ -268,6 +268,17 @@ class CursorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $cursor->getPosition());
     }
 
+    public function testAdvanceByColumnOffset()
+    {
+        $cursor = new Cursor("1. \t\tthere");
+        $cursor->advanceBy(3);
+        $cursor->advanceBy(4, true);
+
+        $this->assertEquals(0, $cursor->getIndent());
+        $this->assertEquals(5, $cursor->getPosition());
+        $this->assertEquals(8, $cursor->getColumn());
+    }
+
     /**
      * @param $subject
      * @param $startPos
