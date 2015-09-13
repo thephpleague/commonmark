@@ -120,7 +120,7 @@ class DocParser
         $context->getBlockCloser()->closeUnmatchedBlocks();
 
         // Determine whether the last line is blank, updating parents as needed
-        $context->getContainer()->setLastLineBlank($cursor, $context->getLineNumber());
+        $this->setAndPropagateLastLineBlank($context, $cursor);
 
         // Handle any remaining cursor contents
         if ($context->getContainer()->isOpen()) {
@@ -235,5 +235,27 @@ class DocParser
             !$cursor->isBlank() &&
             $context->getTip() instanceof Paragraph &&
             count($context->getTip()->getStrings()) > 0;
+    }
+
+    /**
+     * @param ContextInterface $context
+     * @param Cursor           $cursor
+     */
+    private function setAndPropagateLastLineBlank(ContextInterface $context, $cursor)
+    {
+        if ($cursor->isBlank() && $lastChild = $context->getContainer()->lastChild()) {
+            if ($lastChild instanceof AbstractBlock) {
+                $lastChild->setLastLineBlank(true);
+            }
+        }
+
+        $container = $context->getContainer();
+        $lastLineBlank = $container->shouldLastLineBeBlank($cursor, $context->getLineNumber());
+
+        // Propagate lastLineBlank up through parents:
+        while ($container) {
+            $container->setLastLineBlank($lastLineBlank);
+            $container = $container->parent();
+        }
     }
 }

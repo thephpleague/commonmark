@@ -96,14 +96,10 @@ class ListItem extends AbstractBlock
      * @param Cursor $cursor
      * @param int    $currentLineNumber
      *
-     * @return $this
+     * @return bool
      */
-    public function setLastLineBlank(Cursor $cursor, $currentLineNumber)
+    public function shouldLastLineBeBlank(Cursor $cursor, $currentLineNumber)
     {
-        parent::setLastLineBlank($cursor, $currentLineNumber);
-
-        if ($cursor->isBlank()) {
-            $this->lastLineBlank = $this->startLine < $currentLineNumber;
-        }
+        return $cursor->isBlank() && $this->startLine < $currentLineNumber;
     }
 }

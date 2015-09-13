@@ -34,6 +34,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Refactored how `CloseBracketParser::parse()` works internally
  - `CloseBracketParser::createInline` no longer accepts label inlines
  - Disallow list item starting with multiple blank lines (see jgm/CommonMark#332)
+ - Modified `AbstractBlock::setLastLineBlank()`
+   - Functionality moved to `AbstractBlock::shouldLastLineBeBlank()` and new `DocParser::setAndPropagateLastLineBlank()` method
+   - `AbstractBlock::setLastLineBlank()` is now a setter method for `AbstractBlock::$lastLineBlank`
 
 ### Fixed
  - Fixed logic error in calculation of offset (see jgm/commonmark.js@94053a8)
