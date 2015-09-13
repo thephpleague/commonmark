@@ -10,3 +10,15 @@
         'Block rendering': '/0.10/customization/block-rendering/'
         'Inline parsing': '/0.10/customization/inline-parsing/'
         'Inline rendering': '/0.10/customization/inline-rendering'
+'0.11':
+    Getting Started:
+        'Introduction': '/0.11/'
+        'Installation': '/0.11/installation/'
+        'Basic Usage': '/0.11/basic-usage/'
+    Customization:
+        'Overview': '/0.11/customization/overview/'
+        'Environment': '/0.11/customization/environment/'
+        'Block parsing': '/0.11/customization/block-parsing/'
+        'Block rendering': '/0.11/customization/block-rendering/'
+        'Inline parsing': '/0.11/customization/inline-parsing/'
+        'Inline rendering': '/0.11/customization/inline-rendering'

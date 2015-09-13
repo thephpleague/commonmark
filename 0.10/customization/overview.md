@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Customization Overview
-permalink: /customization/overview/
 ---
 
 Customization Overview
