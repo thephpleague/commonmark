@@ -1,7 +1,6 @@
 ---
 layout: default
 title: The Environment
-permalink: /customization/environment/
 ---
 
 The Environment

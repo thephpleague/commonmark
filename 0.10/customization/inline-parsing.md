@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Inline Parsing
-permalink: /customization/inline-parsing/
 ---
 
 Inline Parsing
