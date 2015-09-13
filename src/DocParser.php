@@ -62,7 +62,13 @@ class DocParser
             $input = substr($input, 0, -1);
         }
 
-        return preg_split('/\r\n|\n|\r/', $input);
+        $lines =  preg_split('/\r\n|\n|\r/', $input);
+
+        if (end($lines) === "") {
+            array_pop($lines);
+        }
+
+        return $lines;
     }
 
     /**
