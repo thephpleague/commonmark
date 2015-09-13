@@ -40,6 +40,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Fixed
  - Fixed logic error in calculation of offset (see jgm/commonmark.js@94053a8)
+ - Fixed bug where `DocParser` checked the wrong method to determine remainder handling behavior
+ - Fixed bug where `HorizontalRuleParser` failed to advance the cursor beyond the parsed horizontal rule characters
 
 ### Removed
  - Removed `Block\Element\AbstractInlineContainer`
