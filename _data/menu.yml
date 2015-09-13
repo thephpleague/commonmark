@@ -1,11 +1,12 @@
-Getting Started:
-    'Introduction': '/'
-    'Installation': '/installation/'
-    'Basic Usage': '/basic-usage/'
-Customization:
-    'Overview': '/customization/overview/'
-    'Environment': '/customization/environment/'
-    'Block parsing': '/customization/block-parsing/'
-    'Block rendering': '/customization/block-rendering/'
-    'Inline parsing': '/customization/inline-parsing/'
-    'Inline rendering': '/customization/inline-rendering'
+'0.10':
+    Getting Started:
+        'Introduction': '/'
+        'Installation': '/0.10/installation/'
+        'Basic Usage': '/0.10/basic-usage/'
+    Customization:
+        'Overview': '/0.10/customization/overview/'
+        'Environment': '/0.10/customization/environment/'
+        'Block parsing': '/0.10/customization/block-parsing/'
+        'Block rendering': '/0.10/customization/block-rendering/'
+        'Inline parsing': '/0.10/customization/inline-parsing/'
+        'Inline rendering': '/0.10/customization/inline-rendering'
