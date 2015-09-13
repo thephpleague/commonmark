@@ -37,6 +37,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Modified `AbstractBlock::setLastLineBlank()`
    - Functionality moved to `AbstractBlock::shouldLastLineBeBlank()` and new `DocParser::setAndPropagateLastLineBlank()` method
    - `AbstractBlock::setLastLineBlank()` is now a setter method for `AbstractBlock::$lastLineBlank`
+ - `AbstractBlock::handleRemainingContents()` is no longer abstract
+   - A default implementation is provided
+   - Removed duplicate code from sub-classes which used the default implementation - they'll just use the parent method from now on
 
 ### Fixed
  - Fixed logic error in calculation of offset (see jgm/commonmark.js@94053a8)

@@ -139,7 +139,13 @@ abstract class AbstractBlock extends Node
      * @param ContextInterface $context
      * @param Cursor           $cursor
      */
-    abstract public function handleRemainingContents(ContextInterface $context, Cursor $cursor);
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    {
+        // create paragraph container for line
+        $context->addBlock(new Paragraph());
+        $cursor->advanceToFirstNonSpace();
+        $context->getTip()->addLine($cursor->getRemainder());
+    }
 
     /**
      * @param int $startLine

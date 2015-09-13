@@ -131,16 +131,4 @@ class ListBlock extends AbstractBlock
     {
         return $this->tight;
     }
-
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
-    {
-        // create paragraph container for line
-        $context->addBlock(new Paragraph());
-        $cursor->advanceToFirstNonSpace();
-        $context->getTip()->addLine($cursor->getRemainder());
-    }
 }
