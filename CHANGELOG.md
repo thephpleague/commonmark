@@ -33,6 +33,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - `Image` and `Link` now only accept a string as their second argument
  - Refactored how `CloseBracketParser::parse()` works internally
  - `CloseBracketParser::createInline` no longer accepts label inlines
+ - Disallow list item starting with multiple blank lines (see jgm/CommonMark#332)
 
 ### Fixed
  - Fixed logic error in calculation of offset (see jgm/commonmark.js@94053a8)
