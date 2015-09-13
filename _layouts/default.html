@@ -55,7 +55,7 @@
 </section>
 
 <header>
-    <a class="logo" href="/">
+    <a class="logo" href="{% if version == site.data.project.default_version %}/{% else %}/{{ version }}/{% endif %}">
         {% if site.data.images.logo %}
             <span class="icon">
                 <img src="{{ site.data.images.logo }}" width="50" height="40" alt="{{ site.data.project.title }} - {{ site.data.project.tagline }}">
