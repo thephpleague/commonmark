@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Basic Usage
-permalink: /basic-usage/
 ---
 
 Basic Usage
