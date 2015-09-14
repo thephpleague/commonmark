@@ -85,12 +85,10 @@ class BlockQuote extends AbstractBlock
      * @param Cursor $cursor
      * @param int    $currentLineNumber
      *
-     * @return $this
+     * @return bool
      */
-    public function setLastLineBlank(Cursor $cursor, $currentLineNumber)
+    public function shouldLastLineBeBlank(Cursor $cursor, $currentLineNumber)
     {
-        parent::setLastLineBlank($cursor, $currentLineNumber);
-
-        $this->lastLineBlank = false;
+        return false;
     }
 }

@@ -38,6 +38,9 @@ class HorizontalRuleParser extends AbstractBlockParser
             return false;
         }
 
+        // Advance to the end of the string, consuming the entire line (of the horizontal rule)
+        $cursor->advanceBy(mb_strlen($cursor->getRemainder()));
+
         $context->addBlock(new HorizontalRule());
         $context->setBlocksParsed(true);
 

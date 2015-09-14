@@ -190,6 +190,27 @@ abstract class AbstractBlock extends Node
     }
 
     /**
+     * @param bool $blank
+     */
+    public function setLastLineBlank($blank)
+    {
+        $this->lastLineBlank = $blank;
+    }
+
+    /**
+     * Determines whether the last line should be marked as blank
+     *
+     * @param Cursor $cursor
+     * @param int    $currentLineNumber
+     *
+     * @return bool
+     */
+    public function shouldLastLineBeBlank(Cursor $cursor, $currentLineNumber)
+    {
+        return $cursor->isBlank();
+    }
+
+    /**
      * @return string[]
      */
     public function getStrings()
@@ -246,25 +267,6 @@ abstract class AbstractBlock extends Node
     public function getStringContent()
     {
         return $this->finalStringContents;
-    }
-
-    /**
-     * @param Cursor $cursor
-     * @param int    $currentLineNumber
-     *
-     * @return $this
-     */
-    public function setLastLineBlank(Cursor $cursor, $currentLineNumber)
-    {
-        $this->lastLineBlank = $cursor->isBlank();
-
-        $container = $this;
-        while ($container->parent()) {
-            $container = $container->parent();
-            $container->lastLineBlank = false;
-        }
-
-        return $this;
     }
 
     /**

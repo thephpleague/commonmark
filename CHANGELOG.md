@@ -8,8 +8,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added a `NodeWalker` and `NodeWalkerEvent` to traverse the AST without using recursion
  - Added new `InlineContainer` interface for blocks
  - Added new `getContainer()` and `getReferenceMap()` methods to `InlineParserContext`
+ - Added `iframe` to whitelist of HTML block tags (as per spec)
 
 ### Changed
+ - Bumped spec target version to 0.22
  - Revised AST to use a double-linked list (#169)
  - `AbstractBlock` and `AbstractInline` both extend from `Node`
    - Sub-classes must implement new `isContainer()` method
@@ -31,7 +33,16 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - `Image` and `Link` now only accept a string as their second argument
  - Refactored how `CloseBracketParser::parse()` works internally
  - `CloseBracketParser::createInline` no longer accepts label inlines
- 
+ - Disallow list item starting with multiple blank lines (see jgm/CommonMark#332)
+ - Modified `AbstractBlock::setLastLineBlank()`
+   - Functionality moved to `AbstractBlock::shouldLastLineBeBlank()` and new `DocParser::setAndPropagateLastLineBlank()` method
+   - `AbstractBlock::setLastLineBlank()` is now a setter method for `AbstractBlock::$lastLineBlank`
+
+### Fixed
+ - Fixed logic error in calculation of offset (see jgm/commonmark.js@94053a8)
+ - Fixed bug where `DocParser` checked the wrong method to determine remainder handling behavior
+ - Fixed bug where `HorizontalRuleParser` failed to advance the cursor beyond the parsed horizontal rule characters
+
 ### Removed
  - Removed `Block\Element\AbstractInlineContainer`
    - Extend `AbstractBlock` and implement `InlineContainer` instead
@@ -43,6 +54,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Removed the `ContextInterface` argument from `AbstractInlineParser::parse()` and `InlineParserEngine::parseCharacter`
  - Removed the first `ArrayCollection $inlines` argument from `InlineProcessorInterface::processInlines()`
  - Removed `CloseBracketParser::nullify()`
+ - Removed `pre` from rule 6 of HTML blocks (see jgm/CommonMark#355)
 
 ## [0.10.0] - 2015-07-25
 ### Added
