@@ -67,7 +67,7 @@ class ListItem extends AbstractBlock
     {
         if ($cursor->isBlank() && $this->firstChild !== null) {
             $cursor->advanceToFirstNonSpace();
-        } else if ($cursor->getIndent() >= $this->listData->markerOffset + $this->listData->padding) {
+        } elseif ($cursor->getIndent() >= $this->listData->markerOffset + $this->listData->padding) {
             $cursor->advanceBy($this->listData->markerOffset + $this->listData->padding, true);
         } else {
             return false;

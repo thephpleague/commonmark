@@ -193,7 +193,6 @@ class Cursor
         while ($advanceByColumns ? ($cols < $characters) : ($i < $characters)) {
             if ($this->peek($i) === "\t") {
                 $cols += (4 - (($this->column + $cols) % 4));
-
             } else {
                 $cols++;
             }
