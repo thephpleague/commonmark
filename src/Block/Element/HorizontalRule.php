@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Block\Element;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
 class HorizontalRule extends AbstractBlock
@@ -54,14 +53,5 @@ class HorizontalRule extends AbstractBlock
     public function matchesNextLine(Cursor $cursor)
     {
         return false;
-    }
-
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
-    {
-        // nothing to do; we already added the contents.
     }
 }

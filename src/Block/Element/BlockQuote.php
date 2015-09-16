@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Block\Element;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
 class BlockQuote extends AbstractBlock
@@ -64,21 +63,6 @@ class BlockQuote extends AbstractBlock
         }
 
         return false;
-    }
-
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
-    {
-        if ($cursor->isBlank()) {
-            return;
-        }
-
-        $context->addBlock(new Paragraph());
-        $cursor->advanceToFirstNonSpace();
-        $context->getTip()->addLine($cursor->getRemainder());
     }
 
     /**

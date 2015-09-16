@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Block\Element;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Reference\ReferenceMap;
 
@@ -77,20 +76,5 @@ class Document extends AbstractBlock
     public function matchesNextLine(Cursor $cursor)
     {
         return true;
-    }
-
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
-    {
-        if ($cursor->isBlank()) {
-            return;
-        }
-
-        $context->addBlock(new Paragraph());
-        $cursor->advanceToFirstNonSpace();
-        $context->getTip()->addLine($cursor->getRemainder());
     }
 }
