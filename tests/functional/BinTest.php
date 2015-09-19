@@ -14,8 +14,9 @@ class BinTest extends \PHPUnit_Framework_TestCase
         $cmd = new Command($this->getPathToCommonmark());
         $cmd->execute();
 
-        $this->assertEquals(0, $cmd->getExitCode());
-        $this->assertContains('Usage:', $cmd->getOutput());
+        $this->assertEquals(1, $cmd->getExitCode());
+        $this->assertEmpty($cmd->getOutput());
+        $this->assertContains('Usage:', $cmd->getError());
     }
 
     /**

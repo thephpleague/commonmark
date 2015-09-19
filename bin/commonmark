@@ -14,8 +14,8 @@ foreach ($argv as $i => $arg) {
         switch ($arg) {
             case '-h':
             case '--help':
-                help();
-                break;
+                echo getHelpText();
+                exit(0);
             default:
                 fail('Unknown option: ' . $arg);
         }
@@ -37,7 +37,7 @@ if (isset($src)) {
     fclose($stdin);
 
     if (empty($markdown)) {
-        help();
+        fail(getHelpText());
     }
 }
 
@@ -45,11 +45,13 @@ $converter = new \League\CommonMark\CommonMarkConverter();
 echo $converter->convertToHtml($markdown);
 
 /**
- * Display help and usage info
+ * Get help and usage info
+ *
+ * @return string
  */
-function help()
+function getHelpText()
 {
-    echo <<<HELP
+    return <<<HELP
 CommonMark - Markdown done right
 
 Usage: commonmark [OPTIONS] [FILE]
@@ -79,8 +81,6 @@ Examples:
 Full documentation can be found at http://commonmark.thephpleague.com/
 
 HELP;
-
-    exit(0);
 }
 
 /**
@@ -88,11 +88,7 @@ HELP;
  */
 function fail($message)
 {
-    $message .= "\n";
-
-    $fp = fopen('php://stderr', 'w');
-    fwrite($fp, $message);
-    fclose($fp);
+    fwrite(STDERR, $message . "\n");
     exit(1);
 }
 
