@@ -19,8 +19,8 @@ If the method can only handle certain inline types, be sure to verify that you'v
 
 ### Parameters
 
-* `AbstractBaseInline $inline` - The encountered inline you must render
-* `HtmlRenderer $htmlRenderer` - The AST renderer; use this to help escape output or easily generate HTML tags
+* `AbstractInline $inline` - The encountered inline you must render
+* `ElementRendererInterface $htmlRenderer` - The AST renderer; use this to help escape output or easily generate HTML tags
 
 ### Return value
 
@@ -54,7 +54,7 @@ class MyCustomLinkRenderer implements BlockRendererInterface
         $this->host = $host;
     }
 
-    public function render(AbstractInlineElement $inline, HtmlRenderer $htmlRenderer)
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Link)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
@@ -65,14 +65,14 @@ class MyCustomLinkRenderer implements BlockRendererInterface
         $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
 
         if (isset($inline->attributes['title'])) {
-            $attrs['title'] = $htmlRenderer->escape($inline->attributes['title'], true);
+            $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
 
         if ($this->isExternalUrl($inline->getUrl())) {
             $attr['class'] = 'external-link';
         }
 
-        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->getLabel()->getInlines()));
+        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
     }
 
     private function isExternalUrl($url)

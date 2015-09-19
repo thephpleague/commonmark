@@ -20,7 +20,7 @@ If the method can only handle certain block types, be sure to verify that you've
 ### Parameters
 
 * `AbstractBlock $block` - The encountered block you must render
-* `HtmlRenderer $htmlRenderer` - The AST renderer; use this to render inlines or easily generate HTML tags
+* `ElementRendererInterface $htmlRenderer` - The AST renderer; use this to render inlines or easily generate HTML tags
 * `$inTightList = false` - Whether the element is being rendered in a tight list or not
 
 ### Return value
@@ -61,7 +61,7 @@ Here's a custom renderer which renders horizontal rules using text instead:
 ~~~php
 class TextDividerRenderer implements BlockRendererInterface
 {
-    public function render(AbstractBlock $block, HtmlRenderer $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
         return new HtmlElement('pre', array('class' => 'divider'), '==============================');
     }

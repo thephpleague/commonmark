@@ -22,7 +22,6 @@ This method will be called if both conditions are met:
 
 ### Parameters
 
-* `ContextInterface $context` - Provides information about the current context of the DocParser. Includes access to things like the document, current block container, and more.
 * `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the `Cursor` used to parse the current line.
 
 ### Return value
@@ -32,7 +31,7 @@ This method will be called if both conditions are met:
 Returning `true` tells the engine that you've successfully parsed the character (and related ones after it).  It is your responsibility to:
 
 1. Advance the cursor to the end of the parsed text
-2. Add the parsed inline to the `$inlineContext->getInlines()` collection
+2. Add the parsed inline to the container (`$inlineContext->getContainer()->appendChild(...)`)
 
 ## Examples
 
@@ -47,7 +46,7 @@ class TwitterHandleParser extends AbstractInlineParser
         return array('@');
     }
 
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext) {
+    public function parse(InlineParserContext $inlineContext) {
         $cursor = $inlineContext->getCursor();
 
         // The @ symbol must not have any other characters immediately prior
@@ -74,7 +73,7 @@ class TwitterHandleParser extends AbstractInlineParser
 
         $profileUrl = 'https://twitter.com/' . $handle;
 
-        $inlineContext->getInlines()->add(new Link($profileUrl, '@'.$handle));
+        $inlineContext->getContainer()->appendChild(new Link($profileUrl, '@'.$handle));
 
         return true;
     }
@@ -95,7 +94,7 @@ class SmilieParser extends AbstractInlineParser
         return array(':');
     }
 
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext) {
+    public function parse(InlineParserContext $inlineContext) {
         $cursor = $inlineContext->getCursor();
 
         // The next character must be a paren; if not, then bail
@@ -110,9 +109,9 @@ class SmilieParser extends AbstractInlineParser
         
         // Add the corresponding image
         if ($nextChar === ')') {
-            $inlineContext->getInlines()->add(new Image('/img/happy.png'));
+            $inlineContext->getContainer()->appendChild(new Image('/img/happy.png'));
         } elseif ($nextChar === '(') {
-            $inlineContext->getInlines()->add(new Image('/img/sad.png'));
+            $inlineContext->getContainer()->appendChild(new Image('/img/sad.png'));
         }
 
         return true;
@@ -127,4 +126,4 @@ $environment->addInlineParser(new SmilieParserParser());
 
 * For best performance, `return false` as soon as possible
 * You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
-* You can look at (and modify) previously-parsed inlines if needed.
+* You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).

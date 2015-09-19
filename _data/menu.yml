@@ -5,6 +5,7 @@ Getting Started:
 Customization:
     'Overview': '/customization/overview/'
     'Environment': '/customization/environment/'
+    'Abstract Syntax Tree': '/customization/abstract-syntax-tree'
     'Block parsing': '/customization/block-parsing/'
     'Block rendering': '/customization/block-rendering/'
     'Inline parsing': '/customization/inline-parsing/'
