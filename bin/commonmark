@@ -1,0 +1,112 @@
+#!/usr/bin/env php
+<?php
+
+requireAutoloader();
+
+ini_set('display_errors', 'stderr');
+
+foreach ($argv as $i => $arg) {
+    if ($i === 0) {
+        continue;
+    }
+
+    if (substr($arg, 0, 1) === '-') {
+        switch ($arg) {
+            case '-h':
+            case '--help':
+                help();
+                break;
+            default:
+                fail('Unknown option: ' . $arg);
+        }
+    } else {
+        $src = $argv[1];
+    }
+}
+
+if (isset($src)) {
+    if (!file_exists($src)) {
+        fail('File not found: ' . $src);
+    }
+
+    $markdown = file_get_contents($src);
+} else {
+    $stdin = fopen('php://stdin', 'r');
+    stream_set_blocking($stdin, false);
+    $markdown = stream_get_contents($stdin);
+    fclose($stdin);
+
+    if (empty($markdown)) {
+        help();
+    }
+}
+
+$converter = new \League\CommonMark\CommonMarkConverter();
+echo $converter->convertToHtml($markdown);
+
+/**
+ * Display help and usage info
+ */
+function help()
+{
+    echo <<<HELP
+CommonMark - Markdown done right
+
+Usage: commonmark [OPTIONS] [FILE]
+
+    -h, --help  Shows help and usage information
+
+    If no file is given, input will be read from STDIN
+
+Examples:
+
+    Converting a file named document.md:
+
+        commonmark document.md
+
+    Converting a file and saving its output:
+
+        commonmark document.md > output.html
+
+    Converting from STDIN:
+
+        echo -e '# Hello World!' | commonmark
+
+    Converting from STDIN and saving the output:
+
+        echo -e '# Hello World!' | commonmark > output.html
+
+Full documentation can be found at http://commonmark.thephpleague.com/
+
+HELP;
+
+    exit(0);
+}
+
+/**
+ * @param string $message Error message
+ */
+function fail($message)
+{
+    $message .= "\n";
+
+    $fp = fopen('php://stderr', 'w');
+    fwrite($fp, $message);
+    fclose($fp);
+    exit(1);
+}
+
+function requireAutoloader()
+{
+    $autoloadPaths = [
+        // Local package usage
+        __DIR__ . '/../vendor/autoload.php',
+        // Package was included as a library
+        __DIR__ . '/../../../vendor/autoload.php',
+    ];
+    foreach ($autoloadPaths as $path) {
+        if (file_exists($path)) {
+            require_once $path;
+        }
+    }
+}
