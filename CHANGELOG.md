@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added new `InlineContainer` interface for blocks
  - Added new `getContainer()` and `getReferenceMap()` methods to `InlineParserContext`
  - Added `iframe` to whitelist of HTML block tags (as per spec)
+ - Added `./bin/commonmark` for converting Markdown at the command line
 
 ### Changed
  - Bumped spec target version to 0.22
