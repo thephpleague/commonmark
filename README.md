@@ -23,8 +23,10 @@
 This project can be installed via [Composer]:
 
 ``` bash
-$ composer require league/commonmark
+$ composer require league/commonmark:^0.11
 ```
+
+See [Versioning](#versioning) for important information on which version constraints you should use.
 
 ## Basic Usage
 
@@ -184,13 +186,17 @@ You can compare the performance of **league/commonmark** to other popular parser
 $ ./tests/benchmark/benchmark.php
 ```
 
-## Stability and Versioning
+## Versioning
+
+[SemVer](http://semver.org/) will be followed closely.  0.x versions will introduce breaking changes, so be careful which version constraints you use.  **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatiblity**; for example: `^0.11`.  This is equivalent to `>=0.11.0 <0.12.0`.
+
+If you're only using the `CommonMarkConverter` class to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.11`, `>0.11`, etc.  I personally promise to never break this specific class in any future 0.x release.
+
+## Stability
 
 While this package does work well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future, which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
 
 Major release 1.0.0 will be reserved for when both CommonMark and this project are considered stable (see [outstanding CommonMark spec issues](http://talk.commonmark.org/t/issues-to-resolve-before-1-0-release/1287)).   0.x.x will be used until that happens.
-
-SemVer will be followed [closely](http://semver.org/).
 
 ## Contributing
 
