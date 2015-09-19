@@ -120,53 +120,48 @@ The following table shows which versions of league/commonmark are compatible wit
         <tr>
             <th>league/commonmark</th>
             <th>CommonMark spec</th>
-            <th>Notes</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><strong>0.10.0</strong></td>
-            <td><strong><a href="http://spec.commonmark.org/0.21/">0.21</a></strong>
-            <td>current spec (as of July 25 2015)</td>
+            <td><strong>0.11.0</strong></td>
+            <td><strong><a href="http://spec.commonmark.org/0.22/">0.22</a></strong></td>
+        </tr>
+        <tr>
+            <td>0.10.0</td>
+            <td><a href="http://spec.commonmark.org/0.21/">0.21</a></td>
         </tr>
         <tr>
             <td>0.9.0</td>
             <td><a href="http://spec.commonmark.org/0.20/">0.20</a>
-            <td></td>
         </tr>
         <tr>
             <td>0.8.0</td>
             <td><a href="http://spec.commonmark.org/0.19/">0.19</a>
-            <td></td>
+        </tr>
         <tr>
             <td>0.7.2<br>0.7.1<br>0.7.0<br>0.6.1</td>
             <td><a href="http://spec.commonmark.org/0.18/">0.18</a><br><a href="http://spec.commonmark.org/0.17/">0.17</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.6.0</td>
             <td><a href="http://spec.commonmark.org/0.16/">0.16</a><br><a href="http://spec.commonmark.org/0.15/">0.15</a><br><a href="http://spec.commonmark.org/0.14/">0.14</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.5.x<br>0.4.0</td>
             <td><a href="http://spec.commonmark.org/0.13/">0.13</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.3.0</td>
             <td><a href="http://spec.commonmark.org/0.12/">0.12</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.2.x</td>
             <td><a href="http://spec.commonmark.org/0.10/">0.10</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.1.x</td>
             <td><a href="https://github.com/jgm/CommonMark/blob/2cf0750a7a507eded4cf3c9a48fd1f924d0ce538/spec.txt">0.01</a></td>
-            <td></td>
         </tr>
     </tbody>
 </table>
