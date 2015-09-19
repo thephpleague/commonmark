@@ -18,7 +18,7 @@ use League\CommonMark\Node\Node;
 
 class Delimiter
 {
-    /** @var String */
+    /** @var string */
     protected $char;
 
     /** @var int */
@@ -125,7 +125,7 @@ class Delimiter
     }
 
     /**
-     * @return String
+     * @return string
      */
     public function getChar()
     {
@@ -133,7 +133,7 @@ class Delimiter
     }
 
     /**
-     * @param String $char
+     * @param string $char
      *
      * @return $this
      */
