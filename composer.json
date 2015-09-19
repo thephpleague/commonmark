@@ -25,6 +25,7 @@
         "jgm/CommonMark": "0.22",
         "jgm/SmartPunct": "0.22",
         "michelf/php-markdown": "~1.4",
+        "mikehaertl/php-shellcommand": "~1.1.0",
         "phpunit/phpunit": "~4.3",
         "phpunit/phpunit-mock-objects": "2.3.0",
         "symfony/finder": "~2.3"
