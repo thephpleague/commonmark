@@ -12,11 +12,11 @@
 namespace Webuni\CommonMark\TableExtension;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\AbstractInlineContainer;
+use League\CommonMark\Block\Element\InlineContainer;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class TableCell extends AbstractInlineContainer
+class TableCell extends AbstractBlock implements InlineContainer
 {
     const TYPE_HEAD = 'th';
     const TYPE_BODY = 'td';

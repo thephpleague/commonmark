@@ -31,6 +31,6 @@ class TableRowRenderer implements BlockRendererInterface
 
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 
-        return new HtmlElement('tr', $attrs, $separator.$htmlRenderer->renderBlocks($block->getChildren()).$separator);
+        return new HtmlElement('tr', $attrs, $separator.$htmlRenderer->renderBlocks($block->children()).$separator);
     }
 }

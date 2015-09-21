@@ -52,12 +52,12 @@ class TableParser extends AbstractBlockParser
                 return false;
             }
 
-            $table->getBody()->addChild($row);
+            $table->getBody()->appendChild($row);
 
             return true;
         });
 
-        $table->getHead()->addChild($row);
+        $table->getHead()->appendChild($row);
 
         if (count($lines) >= 1) {
             $paragraph = new Paragraph();
@@ -101,11 +101,11 @@ class TableParser extends AbstractBlockParser
 
         $row = new TableRow();
         foreach ($cells[0] as $i => $cell) {
-            $row->addChild(new TableCell(trim($cell), $type, isset($columns[$i]) ? $columns[$i] : null));
+            $row->appendChild(new TableCell(trim($cell), $type, isset($columns[$i]) ? $columns[$i] : null));
         }
 
         for ($j = count($columns) - 1; $j > $i; --$j) {
-            $row->addChild(new TableCell('', $type, null));
+            $row->appendChild(new TableCell('', $type, null));
         }
 
         return $row;

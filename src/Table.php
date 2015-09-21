@@ -17,15 +17,13 @@ use League\CommonMark\Cursor;
 
 class Table extends AbstractBlock
 {
-    private $head;
-    private $body;
     private $parser;
 
     public function __construct(\Closure $parser)
     {
         parent::__construct();
-        parent::addChild($this->head = new TableRows(TableRows::TYPE_HEAD));
-        parent::addChild($this->body = new TableRows(TableRows::TYPE_BODY));
+        $this->appendChild(new TableRows(TableRows::TYPE_HEAD));
+        $this->appendChild(new TableRows(TableRows::TYPE_BODY));
         $this->parser = $parser;
     }
 
@@ -44,29 +42,22 @@ class Table extends AbstractBlock
         return false;
     }
 
-    public function addChild(AbstractBlock $childBlock)
-    {
-        throw new \OutOfRangeException('The Table block has a fixed number children');
-    }
-
-    public function removeChild(AbstractBlock $childBlock)
-    {
-        throw new \OutOfRangeException('The Table block has a fixed number children');
-    }
-
-    public function replaceChild(ContextInterface $context, AbstractBlock $original, AbstractBlock $replacement)
-    {
-        throw new \OutOfRangeException('The Table block has a fixed number children');
-    }
-
     public function getHead()
     {
-        return $this->head;
+        foreach ($this->children() as $child) {
+            if ($child instanceof TableRows && TableRows::TYPE_HEAD === $child->type) {
+                return $child;
+            }
+        }
     }
 
     public function getBody()
     {
-        return $this->body;
+        foreach ($this->children() as $child) {
+            if ($child instanceof TableRows && TableRows::TYPE_BODY === $child->type) {
+                return $child;
+            }
+        }
     }
 
     public function matchesNextLine(Cursor $cursor)

@@ -33,6 +33,6 @@ class TableCellRenderer implements BlockRendererInterface
             $attrs['align'] = $block->align;
         }
 
-        return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->getInlines()));
+        return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->children()));
     }
 }
