@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Fixed
  - Fixed missing "bin" directive in composer.json
+ - Updated a docblock to match recent changes to method parameters
 
 ## [0.11.0] - 2015-09-19
 ### Added
