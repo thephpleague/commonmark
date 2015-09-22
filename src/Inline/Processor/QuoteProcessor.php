@@ -21,7 +21,7 @@ class QuoteProcessor implements InlineProcessorInterface
 {
     public function processInlines(DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
     {
-        $callback = function (Delimiter $opener, Delimiter $closer, DelimiterStack $stack) {
+        $callback = function (Delimiter $opener, Delimiter $closer) {
             // Open quote
             $openerInline = $opener->getInlineNode();
             $openerInline->setContent(

@@ -158,7 +158,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $cursor->advanceToFirstNonSpace();
 
-        if (!$cursor->match('/^\\)/')) {
+        if ($cursor->match('/^\\)/') === null) {
             return false;
         }
 

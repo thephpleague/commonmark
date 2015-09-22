@@ -3,8 +3,15 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+### Changed
+ - Tightened up some loose comparisons
+
 ### Fixed
  - Fixed missing "bin" directive in composer.json
+ - Updated a docblock to match recent changes to method parameters
+
+### Removed
+ - Removed unused variable from within QuoteProcessor's closure
 
 ## [0.11.0] - 2015-09-19
 ### Added
