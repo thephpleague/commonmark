@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+
+## [0.11.1] - 2015-09-22
 ### Changed
  - Tightened up some loose comparisons
 
@@ -305,7 +307,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.11.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.11.1...HEAD
+[0.11.1]: https://github.com/thephpleague/commonmark/compare/0.11.0...0.11.1
 [0.11.0]: https://github.com/thephpleague/commonmark/compare/0.10.0...0.11.0
 [0.10.0]: https://github.com/thephpleague/commonmark/compare/0.9.0...0.10.0
 [0.9.0]: https://github.com/thephpleague/commonmark/compare/0.8.0...0.9.0
