@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Inline\Element\Html;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;

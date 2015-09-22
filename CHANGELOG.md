@@ -10,6 +10,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Fixed missing "bin" directive in composer.json
  - Updated a docblock to match recent changes to method parameters
 
+### Removed
+ - Removed unused variable from within QuoteProcessor's closure
+
 ## [0.11.0] - 2015-09-19
 ### Added
  - Added new `Node` class, which both `AbstractBlock` and `AbstractInline` extend from (#169)
