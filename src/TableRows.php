@@ -28,6 +28,16 @@ class TableRows extends AbstractBlock
         $this->type = $type;
     }
 
+    public function isHead()
+    {
+        return self::TYPE_HEAD === $this->type;
+    }
+
+    public function isBody()
+    {
+        return self::TYPE_BODY === $this->type;
+    }
+
     public function canContain(AbstractBlock $block)
     {
         return $block instanceof TableRow;

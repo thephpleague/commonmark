@@ -45,7 +45,7 @@ class Table extends AbstractBlock
     public function getHead()
     {
         foreach ($this->children() as $child) {
-            if ($child instanceof TableRows && TableRows::TYPE_HEAD === $child->type) {
+            if ($child instanceof TableRows && $child->isHead()) {
                 return $child;
             }
         }
@@ -54,7 +54,7 @@ class Table extends AbstractBlock
     public function getBody()
     {
         foreach ($this->children() as $child) {
-            if ($child instanceof TableRows && TableRows::TYPE_BODY === $child->type) {
+            if ($child instanceof TableRows && $child->isBody()) {
                 return $child;
             }
         }
