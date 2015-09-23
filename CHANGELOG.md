@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+## Fixed
+ - Fixed parser checking acceptsLines on the wrong element (#183)
 
 ## [0.11.1] - 2015-09-22
 ### Changed
