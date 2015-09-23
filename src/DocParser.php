@@ -129,7 +129,7 @@ class DocParser
         $this->setAndPropagateLastLineBlank($context, $cursor);
 
         // Handle any remaining cursor contents
-        if ($context->getContainer()->acceptsLines()) {
+        if ($context->getTip()->acceptsLines()) {
             $context->getContainer()->handleRemainingContents($context, $cursor);
         } elseif (!$cursor->isBlank()) {
             // Create paragraph container for line
