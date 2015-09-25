@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+
+## [0.11.3] - 2015-09-25
 ## Fixed
  - Reset container after closing containing lists (#183; jgm/commonmark.js#67)
    - The temporary fix from 0.11.2 was reverted
@@ -314,8 +316,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.11.2...HEAD
-[0.11.2]: https://github.com/thephpleague/commonmark/compare/0.11.0...0.11.2
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.11.3...HEAD
+[0.11.3]: https://github.com/thephpleague/commonmark/compare/0.11.2...0.11.3
+[0.11.2]: https://github.com/thephpleague/commonmark/compare/0.11.1...0.11.2
 [0.11.1]: https://github.com/thephpleague/commonmark/compare/0.11.0...0.11.1
 [0.11.0]: https://github.com/thephpleague/commonmark/compare/0.10.0...0.11.0
 [0.10.0]: https://github.com/thephpleague/commonmark/compare/0.9.0...0.10.0
