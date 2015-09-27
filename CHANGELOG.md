@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## Fixed
  - Fixed incorrect `endLine` positions (#187)
+ - Fixed `DocParser::preProcessInput` dropping up to 2 ending newlines instead of just one
 
 ## Removed
  - Removed protected function Context::addChild()

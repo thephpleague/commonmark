@@ -57,13 +57,11 @@ class DocParser
      */
     private function preProcessInput($input)
     {
-        // Remove any /n which appears at the very end of the string
-        if (substr($input, -1) === "\n") {
-            $input = substr($input, 0, -1);
-        }
-
         $lines = preg_split('/\r\n|\n|\r/', $input);
 
+        // Remove any newline which appears at the very end of the string.
+        // We've already split the document by newlines, so we can simply drop
+        // any empty element which appears on the end.
         if (end($lines) === '') {
             array_pop($lines);
         }
