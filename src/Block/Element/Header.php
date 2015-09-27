@@ -44,9 +44,9 @@ class Header extends AbstractBlock implements InlineContainer
         return $this->level;
     }
 
-    public function finalize(ContextInterface $context)
+    public function finalize(ContextInterface $context, $endLineNumber)
     {
-        parent::finalize($context);
+        parent::finalize($context, $endLineNumber);
 
         $this->finalStringContents = implode("\n", $this->getStrings());
     }

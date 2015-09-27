@@ -100,9 +100,9 @@ class ListBlock extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context)
+    public function finalize(ContextInterface $context, $endLineNumber)
     {
-        parent::finalize($context);
+        parent::finalize($context, $endLineNumber);
 
         $this->tight = true; // tight by default
 

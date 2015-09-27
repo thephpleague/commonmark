@@ -4,6 +4,17 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## Changed
+ - `AbstractBlock::finalize()` now reqires a second parameter, `$endLineNumber`
+
+## Fixed
+ - Fixed incorrect `endLine` positions (#187)
+ - Fixed `DocParser::preProcessInput` dropping up to 2 ending newlines instead of just one
+
+## Removed
+ - Removed protected function Context::addChild()
+   - It was a duplicate of the Context::addBlock() method
+
 ## [0.11.3] - 2015-09-25
 ## Fixed
  - Reset container after closing containing lists (#183; jgm/commonmark.js#67)

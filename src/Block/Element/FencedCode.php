@@ -178,9 +178,9 @@ class FencedCode extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context)
+    public function finalize(ContextInterface $context, $endLineNumber)
     {
-        parent::finalize($context);
+        parent::finalize($context, $endLineNumber);
 
         // first line becomes info string
         $this->info = RegexHelper::unescape(trim($this->strings->first()));

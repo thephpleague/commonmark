@@ -57,13 +57,11 @@ class DocParser
      */
     private function preProcessInput($input)
     {
-        // Remove any /n which appears at the very end of the string
-        if (substr($input, -1) === "\n") {
-            $input = substr($input, 0, -1);
-        }
-
         $lines = preg_split('/\r\n|\n|\r/', $input);
 
+        // Remove any newline which appears at the very end of the string.
+        // We've already split the document by newlines, so we can simply drop
+        // any empty element which appears on the end.
         if (end($lines) === '') {
             array_pop($lines);
         }
@@ -87,7 +85,7 @@ class DocParser
         }
 
         while ($context->getTip()) {
-            $context->getTip()->finalize($context);
+            $context->getTip()->finalize($context, count($lines));
         }
 
         $this->processInlines($context, $context->getDocument()->walker());
@@ -175,10 +173,10 @@ class DocParser
 
         if ($lastList) {
             while ($block !== $lastList) {
-                $block->finalize($context);
+                $block->finalize($context, $context->getLineNumber());
                 $block = $block->parent();
             }
-            $lastList->finalize($context);
+            $lastList->finalize($context, $context->getLineNumber());
         }
 
         $context->setContainer($context->getTip());
