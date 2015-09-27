@@ -87,26 +87,6 @@ class Context implements ContextInterface
     }
 
     /**
-     * @param AbstractBlock $newBlock
-     *
-     * @return AbstractBlock
-     */
-    protected function addChild(AbstractBlock $newBlock)
-    {
-        $this->getBlockCloser()->closeUnmatchedBlocks();
-        $newBlock->setStartLine($this->lineNumber);
-        while (!$this->tip->canContain($newBlock)) {
-            $this->tip->finalize($this);
-        }
-
-        $this->tip->appendChild($newBlock);
-        $this->tip = $newBlock;
-        $this->container = $newBlock;
-
-        return $newBlock;
-    }
-
-    /**
      * @return Document
      */
     public function getDocument()
