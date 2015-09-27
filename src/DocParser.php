@@ -87,7 +87,7 @@ class DocParser
         }
 
         while ($context->getTip()) {
-            $context->getTip()->finalize($context);
+            $context->getTip()->finalize($context, count($lines));
         }
 
         $this->processInlines($context, $context->getDocument()->walker());
@@ -175,10 +175,10 @@ class DocParser
 
         if ($lastList) {
             while ($block !== $lastList) {
-                $block->finalize($context);
+                $block->finalize($context, $context->getLineNumber());
                 $block = $block->parent();
             }
-            $lastList->finalize($context);
+            $lastList->finalize($context, $context->getLineNumber());
         }
 
         $context->setContainer($context->getTip());

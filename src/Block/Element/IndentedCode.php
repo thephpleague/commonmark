@@ -64,9 +64,9 @@ class IndentedCode extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context)
+    public function finalize(ContextInterface $context, $endLineNumber)
     {
-        parent::finalize($context);
+        parent::finalize($context, $endLineNumber);
 
         $reversed = array_reverse($this->getStrings(), true);
         foreach ($reversed as $index => $line) {

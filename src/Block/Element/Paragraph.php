@@ -62,9 +62,9 @@ class Paragraph extends AbstractBlock implements InlineContainer
         return true;
     }
 
-    public function finalize(ContextInterface $context)
+    public function finalize(ContextInterface $context, $endLineNumber)
     {
-        parent::finalize($context);
+        parent::finalize($context, $endLineNumber);
 
         $this->finalStringContents = preg_replace('/^  */m', '', implode("\n", $this->getStrings()));
 

@@ -100,9 +100,9 @@ class HtmlBlock extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context)
+    public function finalize(ContextInterface $context, $endLineNumber)
     {
-        parent::finalize($context);
+        parent::finalize($context, $endLineNumber);
 
         $this->finalStringContents = implode("\n", $this->getStrings());
     }
@@ -118,7 +118,7 @@ class HtmlBlock extends AbstractBlock
         // Check for end condition
         if ($this->type >= self::TYPE_1_CODE_CONTAINER && $this->type <= self::TYPE_5_CDATA) {
             if ($cursor->match(RegexHelper::getHtmlBlockCloseRegex($this->type)) !== null) {
-                $this->finalize($context);
+                $this->finalize($context, $context->getLineNumber());
             }
         }
     }

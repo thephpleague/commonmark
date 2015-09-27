@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## Changed
+ - `AbstractBlock::finalize()` now reqires a second parameter, `$endLineNumber`
+
+## Fixed
+ - Fixed incorrect `endLine` positions (#187)
+
 ## Removed
  - Removed protected function Context::addChild()
    - It was a duplicate of the Context::addBlock() method
