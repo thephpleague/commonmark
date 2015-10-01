@@ -27,10 +27,10 @@ class EmphasisParser extends AbstractInlineParser
     public function __construct(array $newConfig = [])
     {
         $this->config = new Configuration([
-            'use_asterisk' => true,
-            'use_underscore' => true,
+            'use_asterisk'    => true,
+            'use_underscore'  => true,
             'enable_emphasis' => true,
-            'enable_strong' => true,
+            'enable_strong'   => true,
         ]);
         $this->config->mergeConfig($newConfig);
     }
@@ -41,12 +41,13 @@ class EmphasisParser extends AbstractInlineParser
     public function getCharacters()
     {
         $chars = [];
-        if ($this->config->getConfig("use_asterisk", true)) {
+        if ($this->config->getConfig('use_asterisk', true)) {
             $chars[] = '*';
         }
-        if ($this->config->getConfig("use_underscore", true)) {
+        if ($this->config->getConfig('use_underscore', true)) {
             $chars[] = '_';
         }
+
         return $chars;
     }
 
@@ -75,7 +76,7 @@ class EmphasisParser extends AbstractInlineParser
         }
 
         // Skip single delims if emphasis is disabled
-        if ($numDelims === 1 && !$this->config->getConfig("enable_emphasis")) {
+        if ($numDelims === 1 && !$this->config->getConfig('enable_emphasis')) {
             return false;
         }
 
@@ -110,7 +111,7 @@ class EmphasisParser extends AbstractInlineParser
         }
 
         $node = new Text($cursor->getPreviousText(), [
-            'delim' => true,
+            'delim'           => true,
             'emphasis_config' => $this->config,
         ]);
         $inlineContext->getContainer()->appendChild($node);
