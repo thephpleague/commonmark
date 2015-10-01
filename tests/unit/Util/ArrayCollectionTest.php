@@ -265,18 +265,18 @@ class ArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['foo' => 1], $collection->slice(0, 1));
         $this->assertEquals([], $collection->slice(0, 0));
 
-        $this->assertEquals([0 => 'bar', 1=> 'baz', 2 => 2], $collection->slice(1));
-        $this->assertEquals([0 => 'bar', 1=> 'baz', 2 => 2], $collection->slice(1, null));
-        $this->assertEquals([0 => 'bar', 1=> 'baz', 2 => 2], $collection->slice(1, 99));
-        $this->assertEquals([0 => 'bar', 1=> 'baz', 2 => 2], $collection->slice(1, 3));
-        $this->assertEquals([0 => 'bar', 1=> 'baz'], $collection->slice(1, 2));
+        $this->assertEquals([0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(1));
+        $this->assertEquals([0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(1, null));
+        $this->assertEquals([0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(1, 99));
+        $this->assertEquals([0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(1, 3));
+        $this->assertEquals([0 => 'bar', 1 => 'baz'], $collection->slice(1, 2));
         $this->assertEquals([0 => 'bar'], $collection->slice(1, 1));
         $this->assertEquals([], $collection->slice(1, 0));
 
-        $this->assertEquals([1=> 'baz', 2 => 2], $collection->slice(2));
-        $this->assertEquals([1=> 'baz', 2 => 2], $collection->slice(2, null));
-        $this->assertEquals([1=> 'baz', 2 => 2], $collection->slice(2, 99));
-        $this->assertEquals([1=> 'baz', 2 => 2], $collection->slice(2, 2));
+        $this->assertEquals([1 => 'baz', 2 => 2], $collection->slice(2));
+        $this->assertEquals([1 => 'baz', 2 => 2], $collection->slice(2, null));
+        $this->assertEquals([1 => 'baz', 2 => 2], $collection->slice(2, 99));
+        $this->assertEquals([1 => 'baz', 2 => 2], $collection->slice(2, 2));
         $this->assertEquals([1 => 'baz'], $collection->slice(2, 1));
         $this->assertEquals([], $collection->slice(2, 0));
 

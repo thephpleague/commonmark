@@ -23,8 +23,10 @@
 This project can be installed via [Composer]:
 
 ``` bash
-$ composer require league/commonmark
+$ composer require league/commonmark:^0.11
 ```
+
+See [Versioning](#versioning) for important information on which version constraints you should use.
 
 ## Basic Usage
 
@@ -97,6 +99,7 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 - [CakePHP 3](https://github.com/gourmet/common-mark)
 - [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
 - [Sculpin](https://github.com/bcremer/sculpin-commonmark-bundle)
+- [Symfony](https://github.com/webuni/commonmark-bundle)
 - [Twig](https://github.com/webuni/commonmark-twig-renderer)
 
 ## Community Extensions
@@ -105,6 +108,8 @@ Custom parsers/renderers can be bundled into extensions which extend CommonMark.
 
  - [Markua](https://github.com/dshafik/markua) - Markdown parser for PHP which intends to support the full Markua spec.
  - [CommonMark Table Extension](https://github.com/webuni/commonmark-table-extension) - Adds the ability to create tables in CommonMark documents.
+ - [CommonMark Attributes Extension](https://github.com/webuni/commonmark-attributes-extension) - Adds a syntax to define attributes on the various HTML elements.
+ - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark, that integrates with [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown).
 
 ## Compatibility with CommonMark ##
 
@@ -117,48 +122,48 @@ The following table shows which versions of league/commonmark are compatible wit
         <tr>
             <th>league/commonmark</th>
             <th>CommonMark spec</th>
-            <th>Notes</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><strong>0.9.0</strong></td>
-            <td><strong><a href="http://spec.commonmark.org/0.20/">0.20</a></strong>
-            <td>current spec (as of Jun 18 '15)</td>
+            <td><strong>0.11.x</strong></td>
+            <td><strong><a href="http://spec.commonmark.org/0.22/">0.22</a></strong></td>
+        </tr>
+        <tr>
+            <td>0.10.0</td>
+            <td><a href="http://spec.commonmark.org/0.21/">0.21</a></td>
+        </tr>
+        <tr>
+            <td>0.9.0</td>
+            <td><a href="http://spec.commonmark.org/0.20/">0.20</a>
         </tr>
         <tr>
             <td>0.8.0</td>
             <td><a href="http://spec.commonmark.org/0.19/">0.19</a>
-            <td></td>
+        </tr>
         <tr>
             <td>0.7.2<br>0.7.1<br>0.7.0<br>0.6.1</td>
             <td><a href="http://spec.commonmark.org/0.18/">0.18</a><br><a href="http://spec.commonmark.org/0.17/">0.17</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.6.0</td>
             <td><a href="http://spec.commonmark.org/0.16/">0.16</a><br><a href="http://spec.commonmark.org/0.15/">0.15</a><br><a href="http://spec.commonmark.org/0.14/">0.14</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.5.x<br>0.4.0</td>
             <td><a href="http://spec.commonmark.org/0.13/">0.13</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.3.0</td>
             <td><a href="http://spec.commonmark.org/0.12/">0.12</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.2.x</td>
             <td><a href="http://spec.commonmark.org/0.10/">0.10</a></td>
-            <td></td>
         </tr>
         <tr>
             <td>0.1.x</td>
             <td><a href="https://github.com/jgm/CommonMark/blob/2cf0750a7a507eded4cf3c9a48fd1f924d0ce538/spec.txt">0.01</a></td>
-            <td></td>
         </tr>
     </tbody>
 </table>
@@ -181,13 +186,17 @@ You can compare the performance of **league/commonmark** to other popular parser
 $ ./tests/benchmark/benchmark.php
 ```
 
-## Stability and Versioning
+## Versioning
+
+[SemVer](http://semver.org/) will be followed closely.  0.x versions will introduce breaking changes, so be careful which version constraints you use.  **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatiblity**; for example: `^0.11`.  This is equivalent to `>=0.11.0 <0.12.0`.
+
+If you're only using the `CommonMarkConverter` class to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.11`, `>0.11`, etc.  I personally promise to never break this specific class in any future 0.x release.
+
+## Stability
 
 While this package does work well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future, which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
 
-Major release 1.0.0 will be reserved for when both CommonMark and this project are considered stable. 0.x.x will be used until that happens.
-
-SemVer will be followed [closely](http://semver.org/).
+Major release 1.0.0 will be reserved for when both CommonMark and this project are considered stable (see [outstanding CommonMark spec issues](http://talk.commonmark.org/t/issues-to-resolve-before-1-0-release/1287)).   0.x.x will be used until that happens.
 
 ## Contributing
 

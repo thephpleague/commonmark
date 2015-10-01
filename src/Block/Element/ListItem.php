@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Block\Element;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
 class ListItem extends AbstractBlock
@@ -65,10 +64,10 @@ class ListItem extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor)
     {
-        if ($cursor->getIndent() >= $this->listData->markerOffset + $this->listData->padding) {
-            $cursor->advanceBy($this->listData->markerOffset + $this->listData->padding);
-        } elseif ($cursor->isBlank()) {
+        if ($cursor->isBlank() && $this->firstChild !== null) {
             $cursor->advanceToFirstNonSpace();
+        } elseif ($cursor->getIndent() >= $this->listData->markerOffset + $this->listData->padding) {
+            $cursor->advanceBy($this->listData->markerOffset + $this->listData->padding, true);
         } else {
             return false;
         }
@@ -77,33 +76,13 @@ class ListItem extends AbstractBlock
     }
 
     /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
-    {
-        if ($cursor->isBlank()) {
-            return;
-        }
-
-        // create paragraph container for line
-        $context->addBlock(new Paragraph());
-        $cursor->advanceToFirstNonSpace();
-        $context->getTip()->addLine($cursor->getRemainder());
-    }
-
-    /**
      * @param Cursor $cursor
-     * @param int $currentLineNumber
+     * @param int    $currentLineNumber
      *
-     * @return $this
+     * @return bool
      */
-    public function setLastLineBlank(Cursor $cursor, $currentLineNumber)
+    public function shouldLastLineBeBlank(Cursor $cursor, $currentLineNumber)
     {
-        parent::setLastLineBlank($cursor, $currentLineNumber);
-
-        if ($cursor->isBlank()) {
-            $this->lastLineBlank = $this->startLine < $currentLineNumber;
-        }
+        return $cursor->isBlank() && $this->startLine < $currentLineNumber;
     }
 }

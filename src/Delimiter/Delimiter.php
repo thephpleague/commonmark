@@ -14,16 +14,18 @@
 
 namespace League\CommonMark\Delimiter;
 
+use League\CommonMark\Node\Node;
+
 class Delimiter
 {
-    /** @var String */
+    /** @var string */
     protected $char;
 
     /** @var int */
     protected $numDelims;
 
-    /** @var int */
-    protected $pos;
+    /** @var Node */
+    protected $inlineNode;
 
     /** @var Delimiter|null */
     protected $previous;
@@ -44,18 +46,18 @@ class Delimiter
     protected $index;
 
     /**
-     * @param string    $char
-     * @param int       $numDelims
-     * @param int       $pos
-     * @param bool      $canOpen
-     * @param bool      $canClose
-     * @param int|null  $index
+     * @param string   $char
+     * @param int      $numDelims
+     * @param Node     $node
+     * @param bool     $canOpen
+     * @param bool     $canClose
+     * @param int|null $index
      */
-    public function __construct($char, $numDelims, $pos, $canOpen, $canClose, $index = null)
+    public function __construct($char, $numDelims, Node $node, $canOpen, $canClose, $index = null)
     {
         $this->char = $char;
         $this->numDelims = $numDelims;
-        $this->pos = $pos;
+        $this->inlineNode = $node;
         $this->canOpen = $canOpen;
         $this->canClose = $canClose;
         $this->active = true;
@@ -63,7 +65,7 @@ class Delimiter
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function canClose()
     {
@@ -71,7 +73,7 @@ class Delimiter
     }
 
     /**
-     * @param boolean $canClose
+     * @param bool $canClose
      *
      * @return $this
      */
@@ -83,7 +85,7 @@ class Delimiter
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function canOpen()
     {
@@ -91,7 +93,7 @@ class Delimiter
     }
 
     /**
-     * @param boolean $canOpen
+     * @param bool $canOpen
      *
      * @return $this
      */
@@ -123,7 +125,7 @@ class Delimiter
     }
 
     /**
-     * @return String
+     * @return string
      */
     public function getChar()
     {
@@ -131,7 +133,7 @@ class Delimiter
     }
 
     /**
-     * @param String $char
+     * @param string $char
      *
      * @return $this
      */
@@ -203,21 +205,21 @@ class Delimiter
     }
 
     /**
-     * @return int
+     * @return Node
      */
-    public function getPos()
+    public function getInlineNode()
     {
-        return $this->pos;
+        return $this->inlineNode;
     }
 
     /**
-     * @param int $pos
+     * @param Node $node
      *
      * @return $this
      */
-    public function setPos($pos)
+    public function setInlineNode(Node $node)
     {
-        $this->pos = $pos;
+        $this->inlineNode = $node;
 
         return $this;
     }

@@ -18,15 +18,15 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Inline\Element\AbstractInline;
 
 /**
- * Renders a parsed AST to HTML
+ * Renders a parsed AST to a string representation
  */
-interface HtmlRendererInterface
+interface ElementRendererInterface
 {
     /**
      * @param string $option
-     * @param mixed|null $default
+     * @param mixed  $default
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function getOption($option, $default = null);
 
@@ -47,11 +47,11 @@ interface HtmlRendererInterface
 
     /**
      * @param AbstractBlock $block
-     * @param bool         $inTightList
-     *
-     * @return string
+     * @param bool          $inTightList
      *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function renderBlock(AbstractBlock $block, $inTightList = false);
 

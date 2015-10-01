@@ -54,8 +54,9 @@ class UnmatchedBlockCloser
     public function closeUnmatchedBlocks()
     {
         while ($this->oldTip !== $this->lastMatchedContainer) {
-            $this->oldTip->finalize($this->context);
-            $this->oldTip = $this->oldTip->getParent();
+            $oldTip = $this->oldTip->parent();
+            $this->oldTip->finalize($this->context, $this->context->getLineNumber() - 1);
+            $this->oldTip = $oldTip;
         }
     }
 

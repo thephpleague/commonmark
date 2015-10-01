@@ -17,7 +17,7 @@ namespace League\CommonMark\Block\Element;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class Paragraph extends AbstractInlineContainer
+class Paragraph extends AbstractBlock implements InlineContainer
 {
     /**
      * Returns true if this block can contain the given block as a child node
@@ -62,9 +62,9 @@ class Paragraph extends AbstractInlineContainer
         return true;
     }
 
-    public function finalize(ContextInterface $context)
+    public function finalize(ContextInterface $context, $endLineNumber)
     {
-        parent::finalize($context);
+        parent::finalize($context, $endLineNumber);
 
         $this->finalStringContents = preg_replace('/^  */m', '', implode("\n", $this->getStrings()));
 
@@ -80,13 +80,13 @@ class Paragraph extends AbstractInlineContainer
         $this->finalStringContents = $cursor->getRemainder();
 
         if ($referenceFound && $cursor->isAtEnd()) {
-            $this->parent->removeChild($this);
+            $this->detach();
         }
     }
 
     /**
      * @param ContextInterface $context
-     * @param Cursor $cursor
+     * @param Cursor           $cursor
      *
      * @return bool
      */

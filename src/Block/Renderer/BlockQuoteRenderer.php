@@ -16,32 +16,37 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\BlockQuote;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 
 class BlockQuoteRenderer implements BlockRendererInterface
 {
     /**
-     * @param BlockQuote $block
-     * @param HtmlRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param BlockQuote               $block
+     * @param ElementRendererInterface $htmlRenderer
+     * @param bool                     $inTightList
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof BlockQuote)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
-        $filling = $htmlRenderer->renderBlocks($block->getChildren());
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
+        $filling = $htmlRenderer->renderBlocks($block->children());
         if ($filling === '') {
-            return new HtmlElement('blockquote', [], $htmlRenderer->getOption('inner_separator', "\n"));
+            return new HtmlElement('blockquote', $attrs, $htmlRenderer->getOption('inner_separator', "\n"));
         }
 
         return new HtmlElement(
             'blockquote',
-            [],
+            $attrs,
             $htmlRenderer->getOption('inner_separator', "\n") . $filling . $htmlRenderer->getOption('inner_separator', "\n")
         );
     }

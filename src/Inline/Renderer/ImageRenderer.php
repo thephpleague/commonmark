@@ -14,30 +14,33 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Image;
 
 class ImageRenderer implements InlineRendererInterface
 {
     /**
-     * @param Image $inline
-     * @param HtmlRendererInterface $htmlRenderer
+     * @param Image                    $inline
+     * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Image)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
         $attrs = [];
+        foreach ($inline->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
 
         $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
 
-        $alt = $htmlRenderer->renderInlines($inline->getChildren());
+        $alt = $htmlRenderer->renderInlines($inline->children());
         $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
 

@@ -14,17 +14,17 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 
 interface InlineRendererInterface
 {
     /**
-     * @param AbstractInline $inline
-     * @param HtmlRendererInterface $htmlRenderer
+     * @param AbstractInline           $inline
+     * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement|string
      */
-    public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer);
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer);
 }

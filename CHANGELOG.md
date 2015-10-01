@@ -3,8 +3,116 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
+
+## Changed
+ - `AbstractBlock::finalize()` now reqires a second parameter, `$endLineNumber`
+
+## Fixed
+ - Fixed incorrect `endLine` positions (#187)
+ - Fixed `DocParser::preProcessInput` dropping up to 2 ending newlines instead of just one
+
+## Removed
+ - Removed protected function Context::addChild()
+   - It was a duplicate of the Context::addBlock() method
+
+## [0.11.3] - 2015-09-25
+## Fixed
+ - Reset container after closing containing lists (#183; jgm/commonmark.js#67)
+   - The temporary fix from 0.11.2 was reverted
+
+## [0.11.2] - 2015-09-23
+## Fixed
+ - Fixed parser checking acceptsLines on the wrong element (#183)
+
+## [0.11.1] - 2015-09-22
+### Changed
+ - Tightened up some loose comparisons
+
+### Fixed
+ - Fixed missing "bin" directive in composer.json
+ - Updated a docblock to match recent changes to method parameters
+
+### Removed
+ - Removed unused variable from within QuoteProcessor's closure
+
+## [0.11.0] - 2015-09-19
+### Added
+ - Added new `Node` class, which both `AbstractBlock` and `AbstractInline` extend from (#169)
+ - Added a `NodeWalker` and `NodeWalkerEvent` to traverse the AST without using recursion
+ - Added new `InlineContainer` interface for blocks
+ - Added new `getContainer()` and `getReferenceMap()` methods to `InlineParserContext`
+ - Added `iframe` to whitelist of HTML block tags (as per spec)
+ - Added `./bin/commonmark` for converting Markdown at the command line
+
+### Changed
+ - Bumped spec target version to 0.22
+ - Revised AST to use a double-linked list (#169)
+ - `AbstractBlock` and `AbstractInline` both extend from `Node`
+   - Sub-classes must implement new `isContainer()` method
+ - Other major changes to `AbstractBlock`:
+   - `getParent()` is now `parent()`
+   - `setParent()` now expects a `Node` instead of an `AbstractBlock`
+   - `getChildren()` is now `children()`
+   - `getLastChild()` is now `lastChild()`
+   - `addChild()` is now `appendChild()`
+ - `InlineParserContext` is constructed using the container `AbstractBlock` and the document's `RefereceMap`
+   - The constructor will automatically create the `Cursor` using the container's string contents
+ - `InlineParserEngine::parse` now requires the `Node` container and the document's `ReferenceMap` instead of a `ContextInterface` and `Cursor`
+ - Changed `Delimiter` to reference the actual inline `Node` instead of the position
+   - The `int $pos` protected member and constructor arg is now `Node $node`
+   - Use `getInlineNode()` and `setInlineNode()` instead of `getPos()` and `setPos()`
+ - Changed `DocParser::processInlines` to use a `NodeWalker` to iterate through inlines
+   - Walker passed as second argument instead of `AbstractBlock`
+   - Uses a `while` loop instead of recursion to traverse the AST
+ - `Image` and `Link` now only accept a string as their second argument
+ - Refactored how `CloseBracketParser::parse()` works internally
+ - `CloseBracketParser::createInline` no longer accepts label inlines
+ - Disallow list item starting with multiple blank lines (see jgm/CommonMark#332)
+ - Modified `AbstractBlock::setLastLineBlank()`
+   - Functionality moved to `AbstractBlock::shouldLastLineBeBlank()` and new `DocParser::setAndPropagateLastLineBlank()` method
+   - `AbstractBlock::setLastLineBlank()` is now a setter method for `AbstractBlock::$lastLineBlank`
+ - `AbstractBlock::handleRemainingContents()` is no longer abstract
+   - A default implementation is provided
+   - Removed duplicate code from sub-classes which used the default implementation - they'll just use the parent method from now on
+
+### Fixed
+ - Fixed logic error in calculation of offset (see jgm/commonmark.js@94053a8)
+ - Fixed bug where `DocParser` checked the wrong method to determine remainder handling behavior
+ - Fixed bug where `HorizontalRuleParser` failed to advance the cursor beyond the parsed horizontal rule characters
+ - Fixed `DocParser` not ignoring the final newline of the input (like the reference parser does)
+
+### Removed
+ - Removed `Block\Element\AbstractInlineContainer`
+   - Extend `AbstractBlock` and implement `InlineContainer` instead
+   - Use child methods instead of `getInlines` and `setInlines`
+ - Removed `AbstractBlock::replaceChild()`
+   - Call `Node::replaceWith()` directly the child node instead
+ - Removed the `getInlines()` method from `InlineParserContext`
+   - Add parsed inlines using `$inlineContext->getContainer()->appendChild()` instead of `$inlineContext->getInlines()->add()`
+ - Removed the `ContextInterface` argument from `AbstractInlineParser::parse()` and `InlineParserEngine::parseCharacter`
+ - Removed the first `ArrayCollection $inlines` argument from `InlineProcessorInterface::processInlines()`
+ - Removed `CloseBracketParser::nullify()`
+ - Removed `pre` from rule 6 of HTML blocks (see jgm/CommonMark#355)
+
+## [0.10.0] - 2015-07-25
 ### Added
  - Added parent references to inline elements (#124)
+ - Added smart punctuation extension (#134)
+ - Added HTML block types
+ - Added indentation caching to the cursor
+ - Added automated code style checks (#133)
+ - Added support for tag attributes in renderers (#101, #165)
+
+### Changed
+ - Bumped spec target version to 0.21
+ - Revised HTML block parsing to conform to new spec (jgm/commonmark.js@99bd473)
+ - Imposed 9-digit limit on ordered list markers, per spec
+ - Allow non-initial hyphens in html tag names (jgm/CommonMark#239)
+ - Updated list of block tag names
+ - Changed tab/indentation handling to meet the new spec behavior
+ - Modified spec tests to show spaces and tabs in test results
+ - Replaced `HtmlRendererInterface` with `ElementRendererInterface` (#141)
+ - Removed the unnecessary `trim()` and string cast from `ListItemRenderer`
 
 ### Fixed
  - Fixed link reference definition edge case (#120)
@@ -12,6 +120,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Allow backslash-escaped backslashes in link labels (#119)
  - Allow link labels up to 999 characters (per the spec)
  - Properly split on whitespace when determining code block class (jgm/commonmark.js#54)
+ - Fixed code style issues (#132, #133, #151, #152)
+ - Fixed wording for invalid inline exception (#136)
+
+### Removed
+ - Removed the advance-by-one optimization due to added cursor complexity
 
 ## [0.9.0] - 2015-06-18
 ### Added
@@ -101,13 +214,13 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Bulk registration of parsers/renderers via extensions (#45)
  - Proper UTF-8 support, especially in the Cursor; mbstring extension is now required (#49)
  - Environment is now configurable; options can be accessed in its parsers/renderers (#56)
- - Added some unit tests 
+ - Added some unit tests
 
 ### Changed
  - Bumped spec target version to 0.15 (#50)
  - Parsers/renderers are now lazy-initialized (#52)
  - Some private elements are now protected for easier extending, especially on Element classes (#53)
- - Renderer option keys changed from camelCase to underscore_case (#56) 
+ - Renderer option keys changed from camelCase to underscore_case (#56)
  - Moved CommonMark parser/render definitions into CommonMarkCoreExtension
 
 ### Fixed
@@ -214,7 +327,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.9.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.11.3...HEAD
+[0.11.3]: https://github.com/thephpleague/commonmark/compare/0.11.2...0.11.3
+[0.11.2]: https://github.com/thephpleague/commonmark/compare/0.11.1...0.11.2
+[0.11.1]: https://github.com/thephpleague/commonmark/compare/0.11.0...0.11.1
+[0.11.0]: https://github.com/thephpleague/commonmark/compare/0.10.0...0.11.0
+[0.10.0]: https://github.com/thephpleague/commonmark/compare/0.9.0...0.10.0
 [0.9.0]: https://github.com/thephpleague/commonmark/compare/0.8.0...0.9.0
 [0.8.0]: https://github.com/thephpleague/commonmark/compare/0.7.2...0.8.0
 [0.7.2]: https://github.com/thephpleague/commonmark/compare/0.7.1...0.7.2

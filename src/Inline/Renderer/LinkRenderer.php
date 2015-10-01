@@ -14,26 +14,29 @@
 
 namespace League\CommonMark\Inline\Renderer;
 
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
 
 class LinkRenderer implements InlineRendererInterface
 {
     /**
-     * @param Link $inline
-     * @param HtmlRendererInterface $htmlRenderer
+     * @param Link                     $inline
+     * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Link)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
         $attrs = [];
+        foreach ($inline->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
 
         $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
 
@@ -41,6 +44,6 @@ class LinkRenderer implements InlineRendererInterface
             $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
 
-        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->getChildren()));
+        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
     }
 }

@@ -15,6 +15,7 @@
 namespace League\CommonMark\Block\Parser;
 
 use League\CommonMark\Block\Element\HtmlBlock;
+use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
@@ -23,7 +24,7 @@ class HtmlBlockParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
-     * @param Cursor $cursor
+     * @param Cursor           $cursor
      *
      * @return bool
      */
@@ -33,14 +34,32 @@ class HtmlBlockParser extends AbstractBlockParser
             return false;
         }
 
-        $match = RegexHelper::matchAt(RegexHelper::getInstance()->getHtmlBlockOpenRegex(), $cursor->getLine(), $cursor->getFirstNonSpacePosition());
-        if ($match === null) {
+        if ($cursor->getFirstNonSpaceCharacter() !== '<') {
             return false;
         }
 
-        $context->addBlock(new HtmlBlock());
-        $context->setBlocksParsed(true);
+        $savedState = $cursor->saveState();
 
-        return true;
+        $cursor->advanceToFirstNonSpace();
+        $line = $cursor->getRemainder();
+
+        for ($blockType = 1; $blockType <= 7; $blockType++) {
+            $match = RegexHelper::matchAt(
+                RegexHelper::getHtmlBlockOpenRegex($blockType),
+                $line
+            );
+
+            if ($match !== null && ($blockType < 7 || !($context->getContainer() instanceof Paragraph))) {
+                $cursor->restoreState($savedState);
+                $context->addBlock(new HtmlBlock($blockType));
+                $context->setBlocksParsed(true);
+
+                return true;
+            }
+        }
+
+        $cursor->restoreState($savedState);
+
+        return false;
     }
 }

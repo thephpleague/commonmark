@@ -16,19 +16,19 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ListBlock;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 
 class ListBlockRenderer implements BlockRendererInterface
 {
     /**
-     * @param ListBlock $block
-     * @param HtmlRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param ListBlock                $block
+     * @param ElementRendererInterface $htmlRenderer
+     * @param bool                     $inTightList
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof ListBlock)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
@@ -36,15 +36,22 @@ class ListBlockRenderer implements BlockRendererInterface
 
         $listData = $block->getListData();
 
-        $tag = $listData->type == ListBlock::TYPE_UNORDERED ? 'ul' : 'ol';
-        $attr = ($listData->start === null || $listData->start === 1) ?
-            [] : ['start' => (string)$listData->start];
+        $tag = $listData->type === ListBlock::TYPE_UNORDERED ? 'ul' : 'ol';
+
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
+        if ($listData->start !== null && $listData->start !== 1) {
+            $attrs['start'] = (string) $listData->start;
+        }
 
         return new HtmlElement(
             $tag,
-            $attr,
+            $attrs,
             $htmlRenderer->getOption('inner_separator', "\n") . $htmlRenderer->renderBlocks(
-                $block->getChildren(),
+                $block->children(),
                 $block->isTight()
             ) . $htmlRenderer->getOption('inner_separator', "\n")
         );

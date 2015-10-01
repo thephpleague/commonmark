@@ -16,25 +16,25 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ListItem;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 
 class ListItemRenderer implements BlockRendererInterface
 {
     /**
-     * @param ListItem $block
-     * @param HtmlRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param ListItem                 $block
+     * @param ElementRendererInterface $htmlRenderer
+     * @param bool                     $inTightList
      *
      * @return string
      */
-    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof ListItem)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
-        $contents = $htmlRenderer->renderBlocks($block->getChildren(), $inTightList);
+        $contents = $htmlRenderer->renderBlocks($block->children(), $inTightList);
         if (substr($contents, 0, 1) === '<') {
             $contents = "\n" . $contents;
         }
@@ -42,8 +42,13 @@ class ListItemRenderer implements BlockRendererInterface
             $contents .= "\n";
         }
 
-        $li = new HtmlElement('li', [], $contents);
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
 
-        return trim($li);
+        $li = new HtmlElement('li', $attrs, $contents);
+
+        return $li;
     }
 }

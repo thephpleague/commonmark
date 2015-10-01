@@ -39,19 +39,33 @@ class CursorState
     private $firstNonSpaceCache;
 
     /**
-     * @param string $line
-     * @param int $length
-     * @param int $currentPosition
-     * @param int $previousPosition
-     * @param int|null $firstNonSpaceCache
+     * @var int
      */
-    public function __construct($line, $length, $currentPosition, $previousPosition, $firstNonSpaceCache)
+    private $indent;
+
+    /**
+     * @var int
+     */
+    private $column;
+
+    /**
+     * @param string   $line
+     * @param int      $length
+     * @param int      $currentPosition
+     * @param int      $previousPosition
+     * @param int|null $firstNonSpaceCache
+     * @param int      $indent
+     * @param int      $column
+     */
+    public function __construct($line, $length, $currentPosition, $previousPosition, $firstNonSpaceCache, $indent, $column)
     {
         $this->line = $line;
         $this->length = $length;
         $this->currentPosition = $currentPosition;
         $this->previousPosition = $previousPosition;
         $this->firstNonSpaceCache = $firstNonSpaceCache;
+        $this->indent = $indent;
+        $this->column = $column;
     }
 
     /**
@@ -60,14 +74,6 @@ class CursorState
     public function getCurrentPosition()
     {
         return $this->currentPosition;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFirstNonSpaceCache()
-    {
-        return $this->firstNonSpaceCache;
     }
 
     /**
@@ -92,5 +98,29 @@ class CursorState
     public function getPreviousPosition()
     {
         return $this->previousPosition;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getFirstNonSpaceCache()
+    {
+        return $this->firstNonSpaceCache;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIndent()
+    {
+        return $this->indent;
+    }
+
+    /**
+     * @return int
+     */
+    public function getColumn()
+    {
+        return $this->column;
     }
 }

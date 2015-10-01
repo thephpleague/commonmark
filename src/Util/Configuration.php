@@ -44,9 +44,9 @@ class Configuration
 
     /**
      * @param string|null $key
-     * @param mixed|null $default
+     * @param mixed       $default
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function getConfig($key = null, $default = null)
     {
@@ -70,7 +70,7 @@ class Configuration
      * @param string      $keyPath
      * @param string|null $default
      *
-     * @return mixed|null
+     * @return mixed
      */
     protected function getConfigByPath($keyPath, $default = null)
     {

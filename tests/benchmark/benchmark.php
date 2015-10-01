@@ -32,7 +32,7 @@ $parsers = [
     'Parsedown' => function ($markdown) {
         $parser = new Parsedown();
         $parser->text($markdown);
-    }
+    },
 ];
 
 $iterations = 20;
@@ -56,4 +56,3 @@ printf("===================================\n");
 foreach ($results as $name => $ms) {
     printf("%-18s | %4d ms\n", $name, $ms);
 }
-

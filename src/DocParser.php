@@ -15,11 +15,11 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\AbstractInlineContainer;
 use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Block\Element\InlineContainer;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Util\TextHelper;
+use League\CommonMark\Node\NodeWalker;
 
 class DocParser
 {
@@ -57,12 +57,16 @@ class DocParser
      */
     private function preProcessInput($input)
     {
-        // Remove any /n which appears at the very end of the string
-        if (substr($input, -1) == "\n") {
-            $input = substr($input, 0, -1);
+        $lines = preg_split('/\r\n|\n|\r/', $input);
+
+        // Remove any newline which appears at the very end of the string.
+        // We've already split the document by newlines, so we can simply drop
+        // any empty element which appears on the end.
+        if (end($lines) === '') {
+            array_pop($lines);
         }
 
-        return preg_split('/\r\n|\n|\r/', $input);
+        return $lines;
     }
 
     /**
@@ -76,15 +80,15 @@ class DocParser
 
         $lines = $this->preProcessInput($input);
         foreach ($lines as $line) {
-            $context->setNextLine(TextHelper::detabLine($line));
+            $context->setNextLine($line);
             $this->incorporateLine($context);
         }
 
         while ($context->getTip()) {
-            $context->getTip()->finalize($context);
+            $context->getTip()->finalize($context, count($lines));
         }
 
-        $this->processInlines($context, $context->getDocument());
+        $this->processInlines($context, $context->getDocument()->walker());
 
         return $context->getDocument();
     }
@@ -120,10 +124,10 @@ class DocParser
         $context->getBlockCloser()->closeUnmatchedBlocks();
 
         // Determine whether the last line is blank, updating parents as needed
-        $context->getContainer()->setLastLineBlank($cursor, $context->getLineNumber());
+        $this->setAndPropagateLastLineBlank($context, $cursor);
 
         // Handle any remaining cursor contents
-        if ($context->getContainer()->isOpen()) {
+        if ($context->getContainer()->acceptsLines()) {
             $context->getContainer()->handleRemainingContents($context, $cursor);
         } elseif (!$cursor->isBlank()) {
             // Create paragraph container for line
@@ -133,15 +137,17 @@ class DocParser
         }
     }
 
-    private function processInlines(ContextInterface $context, AbstractBlock $block)
+    private function processInlines(ContextInterface $context, NodeWalker $walker)
     {
-        if ($block instanceof AbstractInlineContainer) {
-            $cursor = new Cursor(trim($block->getStringContent()));
-            $block->setInlines($this->inlineParserEngine->parse($context, $cursor));
-        }
+        while (($event = $walker->next()) !== null) {
+            if (!$event->isEntering()) {
+                continue;
+            }
 
-        foreach ($block->getChildren() as $child) {
-            $this->processInlines($context, $child);
+            $node = $event->getNode();
+            if ($node instanceof InlineContainer) {
+                $this->inlineParserEngine->parse($node, $context->getDocument()->getReferenceMap());
+            }
         }
     }
 
@@ -152,7 +158,7 @@ class DocParser
      * break of of all lists" feature.)
      *
      * @param ContextInterface $context
-     * @param AbstractBlock $block
+     * @param AbstractBlock    $block
      */
     private function breakOutOfLists(ContextInterface $context, AbstractBlock $block)
     {
@@ -162,16 +168,18 @@ class DocParser
             if ($b instanceof ListBlock) {
                 $lastList = $b;
             }
-            $b = $b->getParent();
+            $b = $b->parent();
         } while ($b);
 
         if ($lastList) {
             while ($block !== $lastList) {
-                $block->finalize($context);
-                $block = $block->getParent();
+                $block->finalize($context, $context->getLineNumber());
+                $block = $block->parent();
             }
-            $lastList->finalize($context);
+            $lastList->finalize($context, $context->getLineNumber());
         }
+
+        $context->setContainer($context->getTip());
     }
 
     /**
@@ -185,14 +193,14 @@ class DocParser
         $context->setContainer($context->getDocument());
 
         while ($context->getContainer()->hasChildren()) {
-            $lastChild = $context->getContainer()->getLastChild();
+            $lastChild = $context->getContainer()->lastChild();
             if (!$lastChild->isOpen()) {
                 break;
             }
 
             $context->setContainer($lastChild);
             if (!$context->getContainer()->matchesNextLine($cursor)) {
-                $context->setContainer($context->getContainer()->getParent()); // back up to the last matching block
+                $context->setContainer($context->getContainer()->parent()); // back up to the last matching block
                 break;
             }
         }
@@ -233,5 +241,27 @@ class DocParser
             !$cursor->isBlank() &&
             $context->getTip() instanceof Paragraph &&
             count($context->getTip()->getStrings()) > 0;
+    }
+
+    /**
+     * @param ContextInterface $context
+     * @param Cursor           $cursor
+     */
+    private function setAndPropagateLastLineBlank(ContextInterface $context, $cursor)
+    {
+        if ($cursor->isBlank() && $lastChild = $context->getContainer()->lastChild()) {
+            if ($lastChild instanceof AbstractBlock) {
+                $lastChild->setLastLineBlank(true);
+            }
+        }
+
+        $container = $context->getContainer();
+        $lastLineBlank = $container->shouldLastLineBeBlank($cursor, $context->getLineNumber());
+
+        // Propagate lastLineBlank up through parents:
+        while ($container) {
+            $container->setLastLineBlank($lastLineBlank);
+            $container = $container->parent();
+        }
     }
 }

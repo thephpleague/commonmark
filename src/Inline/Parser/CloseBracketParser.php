@@ -14,18 +14,17 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterStack;
 use League\CommonMark\Environment;
 use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Inline\Element\AbstractWebResource;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
-use League\CommonMark\Util\ArrayCollection;
 use League\CommonMark\Util\LinkParserHelper;
 
 class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwareInterface
@@ -44,12 +43,11 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     }
 
     /**
-     * @param ContextInterface $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
 
@@ -71,16 +69,10 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $isImage = $opener->getChar() === '!';
 
-        // Instead of copying a slice, we null out the parts of inlines that don't correspond to linkText; later, we'll
-        // collapse them. This is awkward, and could  be simplified if we made inlines a linked list instead
-        $inlines = $inlineContext->getInlines();
-        $labelInlines = new ArrayCollection($inlines->toArray());
-        $this->nullify($labelInlines, 0, $opener->getPos() + 1);
-
         $cursor->advance();
 
         // Check to see if we have a link/image
-        if (!($link = $this->tryParseLink($cursor, $context->getDocument()->getReferenceMap(), $opener, $startPos))) {
+        if (!($link = $this->tryParseLink($cursor, $inlineContext->getReferenceMap(), $opener, $startPos))) {
             // No match
             $inlineContext->getDelimiterStack()->removeDelimiter($opener); // Remove this opener from stack
             $cursor->restoreState($previousState);
@@ -88,20 +80,26 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
-        foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($labelInlines, $inlineContext->getDelimiterStack(), $opener->getPrevious());
+        $inline = $this->createInline($link['url'], $link['title'], $isImage);
+        $opener->getInlineNode()->replaceWith($inline);
+        while (($label = $inline->next()) !== null) {
+            $inline->appendChild($label);
         }
 
-        // Remove the part of inlines that become link_text
-        $this->nullify($inlines, $opener->getPos(), $inlines->count());
+        $delimiterStack = $inlineContext->getDelimiterStack();
+        $stackBottom = $opener->getPrevious();
+        foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
+            $inlineProcessor->processInlines($delimiterStack, $stackBottom);
+        }
+        if ($delimiterStack instanceof DelimiterStack) {
+            $delimiterStack->removeAll($stackBottom);
+        }
 
         // processEmphasis will remove this and later delimiters.
         // Now, for a link, we also remove earlier link openers (no links in links)
         if (!$isImage) {
             $inlineContext->getDelimiterStack()->removeEarlierMatches('[');
         }
-
-        $inlines->add($this->createInline($link['url'], $labelInlines, $link['title'], $isImage));
 
         return true;
     }
@@ -115,22 +113,10 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     }
 
     /**
-     * @param ArrayCollection $collection
-     * @param int $start
-     * @param int $end
-     */
-    protected function nullify(ArrayCollection $collection, $start, $end)
-    {
-        for ($i = $start; $i < $end; $i++) {
-            $collection->set($i, null);
-        }
-    }
-
-    /**
-     * @param Cursor $cursor
+     * @param Cursor       $cursor
      * @param ReferenceMap $referenceMap
-     * @param Delimiter $opener
-     * @param int $startPos
+     * @param Delimiter    $opener
+     * @param int          $startPos
      *
      * @return array|bool
      */
@@ -138,7 +124,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     {
         // Check to see if we have a link/image
         // Inline link?
-        if ($cursor->getCharacter() == '(') {
+        if ($cursor->getCharacter() === '(') {
             if ($result = $this->tryParseInlineLinkAndTitle($cursor)) {
                 return $result;
             }
@@ -172,7 +158,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $cursor->advanceToFirstNonSpace();
 
-        if (!$cursor->match('/^\\)/')) {
+        if ($cursor->match('/^\\)/') === null) {
             return false;
         }
 
@@ -180,10 +166,10 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     }
 
     /**
-     * @param Cursor $cursor
+     * @param Cursor       $cursor
      * @param ReferenceMap $referenceMap
-     * @param Delimiter $opener
-     * @param int $startPos
+     * @param Delimiter    $opener
+     * @param int          $startPos
      *
      * @return Reference|null
      */
@@ -210,18 +196,17 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
     /**
      * @param string $url
-     * @param ArrayCollection $labelInlines
      * @param string $title
-     * @param bool $isImage
+     * @param bool   $isImage
      *
      * @return AbstractWebResource
      */
-    protected function createInline($url, ArrayCollection $labelInlines, $title, $isImage)
+    protected function createInline($url, $title, $isImage)
     {
         if ($isImage) {
-            return new Image($url, $labelInlines, $title);
+            return new Image($url, null, $title);
         } else {
-            return new Link($url, $labelInlines, $title);
+            return new Link($url, null, $title);
         }
     }
 }

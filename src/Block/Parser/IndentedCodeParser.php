@@ -23,7 +23,7 @@ class IndentedCodeParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
-     * @param Cursor $cursor
+     * @param Cursor           $cursor
      *
      * @return bool
      */
@@ -41,7 +41,7 @@ class IndentedCodeParser extends AbstractBlockParser
             return false;
         }
 
-        $cursor->advanceBy(Cursor::INDENT_LEVEL);
+        $cursor->advanceBy(Cursor::INDENT_LEVEL, true);
         $context->addBlock(new IndentedCode());
 
         return true;

@@ -25,7 +25,7 @@ class ListParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
-     * @param Cursor $cursor
+     * @param Cursor           $cursor
      *
      * @return bool
      */
@@ -43,7 +43,7 @@ class ListParser extends AbstractBlockParser
             $data->type = ListBlock::TYPE_UNORDERED;
             $data->delimiter = null;
             $data->bulletChar = $matches[0][0];
-        } elseif ($matches = RegexHelper::matchAll('/^(\d+)([.)])( +|$)/', $rest)) {
+        } elseif ($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])( +|$)/', $rest)) {
             $spacesAfterMarker = strlen($matches[3]);
             $data->type = ListBlock::TYPE_ORDERED;
             $data->start = intval($matches[1]);
@@ -79,7 +79,7 @@ class ListParser extends AbstractBlockParser
 
     /**
      * @param string $marker
-     * @param int $spacesAfterMarker
+     * @param int    $spacesAfterMarker
      * @param string $rest
      *
      * @return int

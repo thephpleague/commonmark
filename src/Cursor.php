@@ -11,8 +11,6 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Util\RegexHelper;
-
 class Cursor
 {
     const INDENT_LEVEL = 4;
@@ -34,6 +32,16 @@ class Cursor
      * reached the end.  In this state, any character-returning method MUST return null.
      */
     private $currentPosition = 0;
+
+    /**
+     * @var int
+     */
+    private $column = 0;
+
+    /**
+     * @var int
+     */
+    private $indent = 0;
 
     /**
      * @var int
@@ -61,12 +69,29 @@ class Cursor
      */
     public function getFirstNonSpacePosition()
     {
-        if ($this->firstNonSpaceCache === null) {
-            $match = RegexHelper::matchAt('/[^ ]/', $this->line, $this->currentPosition);
-            $this->firstNonSpaceCache = ($match === null) ? $this->length : $match;
+        if ($this->firstNonSpaceCache !== null) {
+            return $this->firstNonSpaceCache;
         }
 
-        return $this->firstNonSpaceCache;
+        $i = $this->currentPosition;
+        $cols = $this->column;
+
+        while (($c = $this->getCharacter($i)) !== null) {
+            if ($c === ' ') {
+                $i++;
+                $cols++;
+            } elseif ($c === "\t") {
+                $i++;
+                $cols += (4 - ($cols % 4));
+            } else {
+                break;
+            }
+        }
+
+        $nextNonSpace = ($c === null) ? $this->length : $i;
+        $this->indent = $cols - $this->column;
+
+        return $this->firstNonSpaceCache = $nextNonSpace;
     }
 
     /**
@@ -86,7 +111,9 @@ class Cursor
      */
     public function getIndent()
     {
-        return $this->getFirstNonSpacePosition() - $this->currentPosition;
+        $this->getFirstNonSpacePosition();
+
+        return $this->indent;
     }
 
     /**
@@ -112,7 +139,7 @@ class Cursor
 
         // Index out-of-bounds, or we're at the end
         if ($index < 0 || $index >= $this->length) {
-            return null;
+            return;
         }
 
         return mb_substr($this->line, $index, 1, 'utf-8');
@@ -145,52 +172,53 @@ class Cursor
      */
     public function advance()
     {
-        if ($this->currentPosition < $this->length) {
-            $this->previousPosition = $this->currentPosition;
-            ++$this->currentPosition;
-            $this->firstNonSpaceCache = null;
-        }
+        $this->advanceBy(1);
     }
 
     /**
      * Move the cursor forwards
      *
-     * @param int $characters
-     *   Number of characters to advance by
+     * @param int $characters Number of characters to advance by
      */
-    public function advanceBy($characters)
+    public function advanceBy($characters, $advanceByColumns = false)
     {
         if ($characters === 0) {
             return;
-        } elseif ($characters === 1) {
-            $this->advance();
+        }
 
-            return;
+        $this->firstNonSpaceCache = null;
+
+        $i = 0;
+        $cols = 0;
+        while ($advanceByColumns ? ($cols < $characters) : ($i < $characters)) {
+            if ($this->peek($i) === "\t") {
+                $cols += (4 - (($this->column + $cols) % 4));
+            } else {
+                $cols++;
+            }
+
+            $i++;
         }
 
         $this->previousPosition = $this->currentPosition;
-        $newPosition = $this->currentPosition + $characters;
+        $newPosition = $this->currentPosition + $i;
+
+        $this->column += $cols;
 
         if ($newPosition >= $this->length) {
             $this->currentPosition = $this->length;
         } else {
             $this->currentPosition = $newPosition;
         }
-
-        // Clear the cached value
-        $this->firstNonSpaceCache = null;
     }
 
     /**
      * Advances the cursor while the given character is matched
      *
-     * @param string $character
-     *   Character to match
-     * @param int|null $maximumCharactersToAdvance
-     *   Maximum number of characters to advance before giving up
+     * @param string   $character                  Character to match
+     * @param int|null $maximumCharactersToAdvance Maximum number of characters to advance before giving up
      *
-     * @return int
-     *   Number of positions moved (0 if unsuccessful)
+     * @return int Number of positions moved (0 if unsuccessful)
      */
     public function advanceWhileMatches($character, $maximumCharactersToAdvance = null)
     {
@@ -219,8 +247,7 @@ class Cursor
     /**
      * Parse zero or more space characters, including at most one newline
      *
-     * @return int
-     *   Number of positions moved
+     * @return int Number of positions moved
      */
     public function advanceToFirstNonSpace()
     {
@@ -283,7 +310,7 @@ class Cursor
 
         $matches = [];
         if (!preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
-            return null;
+            return;
         }
 
         // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
@@ -301,7 +328,15 @@ class Cursor
      */
     public function saveState()
     {
-        return new CursorState($this->line, $this->length, $this->currentPosition, $this->previousPosition, $this->firstNonSpaceCache);
+        return new CursorState(
+            $this->line,
+            $this->length,
+            $this->currentPosition,
+            $this->previousPosition,
+            $this->firstNonSpaceCache,
+            $this->indent,
+            $this->column
+        );
     }
 
     /**
@@ -314,6 +349,8 @@ class Cursor
         $this->currentPosition = $state->getCurrentPosition();
         $this->previousPosition = $state->getPreviousPosition();
         $this->firstNonSpaceCache = $state->getFirstNonSpaceCache();
+        $this->column = $state->getColumn();
+        $this->indent = $state->getIndent();
     }
 
     /**
@@ -330,5 +367,13 @@ class Cursor
     public function getPreviousText()
     {
         return mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, 'utf-8');
+    }
+
+    /**
+     * @return int
+     */
+    public function getColumn()
+    {
+        return $this->column;
     }
 }

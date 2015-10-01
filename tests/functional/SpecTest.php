@@ -41,12 +41,16 @@ class SpecTest extends \PHPUnit_Framework_TestCase
      */
     public function testExample($markdown, $html, $section, $number)
     {
+        // Replace visible tabs in spec
+        $markdown = str_replace('→', "\t", $markdown);
+        $html = str_replace('→', "\t", $html);
+
         $actualResult = $this->converter->convertToHtml($markdown);
 
         $failureMessage = sprintf('Unexpected result ("%s" section, example #%d)', $section, $number);
-        $failureMessage .= "\n=== markdown ===============\n" . $markdown;
-        $failureMessage .= "\n=== expected ===============\n" . $html;
-        $failureMessage .= "\n=== got ====================\n" . $actualResult;
+        $failureMessage .= "\n=== markdown ===============\n" . $this->showSpaces($markdown);
+        $failureMessage .= "\n=== expected ===============\n" . $this->showSpaces($html);
+        $failureMessage .= "\n=== got ====================\n" . $this->showSpaces($actualResult);
 
         $this->assertEquals($html, $actualResult, $failureMessage);
     }
@@ -68,7 +72,7 @@ class SpecTest extends \PHPUnit_Framework_TestCase
         preg_match_all('/^\.\n([\s\S]*?)^\.\n([\s\S]*?)^\.$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
 
         $examples = [];
-        $currentSection = "";
+        $currentSection = '';
         $exampleNumber = 0;
 
         foreach ($matches as $match) {
@@ -82,13 +86,26 @@ class SpecTest extends \PHPUnit_Framework_TestCase
 
                 $examples[] = [
                     'markdown' => $markdown,
-                    'html' => $match[2],
-                    'section' => $currentSection,
-                    'number' => $exampleNumber
+                    'html'     => $match[2],
+                    'section'  => $currentSection,
+                    'number'   => $exampleNumber,
                 ];
             }
         }
 
         return $examples;
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return string
+     */
+    protected function showSpaces($str)
+    {
+        $str = str_replace("\t", '→', $str);
+        $str = str_replace(' ', '␣', $str);
+
+        return $str;
     }
 }

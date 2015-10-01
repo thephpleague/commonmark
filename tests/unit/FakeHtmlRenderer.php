@@ -15,10 +15,10 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\HtmlRendererInterface;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 
-class FakeHtmlRenderer implements HtmlRendererInterface
+class FakeHtmlRenderer implements ElementRendererInterface
 {
     protected $options;
 
@@ -32,7 +32,7 @@ class FakeHtmlRenderer implements HtmlRendererInterface
     }
 
     /**
-     * @param string $option
+     * @param string     $option
      * @param mixed|null $default
      *
      * @return mixed|null
@@ -48,7 +48,7 @@ class FakeHtmlRenderer implements HtmlRendererInterface
 
     /**
      * @param string $string
-     * @param bool $preserveEntities
+     * @param bool   $preserveEntities
      *
      * @return string
      */
@@ -69,11 +69,11 @@ class FakeHtmlRenderer implements HtmlRendererInterface
 
     /**
      * @param AbstractBlock $block
-     * @param bool $inTightList
-     *
-     * @return string
+     * @param bool          $inTightList
      *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function renderBlock(AbstractBlock $block, $inTightList = false)
     {
@@ -82,7 +82,7 @@ class FakeHtmlRenderer implements HtmlRendererInterface
 
     /**
      * @param AbstractBlock[] $blocks
-     * @param bool $inTightList
+     * @param bool            $inTightList
      *
      * @return string
      */

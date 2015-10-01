@@ -57,7 +57,7 @@ class ListBlock extends AbstractBlock
         }
 
         if ($this->hasChildren()) {
-            return $this->getLastChild()->endsWithBlankLine();
+            return $this->lastChild()->endsWithBlankLine();
         }
 
         return false;
@@ -100,23 +100,23 @@ class ListBlock extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context)
+    public function finalize(ContextInterface $context, $endLineNumber)
     {
-        parent::finalize($context);
+        parent::finalize($context, $endLineNumber);
 
         $this->tight = true; // tight by default
 
-        foreach ($this->children as $item) {
+        foreach ($this->children() as $item) {
             // check for non-final list item ending with blank line:
-            if ($item->endsWithBlankLine() && $item !== $this->getLastChild()) {
+            if ($item->endsWithBlankLine() && $item !== $this->lastChild()) {
                 $this->tight = false;
                 break;
             }
 
             // Recurse into children of list item, to see if there are
             // spaces between any of them:
-            foreach ($item->getChildren() as $subItem) {
-                if ($subItem->endsWithBlankLine() && ($item !== $this->getLastChild() || $subItem !== $item->getLastChild())) {
+            foreach ($item->children() as $subItem) {
+                if ($subItem->endsWithBlankLine() && ($item !== $this->lastChild() || $subItem !== $item->lastChild())) {
                     $this->tight = false;
                     break;
                 }
@@ -130,17 +130,5 @@ class ListBlock extends AbstractBlock
     public function isTight()
     {
         return $this->tight;
-    }
-
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
-    {
-        // create paragraph container for line
-        $context->addBlock(new Paragraph());
-        $cursor->advanceToFirstNonSpace();
-        $context->getTip()->addLine($cursor->getRemainder());
     }
 }

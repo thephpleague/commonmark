@@ -16,19 +16,19 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Header;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 
 class HeaderRenderer implements BlockRendererInterface
 {
     /**
-     * @param Header $block
-     * @param HtmlRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param Header                   $block
+     * @param ElementRendererInterface $htmlRenderer
+     * @param bool                     $inTightList
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof Header)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
@@ -36,6 +36,11 @@ class HeaderRenderer implements BlockRendererInterface
 
         $tag = 'h' . $block->getLevel();
 
-        return new HtmlElement($tag, [], $htmlRenderer->renderInlines($block->getInlines()));
+        $attrs = [];
+        foreach ($block->getData('attributes', []) as $key => $value) {
+            $attrs[$key] = $htmlRenderer->escape($value, true);
+        }
+
+        return new HtmlElement($tag, $attrs, $htmlRenderer->renderInlines($block->children()));
     }
 }

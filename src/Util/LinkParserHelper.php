@@ -30,19 +30,15 @@ class LinkParserHelper
         if ($res = $cursor->match(RegexHelper::getInstance()->getLinkDestinationBracesRegex())) {
             // Chop off surrounding <..>:
             return UrlEncoder::unescapeAndEncode(
-                RegexHelper::unescape(
-                    substr($res, 1, strlen($res) - 2)
-                )
+                RegexHelper::unescape(substr($res, 1, strlen($res) - 2))
             );
-        } else {
-            $res = $cursor->match(RegexHelper::getInstance()->getLinkDestinationRegex());
-            if ($res !== null) {
-                return UrlEncoder::unescapeAndEncode(
-                    RegexHelper::unescape($res)
-                );
-            } else {
-                return null;
-            }
+        }
+
+        $res = $cursor->match(RegexHelper::getInstance()->getLinkDestinationRegex());
+        if ($res !== null) {
+            return UrlEncoder::unescapeAndEncode(
+                RegexHelper::unescape($res)
+            );
         }
     }
 
@@ -76,8 +72,6 @@ class LinkParserHelper
         if ($title = $cursor->match(RegexHelper::getInstance()->getLinkTitleRegex())) {
             // Chop off quotes from title and unescape
             return RegexHelper::unescape(substr($title, 1, strlen($title) - 2));
-        } else {
-            return null;
         }
     }
 }

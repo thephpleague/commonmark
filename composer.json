@@ -22,8 +22,10 @@
     },
     "require-dev": {
         "erusev/parsedown": "~1.0",
-        "jgm/CommonMark": "0.20",
+        "jgm/CommonMark": "0.22",
+        "jgm/SmartPunct": "0.22",
         "michelf/php-markdown": "~1.4",
+        "mikehaertl/php-shellcommand": "~1.1.0",
         "phpunit/phpunit": "~4.3",
         "phpunit/phpunit-mock-objects": "2.3.0",
         "symfony/finder": "~2.3"
@@ -33,9 +35,20 @@
             "type": "package",
             "package": {
                 "name": "jgm/CommonMark",
-                "version": "0.20",
+                "version": "0.22",
                 "dist": {
-                    "url": "http://spec.commonmark.org/0.20/spec.txt",
+                    "url": "http://spec.commonmark.org/0.22/spec.txt",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jgm/SmartPunct",
+                "version": "0.22",
+                "dist": {
+                    "url": "https://raw.githubusercontent.com/jgm/commonmark.js/0.22.0/test/smart_punct.txt",
                     "type": "file"
                 }
             }
@@ -52,9 +65,10 @@
             "League\\CommonMark\\Tests\\Functional\\": "tests/functional"
         }
     },
+    "bin": ["bin/commonmark"],
     "extra": {
         "branch-alias": {
-            "dev-master": "0.9-dev"
+            "dev-master": "0.12-dev"
         }
     }
 }

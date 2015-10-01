@@ -14,10 +14,9 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\InlineParserContext;
 
 class OpenBracketParser extends AbstractInlineParser
 {
@@ -30,22 +29,22 @@ class OpenBracketParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         if ($inlineContext->getCursor()->getCharacter() !== '[') {
             return false;
         }
 
         $inlineContext->getCursor()->advance();
-        $inlineContext->getInlines()->add(new Text('[', ['delim' => true]));
+        $node = new Text('[', ['delim' => true]);
+        $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack for this opener
-        $delimiter = new Delimiter('[', 1, $inlineContext->getInlines()->count() - 1, true, false, $inlineContext->getCursor()->getPosition());
+        $delimiter = new Delimiter('[', 1, $node, true, false, $inlineContext->getCursor()->getPosition());
         $inlineContext->getDelimiterStack()->push($delimiter);
 
         return true;

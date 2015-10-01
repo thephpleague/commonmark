@@ -15,7 +15,8 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Util\ArrayCollection;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Reference\ReferenceMap;
 
 class InlineParserEngine
 {
@@ -27,33 +28,28 @@ class InlineParserEngine
     }
 
     /**
-     * @param ContextInterface $context
-     * @param Cursor $cursor
-     *
-     * @return ArrayCollection
+     * @param Node         $container
+     * @param ReferenceMap $referenceMap
      */
-    public function parse(ContextInterface $context, Cursor $cursor)
+    public function parse(Node $container, ReferenceMap $referenceMap)
     {
-        $inlineParserContext = new InlineParserContext($cursor);
-        while (($character = $cursor->getCharacter()) !== null) {
-            if (!$this->parseCharacter($character, $context, $inlineParserContext)) {
-                $this->addPlainText($character, $inlineParserContext);
+        $inlineParserContext = new InlineParserContext($container, $referenceMap);
+        while (($character = $inlineParserContext->getCursor()->getCharacter()) !== null) {
+            if (!$this->parseCharacter($character, $inlineParserContext)) {
+                $this->addPlainText($character, $container, $inlineParserContext);
             }
         }
 
         $this->processInlines($inlineParserContext);
-
-        return $inlineParserContext->getInlines();
     }
 
     /**
      * @param string              $character
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineParserContext
      *
      * @return bool Whether we successfully parsed a character at that position
      */
-    protected function parseCharacter($character, ContextInterface $context, InlineParserContext $inlineParserContext)
+    protected function parseCharacter($character, InlineParserContext $inlineParserContext)
     {
         $matchingParsers = $this->environment->getInlineParsersForCharacter($character);
         if (empty($matchingParsers)) {
@@ -61,7 +57,7 @@ class InlineParserEngine
         }
 
         foreach ($matchingParsers as $parser) {
-            if ($parser->parse($context, $inlineParserContext)) {
+            if ($parser->parse($inlineParserContext)) {
                 return true;
             }
         }
@@ -74,16 +70,22 @@ class InlineParserEngine
      */
     protected function processInlines(InlineParserContext $inlineParserContext)
     {
+        $delimiterStack = $inlineParserContext->getDelimiterStack();
+
         foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($inlineParserContext->getInlines(), $inlineParserContext->getDelimiterStack());
+            $inlineProcessor->processInlines($delimiterStack);
         }
+
+        // Remove all delimiters
+        $delimiterStack->removeAll();
     }
 
     /**
      * @param string              $character
+     * @param Node                $container
      * @param InlineParserContext $inlineParserContext
      */
-    private function addPlainText($character, InlineParserContext $inlineParserContext)
+    private function addPlainText($character, Node $container, InlineParserContext $inlineParserContext)
     {
         // We reach here if none of the parsers can handle the input
         // Attempt to match multiple non-special characters at once
@@ -94,11 +96,11 @@ class InlineParserEngine
             $text = $character;
         }
 
-        $lastInline = $inlineParserContext->getInlines()->last();
+        $lastInline = $container->lastChild();
         if ($lastInline instanceof Text && !isset($lastInline->data['delim'])) {
             $lastInline->append($text);
         } else {
-            $inlineParserContext->getInlines()->add(new Text($text));
+            $container->appendChild(new Text($text));
         }
     }
 }

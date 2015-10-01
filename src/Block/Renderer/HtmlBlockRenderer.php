@@ -16,18 +16,18 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\HtmlBlock;
-use League\CommonMark\HtmlRendererInterface;
+use League\CommonMark\ElementRendererInterface;
 
 class HtmlBlockRenderer implements BlockRendererInterface
 {
     /**
-     * @param HtmlBlock $block
-     * @param HtmlRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param HtmlBlock                $block
+     * @param ElementRendererInterface $htmlRenderer
+     * @param bool                     $inTightList
      *
      * @return string
      */
-    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
         if (!($block instanceof HtmlBlock)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));

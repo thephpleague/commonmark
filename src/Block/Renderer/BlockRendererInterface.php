@@ -15,17 +15,17 @@
 namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
 
 interface BlockRendererInterface
 {
     /**
-     * @param AbstractBlock $block
-     * @param HtmlRendererInterface $htmlRenderer
-     * @param bool $inTightList
+     * @param AbstractBlock            $block
+     * @param ElementRendererInterface $htmlRenderer
+     * @param bool                     $inTightList
      *
      * @return HtmlElement|string
      */
-    public function render(AbstractBlock $block, HtmlRendererInterface $htmlRenderer, $inTightList = false);
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false);
 }

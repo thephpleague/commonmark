@@ -14,9 +14,8 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\ContextInterface;
-use League\CommonMark\InlineParserContext;
 use League\CommonMark\Inline\Element\Html;
+use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 class RawHtmlParser extends AbstractInlineParser
@@ -30,16 +29,15 @@ class RawHtmlParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(RegexHelper::getInstance()->getHtmlTagRegex())) {
-            $inlineContext->getInlines()->add(new Html($m));
+            $inlineContext->getContainer()->appendChild(new Html($m));
 
             return true;
         }
