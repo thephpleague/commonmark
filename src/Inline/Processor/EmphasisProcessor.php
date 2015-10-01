@@ -46,9 +46,9 @@ class EmphasisProcessor implements InlineProcessorInterface
 
             // Build contents for new emph element
             if ($useDelims === 1 && $openerInline->data['emphasis_config']->getConfig('enable_emphasis')) {
-                $emph = new Emphasis($contents);
+                $emph = new Emphasis();
             } elseif ($useDelims > 1 && $openerInline->data['emphasis_config']->getConfig('enable_strong')) {
-                $emph = new Strong($contents);
+                $emph = new Strong();
             } else {
                 return $closer->getNext();
             }
