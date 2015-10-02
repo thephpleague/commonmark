@@ -15,18 +15,51 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Environment;
+use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\RegexHelper;
 
-class EmphasisParser extends AbstractInlineParser
+class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInterface
 {
+    protected $config;
+
+    public function __construct(array $newConfig = [])
+    {
+        $this->config = new Configuration([
+            'use_asterisk'    => true,
+            'use_underscore'  => true,
+            'enable_em'       => true,
+            'enable_strong'   => true,
+        ]);
+        $this->config->mergeConfig($newConfig);
+    }
+
+    public function setEnvironment(Environment $environment)
+    {
+        $this->config->mergeConfig($environment->getConfig());
+    }
+
     /**
      * @return string[]
      */
     public function getCharacters()
     {
-        return ['*', '_'];
+        if (!$this->config->getConfig('enable_em') && !$this->config->getConfig('enable_strong')) {
+            return [];
+        }
+
+        $chars = [];
+        if ($this->config->getConfig('use_asterisk')) {
+            $chars[] = '*';
+        }
+        if ($this->config->getConfig('use_underscore')) {
+            $chars[] = '_';
+        }
+
+        return $chars;
     }
 
     /**
@@ -51,6 +84,11 @@ class EmphasisParser extends AbstractInlineParser
 
         while ($cursor->peek($numDelims) === $character) {
             ++$numDelims;
+        }
+
+        // Skip single delims if emphasis is disabled
+        if ($numDelims === 1 && !$this->config->getConfig('enable_em')) {
+            return false;
         }
 
         $cursor->advanceBy($numDelims);
@@ -83,7 +121,10 @@ class EmphasisParser extends AbstractInlineParser
             $canClose = $rightFlanking;
         }
 
-        $node = new Text($cursor->getPreviousText(), ['delim' => true]);
+        $node = new Text($cursor->getPreviousText(), [
+            'delim'           => true,
+            'emphasis_config' => $this->config,
+        ]);
         $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack to this opener

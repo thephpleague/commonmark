@@ -5,6 +5,27 @@ requireAutoloader();
 
 ini_set('display_errors', 'stderr');
 
+$options = array();
+$options_raw = getopt('', array(
+    'use-asterisk',
+    'use-underscore',
+    'enable-strong',
+    'enable-em',
+));
+foreach ($options_raw as $option => $value) {
+    switch ($option) {
+        case 'use-asterisk':
+        case 'use-underscore':
+        case 'enable-strong':
+        case 'enable-em':
+            if ($value !== true && $value !== false) {
+                fail("Invalid value '$value' for option '$option'");
+            }
+            break;
+    }
+    $options[str_replace('-', '_', $option)] = $value;
+}
+
 foreach ($argv as $i => $arg) {
     if ($i === 0) {
         continue;
@@ -17,10 +38,14 @@ foreach ($argv as $i => $arg) {
                 echo getHelpText();
                 exit(0);
             default:
-                fail('Unknown option: ' . $arg);
+                $option = explode('=', $arg, 2)[0];
+                if (!preg_match('/^--[^-]/', $option)
+                    || !array_key_exists(ltrim($option, '-'), $options_raw)) {
+                    fail('Unknown option: ' . $arg);
+                }
         }
     } else {
-        $src = $argv[1];
+        $src = $arg;
     }
 }
 
@@ -41,7 +66,7 @@ if (isset($src)) {
     }
 }
 
-$converter = new \League\CommonMark\CommonMarkConverter();
+$converter = new \League\CommonMark\CommonMarkConverter($options);
 echo $converter->convertToHtml($markdown);
 
 /**

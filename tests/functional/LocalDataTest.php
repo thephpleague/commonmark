@@ -60,6 +60,7 @@ class LocalDataTest extends \PHPUnit_Framework_TestCase
         $finder = new Finder();
         $finder->files()
             ->in(__DIR__ . '/data')
+            ->depth('== 0')
             ->name('*.md');
 
         $ret = [];
