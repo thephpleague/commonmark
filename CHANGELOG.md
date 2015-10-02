@@ -4,6 +4,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Added
+ - Add ability to configure characters and disable emphasis/strong (#135)
+
 ### Changed
  - `AbstractBlock::finalize()` now reqires a second parameter, `$endLineNumber`
 
