@@ -15,12 +15,14 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Environment;
+use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\RegexHelper;
 
-class EmphasisParser extends AbstractInlineParser
+class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInterface
 {
     protected $config;
 
@@ -29,10 +31,15 @@ class EmphasisParser extends AbstractInlineParser
         $this->config = new Configuration([
             'use_asterisk'    => true,
             'use_underscore'  => true,
-            'enable_emphasis' => true,
+            'enable_em'       => true,
             'enable_strong'   => true,
         ]);
         $this->config->mergeConfig($newConfig);
+    }
+
+    public function setEnvironment(Environment $environment)
+    {
+        $this->config->mergeConfig($environment->getConfig());
     }
 
     /**
@@ -40,11 +47,15 @@ class EmphasisParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
+        if (!$this->config->getConfig('enable_em') && !$this->config->getConfig('enable_strong')) {
+            return [];
+        }
+
         $chars = [];
-        if ($this->config->getConfig('use_asterisk', true)) {
+        if ($this->config->getConfig('use_asterisk')) {
             $chars[] = '*';
         }
-        if ($this->config->getConfig('use_underscore', true)) {
+        if ($this->config->getConfig('use_underscore')) {
             $chars[] = '_';
         }
 
@@ -76,7 +87,7 @@ class EmphasisParser extends AbstractInlineParser
         }
 
         // Skip single delims if emphasis is disabled
-        if ($numDelims === 1 && !$this->config->getConfig('enable_emphasis')) {
+        if ($numDelims === 1 && !$this->config->getConfig('enable_em')) {
             return false;
         }
 
