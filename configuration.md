@@ -18,6 +18,10 @@ $converter = new CommonMarkConverter([
         'inner_separator' => "\n",
         'soft_break'      => "\n",
     ],
+    'enable_emphasis' => true,
+    'enable_strong' => true,
+    'use_asterisk' => true,
+    'use_underscore' => true,
 ]);
 ~~~
 
@@ -27,6 +31,10 @@ Here's a list of currently-supported options:
   * `block_separator` - String to use for separating renderer block elements
   * `inner_separator` - String to use for separating inner block contents 
   * `soft_break` - String to use for rendering soft breaks
+* `enable_em` - Disable `<em>` parsing by setting to `false`; enable with `true` (default: `true`)
+* `enable_strong` - Disable `<strong>` parsing by setting to `false`; enable with `true` (default: `true`)
+* `use_asterisk` - Disable parsing of `*` for emphasis by setting to `false`; enable with `true` (default: `true`)
+* `use_underscore` - Disable parsing of `_` for emphasis by setting to `false`; enable with `true` (default: `true`)
 
 ## Environment
 
