@@ -94,7 +94,9 @@ You can also reference the core CommonMark parsers/renderers as they use the sam
 
 Documentation can be found at [commonmark.thephpleague.com][docs].
 
-## Integrations
+## Related Packages
+
+### Integrations
 
 - [CakePHP 3](https://github.com/gourmet/common-mark)
 - [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
@@ -102,7 +104,7 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 - [Symfony](https://github.com/webuni/commonmark-bundle)
 - [Twig](https://github.com/webuni/commonmark-twig-renderer)
 
-## Community Extensions
+### Community Extensions
 
 Custom parsers/renderers can be bundled into extensions which extend CommonMark.  Here are some that you may find interesting:
 
@@ -110,6 +112,10 @@ Custom parsers/renderers can be bundled into extensions which extend CommonMark.
  - [CommonMark Table Extension](https://github.com/webuni/commonmark-table-extension) - Adds the ability to create tables in CommonMark documents.
  - [CommonMark Attributes Extension](https://github.com/webuni/commonmark-attributes-extension) - Adds a syntax to define attributes on the various HTML elements.
  - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark, that integrates with [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown).
+
+### Others
+
+Check out the other cool things people are doing with `league/commonmark`: <https://packagist.org/packages/league/commonmark/dependents>
 
 ## Compatibility with CommonMark ##
 
