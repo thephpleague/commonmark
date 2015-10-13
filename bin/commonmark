@@ -57,8 +57,11 @@ if (isset($src)) {
     $markdown = file_get_contents($src);
 } else {
     $stdin = fopen('php://stdin', 'r');
-    stream_set_blocking($stdin, false);
-    $markdown = stream_get_contents($stdin);
+
+    if (stream_set_blocking($stdin, false)) {
+        $markdown = stream_get_contents($stdin);
+    }
+
     fclose($stdin);
 
     if (empty($markdown)) {
@@ -76,6 +79,30 @@ echo $converter->convertToHtml($markdown);
  */
 function getHelpText()
 {
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        return <<<WINDOWSHELP
+CommonMark - Markdown done right
+
+Usage: commonmark [OPTIONS] [FILE]
+
+    -h, --help  Shows help and usage information
+
+    (Reading data from STDIN is not currently supported on Windows)
+
+Examples:
+
+    Converting a file named document.md:
+
+        commonmark document.md
+
+    Converting a file and saving its output:
+
+        commonmark document.md > output.html
+
+Full documentation can be found at http://commonmark.thephpleague.com/
+WINDOWSHELP;
+    }
+
     return <<<HELP
 CommonMark - Markdown done right
 
