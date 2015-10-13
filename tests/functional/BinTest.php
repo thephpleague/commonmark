@@ -92,6 +92,10 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPathToCommonmark()
     {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            return realpath(__DIR__ . '/../../bin/commonmark.bat');
+        }
+
         return realpath(__DIR__ . '/../../bin/commonmark');
     }
 
