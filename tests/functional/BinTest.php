@@ -77,6 +77,10 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     public function testStdin()
     {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $this->markTestSkipped('Test skipped: STDIN is not supported on Windows');
+        }
+
         $cmd = new Command(sprintf('cat %s | %s ', $this->getPathToData('atx_header.md'), $this->getPathToCommonmark()));
         $cmd->execute();
 
