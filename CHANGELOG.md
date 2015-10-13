@@ -9,10 +9,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
  - `AbstractBlock::finalize()` now reqires a second parameter, `$endLineNumber`
+ - `RegexHelper::REGEX_ENTITY` no longer includes the starting `/` or the ending `/i` (#194)
 
 ### Fixed
  - Fixed incorrect `endLine` positions (#187)
  - Fixed `DocParser::preProcessInput` dropping up to 2 ending newlines instead of just one
+ - Fixed `EntityParser` not checking for ampersands at the start of the current position (#192, #194)
 
 ### Removed
  - Removed protected function Context::addChild()
