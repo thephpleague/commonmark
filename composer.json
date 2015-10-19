@@ -26,7 +26,7 @@
         "jgm/SmartPunct": "0.22",
         "michelf/php-markdown": "~1.4",
         "mikehaertl/php-shellcommand": "~1.1.0",
-        "phpunit/phpunit": "~4.3",
+        "phpunit/phpunit": "~4.3|~5.0",
         "symfony/finder": "~2.3",
         "scrutinizer/ocular": "^1.1"
     },
