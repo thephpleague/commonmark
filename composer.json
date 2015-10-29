@@ -3,7 +3,9 @@
     "description": "Extended parsers and renderers for The PHP League CommonMark parser",
     "keywords": ["markdown", "strikethrough", "strikeout", "commonmark"],
     "require": {
-        "league/commonmark": "^0.10.0",
+        "league/commonmark": "^0.10.0"
+    },
+    "require-dev": {
         "phpunit/phpunit": "^4.7"
     },
     "license": "MIT",
