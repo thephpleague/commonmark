@@ -17,9 +17,16 @@ namespace League\CommonMark\Inline\Renderer;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Html;
+use League\CommonMark\Util\Configuration;
+use League\CommonMark\Util\ConfigurationAwareInterface;
 
-class RawHtmlRenderer implements InlineRendererInterface
+class RawHtmlRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
+    /**
+     * @var Configuration
+     */
+    protected $config;
+
     /**
      * @param Html                     $inline
      * @param ElementRendererInterface $htmlRenderer
@@ -32,6 +39,18 @@ class RawHtmlRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
+        if ($this->config->getConfig('safe') === true) {
+            return '';
+        }
+
         return $inline->getContent();
+    }
+
+    /**
+     * @param Configuration $configuration
+     */
+    public function setConfiguration(Configuration $configuration)
+    {
+        $this->config = $configuration;
     }
 }

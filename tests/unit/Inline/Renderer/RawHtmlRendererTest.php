@@ -17,6 +17,7 @@ namespace League\CommonMark\Tests\Unit\Inline\Renderer;
 use League\CommonMark\Inline\Element\Html;
 use League\CommonMark\Inline\Renderer\RawHtmlRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use League\CommonMark\Util\Configuration;
 
 class RawHtmlRendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,6 +29,7 @@ class RawHtmlRendererTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->renderer = new RawHtmlRenderer();
+        $this->renderer->setConfiguration(new Configuration());
     }
 
     public function testRender()

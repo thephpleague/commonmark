@@ -18,9 +18,17 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Image;
+use League\CommonMark\Util\Configuration;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\RegexHelper;
 
-class ImageRenderer implements InlineRendererInterface
+class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
+    /**
+     * @var Configuration
+     */
+    protected $config;
+
     /**
      * @param Image                    $inline
      * @param ElementRendererInterface $htmlRenderer
@@ -38,7 +46,11 @@ class ImageRenderer implements InlineRendererInterface
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
+        if ($this->config->getConfig('safe') && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl())) {
+            $attrs['src'] = '';
+        } else {
+            $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
+        }
 
         $alt = $htmlRenderer->renderInlines($inline->children());
         $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
@@ -49,5 +61,13 @@ class ImageRenderer implements InlineRendererInterface
         }
 
         return new HtmlElement('img', $attrs, '', true);
+    }
+
+    /**
+     * @param Configuration $configuration
+     */
+    public function setConfiguration(Configuration $configuration)
+    {
+        $this->config = $configuration;
     }
 }

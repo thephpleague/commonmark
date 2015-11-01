@@ -86,6 +86,35 @@ class BinTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests converting Markdown without the --safe flag
+     */
+    public function testUnsafe()
+    {
+        $cmd = new Command($this->getPathToCommonmark());
+        $cmd->addArg($this->getPathToData('safe/input.md'));
+        $cmd->execute();
+
+        $this->assertEquals(0, $cmd->getExitCode());
+        $expectedContents = trim(file_get_contents($this->getPathToData('safe/unsafe_output.html')));
+        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+    }
+
+    /**
+     * Tests converting Markdown with the --safe flag
+     */
+    public function testSafe()
+    {
+        $cmd = new Command($this->getPathToCommonmark());
+        $cmd->addArg($this->getPathToData('safe/input.md'));
+        $cmd->addArg('--safe');
+        $cmd->execute();
+
+        $this->assertEquals(0, $cmd->getExitCode());
+        $expectedContents = trim(file_get_contents($this->getPathToData('safe/safe_output.html')));
+        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+    }
+
+    /**
      * Returns the full path the commonmark "binary"
      *
      * @return string

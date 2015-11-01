@@ -17,6 +17,7 @@ namespace League\CommonMark\Tests\Unit\Block\Renderer;
 use League\CommonMark\Block\Element\HtmlBlock;
 use League\CommonMark\Block\Renderer\HtmlBlockRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use League\CommonMark\Util\Configuration;
 
 class HtmlBlockRendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,6 +29,7 @@ class HtmlBlockRendererTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->renderer = new HtmlBlockRenderer();
+        $this->renderer->setConfiguration(new Configuration());
     }
 
     public function testRender()

@@ -1,0 +1,8 @@
+<p><a href="javascript:alert('XSS')">Click me</a></p>
+<p><a href="javascript:alert(%22XSS%22)">javascript:alert(&quot;XSS&quot;)</a></p>
+<div onclick="alert('XSS')">click me</div>
+<script>alert("XSS")</script>
+<script>
+    alert("XSS");
+</script>
+<p><img src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" alt="Inline image" /></p>

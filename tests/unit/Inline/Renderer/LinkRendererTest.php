@@ -18,6 +18,7 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Renderer\LinkRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use League\CommonMark\Util\Configuration;
 
 class LinkRendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,6 +30,7 @@ class LinkRendererTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->renderer = new LinkRenderer();
+        $this->renderer->setConfiguration(new Configuration());
     }
 
     public function testRenderWithTitle()

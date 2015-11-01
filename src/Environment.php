@@ -443,6 +443,7 @@ class Environment
                 'inner_separator' => "\n",
                 'soft_break'      => "\n",
             ],
+            'safe' => false,
         ]);
 
         return $environment;

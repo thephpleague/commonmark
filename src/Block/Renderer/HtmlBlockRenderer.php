@@ -17,9 +17,16 @@ namespace League\CommonMark\Block\Renderer;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\HtmlBlock;
 use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Util\Configuration;
+use League\CommonMark\Util\ConfigurationAwareInterface;
 
-class HtmlBlockRenderer implements BlockRendererInterface
+class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
 {
+    /**
+     * @var Configuration
+     */
+    protected $config;
+
     /**
      * @param HtmlBlock                $block
      * @param ElementRendererInterface $htmlRenderer
@@ -33,6 +40,18 @@ class HtmlBlockRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
+        if ($this->config->getConfig('safe') === true) {
+            return '';
+        }
+
         return $block->getStringContent();
+    }
+
+    /**
+     * @param Configuration $configuration
+     */
+    public function setConfiguration(Configuration $configuration)
+    {
+        $this->config = $configuration;
     }
 }
