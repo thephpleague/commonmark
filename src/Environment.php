@@ -23,6 +23,7 @@ use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\Configuration;
+use League\CommonMark\Util\ConfigurationAwareInterface;
 
 class Environment
 {
@@ -357,6 +358,10 @@ class Environment
                 $blockParser->setEnvironment($this);
             }
 
+            if ($blockParser instanceof ConfigurationAwareInterface) {
+                $blockParser->setConfiguration($this->config);
+            }
+
             $this->blockParsers[$blockParser->getName()] = $blockParser;
         }
     }
@@ -368,6 +373,10 @@ class Environment
     {
         foreach ($blockRenderers as $class => $blockRenderer) {
             $this->blockRenderersByClass[$class] = $blockRenderer;
+
+            if ($blockRenderer instanceof ConfigurationAwareInterface) {
+                $blockRenderer->setConfiguration($this->config);
+            }
         }
     }
 
@@ -379,6 +388,10 @@ class Environment
         foreach ($inlineParsers as $inlineParser) {
             if ($inlineParser instanceof EnvironmentAwareInterface) {
                 $inlineParser->setEnvironment($this);
+            }
+
+            if ($inlineParser instanceof ConfigurationAwareInterface) {
+                $inlineParser->setConfiguration($this->config);
             }
 
             $this->inlineParsers[$inlineParser->getName()] = $inlineParser;
@@ -396,6 +409,10 @@ class Environment
     {
         foreach ($inlineProcessors as $inlineProcessor) {
             $this->inlineProcessors[] = $inlineProcessor;
+
+            if ($inlineProcessor instanceof ConfigurationAwareInterface) {
+                $inlineProcessor->setConfiguration($this->config);
+            }
         }
     }
 
@@ -406,6 +423,10 @@ class Environment
     {
         foreach ($inlineRenderers as $class => $inlineRenderer) {
             $this->inlineRenderersByClass[$class] = $inlineRenderer;
+
+            if ($inlineRenderer instanceof ConfigurationAwareInterface) {
+                $inlineRenderer->setConfiguration($this->config);
+            }
         }
     }
 
