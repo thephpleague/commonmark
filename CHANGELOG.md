@@ -6,6 +6,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
  - Add ability to configure characters and disable emphasis/strong (#135)
+ - Add HTML safe mode to handle untrusted input (#200, #201)
 
 ### Changed
  - `AbstractBlock::finalize()` now reqires a second parameter, `$endLineNumber`
