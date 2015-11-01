@@ -11,6 +11,7 @@ $options_raw = getopt('', array(
     'use-underscore',
     'enable-strong',
     'enable-em',
+    'safe',
 ));
 foreach ($options_raw as $option => $value) {
     switch ($option) {
@@ -18,6 +19,7 @@ foreach ($options_raw as $option => $value) {
         case 'use-underscore':
         case 'enable-strong':
         case 'enable-em':
+        case 'safe':
             if ($value !== true && $value !== false) {
                 fail("Invalid value '$value' for option '$option'");
             }
@@ -37,6 +39,9 @@ foreach ($argv as $i => $arg) {
             case '--help':
                 echo getHelpText();
                 exit(0);
+            case '--safe':
+                $options['safe'] = true;
+                break;
             default:
                 $option = explode('=', $arg, 2)[0];
                 if (!preg_match('/^--[^-]/', $option)
@@ -82,6 +87,8 @@ CommonMark - Markdown done right
 Usage: commonmark [OPTIONS] [FILE]
 
     -h, --help  Shows help and usage information
+
+    --safe      Escapes all raw HTML input and removes unsafe URLs
 
     If no file is given, input will be read from STDIN
 

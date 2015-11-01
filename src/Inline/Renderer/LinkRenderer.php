@@ -18,9 +18,17 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Util\Configuration;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\RegexHelper;
 
-class LinkRenderer implements InlineRendererInterface
+class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
+    /**
+     * @var Configuration
+     */
+    protected $config;
+
     /**
      * @param Link                     $inline
      * @param ElementRendererInterface $htmlRenderer
@@ -38,12 +46,22 @@ class LinkRenderer implements InlineRendererInterface
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
+        if (!($this->config->getConfig('safe') && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl()))) {
+            $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
+        }
 
         if (isset($inline->data['title'])) {
             $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
 
         return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
+    }
+
+    /**
+     * @param Configuration $configuration
+     */
+    public function setConfiguration(Configuration $configuration)
+    {
+        $this->config = $configuration;
     }
 }

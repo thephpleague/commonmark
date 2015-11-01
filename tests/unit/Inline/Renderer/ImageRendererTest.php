@@ -18,6 +18,7 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Renderer\ImageRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use League\CommonMark\Util\Configuration;
 
 class ImageRendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,6 +30,7 @@ class ImageRendererTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->renderer = new ImageRenderer();
+        $this->renderer->setConfiguration(new Configuration());
     }
 
     public function testRenderWithTitle()
