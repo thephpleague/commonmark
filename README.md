@@ -99,6 +99,7 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 ### Integrations
 
 - [CakePHP 3](https://github.com/gourmet/common-mark)
+- [Drupal](https://www.drupal.org/project/commonmark)
 - [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
 - [Sculpin](https://github.com/bcremer/sculpin-commonmark-bundle)
 - [Symfony](https://github.com/webuni/commonmark-bundle)
