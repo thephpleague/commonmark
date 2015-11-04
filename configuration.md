@@ -22,6 +22,7 @@ $converter = new CommonMarkConverter([
     'enable_strong' => true,
     'use_asterisk' => true,
     'use_underscore' => true,
+    'safe' => false,
 ]);
 ~~~
 
@@ -35,6 +36,7 @@ Here's a list of currently-supported options:
 * `enable_strong` - Disable `<strong>` parsing by setting to `false`; enable with `true` (default: `true`)
 * `use_asterisk` - Disable parsing of `*` for emphasis by setting to `false`; enable with `true` (default: `true`)
 * `use_underscore` - Disable parsing of `_` for emphasis by setting to `false`; enable with `true` (default: `true`)
+* `safe` - Prevents rendering of raw HTML if set to `true` (default: `false`)
 
 ## Environment
 
