@@ -78,9 +78,9 @@ abstract class AbstractBlock extends Node
     }
 
     /**
-     * @param Node $node
+     * @param Node|null $node
      */
-    protected function setParent(Node $node)
+    protected function setParent(Node $node = null)
     {
         if ($node && !$node instanceof self) {
             throw new \InvalidArgumentException('Parent of block must also be block (can not be inline)');
