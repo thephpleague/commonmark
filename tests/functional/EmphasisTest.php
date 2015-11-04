@@ -13,7 +13,13 @@ class EmphasisTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPathToCommonmark()
     {
-        return realpath(__DIR__ . '/../../bin/commonmark');
+        $path = realpath(__DIR__ . '/../../bin/commonmark');
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $path = 'php ' . $path;
+        }
+
+        return $path;
     }
 
     /**
