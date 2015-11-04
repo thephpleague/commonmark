@@ -55,7 +55,10 @@ abstract class Node
         return $this->parent;
     }
 
-    protected function setParent(Node $node)
+    /**
+     * @param Node|null $node
+     */
+    protected function setParent(Node $node = null)
     {
         $this->parent = $node;
     }

@@ -17,6 +17,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
  - `AbstractBlock::finalize()` now reqires a second parameter, `$endLineNumber`
  - `RegexHelper::REGEX_ENTITY` no longer includes the starting `/` or the ending `/i` (#194)
+ - `Node::setParent()` now accepts null values (#203)
 
 ### Fixed
  - Fixed incorrect `endLine` positions (#187)
