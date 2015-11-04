@@ -16,7 +16,10 @@ class BinTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $cmd->getExitCode());
         $this->assertEmpty($cmd->getOutput());
-        $this->assertContains('Usage:', $cmd->getError());
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            $this->assertContains('Usage:', $cmd->getError());
+        }
     }
 
     /**
@@ -55,7 +58,10 @@ class BinTest extends \PHPUnit_Framework_TestCase
         $cmd->execute();
 
         $this->assertEquals(1, $cmd->getExitCode());
-        $this->assertContains('Unknown option', $cmd->getError());
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            $this->assertContains('Unknown option', $cmd->getError());
+        }
     }
 
     /**
