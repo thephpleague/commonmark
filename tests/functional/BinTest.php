@@ -16,7 +16,10 @@ class BinTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $cmd->getExitCode());
         $this->assertEmpty($cmd->getOutput());
-        $this->assertContains('Usage:', $cmd->getError());
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            $this->assertContains('Usage:', $cmd->getError());
+        }
     }
 
     /**
@@ -55,7 +58,10 @@ class BinTest extends \PHPUnit_Framework_TestCase
         $cmd->execute();
 
         $this->assertEquals(1, $cmd->getExitCode());
-        $this->assertContains('Unknown option', $cmd->getError());
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            $this->assertContains('Unknown option', $cmd->getError());
+        }
     }
 
     /**
@@ -77,6 +83,10 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     public function testStdin()
     {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $this->markTestSkipped('Test skipped: STDIN is not supported on Windows');
+        }
+
         $cmd = new Command(sprintf('cat %s | %s ', $this->getPathToData('atx_header.md'), $this->getPathToCommonmark()));
         $cmd->execute();
 
@@ -121,7 +131,13 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPathToCommonmark()
     {
-        return realpath(__DIR__ . '/../../bin/commonmark');
+        $path = realpath(__DIR__ . '/../../bin/commonmark');
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $path = 'php ' . $path;
+        }
+
+        return $path;
     }
 
     /**
