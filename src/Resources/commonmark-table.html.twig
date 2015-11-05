@@ -1,0 +1,29 @@
+{% block table -%}
+    <table{{ block('_attributes') }}>
+        {{- options.inner_separator|default("\n") -}}
+        {{- block('_children') -}}
+        {{- options.inner_separator|default("\n") -}}
+    </table>
+{%- endblock %}
+
+{% block table_rows -%}
+    <{{node.type}}{{ block('_attributes') }}>
+        {{- options.inner_separator|default("\n") -}}
+        {{- block('_children') -}}
+        {{- options.inner_separator|default("\n") -}}
+    </{{ node.type }}>
+{%- endblock %}
+
+{% block table_row -%}
+    <tr{{ block('_attributes') }}>
+        {{- options.inner_separator|default("\n") -}}
+        {{- block('_children') -}}
+        {{- options.inner_separator|default("\n") -}}
+    </tr>
+{%- endblock %}
+
+{% block table_cell -%}
+    <{{ node.type }}{{ block('_attributes') }}{% if node.align  %} align="{{ node.align }}"{% endif %}>
+        {{- block('_inline_children') -}}
+    </{{ node.type }}>
+{%- endblock %}

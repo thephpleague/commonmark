@@ -12,38 +12,57 @@
 namespace Webuni\CommonMark\TableExtension\tests\functional;
 
 use League\CommonMark\DocParser;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
 use Webuni\CommonMark\TableExtension\TableExtension;
+use Webuni\CommonMark\TwigRenderer\CommonMarkTwigExtension;
+use Webuni\CommonMark\TwigRenderer\TwigRenderer;
 
 class LocalDataTest extends \PHPUnit_Framework_TestCase
 {
+    /* @var Environment */
+    private $environment;
     private $parser;
-    private $renderer;
 
     protected function setUp()
     {
-        $environemnt = Environment::createCommonMarkEnvironment();
-        $environemnt->addExtension(new TableExtension());
+        $this->environment = Environment::createCommonMarkEnvironment();
+        $this->environment->addExtension(new TableExtension());
 
-        $this->parser = new DocParser($environemnt);
-        $this->renderer = new HtmlRenderer($environemnt);
+        $this->parser = new DocParser($this->environment);
     }
 
     /**
      * @dataProvider dataProvider
      */
-    public function testExample($markdown, $html, $testName)
+    public function testHtmlRenderer($markdown, $html, $testName)
     {
-        $documentAST = $this->parser->parse($markdown);
-        $actualResult = $this->renderer->renderBlock($documentAST);
+        $renderer = new HtmlRenderer($this->environment);
+        $this->assertCommonMark($renderer, $markdown, $html, $testName);
+    }
 
-        $failureMessage = sprintf('Unexpected result for "%s" test', $testName);
-        $failureMessage .= "\n=== markdown ===============\n".$markdown;
-        $failureMessage .= "\n=== expected ===============\n".$html;
-        $failureMessage .= "\n=== got ====================\n".$actualResult;
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testTwigRenderer($markdown, $html, $testName)
+    {
+        $loader = CommonMarkTwigExtension::createTwigLoader();
 
-        $this->assertEquals($html, $actualResult, $failureMessage);
+        $ref = new \ReflectionClass('Webuni\CommonMark\TableExtension\TableExtension');
+        $loader->addPath(dirname($ref->getFileName()).'/Resources');
+        $loader->addPath(__DIR__);
+
+        $twig = new \Twig_Environment($loader, [
+            'strict_variables' => true,
+        ]);
+        $twig->addExtension(new CommonMarkTwigExtension());
+
+
+        $this->environment->mergeConfig(['renderer' => ['twig_template' => 'template.html.twig']]);
+        $renderer = new TwigRenderer($this->environment, $twig);
+
+        $this->assertCommonMark($renderer, $markdown, $html, $testName);
     }
 
     /**
@@ -61,5 +80,18 @@ class LocalDataTest extends \PHPUnit_Framework_TestCase
         }
 
         return $ret;
+    }
+
+    private function assertCommonMark(ElementRendererInterface $renderer, $markdown, $html, $testName)
+    {
+        $documentAST = $this->parser->parse($markdown);
+        $actualResult = $renderer->renderBlock($documentAST);
+
+        $failureMessage = sprintf('Unexpected result for "%s" test', $testName);
+        $failureMessage .= "\n=== markdown ===============\n".$markdown;
+        $failureMessage .= "\n=== expected ===============\n".$html;
+        $failureMessage .= "\n=== got ====================\n".$actualResult;
+
+        $this->assertEquals($html, $actualResult, $failureMessage);
     }
 }
