@@ -100,7 +100,7 @@ class SmilieParser extends AbstractInlineParser
         // The next character must be a paren; if not, then bail
         // We use peek() to quickly check without affecting the cursor
         $nextChar = $cursor->peek();
-        if ($nextChar !== '(' || $nextChar !== ')') {
+        if ($nextChar !== '(' && $nextChar !== ')') {
             return false;
         }
 
