@@ -8,8 +8,6 @@ php:
   - hhvm
 
 matrix:
-  allow_failures:
-    - php: 7.0
   include:
     - php: 5.4
       env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
