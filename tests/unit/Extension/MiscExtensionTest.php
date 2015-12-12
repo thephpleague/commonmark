@@ -76,6 +76,16 @@ class MiscExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['foo' => $renderer2], $extension->getInlineRenderers());
     }
 
+    public function testDocumentProcessors()
+    {
+        $extension = new MiscExtension();
+        $this->assertEquals([], $extension->getDocumentProcessors());
+
+        $processor = $this->getMockForAbstractClass('League\CommonMark\DocumentProcessorInterface');
+        $extension->addDocumentProcessor($processor);
+        $this->assertEquals([$processor], $extension->getDocumentProcessors());
+    }
+
     public function testGetName()
     {
         $extension = new MiscExtension();

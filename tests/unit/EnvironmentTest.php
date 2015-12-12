@@ -386,4 +386,28 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
         $environment->addExtension($extension);
     }
+
+    public function testAddDocumentProcessor()
+    {
+        $environment = new Environment();
+
+        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $environment->addDocumentProcessor($processor);
+
+        $this->assertContains($processor, $environment->getDocumentProcessors());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddDocumentProcessorFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getDocumentProcessors();
+
+        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $environment->addDocumentProcessor($processor);
+    }
 }

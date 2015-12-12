@@ -73,6 +73,11 @@ class Environment
     protected $inlineRenderersByClass = [];
 
     /**
+     * @var DocumentProcessorInterface[]
+     */
+    protected $documentProcessors = [];
+
+    /**
      * @var Configuration
      */
     protected $config;
@@ -192,6 +197,20 @@ class Environment
     }
 
     /**
+     * @param DocumentProcessorInterface $processor
+     *
+     * @return $this
+     */
+    public function addDocumentProcessor(DocumentProcessorInterface $processor)
+    {
+        $this->assertUninitialized('Failed to add document processor - extensions have already been initialized');
+
+        $this->miscExtension->addDocumentProcessor($processor);
+
+        return $this;
+    }
+
+    /**
      * @return BlockParserInterface[]
      */
     public function getBlockParsers()
@@ -289,6 +308,16 @@ class Environment
     }
 
     /**
+     * @return DocumentProcessorInterface[]
+     */
+    public function getDocumentProcessors()
+    {
+        $this->initializeExtensions();
+
+        return $this->documentProcessors;
+    }
+
+    /**
      * Get all registered extensions
      *
      * @return ExtensionInterface[]
@@ -346,6 +375,7 @@ class Environment
         $this->initializeInlineParsers($extension->getInlineParsers());
         $this->initializeInlineProcessors($extension->getInlineProcessors());
         $this->initializeInlineRenderers($extension->getInlineRenderers());
+        $this->initializeDocumentProcessors($extension->getDocumentProcessors());
     }
 
     /**
@@ -426,6 +456,20 @@ class Environment
 
             if ($inlineRenderer instanceof ConfigurationAwareInterface) {
                 $inlineRenderer->setConfiguration($this->config);
+            }
+        }
+    }
+
+    /**
+     * @param DocumentProcessorInterface[] $documentProcessors
+     */
+    private function initializeDocumentProcessors($documentProcessors)
+    {
+        foreach ($documentProcessors as $documentProcessor) {
+            $this->documentProcessors[] = $documentProcessor;
+
+            if ($documentProcessor instanceof ConfigurationAwareInterface) {
+                $documentProcessor->setConfiguration($this->config);
             }
         }
     }

@@ -16,6 +16,7 @@ namespace League\CommonMark\Extension;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\DocumentProcessorInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
@@ -46,6 +47,11 @@ class MiscExtension implements ExtensionInterface
      * @var InlineRendererInterface[]
      */
     protected $inlineRenderers = [];
+
+    /**
+     * @var DocumentProcessorInterface[]
+     */
+    protected $documentProcessors = [];
 
     /**
      * Returns a list of block parsers to add to the existing list
@@ -163,6 +169,26 @@ class MiscExtension implements ExtensionInterface
         }
 
         $this->inlineRenderers[$inlineClass] = $inlineRenderer;
+
+        return $this;
+    }
+
+    /**
+     * @return DocumentProcessorInterface[]
+     */
+    public function getDocumentProcessors()
+    {
+        return $this->documentProcessors;
+    }
+
+    /**
+     * @param DocumentProcessorInterface $documentProcessor
+     *
+     * @return $this
+     */
+    public function addDocumentProcessor(DocumentProcessorInterface $documentProcessor)
+    {
+        $this->documentProcessors[] = $documentProcessor;
 
         return $this;
     }

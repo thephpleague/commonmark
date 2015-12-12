@@ -24,5 +24,6 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $extension->getInlineParsers());
         $this->assertEquals([], $extension->getInlineProcessors());
         $this->assertEquals([], $extension->getInlineRenderers());
+        $this->assertEquals([], $extension->getDocumentProcessors());
     }
 }

@@ -16,6 +16,7 @@ namespace League\CommonMark\Extension;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\DocumentProcessorInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
@@ -60,6 +61,11 @@ interface ExtensionInterface
      * @return InlineRendererInterface[]
      */
     public function getInlineRenderers();
+
+    /**
+     * @return DocumentProcessorInterface[]
+     */
+    public function getDocumentProcessors();
 
     /**
      * Returns the name of the extension
