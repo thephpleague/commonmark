@@ -33,11 +33,6 @@ class Environment
     protected $extensions = [];
 
     /**
-     * @var MiscExtension
-     */
-    protected $miscExtension;
-
-    /**
      * @var bool
      */
     protected $extensionsInitialized = false;
@@ -89,7 +84,6 @@ class Environment
 
     public function __construct(array $config = [])
     {
-        $this->miscExtension = new MiscExtension();
         $this->config = new Configuration($config);
     }
 
@@ -133,7 +127,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to add block parser - extensions have already been initialized');
 
-        $this->miscExtension->addBlockParser($parser);
+        $this->getMiscExtension()->addBlockParser($parser);
 
         return $this;
     }
@@ -148,7 +142,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to add block renderer - extensions have already been initialized');
 
-        $this->miscExtension->addBlockRenderer($blockClass, $blockRenderer);
+        $this->getMiscExtension()->addBlockRenderer($blockClass, $blockRenderer);
 
         return $this;
     }
@@ -162,7 +156,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to add inline parser - extensions have already been initialized');
 
-        $this->miscExtension->addInlineParser($parser);
+        $this->getMiscExtension()->addInlineParser($parser);
 
         return $this;
     }
@@ -176,7 +170,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to add inline processor - extensions have already been initialized');
 
-        $this->miscExtension->addInlineProcessor($processor);
+        $this->getMiscExtension()->addInlineProcessor($processor);
 
         return $this;
     }
@@ -191,7 +185,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to add inline renderer - extensions have already been initialized');
 
-        $this->miscExtension->addInlineRenderer($inlineClass, $renderer);
+        $this->getMiscExtension()->addInlineRenderer($inlineClass, $renderer);
 
         return $this;
     }
@@ -205,7 +199,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to add document processor - extensions have already been initialized');
 
-        $this->miscExtension->addDocumentProcessor($processor);
+        $this->getMiscExtension()->addDocumentProcessor($processor);
 
         return $this;
     }
@@ -338,7 +332,7 @@ class Environment
     {
         $this->assertUninitialized('Failed to add extension - extensions have already been initialized');
 
-        $this->extensions[$extension->getName()] = $extension;
+        $this->extensions[] = $extension;
 
         return $this;
     }
@@ -356,9 +350,6 @@ class Environment
         foreach ($this->extensions as $extension) {
             $this->initializeExtension($extension);
         }
-
-        // Also initialize those one-off classes
-        $this->initializeExtension($this->miscExtension);
 
         // Lastly, let's build a regex which matches all inline characters
         // This will enable a huge performance boost with inline parsing
@@ -520,5 +511,21 @@ class Environment
         if ($this->extensionsInitialized) {
             throw new \RuntimeException($message);
         }
+    }
+
+    /**
+     * @return MiscExtension
+     */
+    private function getMiscExtension()
+    {
+        $lastExtension = end($this->extensions);
+        if ($lastExtension !== false && $lastExtension instanceof MiscExtension) {
+            return $lastExtension;
+        }
+
+        $miscExtension = new MiscExtension();
+        $this->addExtension($miscExtension);
+
+        return $miscExtension;
     }
 }

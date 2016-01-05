@@ -71,14 +71,4 @@ class SmartPunctExtension extends Extension
             'League\CommonMark\Inline\Element\Text' => new InlineRenderer\TextRenderer(),
         ];
     }
-
-    /**
-     * Returns the name of the extension
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'smartpunct';
-    }
 }

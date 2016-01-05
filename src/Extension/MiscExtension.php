@@ -192,14 +192,4 @@ class MiscExtension implements ExtensionInterface
 
         return $this;
     }
-
-    /**
-     * Returns the name of the extension
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'misc';
-    }
 }

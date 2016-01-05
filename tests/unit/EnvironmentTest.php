@@ -21,19 +21,24 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 {
     public function testAddGetExtensions()
     {
-        $extension = $this->getMockForAbstractClass('League\CommonMark\Extension\ExtensionInterface');
-        $extension->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue('foo'));
+        $firstExtension = $this->getMockForAbstractClass('League\CommonMark\Extension\ExtensionInterface');
 
         $environment = new Environment();
         $this->assertCount(0, $environment->getExtensions());
 
-        $environment->addExtension($extension);
+        $environment->addExtension($firstExtension);
 
         $extensions = $environment->getExtensions();
         $this->assertCount(1, $extensions);
-        $this->assertEquals($extension, $extensions['foo']);
+        $this->assertEquals($firstExtension, $extensions[0]);
+
+        $secondExtension = $this->getMockForAbstractClass('League\CommonMark\Extension\ExtensionInterface');
+        $environment->addExtension($secondExtension);
+
+        $extensions = $environment->getExtensions();
+        $this->assertCount(2, $extensions);
+        $this->assertEquals($firstExtension, $extensions[0]);
+        $this->assertEquals($secondExtension, $extensions[1]);
     }
 
     public function testConstructor()
@@ -410,4 +415,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
         $environment->addDocumentProcessor($processor);
     }
+
+    // TODO: Test non-extension, followed by extension, followed by non-extension. Should create two miscextensions
 }

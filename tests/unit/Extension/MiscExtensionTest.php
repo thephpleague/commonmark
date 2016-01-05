@@ -85,10 +85,4 @@ class MiscExtensionTest extends \PHPUnit_Framework_TestCase
         $extension->addDocumentProcessor($processor);
         $this->assertEquals([$processor], $extension->getDocumentProcessors());
     }
-
-    public function testGetName()
-    {
-        $extension = new MiscExtension();
-        $this->assertEquals('misc', $extension->getName());
-    }
 }

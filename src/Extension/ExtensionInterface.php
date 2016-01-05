@@ -66,11 +66,4 @@ interface ExtensionInterface
      * @return DocumentProcessorInterface[]
      */
     public function getDocumentProcessors();
-
-    /**
-     * Returns the name of the extension
-     *
-     * @return string
-     */
-    public function getName();
 }
