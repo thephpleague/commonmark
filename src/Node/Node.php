@@ -158,7 +158,7 @@ abstract class Node
     public function children()
     {
         $children = [];
-        for ($current = $this->firstChild;null !== $current;$current = $current->next) {
+        for ($current = $this->firstChild; null !== $current; $current = $current->next) {
             $children[] = $current;
         }
 
