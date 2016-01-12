@@ -22,6 +22,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `RawHtmlRenderer` => `HtmlInlineRenderer`
  - Don't allow whitespace between link text and link label of a reference link (spec change)
 
+### Fixed
+ - Fixed several list issues and regressions (jgm/commonmark.js#59)
+
 ## [0.12.0] - 2015-11-04
 
 ### Added
