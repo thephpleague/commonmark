@@ -183,14 +183,14 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $mockRenderer = $this->getMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
 
         $builtInClasses = [
-            'Code'     => 'League\CommonMark\Inline\Element\Code',
-            'Emphasis' => 'League\CommonMark\Inline\Element\Emphasis',
-            'Html'     => 'League\CommonMark\Inline\Element\Html',
-            'Image'    => 'League\CommonMark\Inline\Element\Image',
-            'Link'     => 'League\CommonMark\Inline\Element\Link',
-            'Newline'  => 'League\CommonMark\Inline\Element\Newline',
-            'Strong'   => 'League\CommonMark\Inline\Element\Strong',
-            'Text'     => 'League\CommonMark\Inline\Element\Text',
+            'Code'       => 'League\CommonMark\Inline\Element\Code',
+            'Emphasis'   => 'League\CommonMark\Inline\Element\Emphasis',
+            'HtmlInline' => 'League\CommonMark\Inline\Element\HtmlInline',
+            'Image'      => 'League\CommonMark\Inline\Element\Image',
+            'Link'       => 'League\CommonMark\Inline\Element\Link',
+            'Newline'    => 'League\CommonMark\Inline\Element\Newline',
+            'Strong'     => 'League\CommonMark\Inline\Element\Strong',
+            'Text'       => 'League\CommonMark\Inline\Element\Text',
         ];
 
         foreach ($builtInClasses as $name => $fullyQualifiedName) {

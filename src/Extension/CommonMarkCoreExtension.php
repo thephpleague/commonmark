@@ -72,7 +72,7 @@ class CommonMarkCoreExtension extends Extension
             new InlineParser\EntityParser(),
             new InlineParser\EmphasisParser(),
             new InlineParser\AutolinkParser(),
-            new InlineParser\RawHtmlParser(),
+            new InlineParser\HtmlInlineParser(),
             new InlineParser\CloseBracketParser(),
             new InlineParser\OpenBracketParser(),
             new InlineParser\BangParser(),
@@ -95,14 +95,14 @@ class CommonMarkCoreExtension extends Extension
     public function getInlineRenderers()
     {
         return [
-            'League\CommonMark\Inline\Element\Code'     => new InlineRenderer\CodeRenderer(),
-            'League\CommonMark\Inline\Element\Emphasis' => new InlineRenderer\EmphasisRenderer(),
-            'League\CommonMark\Inline\Element\Html'     => new InlineRenderer\RawHtmlRenderer(),
-            'League\CommonMark\Inline\Element\Image'    => new InlineRenderer\ImageRenderer(),
-            'League\CommonMark\Inline\Element\Link'     => new InlineRenderer\LinkRenderer(),
-            'League\CommonMark\Inline\Element\Newline'  => new InlineRenderer\NewlineRenderer(),
-            'League\CommonMark\Inline\Element\Strong'   => new InlineRenderer\StrongRenderer(),
-            'League\CommonMark\Inline\Element\Text'     => new InlineRenderer\TextRenderer(),
+            'League\CommonMark\Inline\Element\Code'       => new InlineRenderer\CodeRenderer(),
+            'League\CommonMark\Inline\Element\Emphasis'   => new InlineRenderer\EmphasisRenderer(),
+            'League\CommonMark\Inline\Element\HtmlInline' => new InlineRenderer\HtmlInlineRenderer(),
+            'League\CommonMark\Inline\Element\Image'      => new InlineRenderer\ImageRenderer(),
+            'League\CommonMark\Inline\Element\Link'       => new InlineRenderer\LinkRenderer(),
+            'League\CommonMark\Inline\Element\Newline'    => new InlineRenderer\NewlineRenderer(),
+            'League\CommonMark\Inline\Element\Strong'     => new InlineRenderer\StrongRenderer(),
+            'League\CommonMark\Inline\Element\Text'       => new InlineRenderer\TextRenderer(),
         ];
     }
 

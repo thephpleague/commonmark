@@ -16,11 +16,11 @@ namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Inline\Element\Html;
+use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 
-class RawHtmlRenderer implements InlineRendererInterface, ConfigurationAwareInterface
+class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var Configuration
@@ -28,14 +28,14 @@ class RawHtmlRenderer implements InlineRendererInterface, ConfigurationAwareInte
     protected $config;
 
     /**
-     * @param Html                     $inline
+     * @param HtmlInline               $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return string
      */
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
-        if (!($inline instanceof Html)) {
+        if (!($inline instanceof HtmlInline)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 

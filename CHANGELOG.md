@@ -16,6 +16,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `HorizontalRuleRenderer` => `ThematicBreakRenderer`
    - `HorizontalRuleRendererTest` => `ThematicBreakRendererTest`
    - `RegexHelper::getHRuleRegex()` => `RegexHelper::getThematicBreakRegex()`
+ - Renamed inline "Html" and "RawHtml" to "HtmlInline" for consistency
+   - `Html` => `HtmlInline`
+   - `RawHtmlParser` => `HtmlInlineParser`
+   - `RawHtmlRenderer` => `HtmlInlineRenderer`
 
 ## [0.12.0] - 2015-11-04
 

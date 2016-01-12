@@ -14,27 +14,27 @@
 
 namespace League\CommonMark\Tests\Unit\Inline\Renderer;
 
-use League\CommonMark\Inline\Element\Html;
-use League\CommonMark\Inline\Renderer\RawHtmlRenderer;
+use League\CommonMark\Inline\Element\HtmlInline;
+use League\CommonMark\Inline\Renderer\HtmlInlineRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 use League\CommonMark\Util\Configuration;
 
-class RawHtmlRendererTest extends \PHPUnit_Framework_TestCase
+class HtmlInlineRendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var RawHtmlRenderer
+     * @var HtmlInlineRenderer
      */
     protected $renderer;
 
     protected function setUp()
     {
-        $this->renderer = new RawHtmlRenderer();
+        $this->renderer = new HtmlInlineRenderer();
         $this->renderer->setConfiguration(new Configuration());
     }
 
     public function testRender()
     {
-        $inline = new Html('<h1>Test</h1>');
+        $inline = new HtmlInline('<h1>Test</h1>');
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);

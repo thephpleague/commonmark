@@ -14,6 +14,6 @@
 
 namespace League\CommonMark\Inline\Element;
 
-class Html extends AbstractStringContainer
+class HtmlInline extends AbstractStringContainer
 {
 }
