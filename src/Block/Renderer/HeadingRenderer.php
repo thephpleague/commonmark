@@ -15,14 +15,14 @@
 namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\Header;
+use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class HeaderRenderer implements BlockRendererInterface
+class HeadingRenderer implements BlockRendererInterface
 {
     /**
-     * @param Header                   $block
+     * @param Heading                  $block
      * @param ElementRendererInterface $htmlRenderer
      * @param bool                     $inTightList
      *
@@ -30,7 +30,7 @@ class HeaderRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
-        if (!($block instanceof Header)) {
+        if (!($block instanceof Heading)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 

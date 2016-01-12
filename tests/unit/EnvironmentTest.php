@@ -155,7 +155,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
             'BlockQuote'     => 'League\CommonMark\Block\Element\BlockQuote',
             'Document'       => 'League\CommonMark\Block\Element\Document',
             'FencedCode'     => 'League\CommonMark\Block\Element\FencedCode',
-            'Header'         => 'League\CommonMark\Block\Element\Header',
+            'Heading'        => 'League\CommonMark\Block\Element\Heading',
             'HorizontalRule' => 'League\CommonMark\Block\Element\HorizontalRule',
             'HtmlBlock'      => 'League\CommonMark\Block\Element\HtmlBlock',
             'IndentedCode'   => 'League\CommonMark\Block\Element\IndentedCode',

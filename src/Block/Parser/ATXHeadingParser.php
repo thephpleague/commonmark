@@ -14,12 +14,12 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\Block\Element\Header;
+use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class ATXHeaderParser extends AbstractBlockParser
+class ATXHeadingParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
@@ -47,7 +47,7 @@ class ATXHeaderParser extends AbstractBlockParser
         $str = preg_replace('/^ *#+ *$/', '', $str);
         $str = preg_replace('/ +#+ *$/', '', $str);
 
-        $context->addBlock(new Header($level, $str));
+        $context->addBlock(new Heading($level, $str));
         $context->setBlocksParsed(true);
 
         return true;

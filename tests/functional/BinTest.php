@@ -70,11 +70,11 @@ class BinTest extends \PHPUnit_Framework_TestCase
     public function testFileArgument()
     {
         $cmd = new Command($this->getPathToCommonmark());
-        $cmd->addArg($this->getPathToData('atx_header.md'));
+        $cmd->addArg($this->getPathToData('atx_heading.md'));
         $cmd->execute();
 
         $this->assertEquals(0, $cmd->getExitCode());
-        $expectedContents = trim(file_get_contents($this->getPathToData('atx_header.html')));
+        $expectedContents = trim(file_get_contents($this->getPathToData('atx_heading.html')));
         $this->assertEquals($expectedContents, trim($cmd->getOutput()));
     }
 
@@ -87,11 +87,11 @@ class BinTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Test skipped: STDIN is not supported on Windows');
         }
 
-        $cmd = new Command(sprintf('cat %s | %s ', $this->getPathToData('atx_header.md'), $this->getPathToCommonmark()));
+        $cmd = new Command(sprintf('cat %s | %s ', $this->getPathToData('atx_heading.md'), $this->getPathToCommonmark()));
         $cmd->execute();
 
         $this->assertEquals(0, $cmd->getExitCode());
-        $expectedContents = trim(file_get_contents($this->getPathToData('atx_header.html')));
+        $expectedContents = trim(file_get_contents($this->getPathToData('atx_heading.html')));
         $this->assertEquals($expectedContents, trim($cmd->getOutput()));
     }
 

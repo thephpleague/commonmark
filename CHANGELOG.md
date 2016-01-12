@@ -4,6 +4,13 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Changed
+ - Renamed "header" things to "heading" for spec consistency
+   - `Header` => `Heading`
+   - `ATXHeaderParser` => `ATXHeadingParser`
+   - `SetExtHeaderParser` => `SetExtHeadingParser`
+   - `HeaderRenderer` => `HeadingRenderer`
+
 ## [0.12.0] - 2015-11-04
 
 ### Added

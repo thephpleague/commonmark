@@ -30,10 +30,10 @@ class CommonMarkCoreExtension extends Extension
         return [
             // This order is important
             new BlockParser\BlockQuoteParser(),
-            new BlockParser\ATXHeaderParser(),
+            new BlockParser\ATXHeadingParser(),
             new BlockParser\FencedCodeParser(),
             new BlockParser\HtmlBlockParser(),
-            new BlockParser\SetExtHeaderParser(),
+            new BlockParser\SetExtHeadingParser(),
             new BlockParser\HorizontalRuleParser(),
             new BlockParser\ListParser(),
             new BlockParser\IndentedCodeParser(),
@@ -50,7 +50,7 @@ class CommonMarkCoreExtension extends Extension
             'League\CommonMark\Block\Element\BlockQuote'          => new BlockRenderer\BlockQuoteRenderer(),
             'League\CommonMark\Block\Element\Document'            => new BlockRenderer\DocumentRenderer(),
             'League\CommonMark\Block\Element\FencedCode'          => new BlockRenderer\FencedCodeRenderer(),
-            'League\CommonMark\Block\Element\Header'              => new BlockRenderer\HeaderRenderer(),
+            'League\CommonMark\Block\Element\Heading'             => new BlockRenderer\HeadingRenderer(),
             'League\CommonMark\Block\Element\HorizontalRule'      => new BlockRenderer\HorizontalRuleRenderer(),
             'League\CommonMark\Block\Element\HtmlBlock'           => new BlockRenderer\HtmlBlockRenderer(),
             'League\CommonMark\Block\Element\IndentedCode'        => new BlockRenderer\IndentedCodeRenderer(),

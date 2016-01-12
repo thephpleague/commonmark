@@ -14,13 +14,13 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\Block\Element\Header;
+use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class SetExtHeaderParser extends AbstractBlockParser
+class SetExtHeadingParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
@@ -50,7 +50,7 @@ class SetExtHeaderParser extends AbstractBlockParser
         $level = $match[0][0] === '=' ? 1 : 2;
         $strings = $context->getContainer()->getStrings();
 
-        $context->replaceContainerBlock(new Header($level, reset($strings) ?: ''));
+        $context->replaceContainerBlock(new Heading($level, reset($strings) ?: ''));
 
         return true;
     }

@@ -14,21 +14,21 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
-use League\CommonMark\Block\Element\Header;
-use League\CommonMark\Block\Renderer\HeaderRenderer;
+use League\CommonMark\Block\Element\Heading;
+use League\CommonMark\Block\Renderer\HeadingRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 
-class HeaderRendererTest extends \PHPUnit_Framework_TestCase
+class HeadingRendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var HeaderRenderer
+     * @var HeadingRenderer
      */
     protected $renderer;
 
     protected function setUp()
     {
-        $this->renderer = new HeaderRenderer();
+        $this->renderer = new HeadingRenderer();
     }
 
     /**
@@ -39,7 +39,7 @@ class HeaderRendererTest extends \PHPUnit_Framework_TestCase
      */
     public function testRender($level, $expectedTag)
     {
-        $block = new Header($level, 'test');
+        $block = new Heading($level, 'test');
         $block->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
