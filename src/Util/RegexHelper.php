@@ -173,7 +173,7 @@ class RegexHelper
     /**
      * @return string
      */
-    public function getHRuleRegex()
+    public function getThematicBreakRegex()
     {
         return '/^(?:(?:\* *){3,}|(?:_ *){3,}|(?:- *){3,}) *$/';
     }

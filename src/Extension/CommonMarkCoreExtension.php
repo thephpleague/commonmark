@@ -34,7 +34,7 @@ class CommonMarkCoreExtension extends Extension
             new BlockParser\FencedCodeParser(),
             new BlockParser\HtmlBlockParser(),
             new BlockParser\SetExtHeadingParser(),
-            new BlockParser\HorizontalRuleParser(),
+            new BlockParser\ThematicBreakParser(),
             new BlockParser\ListParser(),
             new BlockParser\IndentedCodeParser(),
             new BlockParser\LazyParagraphParser(),
@@ -51,12 +51,12 @@ class CommonMarkCoreExtension extends Extension
             'League\CommonMark\Block\Element\Document'            => new BlockRenderer\DocumentRenderer(),
             'League\CommonMark\Block\Element\FencedCode'          => new BlockRenderer\FencedCodeRenderer(),
             'League\CommonMark\Block\Element\Heading'             => new BlockRenderer\HeadingRenderer(),
-            'League\CommonMark\Block\Element\HorizontalRule'      => new BlockRenderer\HorizontalRuleRenderer(),
             'League\CommonMark\Block\Element\HtmlBlock'           => new BlockRenderer\HtmlBlockRenderer(),
             'League\CommonMark\Block\Element\IndentedCode'        => new BlockRenderer\IndentedCodeRenderer(),
             'League\CommonMark\Block\Element\ListBlock'           => new BlockRenderer\ListBlockRenderer(),
             'League\CommonMark\Block\Element\ListItem'            => new BlockRenderer\ListItemRenderer(),
             'League\CommonMark\Block\Element\Paragraph'           => new BlockRenderer\ParagraphRenderer(),
+            'League\CommonMark\Block\Element\ThematicBreak'       => new BlockRenderer\ThematicBreakRenderer(),
         ];
     }
 

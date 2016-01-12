@@ -10,6 +10,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `ATXHeaderParser` => `ATXHeadingParser`
    - `SetExtHeaderParser` => `SetExtHeadingParser`
    - `HeaderRenderer` => `HeadingRenderer`
+ - Renamed "HorizontalRule" to "ThematicBreak" for spec consistency
+   - `HorizontalRule` => `ThematicBreak`
+   - `HorizontalRuleParser` => `ThematicBreakParser`
+   - `HorizontalRuleRenderer` => `ThematicBreakRenderer`
+   - `HorizontalRuleRendererTest` => `ThematicBreakRendererTest`
+   - `RegexHelper::getHRuleRegex()` => `RegexHelper::getThematicBreakRegex()`
 
 ## [0.12.0] - 2015-11-04
 

@@ -14,12 +14,12 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\Block\Element\HorizontalRule;
+use League\CommonMark\Block\Element\ThematicBreak;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class HorizontalRuleParser extends AbstractBlockParser
+class ThematicBreakParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
@@ -33,15 +33,15 @@ class HorizontalRuleParser extends AbstractBlockParser
             return false;
         }
 
-        $match = RegexHelper::matchAt(RegexHelper::getInstance()->getHRuleRegex(), $cursor->getLine(), $cursor->getFirstNonSpacePosition());
+        $match = RegexHelper::matchAt(RegexHelper::getInstance()->getThematicBreakRegex(), $cursor->getLine(), $cursor->getFirstNonSpacePosition());
         if ($match === null) {
             return false;
         }
 
-        // Advance to the end of the string, consuming the entire line (of the horizontal rule)
+        // Advance to the end of the string, consuming the entire line (of the thematic break)
         $cursor->advanceBy(mb_strlen($cursor->getRemainder()));
 
-        $context->addBlock(new HorizontalRule());
+        $context->addBlock(new ThematicBreak());
         $context->setBlocksParsed(true);
 
         return true;

@@ -14,26 +14,26 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
-use League\CommonMark\Block\Element\HorizontalRule;
-use League\CommonMark\Block\Renderer\HorizontalRuleRenderer;
+use League\CommonMark\Block\Element\ThematicBreak;
+use League\CommonMark\Block\Renderer\ThematicBreakRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 
-class HorizontalRuleRendererTest extends \PHPUnit_Framework_TestCase
+class ThematicBreakRendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var HorizontalRuleRenderer
+     * @var ThematicBreakRenderer
      */
     protected $renderer;
 
     protected function setUp()
     {
-        $this->renderer = new HorizontalRuleRenderer();
+        $this->renderer = new ThematicBreakRenderer();
     }
 
     public function testRender()
     {
-        $block = new HorizontalRule();
+        $block = new ThematicBreak();
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);

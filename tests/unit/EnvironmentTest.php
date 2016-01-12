@@ -156,12 +156,12 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
             'Document'       => 'League\CommonMark\Block\Element\Document',
             'FencedCode'     => 'League\CommonMark\Block\Element\FencedCode',
             'Heading'        => 'League\CommonMark\Block\Element\Heading',
-            'HorizontalRule' => 'League\CommonMark\Block\Element\HorizontalRule',
             'HtmlBlock'      => 'League\CommonMark\Block\Element\HtmlBlock',
             'IndentedCode'   => 'League\CommonMark\Block\Element\IndentedCode',
             'ListBlock'      => 'League\CommonMark\Block\Element\ListBlock',
             'ListItem'       => 'League\CommonMark\Block\Element\ListItem',
             'Paragraph'      => 'League\CommonMark\Block\Element\Paragraph',
+            'ThematicBreak'  => 'League\CommonMark\Block\Element\ThematicBreak',
         ];
 
         foreach ($builtInClasses as $name => $fullyQualifiedName) {

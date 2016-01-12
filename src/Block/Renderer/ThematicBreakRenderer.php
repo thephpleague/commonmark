@@ -15,14 +15,14 @@
 namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\HorizontalRule;
+use League\CommonMark\Block\Element\ThematicBreak;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class HorizontalRuleRenderer implements BlockRendererInterface
+class ThematicBreakRenderer implements BlockRendererInterface
 {
     /**
-     * @param HorizontalRule           $block
+     * @param ThematicBreak            $block
      * @param ElementRendererInterface $htmlRenderer
      * @param bool                     $inTightList
      *
@@ -30,7 +30,7 @@ class HorizontalRuleRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
-        if (!($block instanceof HorizontalRule)) {
+        if (!($block instanceof ThematicBreak)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
