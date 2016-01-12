@@ -155,7 +155,7 @@ class DocParser
      * Break out of all containing lists, resetting the tip of the
      * document to the parent of the highest list, and finalizing
      * all the lists.  (This is used to implement the "two blank lines
-     * break of of all lists" feature.)
+     * break out of all lists" feature.)
      *
      * @param ContextInterface $context
      * @param AbstractBlock    $block
