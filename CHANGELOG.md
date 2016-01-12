@@ -20,6 +20,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `Html` => `HtmlInline`
    - `RawHtmlParser` => `HtmlInlineParser`
    - `RawHtmlRenderer` => `HtmlInlineRenderer`
+ - Don't allow whitespace between link text and link label of a reference link (spec change)
 
 ## [0.12.0] - 2015-11-04
 
