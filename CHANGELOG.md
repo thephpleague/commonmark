@@ -21,9 +21,15 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `RawHtmlParser` => `HtmlInlineParser`
    - `RawHtmlRenderer` => `HtmlInlineRenderer`
  - Don't allow whitespace between link text and link label of a reference link (spec change)
+ - Don't allow spaces in link destinations, even in `<>`
+ - Allow multiline setext header content
+   - The `Heading` constructor now allows `$contents` to be a `string` (old behavior) or `string[]` (new)
 
 ### Fixed
  - Fixed several list issues and regressions (jgm/commonmark.js#59)
+
+### Removed
+ - Removed schema whitelist from autolink regex
 
 ## [0.12.0] - 2015-11-04
 

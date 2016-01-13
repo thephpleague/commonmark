@@ -22,8 +22,8 @@
     },
     "require-dev": {
         "erusev/parsedown": "~1.0",
-        "jgm/CommonMark": "0.23",
-        "jgm/SmartPunct": "0.23",
+        "jgm/CommonMark": "0.24",
+        "jgm/SmartPunct": "0.24",
         "michelf/php-markdown": "~1.4",
         "mikehaertl/php-shellcommand": "~1.1.0",
         "phpunit/phpunit": "~4.3|~5.0",
@@ -35,9 +35,9 @@
             "type": "package",
             "package": {
                 "name": "jgm/CommonMark",
-                "version": "0.23",
+                "version": "0.24",
                 "dist": {
-                    "url": "http://spec.commonmark.org/0.23/spec.txt",
+                    "url": "http://spec.commonmark.org/0.24/spec.txt",
                     "type": "file"
                 }
             }
@@ -46,9 +46,9 @@
             "type": "package",
             "package": {
                 "name": "jgm/SmartPunct",
-                "version": "0.23",
+                "version": "0.24",
                 "dist": {
-                    "url": "https://raw.githubusercontent.com/jgm/commonmark.js/0.23.0/test/smart_punct.txt",
+                    "url": "https://raw.githubusercontent.com/jgm/commonmark.js/0.24.0/test/smart_punct.txt",
                     "type": "file"
                 }
             }

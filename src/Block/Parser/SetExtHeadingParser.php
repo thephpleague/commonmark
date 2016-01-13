@@ -38,10 +38,6 @@ class SetExtHeadingParser extends AbstractBlockParser
             return false;
         }
 
-        if (count($context->getContainer()->getStrings()) !== 1) {
-            return false;
-        }
-
         $match = RegexHelper::matchAll('/^(?:=+|-+) *$/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
         if ($match === null) {
             return false;
@@ -50,7 +46,7 @@ class SetExtHeadingParser extends AbstractBlockParser
         $level = $match[0][0] === '=' ? 1 : 2;
         $strings = $context->getContainer()->getStrings();
 
-        $context->replaceContainerBlock(new Heading($level, reset($strings) ?: ''));
+        $context->replaceContainerBlock(new Heading($level, $strings));
 
         return true;
     }
