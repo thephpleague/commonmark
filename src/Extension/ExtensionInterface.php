@@ -31,15 +31,6 @@ interface ExtensionInterface
     public function getBlockParsers();
 
     /**
-     * Returns a list of block renderers to add to the existing list
-     *
-     * The list keys are the block class names which the corresponding value (renderer) will handle.
-     *
-     * @return BlockRendererInterface[]
-     */
-    public function getBlockRenderers();
-
-    /**
      * Returns a list of inline parsers to add to the existing list
      *
      * @return InlineParserInterface[]
@@ -54,6 +45,22 @@ interface ExtensionInterface
     public function getInlineProcessors();
 
     /**
+     * Returns a list of document processors to add to the existing list
+     *
+     * @return DocumentProcessorInterface[]
+     */
+    public function getDocumentProcessors();
+
+    /**
+     * Returns a list of block renderers to add to the existing list
+     *
+     * The list keys are the block class names which the corresponding value (renderer) will handle.
+     *
+     * @return BlockRendererInterface[]
+     */
+    public function getBlockRenderers();
+
+    /**
      * Returns a list of inline renderers to add to the existing list
      *
      * The list keys are the inline class names which the corresponding value (renderer) will handle.
@@ -61,11 +68,4 @@ interface ExtensionInterface
      * @return InlineRendererInterface[]
      */
     public function getInlineRenderers();
-
-    /**
-     * Returns a list of document processors to add to the existing list
-     *
-     * @return DocumentProcessorInterface[]
-     */
-    public function getDocumentProcessors();
 }

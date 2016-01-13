@@ -43,11 +43,6 @@ class Environment
     protected $blockParsers = [];
 
     /**
-     * @var BlockRendererInterface[]
-     */
-    protected $blockRenderersByClass = [];
-
-    /**
      * @var InlineParserInterface[]
      */
     protected $inlineParsers = [];
@@ -58,19 +53,24 @@ class Environment
     protected $inlineParsersByCharacter = [];
 
     /**
+     * @var DocumentProcessorInterface[]
+     */
+    protected $documentProcessors = [];
+
+    /**
      * @var InlineProcessorInterface[]
      */
     protected $inlineProcessors = [];
 
     /**
+     * @var BlockRendererInterface[]
+     */
+    protected $blockRenderersByClass = [];
+
+    /**
      * @var InlineRendererInterface[]
      */
     protected $inlineRenderersByClass = [];
-
-    /**
-     * @var DocumentProcessorInterface[]
-     */
-    protected $documentProcessors = [];
 
     /**
      * @var Configuration
@@ -133,21 +133,6 @@ class Environment
     }
 
     /**
-     * @param string                 $blockClass
-     * @param BlockRendererInterface $blockRenderer
-     *
-     * @return $this
-     */
-    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
-    {
-        $this->assertUninitialized('Failed to add block renderer - extensions have already been initialized');
-
-        $this->getMiscExtension()->addBlockRenderer($blockClass, $blockRenderer);
-
-        return $this;
-    }
-
-    /**
      * @param InlineParserInterface $parser
      *
      * @return $this
@@ -176,6 +161,35 @@ class Environment
     }
 
     /**
+     * @param DocumentProcessorInterface $processor
+     *
+     * @return $this
+     */
+    public function addDocumentProcessor(DocumentProcessorInterface $processor)
+    {
+        $this->assertUninitialized('Failed to add document processor - extensions have already been initialized');
+
+        $this->getMiscExtension()->addDocumentProcessor($processor);
+
+        return $this;
+    }
+
+    /**
+     * @param string                 $blockClass
+     * @param BlockRendererInterface $blockRenderer
+     *
+     * @return $this
+     */
+    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
+    {
+        $this->assertUninitialized('Failed to add block renderer - extensions have already been initialized');
+
+        $this->getMiscExtension()->addBlockRenderer($blockClass, $blockRenderer);
+
+        return $this;
+    }
+
+    /**
      * @param string                  $inlineClass
      * @param InlineRendererInterface $renderer
      *
@@ -191,20 +205,6 @@ class Environment
     }
 
     /**
-     * @param DocumentProcessorInterface $processor
-     *
-     * @return $this
-     */
-    public function addDocumentProcessor(DocumentProcessorInterface $processor)
-    {
-        $this->assertUninitialized('Failed to add document processor - extensions have already been initialized');
-
-        $this->getMiscExtension()->addDocumentProcessor($processor);
-
-        return $this;
-    }
-
-    /**
      * @return BlockParserInterface[]
      */
     public function getBlockParsers()
@@ -212,22 +212,6 @@ class Environment
         $this->initializeExtensions();
 
         return $this->blockParsers;
-    }
-
-    /**
-     * @param string $blockClass
-     *
-     * @return BlockRendererInterface|null
-     */
-    public function getBlockRendererForClass($blockClass)
-    {
-        $this->initializeExtensions();
-
-        if (!isset($this->blockRenderersByClass[$blockClass])) {
-            return;
-        }
-
-        return $this->blockRenderersByClass[$blockClass];
     }
 
     /**
@@ -279,6 +263,32 @@ class Environment
     }
 
     /**
+     * @return DocumentProcessorInterface[]
+     */
+    public function getDocumentProcessors()
+    {
+        $this->initializeExtensions();
+
+        return $this->documentProcessors;
+    }
+
+    /**
+     * @param string $blockClass
+     *
+     * @return BlockRendererInterface|null
+     */
+    public function getBlockRendererForClass($blockClass)
+    {
+        $this->initializeExtensions();
+
+        if (!isset($this->blockRenderersByClass[$blockClass])) {
+            return;
+        }
+
+        return $this->blockRenderersByClass[$blockClass];
+    }
+
+    /**
      * @param string $inlineClass
      *
      * @return InlineRendererInterface|null
@@ -299,16 +309,6 @@ class Environment
         $this->initializeExtensions();
 
         return new InlineParserEngine($this);
-    }
-
-    /**
-     * @return DocumentProcessorInterface[]
-     */
-    public function getDocumentProcessors()
-    {
-        $this->initializeExtensions();
-
-        return $this->documentProcessors;
     }
 
     /**
@@ -362,11 +362,11 @@ class Environment
     protected function initializeExtension(ExtensionInterface $extension)
     {
         $this->initalizeBlockParsers($extension->getBlockParsers());
-        $this->initializeBlockRenderers($extension->getBlockRenderers());
         $this->initializeInlineParsers($extension->getInlineParsers());
         $this->initializeInlineProcessors($extension->getInlineProcessors());
-        $this->initializeInlineRenderers($extension->getInlineRenderers());
         $this->initializeDocumentProcessors($extension->getDocumentProcessors());
+        $this->initializeBlockRenderers($extension->getBlockRenderers());
+        $this->initializeInlineRenderers($extension->getInlineRenderers());
     }
 
     /**
@@ -384,20 +384,6 @@ class Environment
             }
 
             $this->blockParsers[$blockParser->getName()] = $blockParser;
-        }
-    }
-
-    /**
-     * @param BlockRendererInterface[] $blockRenderers
-     */
-    private function initializeBlockRenderers($blockRenderers)
-    {
-        foreach ($blockRenderers as $class => $blockRenderer) {
-            $this->blockRenderersByClass[$class] = $blockRenderer;
-
-            if ($blockRenderer instanceof ConfigurationAwareInterface) {
-                $blockRenderer->setConfiguration($this->config);
-            }
         }
     }
 
@@ -438,20 +424,6 @@ class Environment
     }
 
     /**
-     * @param InlineRendererInterface[] $inlineRenderers
-     */
-    private function initializeInlineRenderers($inlineRenderers)
-    {
-        foreach ($inlineRenderers as $class => $inlineRenderer) {
-            $this->inlineRenderersByClass[$class] = $inlineRenderer;
-
-            if ($inlineRenderer instanceof ConfigurationAwareInterface) {
-                $inlineRenderer->setConfiguration($this->config);
-            }
-        }
-    }
-
-    /**
      * @param DocumentProcessorInterface[] $documentProcessors
      */
     private function initializeDocumentProcessors($documentProcessors)
@@ -461,6 +433,34 @@ class Environment
 
             if ($documentProcessor instanceof ConfigurationAwareInterface) {
                 $documentProcessor->setConfiguration($this->config);
+            }
+        }
+    }
+
+    /**
+     * @param BlockRendererInterface[] $blockRenderers
+     */
+    private function initializeBlockRenderers($blockRenderers)
+    {
+        foreach ($blockRenderers as $class => $blockRenderer) {
+            $this->blockRenderersByClass[$class] = $blockRenderer;
+
+            if ($blockRenderer instanceof ConfigurationAwareInterface) {
+                $blockRenderer->setConfiguration($this->config);
+            }
+        }
+    }
+
+    /**
+     * @param InlineRendererInterface[] $inlineRenderers
+     */
+    private function initializeInlineRenderers($inlineRenderers)
+    {
+        foreach ($inlineRenderers as $class => $inlineRenderer) {
+            $this->inlineRenderersByClass[$class] = $inlineRenderer;
+
+            if ($inlineRenderer instanceof ConfigurationAwareInterface) {
+                $inlineRenderer->setConfiguration($this->config);
             }
         }
     }

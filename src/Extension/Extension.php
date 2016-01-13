@@ -32,14 +32,6 @@ abstract class Extension implements ExtensionInterface
     }
 
     /**
-     * @return BlockRendererInterface[]
-     */
-    public function getBlockRenderers()
-    {
-        return [];
-    }
-
-    /**
      * @return InlineParserInterface[]
      */
     public function getInlineParsers()
@@ -56,17 +48,25 @@ abstract class Extension implements ExtensionInterface
     }
 
     /**
-     * @return InlineRendererInterface[]
+     * @return DocumentProcessorInterface[]
      */
-    public function getInlineRenderers()
+    public function getDocumentProcessors()
     {
         return [];
     }
 
     /**
-     * @return DocumentProcessorInterface[]
+     * @return BlockRendererInterface[]
      */
-    public function getDocumentProcessors()
+    public function getBlockRenderers()
+    {
+        return [];
+    }
+
+    /**
+     * @return InlineRendererInterface[]
+     */
+    public function getInlineRenderers()
     {
         return [];
     }
