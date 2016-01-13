@@ -16,6 +16,7 @@ namespace League\CommonMark\Extension;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\DocumentProcessorInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
@@ -26,14 +27,6 @@ abstract class Extension implements ExtensionInterface
      * @return BlockParserInterface[]
      */
     public function getBlockParsers()
-    {
-        return [];
-    }
-
-    /**
-     * @return BlockRendererInterface[]
-     */
-    public function getBlockRenderers()
     {
         return [];
     }
@@ -50,6 +43,22 @@ abstract class Extension implements ExtensionInterface
      * @return InlineProcessorInterface[]
      */
     public function getInlineProcessors()
+    {
+        return [];
+    }
+
+    /**
+     * @return DocumentProcessorInterface[]
+     */
+    public function getDocumentProcessors()
+    {
+        return [];
+    }
+
+    /**
+     * @return BlockRendererInterface[]
+     */
+    public function getBlockRenderers()
     {
         return [];
     }

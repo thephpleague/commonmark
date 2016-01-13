@@ -21,19 +21,24 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 {
     public function testAddGetExtensions()
     {
-        $extension = $this->getMockForAbstractClass('League\CommonMark\Extension\ExtensionInterface');
-        $extension->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue('foo'));
+        $firstExtension = $this->getMockForAbstractClass('League\CommonMark\Extension\ExtensionInterface');
 
         $environment = new Environment();
         $this->assertCount(0, $environment->getExtensions());
 
-        $environment->addExtension($extension);
+        $environment->addExtension($firstExtension);
 
         $extensions = $environment->getExtensions();
         $this->assertCount(1, $extensions);
-        $this->assertEquals($extension, $extensions['foo']);
+        $this->assertEquals($firstExtension, $extensions[0]);
+
+        $secondExtension = $this->getMockForAbstractClass('League\CommonMark\Extension\ExtensionInterface');
+        $environment->addExtension($secondExtension);
+
+        $extensions = $environment->getExtensions();
+        $this->assertCount(2, $extensions);
+        $this->assertEquals($firstExtension, $extensions[0]);
+        $this->assertEquals($secondExtension, $extensions[1]);
     }
 
     public function testConstructor()
@@ -385,5 +390,50 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
         $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
         $environment->addExtension($extension);
+    }
+
+    public function testAddDocumentProcessor()
+    {
+        $environment = new Environment();
+
+        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $environment->addDocumentProcessor($processor);
+
+        $this->assertContains($processor, $environment->getDocumentProcessors());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddDocumentProcessorFailsAfterInitialization()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization
+        $environment->getDocumentProcessors();
+
+        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $environment->addDocumentProcessor($processor);
+    }
+
+    public function testExtensionBetweenNonExtensions()
+    {
+        $environment = new Environment();
+
+        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $environment->addDocumentProcessor($processor);
+        $this->assertCount(1, $environment->getExtensions());
+
+        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $environment->addExtension($extension);
+        $this->assertCount(2, $environment->getExtensions());
+
+        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $environment->addInlineParser($parser);
+        $this->assertCount(3, $environment->getExtensions());
+
+        $this->assertInstanceOf('League\CommonMark\Extension\MiscExtension', $environment->getExtensions()[0]);
+        $this->assertInstanceOf('League\CommonMark\Extension\ExtensionInterface', $environment->getExtensions()[1]);
+        $this->assertInstanceOf('League\CommonMark\Extension\MiscExtension', $environment->getExtensions()[2]);
     }
 }

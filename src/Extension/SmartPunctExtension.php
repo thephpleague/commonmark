@@ -14,7 +14,6 @@
 
 namespace League\CommonMark\Extension;
 
-use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Renderer as BlockRenderer;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Processor as InlineProcessor;
@@ -22,25 +21,6 @@ use League\CommonMark\Inline\Renderer as InlineRenderer;
 
 class SmartPunctExtension extends Extension
 {
-    /**
-     * @return BlockParser\BlockParserInterface[]
-     */
-    public function getBlockParsers()
-    {
-        return [];
-    }
-
-    /**
-     * @return BlockRenderer\BlockRendererInterface[]
-     */
-    public function getBlockRenderers()
-    {
-        return [
-            'League\CommonMark\Block\Element\Document'  => new BlockRenderer\DocumentRenderer(),
-            'League\CommonMark\Block\Element\Paragraph' => new BlockRenderer\ParagraphRenderer(),
-        ];
-    }
-
     /**
      * @return InlineParser\InlineParserInterface[]
      */
@@ -63,6 +43,17 @@ class SmartPunctExtension extends Extension
     }
 
     /**
+     * @return BlockRenderer\BlockRendererInterface[]
+     */
+    public function getBlockRenderers()
+    {
+        return [
+            'League\CommonMark\Block\Element\Document'  => new BlockRenderer\DocumentRenderer(),
+            'League\CommonMark\Block\Element\Paragraph' => new BlockRenderer\ParagraphRenderer(),
+        ];
+    }
+
+    /**
      * @return InlineRenderer\InlineRendererInterface[]
      */
     public function getInlineRenderers()
@@ -70,15 +61,5 @@ class SmartPunctExtension extends Extension
         return [
             'League\CommonMark\Inline\Element\Text' => new InlineRenderer\TextRenderer(),
         ];
-    }
-
-    /**
-     * Returns the name of the extension
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'smartpunct';
     }
 }

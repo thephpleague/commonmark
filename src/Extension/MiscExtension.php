@@ -16,6 +16,7 @@ namespace League\CommonMark\Extension;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\DocumentProcessorInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
@@ -28,11 +29,6 @@ class MiscExtension implements ExtensionInterface
     protected $blockParsers = [];
 
     /**
-     * @var BlockRendererInterface[]
-     */
-    protected $blockRenderers = [];
-
-    /**
      * @var InlineParserInterface[]
      */
     protected $inlineParsers = [];
@@ -41,6 +37,16 @@ class MiscExtension implements ExtensionInterface
      * @var InlineProcessorInterface[]
      */
     protected $inlineProcessers = [];
+
+    /**
+     * @var DocumentProcessorInterface[]
+     */
+    protected $documentProcessors = [];
+
+    /**
+     * @var BlockRendererInterface[]
+     */
+    protected $blockRenderers = [];
 
     /**
      * @var InlineRendererInterface[]
@@ -67,33 +73,6 @@ class MiscExtension implements ExtensionInterface
         $this->blockParsers[] = $blockParser;
 
         return $this;
-    }
-
-    /**
-     * Returns a list of block renderers to add to the existing list
-     *
-     * The list keys are the block class names which the corresponding value (renderer) will handle.
-     *
-     * @return BlockRendererInterface[]
-     */
-    public function getBlockRenderers()
-    {
-        return $this->blockRenderers;
-    }
-
-    /**
-     * @param string                 $blockClass
-     * @param BlockRendererInterface $blockRenderer
-     *
-     * @return $this
-     */
-    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
-    {
-        if (class_exists('League\CommonMark\Block\Element\\' . $blockClass)) {
-            $blockClass = 'League\CommonMark\Block\Element\\' . $blockClass;
-        }
-
-        $this->blockRenderers[$blockClass] = $blockRenderer;
     }
 
     /**
@@ -139,6 +118,53 @@ class MiscExtension implements ExtensionInterface
     }
 
     /**
+     * @return DocumentProcessorInterface[]
+     */
+    public function getDocumentProcessors()
+    {
+        return $this->documentProcessors;
+    }
+
+    /**
+     * @param DocumentProcessorInterface $documentProcessor
+     *
+     * @return $this
+     */
+    public function addDocumentProcessor(DocumentProcessorInterface $documentProcessor)
+    {
+        $this->documentProcessors[] = $documentProcessor;
+
+        return $this;
+    }
+
+    /**
+     * Returns a list of block renderers to add to the existing list
+     *
+     * The list keys are the block class names which the corresponding value (renderer) will handle.
+     *
+     * @return BlockRendererInterface[]
+     */
+    public function getBlockRenderers()
+    {
+        return $this->blockRenderers;
+    }
+
+    /**
+     * @param string                 $blockClass
+     * @param BlockRendererInterface $blockRenderer
+     *
+     * @return $this
+     */
+    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
+    {
+        if (class_exists('League\CommonMark\Block\Element\\' . $blockClass)) {
+            $blockClass = 'League\CommonMark\Block\Element\\' . $blockClass;
+        }
+
+        $this->blockRenderers[$blockClass] = $blockRenderer;
+    }
+
+    /**
      * Returns a list of inline renderers to add to the existing list
      *
      * The list keys are the inline class names which the corresponding value (renderer) will handle.
@@ -165,15 +191,5 @@ class MiscExtension implements ExtensionInterface
         $this->inlineRenderers[$inlineClass] = $inlineRenderer;
 
         return $this;
-    }
-
-    /**
-     * Returns the name of the extension
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'misc';
     }
 }

@@ -90,6 +90,8 @@ class DocParser
 
         $this->processInlines($context, $context->getDocument()->walker());
 
+        $this->processDocument($context);
+
         return $context->getDocument();
     }
 
@@ -134,6 +136,13 @@ class DocParser
             $context->addBlock(new Paragraph());
             $cursor->advanceToFirstNonSpace();
             $context->getTip()->addLine($cursor->getRemainder());
+        }
+    }
+
+    private function processDocument(ContextInterface $context)
+    {
+        foreach ($this->getEnvironment()->getDocumentProcessors() as $documentProcessor) {
+            $documentProcessor->processDocument($context->getDocument());
         }
     }
 
