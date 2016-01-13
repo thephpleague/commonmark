@@ -92,7 +92,7 @@ class Environment
      */
     public function mergeConfig(array $config = [])
     {
-        $this->assertUninitialized('Failed to modify configuration - extensions have already been initialized');
+        $this->assertUninitialized('Failed to modify configuration.');
 
         $this->config->mergeConfig($config);
     }
@@ -102,7 +102,7 @@ class Environment
      */
     public function setConfig(array $config = [])
     {
-        $this->assertUninitialized('Failed to modify configuration - extensions have already been initialized');
+        $this->assertUninitialized('Failed to modify configuration.');
 
         $this->config->setConfig($config);
     }
@@ -125,7 +125,7 @@ class Environment
      */
     public function addBlockParser(BlockParserInterface $parser)
     {
-        $this->assertUninitialized('Failed to add block parser - extensions have already been initialized');
+        $this->assertUninitialized('Failed to add block parser.');
 
         $this->getMiscExtension()->addBlockParser($parser);
 
@@ -139,7 +139,7 @@ class Environment
      */
     public function addInlineParser(InlineParserInterface $parser)
     {
-        $this->assertUninitialized('Failed to add inline parser - extensions have already been initialized');
+        $this->assertUninitialized('Failed to add inline parser.');
 
         $this->getMiscExtension()->addInlineParser($parser);
 
@@ -153,7 +153,7 @@ class Environment
      */
     public function addInlineProcessor(InlineProcessorInterface $processor)
     {
-        $this->assertUninitialized('Failed to add inline processor - extensions have already been initialized');
+        $this->assertUninitialized('Failed to add inline processor.');
 
         $this->getMiscExtension()->addInlineProcessor($processor);
 
@@ -167,7 +167,7 @@ class Environment
      */
     public function addDocumentProcessor(DocumentProcessorInterface $processor)
     {
-        $this->assertUninitialized('Failed to add document processor - extensions have already been initialized');
+        $this->assertUninitialized('Failed to add document processor.');
 
         $this->getMiscExtension()->addDocumentProcessor($processor);
 
@@ -182,7 +182,7 @@ class Environment
      */
     public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
     {
-        $this->assertUninitialized('Failed to add block renderer - extensions have already been initialized');
+        $this->assertUninitialized('Failed to add block renderer.');
 
         $this->getMiscExtension()->addBlockRenderer($blockClass, $blockRenderer);
 
@@ -197,7 +197,7 @@ class Environment
      */
     public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer)
     {
-        $this->assertUninitialized('Failed to add inline renderer - extensions have already been initialized');
+        $this->assertUninitialized('Failed to add inline renderer.');
 
         $this->getMiscExtension()->addInlineRenderer($inlineClass, $renderer);
 
@@ -330,7 +330,7 @@ class Environment
      */
     public function addExtension(ExtensionInterface $extension)
     {
-        $this->assertUninitialized('Failed to add extension - extensions have already been initialized');
+        $this->assertUninitialized('Failed to add extension.');
 
         $this->extensions[] = $extension;
 
@@ -506,10 +506,10 @@ class Environment
      *
      * @throws \RuntimeException
      */
-    private function assertUninitialized($message = 'The environment cannot be modified after initialization')
+    private function assertUninitialized($message)
     {
         if ($this->extensionsInitialized) {
-            throw new \RuntimeException($message);
+            throw new \RuntimeException($message.' Extensions have already been initialized.');
         }
     }
 
