@@ -25,15 +25,22 @@ class Heading extends AbstractBlock implements InlineContainer
     protected $level;
 
     /**
-     * @param int    $level
-     * @param string $contents
+     * @param int             $level
+     * @param string|string[] $contents
      */
     public function __construct($level, $contents)
     {
         parent::__construct();
 
         $this->level = $level;
-        $this->addLine($contents);
+
+        if (!is_array($contents)) {
+            $contents = [$contents];
+        }
+
+        foreach ($contents as $line) {
+            $this->addLine($line);
+        }
     }
 
     /**
