@@ -63,6 +63,8 @@ interface ExtensionInterface
     public function getInlineRenderers();
 
     /**
+     * Returns a list of document processors to add to the existing list
+     *
      * @return DocumentProcessorInterface[]
      */
     public function getDocumentProcessors();
