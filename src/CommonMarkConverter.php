@@ -22,11 +22,15 @@ class CommonMarkConverter extends Converter
     /**
      * Create a new commonmark converter instance.
      *
-     * @param array $config
+     * @param array            $config
+     * @param Environment|null $environment
      */
-    public function __construct(array $config = [])
+    public function __construct(array $config = [], Environment $environment = null)
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        if ($environment === null) {
+            $environment = Environment::createCommonMarkEnvironment();
+        }
+
         $environment->mergeConfig($config);
         parent::__construct(new DocParser($environment), new HtmlRenderer($environment));
     }
