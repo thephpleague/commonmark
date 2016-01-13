@@ -416,5 +416,24 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $environment->addDocumentProcessor($processor);
     }
 
-    // TODO: Test non-extension, followed by extension, followed by non-extension. Should create two miscextensions
+    public function testExtensionBetweenNonExtensions()
+    {
+        $environment = new Environment();
+
+        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $environment->addDocumentProcessor($processor);
+        $this->assertCount(1, $environment->getExtensions());
+
+        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $environment->addExtension($extension);
+        $this->assertCount(2, $environment->getExtensions());
+
+        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $environment->addInlineParser($parser);
+        $this->assertCount(3, $environment->getExtensions());
+
+        $this->assertInstanceOf('League\CommonMark\Extension\MiscExtension', $environment->getExtensions()[0]);
+        $this->assertInstanceOf('League\CommonMark\Extension\ExtensionInterface', $environment->getExtensions()[1]);
+        $this->assertInstanceOf('League\CommonMark\Extension\MiscExtension', $environment->getExtensions()[2]);
+    }
 }
