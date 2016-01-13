@@ -15,14 +15,14 @@
 namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\Header;
+use League\CommonMark\Block\Element\ThematicBreak;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class HeaderRenderer implements BlockRendererInterface
+class ThematicBreakRenderer implements BlockRendererInterface
 {
     /**
-     * @param Header                   $block
+     * @param ThematicBreak            $block
      * @param ElementRendererInterface $htmlRenderer
      * @param bool                     $inTightList
      *
@@ -30,17 +30,15 @@ class HeaderRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
-        if (!($block instanceof Header)) {
+        if (!($block instanceof ThematicBreak)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
-
-        $tag = 'h' . $block->getLevel();
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        return new HtmlElement($tag, $attrs, $htmlRenderer->renderInlines($block->children()));
+        return new HtmlElement('hr', $attrs, '', true);
     }
 }

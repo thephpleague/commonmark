@@ -4,6 +4,27 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Changed
+ - Renamed "header" things to "heading" for spec consistency
+   - `Header` => `Heading`
+   - `ATXHeaderParser` => `ATXHeadingParser`
+   - `SetExtHeaderParser` => `SetExtHeadingParser`
+   - `HeaderRenderer` => `HeadingRenderer`
+ - Renamed "HorizontalRule" to "ThematicBreak" for spec consistency
+   - `HorizontalRule` => `ThematicBreak`
+   - `HorizontalRuleParser` => `ThematicBreakParser`
+   - `HorizontalRuleRenderer` => `ThematicBreakRenderer`
+   - `HorizontalRuleRendererTest` => `ThematicBreakRendererTest`
+   - `RegexHelper::getHRuleRegex()` => `RegexHelper::getThematicBreakRegex()`
+ - Renamed inline "Html" and "RawHtml" to "HtmlInline" for consistency
+   - `Html` => `HtmlInline`
+   - `RawHtmlParser` => `HtmlInlineParser`
+   - `RawHtmlRenderer` => `HtmlInlineRenderer`
+ - Don't allow whitespace between link text and link label of a reference link (spec change)
+
+### Fixed
+ - Fixed several list issues and regressions (jgm/commonmark.js#59)
+
 ## [0.12.0] - 2015-11-04
 
 ### Added
@@ -15,7 +36,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added AppVeyor integration for automated unit/functional testing on Windows (#195)
 
 ### Changed
- - `AbstractBlock::finalize()` now reqires a second parameter, `$endLineNumber`
+ - `AbstractBlock::finalize()` now requires a second parameter, `$endLineNumber`
  - `RegexHelper::REGEX_ENTITY` no longer includes the starting `/` or the ending `/i` (#194)
  - `Node::setParent()` now accepts null values (#203)
 

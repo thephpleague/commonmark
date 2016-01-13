@@ -14,12 +14,12 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\Block\Element\HorizontalRule;
+use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class HorizontalRuleParser extends AbstractBlockParser
+class ATXHeadingParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
@@ -33,15 +33,21 @@ class HorizontalRuleParser extends AbstractBlockParser
             return false;
         }
 
-        $match = RegexHelper::matchAt(RegexHelper::getInstance()->getHRuleRegex(), $cursor->getLine(), $cursor->getFirstNonSpacePosition());
-        if ($match === null) {
+        $match = RegexHelper::matchAll('/^#{1,6}(?: +|$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
+        if (!$match) {
             return false;
         }
 
-        // Advance to the end of the string, consuming the entire line (of the horizontal rule)
-        $cursor->advanceBy(mb_strlen($cursor->getRemainder()));
+        $cursor->advanceToFirstNonSpace();
 
-        $context->addBlock(new HorizontalRule());
+        $cursor->advanceBy(strlen($match[0]));
+
+        $level = strlen(trim($match[0]));
+        $str = $cursor->getRemainder();
+        $str = preg_replace('/^ *#+ *$/', '', $str);
+        $str = preg_replace('/ +#+ *$/', '', $str);
+
+        $context->addBlock(new Heading($level, $str));
         $context->setBlocksParsed(true);
 
         return true;

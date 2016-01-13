@@ -14,11 +14,11 @@
 
 namespace League\CommonMark\Inline\Parser;
 
-use League\CommonMark\Inline\Element\Html;
+use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
-class RawHtmlParser extends AbstractInlineParser
+class HtmlInlineParser extends AbstractInlineParser
 {
     /**
      * @return string[]
@@ -37,7 +37,7 @@ class RawHtmlParser extends AbstractInlineParser
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(RegexHelper::getInstance()->getHtmlTagRegex())) {
-            $inlineContext->getContainer()->appendChild(new Html($m));
+            $inlineContext->getContainer()->appendChild(new HtmlInline($m));
 
             return true;
         }

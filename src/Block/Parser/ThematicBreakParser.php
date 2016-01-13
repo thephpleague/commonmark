@@ -14,13 +14,12 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\Block\Element\Header;
-use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Block\Element\ThematicBreak;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class SetExtHeaderParser extends AbstractBlockParser
+class ThematicBreakParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
@@ -34,23 +33,16 @@ class SetExtHeaderParser extends AbstractBlockParser
             return false;
         }
 
-        if (!($context->getContainer() instanceof Paragraph)) {
-            return false;
-        }
-
-        if (count($context->getContainer()->getStrings()) !== 1) {
-            return false;
-        }
-
-        $match = RegexHelper::matchAll('/^(?:=+|-+) *$/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
+        $match = RegexHelper::matchAt(RegexHelper::getInstance()->getThematicBreakRegex(), $cursor->getLine(), $cursor->getFirstNonSpacePosition());
         if ($match === null) {
             return false;
         }
 
-        $level = $match[0][0] === '=' ? 1 : 2;
-        $strings = $context->getContainer()->getStrings();
+        // Advance to the end of the string, consuming the entire line (of the thematic break)
+        $cursor->advanceBy(mb_strlen($cursor->getRemainder()));
 
-        $context->replaceContainerBlock(new Header($level, reset($strings) ?: ''));
+        $context->addBlock(new ThematicBreak());
+        $context->setBlocksParsed(true);
 
         return true;
     }

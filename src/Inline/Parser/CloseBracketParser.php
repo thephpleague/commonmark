@@ -176,7 +176,6 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     protected function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, $startPos)
     {
         $savePos = $cursor->saveState();
-        $cursor->advanceToFirstNonSpace();
         $beforeLabel = $cursor->getPosition();
         $n = LinkParserHelper::parseLinkLabel($cursor);
         if ($n === 0 || $n === 2) {

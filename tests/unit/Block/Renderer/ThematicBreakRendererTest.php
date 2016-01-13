@@ -14,53 +14,32 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
-use League\CommonMark\Block\Element\Header;
-use League\CommonMark\Block\Renderer\HeaderRenderer;
+use League\CommonMark\Block\Element\ThematicBreak;
+use League\CommonMark\Block\Renderer\ThematicBreakRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 
-class HeaderRendererTest extends \PHPUnit_Framework_TestCase
+class ThematicBreakRendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var HeaderRenderer
+     * @var ThematicBreakRenderer
      */
     protected $renderer;
 
     protected function setUp()
     {
-        $this->renderer = new HeaderRenderer();
+        $this->renderer = new ThematicBreakRenderer();
     }
 
-    /**
-     * @param int    $level
-     * @param string $expectedTag
-     *
-     * @dataProvider dataForTestRender
-     */
-    public function testRender($level, $expectedTag)
+    public function testRender()
     {
-        $block = new Header($level, 'test');
-        $block->data['attributes'] = ['id' => 'id'];
+        $block = new ThematicBreak();
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
-        $this->assertEquals($expectedTag, $result->getTagName());
-        $this->assertContains('::inlines::', $result->getContents(true));
-        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
-    }
-
-    public function dataForTestRender()
-    {
-        return [
-            [1, 'h1'],
-            [2, 'h2'],
-            [3, 'h3'],
-            [4, 'h4'],
-            [5, 'h5'],
-            [6, 'h6'],
-        ];
+        $this->assertEquals('hr', $result->getTagName());
     }
 
     /**

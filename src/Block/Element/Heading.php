@@ -17,7 +17,7 @@ namespace League\CommonMark\Block\Element;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class Header extends AbstractBlock implements InlineContainer
+class Heading extends AbstractBlock implements InlineContainer
 {
     /**
      * @var int

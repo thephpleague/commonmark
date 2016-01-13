@@ -14,12 +14,13 @@
 
 namespace League\CommonMark\Block\Parser;
 
-use League\CommonMark\Block\Element\Header;
+use League\CommonMark\Block\Element\Heading;
+use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class ATXHeaderParser extends AbstractBlockParser
+class SetExtHeadingParser extends AbstractBlockParser
 {
     /**
      * @param ContextInterface $context
@@ -33,22 +34,23 @@ class ATXHeaderParser extends AbstractBlockParser
             return false;
         }
 
-        $match = RegexHelper::matchAll('/^#{1,6}(?: +|$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
-        if (!$match) {
+        if (!($context->getContainer() instanceof Paragraph)) {
             return false;
         }
 
-        $cursor->advanceToFirstNonSpace();
+        if (count($context->getContainer()->getStrings()) !== 1) {
+            return false;
+        }
 
-        $cursor->advanceBy(strlen($match[0]));
+        $match = RegexHelper::matchAll('/^(?:=+|-+) *$/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
+        if ($match === null) {
+            return false;
+        }
 
-        $level = strlen(trim($match[0]));
-        $str = $cursor->getRemainder();
-        $str = preg_replace('/^ *#+ *$/', '', $str);
-        $str = preg_replace('/ +#+ *$/', '', $str);
+        $level = $match[0][0] === '=' ? 1 : 2;
+        $strings = $context->getContainer()->getStrings();
 
-        $context->addBlock(new Header($level, $str));
-        $context->setBlocksParsed(true);
+        $context->replaceContainerBlock(new Heading($level, reset($strings) ?: ''));
 
         return true;
     }

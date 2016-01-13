@@ -30,11 +30,11 @@ class CommonMarkCoreExtension extends Extension
         return [
             // This order is important
             new BlockParser\BlockQuoteParser(),
-            new BlockParser\ATXHeaderParser(),
+            new BlockParser\ATXHeadingParser(),
             new BlockParser\FencedCodeParser(),
             new BlockParser\HtmlBlockParser(),
-            new BlockParser\SetExtHeaderParser(),
-            new BlockParser\HorizontalRuleParser(),
+            new BlockParser\SetExtHeadingParser(),
+            new BlockParser\ThematicBreakParser(),
             new BlockParser\ListParser(),
             new BlockParser\IndentedCodeParser(),
             new BlockParser\LazyParagraphParser(),
@@ -50,13 +50,13 @@ class CommonMarkCoreExtension extends Extension
             'League\CommonMark\Block\Element\BlockQuote'          => new BlockRenderer\BlockQuoteRenderer(),
             'League\CommonMark\Block\Element\Document'            => new BlockRenderer\DocumentRenderer(),
             'League\CommonMark\Block\Element\FencedCode'          => new BlockRenderer\FencedCodeRenderer(),
-            'League\CommonMark\Block\Element\Header'              => new BlockRenderer\HeaderRenderer(),
-            'League\CommonMark\Block\Element\HorizontalRule'      => new BlockRenderer\HorizontalRuleRenderer(),
+            'League\CommonMark\Block\Element\Heading'             => new BlockRenderer\HeadingRenderer(),
             'League\CommonMark\Block\Element\HtmlBlock'           => new BlockRenderer\HtmlBlockRenderer(),
             'League\CommonMark\Block\Element\IndentedCode'        => new BlockRenderer\IndentedCodeRenderer(),
             'League\CommonMark\Block\Element\ListBlock'           => new BlockRenderer\ListBlockRenderer(),
             'League\CommonMark\Block\Element\ListItem'            => new BlockRenderer\ListItemRenderer(),
             'League\CommonMark\Block\Element\Paragraph'           => new BlockRenderer\ParagraphRenderer(),
+            'League\CommonMark\Block\Element\ThematicBreak'       => new BlockRenderer\ThematicBreakRenderer(),
         ];
     }
 
@@ -72,7 +72,7 @@ class CommonMarkCoreExtension extends Extension
             new InlineParser\EntityParser(),
             new InlineParser\EmphasisParser(),
             new InlineParser\AutolinkParser(),
-            new InlineParser\RawHtmlParser(),
+            new InlineParser\HtmlInlineParser(),
             new InlineParser\CloseBracketParser(),
             new InlineParser\OpenBracketParser(),
             new InlineParser\BangParser(),
@@ -95,14 +95,14 @@ class CommonMarkCoreExtension extends Extension
     public function getInlineRenderers()
     {
         return [
-            'League\CommonMark\Inline\Element\Code'     => new InlineRenderer\CodeRenderer(),
-            'League\CommonMark\Inline\Element\Emphasis' => new InlineRenderer\EmphasisRenderer(),
-            'League\CommonMark\Inline\Element\Html'     => new InlineRenderer\RawHtmlRenderer(),
-            'League\CommonMark\Inline\Element\Image'    => new InlineRenderer\ImageRenderer(),
-            'League\CommonMark\Inline\Element\Link'     => new InlineRenderer\LinkRenderer(),
-            'League\CommonMark\Inline\Element\Newline'  => new InlineRenderer\NewlineRenderer(),
-            'League\CommonMark\Inline\Element\Strong'   => new InlineRenderer\StrongRenderer(),
-            'League\CommonMark\Inline\Element\Text'     => new InlineRenderer\TextRenderer(),
+            'League\CommonMark\Inline\Element\Code'       => new InlineRenderer\CodeRenderer(),
+            'League\CommonMark\Inline\Element\Emphasis'   => new InlineRenderer\EmphasisRenderer(),
+            'League\CommonMark\Inline\Element\HtmlInline' => new InlineRenderer\HtmlInlineRenderer(),
+            'League\CommonMark\Inline\Element\Image'      => new InlineRenderer\ImageRenderer(),
+            'League\CommonMark\Inline\Element\Link'       => new InlineRenderer\LinkRenderer(),
+            'League\CommonMark\Inline\Element\Newline'    => new InlineRenderer\NewlineRenderer(),
+            'League\CommonMark\Inline\Element\Strong'     => new InlineRenderer\StrongRenderer(),
+            'League\CommonMark\Inline\Element\Text'       => new InlineRenderer\TextRenderer(),
         ];
     }
 

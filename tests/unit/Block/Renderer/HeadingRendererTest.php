@@ -14,32 +14,53 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
-use League\CommonMark\Block\Element\HorizontalRule;
-use League\CommonMark\Block\Renderer\HorizontalRuleRenderer;
+use League\CommonMark\Block\Element\Heading;
+use League\CommonMark\Block\Renderer\HeadingRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 
-class HorizontalRuleRendererTest extends \PHPUnit_Framework_TestCase
+class HeadingRendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var HorizontalRuleRenderer
+     * @var HeadingRenderer
      */
     protected $renderer;
 
     protected function setUp()
     {
-        $this->renderer = new HorizontalRuleRenderer();
+        $this->renderer = new HeadingRenderer();
     }
 
-    public function testRender()
+    /**
+     * @param int    $level
+     * @param string $expectedTag
+     *
+     * @dataProvider dataForTestRender
+     */
+    public function testRender($level, $expectedTag)
     {
-        $block = new HorizontalRule();
+        $block = new Heading($level, 'test');
+        $block->data['attributes'] = ['id' => 'id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
-        $this->assertEquals('hr', $result->getTagName());
+        $this->assertEquals($expectedTag, $result->getTagName());
+        $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
+    }
+
+    public function dataForTestRender()
+    {
+        return [
+            [1, 'h1'],
+            [2, 'h2'],
+            [3, 'h3'],
+            [4, 'h4'],
+            [5, 'h5'],
+            [6, 'h6'],
+        ];
     }
 
     /**

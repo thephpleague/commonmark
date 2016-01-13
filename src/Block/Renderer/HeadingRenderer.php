@@ -15,14 +15,14 @@
 namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\HorizontalRule;
+use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class HorizontalRuleRenderer implements BlockRendererInterface
+class HeadingRenderer implements BlockRendererInterface
 {
     /**
-     * @param HorizontalRule           $block
+     * @param Heading                  $block
      * @param ElementRendererInterface $htmlRenderer
      * @param bool                     $inTightList
      *
@@ -30,15 +30,17 @@ class HorizontalRuleRenderer implements BlockRendererInterface
      */
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
-        if (!($block instanceof HorizontalRule)) {
+        if (!($block instanceof Heading)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
+
+        $tag = 'h' . $block->getLevel();
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        return new HtmlElement('hr', $attrs, '', true);
+        return new HtmlElement($tag, $attrs, $htmlRenderer->renderInlines($block->children()));
     }
 }

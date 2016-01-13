@@ -16,7 +16,7 @@ namespace League\CommonMark\Block\Element;
 
 use League\CommonMark\Cursor;
 
-class HorizontalRule extends AbstractBlock
+class ThematicBreak extends AbstractBlock
 {
     /**
      * Returns true if this block can contain the given block as a child node

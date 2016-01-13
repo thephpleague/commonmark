@@ -31,20 +31,22 @@ class ListParser extends AbstractBlockParser
      */
     public function parse(ContextInterface $context, Cursor $cursor)
     {
+        if ($cursor->isIndented() && !($context->getContainer() instanceof ListBlock)) {
+            return false;
+        }
+
         $tmpCursor = clone $cursor;
         $indent = $tmpCursor->advanceToFirstNonSpace();
-
         $rest = $tmpCursor->getRemainder();
 
         $data = new ListData();
+        $data->markerOffset = $cursor->getIndent();
 
-        if ($matches = RegexHelper::matchAll('/^[*+-]( +|$)/', $rest)) {
-            $spacesAfterMarker = strlen($matches[1]);
+        if ($matches = RegexHelper::matchAll('/^[*+-]/', $rest)) {
             $data->type = ListBlock::TYPE_UNORDERED;
             $data->delimiter = null;
             $data->bulletChar = $matches[0][0];
-        } elseif ($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])( +|$)/', $rest)) {
-            $spacesAfterMarker = strlen($matches[3]);
+        } elseif ($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) {
             $data->type = ListBlock::TYPE_ORDERED;
             $data->start = intval($matches[1]);
             $data->delimiter = $matches[2];
@@ -53,17 +55,18 @@ class ListParser extends AbstractBlockParser
             return false;
         }
 
-        $data->padding = $this->calculateListMarkerPadding($matches[0], $spacesAfterMarker, $rest);
+        $markerLength = strlen($matches[0]);
 
-        if ($cursor->isIndented() && !($context->getContainer() instanceof ListBlock)) {
+        // Make sure we have spaces after
+        $nextChar = $tmpCursor->peek($markerLength);
+        if (!($nextChar === null || $nextChar === "\t" || $nextChar === ' ')) {
             return false;
         }
 
-        $cursor->advanceToFirstNonSpace();
-        $cursor->advanceBy($data->padding);
-
-        // list item
-        $data->markerOffset = $indent;
+        // We've got a match! Advance offset and calculate padding
+        $cursor->advanceToFirstNonSpace(); // to start of marker
+        $cursor->advanceBy($markerLength, true); // to end of marker
+        $data->padding = $this->calculateListMarkerPadding($cursor, $markerLength, $data);
 
         // add the list if needed
         $container = $context->getContainer();
@@ -78,20 +81,33 @@ class ListParser extends AbstractBlockParser
     }
 
     /**
-     * @param string $marker
-     * @param int    $spacesAfterMarker
-     * @param string $rest
+     * @param Cursor $cursor
+     * @param int    $markerLength
      *
      * @return int
      */
-    private function calculateListMarkerPadding($marker, $spacesAfterMarker, $rest)
+    private function calculateListMarkerPadding(Cursor $cursor, $markerLength)
     {
-        $markerLength = strlen($marker);
+        $start = $cursor->saveState();
+        $spacesStartCol = $cursor->getColumn();
+        $spacesStartOffset = $cursor->getPosition();
+        do {
+            $cursor->advanceBy(1, true);
+            $nextChar = $cursor->getCharacter();
+        } while ($cursor->getColumn() - $spacesStartCol < 5 && ($nextChar === ' ' || $nextChar === "\t"));
 
-        if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $markerLength === strlen($rest)) {
-            return $markerLength - $spacesAfterMarker + 1;
+        $blankItem = $cursor->peek() === null;
+        $spacesAfterMarker = $cursor->getColumn() - $spacesStartCol;
+
+        if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $blankItem) {
+            $cursor->restoreState($start);
+            if ($cursor->peek() === ' ') {
+                $cursor->advanceBy(1, true);
+            }
+
+            return $markerLength + 1;
+        } else {
+            return $markerLength + $spacesAfterMarker;
         }
-
-        return $markerLength;
     }
 }
