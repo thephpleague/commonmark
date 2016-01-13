@@ -509,7 +509,7 @@ class Environment
     private function assertUninitialized($message)
     {
         if ($this->extensionsInitialized) {
-            throw new \RuntimeException($message.' Extensions have already been initialized.');
+            throw new \RuntimeException($message . ' Extensions have already been initialized.');
         }
     }
 
