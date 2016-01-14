@@ -115,7 +115,11 @@ class ExternalLinkProcessor implements DocumentProcessorInterface, Configuration
         return $host != $this->config->getConfig('host');
     }
 }
+~~~
 
+And here's how you'd use it:
+
+~~~php
 $env = Environment::createCommonMarkEnvironment();
 $env->addDocumentProcessor(new ExternalLinkProcessor());
 
