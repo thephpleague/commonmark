@@ -129,8 +129,12 @@ The following table shows which versions of league/commonmark are compatible wit
     </thead>
     <tbody>
         <tr>
-            <td><strong>0.12.x</strong><br>0.11.x</td>
-            <td><strong><a href="http://spec.commonmark.org/0.22/">0.22</a></strong></td>
+            <td><strong>0.13.0</strong></td>
+            <td><strong><a href="http://spec.commonmark.org/0.24/">0.24</a></strong></td>
+        </tr>
+        <tr>
+            <td>0.12.x<br>0.11.x</td>
+            <td><a href="http://spec.commonmark.org/0.22/">0.22</a></td>
         </tr>
         <tr>
             <td>0.10.0</td>
