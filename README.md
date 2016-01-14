@@ -23,7 +23,7 @@
 This project can be installed via [Composer]:
 
 ``` bash
-$ composer require league/commonmark:^0.12
+$ composer require league/commonmark:^0.13
 ```
 
 See [Versioning](#versioning) for important information on which version constraints you should use.
@@ -51,30 +51,26 @@ The actual conversion process requires two steps:
 Although the `CommonMarkConverter` wrapper simplifies this process for you, advanced users will likely want to do this themselves:
 
 ```php
-use League\CommonMark\DocParser;
+use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
 
-// Optional: Add your own parsers/renderers here, if desired
+// Optional: Add your own parsers, renderers, extensions, etc. (if desired)
 // For example:  $environment->addInlineParser(new TwitterHandleParser());
 
-// Create the document parser and HTML renderer engines
-$parser = new DocParser($environment);
-$htmlRenderer = new HtmlRenderer($environment);
+// Define your configuration:
+$config = ['safe' => true];
+
+// Create the converter
+$converter = new CommonMarkConverter($config, $environment);
 
 // Here's our sample input
 $markdown = '# Hello World!';
 
-// 1. Parse the Markdown to AST
-$documentAST = $parser->parse($markdown);
-
-// Optional: If you want to access/modify the AST before rendering, do it here
-
-// 2. Render the AST as HTML
-echo $htmlRenderer->renderBlock($documentAST);
+// Let's render it!
+echo $converter->convertToHtml($markdown);
 
 // The output should be:
 // <h1>Hello World!</h1>
