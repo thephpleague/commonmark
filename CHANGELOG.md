@@ -33,6 +33,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Removed
  - Removed schema whitelist from autolink regex
+ - Moved SmartPunct functionality into new [league/commonmark-extras](https://github.com/thephpleague/commonmark-extras) package
 
 ## [0.12.0] - 2015-11-04
 
