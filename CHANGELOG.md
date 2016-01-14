@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [0.13.0] - 2016-01-13
 
 ### Added
+ - Added AST document processors (#210)
  - Added optional `Environment` parameter to `CommonMarkConverter` constructor
 
 ### Changed
