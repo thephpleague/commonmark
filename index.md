@@ -26,6 +26,10 @@ We will always focus on CommonMark compliance over speed, but performance improv
 
 This library allows you to add custom directives, renders, and more.  Check out the [Customization](/customization/overview/) section for more information.
 
+## Integrations & Community Extensions
+
+An updated list of pre-built integrations and extensions can be found in the [Related Packages](https://github.com/thephpleague/commonmark#related-packages) section of the `README`.
+
 ## Questions?
 
 This library was created by [Colin O'Dell](http://www.colinodell.com). Find him on Twitter at [@colinodell](https://twitter.com/colinodell).
