@@ -30,7 +30,7 @@ while ($event = $walker->next()) {
     echo 'I am ' . ($event->isEntering() ? 'entering' : 'leaving') . ' a ' . get_class($event->getNode()) . ' node' . "\n";
 ~~~
 
-This walker doesn't use recursion, so you wan't blow the stack when working with deeply-nested nodes.
+This walker doesn't use recursion, so you won't blow the stack when working with deeply-nested nodes.
 
 ## Modification
 
