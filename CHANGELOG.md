@@ -4,6 +4,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Added
+ - Added optional `Environment` parameter to `CommonMarkConverter` constructor
+
 ### Changed
  - Renamed "header" things to "heading" for spec consistency
    - `Header` => `Heading`
