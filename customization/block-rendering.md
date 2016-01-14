@@ -38,7 +38,7 @@ $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the block class type that should use our renderer
 // Second param - instance of the block renderer
-$environment->addBlockRenderer('FencedCode', new MyCustomCodeRenderer());
+$environment->addBlockRenderer('League\CommonMark\Block\Element\FencedCode', new MyCustomCodeRenderer());
 ~~~
 
 A single renderer could even be used for multiple block types:
@@ -48,31 +48,30 @@ $environment = Environment::createCommonMarkEnvironment();
 
 $myRenderer = new MyCustomCodeRenderer();
 
-$environment->addBlockRenderer('FencedCode', $myRenderer);
-$environment->addBlockRenderer('IndentedCode', $myRenderer);
+$environment->addBlockRenderer('League\CommonMark\Block\Element\FencedCode', $myRenderer);
+$environment->addBlockRenderer('League\CommonMark\Block\Element\IndentedCode', $myRenderer);
 ~~~
 
 Only one renderer can be assigned per element type.  If multiple renderers are assigned to the same block class, only the last one will be used.
 
 ## Example
 
-Here's a custom renderer which renders horizontal rules using text instead:
+Here's a custom renderer which renders thematic breaks as text (instead of `<hr>`):
 
 ~~~php
 class TextDividerRenderer implements BlockRendererInterface
 {
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
-        return new HtmlElement('pre', array('class' => 'divider'), '==============================');
+        return new HtmlElement('pre', ['class' => 'divider'], '==============================');
     }
 }
 
 $environment = Environment::createCommonMarkEnvironment();
-$environment->addBlockRenderer('HorizontalRule', new TextDividerRenderer());
+$environment->addBlockRenderer('League\CommonMark\Block\Element\ThematicBreak', new TextDividerRenderer());
 ~~~
 
 ## Tips
 
 * Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
 * Don't forget to render any inlines your block might contain!
-

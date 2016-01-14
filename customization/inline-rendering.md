@@ -37,7 +37,7 @@ $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the inline class type that should use our renderer
 // Second param - instance of the block renderer
-$environment->addBlockRenderer('Link', new MyCustomLinkRenderer());
+$environment->addBlockRenderer('League\CommonMark\Inline\Element\Link', new MyCustomLinkRenderer());
 ~~~
 
 ## Example
@@ -82,7 +82,7 @@ class MyCustomLinkRenderer implements BlockRendererInterface
 }
 
 $environment = Environment::createCommonMarkEnvironment();
-$environment->addInlineRenderer('Link', new MyCustomLinkRenderer());
+$environment->addInlineRenderer('League\CommonMark\Inline\Element\', new MyCustomLinkRenderer());
 ~~~
 
 ## Tips

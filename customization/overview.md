@@ -37,7 +37,7 @@ to essentially "swap out" built-in renderers with your own.
 
 ## AST manipulation
 
-Once the AST is parsed, you are free to access/manipulate it as needed before it's passed into the rendering engine.
+Once the [Abstract Syntax Tree](/customization/abstract-syntax-tree/) is parsed, you are free to access/manipulate it as needed before it's passed into the rendering engine.
 
 ## Examples
 

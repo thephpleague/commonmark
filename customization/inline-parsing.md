@@ -42,39 +42,32 @@ Let's say you wanted to autolink Twitter handles without using the link syntax. 
 ~~~php
 class TwitterHandleParser extends AbstractInlineParser
 {
-    public function getCharacters() {
-        return array('@');
+    public function getCharacters()
+    {
+        return ['@'];
     }
-
-    public function parse(InlineParserContext $inlineContext) {
+    public function parse(InlineParserContext $inlineContext)
+    {
         $cursor = $inlineContext->getCursor();
-
         // The @ symbol must not have any other characters immediately prior
         $previousChar = $cursor->peek(-1);
         if ($previousChar !== null && $previousChar !== ' ') {
             // peek() doesn't modify the cursor, so no need to restore state first
             return false;
         }
-
         // Save the cursor state in case we need to rewind and bail
         $previousState = $cursor->saveState();
-
         // Advance past the @ symbol to keep parsing simpler
         $cursor->advance();
-
         // Parse the handle
-        $handle = $cursor->match('/^\w+/');
+        $handle = $cursor->match('/^[A-Za-z0-9_]{1,15}(?!\w)/');
         if (empty($handle)) {
             // Regex failed to match; this isn't a valid Twitter handle
             $cursor->restoreState($previousState);
-
             return false;
         }
-
         $profileUrl = 'https://twitter.com/' . $handle;
-
-        $inlineContext->getContainer()->appendChild(new Link($profileUrl, '@'.$handle));
-
+        $inlineContext->getContainer()->appendChild(new Link($profileUrl, '@' . $handle));
         return true;
     }
 }
@@ -90,11 +83,13 @@ Let's say you want to automatically convert smilies (or "frownies") to emoticon 
 ~~~php
 class SmilieParser extends AbstractInlineParser
 {
-    public function getCharacters() {
-        return array(':');
+    public function getCharacters()
+    {
+        return [':'];
     }
 
-    public function parse(InlineParserContext $inlineContext) {
+    public function parse(InlineParserContext $inlineContext)
+    {
         $cursor = $inlineContext->getCursor();
 
         // The next character must be a paren; if not, then bail
@@ -124,6 +119,6 @@ $environment->addInlineParser(new SmilieParserParser());
 
 ## Tips
 
-* For best performance, `return false` as soon as possible
+* For best performance, `return false` **as soon as possible**
 * You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
 * You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).
