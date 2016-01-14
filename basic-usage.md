@@ -18,10 +18,11 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ~~~
 
-The actual conversion process requires two steps:
+The actual conversion process requires three steps:
 
- 1. Parsing the Markdown input into an AST
- 2. Rendering the AST document as HTML
+ 1. Create an `Environment`, adding whichever extensions/parser/renders you need
+ 2. Parsing the Markdown input into an AST
+ 3. Rendering the AST document as HTML
 
 You can do this yourself if you wish:
 

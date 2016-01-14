@@ -72,3 +72,11 @@ Registers an `InlineRendererInterface` to handle a specific type of inline (`$in
 A single renderer can handle multiple inline classes, but you must register it separately for each type. (The same renderer instance can be re-used if desired.)
 
 See [Inline Rendering](/customization/inline-rendering/) for details.
+
+## addDocumentProcessor()
+
+~~~php
+public function addDocumentProcessor(DocumentProcessorInterface $processor)
+~~~
+
+Adds a new Document Processor which will [manipulate the AST](/customization/abstract-syntax-tree/) after parsing the document but before rendering it.
