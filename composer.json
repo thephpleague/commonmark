@@ -24,7 +24,7 @@
         "erusev/parsedown": "~1.0",
         "jgm/CommonMark": "0.24",
         "michelf/php-markdown": "~1.4",
-        "mikehaertl/php-shellcommand": "~1.1.0",
+        "mikehaertl/php-shellcommand": "~1.2.0",
         "phpunit/phpunit": "~4.3|~5.0",
         "symfony/finder": "~2.3",
         "scrutinizer/ocular": "^1.1"
