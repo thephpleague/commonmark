@@ -101,6 +101,10 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 - [Symfony](https://github.com/webuni/commonmark-bundle)
 - [Twig](https://github.com/webuni/commonmark-twig-renderer)
 
+### CommonMark Extras
+
+You can find several examples of useful extensions and customizations in the [league/commonmark-extras package](https://github.com/thephpleague/commonmark-extras).  You can add them to your parser or use them as examples to [develop your own custom features](http://commonmark.thephpleague.com/customization/overview/).
+
 ### Community Extensions
 
 Custom parsers/renderers can be bundled into extensions which extend CommonMark.  Here are some that you may find interesting:
@@ -109,6 +113,8 @@ Custom parsers/renderers can be bundled into extensions which extend CommonMark.
  - [CommonMark Table Extension](https://github.com/webuni/commonmark-table-extension) - Adds the ability to create tables in CommonMark documents.
  - [CommonMark Attributes Extension](https://github.com/webuni/commonmark-attributes-extension) - Adds a syntax to define attributes on the various HTML elements.
  - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark, that integrates with [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown).
+
+If you build your own, feel free to submit a PR to add it to this list!
 
 ### Others
 
