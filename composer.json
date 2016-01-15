@@ -27,7 +27,7 @@
         "mikehaertl/php-shellcommand": "~1.2.0",
         "phpunit/phpunit": "~4.3|~5.0",
         "symfony/finder": "~2.3|~3.0",
-        "scrutinizer/ocular": "^1.1"
+        "scrutinizer/ocular": "~1.1"
     },
     "suggest": {
         "league/commonmark-extras": "Library of useful extensions including smart punctuation"
