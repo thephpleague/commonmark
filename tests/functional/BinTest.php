@@ -75,7 +75,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('atx_heading.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertEquals($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -92,7 +92,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('atx_heading.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertEquals($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -106,7 +106,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('safe/unsafe_output.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertEquals($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -121,7 +121,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('safe/safe_output.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertEquals($expectedContents, $cmd->getOutput());
     }
 
     /**
