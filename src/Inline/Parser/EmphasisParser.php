@@ -86,6 +86,10 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
             ++$numDelims;
         }
 
+        if ($numDelims === 0) {
+            return false;
+        }
+
         // Skip single delims if emphasis is disabled
         if ($numDelims === 1 && !$this->config->getConfig('enable_em')) {
             return false;
@@ -128,12 +132,12 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
         $beforeIsWhitespace = preg_match('/\pZ|\s/u', $charBefore);
         $beforeIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
 
-        $leftFlanking = $numDelims > 0 && !$afterIsWhitespace &&
+        $leftFlanking = !$afterIsWhitespace &&
             !($afterIsPunctuation &&
                 !$beforeIsWhitespace &&
                 !$beforeIsPunctuation);
 
-        $rightFlanking = $numDelims > 0 && !$beforeIsWhitespace &&
+        $rightFlanking = !$beforeIsWhitespace &&
             !($beforeIsPunctuation &&
                 !$afterIsWhitespace &&
                 !$afterIsPunctuation);
