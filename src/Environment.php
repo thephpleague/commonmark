@@ -281,11 +281,7 @@ class Environment
     {
         $this->initializeExtensions();
 
-        if (!isset($this->blockRenderersByClass[$blockClass])) {
-            return;
-        }
-
-        return $this->blockRenderersByClass[$blockClass];
+        return $this->getRendererForClass($this->blockRenderersByClass, $blockClass);
     }
 
     /**
@@ -297,11 +293,7 @@ class Environment
     {
         $this->initializeExtensions();
 
-        if (!isset($this->inlineRenderersByClass[$inlineClass])) {
-            return;
-        }
-
-        return $this->inlineRenderersByClass[$inlineClass];
+        return $this->getRendererForClass($this->inlineRenderersByClass, $inlineClass);
     }
 
     public function createInlineParserEngine()
@@ -527,5 +519,20 @@ class Environment
         $this->addExtension($miscExtension);
 
         return $miscExtension;
+    }
+
+    /**
+     * @param array  $renderers
+     * @param string $class
+     *
+     * @return object|null
+     */
+    private function getRendererForClass(array &$renderers, $class)
+    {
+        if (!isset($renderers[$class])) {
+            return;
+        }
+
+        return $renderers[$class];
     }
 }
