@@ -529,10 +529,21 @@ class Environment
      */
     private function getRendererForClass(array &$renderers, $class)
     {
-        if (!isset($renderers[$class])) {
-            return;
+        if (isset($renderers[$class])) {
+            return $renderers[$class];
         }
 
-        return $renderers[$class];
+        for ($parent = $class; $parent; $parent = get_parent_class($parent)) {
+            if (!isset($renderers[$parent])) {
+                continue;
+            }
+
+            $renderer = $renderers[$parent];
+
+            // "Cache" this result to avoid future loops
+            $renderers[$class] = $renderer;
+
+            return $renderer;
+        }
     }
 }
