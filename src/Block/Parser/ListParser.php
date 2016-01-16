@@ -106,8 +106,8 @@ class ListParser extends AbstractBlockParser
             }
 
             return $markerLength + 1;
-        } else {
-            return $markerLength + $spacesAfterMarker;
         }
+
+        return $markerLength + $spacesAfterMarker;
     }
 }
