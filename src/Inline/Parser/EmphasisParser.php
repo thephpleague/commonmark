@@ -102,7 +102,7 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
             $charAfter = "\n";
         }
 
-        list($canOpen, $canClose) = $this->determineCanOpenOrClose($charBefore, $charAfter, $character, $numDelims);
+        list($canOpen, $canClose) = $this->determineCanOpenOrClose($charBefore, $charAfter, $character);
 
         $node = new Text($cursor->getPreviousText(), [
             'delim'           => true,
@@ -121,11 +121,10 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
      * @param string $charBefore
      * @param string $charAfter
      * @param string $character
-     * @param int    $numDelims
      *
      * @return bool[]
      */
-    private function determineCanOpenOrClose($charBefore, $charAfter, $character, $numDelims)
+    private function determineCanOpenOrClose($charBefore, $charAfter, $character)
     {
         $afterIsWhitespace = preg_match('/\pZ|\s/u', $charAfter);
         $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
