@@ -36,7 +36,7 @@ class ListParser extends AbstractBlockParser
         }
 
         $tmpCursor = clone $cursor;
-        $indent = $tmpCursor->advanceToFirstNonSpace();
+        $tmpCursor->advanceToFirstNonSpace();
         $rest = $tmpCursor->getRemainder();
 
         $data = new ListData();
@@ -66,7 +66,7 @@ class ListParser extends AbstractBlockParser
         // We've got a match! Advance offset and calculate padding
         $cursor->advanceToFirstNonSpace(); // to start of marker
         $cursor->advanceBy($markerLength, true); // to end of marker
-        $data->padding = $this->calculateListMarkerPadding($cursor, $markerLength, $data);
+        $data->padding = $this->calculateListMarkerPadding($cursor, $markerLength);
 
         // add the list if needed
         $container = $context->getContainer();
@@ -90,7 +90,7 @@ class ListParser extends AbstractBlockParser
     {
         $start = $cursor->saveState();
         $spacesStartCol = $cursor->getColumn();
-        $spacesStartOffset = $cursor->getPosition();
+
         do {
             $cursor->advanceBy(1, true);
             $nextChar = $cursor->getCharacter();
@@ -106,8 +106,8 @@ class ListParser extends AbstractBlockParser
             }
 
             return $markerLength + 1;
-        } else {
-            return $markerLength + $spacesAfterMarker;
         }
+
+        return $markerLength + $spacesAfterMarker;
     }
 }

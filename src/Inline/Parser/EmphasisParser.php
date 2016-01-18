@@ -86,6 +86,10 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
             ++$numDelims;
         }
 
+        if ($numDelims === 0) {
+            return false;
+        }
+
         // Skip single delims if emphasis is disabled
         if ($numDelims === 1 && !$this->config->getConfig('enable_em')) {
             return false;
@@ -98,28 +102,7 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
             $charAfter = "\n";
         }
 
-        $afterIsWhitespace = preg_match('/\pZ|\s/u', $charAfter);
-        $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
-        $beforeIsWhitespace = preg_match('/\pZ|\s/u', $charBefore);
-        $beforeIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
-
-        $leftFlanking = $numDelims > 0 && !$afterIsWhitespace &&
-            !($afterIsPunctuation &&
-            !$beforeIsWhitespace &&
-            !$beforeIsPunctuation);
-
-        $rightFlanking = $numDelims > 0 && !$beforeIsWhitespace &&
-            !($beforeIsPunctuation &&
-            !$afterIsWhitespace &&
-            !$afterIsPunctuation);
-
-        if ($character === '_') {
-            $canOpen = $leftFlanking && (!$rightFlanking || $beforeIsPunctuation);
-            $canClose = $rightFlanking && (!$leftFlanking || $afterIsPunctuation);
-        } else {
-            $canOpen = $leftFlanking;
-            $canClose = $rightFlanking;
-        }
+        list($canOpen, $canClose) = $this->determineCanOpenOrClose($charBefore, $charAfter, $character);
 
         $node = new Text($cursor->getPreviousText(), [
             'delim'           => true,
@@ -132,5 +115,33 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
         $inlineContext->getDelimiterStack()->push($delimiter);
 
         return true;
+    }
+
+    /**
+     * @param string $charBefore
+     * @param string $charAfter
+     * @param string $character
+     *
+     * @return bool[]
+     */
+    private function determineCanOpenOrClose($charBefore, $charAfter, $character)
+    {
+        $afterIsWhitespace = preg_match('/\pZ|\s/u', $charAfter);
+        $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
+        $beforeIsWhitespace = preg_match('/\pZ|\s/u', $charBefore);
+        $beforeIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
+
+        $leftFlanking = !$afterIsWhitespace && !($afterIsPunctuation && !$beforeIsWhitespace && !$beforeIsPunctuation);
+        $rightFlanking = !$beforeIsWhitespace && !($beforeIsPunctuation && !$afterIsWhitespace && !$afterIsPunctuation);
+
+        if ($character === '_') {
+            $canOpen = $leftFlanking && (!$rightFlanking || $beforeIsPunctuation);
+            $canClose = $rightFlanking && (!$leftFlanking || $afterIsPunctuation);
+        } else {
+            $canOpen = $leftFlanking;
+            $canClose = $rightFlanking;
+        }
+
+        return [$canOpen, $canClose];
     }
 }
