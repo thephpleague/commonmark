@@ -281,11 +281,7 @@ class Environment
     {
         $this->initializeExtensions();
 
-        if (!isset($this->blockRenderersByClass[$blockClass])) {
-            return;
-        }
-
-        return $this->blockRenderersByClass[$blockClass];
+        return $this->getRendererForClass($this->blockRenderersByClass, $blockClass);
     }
 
     /**
@@ -297,11 +293,7 @@ class Environment
     {
         $this->initializeExtensions();
 
-        if (!isset($this->inlineRenderersByClass[$inlineClass])) {
-            return;
-        }
-
-        return $this->inlineRenderersByClass[$inlineClass];
+        return $this->getRendererForClass($this->inlineRenderersByClass, $inlineClass);
     }
 
     public function createInlineParserEngine()
@@ -351,7 +343,7 @@ class Environment
             $this->initializeExtension($extension);
         }
 
-        // Lastly, let's build a regex which matches all inline characters
+        // Lastly, let's build a regex which matches non-inline characters
         // This will enable a huge performance boost with inline parsing
         $this->buildInlineParserCharacterRegex();
     }
@@ -485,7 +477,9 @@ class Environment
     }
 
     /**
-     * Regex which matches any character that an inline parser might be interested in
+     * Regex which matches any character which doesn't indicate an inline element
+     *
+     * This allows us to parse multiple non-special characters at once
      *
      * @return string
      */
@@ -498,7 +492,13 @@ class Environment
     {
         $chars = array_keys($this->inlineParsersByCharacter);
 
-        $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/u';
+        if (empty($chars)) {
+            // If no special inline characters exist then parse the whole line
+            $this->inlineParserCharacterRegex = '/^.+$/u';
+        } else {
+            // Match any character which inline parsers are not interested in
+            $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/u';
+        }
     }
 
     /**
@@ -527,5 +527,31 @@ class Environment
         $this->addExtension($miscExtension);
 
         return $miscExtension;
+    }
+
+    /**
+     * @param array  $renderers
+     * @param string $class
+     *
+     * @return object|null
+     */
+    private function getRendererForClass(array &$renderers, $class)
+    {
+        if (isset($renderers[$class])) {
+            return $renderers[$class];
+        }
+
+        for ($parent = $class; $parent; $parent = get_parent_class($parent)) {
+            if (!isset($renderers[$parent])) {
+                continue;
+            }
+
+            $renderer = $renderers[$parent];
+
+            // "Cache" this result to avoid future loops
+            $renderers[$class] = $renderer;
+
+            return $renderer;
+        }
     }
 }
