@@ -480,4 +480,19 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($actualRenderer);
     }
+
+    public function testGetInlineParserCharacterRegexForEmptyEnvironment()
+    {
+        $environment = new Environment();
+
+        // This triggers the initialization which builds the regex
+        $environment->createInlineParserEngine();
+
+        $regex = $environment->getInlineParserCharacterRegex();
+
+        $test = '*This* should match **everything** including chars like `[`.';
+        $matches = [];
+        preg_match($regex, $test, $matches);
+        $this->assertSame($test, $matches[0]);
+    }
 }

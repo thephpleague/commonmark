@@ -343,7 +343,7 @@ class Environment
             $this->initializeExtension($extension);
         }
 
-        // Lastly, let's build a regex which matches all inline characters
+        // Lastly, let's build a regex which matches non-inline characters
         // This will enable a huge performance boost with inline parsing
         $this->buildInlineParserCharacterRegex();
     }
@@ -477,7 +477,9 @@ class Environment
     }
 
     /**
-     * Regex which matches any character that an inline parser might be interested in
+     * Regex which matches any character which doesn't indicate an inline element
+     *
+     * This allows us to parse multiple non-special characters at once
      *
      * @return string
      */
@@ -490,7 +492,13 @@ class Environment
     {
         $chars = array_keys($this->inlineParsersByCharacter);
 
-        $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/u';
+        if (empty($chars)) {
+            // If no special inline characters exist then parse the whole line
+            $this->inlineParserCharacterRegex = '/^.+$/u';
+        } else {
+            // Match any character which inline parsers are not interested in
+            $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/u';
+        }
     }
 
     /**
