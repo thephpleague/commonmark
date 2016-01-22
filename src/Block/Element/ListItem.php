@@ -64,7 +64,11 @@ class ListItem extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor)
     {
-        if ($cursor->isBlank() && $this->firstChild !== null) {
+        if ($cursor->isBlank()) {
+            if ($this->firstChild === null) {
+                return false;
+            }
+
             $cursor->advanceToFirstNonSpace();
         } elseif ($cursor->getIndent() >= $this->listData->markerOffset + $this->listData->padding) {
             $cursor->advanceBy($this->listData->markerOffset + $this->listData->padding, true);
