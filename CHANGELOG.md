@@ -4,6 +4,18 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Changed
+ - Refactored `EmphasisParser::parse()` to simplify it (#223)
+ - Updated dev dependencies (#218 & #220)
+
+### Fixed
+ - Fixed invalid regex generated when no inline parsers are defined (#224)
+ - Fixed logic bug with blank line after empty list item (#230)
+ - Fixed some incorrect code comments
+
+### Removed
+ - Removed unused variables (#223)
+
 ## [0.13.0] - 2016-01-13
 
 ### Added
