@@ -91,19 +91,18 @@ class ListParser extends AbstractBlockParser
         $start = $cursor->saveState();
         $spacesStartCol = $cursor->getColumn();
 
-        do {
-            $cursor->advanceBy(1, true);
-            $nextChar = $cursor->getCharacter();
-        } while ($cursor->getColumn() - $spacesStartCol < 5 && ($nextChar === ' ' || $nextChar === "\t"));
+        while ($cursor->getColumn() - $spacesStartCol < 5) {
+            if (!$cursor->advanceBySpaceOrTab()) {
+                break;
+            }
+        }
 
         $blankItem = $cursor->peek() === null;
         $spacesAfterMarker = $cursor->getColumn() - $spacesStartCol;
 
         if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $blankItem) {
             $cursor->restoreState($start);
-            if ($cursor->peek() === ' ') {
-                $cursor->advanceBy(1, true);
-            }
+            $cursor->advanceBySpaceOrTab();
 
             return $markerLength + 1;
         }

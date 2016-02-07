@@ -272,11 +272,16 @@ class CursorTest extends \PHPUnit_Framework_TestCase
     {
         $cursor = new Cursor("1. \t\tthere");
         $cursor->advanceBy(3);
+
+        $this->assertEquals(5, $cursor->getIndent());
+        $this->assertEquals(3, $cursor->getPosition());
+        $this->assertEquals(3, $cursor->getColumn());
+
         $cursor->advanceBy(4, true);
 
-        $this->assertEquals(0, $cursor->getIndent());
-        $this->assertEquals(5, $cursor->getPosition());
-        $this->assertEquals(8, $cursor->getColumn());
+        $this->assertEquals(1, $cursor->getIndent());
+        $this->assertEquals(4, $cursor->getPosition());
+        $this->assertEquals(7, $cursor->getColumn());
     }
 
     /**

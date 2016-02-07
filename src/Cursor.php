@@ -54,6 +54,11 @@ class Cursor
     private $firstNonSpaceCache;
 
     /**
+     * @var bool
+     */
+    private $partiallyConsumedTab = false;
+
+    /**
      * @param string $line
      */
     public function __construct($line)
@@ -182,10 +187,12 @@ class Cursor
      */
     public function advanceBy($characters, $advanceByColumns = false)
     {
-        $this->firstNonSpaceCache = null;
+        if ($characters === 0) {
+            return;
+        }
 
-        $cols = 0;
-        $relPos = -1;
+        $this->previousPosition = $this->currentPosition;
+        $this->firstNonSpaceCache = null;
 
         $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, 'utf-8');
         if ($characters === 1) {
@@ -194,30 +201,43 @@ class Cursor
             $asArray = preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
         }
 
-        foreach ($asArray as $relPos => $char) {
-            if ($char === "\t") {
-                $cols += (4 - (($this->column + $cols) % 4));
+        foreach ($asArray as $relPos => $c) {
+            if ($c === "\t") {
+                $charsToTab = 4 - ($this->column % 4);
+                $this->partiallyConsumedTab = $advanceByColumns && $charsToTab > $characters;
+                $charsToAdvance = $charsToTab > $characters ? $characters : $charsToTab;
+                $this->column += $charsToAdvance;
+                $this->currentPosition += $this->partiallyConsumedTab ? 0 : 1;
+                $characters -= ($advanceByColumns ? $charsToAdvance : 1);
             } else {
-                $cols++;
+                $this->partiallyConsumedTab = false;
+                $this->currentPosition++;
+                $this->column++;
+                $characters--;
             }
 
-            if ($advanceByColumns && $cols >= $characters) {
+            if ($characters <= 0) {
                 break;
             }
         }
+    }
 
-        $i = $advanceByColumns ? $relPos + 1 : $characters;
+    /**
+     * Advances the cursor by a single space or tab, if present
+     *
+     * @return bool
+     */
+    public function advanceBySpaceOrTab()
+    {
+        $character = $this->getCharacter();
 
-        $this->previousPosition = $this->currentPosition;
-        $newPosition = $this->currentPosition + $i;
+        if ($character === ' ' || $character === "\t") {
+            $this->advanceBy(1, true);
 
-        $this->column += $cols;
-
-        if ($newPosition >= $this->length) {
-            $this->currentPosition = $this->length;
-        } else {
-            $this->currentPosition = $newPosition;
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -282,9 +302,17 @@ class Cursor
     {
         if ($this->isAtEnd()) {
             return '';
-        } else {
-            return mb_substr($this->line, $this->currentPosition, null, 'utf-8');
         }
+
+        $prefix = '';
+        $position = $this->currentPosition;
+        if ($this->partiallyConsumedTab) {
+            $position++;
+            $charsToTab = 4 - ($this->column % 4);
+            $prefix = str_repeat(' ', $charsToTab);
+        }
+
+        return $prefix . mb_substr($this->line, $position, null, 'utf-8');
     }
 
     /**
