@@ -6,4 +6,4 @@ enabled:
 
 disabled:
   - concat_without_spaces
-  - phpdoc_short_description
+  - phpdoc_summary
