@@ -25,6 +25,8 @@ The following methods can be used to traverse the AST:
 If you'd like to iterate through all the nodes, use the `walker()` method to obtain an instance of `NodeWalker`.  This will walk through the entire tree, emitting `NodeWalkerEvent`s along the way.
 
 ~~~php
+<?php
+
 $walker = $document->walker();
 while ($event = $walker->next()) {
     echo 'I am ' . ($event->isEntering() ? 'entering' : 'leaving') . ' a ' . get_class($event->getNode()) . ' node' . "\n";
@@ -50,6 +52,8 @@ The following methods can be used to modify the AST:
 The best way to manipulate the AST is by implementing a custom Document Processor.  These are executed once all other processing is done and the document is ready to be rendered. Simply create a class which implements the `DocumentProcessorInterface` which contains a single method:
 
 ~~~php
+<?php
+
 /**
  * @param Document $document
  *
@@ -63,6 +67,8 @@ This method receives the root `Document` node which you could then walk across, 
 Here's an example of a Document Processor which adds an `external-link` class to external URLs.
  
 ~~~php
+<?php
+
 class ExternalLinkProcessor implements DocumentProcessorInterface, ConfigurationAwareInterface
 {
     private $config;
@@ -120,6 +126,8 @@ class ExternalLinkProcessor implements DocumentProcessorInterface, Configuration
 And here's how you'd use it:
 
 ~~~php
+<?php
+
 $env = Environment::createCommonMarkEnvironment();
 $env->addDocumentProcessor(new ExternalLinkProcessor());
 

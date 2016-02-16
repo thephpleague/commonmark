@@ -40,6 +40,8 @@ Returning `true` tells the engine that you've successfully parsed the character 
 Let's say you wanted to autolink Twitter handles without using the link syntax.  This could be accomplished by registering a new inline parser to handle the `@` character:
 
 ~~~php
+<?php
+
 class TwitterHandleParser extends AbstractInlineParser
 {
     public function getCharacters()
@@ -81,6 +83,8 @@ $environment->addInlineParser(new TwitterHandleParser());
 Let's say you want to automatically convert smilies (or "frownies") to emoticon images.  This is incredibly easy with an inline parser:
 
 ~~~php
+<?php
+
 class SmilieParser extends AbstractInlineParser
 {
     public function getCharacters()

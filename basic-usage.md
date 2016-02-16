@@ -10,6 +10,8 @@ Basic Usage
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
 ~~~php
+<?php
+
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
@@ -27,6 +29,8 @@ The actual conversion process requires three steps:
 You can do this yourself if you wish:
 
 ~~~php
+<?php
+
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;

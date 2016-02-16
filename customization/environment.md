@@ -12,6 +12,8 @@ All parsers, renderers, etc. must be registered with the `Environment` class so 
 A pre-configured `Environment` can be obtained like this:
 
 ~~~php
+<?php
+
 use League\CommonMark;
 
 $environment = Environment::createCommonMarkEnvironment();
@@ -25,6 +27,8 @@ You can customize this default `Environment` (or even a new, empty one) using an
 ## addBlockParser()
 
 ~~~php
+<?php
+
 public function addBlockParser(BlockParserInterface $parser);
 ~~~
 
@@ -35,6 +39,8 @@ See [Block Parsing](/customization/block-parsing/) for details.
 ## addBlockRenderer()
 
 ~~~php
+<?php
+
 public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer);
 ~~~
 
@@ -45,6 +51,8 @@ See [Block Rendering](/customization/block-rendering/) for details.
 ## addInlineParser()
 
 ~~~php
+<?php
+
 public function addInlineParser(InlineParserInterface $parser);
 ~~~
 
@@ -55,6 +63,8 @@ See [Inline Parsing](/customization/inline-parsing/) for details.
 ## addInlineProcessor()
 
 ~~~php
+<?php
+
 public function addInlineProcessor(InlineProcessorInterface $processor);
 ~~~
 
@@ -65,6 +75,8 @@ Registers the given `InlineProcessorInterface` with the environment.
 ## addInlineRenderer()
 
 ~~~php
+<?php
+
 public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer);
 ~~~
 
@@ -76,6 +88,8 @@ See [Inline Rendering](/customization/inline-rendering/) for details.
 ## addDocumentProcessor()
 
 ~~~php
+<?php
+
 public function addDocumentProcessor(DocumentProcessorInterface $processor)
 ~~~
 

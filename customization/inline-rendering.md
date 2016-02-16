@@ -33,6 +33,8 @@ You are responsible for handling any escaping that may be necessary.
 When registering your render, you must tell the `Environment` which inline element class your renderer should handle. For example:
 
 ~~~php
+<?php
+
 $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the inline class type that should use our renderer
@@ -45,6 +47,8 @@ $environment->addInlineRenderer('League\CommonMark\Inline\Element\Link', new MyC
 Here's a custom renderer which puts a special class on links to external sites:
 
 ~~~php
+<?php
+
 class MyCustomLinkRenderer implements BlockRendererInterface
 {
     private $host;

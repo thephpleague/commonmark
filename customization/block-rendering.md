@@ -34,6 +34,8 @@ You are responsible for handling any escaping that may be necessary.
 When registering your render, you must tell the `Environment` which block element class your renderer should handle. For example:
 
 ~~~php
+<?php
+
 $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the block class type that should use our renderer
@@ -44,6 +46,8 @@ $environment->addBlockRenderer('League\CommonMark\Block\Element\FencedCode', new
 A single renderer could even be used for multiple block types:
 
 ~~~php
+<?php
+
 $environment = Environment::createCommonMarkEnvironment();
 
 $myRenderer = new MyCustomCodeRenderer();
@@ -59,6 +63,8 @@ Only one renderer can be assigned per element type.  If multiple renderers are a
 Here's a custom renderer which renders thematic breaks as text (instead of `<hr>`):
 
 ~~~php
+<?php
+
 class TextDividerRenderer implements BlockRendererInterface
 {
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
