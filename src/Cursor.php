@@ -188,17 +188,24 @@ class Cursor
 
         $this->firstNonSpaceCache = null;
 
-        $i = 0;
         $cols = 0;
-        while ($advanceByColumns ? ($cols < $characters) : ($i < $characters)) {
-            if ($this->peek($i) === "\t") {
+        $relPos = -1;
+
+        $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, 'utf-8');
+        $asArray = preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
+        foreach ($asArray as $relPos => $char) {
+            if ($char === "\t") {
                 $cols += (4 - (($this->column + $cols) % 4));
             } else {
                 $cols++;
             }
 
-            $i++;
+            if ($advanceByColumns && $cols >= $characters) {
+                break;
+            }
         }
+
+        $i = $advanceByColumns ? $relPos + 1 : $characters;
 
         $this->previousPosition = $this->currentPosition;
         $newPosition = $this->currentPosition + $i;
