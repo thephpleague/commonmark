@@ -39,7 +39,7 @@
                 "name": "jgm/CommonMark",
                 "version": "0.24",
                 "dist": {
-                    "url": "http://spec.commonmark.org/0.24/spec.txt",
+                    "url": "https://raw.githubusercontent.com/jgm/CommonMark/0.24/spec.txt",
                     "type": "file"
                 }
             }
