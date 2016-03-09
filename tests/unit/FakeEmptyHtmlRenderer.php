@@ -28,7 +28,6 @@ class FakeEmptyHtmlRenderer implements ElementRendererInterface
      */
     public function getOption($option, $default = null)
     {
-        return;
     }
 
     /**
