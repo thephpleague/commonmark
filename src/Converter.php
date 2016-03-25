@@ -60,4 +60,18 @@ class Converter
 
         return $this->htmlRenderer->renderBlock($documentAST);
     }
+
+    /**
+     * Converts CommonMark to HTML.
+     *
+     * @see Converter::convertToHtml
+     *
+     * @param $commonMark
+     *
+     * @return string
+     */
+    public function __invoke($commonMark)
+    {
+        return $this->convertToHtml($commonMark);
+    }
 }
