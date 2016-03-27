@@ -70,14 +70,6 @@ abstract class AbstractBlock extends Node
     }
 
     /**
-     * @return AbstractBlock|null
-     */
-    public function parent()
-    {
-        return parent::parent();
-    }
-
-    /**
      * @param Node|null $node
      */
     protected function setParent(Node $node = null)
