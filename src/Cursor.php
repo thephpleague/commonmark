@@ -195,7 +195,7 @@ class Cursor
         $this->firstNonSpaceCache = null;
 
         $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, 'utf-8');
-        if ($characters === 1) {
+        if ($characters === 1 && !empty($nextFewChars)) {
             $asArray = [$nextFewChars];
         } else {
             $asArray = preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
