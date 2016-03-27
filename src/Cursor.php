@@ -182,17 +182,18 @@ class Cursor
      */
     public function advanceBy($characters, $advanceByColumns = false)
     {
-        if ($characters === 0) {
-            return;
-        }
-
         $this->firstNonSpaceCache = null;
 
         $cols = 0;
         $relPos = -1;
 
         $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, 'utf-8');
-        $asArray = preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
+        if ($characters === 1) {
+            $asArray = [$nextFewChars];
+        } else {
+            $asArray = preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
+        }
+
         foreach ($asArray as $relPos => $char) {
             if ($char === "\t") {
                 $cols += (4 - (($this->column + $cols) % 4));
@@ -282,7 +283,7 @@ class Cursor
         if ($this->isAtEnd()) {
             return '';
         } else {
-            return mb_substr($this->line, $this->currentPosition, $this->length, 'utf-8');
+            return mb_substr($this->line, $this->currentPosition, null, 'utf-8');
         }
     }
 
