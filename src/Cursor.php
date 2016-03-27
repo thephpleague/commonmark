@@ -187,10 +187,6 @@ class Cursor
      */
     public function advanceBy($characters, $advanceByColumns = false)
     {
-        if ($characters === 0) {
-            return;
-        }
-
         $this->previousPosition = $this->currentPosition;
         $this->firstNonSpaceCache = null;
 
