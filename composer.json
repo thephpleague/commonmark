@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "erusev/parsedown": "~1.0",
-        "jgm/CommonMark": "0.24",
+        "jgm/CommonMark": "0.25",
         "michelf/php-markdown": "~1.4",
         "mikehaertl/php-shellcommand": "~1.2.0",
         "phpunit/phpunit": "~4.3|~5.0",
@@ -37,9 +37,9 @@
             "type": "package",
             "package": {
                 "name": "jgm/CommonMark",
-                "version": "0.24",
+                "version": "0.25",
                 "dist": {
-                    "url": "https://raw.githubusercontent.com/jgm/CommonMark/0.24/spec.txt",
+                    "url": "https://raw.githubusercontent.com/jgm/CommonMark/69f680f01216a87051b020d6706766c7eff52bc2/spec.txt",
                     "type": "file"
                 }
             }

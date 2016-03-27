@@ -38,9 +38,7 @@ class BlockQuoteParser extends AbstractBlockParser
 
         $cursor->advanceToFirstNonSpace();
         $cursor->advance();
-        if ($cursor->getCharacter() === ' ') {
-            $cursor->advance();
-        }
+        $cursor->advanceBySpaceOrTab();
 
         $context->addBlock(new BlockQuote());
 
