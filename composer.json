@@ -39,7 +39,7 @@
                 "name": "jgm/CommonMark",
                 "version": "0.25",
                 "dist": {
-                    "url": "https://raw.githubusercontent.com/jgm/CommonMark/0.25/spec.txt",
+                    "url": "https://raw.githubusercontent.com/jgm/CommonMark/69f680f01216a87051b020d6706766c7eff52bc2/spec.txt",
                     "type": "file"
                 }
             }
