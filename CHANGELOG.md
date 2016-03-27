@@ -4,6 +4,18 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.13.2] - 2016-03-27
+
+### Added
+ - Added ability to invoke `Converter` as a function (#233, #239)
+ - Added new `advanceBySpaceOrTab` convenience method to `Cursor`
+
+### Changed
+ - Bumped spec target version to 0.25
+ - Adjusted how tabs are handled by the `Cursor` (#234)
+ - Made a couple small micro-optimizations to heavily used functions (#240)
+ - Updated URLs in docblocks to use HTTPS where possible (#238)
+
 ## [0.13.1] - 2016-03-09
 
 ### Changed
@@ -389,7 +401,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.13.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.13.2...HEAD
+[0.13.2]: https://github.com/thephpleague/commonmark/compare/0.13.1...0.13.2
 [0.13.1]: https://github.com/thephpleague/commonmark/compare/0.13.0...0.13.1
 [0.13.0]: https://github.com/thephpleague/commonmark/compare/0.12.0...0.13.0
 [0.12.0]: https://github.com/thephpleague/commonmark/compare/0.11.3...0.12.0
