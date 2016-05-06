@@ -5,9 +5,9 @@ title: Introduction
 
 # Introduction
 
-[![Author](http://img.shields.io/badge/author-@colinodell-blue.svg?style=flat-square)](https://twitter.com/colinodell)
-[![Source Code](http://img.shields.io/badge/source-thephpleague%2Fcommonmark-blue.svg?style=flat-square)](https://github.com/thephpleague/commonmark)
-[![Latest Version](http://img.shields.io/packagist/v/league/commonmark.svg?style=flat-square)](https://github.com/thephpleague/commonmark/releases)
+[![Author](https://img.shields.io/badge/author-@colinodell-blue.svg?style=flat-square)](https://twitter.com/colinodell)
+[![Source Code](https://img.shields.io/badge/source-thephpleague%2Fcommonmark-blue.svg?style=flat-square)](https://github.com/thephpleague/commonmark)
+[![Latest Version](https://img.shields.io/packagist/v/league/commonmark.svg?style=flat-square)](https://github.com/thephpleague/commonmark/releases)
 [![Software License](https://img.shields.io/badge/license-BSD--3-orange.svg?style=flat-square)](https://github.com/thephpleague/commonmark/blob/master/LICENSE)<br />
 [![Build Status](https://img.shields.io/travis/thephpleague/commonmark/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/commonmark)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark/code-structure)
@@ -32,4 +32,4 @@ An updated list of pre-built integrations and extensions can be found in the [Re
 
 ## Questions?
 
-This library was created by [Colin O'Dell](http://www.colinodell.com). Find him on Twitter at [@colinodell](https://twitter.com/colinodell).
+This library was created by [Colin O'Dell](https://www.colinodell.com). Find him on Twitter at [@colinodell](https://twitter.com/colinodell).
