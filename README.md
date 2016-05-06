@@ -3,7 +3,7 @@
 [![Join the chat at https://gitter.im/thephpleague/commonmark](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/thephpleague/commonmark?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Latest Version](https://img.shields.io/packagist/v/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
-[![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE)
+[![Software License](https://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://img.shields.io/travis/thephpleague/commonmark/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/commonmark)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark)
@@ -78,7 +78,7 @@ echo $converter->convertToHtml($markdown);
 
 This approach allows you to access/modify the AST before rendering it.
 
-You can also add custom parsers/renderers by [registering them with the `Environment` class](http://commonmark.thephpleague.com/customization/environment/).
+You can also add custom parsers/renderers by [registering them with the `Environment` class](https://commonmark.thephpleague.com/customization/environment/).
 The [documentation][docs] provides several [customization examples][docs-examples] such as:
 
 - [Parsing Twitter handles into profile links][docs-example-twitter]
@@ -103,7 +103,7 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 
 ### CommonMark Extras
 
-You can find several examples of useful extensions and customizations in the [league/commonmark-extras package](https://github.com/thephpleague/commonmark-extras).  You can add them to your parser or use them as examples to [develop your own custom features](http://commonmark.thephpleague.com/customization/overview/).
+You can find several examples of useful extensions and customizations in the [league/commonmark-extras package](https://github.com/thephpleague/commonmark-extras).  You can add them to your parser or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
 
 ### Community Extensions
 
@@ -249,10 +249,10 @@ This code is a port of the [CommonMark JS reference implementation][commonmark.j
 [CommonMark spec]: http://spec.commonmark.org/
 [commonmark.js]: https://github.com/jgm/commonmark.js
 [John MacFarlane]: http://johnmacfarlane.net
-[docs]: http://commonmark.thephpleague.com/
-[docs-examples]: http://commonmark.thephpleague.com/customization/overview/#examples
-[docs-example-twitter]: http://commonmark.thephpleague.com/customization/inline-parsing#example-1---twitter-handles
-[docs-example-smilies]: http://commonmark.thephpleague.com/customization/inline-parsing#example-2---emoticons
+[docs]: https://commonmark.thephpleague.com/
+[docs-examples]: https://commonmark.thephpleague.com/customization/overview/#examples
+[docs-example-twitter]: https://commonmark.thephpleague.com/customization/inline-parsing#example-1---twitter-handles
+[docs-example-smilies]: https://commonmark.thephpleague.com/customization/inline-parsing#example-2---emoticons
 [All Contributors]: https://github.com/thephpleague/commonmark/contributors
 [@colinodell]: https://github.com/colinodell
 [@jgm]: https://github.com/jgm
