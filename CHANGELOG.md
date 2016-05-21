@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.13.3] - 2016-05-21
+
+### Added
+ - Added `setUrl()` method for `Link` and `Image` elements (#227, #244)
+ - Added cebe/markdown to the benchmark tool (#245)
+
 ## [0.13.2] - 2016-03-27
 
 ### Added
