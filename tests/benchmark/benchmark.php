@@ -33,6 +33,18 @@ $parsers = [
         $parser = new Parsedown();
         $parser->text($markdown);
     },
+    'cebe/markdown' => function ($markdown) {
+        $parser = new \cebe\markdown\Markdown();
+        $parser->parse($markdown);
+    },
+    'cebe/markdown gfm' => function ($markdown) {
+        $parser = new \cebe\markdown\GithubMarkdown();
+        $parser->parse($markdown);
+    },
+    'cebe/markdown extra' => function ($markdown) {
+        $parser = new \cebe\markdown\MarkdownExtra();
+        $parser->parse($markdown);
+    },
 ];
 
 $iterations = 20;
@@ -54,5 +66,5 @@ printf("===================================\n");
 printf("Here are the average parsing times:\n", $iterations);
 printf("===================================\n");
 foreach ($results as $name => $ms) {
-    printf("%-18s | %4d ms\n", $name, $ms);
+    printf("%-19s | %4d ms\n", $name, $ms);
 }
