@@ -206,15 +206,15 @@ $ ./tests/benchmark/benchmark.php
 
 ## Versioning
 
-[SemVer](http://semver.org/) will be followed closely.  0.x versions will introduce breaking changes, so be careful which version constraints you use.  **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatiblity**; for example: `^0.12`.  This is equivalent to `>=0.12.0 <0.13.0`.
+[SemVer](http://semver.org/) will be followed closely.  0.x.0 versions will introduce breaking changes, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.12`.  This is equivalent to `>=0.12.0 <0.13.0`.
 
 If you're only using the `CommonMarkConverter` class to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.12`, `>0.12`, etc.  I personally promise to never break this specific class in any future 0.x release.
 
 ## Stability
 
-While this package does work well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future, which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
+While this package does work well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
 
-Major release 1.0.0 will be reserved for when both CommonMark and this project are considered stable (see [outstanding CommonMark spec issues](http://talk.commonmark.org/t/issues-to-resolve-before-1-0-release/1287)).   0.x.x will be used until that happens.
+Major release 1.0.0 will be reserved for when both CommonMark and this project are considered stable (see [outstanding CommonMark spec issues](http://talk.commonmark.org/t/issues-to-resolve-before-1-0-release/1287)).  0.x.y will be used until that happens.
 
 ## Contributing
 
@@ -232,7 +232,7 @@ Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/master
 
 ## Security
 
-If you discover any security related issues, please email colinodell@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email your report privately to colinodell@gmail.com instead of using the issue tracker.
 
 ## Credits & Acknowledgements
 
