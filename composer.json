@@ -21,6 +21,7 @@
         "ext-mbstring": "*"
     },
     "require-dev": {
+        "cebe/markdown": "~1.0",
         "erusev/parsedown": "~1.0",
         "jgm/CommonMark": "0.25",
         "michelf/php-markdown": "~1.4",
