@@ -407,7 +407,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.13.2...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.13.3...HEAD
+[0.13.3]: https://github.com/thephpleague/commonmark/compare/0.13.1...0.13.3
 [0.13.2]: https://github.com/thephpleague/commonmark/compare/0.13.1...0.13.2
 [0.13.1]: https://github.com/thephpleague/commonmark/compare/0.13.0...0.13.1
 [0.13.0]: https://github.com/thephpleague/commonmark/compare/0.12.0...0.13.0
