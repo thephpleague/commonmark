@@ -24,7 +24,7 @@
 This project can be installed via [Composer]:
 
 ``` bash
-$ composer require league/commonmark:^0.13
+$ composer require league/commonmark
 ```
 
 See [Versioning](#versioning) for important information on which version constraints you should use.
