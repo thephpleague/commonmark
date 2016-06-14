@@ -157,7 +157,7 @@ function requireAutoloader()
         // Local package usage
         __DIR__ . '/../vendor/autoload.php',
         // Package was included as a library
-        __DIR__ . '/../../../vendor/autoload.php',
+        __DIR__ . '/../../../autoload.php',
     ];
     foreach ($autoloadPaths as $path) {
         if (file_exists($path)) {
