@@ -4,6 +4,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Added
+ - Added new `html_input` option to handle untrusted HTML input (#253)
+   - The `safe` option is kept for backward compatibility and still controls if unsafe links are preserved or not
+   - To use the new option, set it to `strip`, `allow` or `escape`
+
 ## [0.13.4] - 2016-06-14
 
 ### Fixed

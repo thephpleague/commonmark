@@ -62,7 +62,7 @@ $environment = Environment::createCommonMarkEnvironment();
 // For example:  $environment->addInlineParser(new TwitterHandleParser());
 
 // Define your configuration:
-$config = ['safe' => true];
+$config = ['html_input' => 'escape'];
 
 // Create the converter
 $converter = new CommonMarkConverter($config, $environment);
