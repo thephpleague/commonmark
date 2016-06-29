@@ -65,6 +65,52 @@ class ImageRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($result->getAttribute('title'));
     }
 
+    public function testRenderAllowUnsafeLink()
+    {
+        $this->renderer->setConfiguration(new Configuration([
+            'allow_unsafe_links' => true,
+        ]));
+
+        $inline = new Image('javascript:void(0)');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertContains('javascript:void(0)', $result->getAttribute('src'));
+        $this->assertContains('::escape::', $result->getAttribute('src'));
+    }
+
+    public function testRenderDisallowUnsafeLink()
+    {
+        $this->renderer->setConfiguration(new Configuration([
+            'allow_unsafe_links' => false,
+        ]));
+
+        $inline = new Image('javascript:void(0)');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertEquals('', $result->getAttribute('src'));
+    }
+
+    public function testRenderUnsafeUrlWithSafeOption()
+    {
+        $this->renderer->setConfiguration(new Configuration([
+            'safe' => true,
+        ]));
+
+        $inline = new Image('javascript:void(0)');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertEquals('', $result->getAttribute('src'));
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */

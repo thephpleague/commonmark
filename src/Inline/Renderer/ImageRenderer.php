@@ -46,7 +46,8 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
             $attrs[$key] = $htmlRenderer->escape($value, true);
         }
 
-        if ($this->config->getConfig('safe') && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl())) {
+        $forbidUnsafeLinks = $this->config->getConfig('safe') || !$this->config->getConfig('allow_unsafe_links');
+        if ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl())) {
             $attrs['src'] = '';
         } else {
             $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);

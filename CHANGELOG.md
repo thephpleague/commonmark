@@ -5,9 +5,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased][unreleased]
 
 ### Added
- - Added new `html_input` option to handle untrusted HTML input (#253)
-   - The `safe` option is kept for backward compatibility and still controls if unsafe links are preserved or not
-   - To use the new option, set it to `strip`, `allow` or `escape`
+ - The `safe` option is deprecated and replaced by 2 new options (#253, #255):
+   - `html_input` (`strip`, `allow` or `escape`): how to handle untrusted HTML input (the default is `strip` for BC reasons)
+   - `allow_unsafe_links` (`true` or `false`): whether to allow risky image URLs and links (the default is `true` for BC reasons)
 
 ## [0.13.4] - 2016-06-14
 

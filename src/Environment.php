@@ -482,8 +482,9 @@ class Environment
                 'inner_separator' => "\n",
                 'soft_break'      => "\n",
             ],
-            'safe'       => false,
-            'html_input' => self::HTML_INPUT_ALLOW,
+            'safe'               => false, // deprecated option
+            'html_input'         => self::HTML_INPUT_ALLOW,
+            'allow_unsafe_links' => true,
         ]);
 
         return $environment;
