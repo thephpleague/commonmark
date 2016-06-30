@@ -50,7 +50,7 @@ class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareI
         }
 
         if ($this->config->getConfig('html_input') === Environment::HTML_INPUT_ESCAPE) {
-            return htmlentities($inline->getContent(), ENT_NOQUOTES);
+            return htmlspecialchars($inline->getContent(), ENT_NOQUOTES);
         }
 
         return $inline->getContent();

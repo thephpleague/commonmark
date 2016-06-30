@@ -51,7 +51,7 @@ class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInt
         }
 
         if ($this->config->getConfig('html_input') === Environment::HTML_INPUT_ESCAPE) {
-            return htmlentities($block->getStringContent(), ENT_NOQUOTES);
+            return htmlspecialchars($block->getStringContent(), ENT_NOQUOTES);
         }
 
         return $block->getStringContent();
