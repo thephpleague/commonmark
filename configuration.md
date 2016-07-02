@@ -24,7 +24,8 @@ $converter = new CommonMarkConverter([
     'enable_strong' => true,
     'use_asterisk' => true,
     'use_underscore' => true,
-    'safe' => false,
+    'html_input' => 'escape',
+    'allow_unsafe_links' => false,
 ]);
 ~~~
 
@@ -38,6 +39,14 @@ Here's a list of currently-supported options:
 * `enable_strong` - Disable `<strong>` parsing by setting to `false`; enable with `true` (default: `true`)
 * `use_asterisk` - Disable parsing of `*` for emphasis by setting to `false`; enable with `true` (default: `true`)
 * `use_underscore` - Disable parsing of `_` for emphasis by setting to `false`; enable with `true` (default: `true`)
+* `html_input` - How to handle HTML input.  Set this option to one of the following strings:
+  - `strip` - Strip all HTML (equivalent to `'safe' => true`)
+  - `allow` - Allow all HTML input as-is (default value; equivalent to `'safe' => false)
+  - `escape` - Escape all HTML
+* `allow_unsafe_links` - Remove risky link and image URLs by setting this to `false` (default: `true`)
+
+The following options have been deprecated.  They will no longer work once 1.0.0 is released:
+
 * `safe` - Prevents rendering of raw HTML if set to `true` (default: `false`)
 
 ## Environment
