@@ -27,7 +27,7 @@ This project can be installed via [Composer]:
 $ composer require league/commonmark
 ```
 
-See [Versioning](#versioning) for important information on which version constraints you should use.
+**Note:** See [Versioning](#versioning) for important information on which version constraints you should use.
 
 ## Basic Usage
 
@@ -206,9 +206,9 @@ $ ./tests/benchmark/benchmark.php
 
 ## Versioning
 
-[SemVer](http://semver.org/) will be followed closely.  0.x.0 versions will introduce breaking changes, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.12`.  This is equivalent to `>=0.12.0 <0.13.0`.
+[SemVer](http://semver.org/) will be followed closely.  0.x.0 versions will introduce breaking changes, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.14`.  This is equivalent to `>=0.14.0 <0.15.0`.
 
-If you're only using the `CommonMarkConverter` class to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.12`, `>0.12`, etc.  I personally promise to never break this specific class in any future 0.x release.
+If you're only using the `CommonMarkConverter` class to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.14`, `>0.14`, etc.  I personally promise to never break this specific class in any future 0.x release.
 
 ## Stability
 
