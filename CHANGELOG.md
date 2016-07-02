@@ -4,10 +4,14 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.14.0] - 2016-07-02
 ### Added
  - The `safe` option is deprecated and replaced by 2 new options (#253, #255):
    - `html_input` (`strip`, `allow` or `escape`): how to handle untrusted HTML input (the default is `strip` for BC reasons)
    - `allow_unsafe_links` (`true` or `false`): whether to allow risky image URLs and links (the default is `true` for BC reasons)
+
+### Deprecated
+ - The `safe` option is now deprecated and will be removed in the 1.0.0 release.
 
 ## [0.13.4] - 2016-06-14
 
@@ -417,7 +421,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.13.4...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.14.0...HEAD
+[0.14.0]: https://github.com/thephpleague/commonmark/compare/0.13.4...0.14.0
 [0.13.4]: https://github.com/thephpleague/commonmark/compare/0.13.3...0.13.4
 [0.13.3]: https://github.com/thephpleague/commonmark/compare/0.13.2...0.13.3
 [0.13.2]: https://github.com/thephpleague/commonmark/compare/0.13.1...0.13.2
