@@ -27,6 +27,10 @@ use League\CommonMark\Util\ConfigurationAwareInterface;
 
 class Environment
 {
+    const HTML_INPUT_STRIP = 'strip';
+    const HTML_INPUT_ESCAPE = 'escape';
+    const HTML_INPUT_ALLOW = 'allow';
+
     /**
      * @var ExtensionInterface[]
      */
@@ -478,7 +482,9 @@ class Environment
                 'inner_separator' => "\n",
                 'soft_break'      => "\n",
             ],
-            'safe' => false,
+            'safe'               => false, // deprecated option
+            'html_input'         => self::HTML_INPUT_ALLOW,
+            'allow_unsafe_links' => true,
         ]);
 
         return $environment;

@@ -15,6 +15,7 @@
 namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Environment;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\Util\Configuration;
@@ -39,8 +40,17 @@ class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareI
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
+        // Kept for BC reasons
         if ($this->config->getConfig('safe') === true) {
             return '';
+        }
+
+        if ($this->config->getConfig('html_input') === Environment::HTML_INPUT_STRIP) {
+            return '';
+        }
+
+        if ($this->config->getConfig('html_input') === Environment::HTML_INPUT_ESCAPE) {
+            return htmlspecialchars($inline->getContent(), ENT_NOQUOTES);
         }
 
         return $inline->getContent();

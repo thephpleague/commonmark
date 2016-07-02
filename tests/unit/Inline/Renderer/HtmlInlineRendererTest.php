@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Tests\Unit\Inline\Renderer;
 
+use League\CommonMark\Environment;
 use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\Inline\Renderer\HtmlInlineRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
@@ -47,6 +48,51 @@ class HtmlInlineRendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->renderer->setConfiguration(new Configuration([
             'safe' => true,
+        ]));
+
+        $inline = new HtmlInline('<h1>Test</h1>');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
+        $this->assertInternalType('string', $result);
+        $this->assertEquals('', $result);
+    }
+
+    public function testRenderAllowHtml()
+    {
+        $this->renderer->setConfiguration(new Configuration([
+            'html_input' => Environment::HTML_INPUT_ALLOW,
+        ]));
+
+        $inline = new HtmlInline('<h1>Test</h1>');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
+        $this->assertInternalType('string', $result);
+        $this->assertContains('<h1>Test</h1>', $result);
+    }
+
+    public function testRenderEscapeHtml()
+    {
+        $this->renderer->setConfiguration(new Configuration([
+            'html_input' => Environment::HTML_INPUT_ESCAPE,
+        ]));
+
+        $inline = new HtmlInline('<h1 class="test">Test</h1>');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
+        $this->assertInternalType('string', $result);
+        $this->assertContains('&lt;h1 class="test"&gt;Test&lt;/h1&gt;', $result);
+    }
+
+    public function testRenderStripHtml()
+    {
+        $this->renderer->setConfiguration(new Configuration([
+            'html_input' => Environment::HTML_INPUT_STRIP,
         ]));
 
         $inline = new HtmlInline('<h1>Test</h1>');
