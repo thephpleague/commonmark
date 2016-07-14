@@ -6,6 +6,13 @@
     </table>
 {%- endblock %}
 
+{% block table_caption -%}
+    {% if node.id -%}
+        {% set attributes = { id: node.id } -%}
+    {% endif -%}
+    <caption{{ block('_attributes') }}>{% set attributes = none %}{{- block('_inline_children') -}}</caption>
+{%- endblock %}
+
 {% block table_rows -%}
     <{{node.type}}{{ block('_attributes') }}>
         {{- options.inner_separator|default("\n") -}}

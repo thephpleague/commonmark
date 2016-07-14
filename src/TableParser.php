@@ -22,6 +22,7 @@ class TableParser extends AbstractBlockParser
 {
     const REGEXP_DEFINITION = '/(?: *(:?) *-+ *(:?) *)+(?=\||$)/';
     const REGEXP_CELLS = '/(?:`[^`]*`|\\\\\\\\|\\\\\||[^|`\\\\]+)+(?=\||$)/';
+    const REGEXP_CAPTION = '/^\[(.+?)\](?:\[(.+)\])?\s*$/';
 
     public function parse(ContextInterface $context, Cursor $cursor)
     {
@@ -42,14 +43,24 @@ class TableParser extends AbstractBlockParser
         }
 
         $columns = $this->parseColumns($match);
-        $row = $this->parseRow(trim(array_pop($lines)), $columns, TableCell::TYPE_HEAD);
-        if (null === $row) {
+        $head = $this->parseRow(trim(array_pop($lines)), $columns, TableCell::TYPE_HEAD);
+        if (null === $head) {
             return false;
         }
 
         $table = new Table(function (Cursor $cursor) use (&$table, $columns) {
             $row = $this->parseRow($cursor->getLine(), $columns);
             if (null === $row) {
+                if (null !== $table->getCaption()) {
+                    return false;
+                }
+
+                if (null !== ($caption = $this->parseCaption($cursor->getLine()))) {
+                    $table->setCaption($caption);
+
+                    return true;
+                }
+
                 return false;
             }
 
@@ -58,7 +69,7 @@ class TableParser extends AbstractBlockParser
             return true;
         });
 
-        $table->getHead()->appendChild($row);
+        $table->getHead()->appendChild($head);
 
         if (count($lines) >= 1) {
             $paragraph = new Paragraph();
@@ -110,5 +121,16 @@ class TableParser extends AbstractBlockParser
         }
 
         return $row;
+    }
+
+    private function parseCaption($line)
+    {
+        $caption = RegexHelper::matchAll(self::REGEXP_CAPTION, $line);
+
+        if (null === $caption) {
+            return;
+        }
+
+        return new TableCaption($caption[1], $caption[2]);
     }
 }

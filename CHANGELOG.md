@@ -4,6 +4,7 @@ CHANGELOG
 0.5.0 (2016-07-13)
 ------------------
 
+ * Added support for table caption (MultiMarkdown)
  * Added a template for twig renderer
  * Updated to the commonmark 0.14 API
 

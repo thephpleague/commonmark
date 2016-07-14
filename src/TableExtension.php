@@ -27,6 +27,7 @@ class TableExtension extends Extension
     {
         return [
             __NAMESPACE__.'\\Table' => new TableRenderer(),
+            __NAMESPACE__.'\\TableCaption' => new TableCaptionRenderer(),
             __NAMESPACE__.'\\TableRows' => new TableRowsRenderer(),
             __NAMESPACE__.'\\TableRow' => new TableRowRenderer(),
             __NAMESPACE__.'\\TableCell' => new TableCellRenderer(),

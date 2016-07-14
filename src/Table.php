@@ -30,7 +30,7 @@ class Table extends AbstractBlock
 
     public function canContain(AbstractBlock $block)
     {
-        return $block instanceof TableRows;
+        return $block instanceof TableRows || $block instanceof TableCaption;
     }
 
     public function acceptsLines()
@@ -41,6 +41,27 @@ class Table extends AbstractBlock
     public function isCode()
     {
         return false;
+    }
+
+    public function setCaption(TableCaption $caption = null)
+    {
+        $node = $this->getCaption();
+        if ($node instanceof TableCaption) {
+            $node->detach();
+        }
+
+        if ($caption instanceof TableCaption) {
+            $this->prependChild($caption);
+        }
+    }
+
+    public function getCaption()
+    {
+        foreach ($this->children() as $child) {
+            if ($child instanceof TableCaption) {
+                return $child;
+            }
+        }
     }
 
     public function getHead()
