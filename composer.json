@@ -20,6 +20,7 @@
         "webuni/commonmark-twig-renderer": "dev-master",
         "phpunit/phpunit": "^4.3|^5.0",
         "friendsofphp/php-cs-fixer": "^1.9",
+        "sllh/php-cs-fixer-styleci-bridge": "^2.0",
         "symfony/var-dumper": "^2.7|^3.0"
     },
     "autoload": {

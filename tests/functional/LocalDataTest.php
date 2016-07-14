@@ -4,6 +4,7 @@
  * This is part of the webuni/commonmark-table-extension package.
  *
  * (c) Martin Hasoň <martin.hason@gmail.com>
+ * (c) Webuni s.r.o. <info@webuni.cz>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -57,7 +58,6 @@ class LocalDataTest extends \PHPUnit_Framework_TestCase
             'strict_variables' => true,
         ]);
         $twig->addExtension(new CommonMarkTwigExtension());
-
 
         $this->environment->mergeConfig(['renderer' => ['twig_template' => 'template.html.twig']]);
         $renderer = new TwigRenderer($this->environment, $twig);
