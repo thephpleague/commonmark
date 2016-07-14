@@ -1,9 +1,6 @@
-preset: recommended
+preset: symfony
 
 enabled:
-  - concat_with_spaces
-  - strict
-
-disabled:
-  - concat_without_spaces
-  - phpdoc_short_description
+  - newline_after_open_tag
+  - ordered_use
+  - short_array_syntax

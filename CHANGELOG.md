@@ -1,10 +1,11 @@
 CHANGELOG
 =========
 
-0.5.0 (2015-09-28)
+0.5.0 (2016-07-13)
 ------------------
 
- * Added a template for twig renderer 
+ * Added a template for twig renderer
+ * Updated to the commonmark 0.14 API
 
 0.4.0 (2015-09-21)
 ------------------

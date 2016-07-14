@@ -3,6 +3,7 @@ CommonMark Table Extension
 
 [![Packagist](https://img.shields.io/packagist/v/webuni/commonmark-table-extension.svg?style=flat-square)](https://packagist.org/packages/webuni/commonmark-table-extension)
 [![Build Status](https://img.shields.io/travis/webuni/commonmark-table-extension.svg?style=flat-square)](https://travis-ci.org/webuni/commonmark-table-extension)
+[![StyleCI](https://styleci.io/repos/36301048/shield)](https://styleci.io/repos/36301048)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/webuni/commonmark-table-extension.svg?style=flat-square)](https://scrutinizer-ci.com/g/webuni/commonmark-table-extension)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/d7a0bce6-6a3a-4b3c-abb1-0b69ad10513b.svg?style=flat-square)](https://insight.sensiolabs.com/projects/d7a0bce6-6a3a-4b3c-abb1-0b69ad10513b)
 

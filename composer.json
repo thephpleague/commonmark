@@ -13,14 +13,14 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "league/commonmark": "^0.11|^0.12|^0.13"
+        "php": "^5.5|^7.0",
+        "league/commonmark": "^0.11|^0.12|^0.13|^0.14"
     },
     "require-dev": {
-        "webuni/commonmark-twig-renderer": "~0.1",
-        "phpunit/phpunit": "^4.3",
-        "fabpot/php-cs-fixer": "^1.9",
-        "symfony/var-dumper": "^2.7"
+        "webuni/commonmark-twig-renderer": "dev-master",
+        "phpunit/phpunit": "^4.3|^5.0",
+        "friendsofphp/php-cs-fixer": "^1.9",
+        "symfony/var-dumper": "^2.7|^3.0"
     },
     "autoload": {
         "psr-4": {
@@ -29,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.4-dev"
+            "dev-master": "0.5-dev"
         }
     }
 }
