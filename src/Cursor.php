@@ -204,7 +204,7 @@ class Cursor
                 $charsToAdvance = $charsToTab > $characters ? $characters : $charsToTab;
                 $this->column += $charsToAdvance;
                 $this->currentPosition += $this->partiallyConsumedTab ? 0 : 1;
-                $characters -= ($advanceByColumns ? $charsToAdvance : 1);
+                $characters -= $charsToAdvance;
             } else {
                 $this->partiallyConsumedTab = false;
                 $this->currentPosition++;
