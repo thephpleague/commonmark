@@ -175,7 +175,7 @@ class RegexHelper
      */
     public function getThematicBreakRegex()
     {
-        return '/^(?:(?:\* *){3,}|(?:_ *){3,}|(?:- *){3,}) *$/';
+        return '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})[ \t]*$/';
     }
 
     /**

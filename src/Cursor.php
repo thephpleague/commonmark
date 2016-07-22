@@ -292,6 +292,21 @@ class Cursor
     }
 
     /**
+     * Move the position to the very end of the line
+     *
+     * @return int The number of characters moved
+     */
+    public function advanceToEnd()
+    {
+        $this->previousPosition = $this->currentPosition;
+        $this->firstNonSpaceCache = null;
+
+        $this->currentPosition = $this->length;
+
+        return $this->currentPosition - $this->previousPosition;
+    }
+
+    /**
      * @return string
      */
     public function getRemainder()
