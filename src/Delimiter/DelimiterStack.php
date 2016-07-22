@@ -140,8 +140,13 @@ class DelimiterStack
                 continue;
             }
 
-            $opener = $this->findFirstMatchingOpener($closer, $openersBottom, $stackBottom);
-            if (!$opener) {
+            $oddMatch = false;
+            $opener = $this->findMatchingOpener($closer, $openersBottom, $stackBottom, $oddMatch);
+            if ($opener) {
+                $closer = $callback($opener, $closer, $this);
+            } elseif ($oddMatch) {
+                $closer = $closer->getNext();
+            } else {
                 $oldCloser = $closer;
                 $closer = $closer->getNext();
                 // Set lower bound for future searches for openers:
@@ -153,8 +158,29 @@ class DelimiterStack
                 }
                 continue;
             }
+        }
+    }
 
-            $closer = $callback($opener, $closer, $this);
+    /**
+     * @param Delimiter      $closer
+     * @param array          $openersBottom
+     * @param Delimiter|null $stackBottom
+     * @param bool           $oddMatch
+     *
+     * @return Delimiter|null
+     */
+    protected function findMatchingOpener(Delimiter $closer, $openersBottom, Delimiter $stackBottom = null, &$oddMatch = false)
+    {
+        $closerChar = $closer->getChar();
+        $opener = $closer->getPrevious();
+
+        while ($opener !== null && $opener !== $stackBottom && $opener !== $openersBottom[$closerChar]) {
+            $oddMatch = ($closer->canOpen() || $opener->canClose()) && ($opener->getNumDelims() + $closer->getNumDelims()) % 3 === 0;
+            if ($opener->getChar() === $closerChar && $opener->canOpen() && !$oddMatch) {
+                return $opener;
+            }
+
+            $opener = $opener->getPrevious();
         }
     }
 
@@ -164,6 +190,8 @@ class DelimiterStack
      * @param Delimiter|null $stackBottom
      *
      * @return Delimiter|null
+     *
+     * @deprecated Use findMatchingOpener() instead.  This method will be removed in the next major release.
      */
     protected function findFirstMatchingOpener(Delimiter $closer, $openersBottom, Delimiter $stackBottom = null)
     {
