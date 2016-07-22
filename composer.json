@@ -40,8 +40,8 @@
                 "name": "jgm/CommonMark",
                 "version": "0.26",
                 "dist": {
-                    "url": "https://raw.githubusercontent.com/jgm/CommonMark/0.26/spec.txt",
-                    "type": "file"
+                    "url": "https://github.com/jgm/commonmark.js/archive/0.26.0.zip",
+                    "type": "zip"
                 }
             }
         }
