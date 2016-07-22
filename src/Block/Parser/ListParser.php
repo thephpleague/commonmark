@@ -64,6 +64,11 @@ class ListParser extends AbstractBlockParser
             return false;
         }
 
+        // If it interrupts paragraph, make sure first line isn't blank
+        if ($context->getContainer() instanceof Paragraph && !RegexHelper::matchAt(RegexHelper::REGEX_NON_SPACE, $rest, $markerLength)) {
+            return false;
+        }
+
         // We've got a match! Advance offset and calculate padding
         $cursor->advanceToFirstNonSpace(); // to start of marker
         $cursor->advanceBy($markerLength, true); // to end of marker

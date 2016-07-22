@@ -56,6 +56,7 @@ class RegexHelper
     const REGEX_PUNCTUATION = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
     const REGEX_UNSAFE_PROTOCOL = '/^javascript:|vbscript:|file:|data:/i';
     const REGEX_SAFE_DATA_PROTOCOL = '/^data:image\/(?:png|gif|jpeg|webp)/i';
+    const REGEX_NON_SPACE = '/[^ \t\f\v\r\n]/';
 
     protected $regex = [];
 
