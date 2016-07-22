@@ -17,6 +17,7 @@ namespace League\CommonMark\Block\Parser;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\ListData;
 use League\CommonMark\Block\Element\ListItem;
+use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
@@ -46,7 +47,7 @@ class ListParser extends AbstractBlockParser
             $data->type = ListBlock::TYPE_UNORDERED;
             $data->delimiter = null;
             $data->bulletChar = $matches[0][0];
-        } elseif ($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) {
+        } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (!($context->getContainer() instanceof Paragraph) || $matches[1] === '1')) {
             $data->type = ListBlock::TYPE_ORDERED;
             $data->start = intval($matches[1]);
             $data->delimiter = $matches[2];
