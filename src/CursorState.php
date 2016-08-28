@@ -49,6 +49,11 @@ class CursorState
     private $column;
 
     /**
+     * @var bool
+     */
+    private $partiallyConsumedTab;
+
+    /**
      * @param string   $line
      * @param int      $length
      * @param int      $currentPosition
@@ -56,8 +61,9 @@ class CursorState
      * @param int|null $firstNonSpaceCache
      * @param int      $indent
      * @param int      $column
+     * @param bool     $partiallyConsumedTab
      */
-    public function __construct($line, $length, $currentPosition, $previousPosition, $firstNonSpaceCache, $indent, $column)
+    public function __construct($line, $length, $currentPosition, $previousPosition, $firstNonSpaceCache, $indent, $column, $partiallyConsumedTab)
     {
         $this->line = $line;
         $this->length = $length;
@@ -66,6 +72,7 @@ class CursorState
         $this->firstNonSpaceCache = $firstNonSpaceCache;
         $this->indent = $indent;
         $this->column = $column;
+        $this->partiallyConsumedTab = $partiallyConsumedTab;
     }
 
     /**
@@ -122,5 +129,13 @@ class CursorState
     public function getColumn()
     {
         return $this->column;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getPartiallyConsumedTab()
+    {
+        return $this->partiallyConsumedTab;
     }
 }

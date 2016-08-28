@@ -382,7 +382,8 @@ class Cursor
             $this->previousPosition,
             $this->firstNonSpaceCache,
             $this->indent,
-            $this->column
+            $this->column,
+            $this->partiallyConsumedTab
         );
     }
 
@@ -398,6 +399,7 @@ class Cursor
         $this->firstNonSpaceCache = $state->getFirstNonSpaceCache();
         $this->column = $state->getColumn();
         $this->indent = $state->getIndent();
+        $this->partiallyConsumedTab = $state->getPartiallyConsumedTab();
     }
 
     /**
