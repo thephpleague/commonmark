@@ -56,6 +56,7 @@ class RegexHelper
     const REGEX_PUNCTUATION = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
     const REGEX_UNSAFE_PROTOCOL = '/^javascript:|vbscript:|file:|data:/i';
     const REGEX_SAFE_DATA_PROTOCOL = '/^data:image\/(?:png|gif|jpeg|webp)/i';
+    const REGEX_NON_SPACE = '/[^ \t\f\v\r\n]/';
 
     protected $regex = [];
 
@@ -175,7 +176,7 @@ class RegexHelper
      */
     public function getThematicBreakRegex()
     {
-        return '/^(?:(?:\* *){3,}|(?:_ *){3,}|(?:- *){3,}) *$/';
+        return '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})[ \t]*$/';
     }
 
     /**

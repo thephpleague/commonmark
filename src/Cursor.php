@@ -204,7 +204,7 @@ class Cursor
                 $charsToAdvance = $charsToTab > $characters ? $characters : $charsToTab;
                 $this->column += $charsToAdvance;
                 $this->currentPosition += $this->partiallyConsumedTab ? 0 : 1;
-                $characters -= ($advanceByColumns ? $charsToAdvance : 1);
+                $characters -= $charsToAdvance;
             } else {
                 $this->partiallyConsumedTab = false;
                 $this->currentPosition++;
@@ -292,6 +292,21 @@ class Cursor
     }
 
     /**
+     * Move the position to the very end of the line
+     *
+     * @return int The number of characters moved
+     */
+    public function advanceToEnd()
+    {
+        $this->previousPosition = $this->currentPosition;
+        $this->firstNonSpaceCache = null;
+
+        $this->currentPosition = $this->length;
+
+        return $this->currentPosition - $this->previousPosition;
+    }
+
+    /**
      * @return string
      */
     public function getRemainder()
@@ -367,7 +382,8 @@ class Cursor
             $this->previousPosition,
             $this->firstNonSpaceCache,
             $this->indent,
-            $this->column
+            $this->column,
+            $this->partiallyConsumedTab
         );
     }
 
@@ -383,6 +399,7 @@ class Cursor
         $this->firstNonSpaceCache = $state->getFirstNonSpaceCache();
         $this->column = $state->getColumn();
         $this->indent = $state->getIndent();
+        $this->partiallyConsumedTab = $state->getPartiallyConsumedTab();
     }
 
     /**

@@ -39,7 +39,7 @@ class ThematicBreakParser extends AbstractBlockParser
         }
 
         // Advance to the end of the string, consuming the entire line (of the thematic break)
-        $cursor->advanceBy(mb_strlen($cursor->getRemainder()));
+        $cursor->advanceToEnd();
 
         $context->addBlock(new ThematicBreak());
         $context->setBlocksParsed(true);

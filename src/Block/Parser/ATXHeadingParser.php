@@ -33,7 +33,7 @@ class ATXHeadingParser extends AbstractBlockParser
             return false;
         }
 
-        $match = RegexHelper::matchAll('/^#{1,6}(?: +|$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
+        $match = RegexHelper::matchAll('/^#{1,6}(?:[ \t]+|$)/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
         if (!$match) {
             return false;
         }

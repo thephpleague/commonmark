@@ -17,7 +17,6 @@ namespace League\CommonMark;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\InlineContainer;
-use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Node\NodeWalker;
 
@@ -105,11 +104,6 @@ class DocParser
         $this->resetContainer($context, $cursor);
         $context->getBlockCloser()->setLastMatchedContainer($context->getContainer());
 
-        // Check to see if we've hit 2nd blank line; if so break out of list:
-        if ($cursor->isBlank() && $context->getContainer()->endsWithBlankLine()) {
-            $this->breakOutOfLists($context, $context->getContainer());
-        }
-
         $this->parseBlocks($context, $cursor);
 
         // What remains at the offset is a text line.  Add the text to the appropriate container.
@@ -158,37 +152,6 @@ class DocParser
                 $this->inlineParserEngine->parse($node, $context->getDocument()->getReferenceMap());
             }
         }
-    }
-
-    /**
-     * Break out of all containing lists, resetting the tip of the
-     * document to the parent of the highest list, and finalizing
-     * all the lists.  (This is used to implement the "two blank lines
-     * break out of all lists" feature.)
-     *
-     * @param ContextInterface $context
-     * @param AbstractBlock    $block
-     */
-    private function breakOutOfLists(ContextInterface $context, AbstractBlock $block)
-    {
-        $b = $block;
-        $lastList = null;
-        do {
-            if ($b instanceof ListBlock) {
-                $lastList = $b;
-            }
-            $b = $b->parent();
-        } while ($b);
-
-        if ($lastList) {
-            while ($block !== $lastList) {
-                $block->finalize($context, $context->getLineNumber());
-                $block = $block->parent();
-            }
-            $lastList->finalize($context, $context->getLineNumber());
-        }
-
-        $context->setContainer($context->getTip());
     }
 
     /**
