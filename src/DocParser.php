@@ -17,7 +17,6 @@ namespace League\CommonMark;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\InlineContainer;
-use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Node\NodeWalker;
 
