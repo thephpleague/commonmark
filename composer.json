@@ -60,7 +60,7 @@
     "bin": ["bin/commonmark"],
     "extra": {
         "branch-alias": {
-            "dev-master": "0.15-dev"
+            "dev-master": "0.16-dev"
         }
     }
 }
