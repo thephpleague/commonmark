@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Webuni\CommonMark\TableExtension\tests\functional;
+namespace Webuni\CommonMark\TableExtension\Tests\Functional;
 
 use League\CommonMark\DocParser;
 use League\CommonMark\ElementRendererInterface;
