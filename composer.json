@@ -17,7 +17,6 @@
         "league/commonmark": "^0.11|^0.12|^0.13|^0.14"
     },
     "require-dev": {
-        "webuni/commonmark-twig-renderer": "dev-master",
         "phpunit/phpunit": "^4.3|^5.0",
         "friendsofphp/php-cs-fixer": "^1.9",
         "sllh/php-cs-fixer-styleci-bridge": "^2.0",

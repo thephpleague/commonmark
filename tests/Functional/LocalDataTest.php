@@ -17,8 +17,6 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
 use Webuni\CommonMark\TableExtension\TableExtension;
-use Webuni\CommonMark\TwigRenderer\CommonMarkTwigExtension;
-use Webuni\CommonMark\TwigRenderer\TwigRenderer;
 
 class LocalDataTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,31 +35,9 @@ class LocalDataTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testHtmlRenderer($markdown, $html, $testName)
+    public function testRenderer($markdown, $html, $testName)
     {
         $renderer = new HtmlRenderer($this->environment);
-        $this->assertCommonMark($renderer, $markdown, $html, $testName);
-    }
-
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testTwigRenderer($markdown, $html, $testName)
-    {
-        $loader = CommonMarkTwigExtension::createTwigLoader();
-
-        $ref = new \ReflectionClass('Webuni\CommonMark\TableExtension\TableExtension');
-        $loader->addPath(dirname($ref->getFileName()).'/Resources');
-        $loader->addPath(__DIR__);
-
-        $twig = new \Twig_Environment($loader, [
-            'strict_variables' => true,
-        ]);
-        $twig->addExtension(new CommonMarkTwigExtension());
-
-        $this->environment->mergeConfig(['renderer' => ['twig_template' => 'template.html.twig']]);
-        $renderer = new TwigRenderer($this->environment, $twig);
-
         $this->assertCommonMark($renderer, $markdown, $html, $testName);
     }
 
@@ -82,7 +58,7 @@ class LocalDataTest extends \PHPUnit_Framework_TestCase
         return $ret;
     }
 
-    private function assertCommonMark(ElementRendererInterface $renderer, $markdown, $html, $testName)
+    protected function assertCommonMark(ElementRendererInterface $renderer, $markdown, $html, $testName)
     {
         $documentAST = $this->parser->parse($markdown);
         $actualResult = $renderer->renderBlock($documentAST);
