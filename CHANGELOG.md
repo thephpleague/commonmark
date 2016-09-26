@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+0.6.0 (2016-09-26)
+------------------
+
+ * Updated to the commonmark 0.15 API
+ * Moved twig template to [webuni/commonmark-twig-renderer](https://packagist.org/packages/webuni/commonmark-twig-renderer)
+
 0.5.0 (2016-07-13)
 ------------------
 
