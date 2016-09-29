@@ -49,7 +49,7 @@ Here's a custom renderer which puts a special class on links to external sites:
 ~~~php
 <?php
 
-class MyCustomLinkRenderer implements BlockRendererInterface
+class MyCustomLinkRenderer implements InlineRendererInterface
 {
     private $host;
 
