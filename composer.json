@@ -6,7 +6,7 @@
         "league/commonmark": "^0.10.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.7"
+        "phpunit/phpunit": "*"
     },
     "license": "MIT",
     "authors": [
