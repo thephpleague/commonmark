@@ -4,6 +4,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.15.1] - 2016-11-08
+
+### Fixed
+ - Fixed setext heading underlines not allowing trailing tabs (#266)
+
 ## [0.15.0] - 2016-09-14
 
 ### Added
@@ -446,7 +451,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.1...HEAD
+[0.15.1]: https://github.com/thephpleague/commonmark/compare/0.15.0...0.15.1
 [0.15.0]: https://github.com/thephpleague/commonmark/compare/0.14.0...0.15.0
 [0.14.0]: https://github.com/thephpleague/commonmark/compare/0.13.4...0.14.0
 [0.13.4]: https://github.com/thephpleague/commonmark/compare/0.13.3...0.13.4
