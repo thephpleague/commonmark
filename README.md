@@ -246,6 +246,8 @@ If you discover any security related issues, please email your report privately 
 
 This code is a port of the [CommonMark JS reference implementation][commonmark.js] which is written, maintained and copyrighted by [John MacFarlane].  This project simply wouldn't exist without his work.
 
+Also a huge thank you to [JetBrains](https://www.jetbrains.com/) for supporting the development of this project with complimentary [PhpStorm](https://www.jetbrains.com/phpstorm/) licenses.
+
 ## License ##
 
 **league/commonmark** is licensed under the BSD-3 license.  See the `LICENSE` file for more details.
