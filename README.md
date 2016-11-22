@@ -210,7 +210,9 @@ $ ./tests/benchmark/benchmark.php
 
 ## Versioning
 
-[SemVer](http://semver.org/) will be followed closely.  0.x.0 versions will introduce breaking changes, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.15`.  This is equivalent to `>=0.15.0 <0.16.0`.
+[SemVer](http://semver.org/) will be followed closely.  0.x.0 versions will introduce breaking changes to the codebase, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.15`.  This is equivalent to `>=0.15.0 <0.16.0`.
+
+0.x.y releases should not introduce breaking changes to the codebase; however, they might change the resulting AST or HTML output of parsed Markdown (due to bug fixes, minor spec changes, etc.)  As a result, you might get slightly different HTML, but any custom code built onto this library will still function correctly.
 
 If you're only using the `CommonMarkConverter` class to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.15`, `>0.15`, etc.  I personally promise to never break this specific class in any future 0.x release.
 
