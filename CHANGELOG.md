@@ -4,6 +4,17 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.15.2] - 2016-11-22
+
+### Changed
+ - Bumped spec target version to 0.27 (#268)
+ - H2-H6 elements are now parsed as HTML block elements instead of HTML inlines
+
+### Fixed
+ - Fixed incomplete punctuation regex
+ - Fixed shortcut links not being allowed before a `(`
+ - Fixed distinction between Unicode whitespace and regular whitespace
+
 ## [0.15.1] - 2016-11-08
 
 ### Fixed
@@ -451,7 +462,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.2...HEAD
+[0.15.2]: https://github.com/thephpleague/commonmark/compare/0.15.1...0.15.2
 [0.15.1]: https://github.com/thephpleague/commonmark/compare/0.15.0...0.15.1
 [0.15.0]: https://github.com/thephpleague/commonmark/compare/0.14.0...0.15.0
 [0.14.0]: https://github.com/thephpleague/commonmark/compare/0.13.4...0.14.0
