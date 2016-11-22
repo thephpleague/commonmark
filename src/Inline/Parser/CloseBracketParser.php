@@ -124,15 +124,9 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     protected function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, $startPos)
     {
         // Check to see if we have a link/image
-        $previousState = $cursor->saveState();
-
         // Inline link?
-        if ($cursor->getCharacter() === '(') {
-            if ($result = $this->tryParseInlineLinkAndTitle($cursor)) {
-                return $result;
-            } else {
-                $cursor->restoreState($previousState);
-            }
+        if ($result = $this->tryParseInlineLinkAndTitle($cursor)) {
+            return $result;
         }
 
         if ($link = $this->tryParseReference($cursor, $referenceMap, $opener, $startPos)) {
@@ -149,9 +143,17 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      */
     protected function tryParseInlineLinkAndTitle(Cursor $cursor)
     {
+        if ($cursor->getCharacter() !== '(') {
+            return false;
+        }
+
+        $previousState = $cursor->saveState();
+
         $cursor->advance();
         $cursor->advanceToFirstNonSpace();
         if (($dest = LinkParserHelper::parseLinkDestination($cursor)) === null) {
+            $cursor->restoreState($previousState);
+
             return false;
         }
 
@@ -166,6 +168,8 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $cursor->advanceToFirstNonSpace();
 
         if ($cursor->match('/^\\)/') === null) {
+            $cursor->restoreState($previousState);
+
             return false;
         }
 
