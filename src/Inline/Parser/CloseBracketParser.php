@@ -123,12 +123,18 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     protected function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, $startPos)
     {
         // Check to see if we have a link/image
+        $previousState = $cursor->saveState();
+
         // Inline link?
         if ($cursor->getCharacter() === '(') {
             if ($result = $this->tryParseInlineLinkAndTitle($cursor)) {
                 return $result;
+            } else {
+                $cursor->restoreState($previousState);
             }
-        } elseif ($link = $this->tryParseReference($cursor, $referenceMap, $opener, $startPos)) {
+        }
+
+        if ($link = $this->tryParseReference($cursor, $referenceMap, $opener, $startPos)) {
             return ['url' => $link->getDestination(), 'title' => $link->getTitle()];
         }
 
