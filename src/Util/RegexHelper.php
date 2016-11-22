@@ -53,10 +53,15 @@ class RegexHelper
 
     const REGEX_ESCAPABLE = '[!"#$%&\'()*+,.\/:;<=>?@[\\\\\]^_`{|}~-]';
     const REGEX_ENTITY = '&(?:#x[a-f0-9]{1,8}|#[0-9]{1,8}|[a-z][a-z0-9]{1,31});';
-    const REGEX_PUNCTUATION = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
+    const REGEX_PUNCTUATION = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\p{Pc}\p{Pd}\p{Pe}\p{Pf}\p{Pi}\p{Po}\p{Ps}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
     const REGEX_UNSAFE_PROTOCOL = '/^javascript:|vbscript:|file:|data:/i';
     const REGEX_SAFE_DATA_PROTOCOL = '/^data:image\/(?:png|gif|jpeg|webp)/i';
     const REGEX_NON_SPACE = '/[^ \t\f\v\r\n]/';
+
+    const REGEX_WHITESPACE_CHAR = '/^[ \t\n\x0b\x0c\x0d]/';
+    const REGEX_WHITESPACE = '/[ \t\n\x0b\x0c\x0d]+/';
+    const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
+    const REGEX_UNICODE_WHITESPACE = '/\pZ|\s/u';
 
     protected $regex = [];
 
@@ -271,7 +276,7 @@ class RegexHelper
             case HtmlBlock::TYPE_5_CDATA:
                 return '/^<!\[CDATA\[/';
             case HtmlBlock::TYPE_6_BLOCK_ELEMENT:
-                return '%^<[/]?(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h1|head|header|hr|html|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|pre|section|source|title|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)(?:\s|[/]?[>]|$)%i';
+                return '%^<[/]?(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[123456]|head|header|hr|html|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|pre|section|source|title|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)(?:\s|[/]?[>]|$)%i';
             case HtmlBlock::TYPE_7_MISC_ELEMENT:
                 $self = self::getInstance();
 

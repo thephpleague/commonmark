@@ -26,6 +26,7 @@ use League\CommonMark\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Util\LinkParserHelper;
+use League\CommonMark\Util\RegexHelper;
 
 class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwareInterface
 {
@@ -124,11 +125,11 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     {
         // Check to see if we have a link/image
         // Inline link?
-        if ($cursor->getCharacter() === '(') {
-            if ($result = $this->tryParseInlineLinkAndTitle($cursor)) {
-                return $result;
-            }
-        } elseif ($link = $this->tryParseReference($cursor, $referenceMap, $opener, $startPos)) {
+        if ($result = $this->tryParseInlineLinkAndTitle($cursor)) {
+            return $result;
+        }
+
+        if ($link = $this->tryParseReference($cursor, $referenceMap, $opener, $startPos)) {
             return ['url' => $link->getDestination(), 'title' => $link->getTitle()];
         }
 
@@ -142,9 +143,17 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      */
     protected function tryParseInlineLinkAndTitle(Cursor $cursor)
     {
+        if ($cursor->getCharacter() !== '(') {
+            return false;
+        }
+
+        $previousState = $cursor->saveState();
+
         $cursor->advance();
         $cursor->advanceToFirstNonSpace();
         if (($dest = LinkParserHelper::parseLinkDestination($cursor)) === null) {
+            $cursor->restoreState($previousState);
+
             return false;
         }
 
@@ -152,13 +161,15 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $title = null;
         // make sure there's a space before the title:
-        if (preg_match('/^\\s/', $cursor->peek(-1))) {
+        if (preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $cursor->peek(-1))) {
             $title = LinkParserHelper::parseLinkTitle($cursor) ?: '';
         }
 
         $cursor->advanceToFirstNonSpace();
 
         if ($cursor->match('/^\\)/') === null) {
+            $cursor->restoreState($previousState);
+
             return false;
         }
 
