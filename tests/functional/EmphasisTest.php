@@ -2,26 +2,8 @@
 
 namespace League\CommonMark\Tests\Functional;
 
-use mikehaertl\shellcommand\Command;
-
-class EmphasisTest extends \PHPUnit_Framework_TestCase
+class EmphasisTest extends AbstractBinTest
 {
-    /**
-     * Returns the full path the commonmark "binary"
-     *
-     * @return string
-     */
-    protected function getPathToCommonmark()
-    {
-        $path = realpath(__DIR__ . '/../../bin/commonmark');
-
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $path = 'php ' . $path;
-        }
-
-        return $path;
-    }
-
     /**
      * Returns the full path to the test data file
      *
@@ -39,7 +21,7 @@ class EmphasisTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmStrong()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg($this->getPathToData('input.md'));
         $cmd->execute();
 
@@ -53,7 +35,7 @@ class EmphasisTest extends \PHPUnit_Framework_TestCase
      */
     public function testEm()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg('--enable-strong=', 0);
         $cmd->addArg($this->getPathToData('input.md'));
         $cmd->execute();
@@ -68,7 +50,7 @@ class EmphasisTest extends \PHPUnit_Framework_TestCase
      */
     public function testStrong()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg('--enable-em=', 0);
         $cmd->addArg($this->getPathToData('input.md'));
         $cmd->execute();
@@ -83,7 +65,7 @@ class EmphasisTest extends \PHPUnit_Framework_TestCase
      */
     public function testNone()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg('--enable-strong=', 0);
         $cmd->addArg('--enable-em=', 0);
         $cmd->addArg($this->getPathToData('input.md'));
@@ -99,7 +81,7 @@ class EmphasisTest extends \PHPUnit_Framework_TestCase
      */
     public function testAsterisks()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg('--use-underscore=', 0);
         $cmd->addArg($this->getPathToData('input.md'));
         $cmd->execute();
@@ -114,7 +96,7 @@ class EmphasisTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnderscores()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg('--use-asterisk=', 0);
         $cmd->addArg($this->getPathToData('input.md'));
         $cmd->execute();
