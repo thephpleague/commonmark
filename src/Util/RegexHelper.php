@@ -58,6 +58,11 @@ class RegexHelper
     const REGEX_SAFE_DATA_PROTOCOL = '/^data:image\/(?:png|gif|jpeg|webp)/i';
     const REGEX_NON_SPACE = '/[^ \t\f\v\r\n]/';
 
+    const REGEX_WHITESPACE_CHAR = '/^[ \t\n\x0b\x0c\x0d]/';
+    const REGEX_WHITESPACE = '/[ \t\n\x0b\x0c\x0d]+/';
+    const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
+    const REGEX_UNICODE_WHITESPACE = '/\pZ|\s/u';
+
     protected $regex = [];
 
     protected static $instance;

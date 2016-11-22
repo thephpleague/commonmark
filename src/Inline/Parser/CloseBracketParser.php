@@ -26,6 +26,7 @@ use League\CommonMark\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Util\LinkParserHelper;
+use League\CommonMark\Util\RegexHelper;
 
 class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwareInterface
 {
@@ -158,7 +159,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $title = null;
         // make sure there's a space before the title:
-        if (preg_match('/^\\s/', $cursor->peek(-1))) {
+        if (preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $cursor->peek(-1))) {
             $title = LinkParserHelper::parseLinkTitle($cursor) ?: '';
         }
 

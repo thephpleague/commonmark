@@ -17,6 +17,7 @@ namespace League\CommonMark\Inline\Parser;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Util\RegexHelper;
 
 class BacktickParser extends AbstractInlineParser
 {
@@ -47,7 +48,7 @@ class BacktickParser extends AbstractInlineParser
         while ($matchingTicks = $cursor->match('/`+/m')) {
             if ($matchingTicks === $ticks) {
                 $code = mb_substr($cursor->getLine(), $previousState->getCurrentPosition(), $cursor->getPosition() - $previousState->getCurrentPosition() - strlen($ticks), 'utf-8');
-                $c = preg_replace('/[ \n]+/', ' ', $code);
+                $c = preg_replace(RegexHelper::REGEX_WHITESPACE, ' ', $code);
                 $inlineContext->getContainer()->appendChild(new Code(trim($c)));
 
                 return true;

@@ -126,9 +126,9 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
      */
     private function determineCanOpenOrClose($charBefore, $charAfter, $character)
     {
-        $afterIsWhitespace = preg_match('/\pZ|\s/u', $charAfter);
+        $afterIsWhitespace = preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
         $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
-        $beforeIsWhitespace = preg_match('/\pZ|\s/u', $charBefore);
+        $beforeIsWhitespace = preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
         $beforeIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
 
         $leftFlanking = !$afterIsWhitespace && !($afterIsPunctuation && !$beforeIsWhitespace && !$beforeIsPunctuation);
