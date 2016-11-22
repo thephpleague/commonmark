@@ -4,14 +4,14 @@ namespace League\CommonMark\Tests\Functional;
 
 use mikehaertl\shellcommand\Command;
 
-class BinTest extends \PHPUnit_Framework_TestCase
+class BinTest extends AbstractBinTest
 {
     /**
      * Tests the behavior of not providing any Markdown input
      */
     public function testNoArgsOrStdin()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->execute();
 
         $this->assertEquals(1, $cmd->getExitCode());
@@ -27,7 +27,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     public function testHelpShortFlag()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg('-h');
         $cmd->execute();
 
@@ -40,7 +40,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     public function testHelpOption()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg('--help');
         $cmd->execute();
 
@@ -53,7 +53,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnknownOption()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg('--foo');
         $cmd->execute();
 
@@ -69,7 +69,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     public function testFileArgument()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg($this->getPathToData('atx_heading.md'));
         $cmd->execute();
 
@@ -100,7 +100,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnsafe()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg($this->getPathToData('safe/input.md'));
         $cmd->execute();
 
@@ -114,7 +114,7 @@ class BinTest extends \PHPUnit_Framework_TestCase
      */
     public function testSafe()
     {
-        $cmd = new Command($this->getPathToCommonmark());
+        $cmd = $this->createCommand();
         $cmd->addArg($this->getPathToData('safe/input.md'));
         $cmd->addArg('--safe');
         $cmd->execute();
@@ -122,22 +122,6 @@ class BinTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('safe/safe_output.html')));
         $this->assertEquals($expectedContents, $cmd->getOutput());
-    }
-
-    /**
-     * Returns the full path the commonmark "binary"
-     *
-     * @return string
-     */
-    protected function getPathToCommonmark()
-    {
-        $path = realpath(__DIR__ . '/../../bin/commonmark');
-
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $path = 'php ' . $path;
-        }
-
-        return $path;
     }
 
     /**
