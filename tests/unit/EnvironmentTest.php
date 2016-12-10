@@ -238,6 +238,21 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($parser, $environment->getInlineParsers());
     }
 
+    public function testInlineParserCanMatchRegexDelimiter()
+    {
+        $environment = new Environment();
+
+        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser->expects($this->any())
+            ->method('getCharacters')
+            ->will($this->returnValue(['/']));
+
+        $environment->addInlineParser($parser);
+        $environment->getInlineParsers();
+
+        $this->assertEquals(1, preg_match($environment->getInlineParserCharacterRegex(), 'foo/bar'));
+    }
+
     /**
      * @expectedException \RuntimeException
      */
