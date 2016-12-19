@@ -511,7 +511,7 @@ class Environment
             $this->inlineParserCharacterRegex = '/^.+$/u';
         } else {
             // Match any character which inline parsers are not interested in
-            $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars)) . ']+/u';
+            $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars), '/') . ']+/u';
         }
     }
 
