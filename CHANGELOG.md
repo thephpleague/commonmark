@@ -4,6 +4,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.15.3] - 2016-12-18
+
+### Fixed
+ - Allow inline parsers matching regex delimiter to be created (#271, #272)
+
 ## [0.15.2] - 2016-11-22
 
 ### Changed
@@ -462,7 +467,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.2...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.3...HEAD
+[0.15.3]: https://github.com/thephpleague/commonmark/compare/0.15.2...0.15.3
 [0.15.2]: https://github.com/thephpleague/commonmark/compare/0.15.1...0.15.2
 [0.15.1]: https://github.com/thephpleague/commonmark/compare/0.15.0...0.15.1
 [0.15.0]: https://github.com/thephpleague/commonmark/compare/0.14.0...0.15.0
