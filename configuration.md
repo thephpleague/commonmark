@@ -20,7 +20,7 @@ $converter = new CommonMarkConverter([
         'inner_separator' => "\n",
         'soft_break'      => "\n",
     ],
-    'enable_emphasis' => true,
+    'enable_em' => true,
     'enable_strong' => true,
     'use_asterisk' => true,
     'use_underscore' => true,
