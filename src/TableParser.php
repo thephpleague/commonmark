@@ -108,23 +108,12 @@ class TableParser extends AbstractBlockParser
     {
         $cells = RegexHelper::matchAll(self::REGEXP_CELLS, $line);
 
-        if (null === $cells) {
+        if (null === $cells || $line === $cells[0]) {
             return;
         }
 
-        // If we have a single match we might be using a single-column table
-        if (!is_array($cells[0])) {
-            // If no indication of the existence of a cell, it's not a valid row
-            if (strpos($line, '|') === false) {
-                return;
-            }
-
-            // Fake single match as array of matches for the code below
-            $cells = [$cells];
-        }
-
         $row = new TableRow();
-        foreach ($cells[0] as $i => $cell) {
+        foreach ((array) $cells[0] as $i => $cell) {
             $row->appendChild(new TableCell(trim($cell), $type, isset($columns[$i]) ? $columns[$i] : null));
         }
 
