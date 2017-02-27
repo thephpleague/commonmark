@@ -21,7 +21,7 @@ use League\CommonMark\Util\RegexHelper;
 class TableParser extends AbstractBlockParser
 {
     const REGEXP_DEFINITION = '/(?: *(:?) *-+ *(:?) *)+(?=\||$)/';
-    const REGEXP_CELLS = '/(?:`[^`]*`|\\\\\\\\|\\\\\||[^|`\\\\]+)+(?=\||$)/';
+    const REGEXP_CELLS = '/(?:`[^`]*`|\\\\\||\\\\|[^|`\\\\]+)+(?=\||$)/';
     const REGEXP_CAPTION = '/^\[(.+?)\](?:\[(.+)\])?\s*$/';
 
     public function parse(ContextInterface $context, Cursor $cursor)
