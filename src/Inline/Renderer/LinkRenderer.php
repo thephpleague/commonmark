@@ -56,7 +56,6 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
             $attrs['target'] = '_blank';
         }
 
-
         if (isset($inline->data['title'])) {
             $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }
