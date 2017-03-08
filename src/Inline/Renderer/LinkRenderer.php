@@ -53,7 +53,7 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
 
         $allowExternalLinks = $this->config->getConfig('allow_external_links', false);
         if ($allowExternalLinks) {
-                  $attrs['target'] = '_blank';
+            $attrs['target'] = '_blank';
         }
 
 
