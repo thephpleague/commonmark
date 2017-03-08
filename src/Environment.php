@@ -485,6 +485,7 @@ class Environment
             'safe'               => false, // deprecated option
             'html_input'         => self::HTML_INPUT_ALLOW,
             'allow_unsafe_links' => true,
+            'allow_external_links' => false,
         ]);
 
         return $environment;
