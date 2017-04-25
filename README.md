@@ -10,7 +10,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/126/badge)](https://bestpractices.coreinfrastructure.org/projects/126)
 
-**league/commonmark** is a Markdown parser for PHP which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
+**league/commonmark** is a PHP-based Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
 
 ## Goals
 
@@ -268,7 +268,7 @@ Also a huge thank you to [JetBrains](https://www.jetbrains.com/) for supporting 
 [docs-example-twitter]: https://commonmark.thephpleague.com/customization/inline-parsing#example-1---twitter-handles
 [docs-example-smilies]: https://commonmark.thephpleague.com/customization/inline-parsing#example-2---emoticons
 [All Contributors]: https://github.com/thephpleague/commonmark/contributors
-[@colinodell]: https://github.com/colinodell
+[@colinodell]: https://www.twitter.com/colinodell
 [@jgm]: https://github.com/jgm
 [jgm/stmd]: https://github.com/jgm/stmd
 [Composer]: https://getcomposer.org/
