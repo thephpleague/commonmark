@@ -460,7 +460,7 @@ class Cursor
         $this->length = $state->getLength();
         $this->currentPosition = $state->getCurrentPosition();
         $this->previousPosition = $state->getPreviousPosition();
-        $this->nextNonSpaceCache = $state->getFirstNonSpaceCache();
+        $this->nextNonSpaceCache = $state->getNextNonSpaceCache();
         $this->column = $state->getColumn();
         $this->indent = $state->getIndent();
         $this->partiallyConsumedTab = $state->getPartiallyConsumedTab();
