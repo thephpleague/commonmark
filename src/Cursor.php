@@ -51,7 +51,7 @@ class Cursor
     /**
      * @var int|null
      */
-    private $firstNonSpaceCache;
+    private $nextNonSpaceCache;
 
     /**
      * @var bool
@@ -88,8 +88,8 @@ class Cursor
      */
     public function getNextNonSpacePosition()
     {
-        if ($this->firstNonSpaceCache !== null) {
-            return $this->firstNonSpaceCache;
+        if ($this->nextNonSpaceCache !== null) {
+            return $this->nextNonSpaceCache;
         }
 
         $i = $this->currentPosition;
@@ -110,7 +110,7 @@ class Cursor
         $nextNonSpace = ($c === null) ? $this->length : $i;
         $this->indent = $cols - $this->column;
 
-        return $this->firstNonSpaceCache = $nextNonSpace;
+        return $this->nextNonSpaceCache = $nextNonSpace;
     }
 
     /**
@@ -217,7 +217,7 @@ class Cursor
     public function advanceBy($characters, $advanceByColumns = false)
     {
         $this->previousPosition = $this->currentPosition;
-        $this->firstNonSpaceCache = null;
+        $this->nextNonSpaceCache = null;
 
         $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, 'utf-8');
         if ($characters === 1 && !empty($nextFewChars)) {
@@ -363,7 +363,7 @@ class Cursor
     public function advanceToEnd()
     {
         $this->previousPosition = $this->currentPosition;
-        $this->firstNonSpaceCache = null;
+        $this->nextNonSpaceCache = null;
 
         $this->currentPosition = $this->length;
 
@@ -444,7 +444,7 @@ class Cursor
             $this->length,
             $this->currentPosition,
             $this->previousPosition,
-            $this->firstNonSpaceCache,
+            $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
             $this->partiallyConsumedTab
@@ -460,7 +460,7 @@ class Cursor
         $this->length = $state->getLength();
         $this->currentPosition = $state->getCurrentPosition();
         $this->previousPosition = $state->getPreviousPosition();
-        $this->firstNonSpaceCache = $state->getFirstNonSpaceCache();
+        $this->nextNonSpaceCache = $state->getFirstNonSpaceCache();
         $this->column = $state->getColumn();
         $this->indent = $state->getIndent();
         $this->partiallyConsumedTab = $state->getPartiallyConsumedTab();
