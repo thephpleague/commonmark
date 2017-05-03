@@ -36,7 +36,7 @@ class BlockQuoteParser extends AbstractBlockParser
             return false;
         }
 
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrTab();
         $cursor->advance();
         $cursor->advanceBySpaceOrTab();
 

@@ -135,7 +135,7 @@ abstract class AbstractBlock extends Node
     {
         // create paragraph container for line
         $context->addBlock(new Paragraph());
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrTab();
         $context->getTip()->addLine($cursor->getRemainder());
     }
 

@@ -128,7 +128,7 @@ class DocParser
         } elseif (!$cursor->isBlank()) {
             // Create paragraph container for line
             $context->addBlock(new Paragraph());
-            $cursor->advanceToFirstNonSpace();
+            $cursor->advanceToNextNonSpaceOrTab();
             $context->getTip()->addLine($cursor->getRemainder());
         }
     }

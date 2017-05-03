@@ -277,11 +277,39 @@ class Cursor
     }
 
     /**
-     * Parse zero or more space characters, including at most one newline
+     * Parse zero or more space characters, including at most one newline.
+     *
+     * @deprecated Use advanceToNextNonSpaceOrNewline() instead
+     */
+    public function advanceToFirstNonSpace()
+    {
+        @trigger_error('Cursor::advanceToFirstNonSpace() will be removed in a future 0.x release.  Use advanceToNextNonSpaceOrTab() or advanceToNextNonSpaceOrNewline() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
+
+        return $this->advanceToNextNonSpaceOrNewline();
+    }
+
+    /**
+     * Parse zero or more space/tab characters
      *
      * @return int Number of positions moved
      */
-    public function advanceToFirstNonSpace()
+    public function advanceToNextNonSpaceOrTab()
+    {
+        $newPosition = $this->getNextNonSpacePosition();
+        $this->advanceBy($newPosition - $this->currentPosition);
+        $this->partiallyConsumedTab = false;
+
+        return $this->currentPosition - $this->previousPosition;
+    }
+
+    /**
+     * Parse zero or more space characters, including at most one newline.
+     *
+     * Tab characters are not parsed with this function.
+     *
+     * @return int Number of positions moved
+     */
+    public function advanceToNextNonSpaceOrNewline()
     {
         $matches = [];
         preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE);

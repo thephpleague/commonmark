@@ -40,7 +40,7 @@ class HtmlBlockParser extends AbstractBlockParser
 
         $savedState = $cursor->saveState();
 
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrTab();
         $line = $cursor->getRemainder();
 
         for ($blockType = 1; $blockType <= 7; $blockType++) {

@@ -38,7 +38,7 @@ class ATXHeadingParser extends AbstractBlockParser
             return false;
         }
 
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrTab();
 
         $cursor->advanceBy(strlen($match[0]));
 
