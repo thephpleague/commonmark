@@ -256,6 +256,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             ['тест', 3, 3],
             ['тест', 4, 4],
             ['тест', 9, 4],
+            ["aa\t1234", 7, 7],
         ];
     }
 

@@ -183,7 +183,8 @@ class Cursor
     /**
      * Move the cursor forwards
      *
-     * @param int $characters Number of characters to advance by
+     * @param int  $characters       Number of characters to advance by
+     * @param bool $advanceByColumns Whether to advance by columns instead of spaces
      */
     public function advanceBy($characters, $advanceByColumns = false)
     {
@@ -200,11 +201,18 @@ class Cursor
         foreach ($asArray as $relPos => $c) {
             if ($c === "\t") {
                 $charsToTab = 4 - ($this->column % 4);
-                $this->partiallyConsumedTab = $advanceByColumns && $charsToTab > $characters;
-                $charsToAdvance = $charsToTab > $characters ? $characters : $charsToTab;
-                $this->column += $charsToAdvance;
-                $this->currentPosition += $this->partiallyConsumedTab ? 0 : 1;
-                $characters -= $charsToAdvance;
+                if ($advanceByColumns) {
+                    $this->partiallyConsumedTab = $charsToTab > $characters;
+                    $charsToAdvance = $charsToTab > $characters ? $characters : $charsToTab;
+                    $this->column += $charsToAdvance;
+                    $this->currentPosition += $this->partiallyConsumedTab ? 0 : 1;
+                    $characters -= $charsToAdvance;
+                } else {
+                    $this->partiallyConsumedTab = false;
+                    $this->column += $charsToTab;
+                    $this->currentPosition++;
+                    $characters--;
+                }
             } else {
                 $this->partiallyConsumedTab = false;
                 $this->currentPosition++;
