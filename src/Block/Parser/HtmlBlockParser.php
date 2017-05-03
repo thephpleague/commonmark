@@ -34,7 +34,7 @@ class HtmlBlockParser extends AbstractBlockParser
             return false;
         }
 
-        if ($cursor->getFirstNonSpaceCharacter() !== '<') {
+        if ($cursor->getNextNonSpaceCharacter() !== '<') {
             return false;
         }
 

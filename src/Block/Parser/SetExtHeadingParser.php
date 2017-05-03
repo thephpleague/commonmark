@@ -38,7 +38,7 @@ class SetExtHeadingParser extends AbstractBlockParser
             return false;
         }
 
-        $match = RegexHelper::matchAll('/^(?:=+|-+)[ \t]*$/', $cursor->getLine(), $cursor->getFirstNonSpacePosition());
+        $match = RegexHelper::matchAll('/^(?:=+|-+)[ \t]*$/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
         if ($match === null) {
             return false;
         }

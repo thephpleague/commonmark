@@ -26,12 +26,15 @@ class CursorTest extends \PHPUnit_Framework_TestCase
      * @param $expectedPosition
      * @param $expectedCharacter
      *
-     * @dataProvider dataForTestingFirstNonSpaceMethods
+     * @dataProvider dataForTestingNextNonSpaceMethods
      */
-    public function testGetFirstNonSpacePosition($string, $expectedPosition, $expectedCharacter)
+    public function testGetNextNonSpacePosition($string, $expectedPosition, $expectedCharacter)
     {
         $cursor = new Cursor($string);
 
+        $this->assertEquals($expectedPosition, $cursor->getNextNonSpacePosition());
+
+        // Also test the deprecated method to ensure it continue working properly
         $this->assertEquals($expectedPosition, $cursor->getFirstNonSpacePosition());
     }
 
@@ -40,16 +43,19 @@ class CursorTest extends \PHPUnit_Framework_TestCase
      * @param $expectedPosition
      * @param $expectedCharacter
      *
-     * @dataProvider dataForTestingFirstNonSpaceMethods
+     * @dataProvider dataForTestingNextNonSpaceMethods
      */
-    public function testGetFirstNonSpaceCharacter($string, $expectedPosition, $expectedCharacter)
+    public function testGetNextNonSpaceCharacter($string, $expectedPosition, $expectedCharacter)
     {
         $cursor = new Cursor($string);
 
+        $this->assertEquals($expectedCharacter, $cursor->getNextNonSpaceCharacter());
+
+        // Also test the deprecated method to ensure it continue working properly
         $this->assertEquals($expectedCharacter, $cursor->getFirstNonSpaceCharacter());
     }
 
-    public function dataForTestingFirstNonSpaceMethods()
+    public function dataForTestingNextNonSpaceMethods()
     {
         return [
             ['', 0, null],

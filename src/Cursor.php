@@ -68,11 +68,25 @@ class Cursor
     }
 
     /**
-     * Returns the position of the next non-space character
+     * Returns the position of the next character which is not a space (or tab)
+     *
+     * @deprecated Use getNextNonSpacePosition() instead
      *
      * @return int
      */
     public function getFirstNonSpacePosition()
+    {
+        @trigger_error('Cursor::getFirstNonSpacePosition() will be removed in a future 0.x release.  Use getNextNonSpacePosition() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
+
+        return $this->getNextNonSpacePosition();
+    }
+
+    /**
+     * Returns the position of the next character which is not a space (or tab)
+     *
+     * @return int
+     */
+    public function getNextNonSpacePosition()
     {
         if ($this->firstNonSpaceCache !== null) {
             return $this->firstNonSpaceCache;
@@ -100,13 +114,27 @@ class Cursor
     }
 
     /**
-     * Returns the next character which isn't a space
+     * Returns the next character which isn't a space (or tab)
+     *
+     * @deprecated Use getNextNonSpaceCharacter() instead
      *
      * @return string
      */
     public function getFirstNonSpaceCharacter()
     {
-        return $this->getCharacter($this->getFirstNonSpacePosition());
+        @trigger_error('Cursor::getFirstNonSpaceCharacter() will be removed in a future 0.x release.  Use getNextNonSpaceCharacter() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
+
+        return $this->getNextNonSpaceCharacter();
+    }
+
+    /**
+     * Returns the next character which isn't a space (or tab)
+     *
+     * @return string
+     */
+    public function getNextNonSpaceCharacter()
+    {
+        return $this->getCharacter($this->getNextNonSpacePosition());
     }
 
     /**
@@ -116,7 +144,7 @@ class Cursor
      */
     public function getIndent()
     {
-        $this->getFirstNonSpacePosition();
+        $this->getNextNonSpacePosition();
 
         return $this->indent;
     }
@@ -169,7 +197,7 @@ class Cursor
      */
     public function isBlank()
     {
-        return $this->getFirstNonSpacePosition() === $this->length;
+        return $this->getNextNonSpacePosition() === $this->length;
     }
 
     /**
