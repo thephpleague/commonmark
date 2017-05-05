@@ -14,7 +14,7 @@ title: Introduction
 [![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark)
 [![Total Downloads](https://img.shields.io/packagist/dt/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
 
-**league/commonmark** is a Markdown parser for PHP which supports the full [CommonMark spec](http://spec.commonmark.org). It is directly based the [CommonMark JS reference implementation](https://github.com/jgm/CommonMark/tree/master/js) by [John MacFarlane](http://johnmacfarlane.net/) ([@jgm](https://github.com/jgm)).
+**league/commonmark** is a Markdown parser for PHP which supports the full [CommonMark spec](http://spec.commonmark.org). It is directly based on the [CommonMark JS reference implementation](https://github.com/jgm/CommonMark/tree/master/js) by [John MacFarlane](http://johnmacfarlane.net/) ([@jgm](https://github.com/jgm)).
 
 ## Goals
 
