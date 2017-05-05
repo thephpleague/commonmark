@@ -30,6 +30,7 @@ If you'd like to iterate through all the nodes, use the `walker()` method to obt
 $walker = $document->walker();
 while ($event = $walker->next()) {
     echo 'I am ' . ($event->isEntering() ? 'entering' : 'leaving') . ' a ' . get_class($event->getNode()) . ' node' . "\n";
+}
 ~~~
 
 This walker doesn't use recursion, so you won't blow the stack when working with deeply-nested nodes.
@@ -136,8 +137,11 @@ $converter = new CommonMarkConverter(['host' => 'commonmark.thephpleague.com'], 
 $input = 'My two favorite sites are <http://google.com> and <http://commonmark.thephpleague.com>';
 
 echo $converter->convertToHtml($input);
+~~~
 
-// Output (formatted for readability):
+Output (formatted for readability):
+
+~~~html
 <p>
     My two favorite sites are
     <a class="external-link" href="http://google.com">http://google.com</a>
