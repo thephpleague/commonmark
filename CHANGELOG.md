@@ -20,7 +20,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Deprecated
 
-**All deprecations listed here will be removed in 0.17.0 or later.** See [UPGRADE.md](UPGRADE.md) for instructions on preparing your code for the eventual removal of these methods.
+**All deprecations listed here will be removed in a future 0.x release.** See [UPGRADE.md](UPGRADE.md) for instructions on preparing your code for the eventual removal of these methods.
 
  - Deprecated `Cursor::advanceToFirstNonSpace()` (#280)
    - Use `advanceToNextNonSpaceOrTab()` or `advanceToNextNonSpaceOrNewline()` instead, depending on your requirements
