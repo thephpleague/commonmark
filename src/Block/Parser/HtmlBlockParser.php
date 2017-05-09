@@ -34,13 +34,13 @@ class HtmlBlockParser extends AbstractBlockParser
             return false;
         }
 
-        if ($cursor->getFirstNonSpaceCharacter() !== '<') {
+        if ($cursor->getNextNonSpaceCharacter() !== '<') {
             return false;
         }
 
         $savedState = $cursor->saveState();
 
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrTab();
         $line = $cursor->getRemainder();
 
         for ($blockType = 1; $blockType <= 7; $blockType++) {

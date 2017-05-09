@@ -26,12 +26,15 @@ class CursorTest extends \PHPUnit_Framework_TestCase
      * @param $expectedPosition
      * @param $expectedCharacter
      *
-     * @dataProvider dataForTestingFirstNonSpaceMethods
+     * @dataProvider dataForTestingNextNonSpaceMethods
      */
-    public function testGetFirstNonSpacePosition($string, $expectedPosition, $expectedCharacter)
+    public function testGetNextNonSpacePosition($string, $expectedPosition, $expectedCharacter)
     {
         $cursor = new Cursor($string);
 
+        $this->assertEquals($expectedPosition, $cursor->getNextNonSpacePosition());
+
+        // Also test the deprecated method to ensure it continue working properly
         $this->assertEquals($expectedPosition, $cursor->getFirstNonSpacePosition());
     }
 
@@ -40,16 +43,19 @@ class CursorTest extends \PHPUnit_Framework_TestCase
      * @param $expectedPosition
      * @param $expectedCharacter
      *
-     * @dataProvider dataForTestingFirstNonSpaceMethods
+     * @dataProvider dataForTestingNextNonSpaceMethods
      */
-    public function testGetFirstNonSpaceCharacter($string, $expectedPosition, $expectedCharacter)
+    public function testGetNextNonSpaceCharacter($string, $expectedPosition, $expectedCharacter)
     {
         $cursor = new Cursor($string);
 
+        $this->assertEquals($expectedCharacter, $cursor->getNextNonSpaceCharacter());
+
+        // Also test the deprecated method to ensure it continue working properly
         $this->assertEquals($expectedCharacter, $cursor->getFirstNonSpaceCharacter());
     }
 
-    public function dataForTestingFirstNonSpaceMethods()
+    public function dataForTestingNextNonSpaceMethods()
     {
         return [
             ['', 0, null],
@@ -256,6 +262,7 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             ['тест', 3, 3],
             ['тест', 4, 4],
             ['тест', 9, 4],
+            ["aa\t1234", 7, 7],
         ];
     }
 
@@ -327,17 +334,17 @@ class CursorTest extends \PHPUnit_Framework_TestCase
      * @param $startPos
      * @param $expectedResult
      *
-     * @dataProvider dataForAdvanceToFirstNonSpaceTest
+     * @dataProvider dataForAdvanceToNextNonSpaceTest
      */
-    public function testAdvanceToFirstNonSpace($subject, $startPos, $expectedResult)
+    public function testAdvanceToNextNonSpace($subject, $startPos, $expectedResult)
     {
         $cursor = new Cursor($subject);
         $cursor->advanceBy($startPos);
 
-        $this->assertEquals($expectedResult, $cursor->advanceToFirstNonSpace());
+        $this->assertEquals($expectedResult, $cursor->advanceToNextNonSpaceOrTab());
     }
 
-    public function dataForAdvanceToFirstNonSpaceTest()
+    public function dataForAdvanceToNextNonSpaceTest()
     {
         return [
             ['', 0, 0],
@@ -352,6 +359,52 @@ class CursorTest extends \PHPUnit_Framework_TestCase
             ['это тест', 0, 0],
             ['это тест', 3, 1],
             ['это тест', 4, 0],
+            ["\tbar", 0, 1],
+            ["  \n  \n  ", 0, 2],
+            ["  \n  \n  ", 1, 1],
+            ["  \n  \n  ", 2, 0],
+            ["  \n  \n  ", 3, 2],
+            ["  \n  \n  ", 4, 1],
+        ];
+    }
+
+    /**
+     * @param $subject
+     * @param $startPos
+     * @param $expectedResult
+     *
+     * @dataProvider dataForAdvanceToNextNonSpaceOrNewlineTest
+     */
+    public function testAdvanceToNextNonSpaceOrNewline($subject, $startPos, $expectedResult)
+    {
+        $cursor = new Cursor($subject);
+        $cursor->advanceBy($startPos);
+
+        $this->assertEquals($expectedResult, $cursor->advanceToNextNonSpaceOrNewline());
+
+        // Also ensure the deprecated method aliased to this one still works
+        $cursor = new Cursor($subject);
+        $cursor->advanceBy($startPos);
+
+        $this->assertEquals($expectedResult, $cursor->advanceToFirstNonSpace());
+    }
+
+    public function dataForAdvanceToNextNonSpaceOrNewlineTest()
+    {
+        return [
+            ['', 0, 0],
+            [' ', 0, 1],
+            [' ', 1, 0],
+            ['  ', 0, 2],
+            ['  ', 1, 1],
+            ['  ', 2, 0],
+            ['foo bar', 0, 0],
+            ['foo bar', 3, 1],
+            ['foo bar', 4, 0],
+            ['это тест', 0, 0],
+            ['это тест', 3, 1],
+            ['это тест', 4, 0],
+            ["\tbar", 0, 0],
             ["  \n  \n  ", 0, 5],
             ["  \n  \n  ", 1, 4],
             ["  \n  \n  ", 2, 3],

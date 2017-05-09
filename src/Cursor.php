@@ -51,7 +51,7 @@ class Cursor
     /**
      * @var int|null
      */
-    private $firstNonSpaceCache;
+    private $nextNonSpaceCache;
 
     /**
      * @var bool
@@ -68,14 +68,28 @@ class Cursor
     }
 
     /**
-     * Returns the position of the next non-space character
+     * Returns the position of the next character which is not a space (or tab)
+     *
+     * @deprecated Use getNextNonSpacePosition() instead
      *
      * @return int
      */
     public function getFirstNonSpacePosition()
     {
-        if ($this->firstNonSpaceCache !== null) {
-            return $this->firstNonSpaceCache;
+        @trigger_error('Cursor::getFirstNonSpacePosition() will be removed in a future 0.x release.  Use getNextNonSpacePosition() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
+
+        return $this->getNextNonSpacePosition();
+    }
+
+    /**
+     * Returns the position of the next character which is not a space (or tab)
+     *
+     * @return int
+     */
+    public function getNextNonSpacePosition()
+    {
+        if ($this->nextNonSpaceCache !== null) {
+            return $this->nextNonSpaceCache;
         }
 
         $i = $this->currentPosition;
@@ -96,17 +110,31 @@ class Cursor
         $nextNonSpace = ($c === null) ? $this->length : $i;
         $this->indent = $cols - $this->column;
 
-        return $this->firstNonSpaceCache = $nextNonSpace;
+        return $this->nextNonSpaceCache = $nextNonSpace;
     }
 
     /**
-     * Returns the next character which isn't a space
+     * Returns the next character which isn't a space (or tab)
+     *
+     * @deprecated Use getNextNonSpaceCharacter() instead
      *
      * @return string
      */
     public function getFirstNonSpaceCharacter()
     {
-        return $this->getCharacter($this->getFirstNonSpacePosition());
+        @trigger_error('Cursor::getFirstNonSpaceCharacter() will be removed in a future 0.x release.  Use getNextNonSpaceCharacter() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
+
+        return $this->getNextNonSpaceCharacter();
+    }
+
+    /**
+     * Returns the next character which isn't a space (or tab)
+     *
+     * @return string
+     */
+    public function getNextNonSpaceCharacter()
+    {
+        return $this->getCharacter($this->getNextNonSpacePosition());
     }
 
     /**
@@ -116,7 +144,7 @@ class Cursor
      */
     public function getIndent()
     {
-        $this->getFirstNonSpacePosition();
+        $this->getNextNonSpacePosition();
 
         return $this->indent;
     }
@@ -169,7 +197,7 @@ class Cursor
      */
     public function isBlank()
     {
-        return $this->getFirstNonSpacePosition() === $this->length;
+        return $this->getNextNonSpacePosition() === $this->length;
     }
 
     /**
@@ -183,12 +211,13 @@ class Cursor
     /**
      * Move the cursor forwards
      *
-     * @param int $characters Number of characters to advance by
+     * @param int  $characters       Number of characters to advance by
+     * @param bool $advanceByColumns Whether to advance by columns instead of spaces
      */
     public function advanceBy($characters, $advanceByColumns = false)
     {
         $this->previousPosition = $this->currentPosition;
-        $this->firstNonSpaceCache = null;
+        $this->nextNonSpaceCache = null;
 
         $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, 'utf-8');
         if ($characters === 1 && !empty($nextFewChars)) {
@@ -200,11 +229,18 @@ class Cursor
         foreach ($asArray as $relPos => $c) {
             if ($c === "\t") {
                 $charsToTab = 4 - ($this->column % 4);
-                $this->partiallyConsumedTab = $advanceByColumns && $charsToTab > $characters;
-                $charsToAdvance = $charsToTab > $characters ? $characters : $charsToTab;
-                $this->column += $charsToAdvance;
-                $this->currentPosition += $this->partiallyConsumedTab ? 0 : 1;
-                $characters -= $charsToAdvance;
+                if ($advanceByColumns) {
+                    $this->partiallyConsumedTab = $charsToTab > $characters;
+                    $charsToAdvance = $charsToTab > $characters ? $characters : $charsToTab;
+                    $this->column += $charsToAdvance;
+                    $this->currentPosition += $this->partiallyConsumedTab ? 0 : 1;
+                    $characters -= $charsToAdvance;
+                } else {
+                    $this->partiallyConsumedTab = false;
+                    $this->column += $charsToTab;
+                    $this->currentPosition++;
+                    $characters--;
+                }
             } else {
                 $this->partiallyConsumedTab = false;
                 $this->currentPosition++;
@@ -269,11 +305,39 @@ class Cursor
     }
 
     /**
-     * Parse zero or more space characters, including at most one newline
+     * Parse zero or more space characters, including at most one newline.
+     *
+     * @deprecated Use advanceToNextNonSpaceOrNewline() instead
+     */
+    public function advanceToFirstNonSpace()
+    {
+        @trigger_error('Cursor::advanceToFirstNonSpace() will be removed in a future 0.x release.  Use advanceToNextNonSpaceOrTab() or advanceToNextNonSpaceOrNewline() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
+
+        return $this->advanceToNextNonSpaceOrNewline();
+    }
+
+    /**
+     * Parse zero or more space/tab characters
      *
      * @return int Number of positions moved
      */
-    public function advanceToFirstNonSpace()
+    public function advanceToNextNonSpaceOrTab()
+    {
+        $newPosition = $this->getNextNonSpacePosition();
+        $this->advanceBy($newPosition - $this->currentPosition);
+        $this->partiallyConsumedTab = false;
+
+        return $this->currentPosition - $this->previousPosition;
+    }
+
+    /**
+     * Parse zero or more space characters, including at most one newline.
+     *
+     * Tab characters are not parsed with this function.
+     *
+     * @return int Number of positions moved
+     */
+    public function advanceToNextNonSpaceOrNewline()
     {
         $matches = [];
         preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE);
@@ -299,7 +363,7 @@ class Cursor
     public function advanceToEnd()
     {
         $this->previousPosition = $this->currentPosition;
-        $this->firstNonSpaceCache = null;
+        $this->nextNonSpaceCache = null;
 
         $this->currentPosition = $this->length;
 
@@ -380,7 +444,7 @@ class Cursor
             $this->length,
             $this->currentPosition,
             $this->previousPosition,
-            $this->firstNonSpaceCache,
+            $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
             $this->partiallyConsumedTab
@@ -396,7 +460,7 @@ class Cursor
         $this->length = $state->getLength();
         $this->currentPosition = $state->getCurrentPosition();
         $this->previousPosition = $state->getPreviousPosition();
-        $this->firstNonSpaceCache = $state->getFirstNonSpaceCache();
+        $this->nextNonSpaceCache = $state->getNextNonSpaceCache();
         $this->column = $state->getColumn();
         $this->indent = $state->getIndent();
         $this->partiallyConsumedTab = $state->getPartiallyConsumedTab();

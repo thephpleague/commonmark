@@ -69,7 +69,7 @@ class ListItem extends AbstractBlock
                 return false;
             }
 
-            $cursor->advanceToFirstNonSpace();
+            $cursor->advanceToNextNonSpaceOrTab();
         } elseif ($cursor->getIndent() >= $this->listData->markerOffset + $this->listData->padding) {
             $cursor->advanceBy($this->listData->markerOffset + $this->listData->padding, true);
         } else {

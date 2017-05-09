@@ -4,6 +4,33 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added new methods to `Cursor` (#280):
+   - `advanceToNextNonSpaceOrNewline()` - Identical replacement for the (now-deprecated) `advanceToFirstNonSpace()` method
+   - `advanceToNextNonSpaceOrTab()` - Similar replacement for `advanceToFirstNonSpace()` but with proper tab handling
+   - `getNextNonSpaceCharacter()` - Identical replacement for the (now-deprecated) `getFirstNonSpaceCharacter()` method
+   - `getNextNonSpacePosition()` - Identical replacement for the (now-deprecated) `getFirstNonSpacePosition()` method
+ - Added new method to `CursorState` (#280):
+   - `getNextNonSpaceCache()` - Identical replacement for the (now-deprecated) `getFirstNonSpaceCache()` method
+
+### Fixed
+
+ - Fixed duplicate characters in non-intended lines containing tabs (#279)
+
+### Deprecated
+
+**All deprecations listed here will be removed in a future 0.x release.** See [UPGRADE.md](UPGRADE.md) for instructions on preparing your code for the eventual removal of these methods.
+
+ - Deprecated `Cursor::advanceToFirstNonSpace()` (#280)
+   - Use `advanceToNextNonSpaceOrTab()` or `advanceToNextNonSpaceOrNewline()` instead, depending on your requirements
+ - Deprecated `Cursor::getFirstNonSpaceCharacter()` (#280)
+   - Use `Cursor::getNextNonSpaceCharacter()` instead
+ - Deprecated `Cursor::getFirstNonSpacePosition()` (#280)
+   - Use `Cursor::getNextNonSpacePosition()` instead
+ - Deprecated `CursorState::getFirstNonSpaceCache()` (#280)
+   - Use `CursorState::getNextNonSpaceCache()` instead
+
 ## [0.15.3] - 2016-12-18
 
 ### Fixed

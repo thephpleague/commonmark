@@ -150,14 +150,14 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $previousState = $cursor->saveState();
 
         $cursor->advance();
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrNewline();
         if (($dest = LinkParserHelper::parseLinkDestination($cursor)) === null) {
             $cursor->restoreState($previousState);
 
             return false;
         }
 
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrNewline();
 
         $title = null;
         // make sure there's a space before the title:
@@ -165,7 +165,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             $title = LinkParserHelper::parseLinkTitle($cursor) ?: '';
         }
 
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrNewline();
 
         if ($cursor->match('/^\\)/') === null) {
             $cursor->restoreState($previousState);

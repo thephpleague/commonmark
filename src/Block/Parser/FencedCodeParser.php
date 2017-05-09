@@ -33,7 +33,7 @@ class FencedCodeParser extends AbstractBlockParser
         }
 
         $previousState = $cursor->saveState();
-        $indent = $cursor->advanceToFirstNonSpace();
+        $indent = $cursor->advanceToNextNonSpaceOrTab();
         $fence = $cursor->match('/^`{3,}(?!.*`)|^~{3,}(?!.*~)/');
         if (is_null($fence)) {
             $cursor->restoreState($previousState);

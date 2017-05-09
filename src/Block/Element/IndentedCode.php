@@ -56,7 +56,7 @@ class IndentedCode extends AbstractBlock
         if ($cursor->isIndented()) {
             $cursor->advanceBy(Cursor::INDENT_LEVEL, true);
         } elseif ($cursor->isBlank()) {
-            $cursor->advanceToFirstNonSpace();
+            $cursor->advanceToNextNonSpaceOrTab();
         } else {
             return false;
         }

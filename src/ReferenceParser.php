@@ -71,7 +71,7 @@ class ReferenceParser
         $cursor->advance();
 
         // Link URL
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrNewline();
 
         $destination = LinkParserHelper::parseLinkDestination($cursor);
         if (empty($destination)) {
@@ -81,7 +81,7 @@ class ReferenceParser
         }
 
         $previousState = $cursor->saveState();
-        $cursor->advanceToFirstNonSpace();
+        $cursor->advanceToNextNonSpaceOrNewline();
 
         $title = LinkParserHelper::parseLinkTitle($cursor);
         if ($title === null) {
