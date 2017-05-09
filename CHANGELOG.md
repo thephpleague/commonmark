@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.15.4] - 2017-05-09
+
 ### Added
 
  - Added new methods to `Cursor` (#280):
@@ -494,7 +496,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.3...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.4...HEAD
+[0.15.4]: https://github.com/thephpleague/commonmark/compare/0.15.3...0.15.4
 [0.15.3]: https://github.com/thephpleague/commonmark/compare/0.15.2...0.15.3
 [0.15.2]: https://github.com/thephpleague/commonmark/compare/0.15.1...0.15.2
 [0.15.1]: https://github.com/thephpleague/commonmark/compare/0.15.0...0.15.1
