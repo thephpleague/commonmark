@@ -51,6 +51,11 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
             $attrs['href'] = $htmlRenderer->escape($inline->getUrl(), true);
         }
 
+        $allowExternalLinks = $this->config->getConfig('allow_external_links', false);
+        if ($allowExternalLinks) {
+            $attrs['target'] = '_blank';
+        }
+
         if (isset($inline->data['title'])) {
             $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
         }

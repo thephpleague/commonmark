@@ -81,6 +81,26 @@ class LinkRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('::escape::', $result->getAttribute('href'));
     }
 
+    public function testRenderAllowExternalLink()
+    {
+        $this->renderer->setConfiguration(new Configuration([
+            'allow_external_links' => true,
+        ]));
+
+        $inline = new Link('http://example.com/foo.html', '::label::');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertEquals('a', $result->getTagName());
+        $this->assertContains('http://example.com/foo.html', $result->getAttribute('href'));
+        $this->assertContains('::escape::', $result->getAttribute('href'));
+        $this->assertNull($result->getAttribute('title'));
+        $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertEquals('_blank', $result->getAttribute('target'));
+    }
+
     public function testRenderDisallowUnsafeLink()
     {
         $this->renderer->setConfiguration(new Configuration([
