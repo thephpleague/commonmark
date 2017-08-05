@@ -15,13 +15,13 @@ This release bumps spec compliance to 0.28 without breaking changes to the API.
 ### Changed
 
  - Bumped CommonMark spec target to 0.28
- - Changed internal implementation of `LinkParserHelper::parseLinkDestination` to allow nested parens
+ - Changed internal implementation of `LinkParserHelper::parseLinkDestination()` to allow nested parens
  - Changed precedence of strong/emph when both nestings are possible (rule 14)
  - Allow tabs before and after ATX closing header
 
 ### Fixed
 
- - Fixed HTML type 6 block regex matching against <pre> (it shouldn't) and not matching <iframe> (it should)
+ - Fixed HTML type 6 block regex matching against `<pre>` (it shouldn't) and not matching `<iframe>` (it should)
  - Fixed reference parser incorrectly handling escaped `]` characters
  - Fixed "multiple of 3" delimiter run calculations
 
