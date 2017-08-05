@@ -53,7 +53,7 @@ class LinkParserHelper
         $match = $cursor->match('/^\[(?:[^\\\\\[\]]|' . $escapedChar . '|\\\\)*\]/');
         $length = mb_strlen($match, 'utf-8');
 
-        if ($match === null || $length > 1001) {
+        if ($match === null || $length > 1001 || preg_match('/[^\\\\]\\\\\]$/', $match)) {
             return 0;
         }
 
