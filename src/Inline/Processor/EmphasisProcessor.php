@@ -26,13 +26,7 @@ class EmphasisProcessor implements InlineProcessorInterface
     {
         $callback = function (Delimiter $opener, Delimiter $closer, DelimiterStack $stack) {
             // Calculate actual number of delimiters used from this closer
-            if ($closer->getNumDelims() < 3 || $opener->getNumDelims() < 3) {
-                $useDelims = $closer->getNumDelims() <= $opener->getNumDelims()
-                    ? $closer->getNumDelims()
-                    : $opener->getNumDelims();
-            } else {
-                $useDelims = $closer->getNumDelims() % 2 === 0 ? 2 : 1;
-            }
+            $useDelims = ($closer->getNumDelims() >= 2 && $opener->getNumDelims() >= 2) ? 2 : 1;
             /** @var Text $openerInline */
             $openerInline = $opener->getInlineNode();
             /** @var Text $closerInline */
