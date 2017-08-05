@@ -1,11 +1,14 @@
 language: php
 
+dist: trusty
+
 php:
   - 5.4
   - 5.5
   - 5.6
   - 7.0
   - 7.1
+  - master
   - hhvm
   
 # Cache Composer deps
@@ -17,6 +20,9 @@ matrix:
   include:
     - php: 5.4
       env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+  allow_failures:
+    - php: master
+  fast_finish: true
 
 # This triggers builds to run on the new TravisCI infrastructure.
 # See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/

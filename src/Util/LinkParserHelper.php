@@ -34,12 +34,41 @@ class LinkParserHelper
             );
         }
 
-        $res = $cursor->match(RegexHelper::getInstance()->getLinkDestinationRegex());
-        if ($res !== null) {
-            return UrlEncoder::unescapeAndEncode(
-                RegexHelper::unescape($res)
-            );
+        $oldState = $cursor->saveState();
+        $openParens = 0;
+        while (($c = $cursor->getCharacter()) !== null) {
+            if ($c === '\\') {
+                $cursor->advance();
+                if ($cursor->getCharacter()) {
+                    $cursor->advance();
+                }
+            } elseif ($c === '(') {
+                $cursor->advance();
+                $openParens++;
+            } elseif ($c === ')') {
+                if ($openParens < 1) {
+                    break;
+                } else {
+                    $cursor->advance();
+                    $openParens--;
+                }
+            } elseif (preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $c)) {
+                break;
+            } else {
+                $cursor->advance();
+            }
         }
+
+        $newPos = $cursor->getPosition();
+        $cursor->restoreState($oldState);
+
+        $cursor->advanceBy($newPos - $cursor->getPosition());
+
+        $res = $cursor->getPreviousText();
+
+        return UrlEncoder::unescapeAndEncode(
+            RegexHelper::unescape($res)
+        );
     }
 
     /**
@@ -53,7 +82,7 @@ class LinkParserHelper
         $match = $cursor->match('/^\[(?:[^\\\\\[\]]|' . $escapedChar . '|\\\\)*\]/');
         $length = mb_strlen($match, 'utf-8');
 
-        if ($match === null || $length > 1001) {
+        if ($match === null || $length > 1001 || preg_match('/[^\\\\]\\\\\]$/', $match)) {
             return 0;
         }
 

@@ -61,6 +61,10 @@ class RegexHelper
     const REGEX_WHITESPACE_CHAR = '/^[ \t\n\x0b\x0c\x0d]/';
     const REGEX_WHITESPACE = '/[ \t\n\x0b\x0c\x0d]+/';
     const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
+
+    /**
+     * @deprecated
+     */
     const REGEX_UNICODE_WHITESPACE = '/\pZ|\s/u';
 
     protected $regex = [];
@@ -162,9 +166,13 @@ class RegexHelper
 
     /**
      * @return string
+     *
+     * @deprecated
      */
     public function getLinkDestinationRegex()
     {
+        @trigger_error('RegexHelper::getLinkDestinationRegex() is no longer used and will be removed in a future 0.x release.', E_USER_DEPRECATED);
+
         return '/^' . '(?:' . $this->regex[self::REG_CHAR] . '+|' . $this->regex[self::ESCAPED_CHAR] . '|\\\\|' . $this->regex[self::IN_PARENS_NOSP] . ')*' . '/';
     }
 
@@ -276,7 +284,7 @@ class RegexHelper
             case HtmlBlock::TYPE_5_CDATA:
                 return '/^<!\[CDATA\[/';
             case HtmlBlock::TYPE_6_BLOCK_ELEMENT:
-                return '%^<[/]?(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[123456]|head|header|hr|html|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|pre|section|source|title|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)(?:\s|[/]?[>]|$)%i';
+                return '%^<[/]?(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[123456]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|section|source|title|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)(?:\s|[/]?[>]|$)%i';
             case HtmlBlock::TYPE_7_MISC_ELEMENT:
                 $self = self::getInstance();
 

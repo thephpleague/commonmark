@@ -23,7 +23,7 @@
     "require-dev": {
         "cebe/markdown": "~1.0",
         "erusev/parsedown": "~1.0",
-        "jgm/CommonMark": "0.27",
+        "jgm/CommonMark": "0.28",
         "michelf/php-markdown": "~1.4",
         "mikehaertl/php-shellcommand": "~1.2.0",
         "phpunit/phpunit": "~4.3|~5.0",
@@ -38,9 +38,9 @@
             "type": "package",
             "package": {
                 "name": "jgm/CommonMark",
-                "version": "0.27",
+                "version": "0.28",
                 "dist": {
-                    "url": "https://github.com/jgm/commonmark.js/archive/0.27.0.zip",
+                    "url": "https://github.com/jgm/commonmark.js/archive/0.28.0.zip",
                     "type": "zip"
                 }
             }

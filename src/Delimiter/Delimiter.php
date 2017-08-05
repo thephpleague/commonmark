@@ -24,6 +24,9 @@ class Delimiter
     /** @var int */
     protected $numDelims;
 
+    /** @var int */
+    protected $origDelims;
+
     /** @var Node */
     protected $inlineNode;
 
@@ -57,6 +60,7 @@ class Delimiter
     {
         $this->char = $char;
         $this->numDelims = $numDelims;
+        $this->origDelims = $numDelims;
         $this->inlineNode = $node;
         $this->canOpen = $canOpen;
         $this->canClose = $canClose;
@@ -202,6 +206,14 @@ class Delimiter
         $this->numDelims = $numDelims;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrigDelims()
+    {
+        return $this->origDelims;
     }
 
     /**
