@@ -44,8 +44,8 @@ class ATXHeadingParser extends AbstractBlockParser
 
         $level = strlen(trim($match[0]));
         $str = $cursor->getRemainder();
-        $str = preg_replace('/^ *#+ *$/', '', $str);
-        $str = preg_replace('/ +#+ *$/', '', $str);
+        $str = preg_replace('/^[ \t]*#+[ \t]*$/', '', $str);
+        $str = preg_replace('/[ \t]+#+[ \t]*$/', '', $str);
 
         $context->addBlock(new Heading($level, $str));
         $context->setBlocksParsed(true);
