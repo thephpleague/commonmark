@@ -4,6 +4,34 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.15.5] - 2017-08-05
+
+This release bumps spec compliance to 0.28 without breaking changes to the API.
+
+### Added
+
+ - Project is now tested against PHP 7.2
+
+### Changed
+
+ - Bumped CommonMark spec target to 0.28
+ - Changed internal implementation of `LinkParserHelper::parseLinkDestination` to allow nested parens
+ - Changed precedence of strong/emph when both nestings are possible (rule 14)
+ - Allow tabs before and after ATX closing header
+
+### Fixed
+
+ - Fixed HTML type 6 block regex matching against <pre> (it shouldn't) and not matching <iframe> (it should)
+ - Fixed reference parser incorrectly handling escaped `]` characters
+ - Fixed "multiple of 3" delimiter run calculations
+
+### Deprecated
+
+An unused constant and static method were deprecated and will be removed in a future release.  See <UPGRADE.md> for more information.
+
+ - Deprecated `RegexHelper::REGEX_UNICODE_WHITESPACE` (no longer used)
+ - Deprecated `RegexHelper::getLinkDestinationRegex()` (no longer used)
+
 ## [0.15.4] - 2017-05-09
 
 ### Added
@@ -496,7 +524,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.4...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.5...HEAD
+[0.15.5]: https://github.com/thephpleague/commonmark/compare/0.15.4...0.15.5
 [0.15.4]: https://github.com/thephpleague/commonmark/compare/0.15.3...0.15.4
 [0.15.3]: https://github.com/thephpleague/commonmark/compare/0.15.2...0.15.3
 [0.15.2]: https://github.com/thephpleague/commonmark/compare/0.15.1...0.15.2
