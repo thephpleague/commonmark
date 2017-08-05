@@ -61,6 +61,10 @@ class RegexHelper
     const REGEX_WHITESPACE_CHAR = '/^[ \t\n\x0b\x0c\x0d]/';
     const REGEX_WHITESPACE = '/[ \t\n\x0b\x0c\x0d]+/';
     const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
+
+    /**
+     * @deprecated
+     */
     const REGEX_UNICODE_WHITESPACE = '/\pZ|\s/u';
 
     protected $regex = [];
@@ -162,9 +166,13 @@ class RegexHelper
 
     /**
      * @return string
+     *
+     * @deprecated
      */
     public function getLinkDestinationRegex()
     {
+        @trigger_error('RegexHelper::getLinkDestinationRegex() is no longer used and will be removed in a future 0.x release.', E_USER_DEPRECATED);
+
         return '/^' . '(?:' . $this->regex[self::REG_CHAR] . '+|' . $this->regex[self::ESCAPED_CHAR] . '|\\\\|' . $this->regex[self::IN_PARENS_NOSP] . ')*' . '/';
     }
 
