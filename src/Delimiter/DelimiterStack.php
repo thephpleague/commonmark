@@ -175,7 +175,7 @@ class DelimiterStack
         $opener = $closer->getPrevious();
 
         while ($opener !== null && $opener !== $stackBottom && $opener !== $openersBottom[$closerChar]) {
-            $oddMatch = ($closer->canOpen() || $opener->canClose()) && ($opener->getNumDelims() + $closer->getNumDelims()) % 3 === 0;
+            $oddMatch = ($closer->canOpen() || $opener->canClose()) && ($opener->getOrigDelims() + $closer->getOrigDelims()) % 3 === 0;
             if ($opener->getChar() === $closerChar && $opener->canOpen() && !$oddMatch) {
                 return $opener;
             }
