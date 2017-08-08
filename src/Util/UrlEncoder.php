@@ -48,6 +48,53 @@ class UrlEncoder
     {
         $decoded = html_entity_decode($uri);
 
-        return strtr(rawurlencode(rawurldecode($decoded)), self::$dontEncode);
+        return self::encode(self::decode($decoded));
+    }
+
+    /**
+     * Decode a percent-encoded URI
+     *
+     * @param string $uri
+     *
+     * @return string
+     */
+    private static function decode($uri)
+    {
+        return preg_replace_callback('/%([0-9a-f]{2})/iu', function($matches) {
+            // Convert percent-encoded codes to uppercase
+            $upper = strtoupper($matches[0]);
+            // Keep excluded characters as-is
+            if (array_key_exists($upper, self::$dontEncode)) {
+                return $upper;
+            }
+
+            // Otherwise, return the character for this codepoint
+            return chr(hexdec($matches[1]));
+        }, $uri);
+    }
+
+    /**
+     * Encode a URI, preserving already-encoded and excluded characters
+     *
+     * @param string $uri
+     *
+     * @return string
+     */
+    private static function encode($uri)
+    {
+        return preg_replace_callback('/(%[0-9a-f]{2})|./iu', function($matches){
+            // Keep already-encoded characters as-is
+            if (count($matches) > 1) {
+                return $matches[0];
+            }
+
+            // Keep excluded characters as-is
+            if (in_array($matches[0], self::$dontEncode)) {
+                return $matches[0];
+            }
+
+            // Otherwise, encode the character
+            return rawurlencode($matches[0]);
+        }, $uri);
     }
 }
