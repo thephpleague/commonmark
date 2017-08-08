@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.15.6] - 2017-08-08
+
+### Fixed
+
+ - Fixed URI normalization not properly encoding/decoding special characters in certain cases (#287)
+
 ## [0.15.5] - 2017-08-05
 
 This release bumps spec compliance to 0.28 without breaking changes to the API.
@@ -524,7 +530,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.5...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.6...HEAD
+[0.15.6]: https://github.com/thephpleague/commonmark/compare/0.15.5...0.15.6
 [0.15.5]: https://github.com/thephpleague/commonmark/compare/0.15.4...0.15.5
 [0.15.4]: https://github.com/thephpleague/commonmark/compare/0.15.3...0.15.4
 [0.15.3]: https://github.com/thephpleague/commonmark/compare/0.15.2...0.15.3

@@ -137,7 +137,7 @@ The following table shows which versions of league/commonmark are compatible wit
     </thead>
     <tbody>
         <tr>
-            <td><strong>0.15.5</strong></td>
+            <td><strong>0.15.6</strong><br>0.15.5</td>
             <td><strong><a href="http://spec.commonmark.org/0.28/">0.28</a></strong></td>
         </tr>
         <tr>
