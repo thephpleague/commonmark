@@ -8,7 +8,7 @@ php:
   - 5.6
   - 7.0
   - 7.1
-  - master
+  - 7.2
   - hhvm
   
 # Cache Composer deps
@@ -21,7 +21,7 @@ matrix:
     - php: 5.4
       env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
   allow_failures:
-    - php: master
+    - php: 7.2
   fast_finish: true
 
 # This triggers builds to run on the new TravisCI infrastructure.
