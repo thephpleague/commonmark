@@ -216,6 +216,12 @@ class Cursor
      */
     public function advanceBy($characters, $advanceByColumns = false)
     {
+        if ($characters === 0) {
+            $this->previousPosition = $this->currentPosition;
+
+            return;
+        }
+
         $this->previousPosition = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
