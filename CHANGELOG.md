@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.15.7] - 2017-10-26
+
+### Fixed
+
+ - Improved performance of `Cursor::advanceBy()` (for a 16% performance boost)
+
 ## [0.15.6] - 2017-08-08
 
 ### Fixed
@@ -530,7 +536,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.6...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.15.7...HEAD
+[0.15.7]: https://github.com/thephpleague/commonmark/compare/0.15.6...0.15.7
 [0.15.6]: https://github.com/thephpleague/commonmark/compare/0.15.5...0.15.6
 [0.15.5]: https://github.com/thephpleague/commonmark/compare/0.15.4...0.15.5
 [0.15.4]: https://github.com/thephpleague/commonmark/compare/0.15.3...0.15.4
