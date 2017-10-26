@@ -216,10 +216,27 @@ class Cursor
      */
     public function advanceBy($characters, $advanceByColumns = false)
     {
+        if ($characters === 0) {
+            $this->previousPosition = $this->currentPosition;
+
+            return;
+        }
+
         $this->previousPosition = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
         $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, 'utf-8');
+
+        // Optimization to avoid tab handling logic if we have no tabs
+        if (preg_match('/\t/', $nextFewChars) === 0) {
+            $length = min($characters, $this->length - $this->currentPosition);
+            $this->partiallyConsumedTab = false;
+            $this->currentPosition += $length;
+            $this->column += $length;
+
+            return;
+        }
+
         if ($characters === 1 && !empty($nextFewChars)) {
             $asArray = [$nextFewChars];
         } else {
