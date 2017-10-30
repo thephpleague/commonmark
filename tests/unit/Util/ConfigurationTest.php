@@ -3,8 +3,9 @@
 namespace League\CommonMark\Tests\Unit\Util;
 
 use League\CommonMark\Util\Configuration;
+use PHPUnit\Framework\TestCase;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     public function testGetConfig()
     {

@@ -14,7 +14,9 @@
 
 namespace League\CommonMark\Tests\Unit\Extension;
 
-class ExtensionTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ExtensionTest extends TestCase
 {
     public function testDefaultMethodBehavior()
     {

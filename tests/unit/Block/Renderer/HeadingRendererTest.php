@@ -18,8 +18,9 @@ use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Block\Renderer\HeadingRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class HeadingRendererTest extends \PHPUnit_Framework_TestCase
+class HeadingRendererTest extends TestCase
 {
     /**
      * @var HeadingRenderer

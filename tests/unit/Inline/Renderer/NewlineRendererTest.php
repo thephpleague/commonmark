@@ -17,8 +17,9 @@ namespace League\CommonMark\Tests\Unit\Inline\Renderer;
 use League\CommonMark\Inline\Element\Newline;
 use League\CommonMark\Inline\Renderer\NewlineRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class NewlineRendererTest extends \PHPUnit_Framework_TestCase
+class NewlineRendererTest extends TestCase
 {
     /**
      * @var NewlineRenderer

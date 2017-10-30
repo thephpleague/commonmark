@@ -18,8 +18,9 @@ use League\CommonMark\Block\Element\IndentedCode;
 use League\CommonMark\Block\Renderer\IndentedCodeRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class IndentedCodeRendererTest extends \PHPUnit_Framework_TestCase
+class IndentedCodeRendererTest extends TestCase
 {
     /**
      * @var IndentedCodeRenderer

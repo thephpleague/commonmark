@@ -19,8 +19,9 @@ use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Renderer\ImageRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 use League\CommonMark\Util\Configuration;
+use PHPUnit\Framework\TestCase;
 
-class ImageRendererTest extends \PHPUnit_Framework_TestCase
+class ImageRendererTest extends TestCase
 {
     /**
      * @var ImageRenderer

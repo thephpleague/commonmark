@@ -19,8 +19,9 @@ use League\CommonMark\Block\Renderer\BlockQuoteRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeEmptyHtmlRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class BlockQuoteRendererTest extends \PHPUnit_Framework_TestCase
+class BlockQuoteRendererTest extends TestCase
 {
     /**
      * @var BlockQuoteRenderer

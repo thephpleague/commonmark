@@ -19,8 +19,9 @@ use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Renderer\LinkRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 use League\CommonMark\Util\Configuration;
+use PHPUnit\Framework\TestCase;
 
-class LinkRendererTest extends \PHPUnit_Framework_TestCase
+class LinkRendererTest extends TestCase
 {
     /**
      * @var LinkRenderer

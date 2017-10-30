@@ -15,11 +15,12 @@
 namespace League\CommonMark\Tests\functional;
 
 use League\CommonMark\CommonMarkConverter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the parser against the CommonMark spec
  */
-class RegressionTest extends \PHPUnit_Framework_TestCase
+class RegressionTest extends TestCase
 {
     /**
      * @var CommonMarkConverter

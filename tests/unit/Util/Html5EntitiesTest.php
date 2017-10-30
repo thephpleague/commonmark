@@ -3,8 +3,9 @@
 namespace League\CommonMark\Tests\Unit\Util;
 
 use League\CommonMark\Util\Html5Entities;
+use PHPUnit\Framework\TestCase;
 
-class Html5EntitiesTest extends \PHPUnit_Framework_TestCase
+class Html5EntitiesTest extends TestCase
 {
     public function testEntityToChar()
     {

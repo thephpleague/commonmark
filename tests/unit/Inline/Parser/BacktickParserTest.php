@@ -18,8 +18,9 @@ use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Parser\BacktickParser;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Reference\ReferenceMap;
+use PHPUnit\Framework\TestCase;
 
-class BacktickParserTest extends \PHPUnit_Framework_TestCase
+class BacktickParserTest extends TestCase
 {
     /**
      * @param $string

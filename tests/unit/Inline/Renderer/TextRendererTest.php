@@ -17,8 +17,9 @@ namespace League\CommonMark\Tests\Unit\Inline\Renderer;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Renderer\TextRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class TextRendererTest extends \PHPUnit_Framework_TestCase
+class TextRendererTest extends TestCase
 {
     /**
      * @var TextRenderer
