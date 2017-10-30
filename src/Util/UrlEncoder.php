@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Util;
 
-class UrlEncoder
+final class UrlEncoder
 {
     protected static $dontEncode = [
         '%21' => '!',
