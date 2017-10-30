@@ -35,6 +35,8 @@ interface ElementRendererInterface
      * @param bool   $preserveEntities
      *
      * @return string
+     *
+     * @deprecated
      */
     public function escape($string, $preserveEntities = false);
 

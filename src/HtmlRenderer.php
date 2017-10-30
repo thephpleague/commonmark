@@ -16,6 +16,7 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Util\Xml;
 
 /**
  * Renders a parsed AST to HTML
@@ -51,16 +52,14 @@ class HtmlRenderer implements ElementRendererInterface
      * @param bool   $preserveEntities
      *
      * @return string
+     *
+     * @deprecated
      */
     public function escape($string, $preserveEntities = false)
     {
-        if ($preserveEntities) {
-            $string = preg_replace('/[&](?![#](x[a-f0-9]{1,8}|[0-9]{1,8});|[a-z][a-z0-9]{1,31};)/i', '&amp;', $string);
-        } else {
-            $string = str_replace('&', '&amp;', $string);
-        }
+        @trigger_error('HtmlRenderer::escape() will be removed in a future 0.x release.  Use Xml::escape() instead.', E_USER_DEPRECATED);
 
-        return str_replace(['<', '>', '"'], ['&lt;', '&gt;', '&quot;'], $string);
+        return Xml::escape($string, $preserveEntities);
     }
 
     /**
