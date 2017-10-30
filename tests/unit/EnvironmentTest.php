@@ -158,16 +158,16 @@ class EnvironmentTest extends TestCase
         $mockRenderer = $this->getMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
 
         $builtInClasses = [
-            'BlockQuote'     => 'League\CommonMark\Block\Element\BlockQuote',
-            'Document'       => 'League\CommonMark\Block\Element\Document',
-            'FencedCode'     => 'League\CommonMark\Block\Element\FencedCode',
-            'Heading'        => 'League\CommonMark\Block\Element\Heading',
-            'HtmlBlock'      => 'League\CommonMark\Block\Element\HtmlBlock',
-            'IndentedCode'   => 'League\CommonMark\Block\Element\IndentedCode',
-            'ListBlock'      => 'League\CommonMark\Block\Element\ListBlock',
-            'ListItem'       => 'League\CommonMark\Block\Element\ListItem',
-            'Paragraph'      => 'League\CommonMark\Block\Element\Paragraph',
-            'ThematicBreak'  => 'League\CommonMark\Block\Element\ThematicBreak',
+            'BlockQuote'    => 'League\CommonMark\Block\Element\BlockQuote',
+            'Document'      => 'League\CommonMark\Block\Element\Document',
+            'FencedCode'    => 'League\CommonMark\Block\Element\FencedCode',
+            'Heading'       => 'League\CommonMark\Block\Element\Heading',
+            'HtmlBlock'     => 'League\CommonMark\Block\Element\HtmlBlock',
+            'IndentedCode'  => 'League\CommonMark\Block\Element\IndentedCode',
+            'ListBlock'     => 'League\CommonMark\Block\Element\ListBlock',
+            'ListItem'      => 'League\CommonMark\Block\Element\ListItem',
+            'Paragraph'     => 'League\CommonMark\Block\Element\Paragraph',
+            'ThematicBreak' => 'League\CommonMark\Block\Element\ThematicBreak',
         ];
 
         foreach ($builtInClasses as $name => $fullyQualifiedName) {

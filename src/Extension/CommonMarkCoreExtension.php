@@ -76,16 +76,16 @@ class CommonMarkCoreExtension extends Extension
     public function getBlockRenderers()
     {
         return [
-            'League\CommonMark\Block\Element\BlockQuote'          => new BlockRenderer\BlockQuoteRenderer(),
-            'League\CommonMark\Block\Element\Document'            => new BlockRenderer\DocumentRenderer(),
-            'League\CommonMark\Block\Element\FencedCode'          => new BlockRenderer\FencedCodeRenderer(),
-            'League\CommonMark\Block\Element\Heading'             => new BlockRenderer\HeadingRenderer(),
-            'League\CommonMark\Block\Element\HtmlBlock'           => new BlockRenderer\HtmlBlockRenderer(),
-            'League\CommonMark\Block\Element\IndentedCode'        => new BlockRenderer\IndentedCodeRenderer(),
-            'League\CommonMark\Block\Element\ListBlock'           => new BlockRenderer\ListBlockRenderer(),
-            'League\CommonMark\Block\Element\ListItem'            => new BlockRenderer\ListItemRenderer(),
-            'League\CommonMark\Block\Element\Paragraph'           => new BlockRenderer\ParagraphRenderer(),
-            'League\CommonMark\Block\Element\ThematicBreak'       => new BlockRenderer\ThematicBreakRenderer(),
+            'League\CommonMark\Block\Element\BlockQuote'    => new BlockRenderer\BlockQuoteRenderer(),
+            'League\CommonMark\Block\Element\Document'      => new BlockRenderer\DocumentRenderer(),
+            'League\CommonMark\Block\Element\FencedCode'    => new BlockRenderer\FencedCodeRenderer(),
+            'League\CommonMark\Block\Element\Heading'       => new BlockRenderer\HeadingRenderer(),
+            'League\CommonMark\Block\Element\HtmlBlock'     => new BlockRenderer\HtmlBlockRenderer(),
+            'League\CommonMark\Block\Element\IndentedCode'  => new BlockRenderer\IndentedCodeRenderer(),
+            'League\CommonMark\Block\Element\ListBlock'     => new BlockRenderer\ListBlockRenderer(),
+            'League\CommonMark\Block\Element\ListItem'      => new BlockRenderer\ListItemRenderer(),
+            'League\CommonMark\Block\Element\Paragraph'     => new BlockRenderer\ParagraphRenderer(),
+            'League\CommonMark\Block\Element\ThematicBreak' => new BlockRenderer\ThematicBreakRenderer(),
         ];
     }
 

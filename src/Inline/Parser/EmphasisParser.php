@@ -29,10 +29,10 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
     public function __construct(array $newConfig = [])
     {
         $this->config = new Configuration([
-            'use_asterisk'    => true,
-            'use_underscore'  => true,
-            'enable_em'       => true,
-            'enable_strong'   => true,
+            'use_asterisk'   => true,
+            'use_underscore' => true,
+            'enable_em'      => true,
+            'enable_strong'  => true,
         ]);
         $this->config->mergeConfig($newConfig);
     }
