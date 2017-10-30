@@ -18,8 +18,9 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Renderer\CodeRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class CodeRendererTest extends \PHPUnit_Framework_TestCase
+class CodeRendererTest extends TestCase
 {
     /**
      * @var CodeRenderer

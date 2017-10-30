@@ -18,8 +18,9 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\Strong;
 use League\CommonMark\Inline\Renderer\StrongRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class StrongRendererTest extends \PHPUnit_Framework_TestCase
+class StrongRendererTest extends TestCase
 {
     /**
      * @var StrongRenderer

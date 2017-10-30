@@ -4,8 +4,9 @@ namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
+use PHPUnit\Framework\TestCase;
 
-class HtmlInputTest extends \PHPUnit_Framework_TestCase
+class HtmlInputTest extends TestCase
 {
     public function testDefaultConfig()
     {

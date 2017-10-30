@@ -12,6 +12,7 @@
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -21,7 +22,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * This is particularly useful for testing minor variations allowed by the spec
  * or small regressions not tested by the spec.
  */
-class LocalDataTest extends \PHPUnit_Framework_TestCase
+class LocalDataTest extends TestCase
 {
     /**
      * @var CommonMarkConverter

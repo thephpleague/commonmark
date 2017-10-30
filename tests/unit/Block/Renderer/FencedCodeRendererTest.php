@@ -18,8 +18,9 @@ use League\CommonMark\Block\Element\FencedCode;
 use League\CommonMark\Block\Renderer\FencedCodeRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class FencedCodeRendererTest extends \PHPUnit_Framework_TestCase
+class FencedCodeRendererTest extends TestCase
 {
     /**
      * @var FencedCodeRenderer

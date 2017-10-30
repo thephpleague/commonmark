@@ -12,8 +12,9 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Cursor;
+use PHPUnit\Framework\TestCase;
 
-class CursorTest extends \PHPUnit_Framework_TestCase
+class CursorTest extends TestCase
 {
     public function testConstructor()
     {

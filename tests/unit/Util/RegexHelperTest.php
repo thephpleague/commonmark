@@ -12,11 +12,12 @@
 namespace League\CommonMark\Tests\Unit\Util;
 
 use League\CommonMark\Util\RegexHelper;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the different regular expressions
  */
-class RegexHelperTest extends \PHPUnit_Framework_TestCase
+class RegexHelperTest extends TestCase
 {
     /**
      * @var RegexHelper

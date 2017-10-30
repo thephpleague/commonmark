@@ -18,8 +18,9 @@ use League\CommonMark\Block\Element\ThematicBreak;
 use League\CommonMark\Block\Renderer\ThematicBreakRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class ThematicBreakRendererTest extends \PHPUnit_Framework_TestCase
+class ThematicBreakRendererTest extends TestCase
 {
     /**
      * @var ThematicBreakRenderer

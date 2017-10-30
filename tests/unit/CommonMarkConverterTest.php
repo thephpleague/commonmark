@@ -6,8 +6,9 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Converter;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
+use PHPUnit\Framework\TestCase;
 
-class CommonMarkConverterTest extends \PHPUnit_Framework_TestCase
+class CommonMarkConverterTest extends TestCase
 {
     public function testEmptyConstructor()
     {

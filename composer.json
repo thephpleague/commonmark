@@ -26,7 +26,7 @@
         "jgm/CommonMark": "0.28",
         "michelf/php-markdown": "~1.4",
         "mikehaertl/php-shellcommand": "~1.2.0",
-        "phpunit/phpunit": "~4.3|~5.0",
+        "phpunit/phpunit": "^4.8.35|~5.7",
         "symfony/finder": "~2.3|~3.0",
         "scrutinizer/ocular": "~1.1"
     },

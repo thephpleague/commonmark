@@ -16,8 +16,9 @@ namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Environment;
 use League\CommonMark\InlineParserEngine;
+use PHPUnit\Framework\TestCase;
 
-class EnvironmentTest extends \PHPUnit_Framework_TestCase
+class EnvironmentTest extends TestCase
 {
     public function testAddGetExtensions()
     {
