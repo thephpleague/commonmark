@@ -162,20 +162,22 @@ class DocParser
      */
     private function resetContainer(ContextInterface $context, Cursor $cursor)
     {
-        $context->setContainer($context->getDocument());
+        $container = $context->getDocument();
 
-        while ($context->getContainer()->hasChildren()) {
-            $lastChild = $context->getContainer()->lastChild();
+        while ($container->hasChildren()) {
+            $lastChild = $container->lastChild();
             if (!$lastChild->isOpen()) {
                 break;
             }
 
-            $context->setContainer($lastChild);
-            if (!$context->getContainer()->matchesNextLine($cursor)) {
-                $context->setContainer($context->getContainer()->parent()); // back up to the last matching block
+            $container = $lastChild;
+            if (!$container->matchesNextLine($cursor)) {
+                $container = $container->parent(); // back up to the last matching block
                 break;
             }
         }
+
+        $context->setContainer($container);
     }
 
     /**
