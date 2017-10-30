@@ -19,8 +19,9 @@ use League\CommonMark\Block\Renderer\HtmlBlockRenderer;
 use League\CommonMark\Environment;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 use League\CommonMark\Util\Configuration;
+use PHPUnit\Framework\TestCase;
 
-class HtmlBlockRendererTest extends \PHPUnit_Framework_TestCase
+class HtmlBlockRendererTest extends TestCase
 {
     /**
      * @var HtmlBlockRenderer

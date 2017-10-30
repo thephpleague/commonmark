@@ -15,8 +15,9 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\HtmlElement;
+use PHPUnit\Framework\TestCase;
 
-class HtmlElementTest extends \PHPUnit_Framework_TestCase
+class HtmlElementTest extends TestCase
 {
     public function testConstructorOneArgument()
     {

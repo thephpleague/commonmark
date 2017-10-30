@@ -3,9 +3,10 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Converter;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 
-class ConverterTest extends \PHPUnit_Framework_TestCase
+class ConverterTest extends TestCase
 {
     public function testInvokeReturnsSameOutputAsConvertToHtml()
     {

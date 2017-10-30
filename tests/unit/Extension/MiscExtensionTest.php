@@ -15,8 +15,9 @@
 namespace League\CommonMark\Tests\Unit\Extension;
 
 use League\CommonMark\Extension\MiscExtension;
+use PHPUnit\Framework\TestCase;
 
-class MiscExtensionTest extends \PHPUnit_Framework_TestCase
+class MiscExtensionTest extends TestCase
 {
     public function testBlockParsers()
     {

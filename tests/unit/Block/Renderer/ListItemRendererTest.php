@@ -19,8 +19,9 @@ use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\Block\Renderer\ListItemRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class ListItemRendererTest extends \PHPUnit_Framework_TestCase
+class ListItemRendererTest extends TestCase
 {
     /**
      * @var ListItemRenderer

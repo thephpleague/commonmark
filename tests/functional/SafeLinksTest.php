@@ -3,8 +3,9 @@
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
+use PHPUnit\Framework\TestCase;
 
-class SafeLinksTest extends \PHPUnit_Framework_TestCase
+class SafeLinksTest extends TestCase
 {
     public function testDefaultConfig()
     {

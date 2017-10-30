@@ -3,8 +3,9 @@
 namespace League\CommonMark\Tests\Unit\Util;
 
 use League\CommonMark\Util\UrlEncoder;
+use PHPUnit\Framework\TestCase;
 
-class UrlEncoderTest extends \PHPUnit_Framework_TestCase
+class UrlEncoderTest extends TestCase
 {
     /**
      * @dataProvider unescapeAndEncodeTestProvider

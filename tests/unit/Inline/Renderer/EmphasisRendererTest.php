@@ -18,8 +18,9 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Renderer\EmphasisRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class EmphasisRendererTest extends \PHPUnit_Framework_TestCase
+class EmphasisRendererTest extends TestCase
 {
     /**
      * @var EmphasisRenderer

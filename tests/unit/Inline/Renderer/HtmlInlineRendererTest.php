@@ -19,8 +19,9 @@ use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\Inline\Renderer\HtmlInlineRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 use League\CommonMark\Util\Configuration;
+use PHPUnit\Framework\TestCase;
 
-class HtmlInlineRendererTest extends \PHPUnit_Framework_TestCase
+class HtmlInlineRendererTest extends TestCase
 {
     /**
      * @var HtmlInlineRenderer

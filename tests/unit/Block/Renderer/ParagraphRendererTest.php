@@ -18,8 +18,9 @@ use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Renderer\ParagraphRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class ParagraphRendererTest extends \PHPUnit_Framework_TestCase
+class ParagraphRendererTest extends TestCase
 {
     /**
      * @var ParagraphRenderer

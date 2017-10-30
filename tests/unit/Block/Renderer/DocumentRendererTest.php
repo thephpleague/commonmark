@@ -18,8 +18,9 @@ use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Renderer\DocumentRenderer;
 use League\CommonMark\Tests\Unit\FakeEmptyHtmlRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class DocumentRendererTest extends \PHPUnit_Framework_TestCase
+class DocumentRendererTest extends TestCase
 {
     /**
      * @var DocumentRenderer
