@@ -51,12 +51,7 @@ class InlineParserEngine
      */
     protected function parseCharacter($character, InlineParserContext $inlineParserContext)
     {
-        $matchingParsers = $this->environment->getInlineParsersForCharacter($character);
-        if (empty($matchingParsers)) {
-            return false;
-        }
-
-        foreach ($matchingParsers as $parser) {
+        foreach ($this->environment->getInlineParsersForCharacter($character) as $parser) {
             if ($parser->parse($inlineParserContext)) {
                 return true;
             }
