@@ -17,7 +17,7 @@ namespace League\CommonMark\Util;
 use League\CommonMark\Block\Element\HtmlBlock;
 
 /**
- * Provides regular expressions and utilties for parsing Markdown
+ * Provides regular expressions and utilities for parsing Markdown
  *
  * Singletons are generally bad, but it allows us to build the regexes once (and only once).
  */
