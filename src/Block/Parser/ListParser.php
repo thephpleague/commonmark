@@ -43,20 +43,20 @@ class ListParser extends AbstractBlockParser
         $data = new ListData();
         $data->markerOffset = $cursor->getIndent();
 
-        if ($matches = RegexHelper::matchAll('/^[*+-]/', $rest)) {
+        if (preg_match('/^[*+-]/', $rest) === 1) {
             $data->type = ListBlock::TYPE_UNORDERED;
             $data->delimiter = null;
-            $data->bulletChar = $matches[0][0];
+            $data->bulletChar = $rest[0];
+            $markerLength = 1;
         } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (!($context->getContainer() instanceof Paragraph) || $matches[1] === '1')) {
             $data->type = ListBlock::TYPE_ORDERED;
-            $data->start = intval($matches[1]);
+            $data->start = (int)$matches[1];
             $data->delimiter = $matches[2];
             $data->bulletChar = null;
+            $markerLength = strlen($matches[0]);
         } else {
             return false;
         }
-
-        $markerLength = strlen($matches[0]);
 
         // Make sure we have spaces after
         $nextChar = $tmpCursor->peek($markerLength);

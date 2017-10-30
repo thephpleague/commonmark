@@ -396,7 +396,7 @@ class Cursor
      */
     public function getRemainder()
     {
-        if ($this->isAtEnd()) {
+        if ($this->currentPosition >= $this->length) {
             return '';
         }
 

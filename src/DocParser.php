@@ -199,6 +199,7 @@ class DocParser
 
             if (!$parsed || $context->getContainer()->acceptsLines()) {
                 $context->setBlocksParsed(true);
+                break;
             }
         }
     }
