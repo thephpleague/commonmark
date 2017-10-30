@@ -38,20 +38,17 @@ class LinkParserHelper
         $openParens = 0;
         while (($c = $cursor->getCharacter()) !== null) {
             if ($c === '\\') {
-                $cursor->advance();
-                if ($cursor->getCharacter()) {
-                    $cursor->advance();
-                }
+                $cursor->advanceBy(2);
             } elseif ($c === '(') {
                 $cursor->advance();
                 $openParens++;
             } elseif ($c === ')') {
                 if ($openParens < 1) {
                     break;
-                } else {
-                    $cursor->advance();
-                    $openParens--;
                 }
+
+                $cursor->advance();
+                $openParens--;
             } elseif (preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $c)) {
                 break;
             } else {

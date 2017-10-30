@@ -296,9 +296,13 @@ class Cursor
      * @param int|null $maximumCharactersToAdvance Maximum number of characters to advance before giving up
      *
      * @return int Number of positions moved (0 if unsuccessful)
+     *
+     * @deprecated Use match() instead
      */
     public function advanceWhileMatches($character, $maximumCharactersToAdvance = null)
     {
+        @trigger_error('Cursor::advanceWhileMatches() will be removed in a future 0.x release.  Use match() instead.', E_USER_DEPRECATED);
+
         // Calculate how far to advance
         $start = $this->currentPosition;
         $newIndex = $start;
@@ -392,7 +396,7 @@ class Cursor
      */
     public function getRemainder()
     {
-        if ($this->isAtEnd()) {
+        if ($this->currentPosition >= $this->length) {
             return '';
         }
 

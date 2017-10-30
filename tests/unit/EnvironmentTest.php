@@ -306,7 +306,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $this->assertNull($environment->getInlineParsersForCharacter('a'));
+        $this->assertEmpty($environment->getInlineParsersForCharacter('a'));
     }
 
     public function testAddInlineProcessor()

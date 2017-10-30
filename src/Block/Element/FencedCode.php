@@ -173,7 +173,7 @@ class FencedCode extends AbstractBlock
         }
 
         // Skip optional spaces of fence offset
-        $cursor->advanceWhileMatches(' ', $this->offset);
+        $cursor->match('/^ {0,' . $this->offset . '}/');
 
         return true;
     }

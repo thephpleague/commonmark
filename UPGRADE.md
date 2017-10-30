@@ -8,6 +8,8 @@ You may continue using the deprecated items listed below in version 0.16.x.  **H
 
 Basically, all methods in these two classes which contain `First` in their name have been deprecated.  The original names were misleading as they always operated on the "first" non-space **after the current position**, which is not always the **first occurrence in the string**. You should instead use the `Next` versions instead:
 
+ - Deprecated `Cursor::advanceWhileMatches()`
+   - Use `Cursor::match()` instead.
  - Deprecated `CursorState::getFirstNonSpaceCache()`
    - Use `CursorState::getNextNonSpaceCache()` instead (identical behavior)
  - Deprecated `Cursor::getFirstNonSpaceCharacter()`

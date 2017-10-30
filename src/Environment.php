@@ -243,14 +243,14 @@ class Environment
     /**
      * @param string $character
      *
-     * @return InlineParserInterface[]|null
+     * @return InlineParserInterface[]
      */
     public function getInlineParsersForCharacter($character)
     {
         $this->initializeExtensions();
 
         if (!isset($this->inlineParsersByCharacter[$character])) {
-            return;
+            return [];
         }
 
         return $this->inlineParsersByCharacter[$character];

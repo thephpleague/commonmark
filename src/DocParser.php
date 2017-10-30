@@ -162,20 +162,22 @@ class DocParser
      */
     private function resetContainer(ContextInterface $context, Cursor $cursor)
     {
-        $context->setContainer($context->getDocument());
+        $container = $context->getDocument();
 
-        while ($context->getContainer()->hasChildren()) {
-            $lastChild = $context->getContainer()->lastChild();
+        while ($container->hasChildren()) {
+            $lastChild = $container->lastChild();
             if (!$lastChild->isOpen()) {
                 break;
             }
 
-            $context->setContainer($lastChild);
-            if (!$context->getContainer()->matchesNextLine($cursor)) {
-                $context->setContainer($context->getContainer()->parent()); // back up to the last matching block
+            $container = $lastChild;
+            if (!$container->matchesNextLine($cursor)) {
+                $container = $container->parent(); // back up to the last matching block
                 break;
             }
         }
+
+        $context->setContainer($container);
     }
 
     /**
@@ -197,6 +199,7 @@ class DocParser
 
             if (!$parsed || $context->getContainer()->acceptsLines()) {
                 $context->setBlocksParsed(true);
+                break;
             }
         }
     }
@@ -221,13 +224,14 @@ class DocParser
      */
     private function setAndPropagateLastLineBlank(ContextInterface $context, $cursor)
     {
-        if ($cursor->isBlank() && $lastChild = $context->getContainer()->lastChild()) {
+        $container = $context->getContainer();
+
+        if ($cursor->isBlank() && $lastChild = $container->lastChild()) {
             if ($lastChild instanceof AbstractBlock) {
                 $lastChild->setLastLineBlank(true);
             }
         }
 
-        $container = $context->getContainer();
         $lastLineBlank = $container->shouldLastLineBeBlank($cursor, $context->getLineNumber());
 
         // Propagate lastLineBlank up through parents:
