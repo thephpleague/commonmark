@@ -65,7 +65,8 @@ class ListParser extends AbstractBlockParser
         }
 
         // If it interrupts paragraph, make sure first line isn't blank
-        if ($context->getContainer() instanceof Paragraph && !RegexHelper::matchAt(RegexHelper::REGEX_NON_SPACE, $rest, $markerLength)) {
+        $container = $context->getContainer();
+        if ($container instanceof Paragraph && !RegexHelper::matchAt(RegexHelper::REGEX_NON_SPACE, $rest, $markerLength)) {
             return false;
         }
 
@@ -75,8 +76,7 @@ class ListParser extends AbstractBlockParser
         $data->padding = $this->calculateListMarkerPadding($cursor, $markerLength);
 
         // add the list if needed
-        $container = $context->getContainer();
-        if (!$container || !($context->getContainer() instanceof ListBlock) || !$data->equals($container->getListData())) {
+        if (!$container || !($container instanceof ListBlock) || !$data->equals($container->getListData())) {
             $context->addBlock(new ListBlock($data));
         }
 

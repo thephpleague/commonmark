@@ -223,13 +223,14 @@ class DocParser
      */
     private function setAndPropagateLastLineBlank(ContextInterface $context, $cursor)
     {
-        if ($cursor->isBlank() && $lastChild = $context->getContainer()->lastChild()) {
+        $container = $context->getContainer();
+
+        if ($cursor->isBlank() && $lastChild = $container->lastChild()) {
             if ($lastChild instanceof AbstractBlock) {
                 $lastChild->setLastLineBlank(true);
             }
         }
 
-        $container = $context->getContainer();
         $lastLineBlank = $container->shouldLastLineBeBlank($cursor, $context->getLineNumber());
 
         // Propagate lastLineBlank up through parents:
