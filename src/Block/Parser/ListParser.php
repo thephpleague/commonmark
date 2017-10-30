@@ -50,7 +50,7 @@ class ListParser extends AbstractBlockParser
             $markerLength = 1;
         } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (!($context->getContainer() instanceof Paragraph) || $matches[1] === '1')) {
             $data->type = ListBlock::TYPE_ORDERED;
-            $data->start = (int)$matches[1];
+            $data->start = (int) $matches[1];
             $data->delimiter = $matches[2];
             $data->bulletChar = null;
             $markerLength = strlen($matches[0]);
