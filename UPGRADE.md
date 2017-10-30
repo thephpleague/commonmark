@@ -28,6 +28,10 @@ More details about this change can be found here: https://github.com/thephpleagu
 
 `RegexHelper::REGEX_UNICODE_WHITESPACE` and `RegexHelper::getLinkDestinationRegex()` were no longer needed as of the 0.15.5 release and have therefore been deprecated.  They will be removed in 0.17.0 or 1.0.0 (whichever comes first).
 
+### `HtmlRenderer::escape()`
+
+`HtmlRenderer::escape()` will be removed in a future 0.x release.  Use the static Xml::escape() method instead - it takes the same exact methods and implements the same behavior.
+
 ## 0.15.0
 
 ### `CursorState` constructor
