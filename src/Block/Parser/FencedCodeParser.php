@@ -32,16 +32,14 @@ class FencedCodeParser extends AbstractBlockParser
             return false;
         }
 
-        $previousState = $cursor->saveState();
-        $indent = $cursor->advanceToNextNonSpaceOrTab();
-        $fence = $cursor->match('/^`{3,}(?!.*`)|^~{3,}(?!.*~)/');
+        $indent = $cursor->getIndent();
+        $fence = $cursor->match('/^[ \t]*(?:`{3,}(?!.*`)|^~{3,}(?!.*~))/');
         if (is_null($fence)) {
-            $cursor->restoreState($previousState);
-
             return false;
         }
 
         // fenced code block
+        $fence = ltrim($fence, " \t");
         $fenceLength = strlen($fence);
         $context->addBlock(new FencedCode($fenceLength, $fence[0], $indent));
 
