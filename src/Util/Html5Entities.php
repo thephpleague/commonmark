@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Util;
 
-class Html5Entities
+final class Html5Entities
 {
     public static $entitiesByName = [
         'Aacute'                          => 'Á',

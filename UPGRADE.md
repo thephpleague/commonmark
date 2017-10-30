@@ -32,6 +32,14 @@ More details about this change can be found here: https://github.com/thephpleagu
 
 `HtmlRenderer::escape()` will be removed in a future 0.x release.  Use the static Xml::escape() method instead - it takes the same exact methods and implements the same behavior.
 
+### Final Utility Classes
+
+The following utility classes were never meant to be extended and have therefore been marked `final`:
+
+ - `Html5Entities`
+ - `LinkParserHelper`
+ - `UrlEncoder`
+
 ## 0.15.0
 
 ### `CursorState` constructor
