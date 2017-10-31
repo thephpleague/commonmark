@@ -1,6 +1,6 @@
 # Upgrade Instructions
 
-## 0.16.0 (unreleased)
+## 0.16.0
 
 You may continue using the deprecated items listed below in version 0.16.x.  **However, these deprecations will be removed in a future major release** (0.17.0+ or 1.0.0, whichever comes first) so consider updating your code now to prepare for that release.
 
@@ -26,7 +26,7 @@ More details about this change can be found here: https://github.com/thephpleagu
 
 ### `RegexHelper`
 
-`RegexHelper::REGEX_UNICODE_WHITESPACE` and `RegexHelper::getLinkDestinationRegex()` were no longer needed as of the 0.15.5 release and have therefore been deprecated.  They will be removed in 0.17.0 or 1.0.0 (whichever comes first).
+`RegexHelper::REGEX_UNICODE_WHITESPACE` and `RegexHelper::getLinkDestinationRegex()` were no longer needed as of the 0.15.5 release and have therefore been deprecated and marked for removal.
 
 ### `HtmlRenderer::escape()`
 
@@ -53,7 +53,7 @@ You should use `DelimiterStack::findMatchingOpener()` instead.
 
 The method signature is almost identical, except for the inclusion of a by-reference boolean `$oddMatch`.
 
-The deprecated `findFirstMatchingOpener()` method may be removed as early as 0.16.0 or 1.0.0.
+The deprecated `findFirstMatchingOpener()` method was removed in the 0.16.0 release.
 
 ## 0.14.0
 
