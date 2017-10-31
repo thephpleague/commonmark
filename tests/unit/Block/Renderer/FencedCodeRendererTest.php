@@ -14,8 +14,11 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
+use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\FencedCode;
 use League\CommonMark\Block\Renderer\FencedCodeRenderer;
+use League\CommonMark\Context;
+use League\CommonMark\Environment;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 use PHPUnit\Framework\TestCase;
@@ -34,19 +37,16 @@ class FencedCodeRendererTest extends TestCase
 
     public function testRenderWithLanguageSpecified()
     {
-        /** @var FencedCode|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder('League\CommonMark\Block\Element\FencedCode')
-            ->setConstructorArgs([3, '~', 0])
-            ->getMock();
+        $document = new Document();
+        $context = new Context($document, new Environment());
 
-        $block->expects($this->any())
-            ->method('getInfoWords')
-            ->will($this->returnValue(['php']));
-        $block->expects($this->any())
-            ->method('getData')
-            ->with($this->equalTo('attributes'))
-            ->will($this->returnValue(['id' => 'id', 'class' => 'foo']));
+        $block = new FencedCode(3, '~', 0);
+        $block->addLine('php');
         $block->addLine('echo "hello world!";');
+        $block->data['attributes'] = ['id' => 'foo', 'class' => 'bar'];
+
+        $document->appendChild($block);
+        $block->finalize($context, 1);
 
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -58,16 +58,22 @@ class FencedCodeRendererTest extends TestCase
         $code = $result->getContents(false);
         $this->assertTrue($code instanceof HtmlElement);
         $this->assertEquals('code', $code->getTagName());
-        $this->assertContains('::escape::foo language-::escape::php', $code->getAttribute('class'));
-        $this->assertContains('::escape::', $code->getContents(true));
+        $this->assertContains('bar language-php', $code->getAttribute('class'));
+        $this->assertContains('hello world', $code->getContents(true));
     }
 
     public function testRenderWithoutLanguageSpecified()
     {
-        /** @var FencedCode|\PHPUnit_Framework_MockObject_MockObject $block */
+        $document = new Document();
+        $context = new Context($document, new Environment());
+
         $block = new FencedCode(3, '~', 0);
+        $block->addLine('');
         $block->addLine('echo "hello world!";');
-        $block->data['attributes'] = ['id' => 'id', 'class' => 'foo'];
+        $block->data['attributes'] = ['id' => 'foo', 'class' => 'bar'];
+
+        $document->appendChild($block);
+        $block->finalize($context, 1);
 
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -79,8 +85,8 @@ class FencedCodeRendererTest extends TestCase
         $code = $result->getContents(false);
         $this->assertTrue($code instanceof HtmlElement);
         $this->assertEquals('code', $code->getTagName());
-        $this->assertEquals('::escape::foo', $code->getAttribute('class'));
-        $this->assertContains('::escape::', $code->getContents(true));
+        $this->assertEquals('bar', $code->getAttribute('class'));
+        $this->assertContains('hello world', $code->getContents(true));
     }
 
     /**

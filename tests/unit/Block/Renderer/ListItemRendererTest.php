@@ -36,14 +36,14 @@ class ListItemRendererTest extends TestCase
     public function testRenderUnorderedList()
     {
         $block = new ListItem(new ListData());
-        $block->data['attributes'] = ['id' => 'id'];
+        $block->data['attributes'] = ['id' => 'foo'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('li', $result->getTagName());
-        $this->assertEquals('<li id="::escape::id">::blocks::</li>', $result->__toString());
+        $this->assertEquals('<li id="foo">::blocks::</li>', $result->__toString());
     }
 
     /**

@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Util\Xml;
 
 class ListBlockRenderer implements BlockRendererInterface
 {
@@ -40,7 +41,7 @@ class ListBlockRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         if ($listData->start !== null && $listData->start !== 1) {

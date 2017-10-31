@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ThematicBreak;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Util\Xml;
 
 class ThematicBreakRenderer implements BlockRendererInterface
 {
@@ -36,7 +37,7 @@ class ThematicBreakRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         return new HtmlElement('hr', $attrs, '', true);

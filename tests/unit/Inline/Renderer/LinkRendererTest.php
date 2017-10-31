@@ -45,7 +45,6 @@ class LinkRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('a', $result->getTagName());
         $this->assertContains('http://example.com/foo.html', $result->getAttribute('href'));
-        $this->assertContains('::escape::', $result->getAttribute('href'));
         $this->assertContains('::title::', $result->getAttribute('title'));
         $this->assertContains('::inlines::', $result->getContents(true));
         $this->assertContains('::id::', $result->getAttribute('id'));
@@ -61,7 +60,6 @@ class LinkRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('a', $result->getTagName());
         $this->assertContains('http://example.com/foo.html', $result->getAttribute('href'));
-        $this->assertContains('::escape::', $result->getAttribute('href'));
         $this->assertNull($result->getAttribute('title'));
         $this->assertContains('::inlines::', $result->getContents(true));
     }
@@ -79,7 +77,6 @@ class LinkRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertContains('javascript:void(0)', $result->getAttribute('href'));
-        $this->assertContains('::escape::', $result->getAttribute('href'));
     }
 
     public function testRenderDisallowUnsafeLink()

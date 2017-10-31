@@ -41,7 +41,7 @@ class HeadingRendererTest extends TestCase
     public function testRender($level, $expectedTag)
     {
         $block = new Heading($level, 'test');
-        $block->data['attributes'] = ['id' => 'id'];
+        $block->data['attributes'] = ['id' => 'foo'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -49,7 +49,7 @@ class HeadingRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals($expectedTag, $result->getTagName());
         $this->assertContains('::inlines::', $result->getContents(true));
-        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
+        $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
     public function dataForTestRender()

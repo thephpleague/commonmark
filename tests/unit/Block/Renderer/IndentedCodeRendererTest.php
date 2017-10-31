@@ -14,8 +14,11 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
+use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\IndentedCode;
 use League\CommonMark\Block\Renderer\IndentedCodeRenderer;
+use League\CommonMark\Context;
+use League\CommonMark\Environment;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
 use PHPUnit\Framework\TestCase;
@@ -34,8 +37,16 @@ class IndentedCodeRendererTest extends TestCase
 
     public function testRender()
     {
+        $document = new Document();
+        $context = new Context($document, new Environment());
+
         $block = new IndentedCode();
-        $block->data['attributes'] = ['id' => 'id'];
+        $block->data['attributes'] = ['id' => 'foo'];
+        $block->addLine('echo "hello world!";');
+
+        $document->appendChild($block);
+        $block->finalize($context, 1);
+
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -47,8 +58,8 @@ class IndentedCodeRendererTest extends TestCase
         $this->assertTrue($code instanceof HtmlElement);
         $this->assertEquals('code', $code->getTagName());
         $this->assertNull($code->getAttribute('class'));
-        $this->assertEquals(['id' => '::escape::id'], $code->getAllAttributes());
-        $this->assertContains('::escape::', $code->getContents(true));
+        $this->assertEquals(['id' => 'foo'], $code->getAllAttributes());
+        $this->assertContains('hello world', $code->getContents(true));
     }
 
     /**

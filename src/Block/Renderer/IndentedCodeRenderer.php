@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\IndentedCode;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Util\Xml;
 
 class IndentedCodeRenderer implements BlockRendererInterface
 {
@@ -36,13 +37,13 @@ class IndentedCodeRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         return new HtmlElement(
             'pre',
             [],
-            new HtmlElement('code', $attrs, $htmlRenderer->escape($block->getStringContent()))
+            new HtmlElement('code', $attrs, Xml::escape($block->getStringContent()))
         );
     }
 }

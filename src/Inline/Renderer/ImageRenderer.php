@@ -21,6 +21,7 @@ use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\RegexHelper;
+use League\CommonMark\Util\Xml;
 
 class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
@@ -43,14 +44,14 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
 
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         $forbidUnsafeLinks = $this->config->getConfig('safe') || !$this->config->getConfig('allow_unsafe_links');
         if ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl())) {
             $attrs['src'] = '';
         } else {
-            $attrs['src'] = $htmlRenderer->escape($inline->getUrl(), true);
+            $attrs['src'] = Xml::escape($inline->getUrl(), true);
         }
 
         $alt = $htmlRenderer->renderInlines($inline->children());
@@ -58,7 +59,7 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
         $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
 
         if (isset($inline->data['title'])) {
-            $attrs['title'] = $htmlRenderer->escape($inline->data['title'], true);
+            $attrs['title'] = Xml::escape($inline->data['title'], true);
         }
 
         return new HtmlElement('img', $attrs, '', true);

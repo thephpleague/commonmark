@@ -35,15 +35,15 @@ class CodeRendererTest extends TestCase
     public function testRender()
     {
         $inline = new Code('echo "hello world";');
-        $inline->data['attributes'] = ['id' => 'id'];
+        $inline->data['attributes'] = ['id' => 'foo'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('code', $result->getTagName());
-        $this->assertContains('echo "hello world";', $result->getContents(true));
-        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
+        $this->assertContains('echo &quot;hello world&quot;;', $result->getContents(true));
+        $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
     /**

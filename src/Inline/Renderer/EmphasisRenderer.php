@@ -18,6 +18,7 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Emphasis;
+use League\CommonMark\Util\Xml;
 
 class EmphasisRenderer implements InlineRendererInterface
 {
@@ -35,7 +36,7 @@ class EmphasisRenderer implements InlineRendererInterface
 
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         return new HtmlElement('em', $attrs, $htmlRenderer->renderInlines($inline->children()));

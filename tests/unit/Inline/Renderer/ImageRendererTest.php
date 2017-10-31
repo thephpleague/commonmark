@@ -45,7 +45,7 @@ class ImageRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('img', $result->getTagName());
         $this->assertContains('http://example.com/foo.jpg', $result->getAttribute('src'));
-        $this->assertContains('::escape::', $result->getAttribute('src'));
+        $this->assertContains('foo.jpg', $result->getAttribute('src'));
         $this->assertContains('::inlines::', $result->getAttribute('alt'));
         $this->assertContains('::title::', $result->getAttribute('title'));
         $this->assertContains('::id::', $result->getAttribute('id'));
@@ -61,7 +61,7 @@ class ImageRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('img', $result->getTagName());
         $this->assertContains('http://example.com/foo.jpg', $result->getAttribute('src'));
-        $this->assertContains('::escape::', $result->getAttribute('src'));
+        $this->assertContains('foo.jpg', $result->getAttribute('src'));
         $this->assertContains('::inlines::', $result->getAttribute('alt'));
         $this->assertNull($result->getAttribute('title'));
     }
@@ -79,7 +79,6 @@ class ImageRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertContains('javascript:void(0)', $result->getAttribute('src'));
-        $this->assertContains('::escape::', $result->getAttribute('src'));
     }
 
     public function testRenderDisallowUnsafeLink()

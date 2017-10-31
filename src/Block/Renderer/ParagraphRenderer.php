@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Util\Xml;
 
 class ParagraphRenderer implements BlockRendererInterface
 {
@@ -39,7 +40,7 @@ class ParagraphRenderer implements BlockRendererInterface
         } else {
             $attrs = [];
             foreach ($block->getData('attributes', []) as $key => $value) {
-                $attrs[$key] = $htmlRenderer->escape($value, true);
+                $attrs[$key] = Xml::escape($value, true);
             }
 
             return new HtmlElement('p', $attrs, $htmlRenderer->renderInlines($block->children()));

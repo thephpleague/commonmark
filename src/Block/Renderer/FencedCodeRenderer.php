@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\FencedCode;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Util\Xml;
 
 class FencedCodeRenderer implements BlockRendererInterface
 {
@@ -36,19 +37,19 @@ class FencedCodeRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         $infoWords = $block->getInfoWords();
         if (count($infoWords) !== 0 && strlen($infoWords[0]) !== 0) {
             $attrs['class'] = isset($attrs['class']) ? $attrs['class'] . ' ' : '';
-            $attrs['class'] .= 'language-' . $htmlRenderer->escape($infoWords[0], true);
+            $attrs['class'] .= 'language-' . Xml::escape($infoWords[0], true);
         }
 
         return new HtmlElement(
             'pre',
             [],
-            new HtmlElement('code', $attrs, $htmlRenderer->escape($block->getStringContent()))
+            new HtmlElement('code', $attrs, Xml::escape($block->getStringContent()))
         );
     }
 }

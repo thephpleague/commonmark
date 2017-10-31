@@ -50,7 +50,7 @@ class ListBlockRendererTest extends TestCase
         $this->assertEquals('ol', $result->getTagName());
         $this->assertSame($expectedAttributeValue, $result->getAttribute('start'));
         $this->assertContains('::blocks::', $result->getContents(true));
-        $this->assertEquals('::escape::id', $result->getAttribute('id'));
+        $this->assertEquals('foo', $result->getAttribute('id'));
     }
 
     public function dataForTestOrderedListStartingNumber()
@@ -74,7 +74,7 @@ class ListBlockRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('ul', $result->getTagName());
         $this->assertContains('::blocks::', $result->getContents(true));
-        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
+        $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
     /**
@@ -100,7 +100,7 @@ class ListBlockRendererTest extends TestCase
         $data->start = $start;
 
         $block = new ListBlock($data);
-        $block->data['attributes'] = ['id' => 'id'];
+        $block->data['attributes'] = ['id' => 'foo'];
 
         return $block;
     }
@@ -114,7 +114,7 @@ class ListBlockRendererTest extends TestCase
         $data->type = ListBlock::TYPE_UNORDERED;
 
         $block = new ListBlock($data);
-        $block->data['attributes'] = ['id' => 'id'];
+        $block->data['attributes'] = ['id' => 'foo'];
 
         return $block;
     }

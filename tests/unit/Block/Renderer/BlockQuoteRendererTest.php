@@ -44,7 +44,7 @@ class BlockQuoteRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('blockquote', $result->getTagName());
         $this->assertEmpty($result->getContents(true));
-        $this->assertEquals(['id' => ''], $result->getAllAttributes());
+        $this->assertEquals(['id' => 'id'], $result->getAllAttributes());
     }
 
     public function testRenderBlockQuote()
@@ -58,7 +58,7 @@ class BlockQuoteRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('blockquote', $result->getTagName());
         $this->assertContains('::blocks::', $result->getContents(true));
-        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
+        $this->assertEquals(['id' => 'id'], $result->getAllAttributes());
     }
 
     /**

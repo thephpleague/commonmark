@@ -35,7 +35,7 @@ class EmphasisRendererTest extends TestCase
     public function testRender()
     {
         $inline = new Emphasis();
-        $inline->data['attributes'] = ['id' => 'id'];
+        $inline->data['attributes'] = ['id' => 'foo'];
         $fakeRenderer = new FakeHtmlRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -43,7 +43,7 @@ class EmphasisRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('em', $result->getTagName());
         $this->assertContains('::inlines::', $result->getContents(true));
-        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
+        $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
     /**

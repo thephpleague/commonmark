@@ -17,6 +17,7 @@ namespace League\CommonMark\Inline\Renderer;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Util\Xml;
 
 class TextRenderer implements InlineRendererInterface
 {
@@ -32,6 +33,6 @@ class TextRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        return $htmlRenderer->escape($inline->getContent());
+        return Xml::escape($inline->getContent());
     }
 }

@@ -30,7 +30,7 @@ More details about this change can be found here: https://github.com/thephpleagu
 
 ### `HtmlRenderer::escape()`
 
-`HtmlRenderer::escape()` will be removed in a future 0.x release.  Use the static Xml::escape() method instead - it takes the same exact methods and implements the same behavior.
+`HtmlRenderer::escape()` was an instance method making it unusable as a general utility method.  Its logic has been moved into a new static Xml::escape() method so use that instead - it takes the same exact methods and implements the same behavior.
 
 ### Final Utility Classes
 
