@@ -183,27 +183,4 @@ class DelimiterStack
             $opener = $opener->getPrevious();
         }
     }
-
-    /**
-     * @param Delimiter      $closer
-     * @param array          $openersBottom
-     * @param Delimiter|null $stackBottom
-     *
-     * @return Delimiter|null
-     *
-     * @deprecated Use findMatchingOpener() instead.  This method will be removed in the next major release.
-     */
-    protected function findFirstMatchingOpener(Delimiter $closer, $openersBottom, Delimiter $stackBottom = null)
-    {
-        $closerChar = $closer->getChar();
-        $opener = $closer->getPrevious();
-
-        while ($opener !== null && $opener !== $stackBottom && $opener !== $openersBottom[$closerChar]) {
-            if ($opener->getChar() === $closerChar && $opener->canOpen()) {
-                return $opener;
-            }
-
-            $opener = $opener->getPrevious();
-        }
-    }
 }
