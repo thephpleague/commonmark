@@ -222,7 +222,7 @@ class DocParser
      * @param ContextInterface $context
      * @param Cursor           $cursor
      */
-    private function setAndPropagateLastLineBlank(ContextInterface $context, $cursor)
+    private function setAndPropagateLastLineBlank(ContextInterface $context, Cursor $cursor)
     {
         $container = $context->getContainer();
 
