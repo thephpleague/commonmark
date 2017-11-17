@@ -247,7 +247,7 @@ abstract class AbstractBlock extends Node
     public function finalize(ContextInterface $context, $endLineNumber)
     {
         if (!$this->open) {
-            return; // TODO: Throw AlreadyClosedException?
+            return;
         }
 
         $this->open = false;

@@ -16,7 +16,7 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\InlineContainer;
+use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Node\NodeWalker;
 
@@ -148,7 +148,7 @@ class DocParser
             }
 
             $node = $event->getNode();
-            if ($node instanceof InlineContainer) {
+            if ($node instanceof InlineContainerInterface) {
                 $this->inlineParserEngine->parse($node, $context->getDocument()->getReferenceMap());
             }
         }
@@ -222,7 +222,7 @@ class DocParser
      * @param ContextInterface $context
      * @param Cursor           $cursor
      */
-    private function setAndPropagateLastLineBlank(ContextInterface $context, $cursor)
+    private function setAndPropagateLastLineBlank(ContextInterface $context, Cursor $cursor)
     {
         $container = $context->getContainer();
 

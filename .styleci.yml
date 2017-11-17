@@ -7,3 +7,5 @@ enabled:
 disabled:
   - concat_without_spaces
   - phpdoc_summary
+  - post_increment
+  - self_accessor

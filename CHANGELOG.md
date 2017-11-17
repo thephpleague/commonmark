@@ -4,6 +4,14 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - References to `InlineContainer` changed to new `InlineContainerInterface` interface
+
+### Deprecated
+
+ - The `InlineContainer` interface has been deprecated. Use `InlineContainerInterface` instead.
+
 ## [0.16.0] - 2017-10-30
 
 This release contains breaking changes, several performance improvements, and two deprecations:
