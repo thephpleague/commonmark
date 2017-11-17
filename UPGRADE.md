@@ -1,5 +1,9 @@
 # Upgrade Instructions
 
+## 0.17.0 (unreleased)
+
+`InlineContainer` was renamed to `InlineContainerInterface`.
+
 ## 0.16.0
 
 You may continue using the deprecated items listed below in version 0.16.x.  **However, these deprecations will be removed in a future major release** (0.17.0+ or 1.0.0, whichever comes first) so consider updating your code now to prepare for that release.

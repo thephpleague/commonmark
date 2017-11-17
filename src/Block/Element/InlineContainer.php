@@ -2,7 +2,9 @@
 
 namespace League\CommonMark\Block\Element;
 
-interface InlineContainer
+/**
+ * @deprecated Use InlineContainerInterface instead
+ */
+interface InlineContainer extends InlineContainerInterface
 {
-    public function getStringContent();
 }
