@@ -20,8 +20,6 @@ matrix:
   include:
     - php: 5.4
       env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
-  allow_failures:
-    - php: 7.2
   fast_finish: true
 
 # This triggers builds to run on the new TravisCI infrastructure.
