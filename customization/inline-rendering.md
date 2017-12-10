@@ -73,7 +73,7 @@ class MyCustomLinkRenderer implements InlineRendererInterface
         }
 
         if ($this->isExternalUrl($inline->getUrl())) {
-            $attr['class'] = 'external-link';
+            $attrs['class'] = 'external-link';
         }
 
         return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
