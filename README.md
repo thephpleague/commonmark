@@ -264,6 +264,10 @@ Also a huge thank you to [JetBrains](https://www.jetbrains.com/) for supporting 
 
 **league/commonmark** is licensed under the BSD-3 license.  See the `LICENSE` file for more details.
 
+## Governance
+
+This project is primarily maintained by [Colin O'Dell][@colinodell].  Members of the [PHP League][php-league] Leadership Team may occassionally assist with some of these duties.
+
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
 [commonmark.js]: https://github.com/jgm/commonmark.js
@@ -277,3 +281,4 @@ Also a huge thank you to [JetBrains](https://www.jetbrains.com/) for supporting 
 [@jgm]: https://github.com/jgm
 [jgm/stmd]: https://github.com/jgm/stmd
 [Composer]: https://getcomposer.org/
+[PHP League]: https://thephpleague.com
