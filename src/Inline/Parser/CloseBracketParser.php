@@ -215,8 +215,8 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     {
         if ($isImage) {
             return new Image($url, null, $title);
-        } else {
-            return new Link($url, null, $title);
         }
+
+        return new Link($url, null, $title);
     }
 }

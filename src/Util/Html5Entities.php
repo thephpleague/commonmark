@@ -2256,9 +2256,9 @@ final class Html5Entities
         if (substr($entity, 0, 2) === '&#') {
             if (strtolower(substr($entity, 2, 1)) === 'x') {
                 return self::fromHex(substr($entity, 3, -1));
-            } else {
-                return self::fromDecimal(substr($entity, 2, -1));
             }
+
+            return self::fromDecimal(substr($entity, 2, -1));
         }
 
         $name = substr($entity, 1, -1);
