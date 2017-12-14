@@ -2,6 +2,7 @@ preset: recommended
 
 enabled:
   - concat_with_spaces
+  - no_useless_else
   - strict
 
 disabled:
