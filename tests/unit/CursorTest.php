@@ -34,9 +34,6 @@ class CursorTest extends TestCase
         $cursor = new Cursor($string);
 
         $this->assertEquals($expectedPosition, $cursor->getNextNonSpacePosition());
-
-        // Also test the deprecated method to ensure it continue working properly
-        $this->assertEquals($expectedPosition, $cursor->getFirstNonSpacePosition());
     }
 
     /**
@@ -51,9 +48,6 @@ class CursorTest extends TestCase
         $cursor = new Cursor($string);
 
         $this->assertEquals($expectedCharacter, $cursor->getNextNonSpaceCharacter());
-
-        // Also test the deprecated method to ensure it continue working properly
-        $this->assertEquals($expectedCharacter, $cursor->getFirstNonSpaceCharacter());
     }
 
     public function dataForTestingNextNonSpaceMethods()
@@ -295,44 +289,6 @@ class CursorTest extends TestCase
     /**
      * @param $subject
      * @param $startPos
-     * @param $char
-     * @param $maxChars
-     * @param $expectedResult
-     *
-     * @dataProvider dataForAdvanceWhileMatchesTest
-     */
-    public function testAdvanceWhileMatches($subject, $startPos, $char, $maxChars, $expectedResult)
-    {
-        $cursor = new Cursor($subject);
-        $cursor->advanceBy($startPos);
-
-        $this->assertEquals($expectedResult, $cursor->advanceWhileMatches($char, $maxChars));
-    }
-
-    public function dataForAdvanceWhileMatchesTest()
-    {
-        return [
-            [' ', 0, ' ', null, 1],
-            ['foo', 0, 'o', null, 0],
-            ['foo', 1, 'o', null, 2],
-            ['foo', 1, 'o', 0, 0],
-            ['foo', 1, 'o', 1, 1],
-            ['foo', 1, 'o', 2, 2],
-            ['foo', 1, 'o', 3, 2],
-            ['foo', 1, 'o', 99, 2],
-            ['Россия', 0, 'Р', null, 1],
-            ['Россия', 1, 'Р', null, 0],
-            ['Россия', 2, 'с', null, 2],
-            ['Россия', 2, 'с', 0, 0],
-            ['Россия', 2, 'с', 1, 1],
-            ['Россия', 2, 'с', 2, 2],
-            ['Россия', 2, 'с', 3, 2],
-        ];
-    }
-
-    /**
-     * @param $subject
-     * @param $startPos
      * @param $expectedResult
      *
      * @dataProvider dataForAdvanceToNextNonSpaceTest
@@ -382,12 +338,6 @@ class CursorTest extends TestCase
         $cursor->advanceBy($startPos);
 
         $this->assertEquals($expectedResult, $cursor->advanceToNextNonSpaceOrNewline());
-
-        // Also ensure the deprecated method aliased to this one still works
-        $cursor = new Cursor($subject);
-        $cursor->advanceBy($startPos);
-
-        $this->assertEquals($expectedResult, $cursor->advanceToFirstNonSpace());
     }
 
     public function dataForAdvanceToNextNonSpaceOrNewlineTest()

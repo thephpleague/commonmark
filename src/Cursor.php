@@ -88,20 +88,6 @@ class Cursor
     /**
      * Returns the position of the next character which is not a space (or tab)
      *
-     * @deprecated Use getNextNonSpacePosition() instead
-     *
-     * @return int
-     */
-    public function getFirstNonSpacePosition()
-    {
-        @trigger_error('Cursor::getFirstNonSpacePosition() will be removed in a future 0.x release.  Use getNextNonSpacePosition() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
-
-        return $this->getNextNonSpacePosition();
-    }
-
-    /**
-     * Returns the position of the next character which is not a space (or tab)
-     *
      * @return int
      */
     public function getNextNonSpacePosition()
@@ -129,20 +115,6 @@ class Cursor
         $this->indent = $cols - $this->column;
 
         return $this->nextNonSpaceCache = $nextNonSpace;
-    }
-
-    /**
-     * Returns the next character which isn't a space (or tab)
-     *
-     * @deprecated Use getNextNonSpaceCharacter() instead
-     *
-     * @return string
-     */
-    public function getFirstNonSpaceCharacter()
-    {
-        @trigger_error('Cursor::getFirstNonSpaceCharacter() will be removed in a future 0.x release.  Use getNextNonSpaceCharacter() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
-
-        return $this->getNextNonSpaceCharacter();
     }
 
     /**
@@ -307,54 +279,6 @@ class Cursor
         }
 
         return false;
-    }
-
-    /**
-     * Advances the cursor while the given character is matched
-     *
-     * @param string   $character                  Character to match
-     * @param int|null $maximumCharactersToAdvance Maximum number of characters to advance before giving up
-     *
-     * @return int Number of positions moved (0 if unsuccessful)
-     *
-     * @deprecated Use match() instead
-     */
-    public function advanceWhileMatches($character, $maximumCharactersToAdvance = null)
-    {
-        @trigger_error('Cursor::advanceWhileMatches() will be removed in a future 0.x release.  Use match() instead.', E_USER_DEPRECATED);
-
-        // Calculate how far to advance
-        $start = $this->currentPosition;
-        $newIndex = $start;
-        if ($maximumCharactersToAdvance === null) {
-            $maximumCharactersToAdvance = $this->length;
-        }
-
-        $max = min($start + $maximumCharactersToAdvance, $this->length);
-
-        while ($newIndex < $max && $this->getCharacter($newIndex) === $character) {
-            ++$newIndex;
-        }
-
-        if ($newIndex <= $start) {
-            return 0;
-        }
-
-        $this->advanceBy($newIndex - $start);
-
-        return $this->currentPosition - $this->previousPosition;
-    }
-
-    /**
-     * Parse zero or more space characters, including at most one newline.
-     *
-     * @deprecated Use advanceToNextNonSpaceOrNewline() instead
-     */
-    public function advanceToFirstNonSpace()
-    {
-        @trigger_error('Cursor::advanceToFirstNonSpace() will be removed in a future 0.x release.  Use advanceToNextNonSpaceOrTab() or advanceToNextNonSpaceOrNewline() instead. See https://github.com/thephpleague/commonmark/issues/280', E_USER_DEPRECATED);
-
-        return $this->advanceToNextNonSpaceOrNewline();
     }
 
     /**

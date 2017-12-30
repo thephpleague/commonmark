@@ -48,21 +48,6 @@ class HtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param string $string
-     * @param bool   $preserveEntities
-     *
-     * @return string
-     *
-     * @deprecated
-     */
-    public function escape($string, $preserveEntities = false)
-    {
-        @trigger_error('HtmlRenderer::escape() will be removed in a future 0.x release.  Use Xml::escape() instead.', E_USER_DEPRECATED);
-
-        return Xml::escape($string, $preserveEntities);
-    }
-
-    /**
      * @param AbstractInline $inline
      *
      * @throws \RuntimeException
