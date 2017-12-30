@@ -93,6 +93,8 @@ class MiscExtension implements ExtensionInterface
     public function addInlineParser(InlineParserInterface $inlineParser)
     {
         $this->inlineParsers[] = $inlineParser;
+
+        return $this;
     }
 
     /**
@@ -162,6 +164,8 @@ class MiscExtension implements ExtensionInterface
         }
 
         $this->blockRenderers[$blockClass] = $blockRenderer;
+
+        return $this;
     }
 
     /**
