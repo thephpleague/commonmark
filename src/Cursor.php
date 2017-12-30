@@ -462,37 +462,43 @@ class Cursor
     }
 
     /**
-     * @return CursorState
+     * Encapsulates the current state of this cursor in case you need to rollback later.
+     *
+     * WARNING: Do not parse or use the return value for ANYTHING except for
+     * passing it back into restoreState(), as the number of values and their
+     * contents may change in any future release without warning.
+     *
+     * @return array
      */
     public function saveState()
     {
-        return new CursorState(
-            $this->line,
-            $this->length,
+        return [
             $this->currentPosition,
             $this->previousPosition,
             $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
             $this->partiallyConsumedTab,
-            $this->encoding
-        );
+        ];
     }
 
     /**
-     * @param CursorState $state
+     * Restore the cursor to a previous state.
+     *
+     * Pass in the value previously obtained by calling saveState().
+     *
+     * @param array $state
      */
-    public function restoreState(CursorState $state)
+    public function restoreState($state)
     {
-        $this->line = $state->getLine();
-        $this->length = $state->getLength();
-        $this->currentPosition = $state->getCurrentPosition();
-        $this->previousPosition = $state->getPreviousPosition();
-        $this->nextNonSpaceCache = $state->getNextNonSpaceCache();
-        $this->column = $state->getColumn();
-        $this->indent = $state->getIndent();
-        $this->partiallyConsumedTab = $state->getPartiallyConsumedTab();
-        $this->encoding = $state->getEncoding();
+        list(
+            $this->currentPosition,
+            $this->previousPosition,
+            $this->nextNonSpaceCache,
+            $this->indent,
+            $this->column,
+            $this->partiallyConsumedTab
+          ) = $state;
     }
 
     /**
