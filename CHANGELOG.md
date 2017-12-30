@@ -35,7 +35,7 @@ This release contains several breaking changes and a minimum PHP version bump - 
 ### Removed
 
  - Removed support for PHP 5.4 and 5.5.
-- Removed `CursorState` class
+ - Removed `CursorState` class
  - Removed all previous deprecations:
    - `Cursor::getFirstNonSpacePosition()`
    - `Cursor::getFirstNonSpaceCharacter()`
