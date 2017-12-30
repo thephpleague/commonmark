@@ -472,14 +472,14 @@ class Cursor
      */
     public function saveState()
     {
-        return array(
+        return [
             $this->currentPosition,
             $this->previousPosition,
             $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
             $this->partiallyConsumedTab,
-        );
+        ];
     }
 
     /**
