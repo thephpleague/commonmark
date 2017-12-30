@@ -61,7 +61,7 @@ class SpecTest extends TestCase
      */
     public function dataProvider()
     {
-        $filename = __DIR__ . '/../../vendor/jgm/CommonMark/test/spec.txt';
+        $filename = __DIR__ . '/../../vendor/commonmark/commonmark.js/test/spec.txt';
         if (($data = file_get_contents($filename)) === false) {
             $this->fail(sprintf('Failed to load spec from %s', $filename));
         }
