@@ -64,6 +64,11 @@ class Cursor
     private $encoding;
 
     /**
+     * @var bool
+     */
+    private $lineContainsTabs;
+
+    /**
      * @param string $line
      */
     public function __construct($line)
@@ -71,6 +76,7 @@ class Cursor
         $this->line = $line;
         $this->encoding = mb_detect_encoding($line, 'ASCII,UTF-8', true) ?: 'ISO-8859-1';
         $this->length = mb_strlen($line, $this->encoding);
+        $this->lineContainsTabs = preg_match('/\t/', $line) > 0;
     }
 
     /**
@@ -234,7 +240,7 @@ class Cursor
         $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding);
 
         // Optimization to avoid tab handling logic if we have no tabs
-        if (preg_match('/\t/', $nextFewChars) === 0) {
+        if (!$this->lineContainsTabs || preg_match('/\t/', $nextFewChars) === 0) {
             $length = min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
