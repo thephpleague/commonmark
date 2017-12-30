@@ -23,6 +23,9 @@ This release contains several breaking changes and a minimum PHP version bump - 
  - References to `InlineContainer` changed to new `InlineContainerInterface` interface.
  - `MiscExtension::addInlineParser()` and `MiscExtension::addBlockRenderer()` now return `$this` instead of nothing.
 
+### Fixed
+ - Fixed `Reference::normalizeReference()` not properly collapsing whitespace to a single space
+
 ### Deprecated
 
  - `RegexHelper::getInstance()` and all instance (non-static) methods have been deprecated.
