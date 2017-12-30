@@ -533,7 +533,7 @@ class Environment
     private function getMiscExtension()
     {
         $lastExtension = end($this->extensions);
-        if ($lastExtension !== false && $lastExtension instanceof MiscExtension) {
+        if ($lastExtension instanceof MiscExtension) {
             return $lastExtension;
         }
 

@@ -384,7 +384,6 @@ class Cursor
     {
         $subject = $this->getRemainder();
 
-        $matches = [];
         if (!preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
             return;
         }
@@ -442,7 +441,7 @@ class Cursor
             $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
-            $this->partiallyConsumedTab
+            $this->partiallyConsumedTab,
           ) = $state;
     }
 

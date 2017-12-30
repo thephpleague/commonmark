@@ -83,8 +83,8 @@ class DocParser
             $this->incorporateLine($context);
         }
 
-        while ($context->getTip()) {
-            $context->getTip()->finalize($context, count($lines));
+        while ($tip = $context->getTip()) {
+            $tip->finalize($context, count($lines));
         }
 
         $this->processInlines($context, $context->getDocument()->walker());
@@ -142,7 +142,7 @@ class DocParser
 
     private function processInlines(ContextInterface $context, NodeWalker $walker)
     {
-        while (($event = $walker->next()) !== null) {
+        while ($event = $walker->next()) {
             if (!$event->isEntering()) {
                 continue;
             }

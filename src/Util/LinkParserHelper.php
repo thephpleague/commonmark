@@ -30,7 +30,7 @@ final class LinkParserHelper
         if ($res = $cursor->match(RegexHelper::REGEX_LINK_DESTINATION_BRACES)) {
             // Chop off surrounding <..>:
             return UrlEncoder::unescapeAndEncode(
-                RegexHelper::unescape(substr($res, 1, strlen($res) - 2))
+                RegexHelper::unescape(substr($res, 1, -1))
             );
         }
 
@@ -96,7 +96,7 @@ final class LinkParserHelper
     {
         if ($title = $cursor->match('/' . RegexHelper::PARTIAL_LINK_TITLE . '/')) {
             // Chop off quotes from title and unescape
-            return RegexHelper::unescape(substr($title, 1, strlen($title) - 2));
+            return RegexHelper::unescape(substr($title, 1, -1));
         }
     }
 }
