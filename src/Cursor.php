@@ -69,6 +69,11 @@ class Cursor
     private $lineContainsTabs;
 
     /**
+     * @var bool
+     */
+    private $isMultibyte;
+
+    /**
      * @param string $line
      */
     public function __construct($line)
@@ -76,6 +81,7 @@ class Cursor
         $this->line = $line;
         $this->encoding = mb_detect_encoding($line, 'ASCII,UTF-8', true) ?: 'ISO-8859-1';
         $this->length = mb_strlen($line, $this->encoding);
+        $this->isMultibyte = $this->length !== strlen($line);
         $this->lineContainsTabs = preg_match('/\t/', $line) > 0;
     }
 
@@ -459,8 +465,15 @@ class Cursor
             return;
         }
 
-        // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
-        $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
+        // $matches[0][0] contains the matched text
+        // $matches[0][1] contains the index of that match
+
+        if ($this->isMultibyte) {
+            // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
+            $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
+        } else {
+            $offset = $matches[0][1];
+        }
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
