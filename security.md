@@ -7,11 +7,13 @@ permalink: /security/
 Security
 ========
 
+## HTML Input
+
 **All HTML input is unescaped by default.**  This behavior ensures that league/commonmark is 100% compliant with the CommonMark spec.
 
 If you're developing an application which renders user-provided Markdown from potentially untrusted users, you are **strongly** encouraged to set the `html_input` option in your configuration to either `escape` or `strip`:
 
-## Example 1 - Escape all raw HTML input:
+### Example - Escape all raw HTML input:
 
 ~~~php
 use League\CommonMark\CommonMarkConverter;
@@ -22,7 +24,7 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 // &lt;script&gt;alert("Hello XSS!");&lt;/script&gt;
 ~~~
 
-## Example 2 - Strip all HTML from the input:
+### Example - Strip all HTML from the input:
 ~~~php
 use League\CommonMark\CommonMarkConverter;
 
@@ -33,5 +35,34 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 ~~~
 
 **Failing to set this option could make your site vulnerable to cross-site scripting (XSS) attacks!**
+
+See the [configuration](/configuration/) section for more information.
+
+## Nesting Level
+
+**No maximum nesting level is enforced by default.**  Markdown content which is too deeply-nested (like 10,000 nested blockquotes: '> > > > > ...') [could result in long render times or segfaults](https://github.com/thephpleague/commonmark/issues/243#issuecomment-217580285).
+
+If you need to parse untrusted input, consider setting a reasonable `max_nesting_level` (perhaps 10-50) depending on your needs.  Once this nesting level is hit, any subsequent Markdown will be rendered as plain text.
+
+## Example - Prevent deep nesting
+~~~php
+use League\CommonMark\CommonMarkConverter;
+
+$markdown = str_repeat('> ', 10000) . ' Foo';
+
+$converter = new CommonMarkConverter(['max_nesting_level' => '5']);
+echo $converter->convertToHtml($markdown);
+
+// <blockquote>
+//   <blockquote>
+//     <blockquote>
+//       <blockquote>
+//         <blockquote>
+//           <p>&gt; &gt; &gt; &gt; &gt; &gt; &gt; ... Foo</p></blockquote>
+//       </blockquote>
+//     </blockquote>
+//   </blockquote>
+// </blockquote>
+~~~
 
 See the [configuration](/configuration/) section for more information.

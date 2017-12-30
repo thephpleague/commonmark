@@ -26,6 +26,7 @@ $converter = new CommonMarkConverter([
     'use_underscore' => true,
     'html_input' => 'escape',
     'allow_unsafe_links' => false,
+    'max_nesting_level' => INF
 ]);
 ~~~
 
@@ -44,6 +45,7 @@ Here's a list of currently-supported options:
   - `allow` - Allow all HTML input as-is (default value; equivalent to `'safe' => false)
   - `escape` - Escape all HTML
 * `allow_unsafe_links` - Remove risky link and image URLs by setting this to `false` (default: `true`)
+* `max_nesting_level` - The maximum nesting level for blocks (default: infinite). Setting this to a positive integer can help protect against long parse times and/or segfaults if blocks are too deeply-nested. Added in 0.17.
 
 The following options have been deprecated.  They will no longer work once 1.0.0 is released:
 
