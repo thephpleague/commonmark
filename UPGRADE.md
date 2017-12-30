@@ -1,8 +1,73 @@
 # Upgrade Instructions
 
-## 0.17.0 (unreleased)
+## 0.17.0
 
-`InlineContainer` was renamed to `InlineContainerInterface`.
+## Minimum PHP version
+
+The minimum PHP version has been increased to 5.6.5.  Users on PHP 5.4 and 5.5 can still use previous versions of this library but will not receive future improvements or bug fixes.
+
+## Removal of deprecated features
+
+Pretty much everything marked as `@deprecated` in 0.16.0 has been removed.
+
+## `RegexHelper`
+
+We're now taking advantage of PHP 5.6's constant expression feature. This removes the need for `RegexHelper` to be a singleton where complex regular expressions are built and referenced using instance methods.  **All regexes are now available as class constants.**
+
+For example, instead of doing this:
+
+```php
+preg_match('/' . RegexHelper::getInstance()->getPartialRegex(RegexHelper::OPENTAG) . '/', $html);
+```
+
+You can now do this:
+
+```php
+preg_match('/' . RegexHelper::PARTIAL_OPENTAG . '/', $html);
+```
+
+(Basically, remove that function call and prefix the constant name with `PARTIAL_`).
+
+Other instance functions like `getLinkTitleRegex()` which returned a regular expression have also been deprecated in favor of pre-defined constants like `PARTIAL_LINK_TITLE`.
+
+The now-deprecated functionality still exists in 0.17.0 **but will be removed in the next major release.**
+
+To summarize:
+
+ - All `REGEX_` constants are fully-formed regexes. Most are unchanged.
+ - All `PARTIAL_` constants need to be wrapped with a `/` on each side before use.
+ - All instance methods are deprecated - use a constant instead.
+
+`RegexHelper` is also `final` now - it only contains constants and static methods and was never intended to be extended.
+
+## Cursor state
+
+`Cursor::saveState()` and `Cursor::restoreState()` provide the ability to rollback the state of a `Cursor`. For example:
+
+```php
+$oldState = $cursor->saveState();
+
+// Made-up example of trying to parse something using calls
+$cursor->advanceToNextNonSpaceOrTab();
+$cursor->match('/foo(bar)?/');
+$cursor->advanceToNextNonSpaceOrTab();
+
+if ($someConditionThatWeDidntExpect) {
+    // Roll back and abort
+    $cursor->restoreState($oldState);
+    return;
+}
+```
+
+This useful feature encapsulated the internal, `private` state of the `Cursor` inside of a `CursorState` object with public methods.  **This was a design mistake** as it meant that any changes to the interal structure of a `Cursor` meant causing BC-breaks on the `CursorState`.
+
+`CursorState` was also never intended for any other usage besides saving/restoring.
+
+For those reasons, we've removed the `CursorState` class entirely and now store the state using an array. **Do not depend on the contents or structure of the array for any reason as it may change in any release without warning!**  If you really need to reference information about the prior state of the cursor, either `clone` it or grab the info you need before manipulating it.
+
+## `InlineContainer` interface
+
+The `InlineContainer` interface was renamed to `InlineContainerInterface`.  The old one still exists as a deprecated interface and will be removed in the next major release.
 
 ## 0.16.0
 
