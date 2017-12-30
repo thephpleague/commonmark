@@ -93,11 +93,11 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @param mixed $key
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function remove($key)
     {
-        if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
+        if (!array_key_exists($key, $this->elements)) {
             return;
         }
 
@@ -142,7 +142,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function containsKey($key)
     {
-        return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
+        return array_key_exists($key, $this->elements);
     }
 
     /**
@@ -189,7 +189,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        if (!isset($offset)) {
+        if ($offset === null) {
             $this->add($value);
         } else {
             $this->set($offset, $value);

@@ -33,7 +33,7 @@ class ThematicBreakParser extends AbstractBlockParser
             return false;
         }
 
-        $match = RegexHelper::matchAt(RegexHelper::getInstance()->getThematicBreakRegex(), $cursor->getLine(), $cursor->getNextNonSpacePosition());
+        $match = RegexHelper::matchAt(RegexHelper::REGEX_THEMATIC_BREAK, $cursor->getLine(), $cursor->getNextNonSpacePosition());
         if ($match === null) {
             return false;
         }

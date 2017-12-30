@@ -85,7 +85,7 @@ class Reference
     {
         // Collapse internal whitespace to single space and remove
         // leading/trailing whitespace
-        $string = preg_replace('/\s+/', '', trim($string));
+        $string = preg_replace('/\s+/', ' ', trim($string));
 
         return mb_strtoupper($string, 'UTF-8');
     }

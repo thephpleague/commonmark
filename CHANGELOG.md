@@ -4,13 +4,47 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.17.0] - 2017-12-30
+
+This release contains several breaking changes and a minimum PHP version bump - see <UPGRADE.md> for more details.
+
+### Added
+
+ - Added new `max_nesting_level` setting (#243)
+ - Added minor performance optimizations to `Cursor`
+
 ### Changed
 
- - References to `InlineContainer` changed to new `InlineContainerInterface` interface
+ - Minimum PHP version is now 5.6.5.
+ - All full and partial regular expressions in `RegexHelper` are now defined as constants instead of being built on-the-fly.
+ - `Cursor::saveState()` now returns an `array` instead of a `CursorState` object.
+ - `Cursor::restoreState()` now accepts an `array` parameter instead of a `CursorState` object.
+ - Saving/restoring the Cursor state no longer tracks things that don't change (like the text content).
+ - `RegexHelper` is now `final`.
+ - References to `InlineContainer` changed to new `InlineContainerInterface` interface.
+ - `MiscExtension::addInlineParser()` and `MiscExtension::addBlockRenderer()` now return `$this` instead of nothing.
+
+### Fixed
+ - Fixed `Reference::normalizeReference()` not properly collapsing whitespace to a single space
 
 ### Deprecated
 
+ - `RegexHelper::getInstance()` and all instance (non-static) methods have been deprecated.
  - The `InlineContainer` interface has been deprecated. Use `InlineContainerInterface` instead.
+
+### Removed
+
+ - Removed support for PHP 5.4 and 5.5.
+ - Removed `CursorState` class
+ - Removed all previous deprecations:
+   - `Cursor::getFirstNonSpacePosition()`
+   - `Cursor::getFirstNonSpaceCharacter()`
+   - `Cursor::advanceWhileMatches()`
+   - `Cursor::advanceToFirstNonSpace()`
+   - `ElementRendererInterface::escape()`
+   - `HtmlRenderer::escape()`
+   - `RegexHelper::REGEX_UNICODE_WHITESPACE`
+   - `RegexHelper::getLinkDestinationRegex()`
 
 ## [0.16.0] - 2017-10-30
 
@@ -575,7 +609,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.16.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.17.0...HEAD
+[0.17.0]: https://github.com/thephpleague/commonmark/compare/0.16.0...0.17.0
 [0.16.0]: https://github.com/thephpleague/commonmark/compare/0.15.7...0.16.0
 [0.15.7]: https://github.com/thephpleague/commonmark/compare/0.15.6...0.15.7
 [0.15.6]: https://github.com/thephpleague/commonmark/compare/0.15.5...0.15.6

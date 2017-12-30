@@ -107,7 +107,7 @@ class HtmlElement
      */
     public function setContents($contents)
     {
-        $this->contents = !is_null($contents) ? $contents : '';
+        $this->contents = $contents !== null ? $contents : '';
 
         return $this;
     }
@@ -124,7 +124,7 @@ class HtmlElement
         }
 
         if ($this->contents !== '') {
-            $result .= '>' . $this->getContents(true) . '</' . $this->tagName . '>';
+            $result .= '>' . $this->getContents() . '</' . $this->tagName . '>';
         } elseif ($this->selfClosing) {
             $result .= ' />';
         } else {

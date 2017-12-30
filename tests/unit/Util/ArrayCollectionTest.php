@@ -106,6 +106,19 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals([], $collection->toArray());
     }
 
+    public function testRemoveNulls()
+    {
+        $collection = new ArrayCollection(['foo' => null]);
+
+        $removed = $collection->remove('nonExistantKey');
+        $this->assertNull($removed);
+        $this->assertEquals(['foo' => null], $collection->toArray());
+
+        $removed = $collection->remove('foo');
+        $this->assertNull($removed);
+        $this->assertEquals([], $collection->toArray());
+    }
+
     public function testIsEmpty()
     {
         $collection = new ArrayCollection();

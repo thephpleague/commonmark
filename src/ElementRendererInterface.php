@@ -31,16 +31,6 @@ interface ElementRendererInterface
     public function getOption($option, $default = null);
 
     /**
-     * @param string $string
-     * @param bool   $preserveEntities
-     *
-     * @return string
-     *
-     * @deprecated
-     */
-    public function escape($string, $preserveEntities = false);
-
-    /**
      * @param AbstractInline[] $inlines
      *
      * @return string

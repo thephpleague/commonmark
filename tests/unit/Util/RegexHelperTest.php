@@ -19,19 +19,9 @@ use PHPUnit\Framework\TestCase;
  */
 class RegexHelperTest extends TestCase
 {
-    /**
-     * @var RegexHelper
-     */
-    protected $regexHelper;
-
-    public function setUp()
-    {
-        $this->regexHelper = RegexHelper::getInstance();
-    }
-
     public function testEscapable()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::ESCAPABLE) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_ESCAPABLE . '$/';
         $this->assertRegExp($regex, '&');
         $this->assertRegExp($regex, '/');
         $this->assertRegExp($regex, '\\');
@@ -41,7 +31,7 @@ class RegexHelperTest extends TestCase
 
     public function testEscapedChar()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::ESCAPED_CHAR) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_ESCAPED_CHAR . '$/';
         $this->assertRegExp($regex, '\\&');
         $this->assertRegExp($regex, '\\/');
         $this->assertRegExp($regex, '\\\\');
@@ -51,7 +41,7 @@ class RegexHelperTest extends TestCase
 
     public function testInDoubleQuotes()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::IN_DOUBLE_QUOTES) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_IN_DOUBLE_QUOTES . '$/';
         $this->assertRegExp($regex, '"\\&"');
         $this->assertRegExp($regex, '"\\/"');
         $this->assertRegExp($regex, '"\\\\"');
@@ -59,7 +49,7 @@ class RegexHelperTest extends TestCase
 
     public function testInSingleQuotes()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::IN_SINGLE_QUOTES) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_IN_SINGLE_QUOTES . '$/';
         $this->assertRegExp($regex, '\'\\&\'');
         $this->assertRegExp($regex, '\'\\/\'');
         $this->assertRegExp($regex, '\'\\\\\'');
@@ -67,7 +57,7 @@ class RegexHelperTest extends TestCase
 
     public function testInParens()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::IN_PARENS) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_IN_PARENS . '$/';
         $this->assertRegExp($regex, '(\\&)');
         $this->assertRegExp($regex, '(\\/)');
         $this->assertRegExp($regex, '(\\\\)');
@@ -75,7 +65,7 @@ class RegexHelperTest extends TestCase
 
     public function testRegChar()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::REG_CHAR) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_REG_CHAR . '$/';
         $this->assertRegExp($regex, 'a');
         $this->assertRegExp($regex, 'A');
         $this->assertRegExp($regex, '!');
@@ -84,7 +74,7 @@ class RegexHelperTest extends TestCase
 
     public function testInParensNoSp()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::IN_PARENS_NOSP) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_IN_PARENS_NOSP . '$/';
         $this->assertRegExp($regex, '(a)');
         $this->assertRegExp($regex, '(A)');
         $this->assertRegExp($regex, '(!)');
@@ -93,7 +83,7 @@ class RegexHelperTest extends TestCase
 
     public function testTagname()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::TAGNAME) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_TAGNAME . '$/';
         $this->assertRegExp($regex, 'a');
         $this->assertRegExp($regex, 'img');
         $this->assertRegExp($regex, 'h1');
@@ -102,7 +92,7 @@ class RegexHelperTest extends TestCase
 
     public function testBlockTagName()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::BLOCKTAGNAME) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_BLOCKTAGNAME . '$/';
         $this->assertRegExp($regex, 'p');
         $this->assertRegExp($regex, 'div');
         $this->assertRegExp($regex, 'h1');
@@ -112,7 +102,7 @@ class RegexHelperTest extends TestCase
 
     public function testAttributeName()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::ATTRIBUTENAME) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_ATTRIBUTENAME . '$/';
         $this->assertRegExp($regex, 'href');
         $this->assertRegExp($regex, 'class');
         $this->assertRegExp($regex, 'data-src');
@@ -121,7 +111,7 @@ class RegexHelperTest extends TestCase
 
     public function testUnquotedValue()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::UNQUOTEDVALUE) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_UNQUOTEDVALUE . '$/';
         $this->assertRegExp($regex, 'foo');
         $this->assertRegExp($regex, 'bar');
         $this->assertNotRegExp($regex, '"baz"');
@@ -129,7 +119,7 @@ class RegexHelperTest extends TestCase
 
     public function testSingleQuotedValue()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::SINGLEQUOTEDVALUE) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_SINGLEQUOTEDVALUE . '$/';
         $this->assertRegExp($regex, '\'foo\'');
         $this->assertRegExp($regex, '\'bar\'');
         $this->assertNotRegExp($regex, '"baz"');
@@ -137,7 +127,7 @@ class RegexHelperTest extends TestCase
 
     public function testDoubleQuotedValue()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::DOUBLEQUOTEDVALUE) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_DOUBLEQUOTEDVALUE . '$/';
         $this->assertRegExp($regex, '"foo"');
         $this->assertRegExp($regex, '"bar"');
         $this->assertNotRegExp($regex, '\'baz\'');
@@ -145,7 +135,7 @@ class RegexHelperTest extends TestCase
 
     public function testAttributeValue()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::ATTRIBUTEVALUE) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_ATTRIBUTEVALUE . '$/';
         $this->assertRegExp($regex, 'foo');
         $this->assertRegExp($regex, '\'bar\'');
         $this->assertRegExp($regex, '"baz"');
@@ -153,7 +143,7 @@ class RegexHelperTest extends TestCase
 
     public function testAttributeValueSpec()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::ATTRIBUTEVALUESPEC) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_ATTRIBUTEVALUESPEC . '$/';
         $this->assertRegExp($regex, '=foo');
         $this->assertRegExp($regex, '= foo');
         $this->assertRegExp($regex, ' =foo');
@@ -170,7 +160,7 @@ class RegexHelperTest extends TestCase
 
     public function testAttribute()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::ATTRIBUTE) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_ATTRIBUTE . '$/';
         $this->assertRegExp($regex, ' disabled');
         $this->assertRegExp($regex, ' disabled="disabled"');
         $this->assertRegExp($regex, ' href="http://www.google.com"');
@@ -179,7 +169,7 @@ class RegexHelperTest extends TestCase
 
     public function testOpenTag()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::OPENTAG) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_OPENTAG . '$/';
         $this->assertRegExp($regex, '<hr>');
         $this->assertRegExp($regex, '<a href="http://www.google.com">');
         $this->assertRegExp($regex, '<img src="http://www.google.com/logo.png" />');
@@ -188,7 +178,7 @@ class RegexHelperTest extends TestCase
 
     public function testCloseTag()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::CLOSETAG) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_CLOSETAG . '$/';
         $this->assertRegExp($regex, '</p>');
         $this->assertRegExp($regex, '</a>');
         $this->assertNotRegExp($regex, '<hr>');
@@ -197,7 +187,7 @@ class RegexHelperTest extends TestCase
 
     public function testOpenBlockTag()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::OPENBLOCKTAG) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_OPENBLOCKTAG . '$/';
         $this->assertRegExp($regex, '<body>');
         $this->assertRegExp($regex, '<hr>');
         $this->assertRegExp($regex, '<hr />');
@@ -208,7 +198,7 @@ class RegexHelperTest extends TestCase
 
     public function testCloseBlockTag()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::CLOSEBLOCKTAG) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_CLOSEBLOCKTAG . '$/';
         $this->assertRegExp($regex, '</body>');
         $this->assertRegExp($regex, '</p>');
         $this->assertNotRegExp($regex, '</a>', 'This is not a block element');
@@ -217,7 +207,7 @@ class RegexHelperTest extends TestCase
 
     public function testHtmlComment()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::HTMLCOMMENT) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_HTMLCOMMENT . '$/';
         $this->assertRegExp($regex, '<!---->');
         $this->assertRegExp($regex, '<!-- -->');
         $this->assertRegExp($regex, '<!-- HELLO WORLD -->');
@@ -229,14 +219,14 @@ class RegexHelperTest extends TestCase
 
     public function testProcessingInstruction()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::PROCESSINGINSTRUCTION) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_PROCESSINGINSTRUCTION . '$/';
         $this->assertRegExp($regex, '<?PITarget PIContent?>');
         $this->assertRegExp($regex, '<?xml-stylesheet type="text/xsl" href="style.xsl"?>');
     }
 
     public function testDeclaration()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::DECLARATION) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_DECLARATION . '$/';
         $this->assertRegExp($regex, '<!DOCTYPE html>');
         $this->assertRegExp($regex, '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">');
         $this->assertRegExp($regex, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
@@ -244,14 +234,14 @@ class RegexHelperTest extends TestCase
 
     public function testCDATA()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::CDATA) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_CDATA . '$/';
         $this->assertRegExp($regex, '<![CDATA[<sender>John Smith</sender>]]>');
         $this->assertRegExp($regex, '<![CDATA[]]]]><![CDATA[>]]>');
     }
 
     public function testHtmlTag()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::HTMLTAG) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_HTMLTAG . '$/';
         $this->assertRegExp($regex, '<body id="main">');
         $this->assertRegExp($regex, '</p>');
         $this->assertRegExp($regex, '<!-- HELLO WORLD -->');
@@ -262,14 +252,14 @@ class RegexHelperTest extends TestCase
 
     public function testHtmlBlockOpen()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::HTMLBLOCKOPEN) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_HTMLBLOCKOPEN . '$/';
         $this->assertRegExp($regex, '<h1>');
         $this->assertRegExp($regex, '</p>');
     }
 
     public function testLinkTitle()
     {
-        $regex = '/^' . $this->regexHelper->getPartialRegex(RegexHelper::HTMLBLOCKOPEN) . '$/';
+        $regex = '/^' . RegexHelper::PARTIAL_HTMLBLOCKOPEN . '$/';
         $this->assertRegExp($regex, '<h1>');
         $this->assertRegExp($regex, '</p>');
     }
@@ -305,5 +295,56 @@ class RegexHelperTest extends TestCase
             ['/ /', 'это тест', 0, 3],
             ['/ /', 'это тест', 1, 3],
         ];
+    }
+
+    /**
+     * @param mixed  $constant
+     * @param string $expectedValue
+     *
+     * @dataProvider dataForTestGetPartialRegex
+     *
+     * @deprecated
+     */
+    public function testGetPartialRegex($constant, $expectedValue)
+    {
+        $this->assertEquals($expectedValue, RegexHelper::getInstance()->getPartialRegex($constant));
+    }
+
+    /**
+     * @return array
+     */
+    public function dataForTestGetPartialRegex()
+    {
+        $data = [];
+
+        $c = new \ReflectionClass(RegexHelper::class);
+
+        foreach ($c->getConstants() as $constant => $value) {
+            if (is_numeric($value)) {
+                $data[] = [$value, constant(RegexHelper::class . '::PARTIAL_' . $constant)];
+            }
+        }
+
+        return $data;
+    }
+
+    public function testGetHtmlTagRegex()
+    {
+        $this->assertEquals('/^' . RegexHelper::PARTIAL_HTMLTAG . '/i', RegexHelper::getInstance()->getHtmlTagRegex());
+    }
+
+    public function testGetLinkTitleRegex()
+    {
+        $this->assertEquals('/' . RegexHelper::PARTIAL_LINK_TITLE . '/', RegexHelper::getInstance()->getLinkTitleRegex());
+    }
+
+    public function testGetLinkDestinationBracesRegex()
+    {
+        $this->assertEquals(RegexHelper::REGEX_LINK_DESTINATION_BRACES, RegexHelper::getInstance()->getLinkDestinationBracesRegex());
+    }
+
+    public function testGetThematicBreakRegex()
+    {
+        $this->assertEquals(RegexHelper::REGEX_THEMATIC_BREAK, RegexHelper::getInstance()->getThematicBreakRegex());
     }
 }

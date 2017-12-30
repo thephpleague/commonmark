@@ -91,7 +91,7 @@ class EnvironmentTest extends TestCase
 
     public function testSetConfigAfterInit()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException('RuntimeException');
 
         $environment = new Environment();
         // This triggers the initialization
@@ -109,7 +109,7 @@ class EnvironmentTest extends TestCase
 
     public function testMergeConfigAfterInit()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException('RuntimeException');
 
         $environment = new Environment();
         // This triggers the initialization
@@ -121,7 +121,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $parser = $this->getMock('League\CommonMark\Block\Parser\BlockParserInterface');
+        $parser = $this->createMock('League\CommonMark\Block\Parser\BlockParserInterface');
         $environment->addBlockParser($parser);
 
         $this->assertContains($parser, $environment->getBlockParsers());
@@ -137,7 +137,7 @@ class EnvironmentTest extends TestCase
         // This triggers the initialization
         $environment->getBlockParsers();
 
-        $parser = $this->getMock('League\CommonMark\Block\Parser\BlockParserInterface');
+        $parser = $this->createMock('League\CommonMark\Block\Parser\BlockParserInterface');
         $environment->addBlockParser($parser);
     }
 
@@ -145,7 +145,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $renderer = $this->getMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
+        $renderer = $this->createMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
         $environment->addBlockRenderer('MyClass', $renderer);
 
         $this->assertEquals($renderer, $environment->getBlockRendererForClass('MyClass'));
@@ -155,7 +155,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $mockRenderer = $this->getMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
+        $mockRenderer = $this->createMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
 
         $builtInClasses = [
             'BlockQuote'    => 'League\CommonMark\Block\Element\BlockQuote',
@@ -186,7 +186,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $mockRenderer = $this->getMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
+        $mockRenderer = $this->createMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
 
         $builtInClasses = [
             'Code'       => 'League\CommonMark\Inline\Element\Code',
@@ -221,7 +221,7 @@ class EnvironmentTest extends TestCase
         // This triggers the initialization
         $environment->getBlockRendererForClass('MyClass');
 
-        $renderer = $this->getMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
+        $renderer = $this->createMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
         $environment->addBlockRenderer('MyClass', $renderer);
     }
 
@@ -229,7 +229,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
         $parser->expects($this->any())
             ->method('getCharacters')
             ->will($this->returnValue(['a']));
@@ -243,7 +243,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
         $parser->expects($this->any())
             ->method('getCharacters')
             ->will($this->returnValue(['/']));
@@ -264,7 +264,7 @@ class EnvironmentTest extends TestCase
         // This triggers the initialization
         $environment->getInlineParsers();
 
-        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
         $environment->addInlineParser($parser);
     }
 
@@ -272,7 +272,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
         $parser->expects($this->any())
             ->method('getName')
             ->will($this->returnValue('test'));
@@ -289,7 +289,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
         $parser->expects($this->any())
             ->method('getName')
             ->will($this->returnValue('test'));
@@ -313,7 +313,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $processor = $this->getMock('League\CommonMark\Inline\Processor\InlineProcessorInterface');
+        $processor = $this->createMock('League\CommonMark\Inline\Processor\InlineProcessorInterface');
         $environment->addInlineProcessor($processor);
 
         $this->assertContains($processor, $environment->getInlineProcessors());
@@ -329,7 +329,7 @@ class EnvironmentTest extends TestCase
         // This triggers the initialization
         $environment->getInlineProcessors();
 
-        $processor = $this->getMock('League\CommonMark\Inline\Processor\InlineProcessorInterface');
+        $processor = $this->createMock('League\CommonMark\Inline\Processor\InlineProcessorInterface');
         $environment->addInlineProcessor($processor);
     }
 
@@ -337,7 +337,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $renderer = $this->getMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
+        $renderer = $this->createMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
         $environment->addInlineRenderer('MyClass', $renderer);
 
         $this->assertEquals($renderer, $environment->getInlineRendererForClass('MyClass'));
@@ -353,7 +353,7 @@ class EnvironmentTest extends TestCase
         // This triggers the initialization
         $environment->getInlineRendererForClass('MyClass');
 
-        $renderer = $this->getMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
+        $renderer = $this->createMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
         $environment->addInlineRenderer('MyClass', $renderer);
     }
 
@@ -388,7 +388,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $extension = $this->createMock('League\CommonMark\Extension\ExtensionInterface');
         $environment->addExtension($extension);
 
         $this->assertContains($extension, $environment->getExtensions());
@@ -404,7 +404,7 @@ class EnvironmentTest extends TestCase
         // This triggers the initialization
         $environment->getInlineRendererForClass('MyClass');
 
-        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $extension = $this->createMock('League\CommonMark\Extension\ExtensionInterface');
         $environment->addExtension($extension);
     }
 
@@ -412,7 +412,7 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $processor = $this->createMock('League\CommonMark\DocumentProcessorInterface');
         $environment->addDocumentProcessor($processor);
 
         $this->assertContains($processor, $environment->getDocumentProcessors());
@@ -428,7 +428,7 @@ class EnvironmentTest extends TestCase
         // This triggers the initialization
         $environment->getDocumentProcessors();
 
-        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $processor = $this->createMock('League\CommonMark\DocumentProcessorInterface');
         $environment->addDocumentProcessor($processor);
     }
 
@@ -436,15 +436,15 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $processor = $this->getMock('League\CommonMark\DocumentProcessorInterface');
+        $processor = $this->createMock('League\CommonMark\DocumentProcessorInterface');
         $environment->addDocumentProcessor($processor);
         $this->assertCount(1, $environment->getExtensions());
 
-        $extension = $this->getMock('League\CommonMark\Extension\ExtensionInterface');
+        $extension = $this->createMock('League\CommonMark\Extension\ExtensionInterface');
         $environment->addExtension($extension);
         $this->assertCount(2, $environment->getExtensions());
 
-        $parser = $this->getMock('League\CommonMark\Inline\Parser\InlineParserInterface');
+        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
         $environment->addInlineParser($parser);
         $this->assertCount(3, $environment->getExtensions());
 

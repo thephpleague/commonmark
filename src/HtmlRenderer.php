@@ -16,7 +16,6 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Util\Xml;
 
 /**
  * Renders a parsed AST to HTML
@@ -45,21 +44,6 @@ class HtmlRenderer implements ElementRendererInterface
     public function getOption($option, $default = null)
     {
         return $this->environment->getConfig('renderer/' . $option, $default);
-    }
-
-    /**
-     * @param string $string
-     * @param bool   $preserveEntities
-     *
-     * @return string
-     *
-     * @deprecated
-     */
-    public function escape($string, $preserveEntities = false)
-    {
-        @trigger_error('HtmlRenderer::escape() will be removed in a future 0.x release.  Use Xml::escape() instead.', E_USER_DEPRECATED);
-
-        return Xml::escape($string, $preserveEntities);
     }
 
     /**
