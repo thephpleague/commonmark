@@ -168,7 +168,9 @@ class Cursor
      */
     public function isIndented()
     {
-        return $this->getIndent() >= self::INDENT_LEVEL;
+        $this->getNextNonSpacePosition();
+
+        return $this->indent >= self::INDENT_LEVEL;
     }
 
     /**
