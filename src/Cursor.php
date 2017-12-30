@@ -462,6 +462,12 @@ class Cursor
     }
 
     /**
+     * Encapsulates the current state of this cursor in case you need to rollback later.
+     *
+     * WARNING: Do not parse or use the return value for ANYTHING except for
+     * passing it back into restoreState(), as the number of values and their
+     * contents may change in any future release without warning.
+     *
      * @return array
      */
     public function saveState()
@@ -477,6 +483,10 @@ class Cursor
     }
 
     /**
+     * Restore the cursor to a previous state.
+     *
+     * Pass in the value previously obtained by calling saveState().
+     *
      * @param array $state
      */
     public function restoreState($state)
