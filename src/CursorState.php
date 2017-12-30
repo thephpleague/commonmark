@@ -63,7 +63,7 @@ class CursorState
      * @param int      $column
      * @param bool     $partiallyConsumedTab
      */
-    public function __construct($line, $length, $currentPosition, $previousPosition, $nextNonSpaceCache, $indent, $column, $partiallyConsumedTab)
+    public function __construct($line, $length, $currentPosition, $previousPosition, $nextNonSpaceCache, $indent, $column, $partiallyConsumedTab, $encoding)
     {
         $this->line = $line;
         $this->length = $length;
@@ -73,6 +73,7 @@ class CursorState
         $this->indent = $indent;
         $this->column = $column;
         $this->partiallyConsumedTab = $partiallyConsumedTab;
+        $this->encoding = $encoding;
     }
 
     /**
@@ -149,5 +150,13 @@ class CursorState
     public function getPartiallyConsumedTab()
     {
         return $this->partiallyConsumedTab;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->encoding;
     }
 }

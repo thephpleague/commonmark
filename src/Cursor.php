@@ -59,12 +59,18 @@ class Cursor
     private $partiallyConsumedTab = false;
 
     /**
+     * @var string
+     */
+    private $encoding;
+
+    /**
      * @param string $line
      */
     public function __construct($line)
     {
         $this->line = $line;
-        $this->length = mb_strlen($line, 'utf-8');
+        $this->encoding = mb_detect_encoding($line, 'ASCII,UTF-8', true) ?: 'ISO-8859-1';
+        $this->length = mb_strlen($line, $this->encoding);
     }
 
     /**
@@ -175,7 +181,7 @@ class Cursor
             return;
         }
 
-        return mb_substr($this->line, $index, 1, 'utf-8');
+        return mb_substr($this->line, $index, 1, $this->encoding);
     }
 
     /**
@@ -225,7 +231,7 @@ class Cursor
         $this->previousPosition = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
-        $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, 'utf-8');
+        $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding);
 
         // Optimization to avoid tab handling logic if we have no tabs
         if (preg_match('/\t/', $nextFewChars) === 0) {
@@ -408,7 +414,7 @@ class Cursor
             $prefix = str_repeat(' ', $charsToTab);
         }
 
-        return $prefix . mb_substr($this->line, $position, null, 'utf-8');
+        return $prefix . mb_substr($this->line, $position, null, $this->encoding);
     }
 
     /**
@@ -446,11 +452,11 @@ class Cursor
         }
 
         // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
-        $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], 'utf-8'), 'utf-8');
+        $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
-        $this->advanceBy($offset + mb_strlen($matches[0][0], 'utf-8'));
+        $this->advanceBy($offset + mb_strlen($matches[0][0], $this->encoding));
 
         return $matches[0][0];
     }
@@ -468,7 +474,8 @@ class Cursor
             $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
-            $this->partiallyConsumedTab
+            $this->partiallyConsumedTab,
+            $this->encoding
         );
     }
 
@@ -485,6 +492,7 @@ class Cursor
         $this->column = $state->getColumn();
         $this->indent = $state->getIndent();
         $this->partiallyConsumedTab = $state->getPartiallyConsumedTab();
+        $this->encoding = $state->getEncoding();
     }
 
     /**
@@ -500,7 +508,7 @@ class Cursor
      */
     public function getPreviousText()
     {
-        return mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, 'utf-8');
+        return mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, $this->encoding);
     }
 
     /**
