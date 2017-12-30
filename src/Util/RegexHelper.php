@@ -21,7 +21,7 @@ use League\CommonMark\Block\Element\HtmlBlock;
  *
  * Singletons are generally bad, but it allows us to build the regexes once (and only once).
  */
-class RegexHelper
+final class RegexHelper
 {
     const ESCAPABLE = 0;
     const ESCAPED_CHAR = 1;
