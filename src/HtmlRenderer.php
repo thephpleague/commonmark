@@ -16,7 +16,6 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Util\Xml;
 
 /**
  * Renders a parsed AST to HTML
