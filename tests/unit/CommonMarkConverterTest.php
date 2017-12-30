@@ -37,7 +37,7 @@ class CommonMarkConverterTest extends TestCase
     public function testEnvironmentAndConfigConstructor()
     {
         $config = ['foo' => 'bar'];
-        $mockEnvironment = $this->getMock('League\CommonMark\Environment');
+        $mockEnvironment = $this->createMock('League\CommonMark\Environment');
         $mockEnvironment->expects($this->once())
             ->method('mergeConfig')
             ->with($config);

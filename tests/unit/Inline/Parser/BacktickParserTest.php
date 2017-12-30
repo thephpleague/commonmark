@@ -30,7 +30,7 @@ class BacktickParserTest extends TestCase
      */
     public function testParse($string, $expectedContents)
     {
-        $nodeStub = $this->getMock('League\CommonMark\Block\Element\AbstractBlock');
+        $nodeStub = $this->createMock('League\CommonMark\Block\Element\AbstractBlock');
         $nodeStub->expects($this->any())->method('getStringContent')->willReturn($string);
         $nodeStub
             ->expects($this->once())
