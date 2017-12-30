@@ -64,6 +64,16 @@ class Cursor
     private $encoding;
 
     /**
+     * @var bool
+     */
+    private $lineContainsTabs;
+
+    /**
+     * @var bool
+     */
+    private $isMultibyte;
+
+    /**
      * @param string $line
      */
     public function __construct($line)
@@ -71,6 +81,8 @@ class Cursor
         $this->line = $line;
         $this->encoding = mb_detect_encoding($line, 'ASCII,UTF-8', true) ?: 'ISO-8859-1';
         $this->length = mb_strlen($line, $this->encoding);
+        $this->isMultibyte = $this->length !== strlen($line);
+        $this->lineContainsTabs = preg_match('/\t/', $line) > 0;
     }
 
     /**
@@ -162,7 +174,9 @@ class Cursor
      */
     public function isIndented()
     {
-        return $this->getIndent() >= self::INDENT_LEVEL;
+        $this->getNextNonSpacePosition();
+
+        return $this->indent >= self::INDENT_LEVEL;
     }
 
     /**
@@ -234,7 +248,7 @@ class Cursor
         $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding);
 
         // Optimization to avoid tab handling logic if we have no tabs
-        if (preg_match('/\t/', $nextFewChars) === 0) {
+        if (!$this->lineContainsTabs || preg_match('/\t/', $nextFewChars) === 0) {
             $length = min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
@@ -451,8 +465,15 @@ class Cursor
             return;
         }
 
-        // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
-        $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
+        // $matches[0][0] contains the matched text
+        // $matches[0][1] contains the index of that match
+
+        if ($this->isMultibyte) {
+            // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
+            $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
+        } else {
+            $offset = $matches[0][1];
+        }
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
