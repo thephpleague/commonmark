@@ -49,7 +49,7 @@ class EscapableParser extends AbstractInlineParser
 
             return true;
         } elseif ($nextChar !== null &&
-            preg_match('/' . RegexHelper::REGEX_ESCAPABLE . '/', $nextChar)
+            preg_match('/' . RegexHelper::PARTIAL_ESCAPABLE . '/', $nextChar)
         ) {
             $cursor->advanceBy(2);
             $inlineContext->getContainer()->appendChild(new Text($nextChar));

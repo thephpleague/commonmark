@@ -36,7 +36,7 @@ class HtmlInlineParser extends AbstractInlineParser
     public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
-        if ($m = $cursor->match(RegexHelper::getInstance()->getHtmlTagRegex())) {
+        if ($m = $cursor->match('/^' . RegexHelper::PARTIAL_HTMLTAG . '/i')) {
             $inlineContext->getContainer()->appendChild(new HtmlInline($m));
 
             return true;
