@@ -10,6 +10,7 @@ This release contains several breaking changes and a minimum PHP version bump - 
 
 ### Added
 
+ - Added new `max_nesting_level` setting (#243)
  - Added minor performance optimizations to `Cursor`
 
 ### Changed

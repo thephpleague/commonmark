@@ -33,12 +33,18 @@ class DocParser
     private $inlineParserEngine;
 
     /**
+     * @var int|float
+     */
+    private $maxNestingLevel;
+
+    /**
      * @param Environment $environment
      */
     public function __construct(Environment $environment)
     {
         $this->environment = $environment;
         $this->inlineParserEngine = new InlineParserEngine($environment);
+        $this->maxNestingLevel = $environment->getConfig('max_nesting_level', INF);
     }
 
     /**
@@ -197,7 +203,7 @@ class DocParser
                 }
             }
 
-            if (!$parsed || $context->getContainer()->acceptsLines()) {
+            if (!$parsed || $context->getContainer()->acceptsLines() || $context->getTip()->getDepth() >= $this->maxNestingLevel) {
                 $context->setBlocksParsed(true);
                 break;
             }

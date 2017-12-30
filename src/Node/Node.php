@@ -7,6 +7,11 @@ use League\CommonMark\Util\ArrayCollection;
 abstract class Node
 {
     /**
+     * @var int
+     */
+    protected $depth = 0;
+
+    /**
      * @var Node|null
      */
     protected $parent;
@@ -61,6 +66,7 @@ abstract class Node
     protected function setParent(Node $node = null)
     {
         $this->parent = $node;
+        $this->depth = ($node === null) ? 0 : $node->depth + 1;
     }
 
     /**
@@ -129,6 +135,7 @@ abstract class Node
         $this->parent = null;
         $this->next = null;
         $this->previous = null;
+        $this->depth = 0;
     }
 
     /**
@@ -223,6 +230,14 @@ abstract class Node
         }
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDepth()
+    {
+        return $this->depth;
     }
 
     /**
