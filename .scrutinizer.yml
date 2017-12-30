@@ -20,7 +20,7 @@ checks:
             - commonmark/commonmark.js
 tools:
     external_code_coverage:
-        timeout: 1200
+        timeout: 1800
         runs: 3
     php_analyzer: true
     php_code_coverage: false
