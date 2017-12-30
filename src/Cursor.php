@@ -462,11 +462,11 @@ class Cursor
     }
 
     /**
-     * @return CursorState
+     * @return array
      */
     public function saveState()
     {
-        return new CursorState(
+        return array(
             $this->line,
             $this->length,
             $this->currentPosition,
@@ -480,19 +480,21 @@ class Cursor
     }
 
     /**
-     * @param CursorState $state
+     * @param array $state
      */
-    public function restoreState(CursorState $state)
+    public function restoreState($state)
     {
-        $this->line = $state->getLine();
-        $this->length = $state->getLength();
-        $this->currentPosition = $state->getCurrentPosition();
-        $this->previousPosition = $state->getPreviousPosition();
-        $this->nextNonSpaceCache = $state->getNextNonSpaceCache();
-        $this->column = $state->getColumn();
-        $this->indent = $state->getIndent();
-        $this->partiallyConsumedTab = $state->getPartiallyConsumedTab();
-        $this->encoding = $state->getEncoding();
+        list(
+            $this->line,
+            $this->length,
+            $this->currentPosition,
+            $this->previousPosition,
+            $this->nextNonSpaceCache,
+            $this->indent,
+            $this->column,
+            $this->partiallyConsumedTab,
+            $this->encoding
+          ) = $state;
     }
 
     /**

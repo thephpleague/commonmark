@@ -43,11 +43,12 @@ class BacktickParser extends AbstractInlineParser
             return false;
         }
 
+        $currentPosition = $cursor->getPosition();
         $previousState = $cursor->saveState();
 
         while ($matchingTicks = $cursor->match('/`+/m')) {
             if ($matchingTicks === $ticks) {
-                $code = mb_substr($cursor->getLine(), $previousState->getCurrentPosition(), $cursor->getPosition() - $previousState->getCurrentPosition() - strlen($ticks), 'utf-8');
+                $code = mb_substr($cursor->getLine(), $currentPosition, $cursor->getPosition() - $currentPosition - strlen($ticks), 'utf-8');
                 $c = preg_replace(RegexHelper::REGEX_WHITESPACE, ' ', $code);
                 $inlineContext->getContainer()->appendChild(new Code(trim($c)));
 
