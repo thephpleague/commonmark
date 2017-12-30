@@ -467,15 +467,12 @@ class Cursor
     public function saveState()
     {
         return array(
-            $this->line,
-            $this->length,
             $this->currentPosition,
             $this->previousPosition,
             $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
             $this->partiallyConsumedTab,
-            $this->encoding
         );
     }
 
@@ -485,15 +482,12 @@ class Cursor
     public function restoreState($state)
     {
         list(
-            $this->line,
-            $this->length,
             $this->currentPosition,
             $this->previousPosition,
             $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
-            $this->partiallyConsumedTab,
-            $this->encoding
+            $this->partiallyConsumedTab
           ) = $state;
     }
 
