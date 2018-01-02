@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^5.5|^7.0",
-        "league/commonmark": "^0.14|^0.15"
+        "league/commonmark": "^0.14|^0.15|^0.16"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.3|^5.0",

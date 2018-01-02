@@ -10,11 +10,14 @@ php:
   - 5.5
   - 5.6
   - 7.0
+  - 7.1
+  - 7.2
   - hhvm
 
 env:
   - COMMONMARK_VERSION=0.14.*
   - COMMONMARK_VERSION=0.15.*
+  - COMMONMARK_VERSION=0.16.*
 
 before_script:
   - if [ $TRAVIS_PHP_VERSION = '7.0' ]; then PHPUNIT_COVERAGE="--coverage-clover=coverage.clover"; fi
