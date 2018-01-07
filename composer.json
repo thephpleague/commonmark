@@ -25,10 +25,10 @@
         "erusev/parsedown": "~1.0",
         "commonmark/commonmark.js": "0.28",
         "michelf/php-markdown": "~1.4",
-        "mikehaertl/php-shellcommand": "~1.2.0",
-        "phpunit/phpunit": "~5.7|~6.5",
-        "symfony/finder": "~3.0|~4.0",
-        "scrutinizer/ocular": "~1.1"
+        "mikehaertl/php-shellcommand": "^1.2",
+        "phpunit/phpunit": "^5.7|^6.5",
+        "symfony/finder": "^3.0|^4.0",
+        "scrutinizer/ocular": "^1.1"
     },
     "suggest": {
         "league/commonmark-extras": "Library of useful extensions including smart punctuation"
