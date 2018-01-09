@@ -103,7 +103,7 @@ class TableParser extends AbstractBlockParser
             } elseif (isset($match[2][$i]) && $match[2][$i]) {
                 $columns[] = TableCell::ALIGN_RIGHT;
             } else {
-                $columns[] = null;
+                $columns[] = '';
             }
         }
 
@@ -120,6 +120,10 @@ class TableParser extends AbstractBlockParser
 
         $row = new TableRow();
         foreach ((array) $cells[0] as $i => $cell) {
+            if (!isset($columns[$i])) {
+                return $row;
+            }
+
             $row->appendChild(new TableCell(trim($cell), $type, isset($columns[$i]) ? $columns[$i] : null));
         }
 
