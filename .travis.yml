@@ -11,11 +11,8 @@ php:
   - 7.0
   - 7.1
   - 7.2
-  - hhvm
 
 env:
-  - COMMONMARK_VERSION=0.14.*
-  - COMMONMARK_VERSION=0.15.*
   - COMMONMARK_VERSION=0.16.*
   - COMMONMARK_VERSION=0.17.*
 
