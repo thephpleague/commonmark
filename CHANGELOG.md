@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+0.7.0 (2018-01-09)
+------------------
+
+ * Increased minimum PHP version to 5.6
+ * Removed support for commonmark 0.14 and 0.15 API
+ * Updated to the commonmark 0.16 and 0.17 API
+ * Fix a problem with parsing whitespaces at the end of line
+
 0.6.1 (2017-01-11)
 ------------------
 

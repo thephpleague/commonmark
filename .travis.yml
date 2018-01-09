@@ -7,7 +7,6 @@ cache:
     - $HOME/.composer/cache
 
 php:
-  - 5.5
   - 5.6
   - 7.0
   - 7.1
@@ -18,15 +17,16 @@ env:
   - COMMONMARK_VERSION=0.14.*
   - COMMONMARK_VERSION=0.15.*
   - COMMONMARK_VERSION=0.16.*
+  - COMMONMARK_VERSION=0.17.*
 
 before_script:
-  - if [ $TRAVIS_PHP_VERSION = '7.0' ]; then PHPUNIT_COVERAGE="--coverage-clover=coverage.clover"; fi
-  - if [ $TRAVIS_PHP_VERSION = '5.5' ]; then COMPOSER_FLAGS="--prefer-lowest"; fi
+  - if [ $TRAVIS_PHP_VERSION = '7.2' ]; then PHPUNIT_COVERAGE="--coverage-clover=coverage.clover"; fi
+  - if [ $TRAVIS_PHP_VERSION = '5.6' ]; then COMPOSER_FLAGS="--prefer-lowest"; fi
   - composer self-update
   - composer require "league/commonmark:${COMMONMARK_VERSION}" --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
-  - vendor/bin/phpunit $PHPUNIT_COVERAGE
+  - phpunit $PHPUNIT_COVERAGE
 
 after_script:
   - if [[ "$PHPUNIT_COVERAGE" != "" ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

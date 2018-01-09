@@ -16,9 +16,20 @@ use League\CommonMark\DocParser;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
+use PHPUnit\Framework\TestCase;
 use Webuni\CommonMark\TableExtension\TableExtension;
 
-class LocalDataTest extends \PHPUnit_Framework_TestCase
+if (class_exists(TestCase::class)) {
+    class CompatibleTestsCase extends TestCase
+    {
+    }
+} else {
+    class CompatibleTestsCase extends \PHPUnit_Framework_TestCase
+    {
+    }
+}
+
+class LocalDataTest extends CompatibleTestsCase
 {
     /* @var Environment */
     private $environment;

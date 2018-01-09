@@ -37,11 +37,7 @@ class TableParser extends AbstractBlockParser
             return false;
         }
 
-        if (method_exists($cursor, 'getNextNonSpacePosition')) {
-            $expressionOffset = $cursor->getNextNonSpacePosition();
-        } else {
-            $expressionOffset = $cursor->getFirstNonSpacePosition();
-        }
+        $expressionOffset = $cursor->getNextNonSpacePosition();
 
         $match = RegexHelper::matchAll(self::REGEXP_DEFINITION, $cursor->getLine(), $expressionOffset);
         if (null === $match) {
