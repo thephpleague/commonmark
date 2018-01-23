@@ -21,6 +21,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.4|^6.0",
+        "vimeo/psalm": "~0.3",
         "friendsofphp/php-cs-fixer": "^2.9",
         "symfony/var-dumper": "^3.0|^4.0"
     },
@@ -31,7 +32,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.7-dev"
+            "dev-master": "0.8-dev"
         }
     }
 }

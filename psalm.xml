@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<psalm
+    name="Example Psalm config with recommended defaults"
+    stopOnFirstError="false"
+    useDocblockTypes="true"
+    totallyTyped="false"
+>
+    <projectFiles>
+        <directory name="src" />
+    </projectFiles>
+
+    <issueHandlers>
+        <LessSpecificReturnType errorLevel="info" />
+
+        <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
+        <DeprecatedClass errorLevel="error" />
+        <DeprecatedMethod errorLevel="error" />
+        <DeprecatedProperty errorLevel="error" />
+
+        <MissingClosureReturnType errorLevel="suppress" />
+        <MissingReturnType errorLevel="suppress" />
+        <MissingPropertyType errorLevel="suppress" />
+        <InvalidDocblock errorLevel="info" />
+        <MisplacedRequiredParam errorLevel="info" />
+
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <MissingConstructor errorLevel="info" />
+        <UntypedParam errorLevel="suppress" />
+
+        <TypeCoercion errorLevel="suppress" />
+    </issueHandlers>
+</psalm>

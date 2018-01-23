@@ -22,7 +22,7 @@ class TableRowRenderer implements BlockRendererInterface
 {
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
     {
-        if (!($block instanceof TableRow)) {
+        if (!$block instanceof TableRow) {
             throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
         }
 

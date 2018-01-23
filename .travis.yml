@@ -23,6 +23,7 @@ before_script:
   - composer require "league/commonmark:${COMMONMARK_VERSION}" --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
+  - vendor/bin/psalm
   - phpunit $PHPUNIT_COVERAGE
 
 after_script:

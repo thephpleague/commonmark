@@ -114,6 +114,7 @@ class TableParser extends AbstractBlockParser
             return;
         }
 
+        $i = 0;
         $row = new TableRow();
         foreach ((array) $cells[0] as $i => $cell) {
             if (!isset($columns[$i])) {
