@@ -32,11 +32,7 @@ class TableCellRenderer implements BlockRendererInterface
         }
 
         if ($block->align) {
-            if ($block->type == TableCell::TYPE_HEAD) {
-                $attrs['style'] = "text-align: $block->align";
-            } else {
-                $attrs['align'] = $block->align;
-            }
+            $attrs['style'] = (isset($attrs['style']) ? $attrs['style'] . ' ' : '') . 'text-align: ' . $block->align;
         }
 
         return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->children()));

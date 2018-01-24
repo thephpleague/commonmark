@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.8.0 (2018-01-24)
+------------------
+
+ * Replace align attribute with text-align style
+
 0.7.1 (2018-01-23)
 ------------------
 
