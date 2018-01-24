@@ -52,9 +52,9 @@ Result:
 <table>
 <thead>
 <tr>
-<th align="left">th</th>
-<th align="center">th(center)</th>
-<th align="right">th(right<)/th>
+<th style="text-align: left">th</th>
+<th style="text-align: center">th(center)</th>
+<th style="text-align: right">th(right<)/th>
 </tr>
 </thead>
 <tbody>
