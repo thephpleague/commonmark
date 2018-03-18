@@ -197,7 +197,7 @@ Also a huge thank you to [JetBrains](https://www.jetbrains.com/) for supporting 
 
 ## Governance
 
-This project is primarily maintained by [Colin O'Dell][@colinodell].  Members of the [PHP League][php-league] Leadership Team may occassionally assist with some of these duties.
+This project is primarily maintained by [Colin O'Dell][@colinodell].  Members of the [PHP League] Leadership Team may occasionally assist with some of these duties.
 
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
