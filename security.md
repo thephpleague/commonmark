@@ -38,6 +38,17 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 
 See the [configuration](/configuration/) section for more information.
 
+## Unsafe Links
+
+Unsafe links are also allowed by default due to CommonMark spec compliance.  An unsafe link is one that uses any of these protocols:
+
+ - `javascript:`
+ - `vbscript:`
+ - `file:`
+ - `data:` (except for `data:image` in png, gif, jpeg, or webp format)
+
+To prevent these from being parsed and rendered, you should set the `allow_unsafe_links` option to `false`.
+
 ## Nesting Level
 
 **No maximum nesting level is enforced by default.**  Markdown content which is too deeply-nested (like 10,000 nested blockquotes: '> > > > > ...') [could result in long render times or segfaults](https://github.com/thephpleague/commonmark/issues/243#issuecomment-217580285).
