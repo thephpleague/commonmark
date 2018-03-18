@@ -2,6 +2,7 @@
 
 namespace League\CommonMark\Tests\Functional;
 
+use League\CommonMark\CommonMarkConverter;
 use mikehaertl\shellcommand\Command;
 
 class BinTest extends AbstractBinTest
@@ -122,6 +123,21 @@ class BinTest extends AbstractBinTest
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('safe/safe_output.html')));
         $this->assertEquals($expectedContents, $cmd->getOutput());
+    }
+
+    /**
+     * Tests that the version flags show the current version
+     */
+    public function testVersion()
+    {
+        foreach (['-v', '--version'] as $arg) {
+            $cmd = $this->createCommand();
+            $cmd->addArg($arg);
+            $cmd->execute();
+
+            $this->assertEquals(0, $cmd->getExitCode());
+            $this->assertEquals(CommonMarkConverter::VERSION, trim($cmd->getOutput()));
+        }
     }
 
     /**

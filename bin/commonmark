@@ -39,6 +39,10 @@ foreach ($argv as $i => $arg) {
             case '--help':
                 echo getHelpText();
                 exit(0);
+            case '-v':
+            case '--version':
+                echo \League\CommonMark\CommonMarkConverter::VERSION . "\n";
+                exit(0);
             case '--safe':
                 $options['safe'] = true;
                 break;
@@ -90,7 +94,9 @@ CommonMark - Markdown done right
 
 Usage: commonmark [OPTIONS] [FILE]
 
-    -h, --help  Shows help and usage information
+    -h, --help    Shows help and usage information
+
+    -v, --version Shows the currently installed version
 
     (Reading data from STDIN is not currently supported on Windows)
 
@@ -113,9 +119,11 @@ CommonMark - Markdown done right
 
 Usage: commonmark [OPTIONS] [FILE]
 
-    -h, --help  Shows help and usage information
+    -h, --help    Shows help and usage information
 
-    --safe      Escapes all raw HTML input and removes unsafe URLs
+    -v, --version Shows the currently installed version
+
+    --safe        Escapes all raw HTML input and removes unsafe URLs
 
     If no file is given, input will be read from STDIN
 
