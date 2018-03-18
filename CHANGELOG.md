@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.17.1] - 2017-03-18
+
+### Added
+
+ - Added a new constant containing the current version: `CommonMarkConverter::VERSION` (#314)
+
 ## [0.17.0] - 2017-12-30
 
 This release contains several breaking changes and a minimum PHP version bump - see <UPGRADE.md> for more details.
@@ -609,7 +615,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.17.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.17.1...HEAD
+[0.17.1]: https://github.com/thephpleague/commonmark/compare/0.17.0...0.17.1
 [0.17.0]: https://github.com/thephpleague/commonmark/compare/0.16.0...0.17.0
 [0.16.0]: https://github.com/thephpleague/commonmark/compare/0.15.7...0.16.0
 [0.15.7]: https://github.com/thephpleague/commonmark/compare/0.15.6...0.15.7
