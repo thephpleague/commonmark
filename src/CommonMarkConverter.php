@@ -19,7 +19,6 @@ namespace League\CommonMark;
  */
 class CommonMarkConverter extends Converter
 {
-
     /**
      * The currently-installed version.
      *
