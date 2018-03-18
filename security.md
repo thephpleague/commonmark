@@ -55,7 +55,7 @@ To prevent these from being parsed and rendered, you should set the `allow_unsaf
 
 If you need to parse untrusted input, consider setting a reasonable `max_nesting_level` (perhaps 10-50) depending on your needs.  Once this nesting level is hit, any subsequent Markdown will be rendered as plain text.
 
-## Example - Prevent deep nesting
+### Example - Prevent deep nesting
 ~~~php
 use League\CommonMark\CommonMarkConverter;
 
