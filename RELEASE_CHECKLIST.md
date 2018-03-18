@@ -1,14 +1,15 @@
 # Release Checklist
 
-To create a new release, branch off of master and...
-
  - [ ] Ensure all tests are passing (including Travis and StyleCI).
- - [ ] Update the `CommonMarkConverter::VERSION` constant.
- - [ ] Bump the `branch-alias` in `composer.json` if needed.
  - [ ] Ensure changes are documented in `CHANGELOG.md`. Release titles should be linked to Github.
  - [ ] If breaking changes or deprecations are introduced, document the upgrade process in `UPGRADE.md`.
  - [ ] Update the compatibility section in `README.md`.
- - [ ] Commit everything to that new release branch and push.
+ - [ ] Bump the `branch-alias` in `composer.json` if needed.
+ - [ ] Ensure all changes above make it into the `master` branch
+
+ - [ ] Update the `CommonMarkConverter::VERSION` constant.
+ - [ ] Create a new release branch containing just the one change above and push to Github. Make sure tests still pass.
  - [ ] Create a release in Github; tag should be named `xx.yy.zz`. Copy `CHANGELOG` section into release notes.
+ - [ ] Remove that release branch once tagged
  - [ ] ???
  - [ ] PROFIT!!
