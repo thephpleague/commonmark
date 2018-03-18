@@ -43,6 +43,8 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
+**Security warning:** If you will be parsing untrusted input from users, please consider setting the `html_input` and `allow_unsafe_links` options. See <https://commonmark.thephpleague.com/security/> for more details.
+
 ## Advanced Usage & Customization
 
 The actual conversion process requires two steps:
