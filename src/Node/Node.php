@@ -70,6 +70,8 @@ abstract class Node
     }
 
     /**
+     * Inserts the $sibling node after $this
+     *
      * @param Node $sibling
      */
     public function insertAfter(Node $sibling)
@@ -91,6 +93,8 @@ abstract class Node
     }
 
     /**
+     * Inserts the $sibling node before $this
+     *
      * @param Node $sibling
      */
     public function insertBefore(Node $sibling)
@@ -187,6 +191,8 @@ abstract class Node
     }
 
     /**
+     * Adds $child as the very first child of $this
+     *
      * @param Node $child
      */
     public function prependChild(Node $child)
