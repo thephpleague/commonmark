@@ -29,7 +29,7 @@
     "require-dev": {
         "cebe/markdown": "~1.0",
         "erusev/parsedown": "~1.0",
-        "commonmark/commonmark.js": "0.28",
+        "commonmark/commonmark.js": "dev-master",
         "michelf/php-markdown": "~1.4",
         "mikehaertl/php-shellcommand": "^1.4",
         "phpunit/phpunit": "^7.5",
@@ -44,9 +44,9 @@
             "type": "package",
             "package": {
                 "name": "commonmark/commonmark.js",
-                "version": "0.28",
+                "version": "dev-master",
                 "dist": {
-                    "url": "https://github.com/commonmark/commonmark.js/archive/0.28.0.zip",
+                    "url": "https://github.com/commonmark/commonmark.js/archive/master.zip",
                     "type": "zip"
                 }
             }
