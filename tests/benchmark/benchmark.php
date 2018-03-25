@@ -18,6 +18,10 @@ use Michelf\MarkdownExtra;
 
 $markdown = file_get_contents(__DIR__ . '/' . 'sample.md');
 
+if (extension_loaded('xdebug')) {
+    fwrite(STDERR, 'The xdebug extension is loaded, this can significantly skew benchmarks. Disable it for accurate results.' . PHP_EOL . PHP_EOL);
+}
+
 $parsers = [
     'CommonMark' => function ($markdown) {
         $parser = new CommonMarkConverter();
