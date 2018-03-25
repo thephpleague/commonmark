@@ -47,24 +47,52 @@ $parsers = [
     },
 ];
 
-$iterations = 20;
+if (extension_loaded('cmark')) {
+    $parsers['krakjoe/cmark'] = function ($markdown) {
+        \CommonMark\Render\HTML(
+	    \CommonMark\Parse($markdown));
+    };
+}
+
+$iterations = isset($argv[1]) ? max($argv[1], 20) : 20;
 $results = [];
+
+printf('Running Benchmarks, %d Implementations, %d Iterations:%s', 
+       count($parsers), $iterations, PHP_EOL);
+
 foreach ($parsers as $name => $parser) {
+    printf("\t%- 30s ", $name);
     $start = microtime(true);
     for ($i = 0; $i <= $iterations; $i++) {
         echo '.';
         $parser($markdown);
     }
-
     $results[$name] = (microtime(true) - $start) * 1000 / $iterations;
+    echo PHP_EOL;
+    usleep(300000);
 }
+echo PHP_EOL;
 
 asort($results);
 
-printf("\n\n");
-printf("===================================\n");
-printf("Here are the average parsing times:\n", $iterations);
-printf("===================================\n");
+$position = 1;
+$top = 0;
+$diffSpace = $iterations - 7;
+
+printf('Benchmark Results:%s', PHP_EOL);
 foreach ($results as $name => $ms) {
-    printf("%-19s | %4d ms\n", $name, $ms);
+    if (!$top) {
+        $top = $ms;
+    } else {
+        $diff = $top - $ms;
+    }
+
+    printf("\t%d) %- 26s % 6.2f ms% {$diffSpace}s%s", 
+        $position++,
+        $name,
+        $ms,
+        $diff ?
+            sprintf(" % 6.2f ms", $diff) : 
+            null,
+        PHP_EOL);
 }
