@@ -84,6 +84,7 @@ $top = 0;
 $diffSpace = $iterations - 7;
 
 printf('Benchmark Results:%s', PHP_EOL);
+$diff = 0;
 foreach ($results as $name => $ms) {
     if (!$top) {
         $top = $ms;
