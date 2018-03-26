@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.17.3] - 2017-03-26
+
+### Fixed
+
+ - Fixed incorrect version constant value
+
 ## [0.17.2] - 2017-03-25
 
 ### Added
@@ -625,7 +631,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.17.2...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.17.3...HEAD
+[0.17.3]: https://github.com/thephpleague/commonmark/compare/0.17.2...0.17.3
 [0.17.2]: https://github.com/thephpleague/commonmark/compare/0.17.1...0.17.2
 [0.17.1]: https://github.com/thephpleague/commonmark/compare/0.17.0...0.17.1
 [0.17.0]: https://github.com/thephpleague/commonmark/compare/0.16.0...0.17.0

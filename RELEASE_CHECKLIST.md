@@ -7,8 +7,8 @@
  - [ ] Bump the `branch-alias` in `composer.json` if needed.
  - [ ] Ensure all changes above make it into the `master` branch
 
- - [ ] Update the `CommonMarkConverter::VERSION` constant.
- - [ ] Create a new release branch containing just the one change above and push to Github. Make sure tests still pass.
+ - [ ] Create a new release branch.
+ - [ ] Update the `CommonMarkConverter::VERSION` constant and commit just that one change to that release branch. Make sure tests still pass.
  - [ ] Create a release in Github; tag should be named `xx.yy.zz`. Copy `CHANGELOG` section into release notes.
  - [ ] Remove that release branch once tagged
  - [ ] ???
