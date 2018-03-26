@@ -175,6 +175,20 @@ final class RegexHelper
     }
 
     /**
+     * @param string|null $character
+     *
+     * @return bool
+     */
+    public static function isEscapable($character)
+    {
+        if ($character === null) {
+            return false;
+        }
+
+        return preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
+    }
+
+    /**
      * Returns a partial regex
      *
      * It'll need to be wrapped with /.../ before use

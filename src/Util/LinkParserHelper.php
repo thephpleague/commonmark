@@ -37,7 +37,7 @@ final class LinkParserHelper
         $oldState = $cursor->saveState();
         $openParens = 0;
         while (($c = $cursor->getCharacter()) !== null) {
-            if ($c === '\\') {
+            if ($c === '\\' && RegexHelper::isEscapable($cursor->peek())) {
                 $cursor->advanceBy(2);
             } elseif ($c === '(') {
                 $cursor->advance();

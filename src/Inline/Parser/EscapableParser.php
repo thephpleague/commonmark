@@ -48,9 +48,7 @@ class EscapableParser extends AbstractInlineParser
             $inlineContext->getContainer()->appendChild(new Newline(Newline::HARDBREAK));
 
             return true;
-        } elseif ($nextChar !== null &&
-            preg_match('/' . RegexHelper::PARTIAL_ESCAPABLE . '/', $nextChar)
-        ) {
+        } elseif (RegexHelper::isEscapable($nextChar)) {
             $cursor->advanceBy(2);
             $inlineContext->getContainer()->appendChild(new Text($nextChar));
 
