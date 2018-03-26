@@ -197,7 +197,7 @@ $run = function (array $config, string $parser) use ($exec) : array {
 
 $display = function ($config, $results, $formatName, $formatResult) : void {
     $space = $config['iterations'] - 7;
-    $position = 0;
+    $position = 1;
     $top = 0;
     $diff = 0;
 
