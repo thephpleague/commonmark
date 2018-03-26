@@ -269,6 +269,13 @@ class RegexHelperTest extends TestCase
         $this->assertEquals('foo(and(bar))', RegexHelper::unescape('foo(and\\(bar\\))'));
     }
 
+    public function testIsEscapable()
+    {
+        $this->assertFalse(RegexHelper::isEscapable(null));
+        $this->assertFalse(RegexHelper::isEscapable('A'));
+        $this->assertTrue(RegexHelper::isEscapable('\\'));
+    }
+
     /**
      * @param $regex
      * @param $string

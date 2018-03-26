@@ -4,6 +4,16 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.17.2] - 2017-03-25
+
+### Added
+
+ - Added new `RegexHelper::isEscapable()` method
+
+### Fixed
+
+ - Fixed spec compliance bug where escaped spaces should not be allowed in link destinations
+
 ## [0.17.1] - 2017-03-18
 
 ### Added
@@ -615,7 +625,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.17.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.17.2...HEAD
+[0.17.2]: https://github.com/thephpleague/commonmark/compare/0.17.1...0.17.2
 [0.17.1]: https://github.com/thephpleague/commonmark/compare/0.17.0...0.17.1
 [0.17.0]: https://github.com/thephpleague/commonmark/compare/0.16.0...0.17.0
 [0.16.0]: https://github.com/thephpleague/commonmark/compare/0.15.7...0.16.0
