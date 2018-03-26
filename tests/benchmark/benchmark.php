@@ -23,12 +23,15 @@ $config = [
     'parser'       => [],
     'flags'        => [
         'isolate'  => false,
+        'memory'   => false,
     ],
 ];
 
-$usage = function (array $config, string $invalid) {
+$usage = function (array $config, string $format, ...$args) {
+    $errmsg = vsprintf("Error: {$format}", $args);
+
     fwrite(STDERR, <<<EOD
-Error: invalid command line at {$invalid}:
+{$errmsg}:
 Usage: {$config['exec']} [options] [flags]
 Options:
     --md         file          default: sample.md
@@ -36,6 +39,7 @@ Options:
     --parser     name          default: all
 Flags:
     -isolate                   default: off
+    -memory                    default: off, implies isolate
 
 EOD
 );
@@ -49,7 +53,7 @@ while ($key = array_shift($argv)) {
                 $key = substr($key, 2);
 
                 if (!isset($config[$key])) {
-                    $usage($config, $key);
+                    $usage($config, 'invalid option %s', $key);
                 }
 
                 if (is_array($config[$key])) {
@@ -63,7 +67,7 @@ while ($key = array_shift($argv)) {
                $key = substr($key, 1);
 
                if (!isset($config['flags'][$key])) {
-                   $usage($config, $key);
+                   $usage($config, 'invalid flag %s', $key);
                }
 
                $config['flags'][$key] = true;
@@ -76,11 +80,15 @@ while ($key = array_shift($argv)) {
 $config['iterations'] = max($config['iterations'], 20);
 
 if ($config['md'] !== '-' && !file_exists($config['md'])) {
-    $usage($config, 'md');
+    $usage($config, 'cannot read input %s', $config['md']);
+}
+
+if ($config['flags']['memory']) {
+    $config['flags']['isolate'] = true;
 }
 
 if ($config['flags']['isolate'] && !function_exists('proc_open')) {
-    $usage($config, 'isolate');
+    $usage($config, 'isolation requires proc_open');
 }
 
 if ($config['md'] === '-') {
@@ -125,11 +133,13 @@ if (extension_loaded('cmark')) {
     };
 }
 
-$parsers = array_filter($parsers, function ($parser) use ($config) {
-    return !count($config['parser']) || array_search($parser, $config['parser']) > -1;
-}, ARRAY_FILTER_USE_KEY);
+if (count($config['parser'])) {
+    $parsers = array_filter($parsers, function ($parser) use ($config) {
+        return array_search($parser, $config['parser']) > -1;
+    }, ARRAY_FILTER_USE_KEY);
+}
 
-$exec = function (array $config, string $parser) use ($parsers) : int {
+$exec = function (array $config, string $parser) use ($parsers) : array {
     $parser = $parsers[$parser];
 
     $start = microtime(true);
@@ -139,18 +149,32 @@ $exec = function (array $config, string $parser) use ($parsers) : int {
     }
     $end = microtime(true);
 
-    return ($end - $start) * 1000;
+    $cpu = ($end - $start) * 1000;
+    $cpu /= $config['iterations'];
+
+    if ($config['flags']['memory']) {
+        $mem = memory_get_peak_usage();
+        $mem /= 1024;
+    } else {
+        $mem = 0;
+    }
+
+    return [$cpu, $mem];
 };
 
 if ($config['exec'] === 'exec') {
-    fwrite(STDERR,
+    vfprintf(STDERR, '%.2f %d',
         $exec($config, array_shift($config['parser'])));
     exit(0);
 }
 
-$run = function (array $config, string $parser) use ($exec) : int {
+$run = function (array $config, string $parser) use ($exec) : array {
     if ($config['flags']['isolate']) {
-        $proc = proc_open("{$config['exec']} --exec exec --parser \"{$parser}\" --md - --iterations {$config['iterations']}", [
+        if ($config['flags']['memory']) {
+            $flags = '-memory';
+        }
+
+        $proc = proc_open("{$config['exec']} --exec exec --parser \"{$parser}\" --md - --iterations {$config['iterations']} {$flags}", [
             0 => ['pipe', 'r'],
             1 => STDOUT,
             2 => ['pipe', 'w'],
@@ -165,10 +189,33 @@ $run = function (array $config, string $parser) use ($exec) : int {
             fclose($pipes[2]);
         }
 
-        return !proc_close($proc) ? $result : -1;
+        return !proc_close($proc) ? preg_split('~ ~', $result) : -1;
     }
 
     return $exec($config, $parser);
+};
+
+$display = function ($config, $results, $formatName, $formatResult) : void {
+    $space = $config['iterations'] - 7;
+    $position = 0;
+    $top = 0;
+    $diff = 0;
+
+    asort($results);
+    foreach ($results as $name => $result) {
+        if (!$top) {
+            $top = $result;
+        } else {
+            $diff = $top - $result;
+        }
+
+        printf("\t%d) $formatName $formatResult % {$diffSpace}s%s",
+            $position++, $name, $result,
+            $diff ?
+                sprintf($formatResult, $diff) :
+                null,
+            PHP_EOL);
+    }
 };
 
 if (extension_loaded('xdebug')) {
@@ -180,38 +227,27 @@ printf('Running Benchmarks (%s), %d Implementations, %d Iterations:%s',
            'Isolated' : 'No Isolation',
        count($parsers), $config['iterations'], PHP_EOL);
 
-$results = [];
-
+$cpu = [];
+$mem = [];
 foreach ($parsers as $name => $parser) {
     printf("\t%- 30s ", $name);
-    $results[$name] =
-        $run($config, $name) / $config['iterations'];
+
+    [$cpu[$name], $mem[$name]] =
+        $run($config, $name);
+
     echo PHP_EOL;
     usleep(300000);
 }
 echo PHP_EOL;
 
-asort($results);
+printf('Benchmark Results, CPU:%s', PHP_EOL);
 
-$position = 1;
-$top = 0;
-$diffSpace = $config['iterations'] - 7;
+$display($config, $cpu, '%- 26s', '% 6.2f ms');
 
-printf('Benchmark Results:%s', PHP_EOL);
-$diff = 0;
-foreach ($results as $name => $ms) {
-    if (!$top) {
-        $top = $ms;
-    } else {
-        $diff = $top - $ms;
-    }
-
-    printf("\t%d) %- 26s % 6.2f ms% {$diffSpace}s%s",
-        $position++,
-        $name,
-        $ms,
-        $diff ?
-            sprintf(' % 6.2f ms', $diff) :
-            null,
-        PHP_EOL);
+if (!$config['flags']['memory']) {
+    exit(0);
 }
+
+printf('%sBenchmark Results, Peak Memory:%s', PHP_EOL, PHP_EOL);
+
+$display($config, $mem, '%- 26s', '% 6d kB');
