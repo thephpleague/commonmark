@@ -209,7 +209,7 @@ $display = function ($config, $results, $formatName, $formatResult) : void {
             $diff = $top - $result;
         }
 
-        printf("\t%d) $formatName $formatResult % {$diffSpace}s%s",
+        printf("\t%d) $formatName $formatResult % {$space}s%s",
             $position++, $name, $result,
             $diff ?
                 sprintf($formatResult, $diff) :
