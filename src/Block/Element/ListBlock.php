@@ -131,4 +131,16 @@ class ListBlock extends AbstractBlock
     {
         return $this->tight;
     }
+
+    /**
+     * @param bool $tight
+     *
+     * @return $this
+     */
+    public function setTight($tight)
+    {
+        $this->tight = $tight;
+
+        return $this;
+    }
 }
