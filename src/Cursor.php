@@ -134,7 +134,9 @@ class Cursor
      */
     public function getIndent()
     {
-        $this->getNextNonSpacePosition();
+        if ($this->nextNonSpaceCache === null) {
+            $this->getNextNonSpacePosition();
+        }
 
         return $this->indent;
     }
@@ -146,9 +148,7 @@ class Cursor
      */
     public function isIndented()
     {
-        $this->getNextNonSpacePosition();
-
-        return $this->indent >= self::INDENT_LEVEL;
+        return $this->getIndent() >= self::INDENT_LEVEL;
     }
 
     /**
@@ -189,7 +189,7 @@ class Cursor
      */
     public function isBlank()
     {
-        return $this->getNextNonSpacePosition() === $this->length;
+        return $this->nextNonSpaceCache === $this->length || $this->getNextNonSpacePosition() === $this->length;
     }
 
     /**

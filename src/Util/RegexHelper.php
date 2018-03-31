@@ -316,7 +316,6 @@ final class RegexHelper
      */
     public static function matchAll($pattern, $subject, $offset = 0)
     {
-        $matches = [];
         $subject = substr($subject, $offset);
         preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
 

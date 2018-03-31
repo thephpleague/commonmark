@@ -90,8 +90,9 @@ class DocParser
             $this->incorporateLine($context);
         }
 
+        $lineCount = count($lines);
         while ($tip = $context->getTip()) {
-            $tip->finalize($context, count($lines));
+            $tip->finalize($context, $lineCount);
         }
 
         $this->processInlines($context, $context->getDocument()->walker());
@@ -103,10 +104,10 @@ class DocParser
 
     private function incorporateLine(ContextInterface $context)
     {
-        $cursor = new Cursor($context->getLine(), $context->getEncoding());
         $context->getBlockCloser()->resetTip();
-
         $context->setBlocksParsed(false);
+
+        $cursor = new Cursor($context->getLine(), $context->getEncoding());
 
         $this->resetContainer($context, $cursor);
         $context->getBlockCloser()->setLastMatchedContainer($context->getContainer());
@@ -171,8 +172,7 @@ class DocParser
     {
         $container = $context->getDocument();
 
-        while ($container->hasChildren()) {
-            $lastChild = $container->lastChild();
+        while ($lastChild = $container->lastChild()) {
             if (!$lastChild->isOpen()) {
                 break;
             }
@@ -219,9 +219,9 @@ class DocParser
      */
     private function isLazyParagraphContinuation(ContextInterface $context, Cursor $cursor)
     {
-        return !$context->getBlockCloser()->areAllClosed() &&
+        return $context->getTip() instanceof Paragraph &&
+            !$context->getBlockCloser()->areAllClosed() &&
             !$cursor->isBlank() &&
-            $context->getTip() instanceof Paragraph &&
             count($context->getTip()->getStrings()) > 0;
     }
 
