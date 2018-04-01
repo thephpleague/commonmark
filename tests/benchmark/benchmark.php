@@ -21,6 +21,7 @@ $config = [
     'md'           => sprintf('%s/sample.md', __DIR__),
     'iterations'   => 20,
     'parser'       => [],
+    'csv'          => false,
     'flags'        => [
         'isolate'  => false,
         'memory'   => false,
@@ -37,6 +38,7 @@ Options:
     --md         file          default: sample.md
     --iterations num           default: 20
     --parser     name          default: all
+    --csv        fd|file       default: disabled
 Flags:
     -isolate                   default: off
     -memory                    default: off, implies isolate
@@ -91,6 +93,30 @@ if ($config['flags']['isolate'] && !function_exists('proc_open')) {
     $usage($config, 'isolation requires proc_open');
 }
 
+if ($config['csv'] !== false) {
+    $stream = ctype_digit($config['csv']) ?
+        "php://fd/{$config['csv']}" :
+        realpath($config['csv']);
+
+    $fd = @fopen($stream,
+        $config['exec'] === 'exec' ?
+            'w' : 'w+');
+
+    if (!is_resource($fd)) {
+        $usage($config,
+            'cannot fopen(%s) for writing',
+            $config['csv']);
+    }
+
+    define('CSVOUT', $fd);
+
+    if ($config['exec'] !== 'exec') {
+        fputcsv(CSVOUT,
+            ['Name', 'CPU', 'MEM']);
+        fflush(CSVOUT);
+    }
+}
+
 if ($config['md'] === '-') {
     $config['md'] = stream_get_contents(STDIN);
 } else {
@@ -140,23 +166,30 @@ if (count($config['parser'])) {
 }
 
 $exec = function (array $config, string $parser) use ($parsers) : array {
-    $parser = $parsers[$parser];
+    $parse = $parsers[$parser];
 
     $start = microtime(true);
     for ($i = 0; $i < $config['iterations']; $i++) {
         echo '.';
-        $parser($config['md']);
+        $parse($config['md']);
     }
     $end = microtime(true);
 
     $cpu = ($end - $start) * 1000;
     $cpu /= $config['iterations'];
+    $cpu = round($cpu, 2);
 
     if ($config['flags']['memory']) {
         $mem = memory_get_peak_usage();
         $mem /= 1024;
     } else {
         $mem = 0;
+    }
+
+    if ($config['csv']) {
+        fputcsv(
+            CSVOUT, [$parser, $cpu, $mem]);
+        fflush(CSVOUT);
     }
 
     return [$cpu, $mem];
@@ -170,11 +203,22 @@ if ($config['exec'] === 'exec') {
 
 $run = function (array $config, string $parser) use ($exec) : array {
     if ($config['flags']['isolate']) {
-        if ($config['flags']['memory']) {
-            $flags = '-memory';
+        $bin = realpath($config['exec']);
+        $argv =
+            '--exec exec ' .
+            "--parser \"{$parser}\" " .
+            '--md - ' .
+            "--iterations {$config['iterations']}";
+
+        if ($config['csv']) {
+            $argv .= " --csv {$config['csv']}";
         }
 
-        $proc = proc_open("{$config['exec']} --exec exec --parser \"{$parser}\" --md - --iterations {$config['iterations']} {$flags}", [
+        if ($config['flags']['memory']) {
+            $argv .= ' -memory';
+        }
+
+        $proc = proc_open("{$bin} {$argv}", [
             0 => ['pipe', 'r'],
             1 => STDOUT,
             2 => ['pipe', 'w'],
@@ -187,19 +231,29 @@ $run = function (array $config, string $parser) use ($exec) : array {
             $result =
                 stream_get_contents($pipes[2]);
             fclose($pipes[2]);
+
+            if (proc_close($proc) !== 0) {
+                fprintf(STDERR, 'failed to close process%s', PHP_EOL);
+                exit(1);
+            }
+        } else {
+            fprintf(STDERR, 'failed to open process%s', PHP_EOL);
+            exit(1);
         }
 
-        return !proc_close($proc) ? preg_split('~ ~', $result) : -1;
+        return preg_split('~ ~', $result);
     }
 
     return $exec($config, $parser);
 };
 
-$display = function ($config, $results, $formatName, $formatResult) : void {
+$display = function (array $config, string $title, array $fmt, array $results, string $formatName, string $formatResult) : void {
     $space = $config['iterations'] - 7;
     $position = 1;
     $top = 0;
     $diff = 0;
+
+    vprintf($title, $fmt);
 
     asort($results);
     foreach ($results as $name => $result) {
@@ -238,16 +292,17 @@ foreach ($parsers as $name => $parser) {
     echo PHP_EOL;
     usleep(300000);
 }
-echo PHP_EOL;
 
-printf('Benchmark Results, CPU:%s', PHP_EOL);
-
-$display($config, $cpu, '%- 26s', '% 6.2f ms');
+$display($config,
+    '%sBenchmark Results, CPU:%s',
+        [PHP_EOL, PHP_EOL],
+    $cpu, '%- 26s', '% 6.2f ms');
 
 if (!$config['flags']['memory']) {
     exit(0);
 }
 
-printf('%sBenchmark Results, Peak Memory:%s', PHP_EOL, PHP_EOL);
-
-$display($config, $mem, '%- 26s', '% 6d kB');
+$display($config,
+    '%sBenchmark Results, Peak Memory:%s',
+        [PHP_EOL, PHP_EOL],
+    $mem, '%- 26s', '% 6d kB');
