@@ -76,10 +76,10 @@ class Cursor
     /**
      * @param string $line
      */
-    public function __construct($line)
+    public function __construct($line, $encoding = 'UTF-8')
     {
         $this->line = $line;
-        $this->encoding = mb_detect_encoding($line, 'ASCII,UTF-8', true) ?: 'ISO-8859-1';
+        $this->encoding = $encoding;
         $this->length = mb_strlen($line, $this->encoding);
         $this->isMultibyte = $this->length !== strlen($line);
         $this->lineContainsTabs = preg_match('/\t/', $line) > 0;

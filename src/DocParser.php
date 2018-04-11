@@ -82,6 +82,7 @@ class DocParser
     public function parse($input)
     {
         $context = new Context(new Document(), $this->getEnvironment());
+        $context->setEncoding(mb_detect_encoding($input, 'ASCII,UTF-8', true) ?: 'ISO-8859-1');
 
         $lines = $this->preProcessInput($input);
         foreach ($lines as $line) {
@@ -102,7 +103,7 @@ class DocParser
 
     private function incorporateLine(ContextInterface $context)
     {
-        $cursor = new Cursor($context->getLine());
+        $cursor = new Cursor($context->getLine(), $context->getEncoding());
         $context->getBlockCloser()->resetTip();
 
         $context->setBlocksParsed(false);
