@@ -74,6 +74,11 @@ class Cursor
     private $isMultibyte;
 
     /**
+     * @var int
+     */
+    private $charCache = [];
+
+    /**
      * @param string $line
      */
     public function __construct($line, $encoding = 'UTF-8')
@@ -162,12 +167,16 @@ class Cursor
             $index = $this->currentPosition;
         }
 
+        if (isset($this->charCache[$index])) {
+            return $this->charCache[$index];
+        }
+
         // Index out-of-bounds, or we're at the end
         if ($index < 0 || $index >= $this->length) {
             return;
         }
 
-        return mb_substr($this->line, $index, 1, $this->encoding);
+        return $this->charCache[$index] = mb_substr($this->line, $index, 1, $this->encoding);
     }
 
     /**
