@@ -217,10 +217,8 @@ class Cursor
         $this->previousPosition = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
-        $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding);
-
         // Optimization to avoid tab handling logic if we have no tabs
-        if (!$this->lineContainsTabs || preg_match('/\t/', $nextFewChars) === 0) {
+        if (!$this->lineContainsTabs || preg_match('/\t/', $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding)) === 0) {
             $length = min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
