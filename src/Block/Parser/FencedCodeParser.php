@@ -34,7 +34,7 @@ class FencedCodeParser extends AbstractBlockParser
 
         $indent = $cursor->getIndent();
         $fence = $cursor->match('/^[ \t]*(?:`{3,}(?!.*`)|^~{3,}(?!.*~))/');
-        if (is_null($fence)) {
+        if ($fence === null) {
             return false;
         }
 

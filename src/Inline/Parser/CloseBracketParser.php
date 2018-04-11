@@ -50,11 +50,6 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
      */
     public function parse(InlineParserContext $inlineContext)
     {
-        $cursor = $inlineContext->getCursor();
-
-        $startPos = $cursor->getPosition();
-        $previousState = $cursor->saveState();
-
         // Look through stack of delimiters for a [ or !
         $opener = $inlineContext->getDelimiterStack()->searchByCharacter(['[', '!']);
         if ($opener === null) {
@@ -68,7 +63,10 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
             return false;
         }
 
-        $isImage = $opener->getChar() === '!';
+        $cursor = $inlineContext->getCursor();
+
+        $startPos = $cursor->getPosition();
+        $previousState = $cursor->saveState();
 
         $cursor->advance();
 
@@ -80,6 +78,8 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
             return false;
         }
+
+        $isImage = $opener->getChar() === '!';
 
         $inline = $this->createInline($link['url'], $link['title'], $isImage);
         $opener->getInlineNode()->replaceWith($inline);

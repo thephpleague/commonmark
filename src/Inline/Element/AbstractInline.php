@@ -41,6 +41,6 @@ abstract class AbstractInline extends Node
      */
     public function getData($key, $default = null)
     {
-        return array_key_exists($key, $this->data) ? $this->data[$key] : $default;
+        return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
 }

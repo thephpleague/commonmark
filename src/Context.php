@@ -62,6 +62,8 @@ class Context implements ContextInterface
      */
     protected $blocksParsed = false;
 
+    protected $encoding = 'UTF-8';
+
     protected $referenceParser;
 
     public function __construct(Document $document, Environment $environment)
@@ -221,5 +223,25 @@ class Context implements ContextInterface
     public function getReferenceParser()
     {
         return $this->referenceParser;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->encoding;
+    }
+
+    /**
+     * @param string $encoding
+     *
+     * @return $this
+     */
+    public function setEncoding($encoding)
+    {
+        $this->encoding = $encoding;
+
+        return $this;
     }
 }

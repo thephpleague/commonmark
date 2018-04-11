@@ -74,12 +74,17 @@ class Cursor
     private $isMultibyte;
 
     /**
+     * @var int
+     */
+    private $charCache = [];
+
+    /**
      * @param string $line
      */
-    public function __construct($line)
+    public function __construct($line, $encoding = 'UTF-8')
     {
         $this->line = $line;
-        $this->encoding = mb_detect_encoding($line, 'ASCII,UTF-8', true) ?: 'ISO-8859-1';
+        $this->encoding = $encoding;
         $this->length = mb_strlen($line, $this->encoding);
         $this->isMultibyte = $this->length !== strlen($line);
         $this->lineContainsTabs = preg_match('/\t/', $line) > 0;
@@ -134,7 +139,9 @@ class Cursor
      */
     public function getIndent()
     {
-        $this->getNextNonSpacePosition();
+        if ($this->nextNonSpaceCache === null) {
+            $this->getNextNonSpacePosition();
+        }
 
         return $this->indent;
     }
@@ -146,9 +153,7 @@ class Cursor
      */
     public function isIndented()
     {
-        $this->getNextNonSpacePosition();
-
-        return $this->indent >= self::INDENT_LEVEL;
+        return $this->getIndent() >= self::INDENT_LEVEL;
     }
 
     /**
@@ -162,12 +167,16 @@ class Cursor
             $index = $this->currentPosition;
         }
 
+        if (isset($this->charCache[$index])) {
+            return $this->charCache[$index];
+        }
+
         // Index out-of-bounds, or we're at the end
         if ($index < 0 || $index >= $this->length) {
             return;
         }
 
-        return mb_substr($this->line, $index, 1, $this->encoding);
+        return $this->charCache[$index] = mb_substr($this->line, $index, 1, $this->encoding);
     }
 
     /**
@@ -189,7 +198,7 @@ class Cursor
      */
     public function isBlank()
     {
-        return $this->getNextNonSpacePosition() === $this->length;
+        return $this->nextNonSpaceCache === $this->length || $this->getNextNonSpacePosition() === $this->length;
     }
 
     /**
@@ -217,10 +226,8 @@ class Cursor
         $this->previousPosition = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
-        $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding);
-
         // Optimization to avoid tab handling logic if we have no tabs
-        if (!$this->lineContainsTabs || preg_match('/\t/', $nextFewChars) === 0) {
+        if (!$this->lineContainsTabs || preg_match('/\t/', $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding)) === 0) {
             $length = min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
@@ -394,13 +401,15 @@ class Cursor
         if ($this->isMultibyte) {
             // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
             $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
+            $matchLength = mb_strlen($matches[0][0], $this->encoding);
         } else {
             $offset = $matches[0][1];
+            $matchLength = strlen($matches[0][0]);
         }
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
-        $this->advanceBy($offset + mb_strlen($matches[0][0], $this->encoding));
+        $this->advanceBy($offset + $matchLength);
 
         return $matches[0][0];
     }
