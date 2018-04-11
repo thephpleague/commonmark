@@ -394,13 +394,15 @@ class Cursor
         if ($this->isMultibyte) {
             // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
             $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
+            $matchLength = mb_strlen($matches[0][0], $this->encoding);
         } else {
             $offset = $matches[0][1];
+            $matchLength = strlen($matches[0][0]);
         }
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
-        $this->advanceBy($offset + mb_strlen($matches[0][0], $this->encoding));
+        $this->advanceBy($offset + $matchLength);
 
         return $matches[0][0];
     }
