@@ -118,6 +118,7 @@ Custom parsers/renderers can be bundled into extensions which extend CommonMark.
  - [CommonMark Attributes Extension](https://github.com/webuni/commonmark-attributes-extension) - Adds a syntax to define attributes on the various HTML elements.
  - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark.
  - [uafrica/commonmark-ext](https://github.com/uafrica/commonmark-ext) - Adds strikethrough support.
+ - [Sup Sub extensions](https://github.com/OWS/commonmark-sup-sub-extensions) - Adds support of superscript and subscript (<sup> and <sub> HTML tags)
 
 If you build your own, feel free to submit a PR to add it to this list!
 
