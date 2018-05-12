@@ -22,7 +22,7 @@ class StrikethroughParser extends AbstractInlineParser
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inline_context)
+    public function parse(InlineParserContext $inline_context)
     {
         $cursor = $inline_context->getCursor();
         $character = $cursor->getCharacter();
@@ -37,19 +37,15 @@ class StrikethroughParser extends AbstractInlineParser
         $previous_state = $cursor->saveState();
         while ($matching_tildes = $cursor->match('/~~+/m')) {
             if ($matching_tildes === $tildes) {
-                $text = mb_substr($cursor->getLine(), $previous_state->getCurrentPosition(),
-                    $cursor->getPosition() - $previous_state->getCurrentPosition() - strlen($tildes), 'utf-8');
+                $text = mb_substr( $cursor->getPreviousText(), 0, -mb_strlen($tildes) );
                 $text = preg_replace('/[ \n]+/', ' ', $text);
-                $inline_context->getInlines()
-                    ->add(new Strikethrough(trim($text)));
+                $inline_context->getContainer()->appendChild(new Strikethrough(trim($text)));
                 return true;
             }
         }
         // If we got here, we didn't match a closing tilde pair sequence
         $cursor->restoreState($previous_state);
-        $inline_context->getInlines()
-            ->add(new Text($tildes));
-
+        $inline_context->getContainer()->appendChild(new Text($tildes));
         return true;
     }
 }
