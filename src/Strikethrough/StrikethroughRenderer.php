@@ -22,7 +22,7 @@ class StrikethroughRenderer implements InlineRendererInterface
         }
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
         return new HtmlElement('del', $attrs, Xml::escape($inline->getContent()));
