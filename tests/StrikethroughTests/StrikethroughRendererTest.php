@@ -22,13 +22,13 @@ class StrikethroughRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $inline = new Strikethrough('reviewed text');
-        $inline->data['attributes'] = ['id' => 'id'];
+        $inline->data['attributes'] = ['id' => 'some"&amp;id'];
         $fake_renderer = new FakeHtmlRenderer();
         $result = $this->renderer->render($inline, $fake_renderer);
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('del', $result->getTagName());
         $this->assertContains('reviewed text', $result->getContents(true));
-        $this->assertEquals(['id' => '::escape::id'], $result->getAllAttributes());
+        $this->assertEquals(['id' => 'some&quot;&amp;id'], $result->getAllAttributes());
     }
 
     /**

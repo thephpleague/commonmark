@@ -5,6 +5,7 @@ use CommonMarkExt\Strikethrough\Strikethrough;
 use CommonMarkExt\Strikethrough\StrikethroughParser;
 use League\CommonMark\Cursor;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Reference\ReferenceMap;
 
 class StrikethroughParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,20 +17,22 @@ class StrikethroughParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParse($string, $expected)
     {
-        $cursor = new Cursor($string);
+        $nodeStub = $this->getMock(\League\CommonMark\Block\Element\AbstractBlock::class);
+        $nodeStub->expects($this->any())->method('getStringContent')->willReturn($string);
+        $nodeStub
+            ->expects($this->once())
+            ->method('appendChild')
+            ->with($this->callback(function (Strikethrough $s) use ($expected) {
+                return $s instanceof Strikethrough && $expected === $s->getContent();
+            }));
+        $inline_context = new InlineParserContext($nodeStub, new ReferenceMap());
+
         // Move to just before the first tilde pair
         $first_tilde_pos = mb_strpos($string, '~~', null, 'utf-8');
-        $cursor->advanceBy($first_tilde_pos);
-        $inline_context = new InlineParserContext($cursor);
-        $context_stub = $this->getMock('League\CommonMark\ContextInterface');
+        $inline_context->getCursor()->advanceBy($first_tilde_pos);
+
         $parser = new StrikethroughParser();
-        $parser->parse($context_stub, $inline_context);
-        $inlines = $inline_context->getInlines();
-        $this->assertCount(1, $inlines);
-        $this->assertTrue($inlines->first() instanceof Strikethrough);
-        /** @var Strikethrough $text */
-        $text = $inlines->first();
-        $this->assertEquals($expected, $text->getContent());
+        $parser->parse($inline_context);
     }
 
     /**

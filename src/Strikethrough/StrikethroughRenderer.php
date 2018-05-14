@@ -5,6 +5,7 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Util\Xml;
 
 class StrikethroughRenderer implements InlineRendererInterface
 {
@@ -21,9 +22,9 @@ class StrikethroughRenderer implements InlineRendererInterface
         }
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
-        return new HtmlElement('del', $attrs, $htmlRenderer->escape($inline->getContent()));
+        return new HtmlElement('del', $attrs, Xml::escape($inline->getContent()));
     }
 }
