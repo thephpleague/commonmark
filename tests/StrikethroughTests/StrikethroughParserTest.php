@@ -17,7 +17,7 @@ class StrikethroughParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParse($string, $expected)
     {
-        $nodeStub = $this->getMock('League\CommonMark\Block\Element\AbstractBlock');
+        $nodeStub = $this->getMock(\League\CommonMark\Block\Element\AbstractBlock::class);
         $nodeStub->expects($this->any())->method('getStringContent')->willReturn($string);
         $nodeStub
             ->expects($this->once())
