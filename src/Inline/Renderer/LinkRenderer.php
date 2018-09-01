@@ -43,8 +43,10 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
         }
 
         $attrs = [
-            'rel' => 'noopener'
+            'target' => '_blank',
+            'rel' => 'noopener noreferrer'
         ];
+        
         foreach ($inline->getData('attributes', []) as $key => $value) {
             $attrs[$key] = Xml::escape($value, true);
         }
