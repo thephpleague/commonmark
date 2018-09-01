@@ -42,11 +42,7 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        $attrs = [
-            'target' => '_blank',
-            'rel' => 'noopener noreferrer'
-        ];
-        
+        $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
             $attrs[$key] = Xml::escape($value, true);
         }
@@ -58,6 +54,10 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
 
         if (isset($inline->data['title'])) {
             $attrs['title'] = Xml::escape($inline->data['title'], true);
+        }
+        
+        if (isset($attrs['target']) && $attrs['target'] === '_blank' && !isset($attrs['rel'])) {
+            $attrs['rel'] = 'noopener noreferrer';
         }
 
         return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
