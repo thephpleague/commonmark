@@ -55,7 +55,7 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
         if (isset($inline->data['title'])) {
             $attrs['title'] = Xml::escape($inline->data['title'], true);
         }
-        
+
         if (isset($attrs['target']) && $attrs['target'] === '_blank' && !isset($attrs['rel'])) {
             $attrs['rel'] = 'noopener noreferrer';
         }
