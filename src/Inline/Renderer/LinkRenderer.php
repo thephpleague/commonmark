@@ -42,7 +42,9 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        $attrs = [];
+        $attrs = [
+            'rel' => 'noopener'
+        ];
         foreach ($inline->getData('attributes', []) as $key => $value) {
             $attrs[$key] = Xml::escape($value, true);
         }
