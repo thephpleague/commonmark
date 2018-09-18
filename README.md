@@ -102,8 +102,10 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 - [Drupal 7 & 8](https://www.drupal.org/project/markdown)
 - [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
 - [Sculpin](https://github.com/bcremer/sculpin-commonmark-bundle)
-- [Symfony](https://github.com/webuni/commonmark-bundle)
-- [Twig](https://github.com/webuni/commonmark-twig-renderer)
+- [Symfony 2 & 3](https://github.com/webuni/commonmark-bundle)
+- [Symfony 4](https://github.com/avensome/commonmark-bundle)
+- [Twig-based renderer](https://github.com/webuni/commonmark-twig-renderer)
+- [Twig filter and tag](https://github.com/aptoma/twig-markdown)
 
 ### CommonMark Extras
 
