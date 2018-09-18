@@ -1,5 +1,9 @@
 # Upgrade Instructions
 
+## 0.18.0
+
+No breaking changes were introduced, but we did add a new interface: `ConverterInface`. Consider depending on this interface in your code instead of the concrete implementation. (See #330)
+
 ## 0.17.0
 
 ## Minimum PHP version

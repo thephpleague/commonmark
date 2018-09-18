@@ -4,6 +4,18 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.18.0] - 2018-09-18
+
+### Added
+
+ - Added `ConverterInterface` to `Converter` and `CommonMarkConverter` (#330)
+ - Added `ListItem::getListData()` method (#329)
+
+### Changed
+
+ - Links with `target="_blank"` will also get `rel="noopener noreferrer"` by default (#331)
+ - Implemented several performance optimizations (#324)
+
 ## [0.17.5] - 2018-03-29
 
 ### Fixed
@@ -645,7 +657,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.17.5...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.0...HEAD
+[0.18.0]: https://github.com/thephpleague/commonmark/compare/0.17.5...0.18.0
 [0.17.5]: https://github.com/thephpleague/commonmark/compare/0.17.4...0.17.5
 [0.17.4]: https://github.com/thephpleague/commonmark/compare/0.17.3...0.17.4
 [0.17.3]: https://github.com/thephpleague/commonmark/compare/0.17.2...0.17.3
