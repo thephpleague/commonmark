@@ -24,7 +24,7 @@ class CommonMarkConverter extends Converter
      *
      * This might be a typical `x.y.z` version, or `x.y-dev`.
      */
-    const VERSION = '0.19-dev';
+    const VERSION = '0.18.0';
 
     /**
      * Create a new commonmark converter instance.
