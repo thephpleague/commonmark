@@ -31,6 +31,14 @@ class ListItem extends AbstractBlock
     }
 
     /**
+     * @return ListData
+     */
+    public function getListData()
+    {
+        return $this->listData;
+    }
+
+    /**
      * Returns true if this block can contain the given block as a child node
      *
      * @param AbstractBlock $block
