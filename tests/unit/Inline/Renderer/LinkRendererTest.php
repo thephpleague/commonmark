@@ -119,4 +119,19 @@ class LinkRendererTest extends TestCase
 
         $this->renderer->render($inline, $fakeRenderer);
     }
+
+    public function testRenderWithExternalTarget()
+    {
+        $inline = new Link('http://example.com/foo.html', '::label::', '::title::');
+        $inline->data['attributes'] = ['target' => '_blank'];
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertEquals('a', $result->getTagName());
+        $this->assertContains('http://example.com/foo.html', $result->getAttribute('href'));
+        $this->assertContains('noopener', $result->getAttribute('rel'));
+        $this->assertContains('noreferrer', $result->getAttribute('rel'));
+    }
 }
