@@ -11,5 +11,6 @@
  - [ ] Update the `CommonMarkConverter::VERSION` constant and commit just that one change to that release branch. Make sure tests still pass.
  - [ ] Create a release in Github **BASED ON THE RELEASE BRANCH, NOT MASTER!**; tag should be named `xx.yy.zz`. Copy `CHANGELOG` section into release notes.
  - [ ] Remove that release branch once tagged
+ - [ ] Bump constraints in league/commonmark-extras and tag a new release
  - [ ] ???
  - [ ] PROFIT!!
