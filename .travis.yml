@@ -9,6 +9,8 @@ php:
   - 7.2
   - master
   - hhvm
+env:
+  - 'PHPUNIT=true'
   
 # Cache Composer deps
 cache:
@@ -18,7 +20,10 @@ cache:
 matrix:
   include:
     - php: 5.6
-      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest" PHPUNIT=true'
+    - name: phpstan
+      php: 7.1
+      env: 'PHPSTAN=true'
   allow_failures:
     - php: master
   fast_finish: true
@@ -30,9 +35,11 @@ sudo: false
 before_script:
   - travis_retry composer self-update
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
+  - if [[ $PHPSTAN ]]; then composer require --dev phpstan/phpstan-shim --no-interaction --prefer-dist; fi
 
 script:
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - if [[ $PHPSTAN ]]; then vendor/bin/phpstan analyse -l 2 src; fi
+  - if [[ $PHPUNIT ]]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
 
 after_script:
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$TRAVIS_PHP_VERSION" != "7.0" ]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$TRAVIS_PHP_VERSION" != "7.0" ] && [[ $PHPUNIT ]]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
