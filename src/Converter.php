@@ -66,7 +66,7 @@ class Converter implements ConverterInterface
      *
      * @see Converter::convertToHtml
      *
-     * @param $commonMark
+     * @param string $commonMark
      *
      * @return string
      */

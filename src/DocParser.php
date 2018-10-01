@@ -173,6 +173,10 @@ class DocParser
         $container = $context->getDocument();
 
         while ($lastChild = $container->lastChild()) {
+            if (!($lastChild instanceof AbstractBlock)) {
+                break;
+            }
+
             if (!$lastChild->isOpen()) {
                 break;
             }
@@ -242,7 +246,7 @@ class DocParser
         $lastLineBlank = $container->shouldLastLineBeBlank($cursor, $context->getLineNumber());
 
         // Propagate lastLineBlank up through parents:
-        while ($container) {
+        while ($container instanceof AbstractBlock) {
             $container->setLastLineBlank($lastLineBlank);
             $container = $container->parent();
         }
