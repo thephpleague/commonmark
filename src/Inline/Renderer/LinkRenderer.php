@@ -18,6 +18,7 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\RegexHelper;
@@ -60,7 +61,11 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
             $attrs['rel'] = 'noopener noreferrer';
         }
 
-        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
+        $children = array_filter($inline->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractInline;
+        });
+
+        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($children));
     }
 
     /**

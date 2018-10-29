@@ -170,6 +170,9 @@ class DocParser
      */
     private function resetContainer(ContextInterface $context, Cursor $cursor)
     {
+        /**
+        * @var AbstractBlock|null $container
+        */
         $container = $context->getDocument();
 
         while ($lastChild = $container->lastChild()) {
@@ -181,8 +184,14 @@ class DocParser
                 break;
             }
 
+            /**
+            * @var AbstractBlock|null $container
+            */
             $container = $lastChild;
             if (!$container->matchesNextLine($cursor)) {
+                /**
+                * @var AbstractBlock|null $container
+                */
                 $container = $container->parent(); // back up to the last matching block
                 break;
             }

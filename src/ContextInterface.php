@@ -25,16 +25,16 @@ interface ContextInterface
     public function getDocument();
 
     /**
-     * @return AbstractBlock
+     * @return AbstractBlock|null
      */
     public function getTip();
 
     /**
-     * @param AbstractBlock $block
+     * @param AbstractBlock|null $block
      *
      * @return $this
      */
-    public function setTip(AbstractBlock $block);
+    public function setTip(AbstractBlock $block = null);
 
     /**
      * @return int
@@ -59,7 +59,7 @@ interface ContextInterface
     public function getContainer();
 
     /**
-     * @param AbstractBlock $getDocument
+     * @param AbstractBlock|null $getDocument
      *
      * @return $this
      */

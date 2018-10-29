@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\BlockQuote;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Xml;
 
 class BlockQuoteRenderer implements BlockRendererInterface
@@ -40,7 +41,11 @@ class BlockQuoteRenderer implements BlockRendererInterface
             $attrs[$key] = Xml::escape($value, true);
         }
 
-        $filling = $htmlRenderer->renderBlocks($block->children());
+        $children = array_filter($block->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractBlock;
+        });
+
+        $filling = $htmlRenderer->renderBlocks($children);
         if ($filling === '') {
             return new HtmlElement('blockquote', $attrs, $htmlRenderer->getOption('inner_separator', "\n"));
         }

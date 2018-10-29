@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Xml;
 
 class ListBlockRenderer implements BlockRendererInterface
@@ -48,11 +49,15 @@ class ListBlockRenderer implements BlockRendererInterface
             $attrs['start'] = (string) $listData->start;
         }
 
+        $children = array_filter($block->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractBlock;
+        });
+
         return new HtmlElement(
             $tag,
             $attrs,
             $htmlRenderer->getOption('inner_separator', "\n") . $htmlRenderer->renderBlocks(
-                $block->children(),
+                $children,
                 $block->isTight()
             ) . $htmlRenderer->getOption('inner_separator', "\n")
         );

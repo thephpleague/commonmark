@@ -253,7 +253,12 @@ abstract class AbstractBlock extends Node
         $this->open = false;
         $this->endLine = $endLineNumber;
 
-        $context->setTip($context->getTip()->parent());
+        /**
+        * @var AbstractBlock|null $parent
+        */
+        $parent = $context->getTip()->parent();
+
+        $context->setTip($parent);
     }
 
     /**

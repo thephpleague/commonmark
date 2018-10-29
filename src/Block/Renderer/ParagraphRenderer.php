@@ -18,6 +18,8 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Xml;
 
 class ParagraphRenderer implements BlockRendererInterface
@@ -35,8 +37,12 @@ class ParagraphRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
+        $children = array_filter($block->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractInline;
+        });
+
         if ($inTightList) {
-            return $htmlRenderer->renderInlines($block->children());
+            return $htmlRenderer->renderInlines($children);
         }
 
         $attrs = [];
@@ -44,6 +50,6 @@ class ParagraphRenderer implements BlockRendererInterface
             $attrs[$key] = Xml::escape($value, true);
         }
 
-        return new HtmlElement('p', $attrs, $htmlRenderer->renderInlines($block->children()));
+        return new HtmlElement('p', $attrs, $htmlRenderer->renderInlines($children));
     }
 }
