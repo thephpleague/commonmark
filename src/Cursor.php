@@ -74,7 +74,7 @@ class Cursor
     private $isMultibyte;
 
     /**
-     * @var int
+     * @var array<int, string>
      */
     private $charCache = [];
 
@@ -173,7 +173,7 @@ class Cursor
 
         // Index out-of-bounds, or we're at the end
         if ($index < 0 || $index >= $this->length) {
-            return;
+            return null;
         }
 
         return $this->charCache[$index] = mb_substr($this->line, $index, 1, $this->encoding);
@@ -392,7 +392,7 @@ class Cursor
         $subject = $this->getRemainder();
 
         if (!preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
-            return;
+            return null;
         }
 
         // $matches[0][0] contains the matched text

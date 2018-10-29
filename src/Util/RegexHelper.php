@@ -296,7 +296,7 @@ final class RegexHelper
         $matches = [];
         $string = mb_substr($string, $offset, null, 'utf-8');
         if (!preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
-            return;
+            return null;
         }
 
         // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
@@ -321,7 +321,7 @@ final class RegexHelper
 
         $fullMatches = reset($matches);
         if (empty($fullMatches)) {
-            return;
+            return null;
         }
 
         if (count($fullMatches) === 1) {

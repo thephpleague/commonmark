@@ -15,6 +15,7 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
+use RuntimeException;
 
 class UnmatchedBlockCloser
 {
@@ -57,6 +58,12 @@ class UnmatchedBlockCloser
 
         while ($this->oldTip !== $this->lastMatchedContainer) {
             $oldTip = $this->oldTip->parent();
+            if ( ! ($oldTip instanceof AbstractBlock)) {
+                throw new RuntimeException(sprintf(
+                    '$this->oldTip::parent() did not resolve to an instance of %s',
+                    AbstractBlock::class
+                ));
+            }
             $this->oldTip->finalize($this->context, $endLine);
             $this->oldTip = $oldTip;
         }

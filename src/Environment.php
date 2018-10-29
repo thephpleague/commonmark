@@ -286,7 +286,7 @@ class Environment
         $this->initializeExtensions();
 
         if (!isset($this->blockRenderersByClass[$blockClass])) {
-            return;
+            return null;
         }
 
         return $this->blockRenderersByClass[$blockClass];
@@ -302,7 +302,7 @@ class Environment
         $this->initializeExtensions();
 
         if (!isset($this->inlineRenderersByClass[$inlineClass])) {
-            return;
+            return null;
         }
 
         return $this->inlineRenderersByClass[$inlineClass];

@@ -28,7 +28,7 @@ class Context implements ContextInterface
     protected $environment;
 
     /**
-     * @var AbstractBlock
+     * @var Document
      */
     protected $doc;
 

@@ -59,7 +59,7 @@ class ReferenceMap
         $label = Reference::normalizeReference($label);
 
         if (!isset($this->references[$label])) {
-            return;
+            return null;
         }
 
         return $this->references[$label];
