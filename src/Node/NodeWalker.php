@@ -10,7 +10,7 @@ class NodeWalker
     private $root;
 
     /**
-     * @var Node
+     * @var Node|null
      */
     private $current;
 
@@ -41,7 +41,7 @@ class NodeWalker
         $current = $this->current;
         $entering = $this->entering;
         if (null === $current) {
-            return;
+            return null;
         }
 
         if ($entering && $current->isContainer()) {

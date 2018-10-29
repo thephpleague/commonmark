@@ -63,7 +63,7 @@ class HtmlElement
     public function getAttribute($key)
     {
         if (!isset($this->attributes[$key])) {
-            return;
+            return null;
         }
 
         return $this->attributes[$key];
