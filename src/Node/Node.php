@@ -220,11 +220,11 @@ abstract class Node
     /**
      * Replace all children of given node with collection of another
      *
-     * @param array $children
+     * @param array|ArrayCollection|object $children
      *
      * @return $this
      */
-    public function replaceChildren(array $children)
+    public function replaceChildren($children)
     {
         if (!is_array($children) && !(is_object($children) && $children instanceof ArrayCollection)) {
             throw new \InvalidArgumentException(sprintf('Expect iterable, got %s', get_class($children)));

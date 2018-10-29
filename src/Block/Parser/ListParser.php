@@ -65,6 +65,9 @@ class ListParser extends AbstractBlockParser
         }
 
         // If it interrupts paragraph, make sure first line isn't blank
+        /**
+        * @var object|false $container
+        */
         $container = $context->getContainer();
         if ($container instanceof Paragraph && !RegexHelper::matchAt(RegexHelper::REGEX_NON_SPACE, $rest, $markerLength)) {
             return false;
