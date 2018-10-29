@@ -14,6 +14,7 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\ReferenceMap;
@@ -28,10 +29,10 @@ class InlineParserEngine
     }
 
     /**
-     * @param Node         $container
-     * @param ReferenceMap $referenceMap
+     * @param AbstractBlock $container
+     * @param ReferenceMap  $referenceMap
      */
-    public function parse(Node $container, ReferenceMap $referenceMap)
+    public function parse(AbstractBlock $container, ReferenceMap $referenceMap)
     {
         $inlineParserContext = new InlineParserContext($container, $referenceMap);
         while (($character = $inlineParserContext->getCursor()->getCharacter()) !== null) {

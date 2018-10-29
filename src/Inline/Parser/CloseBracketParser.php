@@ -214,7 +214,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     protected function createInline($url, $title, $isImage)
     {
         if ($isImage) {
-            return new Image($url, null, $title);
+            return new Image($url, '', $title);
         }
 
         return new Link($url, null, $title);

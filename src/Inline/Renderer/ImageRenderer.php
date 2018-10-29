@@ -18,6 +18,7 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Image;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\RegexHelper;
@@ -54,7 +55,11 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
             $attrs['src'] = Xml::escape($inline->getUrl(), true);
         }
 
-        $alt = $htmlRenderer->renderInlines($inline->children());
+        $children = array_filter($inline->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractInline;
+        });
+
+        $alt = $htmlRenderer->renderInlines($children);
         $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
 

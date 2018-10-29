@@ -18,6 +18,8 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Xml;
 
 class HeadingRenderer implements BlockRendererInterface
@@ -42,6 +44,10 @@ class HeadingRenderer implements BlockRendererInterface
             $attrs[$key] = Xml::escape($value, true);
         }
 
-        return new HtmlElement($tag, $attrs, $htmlRenderer->renderInlines($block->children()));
+        $children = array_filter($block->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractInline;
+        });
+
+        return new HtmlElement($tag, $attrs, $htmlRenderer->renderInlines($children));
     }
 }

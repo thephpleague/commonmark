@@ -18,6 +18,7 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Strong;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Xml;
 
 class StrongRenderer implements InlineRendererInterface
@@ -39,6 +40,10 @@ class StrongRenderer implements InlineRendererInterface
             $attrs[$key] = Xml::escape($value, true);
         }
 
-        return new HtmlElement('strong', $attrs, $htmlRenderer->renderInlines($inline->children()));
+        $children = array_filter($inline->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractInline;
+        });
+
+        return new HtmlElement('strong', $attrs, $htmlRenderer->renderInlines($children));
     }
 }

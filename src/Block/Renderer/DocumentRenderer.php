@@ -17,6 +17,7 @@ namespace League\CommonMark\Block\Renderer;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Node\Node;
 
 class DocumentRenderer implements BlockRendererInterface
 {
@@ -33,7 +34,11 @@ class DocumentRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
-        $wholeDoc = $htmlRenderer->renderBlocks($block->children());
+        $children = array_filter($block->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractBlock;
+        });
+
+        $wholeDoc = $htmlRenderer->renderBlocks($children);
 
         return $wholeDoc === '' ? '' : $wholeDoc . "\n";
     }

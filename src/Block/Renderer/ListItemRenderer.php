@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Xml;
 
 class ListItemRenderer implements BlockRendererInterface
@@ -35,7 +36,11 @@ class ListItemRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
-        $contents = $htmlRenderer->renderBlocks($block->children(), $inTightList);
+        $children = array_filter($block->children(), function (Node $maybe) {
+            return $maybe instanceof AbstractBlock;
+        });
+
+        $contents = $htmlRenderer->renderBlocks($children, $inTightList);
         if (substr($contents, 0, 1) === '<') {
             $contents = "\n" . $contents;
         }
