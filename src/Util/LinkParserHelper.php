@@ -37,6 +37,7 @@ final class LinkParserHelper
         $oldState = $cursor->saveState();
         $openParens = 0;
         while (($c = $cursor->getCharacter()) !== null) {
+            $c = (string) $c; // re: https://github.com/phpstan/phpstan/issues/647
             if ($c === '\\' && RegexHelper::isEscapable($cursor->peek())) {
                 $cursor->advanceBy(2);
             } elseif ($c === '(') {
