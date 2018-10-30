@@ -122,12 +122,8 @@ class DocParser
         // What remains at the offset is a text line.  Add the text to the appropriate container.
         // First check for a lazy paragraph continuation:
         if ($this->isLazyParagraphContinuation($context, $cursor)) {
-            $contextTip = $context->getTip();
-
             // lazy paragraph continuation
-            if ($contextTip instanceof AbstractBlock) {
-                $contextTip->addLine($cursor->getRemainder());
-            }
+            $context->getTipExpectBlock()->addLine($cursor->getRemainder());
 
             return;
         }
