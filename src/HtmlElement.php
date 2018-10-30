@@ -124,8 +124,8 @@ class HtmlElement
         }
 
         /**
-        * @var string $contents
-        */
+         * @var string $contents
+         */
         $contents = $this->getContents();
 
         if ($this->contents !== '') {

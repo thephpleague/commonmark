@@ -56,7 +56,7 @@ class UnmatchedBlockCloser
     {
         $endLine = $this->context->getLineNumber() - 1;
 
-        if ( ! ($this->oldTip instanceof AbstractBlock)) {
+        if (!($this->oldTip instanceof AbstractBlock)) {
             throw new RuntimeException(sprintf(
                 '$this->oldTip was not an instance of %s',
                 AbstractBlock::class
@@ -65,7 +65,7 @@ class UnmatchedBlockCloser
 
         while ($this->oldTip !== $this->lastMatchedContainer) {
             $oldTip = $this->oldTip->parent();
-            if ( ! ($oldTip instanceof AbstractBlock)) {
+            if (!($oldTip instanceof AbstractBlock)) {
                 throw new RuntimeException(sprintf(
                     '$this->oldTip::parent() did not resolve to an instance of %s',
                     AbstractBlock::class
