@@ -106,6 +106,25 @@ class Context implements ContextInterface
     }
 
     /**
+     * @throws RuntimeException if ContextInterface::getTip() does not return AbstractBlock
+     *
+     * @return AbstractBlock
+     */
+    public function getTipExpectBlock()
+    {
+        $tip = $this->getTip();
+
+        if (!($tip instanceof AbstractBlock)) {
+            throw new RuntimeException(sprintf(
+                'Tip did not resolve to an instance of %s',
+                AbstractBlock::class
+            ));
+        }
+
+        return $tip;
+    }
+
+    /**
      * @param AbstractBlock|null $block
      *
      * @return $this

@@ -30,6 +30,13 @@ interface ContextInterface
     public function getTip();
 
     /**
+     * @throws \RuntimeException if ContextInterface::getTip() does not return AbstractBlock
+     *
+     * @return AbstractBlock
+     */
+    public function getTipExpectBlock();
+
+    /**
      * @param AbstractBlock|null $block
      *
      * @return $this
