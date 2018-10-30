@@ -16,6 +16,7 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
+use RuntimeException;
 
 /**
  * Parses Markdown into an AST
@@ -171,6 +172,10 @@ class Context implements ContextInterface
     {
         $this->getBlockCloser()->closeUnmatchedBlocks();
         $block->setStartLine($this->lineNumber);
+
+        if (!($this->tip instanceof AbstractBlock)) {
+            throw new RuntimeException('No tip block on context!');
+        }
 
         while (!$this->tip->canContain($block)) {
             $this->tip->finalize($this, $this->lineNumber);
