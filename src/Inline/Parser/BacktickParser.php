@@ -49,7 +49,7 @@ class BacktickParser extends AbstractInlineParser
         while ($matchingTicks = $cursor->match('/`+/m')) {
             if ($matchingTicks === $ticks) {
                 $code = mb_substr($cursor->getLine(), $currentPosition, $cursor->getPosition() - $currentPosition - strlen($ticks), 'utf-8');
-                $c = preg_replace(RegexHelper::REGEX_WHITESPACE, ' ', $code);
+                $c = (string) preg_replace(RegexHelper::REGEX_WHITESPACE, ' ', $code);
                 $inlineContext->getContainer()->appendChild(new Code(trim($c)));
 
                 return true;
@@ -58,7 +58,7 @@ class BacktickParser extends AbstractInlineParser
 
         // If we got here, we didn't match a closing backtick sequence
         $cursor->restoreState($previousState);
-        $inlineContext->getContainer()->appendChild(new Text($ticks));
+        $inlineContext->getContainer()->appendChild(new Text((string) $ticks));
 
         return true;
     }

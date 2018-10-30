@@ -136,7 +136,10 @@ abstract class AbstractBlock extends Node
         // create paragraph container for line
         $context->addBlock(new Paragraph());
         $cursor->advanceToNextNonSpaceOrTab();
-        $context->getTip()->addLine($cursor->getRemainder());
+        $tip = $context->getTip();
+        if ($tip instanceof AbstractBlock) {
+            $tip->addLine($cursor->getRemainder());
+        }
     }
 
     /**
@@ -253,10 +256,15 @@ abstract class AbstractBlock extends Node
         $this->open = false;
         $this->endLine = $endLineNumber;
 
-        /**
-        * @var AbstractBlock|null $parent
-        */
-        $parent = $context->getTip()->parent();
+        $parent = null;
+        $tip = $context->getTip();
+
+        if ($tip instanceof AbstractBlock) {
+            /**
+            * @var AbstractBlock|null $parent
+            */
+            $parent = $tip->parent();
+        }
 
         $context->setTip($parent);
     }

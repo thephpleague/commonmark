@@ -129,7 +129,7 @@ class Cursor
      */
     public function getNextNonSpaceCharacter()
     {
-        return $this->getCharacter($this->getNextNonSpacePosition());
+        return (string) $this->getCharacter($this->getNextNonSpacePosition());
     }
 
     /**

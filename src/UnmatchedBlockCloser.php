@@ -25,7 +25,7 @@ class UnmatchedBlockCloser
     private $context;
 
     /**
-     * @var AbstractBlock
+     * @var AbstractBlock|null
      */
     private $oldTip;
 
@@ -55,6 +55,13 @@ class UnmatchedBlockCloser
     public function closeUnmatchedBlocks()
     {
         $endLine = $this->context->getLineNumber() - 1;
+
+        if ( ! ($this->oldTip instanceof AbstractBlock)) {
+            throw new RuntimeException(sprintf(
+                '$this->oldTip was not an instance of %s',
+                AbstractBlock::class
+            ));
+        }
 
         while ($this->oldTip !== $this->lastMatchedContainer) {
             $oldTip = $this->oldTip->parent();

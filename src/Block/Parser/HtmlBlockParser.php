@@ -45,7 +45,7 @@ class HtmlBlockParser extends AbstractBlockParser
 
         for ($blockType = 1; $blockType <= 7; $blockType++) {
             $match = RegexHelper::matchAt(
-                RegexHelper::getHtmlBlockOpenRegex($blockType),
+                (string) RegexHelper::getHtmlBlockOpenRegex($blockType),
                 $line
             );
 

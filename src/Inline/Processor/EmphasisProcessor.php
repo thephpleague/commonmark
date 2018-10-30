@@ -19,6 +19,7 @@ use League\CommonMark\Delimiter\DelimiterStack;
 use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Element\Strong;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Node\Node;
 
 class EmphasisProcessor implements InlineProcessorInterface
 {
@@ -49,6 +50,9 @@ class EmphasisProcessor implements InlineProcessorInterface
 
             $openerInline->insertAfter($emph);
             while (($node = $emph->next()) !== $closerInline) {
+                if ( ! ($node instanceof Node)) {
+                    continue;
+                }
                 $emph->appendChild($node);
             }
 

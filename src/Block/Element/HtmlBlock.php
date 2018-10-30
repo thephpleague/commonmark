@@ -113,11 +113,15 @@ class HtmlBlock extends AbstractBlock
      */
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
-        $context->getTip()->addLine($cursor->getRemainder());
+        $tip = $context->getTip();
+
+        if ($tip instanceof AbstractBlock) {
+            $tip->addLine($cursor->getRemainder());
+        }
 
         // Check for end condition
         if ($this->type >= self::TYPE_1_CODE_CONTAINER && $this->type <= self::TYPE_5_CDATA) {
-            if ($cursor->match(RegexHelper::getHtmlBlockCloseRegex($this->type)) !== null) {
+            if ($cursor->match((string) RegexHelper::getHtmlBlockCloseRegex($this->type)) !== null) {
                 $this->finalize($context, $context->getLineNumber());
             }
         }

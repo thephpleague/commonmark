@@ -50,7 +50,7 @@ class EscapableParser extends AbstractInlineParser
             return true;
         } elseif (RegexHelper::isEscapable($nextChar)) {
             $cursor->advanceBy(2);
-            $inlineContext->getContainer()->appendChild(new Text($nextChar));
+            $inlineContext->getContainer()->appendChild(new Text((string) $nextChar));
 
             return true;
         }
