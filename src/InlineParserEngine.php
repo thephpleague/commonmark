@@ -36,6 +36,7 @@ class InlineParserEngine
     {
         $inlineParserContext = new InlineParserContext($container, $referenceMap);
         while (($character = $inlineParserContext->getCursor()->getCharacter()) !== null) {
+            $character = (string) $character; // re: https://github.com/phpstan/phpstan/issues/647
             if (!$this->parseCharacter($character, $inlineParserContext)) {
                 $this->addPlainText($character, $container, $inlineParserContext);
             }
