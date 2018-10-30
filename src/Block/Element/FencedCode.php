@@ -217,7 +217,10 @@ class FencedCode extends AbstractBlock
             }
         }
 
-        $context->getTip()->addLine($cursor->getRemainder());
+        $tip = $context->getTip();
+        if ($tip instanceof AbstractBlock) {
+            $tip->addLine($cursor->getRemainder());
+        }
     }
 
     /**

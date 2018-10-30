@@ -87,7 +87,7 @@ abstract class Node
         $this->next = $sibling;
         $sibling->setParent($this->parent);
 
-        if (!$sibling->next) {
+        if (!$sibling->next && $sibling->parent instanceof Node) {
             $sibling->parent->lastChild = $sibling;
         }
     }
@@ -110,7 +110,7 @@ abstract class Node
         $this->previous = $sibling;
         $sibling->setParent($this->parent);
 
-        if (!$sibling->previous) {
+        if (!$sibling->previous && $sibling->parent instanceof Node) {
             $sibling->parent->firstChild = $sibling;
         }
     }
@@ -170,6 +170,9 @@ abstract class Node
     {
         $children = [];
         for ($current = $this->firstChild; null !== $current; $current = $current->next) {
+            if ( ! ($current instanceof Node)) {
+                continue;
+            }
             $children[] = $current;
         }
 

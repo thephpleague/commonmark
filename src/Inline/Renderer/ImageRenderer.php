@@ -60,8 +60,8 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
         });
 
         $alt = $htmlRenderer->renderInlines($children);
-        $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
-        $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
+        $alt = (string) preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
+        $attrs['alt'] = (string) preg_replace('/\<[^>]*\>/', '', $alt);
 
         if (isset($inline->data['title'])) {
             $attrs['title'] = Xml::escape($inline->data['title'], true);

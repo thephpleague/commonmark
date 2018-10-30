@@ -5,7 +5,7 @@ namespace League\CommonMark\Node;
 final class NodeWalkerEvent
 {
     /**
-     * @var Node
+     * @var Node|null
      */
     private $node;
 
@@ -25,7 +25,7 @@ final class NodeWalkerEvent
     }
 
     /**
-     * @return Node
+     * @return Node|null
      */
     public function getNode()
     {

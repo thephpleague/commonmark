@@ -23,6 +23,7 @@ use League\CommonMark\Inline\Element\AbstractWebResource;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Util\LinkParserHelper;
@@ -84,6 +85,9 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $inline = $this->createInline($link['url'], $link['title'], $isImage);
         $opener->getInlineNode()->replaceWith($inline);
         while (($label = $inline->next()) !== null) {
+            if ( ! ($label instanceof Node)) {
+                continue;
+            }
             $inline->appendChild($label);
         }
 
@@ -161,7 +165,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
 
         $title = null;
         // make sure there's a space before the title:
-        if (preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $cursor->peek(-1))) {
+        if (preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, (string) $cursor->peek(-1))) {
             $title = LinkParserHelper::parseLinkTitle($cursor) ?: '';
         }
 
@@ -191,7 +195,7 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
         $n = LinkParserHelper::parseLinkLabel($cursor);
         if ($n === 0 || $n === 2) {
             // Empty or missing second label
-            $reflabel = mb_substr($cursor->getLine(), $opener->getIndex(), $startPos - $opener->getIndex(), 'utf-8');
+            $reflabel = mb_substr($cursor->getLine(), (int) $opener->getIndex(), $startPos - $opener->getIndex(), 'utf-8');
         } else {
             $reflabel = mb_substr($cursor->getLine(), $beforeLabel + 1, $n - 2, 'utf-8');
         }

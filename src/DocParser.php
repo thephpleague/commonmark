@@ -119,11 +119,16 @@ class DocParser
 
         $this->parseBlocks($context, $cursor);
 
+
         // What remains at the offset is a text line.  Add the text to the appropriate container.
         // First check for a lazy paragraph continuation:
         if ($this->isLazyParagraphContinuation($context, $cursor)) {
+            $contextTip = $context->getTip();
+
             // lazy paragraph continuation
-            $context->getTip()->addLine($cursor->getRemainder());
+            if ($contextTip instanceof AbstractBlock) {
+                $contextTip->addLine($cursor->getRemainder());
+            }
 
             return;
         }
@@ -142,7 +147,11 @@ class DocParser
             // Create paragraph container for line
             $context->addBlock(new Paragraph());
             $cursor->advanceToNextNonSpaceOrTab();
-            $context->getTip()->addLine($cursor->getRemainder());
+            $contextTip = $context->getTip();
+
+            if ($contextTip instanceof AbstractBlock) {
+                $contextTip->addLine($cursor->getRemainder());
+            }
         }
     }
 
@@ -180,7 +189,7 @@ class DocParser
         */
         $container = $context->getDocument();
 
-        while ($lastChild = $container->lastChild()) {
+        while ($container instanceof AbstractBlock && $lastChild = $container->lastChild()) {
             if (!($lastChild instanceof AbstractBlock)) {
                 break;
             }
@@ -193,7 +202,7 @@ class DocParser
             * @var AbstractBlock|null $container
             */
             $container = $lastChild;
-            if (!$container->matchesNextLine($cursor)) {
+            if ($container instanceof AbstractBlock && !$container->matchesNextLine($cursor)) {
                 /**
                 * @var AbstractBlock|null $container
                 */
@@ -222,7 +231,14 @@ class DocParser
                 }
             }
 
-            if (!$parsed || $context->getContainer()->acceptsLines() || $context->getTip()->getDepth() >= $this->maxNestingLevel) {
+            if (
+                !$parsed ||
+                $context->getContainer()->acceptsLines() ||
+                (
+                    ($context->getTip() instanceof AbstractBlock) &&
+                    $context->getTip()->getDepth() >= $this->maxNestingLevel
+                )
+            ) {
                 $context->setBlocksParsed(true);
                 break;
             }

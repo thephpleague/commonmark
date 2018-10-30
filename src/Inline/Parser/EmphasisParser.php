@@ -69,7 +69,7 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
      */
     public function parse(InlineParserContext $inlineContext)
     {
-        $character = $inlineContext->getCursor()->getCharacter();
+        $character = (string) $inlineContext->getCursor()->getCharacter();
         if (!in_array($character, $this->getCharacters())) {
             return false;
         }

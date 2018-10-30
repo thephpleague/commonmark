@@ -66,7 +66,7 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
     {
         parent::finalize($context, $endLineNumber);
 
-        $this->finalStringContents = preg_replace('/^  */m', '', implode("\n", $this->getStrings()));
+        $this->finalStringContents = (string) preg_replace('/^  */m', '', implode("\n", $this->getStrings()));
 
         // Short-circuit
         if ($this->finalStringContents === '' || $this->finalStringContents[0] !== '[') {
@@ -108,6 +108,10 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
         $cursor->advanceToNextNonSpaceOrTab();
-        $context->getTip()->addLine($cursor->getRemainder());
+        $tip = $context->getTip();
+
+        if ($tip instanceof AbstractBlock) {
+            $tip->addLine($cursor->getRemainder());
+        }
     }
 }

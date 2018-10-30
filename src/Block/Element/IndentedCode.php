@@ -91,6 +91,10 @@ class IndentedCode extends AbstractBlock
      */
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
-        $context->getTip()->addLine($cursor->getRemainder());
+        $tip = $context->getTip();
+
+        if ($tip instanceof AbstractBlock) {
+            $tip->addLine($cursor->getRemainder());
+        }
     }
 }

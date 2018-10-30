@@ -346,12 +346,12 @@ final class RegexHelper
     {
         $allEscapedChar = '/\\\\(' . self::PARTIAL_ESCAPABLE . ')/';
 
-        $escaped = preg_replace($allEscapedChar, '$1', $string);
+        $escaped = (string) preg_replace($allEscapedChar, '$1', $string);
         $replaced = preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', function ($e) {
             return Html5Entities::decodeEntity($e[0]);
         }, $escaped);
 
-        return $replaced;
+        return (string) $replaced;
     }
 
     /**
