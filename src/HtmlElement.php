@@ -124,7 +124,7 @@ class HtmlElement
         }
 
         /**
-         * @var string $contents
+         * @var string
          */
         $contents = $this->getContents();
 
