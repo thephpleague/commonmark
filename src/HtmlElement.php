@@ -123,8 +123,13 @@ class HtmlElement
             $result .= ' ' . $key . '="' . $value . '"';
         }
 
+        /**
+        * @var string $contents
+        */
+        $contents = $this->getContents();
+
         if ($this->contents !== '') {
-            $result .= '>' . $this->getContents() . '</' . $this->tagName . '>';
+            $result .= '>' . $contents . '</' . $this->tagName . '>';
         } elseif ($this->selfClosing) {
             $result .= ' />';
         } else {

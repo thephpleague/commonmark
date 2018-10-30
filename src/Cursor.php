@@ -85,7 +85,7 @@ class Cursor
     {
         $this->line = $line;
         $this->encoding = $encoding;
-        $this->length = mb_strlen($line, $this->encoding);
+        $this->length = (int) mb_strlen($line, $this->encoding);
         $this->isMultibyte = $this->length !== strlen($line);
         $this->lineContainsTabs = preg_match('/\t/', $line) > 0;
     }
@@ -239,7 +239,7 @@ class Cursor
         if ($characters === 1 && !empty($nextFewChars)) {
             $asArray = [$nextFewChars];
         } else {
-            $asArray = preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
+            $asArray = (array) preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
         }
 
         foreach ($asArray as $relPos => $c) {
@@ -316,7 +316,7 @@ class Cursor
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
-        $increment = $matches[0][1] + strlen($matches[0][0]);
+        $increment = (int) $matches[0][1] + strlen($matches[0][0]);
 
         if ($increment === 0) {
             return 0;

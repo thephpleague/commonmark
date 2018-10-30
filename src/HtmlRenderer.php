@@ -60,7 +60,7 @@ class HtmlRenderer implements ElementRendererInterface
             throw new \RuntimeException('Unable to find corresponding renderer for inline type ' . get_class($inline));
         }
 
-        return $renderer->render($inline, $this);
+        return (string) $renderer->render($inline, $this);
     }
 
     /**
@@ -93,7 +93,7 @@ class HtmlRenderer implements ElementRendererInterface
             throw new \RuntimeException('Unable to find corresponding renderer for block type ' . get_class($block));
         }
 
-        return $renderer->render($block, $this, $inTightList);
+        return (string) $renderer->render($block, $this, $inTightList);
     }
 
     /**

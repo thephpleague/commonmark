@@ -69,7 +69,7 @@ final class UrlEncoder
             }
 
             // Otherwise, return the character for this codepoint
-            return chr(hexdec($matches[1]));
+            return chr((int) hexdec($matches[1]));
         }, $uri);
     }
 

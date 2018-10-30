@@ -67,7 +67,12 @@ class FencedCode extends AbstractBlock
      */
     public function getInfoWords()
     {
-        return preg_split('/\s+/', $this->info);
+        /**
+        * @var string[] $out
+        */
+        $out = array_filter((array) preg_split('/\s+/', $this->info), 'is_string');
+
+        return $out;
     }
 
     /**
