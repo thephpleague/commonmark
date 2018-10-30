@@ -62,7 +62,7 @@ class DocParser
      */
     private function preProcessInput($input)
     {
-        $lines = preg_split('/\r\n|\n|\r/', $input);
+        $lines = (array) preg_split('/\r\n|\n|\r/', $input);
 
         // Remove any newline which appears at the very end of the string.
         // We've already split the document by newlines, so we can simply drop
@@ -70,6 +70,11 @@ class DocParser
         if (end($lines) === '') {
             array_pop($lines);
         }
+
+        /**
+        * @var string[] $lines
+        */
+        $lines = array_filter($lines, 'is_string');
 
         return $lines;
     }
@@ -156,7 +161,7 @@ class DocParser
             }
 
             $node = $event->getNode();
-            if ($node instanceof InlineContainerInterface) {
+            if ($node instanceof AbstractBlock) {
                 $this->inlineParserEngine->parse($node, $context->getDocument()->getReferenceMap());
             }
         }
