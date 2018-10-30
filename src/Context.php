@@ -171,14 +171,12 @@ class Context implements ContextInterface
     {
         $this->getBlockCloser()->closeUnmatchedBlocks();
         $block->setStartLine($this->lineNumber);
-        $tip = $this->tip;
-        while ($tip instanceof AbstractBlock && !$tip->canContain($block)) {
-            $tip->finalize($this, $this->lineNumber);
+
+        while (!$this->tip->canContain($block)) {
+            $this->tip->finalize($this, $this->lineNumber);
         }
 
-        if ($tip instanceof AbstractBlock) {
-            $tip->appendChild($block);
-        }
+        $this->tip->appendChild($block);
         $this->tip = $block;
         $this->container = $block;
 
