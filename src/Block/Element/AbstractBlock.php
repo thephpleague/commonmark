@@ -18,6 +18,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Util\ArrayCollection;
+use RuntimeException;
 
 /**
  * Block-level element
@@ -260,10 +261,14 @@ abstract class AbstractBlock extends Node
         $tip = $context->getTip();
 
         if ($tip instanceof AbstractBlock) {
-            /**
-             * @var AbstractBlock|null
-             */
             $parent = $tip->parent();
+        }
+
+        if (!is_null($parent) && !($parent instanceof AbstractBlock)) {
+            throw new RuntimeException(sprintf(
+                'Parent of context tip did not resolve to %s',
+                AbstractBlock::class
+            ));
         }
 
         $context->setTip($parent);

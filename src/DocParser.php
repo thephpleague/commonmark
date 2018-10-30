@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Node\NodeWalker;
+use RuntimeException;
 
 class DocParser
 {
@@ -182,9 +183,6 @@ class DocParser
      */
     private function resetContainer(ContextInterface $context, Cursor $cursor)
     {
-        /**
-         * @var AbstractBlock|null
-         */
         $container = $context->getDocument();
 
         while ($container instanceof AbstractBlock && $lastChild = $container->lastChild()) {
@@ -196,17 +194,18 @@ class DocParser
                 break;
             }
 
-            /**
-             * @var AbstractBlock|null
-             */
             $container = $lastChild;
             if ($container instanceof AbstractBlock && !$container->matchesNextLine($cursor)) {
-                /**
-                 * @var AbstractBlock|null
-                 */
                 $container = $container->parent(); // back up to the last matching block
                 break;
             }
+        }
+
+        if (!is_null($container) && !($container instanceof AbstractBlock)) {
+            throw new RuntimeException(sprintf(
+                'Context container could not be resolved to %s',
+                AbstractBlock::class
+            ));
         }
 
         $context->setContainer($container);
