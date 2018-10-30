@@ -71,7 +71,7 @@ class DocParser
         }
 
         /**
-         * @var string[] $lines
+         * @var string[]
          */
         $lines = array_filter($lines, 'is_string');
 
@@ -183,7 +183,7 @@ class DocParser
     private function resetContainer(ContextInterface $context, Cursor $cursor)
     {
         /**
-         * @var AbstractBlock|null $container
+         * @var AbstractBlock|null
          */
         $container = $context->getDocument();
 
@@ -197,12 +197,12 @@ class DocParser
             }
 
             /**
-             * @var AbstractBlock|null $container
+             * @var AbstractBlock|null
              */
             $container = $lastChild;
             if ($container instanceof AbstractBlock && !$container->matchesNextLine($cursor)) {
                 /**
-                 * @var AbstractBlock|null $container
+                 * @var AbstractBlock|null
                  */
                 $container = $container->parent(); // back up to the last matching block
                 break;

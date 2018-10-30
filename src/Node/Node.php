@@ -170,7 +170,7 @@ abstract class Node
     {
         $children = [];
         for ($current = $this->firstChild; null !== $current; $current = $current->next) {
-            if ( ! ($current instanceof Node)) {
+            if (!($current instanceof Node)) {
                 continue;
             }
             $children[] = $current;
