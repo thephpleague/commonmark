@@ -261,8 +261,8 @@ abstract class AbstractBlock extends Node
 
         if ($tip instanceof AbstractBlock) {
             /**
-            * @var AbstractBlock|null $parent
-            */
+             * @var AbstractBlock|null $parent
+             */
             $parent = $tip->parent();
         }
 

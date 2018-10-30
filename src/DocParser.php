@@ -16,7 +16,6 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Node\NodeWalker;
 
@@ -72,8 +71,8 @@ class DocParser
         }
 
         /**
-        * @var string[] $lines
-        */
+         * @var string[] $lines
+         */
         $lines = array_filter($lines, 'is_string');
 
         return $lines;
@@ -118,7 +117,6 @@ class DocParser
         $context->getBlockCloser()->setLastMatchedContainer($context->getContainer());
 
         $this->parseBlocks($context, $cursor);
-
 
         // What remains at the offset is a text line.  Add the text to the appropriate container.
         // First check for a lazy paragraph continuation:
@@ -185,8 +183,8 @@ class DocParser
     private function resetContainer(ContextInterface $context, Cursor $cursor)
     {
         /**
-        * @var AbstractBlock|null $container
-        */
+         * @var AbstractBlock|null $container
+         */
         $container = $context->getDocument();
 
         while ($container instanceof AbstractBlock && $lastChild = $container->lastChild()) {
@@ -199,13 +197,13 @@ class DocParser
             }
 
             /**
-            * @var AbstractBlock|null $container
-            */
+             * @var AbstractBlock|null $container
+             */
             $container = $lastChild;
             if ($container instanceof AbstractBlock && !$container->matchesNextLine($cursor)) {
                 /**
-                * @var AbstractBlock|null $container
-                */
+                 * @var AbstractBlock|null $container
+                 */
                 $container = $container->parent(); // back up to the last matching block
                 break;
             }
