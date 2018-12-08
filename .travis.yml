@@ -9,7 +9,6 @@ php:
   - 7.2
   - 7.3
   - master
-  - hhvm
 env:
   - 'PHPUNIT=true'
   
@@ -43,4 +42,4 @@ script:
   - if [[ $PHPUNIT ]]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
 
 after_script:
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$TRAVIS_PHP_VERSION" != "7.0" ] && [[ $PHPUNIT ]]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [[ $PHPUNIT ]]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
