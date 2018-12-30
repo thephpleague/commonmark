@@ -20,7 +20,7 @@ title: Introduction
 
 While other Markdown parsers focus on speed, or try to enable a wide range of flavors, this parser will strive to match the C and JavaScript implementations of CommonMark to make a logical and similar API.
 
-We will always focus on CommonMark compliance over speed, but performance improvements will definitely happen during efforts to reach v1.0.0 and afterwards.
+We will always focus on CommonMark compliance over speed, but performance improvements will definitely happen during efforts to reach v1.0.0 and onwards.
 
 ## Customization
 
