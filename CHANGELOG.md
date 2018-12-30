@@ -4,6 +4,14 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.18.1] - 2018-12-29
+
+This is a **security update** release.
+
+### Fixed
+
+ - Fix XSS vulnerability caused by URL normalization not encoding newlines (#337)
+
 ## [0.18.0] - 2018-09-18
 
 ### Added
