@@ -82,7 +82,7 @@ final class UrlEncoder
      */
     private static function encode($uri)
     {
-        return preg_replace_callback('/(%[0-9a-f]{2})|./iu', function ($matches) {
+        return preg_replace_callback('/(%[0-9a-f]{2})|./isu', function ($matches) {
             // Keep already-encoded characters as-is
             if (count($matches) > 1) {
                 return $matches[0];
