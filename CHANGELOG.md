@@ -10,7 +10,7 @@ This is a **security update** release.
 
 ### Fixed
 
- - Fix XSS vulnerability caused by URL normalization not encoding newlines (#337)
+ - Fix XSS vulnerability caused by URL normalization not handling/encoding newlines properly (#337, CVE-2018-20583)
 
 ## [0.18.0] - 2018-09-18
 
