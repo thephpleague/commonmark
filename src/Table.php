@@ -89,7 +89,11 @@ class Table extends AbstractBlock
     {
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    /**
+     * @return AbstractBlock[]
+     */
+    public function children(): array
     {
+        return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractBlock; });
     }
 }

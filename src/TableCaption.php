@@ -50,4 +50,12 @@ class TableCaption extends AbstractBlock implements InlineContainerInterface
     {
         return false;
     }
+
+    /**
+     * @return AbstractInline[]
+     */
+    public function children(): array
+    {
+        return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractInline; });
+    }
 }

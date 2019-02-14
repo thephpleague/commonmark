@@ -64,4 +64,12 @@ class TableCell extends AbstractBlock implements InlineContainerInterface
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
     }
+
+    /**
+     * @return AbstractInline[]
+     */
+    public function children(): array
+    {
+        return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractInline; });
+    }
 }
