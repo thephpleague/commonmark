@@ -21,13 +21,16 @@ use League\CommonMark\Node\Node;
 
 class Table extends AbstractBlock
 {
+    private $caption;
+    private $head;
+    private $body;
     private $parser;
 
     public function __construct(\Closure $parser)
     {
         parent::__construct();
-        $this->appendChild(new TableRows(TableRows::TYPE_HEAD));
-        $this->appendChild(new TableRows(TableRows::TYPE_BODY));
+        $this->appendChild($this->head = new TableRows(TableRows::TYPE_HEAD));
+        $this->appendChild($this->body = new TableRows(TableRows::TYPE_BODY));
         $this->parser = $parser;
     }
 
@@ -53,36 +56,30 @@ class Table extends AbstractBlock
             $node->detach();
         }
 
-        if ($caption instanceof TableCaption) {
+        $this->caption = $caption;
+        if (null !== $caption) {
             $this->prependChild($caption);
         }
     }
 
-    public function getCaption()
+    public function getCaption(): ?TableCaption
     {
-        foreach ($this->children() as $child) {
-            if ($child instanceof TableCaption) {
-                return $child;
-            }
-        }
+        return $this->caption;
     }
 
-    public function getHead()
+    public function getHead(): TableRows
     {
-        foreach ($this->children() as $child) {
-            if ($child instanceof TableRows && $child->isHead()) {
-                return $child;
-            }
-        }
+        return $this->head;
     }
 
-    public function getBody()
+    public function getBody(): TableRows
     {
-        foreach ($this->children() as $child) {
-            if ($child instanceof TableRows && $child->isBody()) {
-                return $child;
-            }
-        }
+        return $this->body;
+    }
+
+    public function matchesNextLine(Cursor $cursor): bool
+    {
+        return call_user_func($this->parser, $cursor, $this);
     }
 
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void

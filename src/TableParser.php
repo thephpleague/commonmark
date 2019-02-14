@@ -52,7 +52,7 @@ class TableParser extends AbstractBlockParser
             return false;
         }
 
-        $table = new Table(function (Cursor $cursor) use (&$table, $columns) {
+        $table = new Table(function (Cursor $cursor, Table $table) use ($columns): bool {
             $row = $this->parseRow($cursor->getLine(), $columns);
             if (null === $row) {
                 if (null !== $table->getCaption()) {
