@@ -19,19 +19,13 @@ use League\CommonMark\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 use Webuni\CommonMark\TableExtension\TableExtension;
 
-if (class_exists(TestCase::class)) {
-    class CompatibleTestsCase extends TestCase
-    {
-    }
-} else {
-    class CompatibleTestsCase extends \PHPUnit_Framework_TestCase
-    {
-    }
-}
-
-class LocalDataTest extends CompatibleTestsCase
+/**
+ * @internal
+ * @coversNothing
+ */
+class LocalDataTest extends TestCase
 {
-    /* @var Environment */
+    // @var Environment
     private $environment;
     private $parser;
 

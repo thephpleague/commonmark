@@ -13,6 +13,9 @@ EOF;
 return PhpCsFixer\Config::create()
     ->setRules(array(
         '@PSR2' => true,
+        '@PHP71Migration:risky' => true,
+        '@Symfony' => true,
+        '@PhpCsFixer' => true,
         'array_syntax' => ['syntax' => 'short'],
         'header_comment' => [
             'header' => $header,

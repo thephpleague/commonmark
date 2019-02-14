@@ -1,32 +1,50 @@
 <?xml version="1.0"?>
 <psalm
-    name="Example Psalm config with recommended defaults"
-    stopOnFirstError="false"
-    useDocblockTypes="true"
     totallyTyped="false"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config file:///home/hason/Projekty/github/commonmark-table-extension/vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
         <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
-        <LessSpecificReturnType errorLevel="info" />
+        <LessSpecificReturnType errorLevel="suppress" />
+        <LessSpecificImplementedReturnType errorLevel="suppress" />
 
         <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
-        <DeprecatedClass errorLevel="error" />
-        <DeprecatedMethod errorLevel="error" />
-        <DeprecatedProperty errorLevel="error" />
 
-        <MissingClosureReturnType errorLevel="suppress" />
-        <MissingReturnType errorLevel="suppress" />
+        <DeprecatedMethod errorLevel="info" />
+        <DeprecatedProperty errorLevel="info" />
+        <DeprecatedClass errorLevel="info" />
+        <DeprecatedConstant errorLevel="info" />
+        <DeprecatedInterface errorLevel="info" />
+        <DeprecatedTrait errorLevel="info" />
+
+        <MissingClosureReturnType errorLevel="info" />
+        <MissingReturnType errorLevel="info" />
         <MissingPropertyType errorLevel="suppress" />
         <InvalidDocblock errorLevel="info" />
         <MisplacedRequiredParam errorLevel="info" />
 
         <PropertyNotSetInConstructor errorLevel="suppress" />
         <MissingConstructor errorLevel="info" />
-        <UntypedParam errorLevel="suppress" />
+        <MissingClosureParamType errorLevel="info" />
+        <MissingParamType errorLevel="info" />
 
-        <TypeCoercion errorLevel="suppress" />
+        <RedundantCondition errorLevel="info" />
+
+        <DocblockTypeContradiction errorLevel="info" />
+        <RedundantConditionGivenDocblockType errorLevel="info" />
+
+        <UnresolvableInclude errorLevel="info" />
+
+        <RawObjectIteration errorLevel="info" />
+
+        <InvalidStringClass errorLevel="info" />
     </issueHandlers>
 </psalm>
