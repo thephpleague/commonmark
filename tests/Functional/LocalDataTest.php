@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This is part of the webuni/commonmark-table-extension package.
  *
@@ -25,11 +27,10 @@ use Webuni\CommonMark\TableExtension\TableExtension;
  */
 class LocalDataTest extends TestCase
 {
-    // @var Environment
     private $environment;
     private $parser;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->environment = Environment::createCommonMarkEnvironment();
         $this->environment->addExtension(new TableExtension());
@@ -40,7 +41,7 @@ class LocalDataTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testRenderer($markdown, $html, $testName)
+    public function testRenderer(string $markdown, string $html, string $testName): void
     {
         $renderer = new HtmlRenderer($this->environment);
         $this->assertCommonMark($renderer, $markdown, $html, $testName);
@@ -63,7 +64,7 @@ class LocalDataTest extends TestCase
         return $ret;
     }
 
-    protected function assertCommonMark(ElementRendererInterface $renderer, $markdown, $html, $testName)
+    protected function assertCommonMark(ElementRendererInterface $renderer, $markdown, $html, $testName): void
     {
         $documentAST = $this->parser->parse($markdown);
         $actualResult = $renderer->renderBlock($documentAST);

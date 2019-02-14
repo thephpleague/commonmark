@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This is part of the webuni/commonmark-table-extension package.
  *
@@ -32,7 +34,7 @@ class TableCellRenderer implements BlockRendererInterface
         }
 
         if ($block->align) {
-            $attrs['style'] = (isset($attrs['style']) ? $attrs['style'] . ' ' : '') . 'text-align: ' . $block->align;
+            $attrs['style'] = (isset($attrs['style']) ? $attrs['style'].' ' : '').'text-align: '.$block->align;
         }
 
         return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->children()));

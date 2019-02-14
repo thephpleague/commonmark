@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This is part of the webuni/commonmark-table-extension package.
  *
@@ -15,6 +17,7 @@ namespace Webuni\CommonMark\TableExtension;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Node\Node;
 
 class Table extends AbstractBlock
 {
@@ -28,22 +31,22 @@ class Table extends AbstractBlock
         $this->parser = $parser;
     }
 
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return $block instanceof TableRows || $block instanceof TableCaption;
     }
 
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return true;
     }
 
-    public function isCode()
+    public function isCode(): bool
     {
         return false;
     }
 
-    public function setCaption(TableCaption $caption = null)
+    public function setCaption(TableCaption $caption = null): void
     {
         $node = $this->getCaption();
         if ($node instanceof TableCaption) {
@@ -82,9 +85,8 @@ class Table extends AbstractBlock
         }
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
-        return call_user_func($this->parser, $cursor);
     }
 
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)

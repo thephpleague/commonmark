@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This is part of the webuni/commonmark-table-extension package.
  *
@@ -15,30 +17,31 @@ namespace Webuni\CommonMark\TableExtension;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Node\Node;
 
 class TableRow extends AbstractBlock
 {
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return $block instanceof TableCell;
     }
 
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return false;
     }
 
-    public function isCode()
+    public function isCode(): bool
     {
         return false;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         return false;
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
     }
 }

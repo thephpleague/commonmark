@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This is part of the webuni/commonmark-table-extension package.
  *
@@ -13,36 +15,38 @@
 namespace Webuni\CommonMark\TableExtension;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\InlineContainer;
+use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Node;
 
-class TableCaption extends AbstractBlock implements InlineContainer
+class TableCaption extends AbstractBlock implements InlineContainerInterface
 {
     public $id;
 
-    public function __construct($caption, $id = null)
+    public function __construct(string $caption, string $id = null)
     {
         parent::__construct();
         $this->finalStringContents = $caption;
         $this->id = $id;
     }
 
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
 
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return false;
     }
 
-    public function isCode()
+    public function isCode(): bool
     {
         return false;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         return false;
     }

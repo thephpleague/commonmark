@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This is part of the webuni/commonmark-table-extension package.
  *
@@ -16,14 +18,14 @@ use League\CommonMark\Extension\Extension;
 
 class TableExtension extends Extension
 {
-    public function getBlockParsers()
+    public function getBlockParsers(): array
     {
         return [
             new TableParser(),
         ];
     }
 
-    public function getBlockRenderers()
+    public function getBlockRenderers(): array
     {
         return [
             __NAMESPACE__.'\\Table' => new TableRenderer(),
@@ -34,7 +36,7 @@ class TableExtension extends Extension
         ];
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'table';
     }

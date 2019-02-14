@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This is part of the webuni/commonmark-table-extension package.
  *
@@ -15,6 +17,7 @@ namespace Webuni\CommonMark\TableExtension;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Node\Node;
 
 class TableRows extends AbstractBlock
 {
@@ -23,43 +26,43 @@ class TableRows extends AbstractBlock
 
     public $type = self::TYPE_BODY;
 
-    public function __construct($type = self::TYPE_BODY)
+    public function __construct(string $type = self::TYPE_BODY)
     {
         parent::__construct();
         $this->type = $type;
     }
 
-    public function isHead()
+    public function isHead(): bool
     {
         return self::TYPE_HEAD === $this->type;
     }
 
-    public function isBody()
+    public function isBody(): bool
     {
         return self::TYPE_BODY === $this->type;
     }
 
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return $block instanceof TableRow;
     }
 
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return false;
     }
 
-    public function isCode()
+    public function isCode(): bool
     {
         return false;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         return false;
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
     }
 }

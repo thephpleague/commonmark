@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This is part of the webuni/commonmark-table-extension package.
  *
@@ -13,11 +15,13 @@
 namespace Webuni\CommonMark\TableExtension;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\InlineContainer;
+use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Node;
 
-class TableCell extends AbstractBlock implements InlineContainer
+class TableCell extends AbstractBlock implements InlineContainerInterface
 {
     const TYPE_HEAD = 'th';
     const TYPE_BODY = 'td';
@@ -29,7 +33,7 @@ class TableCell extends AbstractBlock implements InlineContainer
     public $type = self::TYPE_BODY;
     public $align;
 
-    public function __construct($string = '', $type = self::TYPE_BODY, $align = null)
+    public function __construct(string $string = '', string $type = self::TYPE_BODY, string $align = null)
     {
         parent::__construct();
         $this->finalStringContents = $string;
@@ -37,27 +41,27 @@ class TableCell extends AbstractBlock implements InlineContainer
         $this->align = $align;
     }
 
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
 
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return false;
     }
 
-    public function isCode()
+    public function isCode(): bool
     {
         return false;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         return false;
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
     }
 }
