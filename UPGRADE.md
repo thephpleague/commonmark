@@ -1,5 +1,38 @@
 # Upgrade Instructions
 
+## UNRELEASED
+
+The `Environment` and extension framework underwent some major changes in this release.
+
+### Environment interfaces
+
+We have extracted two interfaces from the `Environment` class:
+
+ - `EnvironmentInterface` - contains all the getters; use this in your parsers, renderers, etc.
+ - `ConfigurableEnvironmentInterface` - contains all the `add` methods, as well as `setConfig()` and `mergeConfig`
+
+As a result, `EnvironmentAwareInterface` now requires an `EnvironmentInterface` instead of an `Environment`, so update your parsers/processors/renderers accordingly.
+
+### Extensions
+
+Extensions work much differently now.  In the past, you'd have functions returning an array of things that the `Environment` would register for you.
+
+The `ExtensionInterface` was changed to have a single `register(ConfigurableEnvironmentInterface $environment)` method.  You must now manually `add()` all your parsers, processors, and renderers yourself directly within the environment you are provided.  See the changes made to `CommonMarkCoreExtension` for a good example.
+
+The `Environment` will still automatically inject the `Environment` or `Configuration` for any parsers, processors, and renderers implementing the `EnvironmentAwareInterface` or `ConfigurationAwareInterface` - that behavior hasn't changed.
+
+### Adding renderers with short names
+
+`Environment::add___Renderer()` now requires the fully-qualified class name with namespace as its first argument.  Providing just the class name without the namespace will no longer work.  
+
+### Prioritization of parsers, processors, and renderers
+
+The execution order of these things no longer depends on the order you add them - you can now specific custom priorities when `add()`ing them to the `Environment`!  The priority can be any integer you want.  The default value is `0`. All CommonMark Core things will have a priority between -255 and 255.  The higher the number, the earlier it will be executed.
+
+### Multiple block/inline renderers per class
+
+Thanks to the new prioritization system, we now support multiple renderers for the same block/inline class!  The first renderer to return a non-null result will be considered the "winner" and no subsequent renderers will execute for that block/inline.  No change should be required for most extensions unless you were using some weird workaround to support multiple renderers yourself. 
+
 ## 0.18.0
 
 No breaking changes were introduced, but we did add a new interface: `ConverterInface`. Consider depending on this interface in your code instead of the concrete implementation. (See #330)
