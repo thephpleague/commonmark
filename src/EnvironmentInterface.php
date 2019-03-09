@@ -56,16 +56,16 @@ interface EnvironmentInterface
     /**
      * @param string $blockClass
      *
-     * @return BlockRendererInterface|null
+     * @return \Traversable<BlockRendererInterface>
      */
-    public function getBlockRendererForClass($blockClass);
+    public function getBlockRenderersForClass($blockClass);
 
     /**
      * @param string $inlineClass
      *
-     * @return InlineRendererInterface|null
+     * @return \Traversable<InlineRendererInterface>
      */
-    public function getInlineRendererForClass($inlineClass);
+    public function getInlineRenderersForClass($inlineClass);
 
     /**
      * Regex which matches any character which doesn't indicate an inline element

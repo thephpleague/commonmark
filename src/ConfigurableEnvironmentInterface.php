@@ -31,45 +31,51 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
 
     /**
      * @param BlockParserInterface $parser
+     * @param int                  $priority
      *
      * @return self
      */
-    public function addBlockParser(BlockParserInterface $parser);
+    public function addBlockParser(BlockParserInterface $parser, $priority = 0);
 
     /**
      * @param InlineParserInterface $parser
+     * @param int                   $priority
      *
      * @return self
      */
-    public function addInlineParser(InlineParserInterface $parser);
+    public function addInlineParser(InlineParserInterface $parser, $priority = 0);
 
     /**
      * @param InlineProcessorInterface $processor
+     * @param int                      $priority
      *
      * @return self
      */
-    public function addInlineProcessor(InlineProcessorInterface $processor);
+    public function addInlineProcessor(InlineProcessorInterface $processor, $priority = 0);
 
     /**
      * @param DocumentProcessorInterface $processor
+     * @param int                        $priority
      *
      * @return self
      */
-    public function addDocumentProcessor(DocumentProcessorInterface $processor);
+    public function addDocumentProcessor(DocumentProcessorInterface $processor, $priority = 0);
 
     /**
      * @param string                 $blockClass
      * @param BlockRendererInterface $blockRenderer
+     * @param int                    $priority
      *
      * @return self
      */
-    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer);
+    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, $priority = 0);
 
     /**
      * @param string                  $inlineClass
      * @param InlineRendererInterface $renderer
+     * @param int                     $priority
      *
      * @return self
      */
-    public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer);
+    public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer, $priority = 0);
 }

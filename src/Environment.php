@@ -19,6 +19,7 @@ use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Extension\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\MiscExtension;
+use League\CommonMark\Util\PrioritizedList;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
@@ -38,37 +39,37 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     private $extensionsInitialized = false;
 
     /**
-     * @var BlockParserInterface[]
+     * @var PrioritizedList<BlockParserInterface>
      */
-    private $blockParsers = [];
+    private $blockParsers;
 
     /**
-     * @var InlineParserInterface[]
+     * @var PrioritizedList<InlineParserInterface>
      */
-    private $inlineParsers = [];
+    private $inlineParsers;
 
     /**
-     * @var array
+     * @var array<string, PrioritizedList<InlineParserInterface>>
      */
     private $inlineParsersByCharacter = [];
 
     /**
-     * @var DocumentProcessorInterface[]
+     * @var PrioritizedList<DocumentProcessorInterface>
      */
-    private $documentProcessors = [];
+    private $documentProcessors;
 
     /**
-     * @var InlineProcessorInterface[]
+     * @var PrioritizedList<InlineProcessorInterface>
      */
-    private $inlineProcessors = [];
+    private $inlineProcessors;
 
     /**
-     * @var BlockRendererInterface[]
+     * @var array<string, PrioritizedList<BlockRendererInterface>>
      */
     private $blockRenderersByClass = [];
 
     /**
-     * @var InlineRendererInterface[]
+     * @var array<string, PrioritizedList<InlineRendererInterface>>
      */
     private $inlineRenderersByClass = [];
 
@@ -85,6 +86,11 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     public function __construct(array $config = [])
     {
         $this->config = new Configuration($config);
+
+        $this->blockParsers = new PrioritizedList();
+        $this->inlineParsers = new PrioritizedList();
+        $this->documentProcessors = new PrioritizedList();
+        $this->inlineProcessors = new PrioritizedList();
     }
 
     /**
@@ -118,11 +124,11 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addBlockParser(BlockParserInterface $parser)
+    public function addBlockParser(BlockParserInterface $parser, $priority = 0)
     {
         $this->assertUninitialized('Failed to add block parser.');
 
-        $this->blockParsers[] = $parser;
+        $this->blockParsers->add($parser, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($parser);
 
         return $this;
@@ -131,15 +137,19 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addInlineParser(InlineParserInterface $parser)
+    public function addInlineParser(InlineParserInterface $parser, $priority = 0)
     {
         $this->assertUninitialized('Failed to add inline parser.');
 
-        $this->inlineParsers[] = $parser;
+        $this->inlineParsers->add($parser, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($parser);
 
         foreach ($parser->getCharacters() as $character) {
-            $this->inlineParsersByCharacter[$character][] = $parser;
+            if (!isset($this->inlineParsersByCharacter[$character])) {
+                $this->inlineParsersByCharacter[$character] = new PrioritizedList();
+            }
+
+            $this->inlineParsersByCharacter[$character]->add($parser, $priority);
         }
 
         return $this;
@@ -148,11 +158,11 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addInlineProcessor(InlineProcessorInterface $processor)
+    public function addInlineProcessor(InlineProcessorInterface $processor, $priority = 0)
     {
         $this->assertUninitialized('Failed to add inline processor.');
 
-        $this->inlineProcessors[] = $processor;
+        $this->inlineProcessors->add($processor, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($processor);
 
         return $this;
@@ -161,11 +171,11 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addDocumentProcessor(DocumentProcessorInterface $processor)
+    public function addDocumentProcessor(DocumentProcessorInterface $processor, $priority = 0)
     {
         $this->assertUninitialized('Failed to add document processor.');
 
-        $this->documentProcessors[] = $processor;
+        $this->documentProcessors->add($processor, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($processor);
 
         return $this;
@@ -174,11 +184,15 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
+    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, $priority = 0)
     {
         $this->assertUninitialized('Failed to add block renderer.');
 
-        $this->blockRenderersByClass[$blockClass] = $blockRenderer;
+        if (!isset($this->blockRenderersByClass[$blockClass])) {
+            $this->blockRenderersByClass[$blockClass] = new PrioritizedList();
+        }
+
+        $this->blockRenderersByClass[$blockClass]->add($blockRenderer, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($blockRenderer);
 
         return $this;
@@ -187,11 +201,15 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer)
+    public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer, $priority = 0)
     {
         $this->assertUninitialized('Failed to add inline renderer.');
 
-        $this->inlineRenderersByClass[$inlineClass] = $renderer;
+        if (!isset($this->inlineRenderersByClass[$inlineClass])) {
+            $this->inlineRenderersByClass[$inlineClass] = new PrioritizedList();
+        }
+
+        $this->inlineRenderersByClass[$inlineClass]->add($renderer, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($renderer);
 
         return $this;
@@ -204,7 +222,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->initializeExtensions();
 
-        return $this->blockParsers;
+        return $this->blockParsers->getIterator();
     }
 
     /**
@@ -218,7 +236,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
             return [];
         }
 
-        return $this->inlineParsersByCharacter[$character];
+        return $this->inlineParsersByCharacter[$character]->getIterator();
     }
 
     /**
@@ -228,7 +246,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->initializeExtensions();
 
-        return $this->inlineProcessors;
+        return $this->inlineProcessors->getIterator();
     }
 
     /**
@@ -238,35 +256,35 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->initializeExtensions();
 
-        return $this->documentProcessors;
+        return $this->documentProcessors->getIterator();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBlockRendererForClass($blockClass)
+    public function getBlockRenderersForClass($blockClass)
     {
         $this->initializeExtensions();
 
         if (!isset($this->blockRenderersByClass[$blockClass])) {
-            return;
+            return [];
         }
 
-        return $this->blockRenderersByClass[$blockClass];
+        return $this->blockRenderersByClass[$blockClass]->getIterator();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getInlineRendererForClass($inlineClass)
+    public function getInlineRenderersForClass($inlineClass)
     {
         $this->initializeExtensions();
 
         if (!isset($this->inlineRenderersByClass[$inlineClass])) {
-            return;
+            return [];
         }
 
-        return $this->inlineRenderersByClass[$inlineClass];
+        return $this->inlineRenderersByClass[$inlineClass]->getIterator();
     }
 
     /**

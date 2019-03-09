@@ -15,7 +15,9 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
 /**
  * Renders a parsed AST to HTML
@@ -55,12 +57,16 @@ class HtmlRenderer implements ElementRendererInterface
      */
     protected function renderInline(AbstractInline $inline)
     {
-        $renderer = $this->environment->getInlineRendererForClass(get_class($inline));
-        if (!$renderer) {
-            throw new \RuntimeException('Unable to find corresponding renderer for inline type ' . get_class($inline));
+        $renderers = $this->environment->getInlineRenderersForClass(get_class($inline));
+
+        /** @var InlineRendererInterface $renderer */
+        foreach ($renderers as $renderer) {
+            if (($result = $renderer->render($inline, $this)) !== null) {
+                return $result;
+            }
         }
 
-        return $renderer->render($inline, $this);
+        throw new \RuntimeException('Unable to find corresponding renderer for inline type ' . get_class($inline));
     }
 
     /**
@@ -88,12 +94,16 @@ class HtmlRenderer implements ElementRendererInterface
      */
     public function renderBlock(AbstractBlock $block, $inTightList = false)
     {
-        $renderer = $this->environment->getBlockRendererForClass(get_class($block));
-        if (!$renderer) {
-            throw new \RuntimeException('Unable to find corresponding renderer for block type ' . get_class($block));
+        $renderers = $this->environment->getBlockRenderersForClass(get_class($block));
+
+        /** @var BlockRendererInterface $renderer */
+        foreach ($renderers as $renderer) {
+            if (($result = $renderer->render($block, $this, $inTightList)) !== null) {
+                return $result;
+            }
         }
 
-        return $renderer->render($block, $this, $inTightList);
+        throw new \RuntimeException('Unable to find corresponding renderer for block type ' . get_class($block));
     }
 
     /**

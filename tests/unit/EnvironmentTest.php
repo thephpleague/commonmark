@@ -15,9 +15,14 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
+use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\DocumentProcessorInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Inline\Parser\InlineParserInterface;
+use League\CommonMark\Inline\Processor\InlineProcessorInterface;
+use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -162,7 +167,7 @@ class EnvironmentTest extends TestCase
         $renderer = $this->createMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
         $environment->addBlockRenderer('MyClass', $renderer);
 
-        $this->assertEquals($renderer, $environment->getBlockRendererForClass('MyClass'));
+        $this->assertContains($renderer, $environment->getBlockRenderersForClass('MyClass'));
     }
 
     /**
@@ -173,7 +178,7 @@ class EnvironmentTest extends TestCase
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getBlockRendererForClass('MyClass');
+        $environment->getBlockRenderersForClass('MyClass');
 
         $renderer = $this->createMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
         $environment->addBlockRenderer('MyClass', $renderer);
@@ -263,7 +268,7 @@ class EnvironmentTest extends TestCase
         $renderer = $this->createMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
         $environment->addInlineRenderer('MyClass', $renderer);
 
-        $this->assertEquals($renderer, $environment->getInlineRendererForClass('MyClass'));
+        $this->assertContains($renderer, $environment->getInlineRenderersForClass('MyClass'));
     }
 
     /**
@@ -274,7 +279,7 @@ class EnvironmentTest extends TestCase
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getInlineRendererForClass('MyClass');
+        $environment->getInlineRenderersForClass('MyClass');
 
         $renderer = $this->createMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
         $environment->addInlineRenderer('MyClass', $renderer);
@@ -284,18 +289,18 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $renderer = $environment->getBlockRendererForClass('MyClass');
+        $renderer = $environment->getBlockRenderersForClass('MyClass');
 
-        $this->assertNull($renderer);
+        $this->assertEmpty($renderer);
     }
 
     public function testGetInlineRendererForNonExistantClass()
     {
         $environment = new Environment();
 
-        $renderer = $environment->getInlineRendererForClass('MyClass');
+        $renderer = $environment->getInlineRenderersForClass('MyClass');
 
-        $this->assertNull($renderer);
+        $this->assertEmpty($renderer);
     }
 
     public function testAddExtensionAndGetter()
@@ -316,7 +321,7 @@ class EnvironmentTest extends TestCase
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getInlineRendererForClass('MyClass');
+        $environment->getInlineRenderersForClass('MyClass');
 
         $extension = $this->createMock('League\CommonMark\Extension\ExtensionInterface');
         $environment->addExtension($extension);
@@ -373,5 +378,122 @@ class EnvironmentTest extends TestCase
 
         // Trigger initialization
         $environment->getBlockParsers();
+    }
+
+    public function testBlockParserPrioritization()
+    {
+        $environment = new Environment();
+
+        $parser1 = $this->createMock(BlockParserInterface::class);
+        $parser2 = $this->createMock(BlockParserInterface::class);
+        $parser3 = $this->createMock(BlockParserInterface::class);
+
+        $environment->addBlockParser($parser1);
+        $environment->addBlockParser($parser2, 50);
+        $environment->addBlockParser($parser3);
+
+        $parsers = iterator_to_array($environment->getBlockParsers());
+
+        $this->assertSame($parser2, $parsers[0]);
+        $this->assertSame($parser1, $parsers[1]);
+        $this->assertSame($parser3, $parsers[2]);
+    }
+
+    public function testInlineParserPrioritization()
+    {
+        $environment = new Environment();
+
+        $parser1 = $this->createMock(InlineParserInterface::class);
+        $parser1->method('getCharacters')->willReturn(['a']);
+        $parser2 = $this->createMock(InlineParserInterface::class);
+        $parser2->method('getCharacters')->willReturn(['a']);
+        $parser3 = $this->createMock(InlineParserInterface::class);
+        $parser3->method('getCharacters')->willReturn(['a']);
+
+        $environment->addInlineParser($parser1);
+        $environment->addInlineParser($parser2, 50);
+        $environment->addInlineParser($parser3);
+
+        $parsers = iterator_to_array($environment->getInlineParsersForCharacter('a'));
+
+        $this->assertSame($parser2, $parsers[0]);
+        $this->assertSame($parser1, $parsers[1]);
+        $this->assertSame($parser3, $parsers[2]);
+    }
+
+    public function testInlineProcessorPrioritization()
+    {
+        $environment = new Environment();
+
+        $processor1 = $this->createMock(InlineProcessorInterface::class);
+        $processor2 = $this->createMock(InlineProcessorInterface::class);
+        $processor3 = $this->createMock(InlineProcessorInterface::class);
+
+        $environment->addInlineProcessor($processor1);
+        $environment->addInlineProcessor($processor2, 50);
+        $environment->addInlineProcessor($processor3);
+
+        $parsers = iterator_to_array($environment->getInlineProcessors());
+
+        $this->assertSame($processor2, $parsers[0]);
+        $this->assertSame($processor1, $parsers[1]);
+        $this->assertSame($processor3, $parsers[2]);
+    }
+
+    public function testDocumentProcessorPrioritization()
+    {
+        $environment = new Environment();
+
+        $processor1 = $this->createMock(DocumentProcessorInterface::class);
+        $processor2 = $this->createMock(DocumentProcessorInterface::class);
+        $processor3 = $this->createMock(DocumentProcessorInterface::class);
+
+        $environment->addDocumentProcessor($processor1);
+        $environment->addDocumentProcessor($processor2, 50);
+        $environment->addDocumentProcessor($processor3);
+
+        $parsers = iterator_to_array($environment->getDocumentProcessors());
+
+        $this->assertSame($processor2, $parsers[0]);
+        $this->assertSame($processor1, $parsers[1]);
+        $this->assertSame($processor3, $parsers[2]);
+    }
+
+    public function testBlockRendererPrioritization()
+    {
+        $environment = new Environment();
+
+        $renderer1 = $this->createMock(BlockRendererInterface::class);
+        $renderer2 = $this->createMock(BlockRendererInterface::class);
+        $renderer3 = $this->createMock(BlockRendererInterface::class);
+
+        $environment->addBlockRenderer('foo', $renderer1);
+        $environment->addBlockRenderer('foo', $renderer2, 50);
+        $environment->addBlockRenderer('foo', $renderer3);
+
+        $parsers = iterator_to_array($environment->getBlockRenderersForClass('foo'));
+
+        $this->assertSame($renderer2, $parsers[0]);
+        $this->assertSame($renderer1, $parsers[1]);
+        $this->assertSame($renderer3, $parsers[2]);
+    }
+
+    public function testInlineRendererPrioritization()
+    {
+        $environment = new Environment();
+
+        $renderer1 = $this->createMock(InlineRendererInterface::class);
+        $renderer2 = $this->createMock(InlineRendererInterface::class);
+        $renderer3 = $this->createMock(InlineRendererInterface::class);
+
+        $environment->addInlineRenderer('foo', $renderer1);
+        $environment->addInlineRenderer('foo', $renderer2, 50);
+        $environment->addInlineRenderer('foo', $renderer3);
+
+        $parsers = iterator_to_array($environment->getInlineRenderersForClass('foo'));
+
+        $this->assertSame($renderer2, $parsers[0]);
+        $this->assertSame($renderer1, $parsers[1]);
+        $this->assertSame($renderer3, $parsers[2]);
     }
 }
