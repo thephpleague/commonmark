@@ -14,18 +14,24 @@
 
 namespace League\CommonMark\Tests\Unit;
 
+use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Environment;
-use League\CommonMark\InlineParserEngine;
+use League\CommonMark\EnvironmentAwareInterface;
+use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Util\ConfigurationAwareInterface;
 use PHPUnit\Framework\TestCase;
 
 class EnvironmentTest extends TestCase
 {
     public function testAddGetExtensions()
     {
-        $firstExtension = $this->getMockForAbstractClass('League\CommonMark\Extension\ExtensionInterface');
-
         $environment = new Environment();
         $this->assertCount(0, $environment->getExtensions());
+
+        $firstExtension = $this->createMock(ExtensionInterface::class);
+        $firstExtension->expects($this->once())
+            ->method('register')
+            ->with($environment);
 
         $environment->addExtension($firstExtension);
 
@@ -33,13 +39,21 @@ class EnvironmentTest extends TestCase
         $this->assertCount(1, $extensions);
         $this->assertEquals($firstExtension, $extensions[0]);
 
-        $secondExtension = $this->getMockForAbstractClass('League\CommonMark\Extension\ExtensionInterface');
+        $secondExtension = $this->createMock(ExtensionInterface::class);
+        $secondExtension->expects($this->once())
+            ->method('register')
+            ->with($environment);
         $environment->addExtension($secondExtension);
 
         $extensions = $environment->getExtensions();
+
         $this->assertCount(2, $extensions);
         $this->assertEquals($firstExtension, $extensions[0]);
         $this->assertEquals($secondExtension, $extensions[1]);
+
+        // Trigger initialization
+        $environment->getBlockParsers();
+        $environment->getInlineProcessors();
     }
 
     public function testConstructor()
@@ -149,66 +163,6 @@ class EnvironmentTest extends TestCase
         $environment->addBlockRenderer('MyClass', $renderer);
 
         $this->assertEquals($renderer, $environment->getBlockRendererForClass('MyClass'));
-    }
-
-    public function testSwapBuiltInBlockRenderer()
-    {
-        $environment = new Environment();
-
-        $mockRenderer = $this->createMock('League\CommonMark\Block\Renderer\BlockRendererInterface');
-
-        $builtInClasses = [
-            'BlockQuote'    => 'League\CommonMark\Block\Element\BlockQuote',
-            'Document'      => 'League\CommonMark\Block\Element\Document',
-            'FencedCode'    => 'League\CommonMark\Block\Element\FencedCode',
-            'Heading'       => 'League\CommonMark\Block\Element\Heading',
-            'HtmlBlock'     => 'League\CommonMark\Block\Element\HtmlBlock',
-            'IndentedCode'  => 'League\CommonMark\Block\Element\IndentedCode',
-            'ListBlock'     => 'League\CommonMark\Block\Element\ListBlock',
-            'ListItem'      => 'League\CommonMark\Block\Element\ListItem',
-            'Paragraph'     => 'League\CommonMark\Block\Element\Paragraph',
-            'ThematicBreak' => 'League\CommonMark\Block\Element\ThematicBreak',
-        ];
-
-        foreach ($builtInClasses as $name => $fullyQualifiedName) {
-            $environment->addBlockRenderer($name, $mockRenderer);
-        }
-
-        foreach ($builtInClasses as $name => $fullyQualifiedName) {
-            $this->assertEquals(
-                $mockRenderer,
-                $environment->getBlockRendererForClass($fullyQualifiedName)
-            );
-        }
-    }
-
-    public function testSwapBuiltInInlineRenderer()
-    {
-        $environment = new Environment();
-
-        $mockRenderer = $this->createMock('League\CommonMark\Inline\Renderer\InlineRendererInterface');
-
-        $builtInClasses = [
-            'Code'       => 'League\CommonMark\Inline\Element\Code',
-            'Emphasis'   => 'League\CommonMark\Inline\Element\Emphasis',
-            'HtmlInline' => 'League\CommonMark\Inline\Element\HtmlInline',
-            'Image'      => 'League\CommonMark\Inline\Element\Image',
-            'Link'       => 'League\CommonMark\Inline\Element\Link',
-            'Newline'    => 'League\CommonMark\Inline\Element\Newline',
-            'Strong'     => 'League\CommonMark\Inline\Element\Strong',
-            'Text'       => 'League\CommonMark\Inline\Element\Text',
-        ];
-
-        foreach ($builtInClasses as $name => $fullyQualifiedName) {
-            $environment->addInlineRenderer($name, $mockRenderer);
-        }
-
-        foreach ($builtInClasses as $name => $fullyQualifiedName) {
-            $this->assertEquals(
-                $mockRenderer,
-                $environment->getInlineRendererForClass($fullyQualifiedName)
-            );
-        }
     }
 
     /**
@@ -392,27 +346,6 @@ class EnvironmentTest extends TestCase
         $environment->addDocumentProcessor($processor);
     }
 
-    public function testExtensionBetweenNonExtensions()
-    {
-        $environment = new Environment();
-
-        $processor = $this->createMock('League\CommonMark\DocumentProcessorInterface');
-        $environment->addDocumentProcessor($processor);
-        $this->assertCount(1, $environment->getExtensions());
-
-        $extension = $this->createMock('League\CommonMark\Extension\ExtensionInterface');
-        $environment->addExtension($extension);
-        $this->assertCount(2, $environment->getExtensions());
-
-        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
-        $environment->addInlineParser($parser);
-        $this->assertCount(3, $environment->getExtensions());
-
-        $this->assertInstanceOf('League\CommonMark\Extension\MiscExtension', $environment->getExtensions()[0]);
-        $this->assertInstanceOf('League\CommonMark\Extension\ExtensionInterface', $environment->getExtensions()[1]);
-        $this->assertInstanceOf('League\CommonMark\Extension\MiscExtension', $environment->getExtensions()[2]);
-    }
-
     public function testGetInlineParserCharacterRegexForEmptyEnvironment()
     {
         $environment = new Environment();
@@ -426,5 +359,19 @@ class EnvironmentTest extends TestCase
         $matches = [];
         preg_match($regex, $test, $matches);
         $this->assertSame($test, $matches[0]);
+    }
+
+    public function testInjectablesGetInjected()
+    {
+        $environment = new Environment();
+
+        $parser = $this->getMockBuilder([BlockParserInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
+        $parser->expects($this->once())->method('setEnvironment')->with($environment);
+        $parser->expects($this->once())->method('setConfiguration');
+
+        $environment->addBlockParser($parser);
+
+        // Trigger initialization
+        $environment->getBlockParsers();
     }
 }

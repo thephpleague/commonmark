@@ -122,7 +122,8 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->assertUninitialized('Failed to add block parser.');
 
-        $this->getMiscExtension()->addBlockParser($parser);
+        $this->blockParsers[] = $parser;
+        $this->injectEnvironmentAndConfigurationIfNeeded($parser);
 
         return $this;
     }
@@ -134,7 +135,12 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->assertUninitialized('Failed to add inline parser.');
 
-        $this->getMiscExtension()->addInlineParser($parser);
+        $this->inlineParsers[] = $parser;
+        $this->injectEnvironmentAndConfigurationIfNeeded($parser);
+
+        foreach ($parser->getCharacters() as $character) {
+            $this->inlineParsersByCharacter[$character][] = $parser;
+        }
 
         return $this;
     }
@@ -146,7 +152,8 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->assertUninitialized('Failed to add inline processor.');
 
-        $this->getMiscExtension()->addInlineProcessor($processor);
+        $this->inlineProcessors[] = $processor;
+        $this->injectEnvironmentAndConfigurationIfNeeded($processor);
 
         return $this;
     }
@@ -158,7 +165,8 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->assertUninitialized('Failed to add document processor.');
 
-        $this->getMiscExtension()->addDocumentProcessor($processor);
+        $this->documentProcessors[] = $processor;
+        $this->injectEnvironmentAndConfigurationIfNeeded($processor);
 
         return $this;
     }
@@ -170,7 +178,8 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->assertUninitialized('Failed to add block renderer.');
 
-        $this->getMiscExtension()->addBlockRenderer($blockClass, $blockRenderer);
+        $this->blockRenderersByClass[$blockClass] = $blockRenderer;
+        $this->injectEnvironmentAndConfigurationIfNeeded($blockRenderer);
 
         return $this;
     }
@@ -182,7 +191,8 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->assertUninitialized('Failed to add inline renderer.');
 
-        $this->getMiscExtension()->addInlineRenderer($inlineClass, $renderer);
+        $this->inlineRenderersByClass[$inlineClass] = $renderer;
+        $this->injectEnvironmentAndConfigurationIfNeeded($renderer);
 
         return $this;
     }
@@ -292,124 +302,26 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
             return;
         }
 
-        $this->extensionsInitialized = true;
-
-        // Initialize all the registered extensions
+        // Ask all extensions to register their components
         foreach ($this->extensions as $extension) {
-            $this->initializeExtension($extension);
+            $extension->register($this);
         }
+
+        $this->extensionsInitialized = true;
 
         // Lastly, let's build a regex which matches non-inline characters
         // This will enable a huge performance boost with inline parsing
         $this->buildInlineParserCharacterRegex();
     }
 
-    /**
-     * @param ExtensionInterface $extension
-     */
-    private function initializeExtension(ExtensionInterface $extension)
+    private function injectEnvironmentAndConfigurationIfNeeded($object)
     {
-        $this->initalizeBlockParsers($extension->getBlockParsers());
-        $this->initializeInlineParsers($extension->getInlineParsers());
-        $this->initializeInlineProcessors($extension->getInlineProcessors());
-        $this->initializeDocumentProcessors($extension->getDocumentProcessors());
-        $this->initializeBlockRenderers($extension->getBlockRenderers());
-        $this->initializeInlineRenderers($extension->getInlineRenderers());
-    }
-
-    /**
-     * @param BlockParserInterface[] $blockParsers
-     */
-    private function initalizeBlockParsers($blockParsers)
-    {
-        foreach ($blockParsers as $blockParser) {
-            if ($blockParser instanceof EnvironmentAwareInterface) {
-                $blockParser->setEnvironment($this);
-            }
-
-            if ($blockParser instanceof ConfigurationAwareInterface) {
-                $blockParser->setConfiguration($this->config);
-            }
-
-            $this->blockParsers[$blockParser->getName()] = $blockParser;
+        if ($object instanceof EnvironmentAwareInterface) {
+            $object->setEnvironment($this);
         }
-    }
 
-    /**
-     * @param InlineParserInterface[] $inlineParsers
-     */
-    private function initializeInlineParsers($inlineParsers)
-    {
-        foreach ($inlineParsers as $inlineParser) {
-            if ($inlineParser instanceof EnvironmentAwareInterface) {
-                $inlineParser->setEnvironment($this);
-            }
-
-            if ($inlineParser instanceof ConfigurationAwareInterface) {
-                $inlineParser->setConfiguration($this->config);
-            }
-
-            $this->inlineParsers[$inlineParser->getName()] = $inlineParser;
-
-            foreach ($inlineParser->getCharacters() as $character) {
-                $this->inlineParsersByCharacter[$character][] = $inlineParser;
-            }
-        }
-    }
-
-    /**
-     * @param InlineProcessorInterface[] $inlineProcessors
-     */
-    private function initializeInlineProcessors($inlineProcessors)
-    {
-        foreach ($inlineProcessors as $inlineProcessor) {
-            $this->inlineProcessors[] = $inlineProcessor;
-
-            if ($inlineProcessor instanceof ConfigurationAwareInterface) {
-                $inlineProcessor->setConfiguration($this->config);
-            }
-        }
-    }
-
-    /**
-     * @param DocumentProcessorInterface[] $documentProcessors
-     */
-    private function initializeDocumentProcessors($documentProcessors)
-    {
-        foreach ($documentProcessors as $documentProcessor) {
-            $this->documentProcessors[] = $documentProcessor;
-
-            if ($documentProcessor instanceof ConfigurationAwareInterface) {
-                $documentProcessor->setConfiguration($this->config);
-            }
-        }
-    }
-
-    /**
-     * @param BlockRendererInterface[] $blockRenderers
-     */
-    private function initializeBlockRenderers($blockRenderers)
-    {
-        foreach ($blockRenderers as $class => $blockRenderer) {
-            $this->blockRenderersByClass[$class] = $blockRenderer;
-
-            if ($blockRenderer instanceof ConfigurationAwareInterface) {
-                $blockRenderer->setConfiguration($this->config);
-            }
-        }
-    }
-
-    /**
-     * @param InlineRendererInterface[] $inlineRenderers
-     */
-    private function initializeInlineRenderers($inlineRenderers)
-    {
-        foreach ($inlineRenderers as $class => $inlineRenderer) {
-            $this->inlineRenderersByClass[$class] = $inlineRenderer;
-
-            if ($inlineRenderer instanceof ConfigurationAwareInterface) {
-                $inlineRenderer->setConfiguration($this->config);
-            }
+        if ($object instanceof ConfigurationAwareInterface) {
+            $object->setConfiguration($this->config);
         }
     }
 
@@ -466,21 +378,5 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
         if ($this->extensionsInitialized) {
             throw new \RuntimeException($message . ' Extensions have already been initialized.');
         }
-    }
-
-    /**
-     * @return MiscExtension
-     */
-    private function getMiscExtension()
-    {
-        $lastExtension = end($this->extensions);
-        if ($lastExtension instanceof MiscExtension) {
-            return $lastExtension;
-        }
-
-        $miscExtension = new MiscExtension();
-        $this->addExtension($miscExtension);
-
-        return $miscExtension;
     }
 }
