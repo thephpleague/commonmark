@@ -225,20 +225,6 @@ class EnvironmentTest extends TestCase
         $environment->addBlockRenderer('MyClass', $renderer);
     }
 
-    public function testAddInlineParserAndGetter()
-    {
-        $environment = new Environment();
-
-        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
-        $parser->expects($this->any())
-            ->method('getCharacters')
-            ->will($this->returnValue(['a']));
-
-        $environment->addInlineParser($parser);
-
-        $this->assertContains($parser, $environment->getInlineParsers());
-    }
-
     public function testInlineParserCanMatchRegexDelimiter()
     {
         $environment = new Environment();
@@ -249,7 +235,7 @@ class EnvironmentTest extends TestCase
             ->will($this->returnValue(['/']));
 
         $environment->addInlineParser($parser);
-        $environment->getInlineParsers();
+        $environment->getInlineParsersForCharacter('/');
 
         $this->assertEquals(1, preg_match($environment->getInlineParserCharacterRegex(), 'foo/bar'));
     }
@@ -262,27 +248,10 @@ class EnvironmentTest extends TestCase
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getInlineParsers();
+        $environment->getInlineParsersForCharacter('');
 
         $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
         $environment->addInlineParser($parser);
-    }
-
-    public function testGetInlineParserByName()
-    {
-        $environment = new Environment();
-
-        $parser = $this->createMock('League\CommonMark\Inline\Parser\InlineParserInterface');
-        $parser->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue('test'));
-        $parser->expects($this->any())
-            ->method('getCharacters')
-            ->will($this->returnValue(['a']));
-
-        $environment->addInlineParser($parser);
-
-        $this->assertEquals($parser, $environment->getInlineParser('test'));
     }
 
     public function testGetInlineParsersForCharacter()
@@ -375,15 +344,6 @@ class EnvironmentTest extends TestCase
         $this->assertNull($renderer);
     }
 
-    public function testCreateInlineParserEngine()
-    {
-        $environment = new Environment();
-
-        $engine = $environment->createInlineParserEngine();
-
-        $this->assertTrue($engine instanceof InlineParserEngine);
-    }
-
     public function testAddExtensionAndGetter()
     {
         $environment = new Environment();
@@ -458,7 +418,7 @@ class EnvironmentTest extends TestCase
         $environment = new Environment();
 
         // This triggers the initialization which builds the regex
-        $environment->createInlineParserEngine();
+        $environment->getInlineParsersForCharacter('');
 
         $regex = $environment->getInlineParserCharacterRegex();
 

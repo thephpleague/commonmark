@@ -15,8 +15,8 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Environment;
 use League\CommonMark\EnvironmentAwareInterface;
+use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\Configuration;
@@ -37,7 +37,7 @@ class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInt
         $this->config->mergeConfig($newConfig);
     }
 
-    public function setEnvironment(Environment $environment)
+    public function setEnvironment(EnvironmentInterface $environment)
     {
         $this->config->mergeConfig($environment->getConfig());
     }

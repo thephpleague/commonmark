@@ -23,14 +23,14 @@ use League\CommonMark\Inline\Element\AbstractInline;
 class HtmlRenderer implements ElementRendererInterface
 {
     /**
-     * @var Environment
+     * @var EnvironmentInterface
      */
     protected $environment;
 
     /**
-     * @param Environment $environment
+     * @param EnvironmentInterface $environment
      */
-    public function __construct(Environment $environment)
+    public function __construct(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
     }

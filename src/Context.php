@@ -23,7 +23,7 @@ use League\CommonMark\Block\Element\Document;
 class Context implements ContextInterface
 {
     /**
-     * @var Environment
+     * @var EnvironmentInterface
      */
     protected $environment;
 
@@ -66,7 +66,7 @@ class Context implements ContextInterface
 
     protected $referenceParser;
 
-    public function __construct(Document $document, Environment $environment)
+    public function __construct(Document $document, EnvironmentInterface $environment)
     {
         $this->doc = $document;
         $this->tip = $this->doc;

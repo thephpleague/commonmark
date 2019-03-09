@@ -15,7 +15,7 @@
 namespace League\CommonMark\Inline\Renderer;
 
 use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\Environment;
+use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\Util\Configuration;
@@ -45,11 +45,11 @@ class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareI
             return '';
         }
 
-        if ($this->config->getConfig('html_input') === Environment::HTML_INPUT_STRIP) {
+        if ($this->config->getConfig('html_input') === EnvironmentInterface::HTML_INPUT_STRIP) {
             return '';
         }
 
-        if ($this->config->getConfig('html_input') === Environment::HTML_INPUT_ESCAPE) {
+        if ($this->config->getConfig('html_input') === EnvironmentInterface::HTML_INPUT_ESCAPE) {
             return htmlspecialchars($inline->getContent(), ENT_NOQUOTES);
         }
 

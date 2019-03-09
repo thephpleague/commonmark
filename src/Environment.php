@@ -25,66 +25,62 @@ use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 
-class Environment
+final class Environment implements EnvironmentInterface, ConfigurableEnvironmentInterface
 {
-    const HTML_INPUT_STRIP = 'strip';
-    const HTML_INPUT_ESCAPE = 'escape';
-    const HTML_INPUT_ALLOW = 'allow';
-
     /**
      * @var ExtensionInterface[]
      */
-    protected $extensions = [];
+    private $extensions = [];
 
     /**
      * @var bool
      */
-    protected $extensionsInitialized = false;
+    private $extensionsInitialized = false;
 
     /**
      * @var BlockParserInterface[]
      */
-    protected $blockParsers = [];
+    private $blockParsers = [];
 
     /**
      * @var InlineParserInterface[]
      */
-    protected $inlineParsers = [];
+    private $inlineParsers = [];
 
     /**
      * @var array
      */
-    protected $inlineParsersByCharacter = [];
+    private $inlineParsersByCharacter = [];
 
     /**
      * @var DocumentProcessorInterface[]
      */
-    protected $documentProcessors = [];
+    private $documentProcessors = [];
 
     /**
      * @var InlineProcessorInterface[]
      */
-    protected $inlineProcessors = [];
+    private $inlineProcessors = [];
 
     /**
      * @var BlockRendererInterface[]
      */
-    protected $blockRenderersByClass = [];
+    private $blockRenderersByClass = [];
 
     /**
      * @var InlineRendererInterface[]
      */
-    protected $inlineRenderersByClass = [];
+    private $inlineRenderersByClass = [];
 
     /**
      * @var Configuration
      */
-    protected $config;
+    private $config;
 
     /**
      * @var string
      */
-    protected $inlineParserCharacterRegex;
+    private $inlineParserCharacterRegex;
 
     public function __construct(array $config = [])
     {
@@ -92,7 +88,7 @@ class Environment
     }
 
     /**
-     * @param array $config
+     * {@inheritdoc}
      */
     public function mergeConfig(array $config = [])
     {
@@ -102,7 +98,7 @@ class Environment
     }
 
     /**
-     * @param array $config
+     * {@inheritdoc}
      */
     public function setConfig(array $config = [])
     {
@@ -112,10 +108,7 @@ class Environment
     }
 
     /**
-     * @param string|null $key
-     * @param mixed       $default
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getConfig($key = null, $default = null)
     {
@@ -123,9 +116,7 @@ class Environment
     }
 
     /**
-     * @param BlockParserInterface $parser
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function addBlockParser(BlockParserInterface $parser)
     {
@@ -137,9 +128,7 @@ class Environment
     }
 
     /**
-     * @param InlineParserInterface $parser
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function addInlineParser(InlineParserInterface $parser)
     {
@@ -151,9 +140,7 @@ class Environment
     }
 
     /**
-     * @param InlineProcessorInterface $processor
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function addInlineProcessor(InlineProcessorInterface $processor)
     {
@@ -165,9 +152,7 @@ class Environment
     }
 
     /**
-     * @param DocumentProcessorInterface $processor
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function addDocumentProcessor(DocumentProcessorInterface $processor)
     {
@@ -179,10 +164,7 @@ class Environment
     }
 
     /**
-     * @param string                 $blockClass
-     * @param BlockRendererInterface $blockRenderer
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer)
     {
@@ -194,10 +176,7 @@ class Environment
     }
 
     /**
-     * @param string                  $inlineClass
-     * @param InlineRendererInterface $renderer
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer)
     {
@@ -209,7 +188,7 @@ class Environment
     }
 
     /**
-     * @return BlockParserInterface[]
+     * {@inheritdoc}
      */
     public function getBlockParsers()
     {
@@ -219,31 +198,7 @@ class Environment
     }
 
     /**
-     * @param string $name
-     *
-     * @return InlineParserInterface
-     */
-    public function getInlineParser($name)
-    {
-        $this->initializeExtensions();
-
-        return $this->inlineParsers[$name];
-    }
-
-    /**
-     * @return InlineParserInterface[]
-     */
-    public function getInlineParsers()
-    {
-        $this->initializeExtensions();
-
-        return $this->inlineParsers;
-    }
-
-    /**
-     * @param string $character
-     *
-     * @return InlineParserInterface[]
+     * {@inheritdoc}
      */
     public function getInlineParsersForCharacter($character)
     {
@@ -257,7 +212,7 @@ class Environment
     }
 
     /**
-     * @return InlineProcessorInterface[]
+     * {@inheritdoc}
      */
     public function getInlineProcessors()
     {
@@ -267,7 +222,7 @@ class Environment
     }
 
     /**
-     * @return DocumentProcessorInterface[]
+     * {@inheritdoc}
      */
     public function getDocumentProcessors()
     {
@@ -277,9 +232,7 @@ class Environment
     }
 
     /**
-     * @param string $blockClass
-     *
-     * @return BlockRendererInterface|null
+     * {@inheritdoc}
      */
     public function getBlockRendererForClass($blockClass)
     {
@@ -293,9 +246,7 @@ class Environment
     }
 
     /**
-     * @param string $inlineClass
-     *
-     * @return InlineRendererInterface|null
+     * {@inheritdoc}
      */
     public function getInlineRendererForClass($inlineClass)
     {
@@ -306,13 +257,6 @@ class Environment
         }
 
         return $this->inlineRenderersByClass[$inlineClass];
-    }
-
-    public function createInlineParserEngine()
-    {
-        $this->initializeExtensions();
-
-        return new InlineParserEngine($this);
     }
 
     /**
@@ -341,7 +285,7 @@ class Environment
         return $this;
     }
 
-    protected function initializeExtensions()
+    private function initializeExtensions()
     {
         // Only initialize them once
         if ($this->extensionsInitialized) {
@@ -363,7 +307,7 @@ class Environment
     /**
      * @param ExtensionInterface $extension
      */
-    protected function initializeExtension(ExtensionInterface $extension)
+    private function initializeExtension(ExtensionInterface $extension)
     {
         $this->initalizeBlockParsers($extension->getBlockParsers());
         $this->initializeInlineParsers($extension->getInlineParsers());
@@ -492,11 +436,7 @@ class Environment
     }
 
     /**
-     * Regex which matches any character which doesn't indicate an inline element
-     *
-     * This allows us to parse multiple non-special characters at once
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getInlineParserCharacterRegex()
     {
