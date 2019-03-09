@@ -18,13 +18,12 @@ use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Extension\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\Extension\MiscExtension;
-use League\CommonMark\Util\PrioritizedList;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\PrioritizedList;
 
 final class Environment implements EnvironmentInterface, ConfigurableEnvironmentInterface
 {
