@@ -27,7 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "league\\CommonMark\\Ext\\InlinesOnly\\Test\\": "tests"
+            "League\\CommonMark\\Ext\\InlinesOnly\\Tests\\": "tests"
         }
     },
     "scripts": {
