@@ -114,15 +114,19 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 - [Twig-based renderer](https://github.com/webuni/commonmark-twig-renderer)
 - [Twig filter and tag](https://github.com/aptoma/twig-markdown)
 
-### CommonMark Extras
+### League Extensions
 
-You can find several examples of useful extensions and customizations in the [league/commonmark-extras package](https://github.com/thephpleague/commonmark-extras).  You can add them to your parser or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
+The PHP League offers useful extensions that add extra syntax and features:
+
+ - [`league/commonmark-ext-smartpunct`](https://github.com/thephpleague/commonmark-ext-smartpunct) - Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents
+ - [`league/commonmark-ext-inlines-only`](https://github.com/thephpleague/commonmark-ext-inlines-only) - Renders inline text without paragraph tags or other block-level elements
+
+You can add them to your project or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
 
 ### Community Extensions
 
 Custom parsers/renderers can be bundled into extensions which extend CommonMark.  Here are some that you may find interesting:
 
- - [Markua](https://github.com/dshafik/markua) - Markdown parser for PHP which intends to support the full Markua spec.
  - [CommonMark Table Extension](https://github.com/webuni/commonmark-table-extension) - Adds the ability to create tables in CommonMark documents.
  - [CommonMark Attributes Extension](https://github.com/webuni/commonmark-attributes-extension) - Adds a syntax to define attributes on the various HTML elements.
  - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark.
