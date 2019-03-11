@@ -1,0 +1,55 @@
+{
+    "name": "league/commonmark-ext-smartpunct",
+    "type": "commonmark-extension",
+    "description": "Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents",
+    "keywords": ["markdown", "commonmark", "extension", "punctuation"],
+    "homepage": "https://github.com/thephpleague/commonmark-ext-smartpunct",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Colin O'Dell",
+            "email": "colinodell@gmail.com",
+            "homepage": "https://www.colinodell.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.6",
+        "league/commonmark": "^0.13|^0.14|^0.15|^0.16|^0.17|^0.18"
+    },
+    "require-dev": {
+        "jgm/smartpunct": "0.28",
+        "phpunit/phpunit": "^5.7"
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "jgm/smartpunct",
+                "version": "0.28",
+                "dist": {
+                    "url": "https://raw.githubusercontent.com/jgm/commonmark.js/0.28.0/test/smart_punct.txt",
+                    "type": "file"
+                }
+            }
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "League\\CommonMark\\Ext\\SmartPunct\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "league\\CommonMark\\Ext\\SmartPunct\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    }
+}
