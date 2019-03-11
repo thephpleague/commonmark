@@ -65,10 +65,13 @@ $environment = Environment::createCommonMarkEnvironment();
 // For example:  $environment->addInlineParser(new TwitterHandleParser());
 
 // Define your configuration:
-$config = ['html_input' => 'escape'];
-
-// To configure GitHub style newlines to create line breaks:
-$config = ['renderer' => ['soft_break' => "<br />\n"]];
+$config = [
+  'html_input' => 'escape',
+  'renderer' => [
+    // To configure GitHub style newlines to create line breaks:
+    'soft_break' => "<br />\n",
+  ],
+];
 
 // Create the converter
 $converter = new CommonMarkConverter($config, $environment);
