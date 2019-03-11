@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the league/commonmark-extras package.
+ * This file is part of the league/commonmark-ext-smartpunct package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
@@ -12,7 +12,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Ext\Tests\SmartPunct;
+namespace League\CommonMark\Ext\SmartPunct\Tests;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Converter;

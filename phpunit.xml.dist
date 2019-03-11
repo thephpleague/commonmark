@@ -10,7 +10,7 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="commonmark-extras Test Suite">
+        <testsuite name="commonmark-ext-smartpunct Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

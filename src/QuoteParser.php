@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the league/commonmark-extras package.
+ * This file is part of the league/commonmark-ext-smartpunct package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *

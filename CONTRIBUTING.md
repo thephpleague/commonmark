@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Github](https://github.com/thephpleague/commonmark-extras).
+We accept contributions via Pull Requests on [Github](https://github.com/thephpleague/commonmark-ext-smartpunct).
 
 ## Pull Requests
 
@@ -24,7 +24,7 @@ We accept contributions via Pull Requests on [Github](https://github.com/thephpl
 
 ~~~
 /*
- * This file is part of the league/commonmark-extras package.
+ * This file is part of the league/commonmark-ext-smartpunct package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
