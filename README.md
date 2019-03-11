@@ -108,9 +108,13 @@ Documentation can be found at [commonmark.thephpleague.com][docs].
 - [Twig-based renderer](https://github.com/webuni/commonmark-twig-renderer)
 - [Twig filter and tag](https://github.com/aptoma/twig-markdown)
 
-### CommonMark Extras
+### League Extensions
 
-You can find several examples of useful extensions and customizations in the [league/commonmark-extras package](https://github.com/thephpleague/commonmark-extras).  You can add them to your parser or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
+The PHP League offers useful extensions that add extra syntax and features:
+
+ - [`league/commonmark-ext-smartpunct`](https://github.com/thephpleague/commonmark-ext-smartpunct) - Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents
+
+You can add them to your project or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
 
 ### Community Extensions
 
