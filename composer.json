@@ -1,0 +1,41 @@
+{
+    "name": "league/commonmark-ext-inlines-only",
+    "type": "commonmark-extension",
+    "description": "Extension for league/commonmark which only renders inline text",
+    "keywords": ["markdown", "commonmark", "extension", "inline"],
+    "homepage": "https://github.com/thephpleague/commonmark-ext-inlines-only",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Colin O'Dell",
+            "email": "colinodell@gmail.com",
+            "homepage": "https://www.colinodell.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.6",
+        "league/commonmark": "^0.18.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "League\\CommonMark\\Ext\\InlinesOnly\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "league\\CommonMark\\Ext\\InlinesOnly\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    }
+}
