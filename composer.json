@@ -1,8 +1,8 @@
 {
     "name": "league/commonmark-ext-smartpunct",
     "type": "commonmark-extension",
-    "description": "Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents",
-    "keywords": ["markdown", "commonmark", "extension", "punctuation"],
+    "description": "Intelligently converts ASCII quotes, dashes, and ellipses in Markdown to their Unicode equivalents",
+    "keywords": ["markdown", "commonmark", "extension", "punctuation", "smartpunct"],
     "homepage": "https://github.com/thephpleague/commonmark-ext-smartpunct",
     "license": "BSD-3-Clause",
     "authors": [
