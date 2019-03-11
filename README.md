@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents.
+Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents.  For use with the [`league/commonmark` Markdown parser for PHP](https://github.com/thephpleague/commonmark).
 
 For example, this Markdown...
 
