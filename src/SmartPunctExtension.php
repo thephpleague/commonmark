@@ -50,7 +50,7 @@ class SmartPunctExtension extends Extension
     public function getBlockRenderers()
     {
         return [
-            Document::class => new CoreBlockRenderer\DocumentRenderer(),
+            Document::class  => new CoreBlockRenderer\DocumentRenderer(),
             Paragraph::class => new CoreBlockRenderer\ParagraphRenderer(),
         ];
     }
