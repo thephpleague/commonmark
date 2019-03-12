@@ -41,7 +41,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "league\\CommonMark\\Ext\\SmartPunct\\Test\\": "tests"
+            "League\\CommonMark\\Ext\\SmartPunct\\Tests\\": "tests"
         }
     },
     "scripts": {
