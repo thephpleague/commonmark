@@ -365,7 +365,7 @@ class Environment
      */
     protected function initializeExtension(ExtensionInterface $extension)
     {
-        $this->initalizeBlockParsers($extension->getBlockParsers());
+        $this->initializeBlockParsers($extension->getBlockParsers());
         $this->initializeInlineParsers($extension->getInlineParsers());
         $this->initializeInlineProcessors($extension->getInlineProcessors());
         $this->initializeDocumentProcessors($extension->getDocumentProcessors());
@@ -376,7 +376,7 @@ class Environment
     /**
      * @param BlockParserInterface[] $blockParsers
      */
-    private function initalizeBlockParsers($blockParsers)
+    private function initializeBlockParsers($blockParsers)
     {
         foreach ($blockParsers as $blockParser) {
             if ($blockParser instanceof EnvironmentAwareInterface) {
