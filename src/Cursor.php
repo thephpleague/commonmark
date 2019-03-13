@@ -162,7 +162,7 @@ class Cursor
      *
      * @return string|null
      */
-    public function getCharacter($index = null): ?string
+    public function getCharacter(?int $index = null): ?string
     {
         if ($index === null) {
             $index = $this->currentPosition;
@@ -187,7 +187,7 @@ class Cursor
      *
      * @return string|null
      */
-    public function peek($offset = 1): ?string
+    public function peek(int $offset = 1): ?string
     {
         return $this->getCharacter($this->currentPosition + $offset);
     }
