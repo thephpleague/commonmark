@@ -40,15 +40,16 @@ class ListParser implements BlockParserInterface
         $tmpCursor->advanceToNextNonSpaceOrTab();
         $rest = $tmpCursor->getRemainder();
 
-        $data = new ListData();
-        $data->markerOffset = $cursor->getIndent();
-
         if (preg_match('/^[*+-]/', $rest) === 1) {
+            $data = new ListData();
+            $data->markerOffset = $cursor->getIndent();
             $data->type = ListBlock::TYPE_UNORDERED;
             $data->delimiter = null;
             $data->bulletChar = $rest[0];
             $markerLength = 1;
         } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (!($context->getContainer() instanceof Paragraph) || $matches[1] === '1')) {
+            $data = new ListData();
+            $data->markerOffset = $cursor->getIndent();
             $data->type = ListBlock::TYPE_ORDERED;
             $data->start = (int) $matches[1];
             $data->delimiter = $matches[2];
