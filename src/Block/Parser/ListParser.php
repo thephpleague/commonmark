@@ -76,7 +76,7 @@ class ListParser implements BlockParserInterface
         $data->padding = $this->calculateListMarkerPadding($cursor, $markerLength);
 
         // add the list if needed
-        if (!$container || !($container instanceof ListBlock) || !$data->equals($container->getListData())) {
+        if (!($container instanceof ListBlock) || !$data->equals($container->getListData())) {
             $context->addBlock(new ListBlock($data));
         }
 
