@@ -8,7 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
  - The priority of parsers, processors, and renderers can now be set when `add()`ing them; you no longer need to rely on the order in which they are added
  - Added support for trying multiple parsers per block/inline
- - Extracted two new bases interfaces from `Environment`:
+ - Extracted two new base interfaces from `Environment`:
    - `EnvironmentInterface`
    - `ConfigurableEnvironmentInterface`
 
