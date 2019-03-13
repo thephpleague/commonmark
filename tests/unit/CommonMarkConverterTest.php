@@ -6,6 +6,7 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Converter;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
+use League\CommonMark\EnvironmentInterface;
 use PHPUnit\Framework\TestCase;
 
 class CommonMarkConverterTest extends TestCase
@@ -37,7 +38,7 @@ class CommonMarkConverterTest extends TestCase
     public function testEnvironmentAndConfigConstructor()
     {
         $config = ['foo' => 'bar'];
-        $mockEnvironment = $this->createMock('League\CommonMark\Environment');
+        $mockEnvironment = $this->createMock('League\CommonMark\ConfigurableEnvironmentInterface');
         $mockEnvironment->expects($this->once())
             ->method('mergeConfig')
             ->with($config);
@@ -52,7 +53,7 @@ class CommonMarkConverterTest extends TestCase
     /**
      * @param Converter $converter
      *
-     * @return \League\CommonMark\Environment
+     * @return EnvironmentInterface
      */
     private function getEnvironmentFromConverter(Converter $converter)
     {

@@ -17,8 +17,8 @@ namespace League\CommonMark\Inline\Parser;
 use League\CommonMark\Cursor;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\DelimiterStack;
-use League\CommonMark\Environment;
 use League\CommonMark\EnvironmentAwareInterface;
+use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Inline\Element\AbstractWebResource;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
@@ -31,7 +31,7 @@ use League\CommonMark\Util\RegexHelper;
 class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwareInterface
 {
     /**
-     * @var Environment
+     * @var EnvironmentInterface
      */
     protected $environment;
 
@@ -106,9 +106,9 @@ class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwar
     }
 
     /**
-     * @param Environment $environment
+     * @param EnvironmentInterface $environment
      */
-    public function setEnvironment(Environment $environment)
+    public function setEnvironment(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
     }

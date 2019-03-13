@@ -11,3 +11,7 @@ disabled:
   - phpdoc_summary
   - post_increment
   - self_accessor
+
+finder:
+  not-name:
+    - "CommonMarkCoreExtension.php"

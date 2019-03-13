@@ -14,58 +14,9 @@
 
 namespace League\CommonMark\Extension;
 
-use League\CommonMark\Block\Parser\BlockParserInterface;
-use League\CommonMark\Block\Renderer\BlockRendererInterface;
-use League\CommonMark\DocumentProcessorInterface;
-use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\Inline\Processor\InlineProcessorInterface;
-use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\ConfigurableEnvironmentInterface;
 
 interface ExtensionInterface
 {
-    /**
-     * Returns a list of block parsers to add to the existing list
-     *
-     * @return BlockParserInterface[]
-     */
-    public function getBlockParsers();
-
-    /**
-     * Returns a list of inline parsers to add to the existing list
-     *
-     * @return InlineParserInterface[]
-     */
-    public function getInlineParsers();
-
-    /**
-     * Returns a list of inline processors to add to the existing list
-     *
-     * @return InlineProcessorInterface[]
-     */
-    public function getInlineProcessors();
-
-    /**
-     * Returns a list of document processors to add to the existing list
-     *
-     * @return DocumentProcessorInterface[]
-     */
-    public function getDocumentProcessors();
-
-    /**
-     * Returns a list of block renderers to add to the existing list
-     *
-     * The list keys are the block class names which the corresponding value (renderer) will handle.
-     *
-     * @return BlockRendererInterface[]
-     */
-    public function getBlockRenderers();
-
-    /**
-     * Returns a list of inline renderers to add to the existing list
-     *
-     * The list keys are the inline class names which the corresponding value (renderer) will handle.
-     *
-     * @return InlineRendererInterface[]
-     */
-    public function getInlineRenderers();
+    public function register(ConfigurableEnvironmentInterface $environment);
 }

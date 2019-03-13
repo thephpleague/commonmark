@@ -23,7 +23,7 @@ use League\CommonMark\Node\NodeWalker;
 class DocParser
 {
     /**
-     * @var Environment
+     * @var EnvironmentInterface
      */
     protected $environment;
 
@@ -38,9 +38,9 @@ class DocParser
     private $maxNestingLevel;
 
     /**
-     * @param Environment $environment
+     * @param EnvironmentInterface $environment
      */
-    public function __construct(Environment $environment)
+    public function __construct(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
         $this->inlineParserEngine = new InlineParserEngine($environment);
@@ -48,7 +48,7 @@ class DocParser
     }
 
     /**
-     * @return Environment
+     * @return EnvironmentInterface
      */
     public function getEnvironment()
     {

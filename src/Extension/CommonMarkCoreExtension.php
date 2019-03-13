@@ -16,93 +16,58 @@ namespace League\CommonMark\Extension;
 
 use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Renderer as BlockRenderer;
+use League\CommonMark\ConfigurableEnvironmentInterface;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Processor as InlineProcessor;
 use League\CommonMark\Inline\Renderer as InlineRenderer;
 
-class CommonMarkCoreExtension extends Extension
+final class CommonMarkCoreExtension implements ExtensionInterface
 {
-    /**
-     * @return BlockParser\BlockParserInterface[]
-     */
-    public function getBlockParsers()
+    public function register(ConfigurableEnvironmentInterface $environment)
     {
-        return [
-            // This order is important
-            new BlockParser\BlockQuoteParser(),
-            new BlockParser\ATXHeadingParser(),
-            new BlockParser\FencedCodeParser(),
-            new BlockParser\HtmlBlockParser(),
-            new BlockParser\SetExtHeadingParser(),
-            new BlockParser\ThematicBreakParser(),
-            new BlockParser\ListParser(),
-            new BlockParser\IndentedCodeParser(),
-            new BlockParser\LazyParagraphParser(),
-        ];
-    }
+        $environment
+            ->addBlockParser(new BlockParser\BlockQuoteParser(),      70)
+            ->addBlockParser(new BlockParser\ATXHeadingParser(),      60)
+            ->addBlockParser(new BlockParser\FencedCodeParser(),      50)
+            ->addBlockParser(new BlockParser\HtmlBlockParser(),       40)
+            ->addBlockParser(new BlockParser\SetExtHeadingParser(),   30)
+            ->addBlockParser(new BlockParser\ThematicBreakParser(),   20)
+            ->addBlockParser(new BlockParser\ListParser(),            10)
+            ->addBlockParser(new BlockParser\IndentedCodeParser(),  -100)
+            ->addBlockParser(new BlockParser\LazyParagraphParser(), -200)
 
-    /**
-     * @return InlineParser\InlineParserInterface[]
-     */
-    public function getInlineParsers()
-    {
-        return [
-            new InlineParser\NewlineParser(),
-            new InlineParser\BacktickParser(),
-            new InlineParser\EscapableParser(),
-            new InlineParser\EntityParser(),
-            new InlineParser\EmphasisParser(),
-            new InlineParser\AutolinkParser(),
-            new InlineParser\HtmlInlineParser(),
-            new InlineParser\CloseBracketParser(),
-            new InlineParser\OpenBracketParser(),
-            new InlineParser\BangParser(),
-        ];
-    }
+            ->addInlineParser(new InlineParser\NewlineParser(),     200)
+            ->addInlineParser(new InlineParser\BacktickParser(),    150)
+            ->addInlineParser(new InlineParser\EscapableParser(),    80)
+            ->addInlineParser(new InlineParser\EntityParser(),       70)
+            ->addInlineParser(new InlineParser\EmphasisParser(),     60)
+            ->addInlineParser(new InlineParser\AutolinkParser(),     50)
+            ->addInlineParser(new InlineParser\HtmlInlineParser(),   40)
+            ->addInlineParser(new InlineParser\CloseBracketParser(), 30)
+            ->addInlineParser(new InlineParser\OpenBracketParser(),  20)
+            ->addInlineParser(new InlineParser\BangParser(),         10)
 
-    /**
-     * @return InlineProcessor\InlineProcessorInterface[]
-     */
-    public function getInlineProcessors()
-    {
-        return [
-            new InlineProcessor\EmphasisProcessor(),
-        ];
-    }
+            ->addInlineProcessor(new InlineProcessor\EmphasisProcessor(), 0)
 
-    /**
-     * @return BlockRenderer\BlockRendererInterface[]
-     */
-    public function getBlockRenderers()
-    {
-        return [
-            'League\CommonMark\Block\Element\BlockQuote'    => new BlockRenderer\BlockQuoteRenderer(),
-            'League\CommonMark\Block\Element\Document'      => new BlockRenderer\DocumentRenderer(),
-            'League\CommonMark\Block\Element\FencedCode'    => new BlockRenderer\FencedCodeRenderer(),
-            'League\CommonMark\Block\Element\Heading'       => new BlockRenderer\HeadingRenderer(),
-            'League\CommonMark\Block\Element\HtmlBlock'     => new BlockRenderer\HtmlBlockRenderer(),
-            'League\CommonMark\Block\Element\IndentedCode'  => new BlockRenderer\IndentedCodeRenderer(),
-            'League\CommonMark\Block\Element\ListBlock'     => new BlockRenderer\ListBlockRenderer(),
-            'League\CommonMark\Block\Element\ListItem'      => new BlockRenderer\ListItemRenderer(),
-            'League\CommonMark\Block\Element\Paragraph'     => new BlockRenderer\ParagraphRenderer(),
-            'League\CommonMark\Block\Element\ThematicBreak' => new BlockRenderer\ThematicBreakRenderer(),
-        ];
-    }
+            ->addBlockRenderer('League\CommonMark\Block\Element\BlockQuote',    new BlockRenderer\BlockQuoteRenderer(),    0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\Document',      new BlockRenderer\DocumentRenderer(),      0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\FencedCode',    new BlockRenderer\FencedCodeRenderer(),    0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\Heading',       new BlockRenderer\HeadingRenderer(),       0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\HtmlBlock',     new BlockRenderer\HtmlBlockRenderer(),     0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\IndentedCode',  new BlockRenderer\IndentedCodeRenderer(),  0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\ListBlock',     new BlockRenderer\ListBlockRenderer(),     0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\ListItem',      new BlockRenderer\ListItemRenderer(),      0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\Paragraph',     new BlockRenderer\ParagraphRenderer(),     0)
+            ->addBlockRenderer('League\CommonMark\Block\Element\ThematicBreak', new BlockRenderer\ThematicBreakRenderer(), 0)
 
-    /**
-     * @return InlineRenderer\InlineRendererInterface[]
-     */
-    public function getInlineRenderers()
-    {
-        return [
-            'League\CommonMark\Inline\Element\Code'       => new InlineRenderer\CodeRenderer(),
-            'League\CommonMark\Inline\Element\Emphasis'   => new InlineRenderer\EmphasisRenderer(),
-            'League\CommonMark\Inline\Element\HtmlInline' => new InlineRenderer\HtmlInlineRenderer(),
-            'League\CommonMark\Inline\Element\Image'      => new InlineRenderer\ImageRenderer(),
-            'League\CommonMark\Inline\Element\Link'       => new InlineRenderer\LinkRenderer(),
-            'League\CommonMark\Inline\Element\Newline'    => new InlineRenderer\NewlineRenderer(),
-            'League\CommonMark\Inline\Element\Strong'     => new InlineRenderer\StrongRenderer(),
-            'League\CommonMark\Inline\Element\Text'       => new InlineRenderer\TextRenderer(),
-        ];
+            ->addInlineRenderer('League\CommonMark\Inline\Element\Code',       new InlineRenderer\CodeRenderer(),       0)
+            ->addInlineRenderer('League\CommonMark\Inline\Element\Emphasis',   new InlineRenderer\EmphasisRenderer(),   0)
+            ->addInlineRenderer('League\CommonMark\Inline\Element\HtmlInline', new InlineRenderer\HtmlInlineRenderer(), 0)
+            ->addInlineRenderer('League\CommonMark\Inline\Element\Image',      new InlineRenderer\ImageRenderer(),      0)
+            ->addInlineRenderer('League\CommonMark\Inline\Element\Link',       new InlineRenderer\LinkRenderer(),       0)
+            ->addInlineRenderer('League\CommonMark\Inline\Element\Newline',    new InlineRenderer\NewlineRenderer(),    0)
+            ->addInlineRenderer('League\CommonMark\Inline\Element\Strong',     new InlineRenderer\StrongRenderer(),     0)
+            ->addInlineRenderer('League\CommonMark\Inline\Element\Text',       new InlineRenderer\TextRenderer(),       0)
+        ;
     }
 }

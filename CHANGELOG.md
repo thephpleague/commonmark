@@ -4,6 +4,31 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - The priority of parsers, processors, and renderers can now be set when `add()`ing them; you no longer need to rely on the order in which they are added
+ - Added support for trying multiple parsers per block/inline
+ - Extracted two new bases interfaces from `Environment`:
+   - `EnvironmentInterface`
+   - `ConfigurableEnvironmentInterface`
+
+### Changed
+
+ - `Environment` is now a `final` class
+ - `Environment::getBlockRendererForClass()` was replaced with `Environment::getBlockRenderersForClass()` (note the added `s`)
+ - `Environment::getInlineRendererForClass()` was replaced with `Environment::getInlineRenderersForClass()` (note the added `s`)
+ - The `Environment::get____()` methods now return an iterator instead of an array
+
+### Removed
+
+ - Removed support for `add()`ing parsers with just the target block/inline class name - you need to include the full namespace now
+ - Removed the following unused methods from `Environment`:
+   - `getInlineParser($name)`
+   - `getInlineParsers()`
+   - `createInlineParserEngine()`
+
+### Changed
+
 ## [0.18.1] - 2018-12-29
 
 This is a **security update** release.

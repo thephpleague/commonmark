@@ -22,7 +22,7 @@ class InlineParserEngine
 {
     protected $environment;
 
-    public function __construct(Environment $environment)
+    public function __construct(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
     }
