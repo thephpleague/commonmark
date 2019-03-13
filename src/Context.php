@@ -18,7 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 
 /**
- * Parses Markdown into an AST
+ * Maintains the current state of the Markdown parser engine
  */
 class Context implements ContextInterface
 {

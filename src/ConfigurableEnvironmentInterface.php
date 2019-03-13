@@ -17,6 +17,9 @@ use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
+/**
+ * Interface for an Environment which can be configured with config settings, parsers, processors, and renderers
+ */
 interface ConfigurableEnvironmentInterface extends EnvironmentInterface
 {
     /**
