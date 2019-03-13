@@ -21,6 +21,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - The `Environment::get____()` methods now return an iterator instead of an array
  - `Context::addBlock()` no longer returns the same block instance you passed into the method, as this served no useful purpose
  - `RegexHelper::isEscapable()` no longer accepts `null` values
+ - `Node::replaceChildren()` now accepts any type of `iterable`, not just `array`s
 
 ### Removed
 
