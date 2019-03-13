@@ -18,7 +18,7 @@ use League\CommonMark\Block\Element\BlockQuote;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class BlockQuoteParser extends AbstractBlockParser
+class BlockQuoteParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context

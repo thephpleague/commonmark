@@ -31,17 +31,6 @@ class FakeEmptyHtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param string $string
-     * @param bool   $preserveEntities
-     *
-     * @return string
-     */
-    public function escape($string, $preserveEntities = false)
-    {
-        return '';
-    }
-
-    /**
      * @param AbstractInline[] $inlines
      *
      * @return string

@@ -18,7 +18,7 @@ use League\CommonMark\Block\Element\FencedCode;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class FencedCodeParser extends AbstractBlockParser
+class FencedCodeParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context

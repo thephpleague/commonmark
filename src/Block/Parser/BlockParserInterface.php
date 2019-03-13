@@ -20,11 +20,6 @@ use League\CommonMark\Cursor;
 interface BlockParserInterface
 {
     /**
-     * @return string
-     */
-    public function getName();
-
-    /**
      * @param ContextInterface $context
      * @param Cursor           $cursor
      *

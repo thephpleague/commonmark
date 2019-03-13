@@ -20,7 +20,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class SetExtHeadingParser extends AbstractBlockParser
+class SetExtHeadingParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context

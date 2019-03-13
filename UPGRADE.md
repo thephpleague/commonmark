@@ -8,6 +8,23 @@ The `Environment` and extension framework underwent some major changes in this r
 
 This library no longer supports PHP 5.6 or 7.0.  Feel free to remove support for those from your extensions as well.
 
+### Removed classes and interface methods
+
+The `getName()` method has been removed from several classes:
+
+ - `BlockParserInterface` and `AbstractBlockParser`
+ - `InlineParserInterface` and `AbstractInlineParser`
+
+This method was originally intended for supporting XML rendering, which was never implemented, and will likely define names a bit differently if/when we do add support.
+
+After doing this, the two abstract classes mentioned above had notthing left in them, so those were removed.  Any parsers previously extending them should directly implement the corresponding interface instead.
+
+`InlineContainer` was also removed.
+
+### Removed deprecated `RegexHelper` methods
+
+Several previously-deprecated methods inside of `RegexHelper` were finally removed.  That functionality was made available with static methods and constants, so use those instead.
+
 ### Environment interfaces
 
 We have extracted two interfaces from the `Environment` class:

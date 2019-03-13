@@ -19,7 +19,7 @@ use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\Html5Entities;
 use League\CommonMark\Util\RegexHelper;
 
-class EntityParser extends AbstractInlineParser
+class EntityParser implements InlineParserInterface
 {
     /**
      * @return string[]

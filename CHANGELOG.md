@@ -27,6 +27,24 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `getInlineParser($name)`
    - `getInlineParsers()`
    - `createInlineParserEngine()`
+ - Removed the unused `getName()` methods:
+   - `AbstractBlockParser::getName()`
+   - `AbstractInlineParser::getName()`
+   - `BlockParserInterface::getName()`
+   - `InlinerParserInterface::getName()`
+ - Removed the now-useless classes:
+   - `AbstractBlock`
+   - `AbstractInlinerParser`
+   - `InlineContainer`
+ - Removed previously-deprecated functionality:
+   - `InlineContainer` class
+   - `RegexHelper::$instance`
+   - `RegexHelper::getInstance()`
+   - `RegexHelper::getPartialRegex()`
+   - `RegexHelper::getHtmlTagRegex()`
+   - `RegexHelper::getLinkTitleRegex()`
+   - `RegexHelper::getLinkDestinationBracesRegex()`
+   - `RegexHelper::getThematicBreakRegex()`
 
 ### Changed
 

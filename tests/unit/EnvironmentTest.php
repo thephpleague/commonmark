@@ -220,9 +220,6 @@ class EnvironmentTest extends TestCase
 
         $parser = $this->createMock(InlineParserInterface::class);
         $parser->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue('test'));
-        $parser->expects($this->any())
             ->method('getCharacters')
             ->will($this->returnValue(['a']));
 

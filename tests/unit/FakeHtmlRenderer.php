@@ -47,19 +47,6 @@ class FakeHtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param string $string
-     * @param bool   $preserveEntities
-     *
-     * @return string
-     *
-     * @deprecated
-     */
-    public function escape($string, $preserveEntities = false)
-    {
-        return 'YOU SHOULD NEVER SEE THIS STRING';
-    }
-
-    /**
      * @param AbstractInline[] $inlines
      *
      * @return string

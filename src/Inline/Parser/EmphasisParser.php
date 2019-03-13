@@ -22,7 +22,7 @@ use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\RegexHelper;
 
-class EmphasisParser extends AbstractInlineParser implements EnvironmentAwareInterface
+class EmphasisParser implements InlineParserInterface, EnvironmentAwareInterface
 {
     protected $config;
 

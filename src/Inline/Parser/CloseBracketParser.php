@@ -28,7 +28,7 @@ use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Util\LinkParserHelper;
 use League\CommonMark\Util\RegexHelper;
 
-class CloseBracketParser extends AbstractInlineParser implements EnvironmentAwareInterface
+class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInterface
 {
     /**
      * @var EnvironmentInterface

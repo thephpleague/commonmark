@@ -18,7 +18,7 @@ use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
-class HtmlInlineParser extends AbstractInlineParser
+class HtmlInlineParser implements InlineParserInterface
 {
     /**
      * @return string[]

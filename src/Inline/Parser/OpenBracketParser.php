@@ -18,7 +18,7 @@ use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 
-class OpenBracketParser extends AbstractInlineParser
+class OpenBracketParser implements InlineParserInterface
 {
     /**
      * @return string[]
