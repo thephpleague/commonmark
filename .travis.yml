@@ -36,7 +36,7 @@ before_script:
   - if [[ $PHPSTAN ]]; then composer require --dev phpstan/phpstan-shim --no-interaction --prefer-dist; fi
 
 script:
-  - if [[ $PHPSTAN ]]; then vendor/bin/phpstan analyse -l 2 src; fi
+  - if [[ $PHPSTAN ]]; then vendor/bin/phpstan analyse -l 4 src; fi
   - if [[ $PHPUNIT ]]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
 
 after_script:
