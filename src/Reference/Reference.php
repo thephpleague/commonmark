@@ -41,7 +41,7 @@ class Reference
      * @param string $destination
      * @param string $title
      */
-    public function __construct($label, $destination, $title)
+    public function __construct(string $label, string $destination, string $title)
     {
         $this->label = self::normalizeReference($label);
         $this->destination = $destination;
@@ -51,7 +51,7 @@ class Reference
     /**
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -59,7 +59,7 @@ class Reference
     /**
      * @return string
      */
-    public function getDestination()
+    public function getDestination(): string
     {
         return $this->destination;
     }
@@ -67,7 +67,7 @@ class Reference
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -81,7 +81,7 @@ class Reference
      *
      * @return string
      */
-    public static function normalizeReference($string)
+    public static function normalizeReference(string $string): string
     {
         // Collapse internal whitespace to single space and remove
         // leading/trailing whitespace

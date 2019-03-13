@@ -26,7 +26,7 @@ class IndentedCode extends AbstractBlock
      *
      * @return bool
      */
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
@@ -36,7 +36,7 @@ class IndentedCode extends AbstractBlock
      *
      * @return bool
      */
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return true;
     }
@@ -46,12 +46,12 @@ class IndentedCode extends AbstractBlock
      *
      * @return bool
      */
-    public function isCode()
+    public function isCode(): bool
     {
         return true;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         if ($cursor->isIndented()) {
             $cursor->advanceBy(Cursor::INDENT_LEVEL, true);
@@ -64,7 +64,7 @@ class IndentedCode extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context, $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber)
     {
         parent::finalize($context, $endLineNumber);
 

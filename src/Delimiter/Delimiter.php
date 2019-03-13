@@ -56,7 +56,7 @@ class Delimiter
      * @param bool     $canClose
      * @param int|null $index
      */
-    public function __construct($char, $numDelims, Node $node, $canOpen, $canClose, $index = null)
+    public function __construct(string $char, int $numDelims, Node $node, bool $canOpen, bool $canClose, ?int $index = null)
     {
         $this->char = $char;
         $this->numDelims = $numDelims;
@@ -71,7 +71,7 @@ class Delimiter
     /**
      * @return bool
      */
-    public function canClose()
+    public function canClose(): bool
     {
         return $this->canClose;
     }
@@ -81,7 +81,7 @@ class Delimiter
      *
      * @return $this
      */
-    public function setCanClose($canClose)
+    public function setCanClose(bool $canClose)
     {
         $this->canClose = $canClose;
 
@@ -91,7 +91,7 @@ class Delimiter
     /**
      * @return bool
      */
-    public function canOpen()
+    public function canOpen(): bool
     {
         return $this->canOpen;
     }
@@ -101,7 +101,7 @@ class Delimiter
      *
      * @return $this
      */
-    public function setCanOpen($canOpen)
+    public function setCanOpen(bool $canOpen)
     {
         $this->canOpen = $canOpen;
 
@@ -111,7 +111,7 @@ class Delimiter
     /**
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->active;
     }
@@ -121,7 +121,7 @@ class Delimiter
      *
      * @return $this
      */
-    public function setActive($active)
+    public function setActive(bool $active)
     {
         $this->active = $active;
 
@@ -131,7 +131,7 @@ class Delimiter
     /**
      * @return string
      */
-    public function getChar()
+    public function getChar(): string
     {
         return $this->char;
     }
@@ -141,7 +141,7 @@ class Delimiter
      *
      * @return $this
      */
-    public function setChar($char)
+    public function setChar(string $char)
     {
         $this->char = $char;
 
@@ -151,7 +151,7 @@ class Delimiter
     /**
      * @return int|null
      */
-    public function getIndex()
+    public function getIndex(): ?int
     {
         return $this->index;
     }
@@ -161,7 +161,7 @@ class Delimiter
      *
      * @return $this
      */
-    public function setIndex($index)
+    public function setIndex(?int $index)
     {
         $this->index = $index;
 
@@ -171,7 +171,7 @@ class Delimiter
     /**
      * @return Delimiter|null
      */
-    public function getNext()
+    public function getNext(): ?self
     {
         return $this->next;
     }
@@ -181,7 +181,7 @@ class Delimiter
      *
      * @return $this
      */
-    public function setNext($next)
+    public function setNext(?self $next)
     {
         $this->next = $next;
 
@@ -191,7 +191,7 @@ class Delimiter
     /**
      * @return int
      */
-    public function getNumDelims()
+    public function getNumDelims(): int
     {
         return $this->numDelims;
     }
@@ -201,7 +201,7 @@ class Delimiter
      *
      * @return $this
      */
-    public function setNumDelims($numDelims)
+    public function setNumDelims(int $numDelims)
     {
         $this->numDelims = $numDelims;
 
@@ -211,7 +211,7 @@ class Delimiter
     /**
      * @return int
      */
-    public function getOrigDelims()
+    public function getOrigDelims(): int
     {
         return $this->origDelims;
     }
@@ -219,7 +219,7 @@ class Delimiter
     /**
      * @return Node
      */
-    public function getInlineNode()
+    public function getInlineNode(): Node
     {
         return $this->inlineNode;
     }
@@ -239,7 +239,7 @@ class Delimiter
     /**
      * @return Delimiter|null
      */
-    public function getPrevious()
+    public function getPrevious(): ?self
     {
         return $this->previous;
     }
@@ -249,7 +249,7 @@ class Delimiter
      *
      * @return $this
      */
-    public function setPrevious($previous)
+    public function setPrevious(?self $previous)
     {
         $this->previous = $previous;
 

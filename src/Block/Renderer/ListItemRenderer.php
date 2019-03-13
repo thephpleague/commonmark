@@ -29,7 +29,7 @@ class ListItemRenderer implements BlockRendererInterface
      *
      * @return string
      */
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!($block instanceof ListItem)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));

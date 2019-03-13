@@ -14,6 +14,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 
+ - Pretty much everything now has parameter and return types (#346)
  - `Environment` is now a `final` class
  - `Environment::getBlockRendererForClass()` was replaced with `Environment::getBlockRenderersForClass()` (note the added `s`)
  - `Environment::getInlineRendererForClass()` was replaced with `Environment::getInlineRenderersForClass()` (note the added `s`)

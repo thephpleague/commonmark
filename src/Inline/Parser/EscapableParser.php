@@ -24,7 +24,7 @@ class EscapableParser implements InlineParserInterface
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['\\'];
     }
@@ -34,7 +34,7 @@ class EscapableParser implements InlineParserInterface
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         if ($cursor->getCharacter() !== '\\') {
@@ -48,7 +48,7 @@ class EscapableParser implements InlineParserInterface
             $inlineContext->getContainer()->appendChild(new Newline(Newline::HARDBREAK));
 
             return true;
-        } elseif (RegexHelper::isEscapable($nextChar)) {
+        } elseif ($nextChar !== null && RegexHelper::isEscapable($nextChar)) {
             $cursor->advanceBy(2);
             $inlineContext->getContainer()->appendChild(new Text($nextChar));
 

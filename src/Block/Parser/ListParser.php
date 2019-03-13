@@ -30,7 +30,7 @@ class ListParser implements BlockParserInterface
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, Cursor $cursor)
+    public function parse(ContextInterface $context, Cursor $cursor): bool
     {
         if ($cursor->isIndented() && !($context->getContainer() instanceof ListBlock)) {
             return false;
@@ -92,7 +92,7 @@ class ListParser implements BlockParserInterface
      *
      * @return int
      */
-    private function calculateListMarkerPadding(Cursor $cursor, $markerLength)
+    private function calculateListMarkerPadding(Cursor $cursor, int $markerLength): int
     {
         $start = $cursor->saveState();
         $spacesStartCol = $cursor->getColumn();

@@ -158,7 +158,7 @@ final class RegexHelper
      *
      * @return bool
      */
-    public static function isEscapable($character)
+    public static function isEscapable(?string $character): bool
     {
         if ($character === null) {
             return false;
@@ -176,12 +176,12 @@ final class RegexHelper
      *
      * @return int|null Index of match, or null
      */
-    public static function matchAt($regex, $string, $offset = 0)
+    public static function matchAt(string $regex, string $string, int $offset = 0): ?int
     {
         $matches = [];
         $string = mb_substr($string, $offset, null, 'utf-8');
         if (!preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
-            return;
+            return null;
         }
 
         // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
@@ -199,14 +199,14 @@ final class RegexHelper
      *
      * @return array|null
      */
-    public static function matchAll($pattern, $subject, $offset = 0)
+    public static function matchAll(string $pattern, string $subject, int $offset = 0): ?array
     {
         $subject = substr($subject, $offset);
         preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
 
         $fullMatches = reset($matches);
         if (empty($fullMatches)) {
-            return;
+            return null;
         }
 
         if (count($fullMatches) === 1) {
@@ -218,6 +218,8 @@ final class RegexHelper
         if (!empty($matches)) {
             return $matches;
         }
+
+        return null;
     }
 
     /**
@@ -227,7 +229,7 @@ final class RegexHelper
      *
      * @return string
      */
-    public static function unescape($string)
+    public static function unescape(string $string): string
     {
         $allEscapedChar = '/\\\\(' . self::PARTIAL_ESCAPABLE . ')/';
 
@@ -244,7 +246,7 @@ final class RegexHelper
      *
      * @return string|null
      */
-    public static function getHtmlBlockOpenRegex($type)
+    public static function getHtmlBlockOpenRegex(int $type): ?string
     {
         switch ($type) {
             case HtmlBlock::TYPE_1_CODE_CONTAINER:
@@ -262,6 +264,8 @@ final class RegexHelper
             case HtmlBlock::TYPE_7_MISC_ELEMENT:
                 return '/^(?:' . self::PARTIAL_OPENTAG . '|' . self::PARTIAL_CLOSETAG . ')\\s*$/i';
         }
+
+        return null;
     }
 
     /**
@@ -269,7 +273,7 @@ final class RegexHelper
      *
      * @return string|null
      */
-    public static function getHtmlBlockCloseRegex($type)
+    public static function getHtmlBlockCloseRegex(int $type): ?string
     {
         switch ($type) {
             case HtmlBlock::TYPE_1_CODE_CONTAINER:
@@ -283,6 +287,8 @@ final class RegexHelper
             case HtmlBlock::TYPE_5_CDATA:
                 return '/\]\]>/';
         }
+
+        return null;
     }
 
     /**
@@ -290,7 +296,7 @@ final class RegexHelper
      *
      * @return bool
      */
-    public static function isLinkPotentiallyUnsafe($url)
+    public static function isLinkPotentiallyUnsafe(string $url): bool
     {
         return preg_match(self::REGEX_UNSAFE_PROTOCOL, $url) !== 0 && preg_match(self::REGEX_SAFE_DATA_PROTOCOL, $url) === 0;
     }

@@ -25,7 +25,7 @@ class AbstractStringContainer extends AbstractInline
      * @param string $contents
      * @param array  $data
      */
-    public function __construct($contents = '', array $data = [])
+    public function __construct(string $contents = '', array $data = [])
     {
         $this->content = $contents;
         $this->data = $data;
@@ -34,7 +34,7 @@ class AbstractStringContainer extends AbstractInline
     /**
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -44,7 +44,7 @@ class AbstractStringContainer extends AbstractInline
      *
      * @return $this
      */
-    public function setContent($contents)
+    public function setContent(string $contents)
     {
         $this->content = $contents;
 

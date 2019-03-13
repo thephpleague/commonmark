@@ -26,8 +26,9 @@ class FakeEmptyHtmlRenderer implements ElementRendererInterface
      *
      * @return mixed|null
      */
-    public function getOption($option, $default = null)
+    public function getOption(string $option, $default = null)
     {
+        return null;
     }
 
     /**
@@ -35,7 +36,7 @@ class FakeEmptyHtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    public function renderInlines($inlines)
+    public function renderInlines(iterable $inlines): string
     {
         return '';
     }
@@ -48,7 +49,7 @@ class FakeEmptyHtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    public function renderBlock(AbstractBlock $block, $inTightList = false)
+    public function renderBlock(AbstractBlock $block, bool $inTightList = false): string
     {
         return '';
     }
@@ -59,7 +60,7 @@ class FakeEmptyHtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    public function renderBlocks($blocks, $inTightList = false)
+    public function renderBlocks(iterable $blocks, bool $inTightList = false): string
     {
         return '';
     }

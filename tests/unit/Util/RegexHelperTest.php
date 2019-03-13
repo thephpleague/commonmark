@@ -284,7 +284,7 @@ class RegexHelperTest extends TestCase
      *
      * @dataProvider dataForTestMatchAt
      */
-    public function testMatchAt($regex, $string, $offset, $expectedResult)
+    public function testMatchAt(string $regex, string $string, ?int $offset, int $expectedResult)
     {
         $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string, $offset));
     }

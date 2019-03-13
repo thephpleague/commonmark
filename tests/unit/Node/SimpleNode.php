@@ -17,7 +17,7 @@ final class SimpleNode extends Node
     /**
      * @param bool $isContainer
      */
-    public function __construct($isContainer = true)
+    public function __construct(bool $isContainer = true)
     {
         $this->container = $isContainer;
     }
@@ -25,7 +25,7 @@ final class SimpleNode extends Node
     /**
      * @return bool
      */
-    public function isContainer()
+    public function isContainer(): bool
     {
         return $this->container;
     }

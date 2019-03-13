@@ -24,7 +24,7 @@ final class PrioritizedList implements \IteratorAggregate
      * @param mixed $item
      * @param int   $priority
      */
-    public function add($item, $priority)
+    public function add($item, int $priority)
     {
         $this->list[$priority][] = $item;
         $this->optimized = null;
@@ -33,7 +33,7 @@ final class PrioritizedList implements \IteratorAggregate
     /**
      * @return \Traversable
      */
-    public function getIterator()
+    public function getIterator(): iterable
     {
         if ($this->optimized === null) {
             krsort($this->list);

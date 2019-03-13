@@ -24,7 +24,7 @@ class Newline extends AbstractInline
     /**
      * @param int $breakType
      */
-    public function __construct($breakType = self::HARDBREAK)
+    public function __construct(int $breakType = self::HARDBREAK)
     {
         $this->type = $breakType;
     }
@@ -32,7 +32,7 @@ class Newline extends AbstractInline
     /**
      * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }

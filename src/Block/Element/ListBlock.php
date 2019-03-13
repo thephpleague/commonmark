@@ -42,7 +42,7 @@ class ListBlock extends AbstractBlock
     /**
      * @return ListData
      */
-    public function getListData()
+    public function getListData(): ListData
     {
         return $this->listData;
     }
@@ -50,7 +50,7 @@ class ListBlock extends AbstractBlock
     /**
      * @return bool
      */
-    public function endsWithBlankLine()
+    public function endsWithBlankLine(): bool
     {
         if ($this->lastLineBlank) {
             return true;
@@ -70,7 +70,7 @@ class ListBlock extends AbstractBlock
      *
      * @return bool
      */
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return $block instanceof ListItem;
     }
@@ -80,7 +80,7 @@ class ListBlock extends AbstractBlock
      *
      * @return bool
      */
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return false;
     }
@@ -90,17 +90,17 @@ class ListBlock extends AbstractBlock
      *
      * @return bool
      */
-    public function isCode()
+    public function isCode(): bool
     {
         return false;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         return true;
     }
 
-    public function finalize(ContextInterface $context, $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber)
     {
         parent::finalize($context, $endLineNumber);
 
@@ -131,7 +131,7 @@ class ListBlock extends AbstractBlock
     /**
      * @return bool
      */
-    public function isTight()
+    public function isTight(): bool
     {
         return $this->tight;
     }
@@ -141,7 +141,7 @@ class ListBlock extends AbstractBlock
      *
      * @return $this
      */
-    public function setTight($tight)
+    public function setTight(bool $tight): self
     {
         $this->tight = $tight;
 

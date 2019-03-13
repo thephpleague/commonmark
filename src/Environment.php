@@ -123,7 +123,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addBlockParser(BlockParserInterface $parser, $priority = 0)
+    public function addBlockParser(BlockParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add block parser.');
 
@@ -136,7 +136,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addInlineParser(InlineParserInterface $parser, $priority = 0)
+    public function addInlineParser(InlineParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add inline parser.');
 
@@ -157,7 +157,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addInlineProcessor(InlineProcessorInterface $processor, $priority = 0)
+    public function addInlineProcessor(InlineProcessorInterface $processor, int $priority = 0): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add inline processor.');
 
@@ -170,7 +170,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addDocumentProcessor(DocumentProcessorInterface $processor, $priority = 0)
+    public function addDocumentProcessor(DocumentProcessorInterface $processor, int $priority = 0): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add document processor.');
 
@@ -183,7 +183,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, $priority = 0)
+    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, int $priority = 0): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add block renderer.');
 
@@ -200,7 +200,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer, $priority = 0)
+    public function addInlineRenderer(string $inlineClass, InlineRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add inline renderer.');
 
@@ -217,7 +217,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function getBlockParsers()
+    public function getBlockParsers(): iterable
     {
         $this->initializeExtensions();
 
@@ -227,7 +227,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function getInlineParsersForCharacter($character)
+    public function getInlineParsersForCharacter(string $character): iterable
     {
         $this->initializeExtensions();
 
@@ -241,7 +241,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function getInlineProcessors()
+    public function getInlineProcessors(): iterable
     {
         $this->initializeExtensions();
 
@@ -251,7 +251,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function getDocumentProcessors()
+    public function getDocumentProcessors(): iterable
     {
         $this->initializeExtensions();
 
@@ -261,7 +261,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function getBlockRenderersForClass($blockClass)
+    public function getBlockRenderersForClass(string $blockClass): iterable
     {
         $this->initializeExtensions();
 
@@ -275,7 +275,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function getInlineRenderersForClass($inlineClass)
+    public function getInlineRenderersForClass(string $inlineClass): iterable
     {
         $this->initializeExtensions();
 
@@ -291,7 +291,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      *
      * @return ExtensionInterface[]
      */
-    public function getExtensions()
+    public function getExtensions(): iterable
     {
         return $this->extensions;
     }
@@ -303,7 +303,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      *
      * @return $this
      */
-    public function addExtension(ExtensionInterface $extension)
+    public function addExtension(ExtensionInterface $extension): self
     {
         $this->assertUninitialized('Failed to add extension.');
 
@@ -345,7 +345,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * @return Environment
      */
-    public static function createCommonMarkEnvironment()
+    public static function createCommonMarkEnvironment(): Environment
     {
         $environment = new static();
         $environment->addExtension(new CommonMarkCoreExtension());
@@ -367,7 +367,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function getInlineParserCharacterRegex()
+    public function getInlineParserCharacterRegex(): string
     {
         return $this->inlineParserCharacterRegex;
     }
@@ -390,7 +390,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      *
      * @throws \RuntimeException
      */
-    private function assertUninitialized($message)
+    private function assertUninitialized(string $message)
     {
         if ($this->extensionsInitialized) {
             throw new \RuntimeException($message . ' Extensions have already been initialized.');

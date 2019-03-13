@@ -18,12 +18,12 @@ interface InlineParserInterface
     /**
      * @return string[]
      */
-    public function getCharacters();
+    public function getCharacters(): array;
 
     /**
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext);
+    public function parse(InlineParserContext $inlineContext): bool;
 }

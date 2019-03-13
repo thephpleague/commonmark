@@ -29,7 +29,7 @@ class HeadingRenderer implements BlockRendererInterface
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!($block instanceof Heading)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));

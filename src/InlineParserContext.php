@@ -36,7 +36,7 @@ class InlineParserContext
     /**
      * @return AbstractBlock
      */
-    public function getContainer()
+    public function getContainer(): AbstractBlock
     {
         return $this->container;
     }
@@ -44,7 +44,7 @@ class InlineParserContext
     /**
      * @return ReferenceMap
      */
-    public function getReferenceMap()
+    public function getReferenceMap(): ReferenceMap
     {
         return $this->referenceMap;
     }
@@ -52,7 +52,7 @@ class InlineParserContext
     /**
      * @return Cursor
      */
-    public function getCursor()
+    public function getCursor(): Cursor
     {
         return $this->cursor;
     }
@@ -60,7 +60,7 @@ class InlineParserContext
     /**
      * @return DelimiterStack
      */
-    public function getDelimiterStack()
+    public function getDelimiterStack(): DelimiterStack
     {
         return $this->delimiterStack;
     }

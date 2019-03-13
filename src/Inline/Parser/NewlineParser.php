@@ -23,7 +23,7 @@ class NewlineParser implements InlineParserInterface
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ["\n"];
     }
@@ -33,7 +33,7 @@ class NewlineParser implements InlineParserInterface
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $inlineContext->getCursor()->advance();
 

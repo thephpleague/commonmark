@@ -21,7 +21,7 @@ class DelimiterStack
      */
     protected $top;
 
-    public function getTop()
+    public function getTop(): ?Delimiter
     {
         return $this->top;
     }
@@ -42,7 +42,7 @@ class DelimiterStack
      *
      * @return Delimiter|null
      */
-    public function findEarliest(Delimiter $stackBottom = null)
+    public function findEarliest(Delimiter $stackBottom = null): ?Delimiter
     {
         $delimiter = $this->top;
         while ($delimiter !== null && $delimiter->getPrevious() !== $stackBottom) {
@@ -82,7 +82,7 @@ class DelimiterStack
     /**
      * @param string $character
      */
-    public function removeEarlierMatches($character)
+    public function removeEarlierMatches(string $character)
     {
         $opener = $this->top;
         while ($opener !== null) {
@@ -99,7 +99,7 @@ class DelimiterStack
      *
      * @return Delimiter|null
      */
-    public function searchByCharacter($characters)
+    public function searchByCharacter($characters): ?Delimiter
     {
         if (!is_array($characters)) {
             $characters = [$characters];
@@ -121,7 +121,7 @@ class DelimiterStack
      * @param callable        $callback
      * @param Delimiter       $stackBottom
      */
-    public function iterateByCharacters($characters, $callback, Delimiter $stackBottom = null)
+    public function iterateByCharacters($characters, callable $callback, Delimiter $stackBottom = null)
     {
         if (!is_array($characters)) {
             $characters = [$characters];
@@ -169,7 +169,7 @@ class DelimiterStack
      *
      * @return Delimiter|null
      */
-    protected function findMatchingOpener(Delimiter $closer, $openersBottom, Delimiter $stackBottom = null, &$oddMatch = false)
+    protected function findMatchingOpener(Delimiter $closer, array $openersBottom, Delimiter $stackBottom = null, bool &$oddMatch = false): ?Delimiter
     {
         $closerChar = $closer->getChar();
         $opener = $closer->getPrevious();
@@ -182,5 +182,7 @@ class DelimiterStack
 
             $opener = $opener->getPrevious();
         }
+
+        return null;
     }
 }

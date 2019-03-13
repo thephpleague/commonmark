@@ -24,7 +24,7 @@ class BacktickParser implements InlineParserInterface
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['`'];
     }
@@ -34,7 +34,7 @@ class BacktickParser implements InlineParserInterface
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 

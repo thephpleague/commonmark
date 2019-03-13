@@ -25,6 +25,10 @@ After doing this, the two abstract classes mentioned above had notthing left in 
 
 Several previously-deprecated methods inside of `RegexHelper` were finally removed.  That functionality was made available with static methods and constants, so use those instead.
 
+### Parameter and return types
+
+Pretty much every method now uses parameter and return types, including several interfaces.  Update your implementations accordingly.
+
 ### Environment interfaces
 
 We have extracted two interfaces from the `Environment` class:

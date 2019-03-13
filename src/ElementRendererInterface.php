@@ -28,14 +28,14 @@ interface ElementRendererInterface
      *
      * @return mixed
      */
-    public function getOption($option, $default = null);
+    public function getOption(string $option, $default = null);
 
     /**
      * @param AbstractInline[] $inlines
      *
      * @return string
      */
-    public function renderInlines($inlines);
+    public function renderInlines(iterable $inlines): string;
 
     /**
      * @param AbstractBlock $block
@@ -45,7 +45,7 @@ interface ElementRendererInterface
      *
      * @return string
      */
-    public function renderBlock(AbstractBlock $block, $inTightList = false);
+    public function renderBlock(AbstractBlock $block, bool $inTightList = false): string;
 
     /**
      * @param AbstractBlock[] $blocks
@@ -53,5 +53,5 @@ interface ElementRendererInterface
      *
      * @return string
      */
-    public function renderBlocks($blocks, $inTightList = false);
+    public function renderBlocks(iterable $blocks, bool $inTightList = false): string;
 }

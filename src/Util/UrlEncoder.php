@@ -44,7 +44,7 @@ final class UrlEncoder
      *
      * @return string
      */
-    public static function unescapeAndEncode($uri)
+    public static function unescapeAndEncode(string $uri): string
     {
         $decoded = html_entity_decode($uri);
 
@@ -58,7 +58,7 @@ final class UrlEncoder
      *
      * @return string
      */
-    private static function decode($uri)
+    private static function decode(string $uri): string
     {
         return preg_replace_callback('/%([0-9a-f]{2})/iu', function ($matches) {
             // Convert percent-encoded codes to uppercase
@@ -80,7 +80,7 @@ final class UrlEncoder
      *
      * @return string
      */
-    private static function encode($uri)
+    private static function encode(string $uri): string
     {
         return preg_replace_callback('/(%[0-9a-f]{2})|./isu', function ($matches) {
             // Keep already-encoded characters as-is

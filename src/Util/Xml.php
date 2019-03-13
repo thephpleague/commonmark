@@ -25,7 +25,7 @@ final class Xml
      *
      * @return string
      */
-    public static function escape($string, $preserveEntities = false)
+    public static function escape(string $string, bool $preserveEntities = false): string
     {
         if ($preserveEntities) {
             $string = preg_replace('/[&](?![#](x[a-f0-9]{1,8}|[0-9]{1,8});|[a-z][a-z0-9]{1,31};)/i', '&amp;', $string);

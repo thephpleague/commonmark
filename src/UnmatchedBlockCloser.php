@@ -56,6 +56,7 @@ class UnmatchedBlockCloser
         $endLine = $this->context->getLineNumber() - 1;
 
         while ($this->oldTip !== $this->lastMatchedContainer) {
+            /** @var AbstractBlock $oldTip */
             $oldTip = $this->oldTip->parent();
             $this->oldTip->finalize($this->context, $endLine);
             $this->oldTip = $oldTip;
@@ -70,7 +71,7 @@ class UnmatchedBlockCloser
     /**
      * @return bool
      */
-    public function areAllClosed()
+    public function areAllClosed(): bool
     {
         return $this->context->getTip() === $this->lastMatchedContainer;
     }

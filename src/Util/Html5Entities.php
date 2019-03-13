@@ -2247,7 +2247,7 @@ final class Html5Entities
      *
      * @return string
      */
-    public static function decodeEntity($entity)
+    public static function decodeEntity(string $entity): string
     {
         if (substr($entity, -1) !== ';') {
             return $entity;
@@ -2274,7 +2274,7 @@ final class Html5Entities
      *
      * @return string
      */
-    public static function fromDecimal($number)
+    public static function fromDecimal($number): string
     {
         // Only convert code points within planes 0-2, excluding NULL
         if (empty($number) || $number > 0x2FFFF) {
@@ -2297,7 +2297,7 @@ final class Html5Entities
      *
      * @return string
      */
-    public static function fromHex($hexChars)
+    public static function fromHex(string $hexChars): string
     {
         return self::fromDecimal(hexdec($hexChars));
     }

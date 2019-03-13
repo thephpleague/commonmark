@@ -32,40 +32,40 @@ interface EnvironmentInterface
     public function getConfig($key = null, $default = null);
 
     /**
-     * @return \Traversable<BlockParserInterface>
+     * @return iterable<BlockParserInterface>
      */
-    public function getBlockParsers();
+    public function getBlockParsers(): iterable;
 
     /**
      * @param string $character
      *
-     * @return \Traversable<InlineParserInterface>
+     * @return iterable<InlineParserInterface>
      */
-    public function getInlineParsersForCharacter($character);
+    public function getInlineParsersForCharacter(string $character): iterable;
 
     /**
-     * @return \Traversable<InlineProcessorInterface>
+     * @return iterable<InlineProcessorInterface>
      */
-    public function getInlineProcessors();
+    public function getInlineProcessors(): iterable;
 
     /**
-     * @return \Traversable<DocumentProcessorInterface>
+     * @return iterable<DocumentProcessorInterface>
      */
-    public function getDocumentProcessors();
+    public function getDocumentProcessors(): iterable;
 
     /**
      * @param string $blockClass
      *
-     * @return \Traversable<BlockRendererInterface>
+     * @return iterable<BlockRendererInterface>
      */
-    public function getBlockRenderersForClass($blockClass);
+    public function getBlockRenderersForClass(string $blockClass): iterable;
 
     /**
      * @param string $inlineClass
      *
-     * @return \Traversable<InlineRendererInterface>
+     * @return iterable<InlineRendererInterface>
      */
-    public function getInlineRenderersForClass($inlineClass);
+    public function getInlineRenderersForClass(string $inlineClass): iterable;
 
     /**
      * Regex which matches any character which doesn't indicate an inline element
@@ -74,5 +74,5 @@ interface EnvironmentInterface
      *
      * @return string
      */
-    public function getInlineParserCharacterRegex();
+    public function getInlineParserCharacterRegex(): string;
 }

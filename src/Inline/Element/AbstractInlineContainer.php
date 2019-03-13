@@ -19,7 +19,7 @@ abstract class AbstractInlineContainer extends AbstractInline
     /**
      * @return bool
      */
-    public function isContainer()
+    public function isContainer(): bool
     {
         return true;
     }

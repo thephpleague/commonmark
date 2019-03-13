@@ -25,5 +25,5 @@ interface BlockParserInterface
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, Cursor $cursor);
+    public function parse(ContextInterface $context, Cursor $cursor): bool;
 }

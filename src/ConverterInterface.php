@@ -25,5 +25,5 @@ interface ConverterInterface
      *
      * @api
      */
-    public function convertToHtml($commonMark);
+    public function convertToHtml(string $commonMark): string;
 }
