@@ -21,6 +21,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Removed
 
+ - Removed support for PHP 5.6 and 7.0 (#346)
  - Removed support for `add()`ing parsers with just the target block/inline class name - you need to include the full namespace now
  - Removed the following unused methods from `Environment`:
    - `getInlineParser($name)`

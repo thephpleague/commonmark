@@ -4,6 +4,10 @@
 
 The `Environment` and extension framework underwent some major changes in this release.
 
+### PHP support
+
+This library no longer supports PHP 5.6 or 7.0.  Feel free to remove support for those from your extensions as well.
+
 ### Environment interfaces
 
 We have extracted two interfaces from the `Environment` class:
