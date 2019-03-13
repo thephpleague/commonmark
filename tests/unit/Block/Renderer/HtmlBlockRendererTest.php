@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
+use League\CommonMark\Block\Element as BlockElement;
 use League\CommonMark\Block\Element\HtmlBlock;
 use League\CommonMark\Block\Renderer\HtmlBlockRenderer;
 use League\CommonMark\Environment;
@@ -37,7 +38,7 @@ class HtmlBlockRendererTest extends TestCase
     public function testRender()
     {
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder('League\CommonMark\Block\Element\HtmlBlock')
+        $block = $this->getMockBuilder(\League\CommonMark\Block\Element\HtmlBlock::class)
             ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
             ->getMock();
         $block->expects($this->any())
@@ -59,7 +60,7 @@ class HtmlBlockRendererTest extends TestCase
         ]));
 
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder('League\CommonMark\Block\Element\HtmlBlock')
+        $block = $this->getMockBuilder(\League\CommonMark\Block\Element\HtmlBlock::class)
             ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
             ->getMock();
         $block->expects($this->any())
@@ -81,7 +82,7 @@ class HtmlBlockRendererTest extends TestCase
         ]));
 
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder('League\CommonMark\Block\Element\HtmlBlock')
+        $block = $this->getMockBuilder(\League\CommonMark\Block\Element\HtmlBlock::class)
             ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
             ->getMock();
         $block->expects($this->any())
@@ -103,7 +104,7 @@ class HtmlBlockRendererTest extends TestCase
         ]));
 
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder('League\CommonMark\Block\Element\HtmlBlock')
+        $block = $this->getMockBuilder(\League\CommonMark\Block\Element\HtmlBlock::class)
             ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
             ->getMock();
         $block->expects($this->any())
@@ -125,7 +126,7 @@ class HtmlBlockRendererTest extends TestCase
         ]));
 
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder('League\CommonMark\Block\Element\HtmlBlock')
+        $block = $this->getMockBuilder(\League\CommonMark\Block\Element\HtmlBlock::class)
             ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
             ->getMock();
         $block->expects($this->any())
@@ -145,7 +146,7 @@ class HtmlBlockRendererTest extends TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass('League\CommonMark\Block\Element\AbstractBlock');
+        $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

@@ -15,6 +15,7 @@
 namespace League\CommonMark\Tests\Unit\Inline\Renderer;
 
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Inline\Element as InlineElement;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Renderer\LinkRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
@@ -114,7 +115,7 @@ class LinkRendererTest extends TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass('League\CommonMark\Inline\Element\AbstractInline');
+        $inline = $this->getMockForAbstractClass(InlineElement\AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

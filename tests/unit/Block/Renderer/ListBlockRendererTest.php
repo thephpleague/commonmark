@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
+use League\CommonMark\Block\Element as BlockElement;
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\ListData;
 use League\CommonMark\Block\Renderer\ListBlockRenderer;
@@ -82,7 +83,7 @@ class ListBlockRendererTest extends TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass('League\CommonMark\Block\Element\AbstractBlock');
+        $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

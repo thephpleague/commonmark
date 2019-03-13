@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
+use League\CommonMark\Block\Element as BlockElement;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Renderer\ParagraphRenderer;
 use League\CommonMark\HtmlElement;
@@ -51,7 +52,7 @@ class ParagraphRendererTest extends TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass('League\CommonMark\Block\Element\AbstractBlock');
+        $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
