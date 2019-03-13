@@ -50,7 +50,7 @@ class DocParser
     /**
      * @return EnvironmentInterface
      */
-    public function getEnvironment()
+    public function getEnvironment(): EnvironmentInterface
     {
         return $this->environment;
     }
@@ -60,7 +60,7 @@ class DocParser
      *
      * @return string[]
      */
-    private function preProcessInput($input)
+    private function preProcessInput(string $input): array
     {
         $lines = preg_split('/\r\n|\n|\r/', $input);
 
@@ -79,7 +79,7 @@ class DocParser
      *
      * @return Document
      */
-    public function parse($input)
+    public function parse(string $input): Document
     {
         $context = new Context(new Document(), $this->getEnvironment());
         $context->setEncoding(mb_detect_encoding($input, 'ASCII,UTF-8', true) ?: 'ISO-8859-1');
@@ -221,7 +221,7 @@ class DocParser
      *
      * @return bool
      */
-    private function isLazyParagraphContinuation(ContextInterface $context, Cursor $cursor)
+    private function isLazyParagraphContinuation(ContextInterface $context, Cursor $cursor): bool
     {
         return $context->getTip() instanceof Paragraph &&
             !$context->getBlockCloser()->areAllClosed() &&

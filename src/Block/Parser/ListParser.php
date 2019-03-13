@@ -22,7 +22,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class ListParser extends AbstractBlockParser
+class ListParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context
@@ -30,7 +30,7 @@ class ListParser extends AbstractBlockParser
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, Cursor $cursor)
+    public function parse(ContextInterface $context, Cursor $cursor): bool
     {
         if ($cursor->isIndented() && !($context->getContainer() instanceof ListBlock)) {
             return false;
@@ -76,7 +76,7 @@ class ListParser extends AbstractBlockParser
         $data->padding = $this->calculateListMarkerPadding($cursor, $markerLength);
 
         // add the list if needed
-        if (!$container || !($container instanceof ListBlock) || !$data->equals($container->getListData())) {
+        if (!($container instanceof ListBlock) || !$data->equals($container->getListData())) {
             $context->addBlock(new ListBlock($data));
         }
 
@@ -92,7 +92,7 @@ class ListParser extends AbstractBlockParser
      *
      * @return int
      */
-    private function calculateListMarkerPadding(Cursor $cursor, $markerLength)
+    private function calculateListMarkerPadding(Cursor $cursor, int $markerLength): int
     {
         $start = $cursor->saveState();
         $spacesStartCol = $cursor->getColumn();

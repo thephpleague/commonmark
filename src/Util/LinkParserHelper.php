@@ -25,7 +25,7 @@ final class LinkParserHelper
      *
      * @return null|string The string, or null if no match
      */
-    public static function parseLinkDestination(Cursor $cursor)
+    public static function parseLinkDestination(Cursor $cursor): ?string
     {
         if ($res = $cursor->match(RegexHelper::REGEX_LINK_DESTINATION_BRACES)) {
             // Chop off surrounding <..>:
@@ -73,7 +73,7 @@ final class LinkParserHelper
      *
      * @return int
      */
-    public static function parseLinkLabel(Cursor $cursor)
+    public static function parseLinkLabel(Cursor $cursor): int
     {
         $match = $cursor->match('/^\[(?:[^\\\\\[\]]|' . RegexHelper::PARTIAL_ESCAPED_CHAR . '|\\\\)*\]/');
         if ($match === null || preg_match('/[^\\\\]\\\\\]$/', $match)) {
@@ -96,11 +96,13 @@ final class LinkParserHelper
      *
      * @return null|string The string, or null if no match
      */
-    public static function parseLinkTitle(Cursor $cursor)
+    public static function parseLinkTitle(Cursor $cursor): ?string
     {
         if ($title = $cursor->match('/' . RegexHelper::PARTIAL_LINK_TITLE . '/')) {
             // Chop off quotes from title and unescape
             return RegexHelper::unescape(substr($title, 1, -1));
         }
+
+        return null;
     }
 }

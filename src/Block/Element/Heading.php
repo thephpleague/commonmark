@@ -28,7 +28,7 @@ class Heading extends AbstractBlock implements InlineContainerInterface
      * @param int             $level
      * @param string|string[] $contents
      */
-    public function __construct($level, $contents)
+    public function __construct(int $level, $contents)
     {
         parent::__construct();
 
@@ -46,12 +46,12 @@ class Heading extends AbstractBlock implements InlineContainerInterface
     /**
      * @return int
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }
 
-    public function finalize(ContextInterface $context, $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber)
     {
         parent::finalize($context, $endLineNumber);
 
@@ -65,7 +65,7 @@ class Heading extends AbstractBlock implements InlineContainerInterface
      *
      * @return bool
      */
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
@@ -75,7 +75,7 @@ class Heading extends AbstractBlock implements InlineContainerInterface
      *
      * @return bool
      */
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return true;
     }
@@ -85,12 +85,12 @@ class Heading extends AbstractBlock implements InlineContainerInterface
      *
      * @return bool
      */
-    public function isCode()
+    public function isCode(): bool
     {
         return false;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         return false;
     }

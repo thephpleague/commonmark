@@ -19,12 +19,12 @@ use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
-class EscapableParser extends AbstractInlineParser
+class EscapableParser implements InlineParserInterface
 {
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['\\'];
     }
@@ -34,7 +34,7 @@ class EscapableParser extends AbstractInlineParser
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         if ($cursor->getCharacter() !== '\\') {
@@ -48,7 +48,7 @@ class EscapableParser extends AbstractInlineParser
             $inlineContext->getContainer()->appendChild(new Newline(Newline::HARDBREAK));
 
             return true;
-        } elseif (RegexHelper::isEscapable($nextChar)) {
+        } elseif ($nextChar !== null && RegexHelper::isEscapable($nextChar)) {
             $cursor->advanceBy(2);
             $inlineContext->getContainer()->appendChild(new Text($nextChar));
 

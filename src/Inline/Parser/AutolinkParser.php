@@ -18,7 +18,7 @@ use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\UrlEncoder;
 
-class AutolinkParser extends AbstractInlineParser
+class AutolinkParser implements InlineParserInterface
 {
     const EMAIL_REGEX = '/^<([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>/';
     const OTHER_LINK_REGEX = '/^<[A-Za-z][A-Za-z0-9.+-]{1,31}:[^<>\x00-\x20]*>/i';
@@ -26,7 +26,7 @@ class AutolinkParser extends AbstractInlineParser
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['<'];
     }
@@ -36,7 +36,7 @@ class AutolinkParser extends AbstractInlineParser
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(self::EMAIL_REGEX)) {

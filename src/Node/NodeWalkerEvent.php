@@ -27,7 +27,7 @@ final class NodeWalkerEvent
     /**
      * @return Node
      */
-    public function getNode()
+    public function getNode(): Node
     {
         return $this->node;
     }
@@ -35,7 +35,7 @@ final class NodeWalkerEvent
     /**
      * @return bool
      */
-    public function isEntering()
+    public function isEntering(): bool
     {
         return $this->isEntering;
     }

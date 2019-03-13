@@ -32,12 +32,12 @@ class ListData
     public $type;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $delimiter;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $bulletChar;
 

@@ -54,7 +54,7 @@ class Converter implements ConverterInterface
      *
      * @api
      */
-    public function convertToHtml($commonMark)
+    public function convertToHtml(string $commonMark): string
     {
         $documentAST = $this->docParser->parse($commonMark);
 
@@ -70,7 +70,7 @@ class Converter implements ConverterInterface
      *
      * @return string
      */
-    public function __invoke($commonMark)
+    public function __invoke(string $commonMark): string
     {
         return $this->convertToHtml($commonMark);
     }

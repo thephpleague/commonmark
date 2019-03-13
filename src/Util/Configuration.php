@@ -48,7 +48,7 @@ class Configuration
      *
      * @return mixed
      */
-    public function getConfig($key = null, $default = null)
+    public function getConfig(?string $key = null, $default = null)
     {
         if ($key === null) {
             return $this->config;
@@ -72,7 +72,7 @@ class Configuration
      *
      * @return mixed
      */
-    protected function getConfigByPath($keyPath, $default = null)
+    protected function getConfigByPath(string $keyPath, ?string $default = null)
     {
         $keyArr = explode('/', $keyPath);
         $data = $this->config;

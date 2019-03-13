@@ -2,8 +2,6 @@
 
 namespace League\CommonMark\Node;
 
-use League\CommonMark\Util\ArrayCollection;
-
 abstract class Node
 {
     /**
@@ -39,7 +37,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function previous()
+    public function previous(): ?Node
     {
         return $this->previous;
     }
@@ -47,7 +45,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function next()
+    public function next(): ?Node
     {
         return $this->next;
     }
@@ -55,7 +53,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function parent()
+    public function parent(): ?Node
     {
         return $this->parent;
     }
@@ -145,12 +143,12 @@ abstract class Node
     /**
      * @return bool
      */
-    abstract public function isContainer();
+    abstract public function isContainer(): bool;
 
     /**
      * @return Node|null
      */
-    public function firstChild()
+    public function firstChild(): ?Node
     {
         return $this->firstChild;
     }
@@ -158,7 +156,7 @@ abstract class Node
     /**
      * @return Node|null
      */
-    public function lastChild()
+    public function lastChild(): ?Node
     {
         return $this->lastChild;
     }
@@ -166,7 +164,7 @@ abstract class Node
     /**
      * @return Node[]
      */
-    public function children()
+    public function children(): iterable
     {
         $children = [];
         for ($current = $this->firstChild; null !== $current; $current = $current->next) {
@@ -220,16 +218,12 @@ abstract class Node
     /**
      * Replace all children of given node with collection of another
      *
-     * @param array $children
+     * @param iterable $children
      *
      * @return $this
      */
-    public function replaceChildren(array $children)
+    public function replaceChildren(iterable $children)
     {
-        if (!is_array($children) && !(is_object($children) && $children instanceof ArrayCollection)) {
-            throw new \InvalidArgumentException(sprintf('Expect iterable, got %s', get_class($children)));
-        }
-
         $this->detachChildren();
         foreach ($children as $item) {
             $this->appendChild($item);
@@ -241,7 +235,7 @@ abstract class Node
     /**
      * @return int
      */
-    public function getDepth()
+    public function getDepth(): int
     {
         return $this->depth;
     }
@@ -249,7 +243,7 @@ abstract class Node
     /**
      * @return NodeWalker
      */
-    public function walker()
+    public function walker(): NodeWalker
     {
         return new NodeWalker($this);
     }

@@ -14,20 +14,41 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 
+ - Pretty much everything now has parameter and return types (#346)
  - `Environment` is now a `final` class
  - `Environment::getBlockRendererForClass()` was replaced with `Environment::getBlockRenderersForClass()` (note the added `s`)
  - `Environment::getInlineRendererForClass()` was replaced with `Environment::getInlineRenderersForClass()` (note the added `s`)
  - The `Environment::get____()` methods now return an iterator instead of an array
+ - `Context::addBlock()` no longer returns the same block instance you passed into the method, as this served no useful purpose
+ - `RegexHelper::isEscapable()` no longer accepts `null` values
+ - `Node::replaceChildren()` now accepts any type of `iterable`, not just `array`s
 
 ### Removed
 
+ - Removed support for PHP 5.6 and 7.0 (#346)
  - Removed support for `add()`ing parsers with just the target block/inline class name - you need to include the full namespace now
  - Removed the following unused methods from `Environment`:
    - `getInlineParser($name)`
    - `getInlineParsers()`
    - `createInlineParserEngine()`
-
-### Changed
+ - Removed the unused `getName()` methods:
+   - `AbstractBlockParser::getName()`
+   - `AbstractInlineParser::getName()`
+   - `BlockParserInterface::getName()`
+   - `InlinerParserInterface::getName()`
+ - Removed the now-useless classes:
+   - `AbstractBlock`
+   - `AbstractInlinerParser`
+   - `InlineContainer`
+ - Removed previously-deprecated functionality:
+   - `InlineContainer` class
+   - `RegexHelper::$instance`
+   - `RegexHelper::getInstance()`
+   - `RegexHelper::getPartialRegex()`
+   - `RegexHelper::getHtmlTagRegex()`
+   - `RegexHelper::getLinkTitleRegex()`
+   - `RegexHelper::getLinkDestinationBracesRegex()`
+   - `RegexHelper::getThematicBreakRegex()`
 
 ## [0.18.1] - 2018-12-29
 

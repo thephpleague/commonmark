@@ -25,24 +25,24 @@ class HtmlElement
     protected $selfClosing = false;
 
     /**
-     * @param string                           $tagName
-     * @param string[]                         $attributes
-     * @param HtmlElement|HtmlElement[]|string $contents
-     * @param bool                             $selfClosing
+     * @param string                                $tagName
+     * @param string[]                              $attributes
+     * @param HtmlElement|HtmlElement[]|string|null $contents
+     * @param bool                                  $selfClosing
      */
-    public function __construct($tagName, $attributes = [], $contents = '', $selfClosing = false)
+    public function __construct(string $tagName, array $attributes = [], $contents = '', bool $selfClosing = false)
     {
         $this->tagName = $tagName;
         $this->attributes = $attributes;
         $this->selfClosing = $selfClosing;
 
-        $this->setContents($contents);
+        $this->setContents($contents ?: '');
     }
 
     /**
      * @return string
      */
-    public function getTagName()
+    public function getTagName(): string
     {
         return $this->tagName;
     }
@@ -50,7 +50,7 @@ class HtmlElement
     /**
      * @return string[]
      */
-    public function getAllAttributes()
+    public function getAllAttributes(): array
     {
         return $this->attributes;
     }
@@ -60,10 +60,10 @@ class HtmlElement
      *
      * @return string|null
      */
-    public function getAttribute($key)
+    public function getAttribute(string $key): ?string
     {
         if (!isset($this->attributes[$key])) {
-            return;
+            return null;
         }
 
         return $this->attributes[$key];
@@ -75,7 +75,7 @@ class HtmlElement
      *
      * @return $this
      */
-    public function setAttribute($key, $value)
+    public function setAttribute(string $key, string $value): self
     {
         $this->attributes[$key] = $value;
 
@@ -87,7 +87,7 @@ class HtmlElement
      *
      * @return HtmlElement|HtmlElement[]|string
      */
-    public function getContents($asString = true)
+    public function getContents(bool $asString = true)
     {
         if (!$asString || is_string($this->contents)) {
             return $this->contents;
@@ -105,9 +105,9 @@ class HtmlElement
      *
      * @return $this
      */
-    public function setContents($contents)
+    public function setContents($contents): self
     {
-        $this->contents = $contents !== null ? $contents : '';
+        $this->contents = $contents ?: '';
 
         return $this;
     }
@@ -115,7 +115,7 @@ class HtmlElement
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $result = '<' . $this->tagName;
 

@@ -42,7 +42,7 @@ class ReferenceMap
      *
      * @return bool
      */
-    public function contains($label)
+    public function contains(string $label): bool
     {
         $label = Reference::normalizeReference($label);
 
@@ -54,12 +54,12 @@ class ReferenceMap
      *
      * @return Reference|null
      */
-    public function getReference($label)
+    public function getReference(string $label): ?Reference
     {
         $label = Reference::normalizeReference($label);
 
         if (!isset($this->references[$label])) {
-            return;
+            return null;
         }
 
         return $this->references[$label];
@@ -70,7 +70,7 @@ class ReferenceMap
      *
      * @return Reference[]
      */
-    public function listReferences()
+    public function listReferences(): iterable
     {
         return array_values($this->references);
     }

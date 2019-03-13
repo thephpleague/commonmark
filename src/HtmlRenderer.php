@@ -41,9 +41,9 @@ class HtmlRenderer implements ElementRendererInterface
      * @param string $option
      * @param mixed  $default
      *
-     * @return mixed
+     * @return mixed|null
      */
-    public function getOption($option, $default = null)
+    public function getOption(string $option, $default = null)
     {
         return $this->environment->getConfig('renderer/' . $option, $default);
     }
@@ -55,7 +55,7 @@ class HtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    protected function renderInline(AbstractInline $inline)
+    protected function renderInline(AbstractInline $inline): string
     {
         $renderers = $this->environment->getInlineRenderersForClass(get_class($inline));
 
@@ -74,7 +74,7 @@ class HtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    public function renderInlines($inlines)
+    public function renderInlines(iterable $inlines): string
     {
         $result = [];
         foreach ($inlines as $inline) {
@@ -92,7 +92,7 @@ class HtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    public function renderBlock(AbstractBlock $block, $inTightList = false)
+    public function renderBlock(AbstractBlock $block, bool $inTightList = false): string
     {
         $renderers = $this->environment->getBlockRenderersForClass(get_class($block));
 
@@ -112,7 +112,7 @@ class HtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    public function renderBlocks($blocks, $inTightList = false)
+    public function renderBlocks(iterable $blocks, bool $inTightList = false): string
     {
         $result = [];
         foreach ($blocks as $block) {

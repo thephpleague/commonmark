@@ -18,12 +18,12 @@ use League\CommonMark\Inline\Element\Newline;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 
-class NewlineParser extends AbstractInlineParser
+class NewlineParser implements InlineParserInterface
 {
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ["\n"];
     }
@@ -33,7 +33,7 @@ class NewlineParser extends AbstractInlineParser
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $inlineContext->getCursor()->advance();
 

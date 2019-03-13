@@ -20,7 +20,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class SetExtHeadingParser extends AbstractBlockParser
+class SetExtHeadingParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context
@@ -28,7 +28,7 @@ class SetExtHeadingParser extends AbstractBlockParser
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, Cursor $cursor)
+    public function parse(ContextInterface $context, Cursor $cursor): bool
     {
         if ($cursor->isIndented()) {
             return false;

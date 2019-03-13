@@ -34,7 +34,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function first()
     {
@@ -64,7 +64,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return bool
      */
-    public function add($element)
+    public function add($element): bool
     {
         $this->elements[] = $element;
 
@@ -110,7 +110,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @return bool
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->elements);
     }
@@ -120,7 +120,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return bool
      */
-    public function contains($element)
+    public function contains($element): bool
     {
         return in_array($element, $this->elements, true);
     }
@@ -140,7 +140,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return bool
      */
-    public function containsKey($key)
+    public function containsKey($key): bool
     {
         return array_key_exists($key, $this->elements);
     }
@@ -150,7 +150,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return int The count as an integer.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->elements);
     }
@@ -162,7 +162,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return bool true on success or false on failure.
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->containsKey($offset);
     }
@@ -216,7 +216,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return array
      */
-    public function slice($offset, $length = null)
+    public function slice(int $offset, ?int $length = null): array
     {
         return array_slice($this->elements, $offset, $length, true);
     }
@@ -224,7 +224,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->elements;
     }

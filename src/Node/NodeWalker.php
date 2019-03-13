@@ -10,7 +10,7 @@ class NodeWalker
     private $root;
 
     /**
-     * @var Node
+     * @var Node|null
      */
     private $current;
 
@@ -36,12 +36,12 @@ class NodeWalker
      *
      * @return NodeWalkerEvent|null
      */
-    public function next()
+    public function next(): ?NodeWalkerEvent
     {
         $current = $this->current;
         $entering = $this->entering;
         if (null === $current) {
-            return;
+            return null;
         }
 
         if ($entering && $current->isContainer()) {
@@ -70,7 +70,7 @@ class NodeWalker
      * @param Node $node
      * @param bool $entering
      */
-    public function resumeAt(Node $node, $entering = true)
+    public function resumeAt(Node $node, bool $entering = true)
     {
         $this->current = $node;
         $this->entering = $entering;

@@ -382,7 +382,6 @@ class CursorTest extends TestCase
     public function dataForGetRemainderTest()
     {
         return [
-            ['', null, ''],
             [' ', 0, ' '],
             ['  ', 0, '  '],
             ['  ', 1, ' '],

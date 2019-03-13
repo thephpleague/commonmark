@@ -18,7 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 
 /**
- * Parses Markdown into an AST
+ * Maintains the current state of the Markdown parser engine
  */
 class Context implements ContextInterface
 {
@@ -28,7 +28,7 @@ class Context implements ContextInterface
     protected $environment;
 
     /**
-     * @var AbstractBlock
+     * @var Document
      */
     protected $doc;
 
@@ -62,8 +62,14 @@ class Context implements ContextInterface
      */
     protected $blocksParsed = false;
 
+    /**
+     * @var string
+     */
     protected $encoding = 'UTF-8';
 
+    /**
+     * @var ReferenceParser
+     */
     protected $referenceParser;
 
     public function __construct(Document $document, EnvironmentInterface $environment)
@@ -82,7 +88,7 @@ class Context implements ContextInterface
     /**
      * @param string $line
      */
-    public function setNextLine($line)
+    public function setNextLine(string $line)
     {
         ++$this->lineNumber;
         $this->line = $line;
@@ -91,7 +97,7 @@ class Context implements ContextInterface
     /**
      * @return Document
      */
-    public function getDocument()
+    public function getDocument(): Document
     {
         return $this->doc;
     }
@@ -99,7 +105,7 @@ class Context implements ContextInterface
     /**
      * @return AbstractBlock|null
      */
-    public function getTip()
+    public function getTip(): ?AbstractBlock
     {
         return $this->tip;
     }
@@ -109,7 +115,7 @@ class Context implements ContextInterface
      *
      * @return $this
      */
-    public function setTip(AbstractBlock $block = null)
+    public function setTip(?AbstractBlock $block)
     {
         $this->tip = $block;
 
@@ -119,7 +125,7 @@ class Context implements ContextInterface
     /**
      * @return int
      */
-    public function getLineNumber()
+    public function getLineNumber(): int
     {
         return $this->lineNumber;
     }
@@ -127,7 +133,7 @@ class Context implements ContextInterface
     /**
      * @return string
      */
-    public function getLine()
+    public function getLine(): string
     {
         return $this->line;
     }
@@ -137,7 +143,7 @@ class Context implements ContextInterface
      *
      * @return UnmatchedBlockCloser
      */
-    public function getBlockCloser()
+    public function getBlockCloser(): UnmatchedBlockCloser
     {
         return $this->blockCloser;
     }
@@ -145,7 +151,7 @@ class Context implements ContextInterface
     /**
      * @return AbstractBlock
      */
-    public function getContainer()
+    public function getContainer(): AbstractBlock
     {
         return $this->container;
     }
@@ -155,7 +161,7 @@ class Context implements ContextInterface
      *
      * @return $this
      */
-    public function setContainer($container)
+    public function setContainer(AbstractBlock $container)
     {
         $this->container = $container;
 
@@ -164,8 +170,6 @@ class Context implements ContextInterface
 
     /**
      * @param AbstractBlock $block
-     *
-     * @return AbstractBlock
      */
     public function addBlock(AbstractBlock $block)
     {
@@ -178,8 +182,6 @@ class Context implements ContextInterface
         $this->tip->appendChild($block);
         $this->tip = $block;
         $this->container = $block;
-
-        return $block;
     }
 
     /**
@@ -200,7 +202,7 @@ class Context implements ContextInterface
     /**
      * @return bool
      */
-    public function getBlocksParsed()
+    public function getBlocksParsed(): bool
     {
         return $this->blocksParsed;
     }
@@ -210,7 +212,7 @@ class Context implements ContextInterface
      *
      * @return $this
      */
-    public function setBlocksParsed($bool)
+    public function setBlocksParsed(bool $bool)
     {
         $this->blocksParsed = $bool;
 
@@ -220,7 +222,7 @@ class Context implements ContextInterface
     /**
      * @return ReferenceParser
      */
-    public function getReferenceParser()
+    public function getReferenceParser(): ReferenceParser
     {
         return $this->referenceParser;
     }
@@ -228,7 +230,7 @@ class Context implements ContextInterface
     /**
      * @return string
      */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
@@ -238,7 +240,7 @@ class Context implements ContextInterface
      *
      * @return $this
      */
-    public function setEncoding($encoding)
+    public function setEncoding(string $encoding): self
     {
         $this->encoding = $encoding;
 

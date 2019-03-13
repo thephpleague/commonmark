@@ -271,7 +271,7 @@ class RegexHelperTest extends TestCase
 
     public function testIsEscapable()
     {
-        $this->assertFalse(RegexHelper::isEscapable(null));
+        $this->assertFalse(RegexHelper::isEscapable(''));
         $this->assertFalse(RegexHelper::isEscapable('A'));
         $this->assertTrue(RegexHelper::isEscapable('\\'));
     }
@@ -284,9 +284,13 @@ class RegexHelperTest extends TestCase
      *
      * @dataProvider dataForTestMatchAt
      */
-    public function testMatchAt($regex, $string, $offset, $expectedResult)
+    public function testMatchAt(string $regex, string $string, ?int $offset, int $expectedResult)
     {
-        $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string, $offset));
+        if ($offset === null) {
+            $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string));
+        } else {
+            $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string, $offset));
+        }
     }
 
     /**
@@ -302,56 +306,5 @@ class RegexHelperTest extends TestCase
             ['/ /', 'это тест', 0, 3],
             ['/ /', 'это тест', 1, 3],
         ];
-    }
-
-    /**
-     * @param mixed  $constant
-     * @param string $expectedValue
-     *
-     * @dataProvider dataForTestGetPartialRegex
-     *
-     * @deprecated
-     */
-    public function testGetPartialRegex($constant, $expectedValue)
-    {
-        $this->assertEquals($expectedValue, RegexHelper::getInstance()->getPartialRegex($constant));
-    }
-
-    /**
-     * @return array
-     */
-    public function dataForTestGetPartialRegex()
-    {
-        $data = [];
-
-        $c = new \ReflectionClass(RegexHelper::class);
-
-        foreach ($c->getConstants() as $constant => $value) {
-            if (is_numeric($value)) {
-                $data[] = [$value, constant(RegexHelper::class . '::PARTIAL_' . $constant)];
-            }
-        }
-
-        return $data;
-    }
-
-    public function testGetHtmlTagRegex()
-    {
-        $this->assertEquals('/^' . RegexHelper::PARTIAL_HTMLTAG . '/i', RegexHelper::getInstance()->getHtmlTagRegex());
-    }
-
-    public function testGetLinkTitleRegex()
-    {
-        $this->assertEquals('/' . RegexHelper::PARTIAL_LINK_TITLE . '/', RegexHelper::getInstance()->getLinkTitleRegex());
-    }
-
-    public function testGetLinkDestinationBracesRegex()
-    {
-        $this->assertEquals(RegexHelper::REGEX_LINK_DESTINATION_BRACES, RegexHelper::getInstance()->getLinkDestinationBracesRegex());
-    }
-
-    public function testGetThematicBreakRegex()
-    {
-        $this->assertEquals(RegexHelper::REGEX_THEMATIC_BREAK, RegexHelper::getInstance()->getThematicBreakRegex());
     }
 }

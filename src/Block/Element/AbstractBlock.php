@@ -84,7 +84,7 @@ abstract class AbstractBlock extends Node
     /**
      * @return bool
      */
-    public function isContainer()
+    public function isContainer(): bool
     {
         return true;
     }
@@ -92,7 +92,7 @@ abstract class AbstractBlock extends Node
     /**
      * @return bool
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return $this->firstChild !== null;
     }
@@ -104,28 +104,28 @@ abstract class AbstractBlock extends Node
      *
      * @return bool
      */
-    abstract public function canContain(AbstractBlock $block);
+    abstract public function canContain(AbstractBlock $block): bool;
 
     /**
      * Returns true if block type can accept lines of text
      *
      * @return bool
      */
-    abstract public function acceptsLines();
+    abstract public function acceptsLines(): bool;
 
     /**
      * Whether this is a code block
      *
      * @return bool
      */
-    abstract public function isCode();
+    abstract public function isCode(): bool;
 
     /**
      * @param Cursor $cursor
      *
      * @return bool
      */
-    abstract public function matchesNextLine(Cursor $cursor);
+    abstract public function matchesNextLine(Cursor $cursor): bool;
 
     /**
      * @param ContextInterface $context
@@ -144,7 +144,7 @@ abstract class AbstractBlock extends Node
      *
      * @return $this
      */
-    public function setStartLine($startLine)
+    public function setStartLine(int $startLine)
     {
         $this->startLine = $startLine;
         if (empty($this->endLine)) {
@@ -157,12 +157,17 @@ abstract class AbstractBlock extends Node
     /**
      * @return int
      */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         return $this->startLine;
     }
 
-    public function setEndLine($endLine)
+    /**
+     * @param int $endLine
+     *
+     * @return $this
+     */
+    public function setEndLine(int $endLine)
     {
         $this->endLine = $endLine;
 
@@ -172,7 +177,7 @@ abstract class AbstractBlock extends Node
     /**
      * @return int
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->endLine;
     }
@@ -182,7 +187,7 @@ abstract class AbstractBlock extends Node
      *
      * @return bool
      */
-    public function endsWithBlankLine()
+    public function endsWithBlankLine(): bool
     {
         return $this->lastLineBlank;
     }
@@ -190,7 +195,7 @@ abstract class AbstractBlock extends Node
     /**
      * @param bool $blank
      */
-    public function setLastLineBlank($blank)
+    public function setLastLineBlank(bool $blank)
     {
         $this->lastLineBlank = $blank;
     }
@@ -203,7 +208,7 @@ abstract class AbstractBlock extends Node
      *
      * @return bool
      */
-    public function shouldLastLineBeBlank(Cursor $cursor, $currentLineNumber)
+    public function shouldLastLineBeBlank(Cursor $cursor, int $currentLineNumber): bool
     {
         return $cursor->isBlank();
     }
@@ -211,7 +216,7 @@ abstract class AbstractBlock extends Node
     /**
      * @return string[]
      */
-    public function getStrings()
+    public function getStrings(): iterable
     {
         return $this->strings->toArray();
     }
@@ -219,7 +224,7 @@ abstract class AbstractBlock extends Node
     /**
      * @param string $line
      */
-    public function addLine($line)
+    public function addLine(string $line)
     {
         if (!$this->acceptsLines()) {
             throw new \LogicException('You cannot add lines to a block which cannot accept them');
@@ -233,7 +238,7 @@ abstract class AbstractBlock extends Node
      *
      * @return bool
      */
-    public function isOpen()
+    public function isOpen(): bool
     {
         return $this->open;
     }
@@ -244,7 +249,7 @@ abstract class AbstractBlock extends Node
      * @param ContextInterface $context
      * @param int              $endLineNumber
      */
-    public function finalize(ContextInterface $context, $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber)
     {
         if (!$this->open) {
             return;
@@ -259,7 +264,7 @@ abstract class AbstractBlock extends Node
     /**
      * @return string
      */
-    public function getStringContent()
+    public function getStringContent(): string
     {
         return $this->finalStringContents;
     }
@@ -270,7 +275,7 @@ abstract class AbstractBlock extends Node
      *
      * @return mixed
      */
-    public function getData($key, $default = null)
+    public function getData(string $key, $default = null)
     {
         return array_key_exists($key, $this->data) ? $this->data[$key] : $default;
     }

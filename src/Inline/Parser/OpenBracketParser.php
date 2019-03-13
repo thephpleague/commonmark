@@ -18,12 +18,12 @@ use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 
-class OpenBracketParser extends AbstractInlineParser
+class OpenBracketParser implements InlineParserInterface
 {
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['['];
     }
@@ -33,7 +33,7 @@ class OpenBracketParser extends AbstractInlineParser
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         if ($inlineContext->getCursor()->getCharacter() !== '[') {
             return false;

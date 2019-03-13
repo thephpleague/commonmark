@@ -45,7 +45,7 @@ class FencedCode extends AbstractBlock
      * @param string $char
      * @param int    $offset
      */
-    public function __construct($length, $char, $offset)
+    public function __construct(int $length, string $char, int $offset)
     {
         parent::__construct();
 
@@ -57,7 +57,7 @@ class FencedCode extends AbstractBlock
     /**
      * @return string
      */
-    public function getInfo()
+    public function getInfo(): string
     {
         return $this->info;
     }
@@ -65,7 +65,7 @@ class FencedCode extends AbstractBlock
     /**
      * @return string[]
      */
-    public function getInfoWords()
+    public function getInfoWords(): array
     {
         return preg_split('/\s+/', $this->info);
     }
@@ -73,7 +73,7 @@ class FencedCode extends AbstractBlock
     /**
      * @return string
      */
-    public function getChar()
+    public function getChar(): string
     {
         return $this->char;
     }
@@ -83,7 +83,7 @@ class FencedCode extends AbstractBlock
      *
      * @return $this
      */
-    public function setChar($char)
+    public function setChar(string $char): self
     {
         $this->char = $char;
 
@@ -93,7 +93,7 @@ class FencedCode extends AbstractBlock
     /**
      * @return int
      */
-    public function getLength()
+    public function getLength(): int
     {
         return $this->length;
     }
@@ -103,7 +103,7 @@ class FencedCode extends AbstractBlock
      *
      * @return $this
      */
-    public function setLength($length)
+    public function setLength(int $length): self
     {
         $this->length = $length;
 
@@ -113,7 +113,7 @@ class FencedCode extends AbstractBlock
     /**
      * @return int
      */
-    public function getOffset()
+    public function getOffset(): int
     {
         return $this->offset;
     }
@@ -123,7 +123,7 @@ class FencedCode extends AbstractBlock
      *
      * @return $this
      */
-    public function setOffset($offset)
+    public function setOffset(int $offset): self
     {
         $this->offset = $offset;
 
@@ -137,7 +137,7 @@ class FencedCode extends AbstractBlock
      *
      * @return bool
      */
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
@@ -147,7 +147,7 @@ class FencedCode extends AbstractBlock
      *
      * @return bool
      */
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return true;
     }
@@ -157,12 +157,12 @@ class FencedCode extends AbstractBlock
      *
      * @return bool
      */
-    public function isCode()
+    public function isCode(): bool
     {
         return true;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         if ($this->length === -1) {
             if ($cursor->isBlank()) {
@@ -178,7 +178,7 @@ class FencedCode extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context, $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber)
     {
         parent::finalize($context, $endLineNumber);
 
@@ -221,7 +221,7 @@ class FencedCode extends AbstractBlock
      *
      * @return bool
      */
-    public function shouldLastLineBeBlank(Cursor $cursor, $currentLineNumber)
+    public function shouldLastLineBeBlank(Cursor $cursor, int $currentLineNumber): bool
     {
         return false;
     }

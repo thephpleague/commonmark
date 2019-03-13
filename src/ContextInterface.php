@@ -22,82 +22,74 @@ interface ContextInterface
     /**
      * @return Document
      */
-    public function getDocument();
+    public function getDocument(): Document;
 
     /**
-     * @return AbstractBlock
+     * @return AbstractBlock|null
      */
-    public function getTip();
+    public function getTip(): ?AbstractBlock;
 
     /**
-     * @param AbstractBlock $block
-     *
-     * @return $this
+     * @param AbstractBlock|null $block
      */
-    public function setTip(AbstractBlock $block);
+    public function setTip(?AbstractBlock $block);
 
     /**
      * @return int
      */
-    public function getLineNumber();
+    public function getLineNumber(): int;
 
     /**
      * @return string
      */
-    public function getLine();
+    public function getLine(): string;
 
     /**
      * Finalize and close any unmatched blocks
      *
      * @return UnmatchedBlockCloser
      */
-    public function getBlockCloser();
+    public function getBlockCloser(): UnmatchedBlockCloser;
 
     /**
      * @return AbstractBlock
      */
-    public function getContainer();
+    public function getContainer(): AbstractBlock;
 
     /**
-     * @param AbstractBlock $getDocument
-     *
-     * @return $this
+     * @param AbstractBlock $container
      */
-    public function setContainer($getDocument);
+    public function setContainer(AbstractBlock $container);
 
     /**
      * @param AbstractBlock $block
-     *
-     * @return AbstractBlock
      */
     public function addBlock(AbstractBlock $block);
 
     /**
      * @param AbstractBlock $replacement
-     *
-     * @return void
      */
     public function replaceContainerBlock(AbstractBlock $replacement);
 
     /**
      * @return bool
      */
-    public function getBlocksParsed();
+    public function getBlocksParsed(): bool;
 
     /**
      * @param bool $bool
      *
      * @return $this
      */
-    public function setBlocksParsed($bool);
+    public function setBlocksParsed(bool $bool);
 
     /**
      * @return ReferenceParser
      */
-    public function getReferenceParser();
+    public function getReferenceParser(): ReferenceParser;
 
     /**
      * @return string
      */
-    public function getEncoding();
+    public function getEncoding(): string;
 }

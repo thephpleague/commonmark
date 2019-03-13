@@ -4,6 +4,31 @@
 
 The `Environment` and extension framework underwent some major changes in this release.
 
+### PHP support
+
+This library no longer supports PHP 5.6 or 7.0.  Feel free to remove support for those from your extensions as well.
+
+### Removed classes and interface methods
+
+The `getName()` method has been removed from several classes:
+
+ - `BlockParserInterface` and `AbstractBlockParser`
+ - `InlineParserInterface` and `AbstractInlineParser`
+
+This method was originally intended for supporting XML rendering, which was never implemented, and will likely define names a bit differently if/when we do add support.
+
+After doing this, the two abstract classes mentioned above had notthing left in them, so those were removed.  Any parsers previously extending them should directly implement the corresponding interface instead.
+
+`InlineContainer` was also removed.
+
+### Removed deprecated `RegexHelper` methods
+
+Several previously-deprecated methods inside of `RegexHelper` were finally removed.  That functionality was made available with static methods and constants, so use those instead.
+
+### Parameter and return types
+
+Pretty much every method now uses parameter and return types, including several interfaces.  Update your implementations accordingly.
+
 ### Environment interfaces
 
 We have extracted two interfaces from the `Environment` class:
@@ -32,6 +57,10 @@ The execution order of these things no longer depends on the order you add them 
 ### Multiple block/inline renderers per class
 
 Thanks to the new prioritization system, we now support multiple renderers for the same block/inline class!  The first renderer to return a non-null result will be considered the "winner" and no subsequent renderers will execute for that block/inline.  No change should be required for most extensions unless you were using some weird workaround to support multiple renderers yourself. 
+
+### `RegexHelper::isEscapable()` no longer accepts `null` values
+
+In cases where you may have previously passed a `null` value in, skip the call to this method.  The previous behavior was to return `false` for `null` values, but `null` is never escapable so it's silly to make this call when we know what the result will be.
 
 ## 0.18.0
 

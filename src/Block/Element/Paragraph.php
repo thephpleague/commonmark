@@ -26,7 +26,7 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
      *
      * @return bool
      */
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
@@ -36,7 +36,7 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
      *
      * @return bool
      */
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return true;
     }
@@ -46,12 +46,12 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
      *
      * @return bool
      */
-    public function isCode()
+    public function isCode(): bool
     {
         return false;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         if ($cursor->isBlank()) {
             $this->lastLineBlank = true;
@@ -62,7 +62,7 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
         return true;
     }
 
-    public function finalize(ContextInterface $context, $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber)
     {
         parent::finalize($context, $endLineNumber);
 

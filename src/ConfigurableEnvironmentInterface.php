@@ -17,6 +17,9 @@ use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
+/**
+ * Interface for an Environment which can be configured with config settings, parsers, processors, and renderers
+ */
 interface ConfigurableEnvironmentInterface extends EnvironmentInterface
 {
     /**
@@ -30,52 +33,62 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
     public function setConfig(array $config = []);
 
     /**
-     * @param BlockParserInterface $parser
-     * @param int                  $priority
+     * Registers the given block parser with the Environment
+     *
+     * @param BlockParserInterface $parser   Block parser instance
+     * @param int                  $priority Priority (a higher number will be executed earlier)
      *
      * @return self
      */
-    public function addBlockParser(BlockParserInterface $parser, $priority = 0);
+    public function addBlockParser(BlockParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface;
 
     /**
-     * @param InlineParserInterface $parser
-     * @param int                   $priority
+     * Registers the given inline parser with the Environment
+     *
+     * @param InlineParserInterface $parser   Inline parser instance
+     * @param int                   $priority Priority (a higher number will be executed earlier)
      *
      * @return self
      */
-    public function addInlineParser(InlineParserInterface $parser, $priority = 0);
+    public function addInlineParser(InlineParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface;
 
     /**
-     * @param InlineProcessorInterface $processor
-     * @param int                      $priority
+     * Registers the given inline processor with the Environment
+     *
+     * @param InlineProcessorInterface $processor Inline processor instance
+     * @param int                      $priority  Priority (a higher number will be executed earlier)
      *
      * @return self
      */
-    public function addInlineProcessor(InlineProcessorInterface $processor, $priority = 0);
+    public function addInlineProcessor(InlineProcessorInterface $processor, int $priority = 0): ConfigurableEnvironmentInterface;
 
     /**
-     * @param DocumentProcessorInterface $processor
-     * @param int                        $priority
+     * Registers the given document processor with the Environment
+     *
+     * @param DocumentProcessorInterface $processor Document processor instance
+     * @param int                        $priority  Priority (a higher number will be executed earlier)
      *
      * @return self
      */
-    public function addDocumentProcessor(DocumentProcessorInterface $processor, $priority = 0);
+    public function addDocumentProcessor(DocumentProcessorInterface $processor, int $priority = 0): ConfigurableEnvironmentInterface;
 
     /**
-     * @param string                 $blockClass
-     * @param BlockRendererInterface $blockRenderer
-     * @param int                    $priority
+     * @param string                 $blockClass    The fully-qualified block element class name the renderer below should handle
+     * @param BlockRendererInterface $blockRenderer The renderer responsible for rendering the type of element given above
+     * @param int                    $priority      Priority (a higher number will be executed earlier)
      *
      * @return self
      */
-    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, $priority = 0);
+    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, int $priority = 0): ConfigurableEnvironmentInterface;
 
     /**
-     * @param string                  $inlineClass
-     * @param InlineRendererInterface $renderer
-     * @param int                     $priority
+     * Registers the given inline renderer with the Environment
+     *
+     * @param string                  $inlineClass The fully-qualified inline element class name the renderer below should handle
+     * @param InlineRendererInterface $renderer    The renderer responsible for rendering the type of element given above
+     * @param int                     $priority    Priority (a higher number will be executed earlier)
      *
      * @return self
      */
-    public function addInlineRenderer($inlineClass, InlineRendererInterface $renderer, $priority = 0);
+    public function addInlineRenderer(string $inlineClass, InlineRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface;
 }

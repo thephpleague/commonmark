@@ -36,7 +36,7 @@ class HtmlBlock extends AbstractBlock
     /**
      * @param int $type
      */
-    public function __construct($type)
+    public function __construct(int $type)
     {
         parent::__construct();
 
@@ -46,7 +46,7 @@ class HtmlBlock extends AbstractBlock
     /**
      * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
@@ -54,7 +54,7 @@ class HtmlBlock extends AbstractBlock
     /**
      * @param int $type
      */
-    public function setType($type)
+    public function setType(int $type)
     {
         $this->type = $type;
     }
@@ -66,7 +66,7 @@ class HtmlBlock extends AbstractBlock
      *
      * @return bool
      */
-    public function canContain(AbstractBlock $block)
+    public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
@@ -76,7 +76,7 @@ class HtmlBlock extends AbstractBlock
      *
      * @return bool
      */
-    public function acceptsLines()
+    public function acceptsLines(): bool
     {
         return true;
     }
@@ -86,12 +86,12 @@ class HtmlBlock extends AbstractBlock
      *
      * @return bool
      */
-    public function isCode()
+    public function isCode(): bool
     {
         return true;
     }
 
-    public function matchesNextLine(Cursor $cursor)
+    public function matchesNextLine(Cursor $cursor): bool
     {
         if ($cursor->isBlank() && ($this->type === self::TYPE_6_BLOCK_ELEMENT || $this->type === self::TYPE_7_MISC_ELEMENT)) {
             return false;
@@ -100,7 +100,7 @@ class HtmlBlock extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context, $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber)
     {
         parent::finalize($context, $endLineNumber);
 

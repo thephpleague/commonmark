@@ -18,7 +18,7 @@ use League\CommonMark\Block\Element\BlockQuote;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class BlockQuoteParser extends AbstractBlockParser
+class BlockQuoteParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context
@@ -26,7 +26,7 @@ class BlockQuoteParser extends AbstractBlockParser
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, Cursor $cursor)
+    public function parse(ContextInterface $context, Cursor $cursor): bool
     {
         if ($cursor->isIndented()) {
             return false;
