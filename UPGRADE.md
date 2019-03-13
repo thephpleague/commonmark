@@ -58,6 +58,10 @@ The execution order of these things no longer depends on the order you add them 
 
 Thanks to the new prioritization system, we now support multiple renderers for the same block/inline class!  The first renderer to return a non-null result will be considered the "winner" and no subsequent renderers will execute for that block/inline.  No change should be required for most extensions unless you were using some weird workaround to support multiple renderers yourself. 
 
+### `RegexHelper::isEscapable()` no longer accepts `null` values
+
+In cases where you may have previously passed a `null` value in, skip the call to this method.  The previous behavior was to return `false` for `null` values, but `null` is never escapable so it's silly to make this call when we know what the result will be.
+
 ## 0.18.0
 
 No breaking changes were introduced, but we did add a new interface: `ConverterInface`. Consider depending on this interface in your code instead of the concrete implementation. (See #330)

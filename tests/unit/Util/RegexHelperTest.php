@@ -271,7 +271,7 @@ class RegexHelperTest extends TestCase
 
     public function testIsEscapable()
     {
-        $this->assertFalse(RegexHelper::isEscapable(null));
+        $this->assertFalse(RegexHelper::isEscapable(''));
         $this->assertFalse(RegexHelper::isEscapable('A'));
         $this->assertTrue(RegexHelper::isEscapable('\\'));
     }
@@ -286,7 +286,12 @@ class RegexHelperTest extends TestCase
      */
     public function testMatchAt(string $regex, string $string, ?int $offset, int $expectedResult)
     {
-        $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string, $offset));
+        if ($offset === null) {
+            $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string));
+        } else {
+            $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string, $offset));
+        }
+
     }
 
     /**

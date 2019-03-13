@@ -154,16 +154,12 @@ final class RegexHelper
     const REGEX_LINK_DESTINATION_BRACES = '/^(?:' . '[<](?:[^ <>\\t\\n\\\\\\x00]' . '|' . self::PARTIAL_ESCAPED_CHAR . '|' . '\\\\)*[>]' . ')/';
 
     /**
-     * @param string|null $character
+     * @param string $character
      *
      * @return bool
      */
-    public static function isEscapable(?string $character): bool
+    public static function isEscapable(string $character): bool
     {
-        if ($character === null) {
-            return false;
-        }
-
         return preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
     }
 
