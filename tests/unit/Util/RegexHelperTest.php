@@ -291,7 +291,6 @@ class RegexHelperTest extends TestCase
         } else {
             $this->assertEquals($expectedResult, RegexHelper::matchAt($regex, $string, $offset));
         }
-
     }
 
     /**
