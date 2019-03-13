@@ -15,7 +15,7 @@ class AbstractWebResourceTest extends TestCase
         $url = 'https://www.example.com/foo';
 
         /** @var AbstractWebResource $element */
-        $element = $this->getMockBuilder('League\\CommonMark\\Inline\\Element\\AbstractWebResource')
+        $element = $this->getMockBuilder(\League\CommonMark\Inline\Element\AbstractWebResource::class)
             ->setConstructorArgs([$url])
             ->getMockForAbstractClass();
 
@@ -31,7 +31,7 @@ class AbstractWebResourceTest extends TestCase
         $url2 = 'https://www.example.com/bar';
 
         /** @var AbstractWebResource $element */
-        $element = $this->getMockBuilder('League\\CommonMark\\Inline\\Element\\AbstractWebResource')
+        $element = $this->getMockBuilder(\League\CommonMark\Inline\Element\AbstractWebResource::class)
             ->setConstructorArgs([$url1])
             ->getMockForAbstractClass();
 

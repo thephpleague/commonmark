@@ -59,7 +59,7 @@ class DocumentRendererTest extends TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass('League\CommonMark\Block\Element\AbstractBlock');
+        $inline = $this->getMockForAbstractClass(\League\CommonMark\Block\Element\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

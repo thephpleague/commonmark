@@ -19,7 +19,7 @@ class CommonMarkConverterTest extends TestCase
         $environment = $this->getEnvironmentFromConverter($converter);
 
         $this->assertCount(1, $environment->getExtensions());
-        $this->assertInstanceOf('League\CommonMark\Extension\CommonMarkCoreExtension', $environment->getExtensions()[0]);
+        $this->assertInstanceOf(\League\CommonMark\Extension\CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
         $this->assertEquals($expectedEnvironment->getConfig(), $environment->getConfig());
     }
 
@@ -31,14 +31,14 @@ class CommonMarkConverterTest extends TestCase
         $environment = $this->getEnvironmentFromConverter($converter);
 
         $this->assertCount(1, $environment->getExtensions());
-        $this->assertInstanceOf('League\CommonMark\Extension\CommonMarkCoreExtension', $environment->getExtensions()[0]);
+        $this->assertInstanceOf(\League\CommonMark\Extension\CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
         $this->assertArrayHasKey('foo', $environment->getConfig());
     }
 
     public function testEnvironmentAndConfigConstructor()
     {
         $config = ['foo' => 'bar'];
-        $mockEnvironment = $this->createMock('League\CommonMark\ConfigurableEnvironmentInterface');
+        $mockEnvironment = $this->createMock(\League\CommonMark\ConfigurableEnvironmentInterface::class);
         $mockEnvironment->expects($this->once())
             ->method('mergeConfig')
             ->with($config);

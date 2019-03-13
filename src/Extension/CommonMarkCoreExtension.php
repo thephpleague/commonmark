@@ -14,9 +14,11 @@
 
 namespace League\CommonMark\Extension;
 
+use League\CommonMark\Block\Element as BlockElement;
 use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Renderer as BlockRenderer;
 use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Inline\Element as InlineElement;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Processor as InlineProcessor;
 use League\CommonMark\Inline\Renderer as InlineRenderer;
@@ -49,25 +51,25 @@ final class CommonMarkCoreExtension implements ExtensionInterface
 
             ->addInlineProcessor(new InlineProcessor\EmphasisProcessor(), 0)
 
-            ->addBlockRenderer('League\CommonMark\Block\Element\BlockQuote',    new BlockRenderer\BlockQuoteRenderer(),    0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\Document',      new BlockRenderer\DocumentRenderer(),      0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\FencedCode',    new BlockRenderer\FencedCodeRenderer(),    0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\Heading',       new BlockRenderer\HeadingRenderer(),       0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\HtmlBlock',     new BlockRenderer\HtmlBlockRenderer(),     0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\IndentedCode',  new BlockRenderer\IndentedCodeRenderer(),  0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\ListBlock',     new BlockRenderer\ListBlockRenderer(),     0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\ListItem',      new BlockRenderer\ListItemRenderer(),      0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\Paragraph',     new BlockRenderer\ParagraphRenderer(),     0)
-            ->addBlockRenderer('League\CommonMark\Block\Element\ThematicBreak', new BlockRenderer\ThematicBreakRenderer(), 0)
+            ->addBlockRenderer(BlockElement\BlockQuote::class,    new BlockRenderer\BlockQuoteRenderer(),    0)
+            ->addBlockRenderer(BlockElement\Document::class,      new BlockRenderer\DocumentRenderer(),      0)
+            ->addBlockRenderer(BlockElement\FencedCode::class,    new BlockRenderer\FencedCodeRenderer(),    0)
+            ->addBlockRenderer(BlockElement\Heading::class,       new BlockRenderer\HeadingRenderer(),       0)
+            ->addBlockRenderer(BlockElement\HtmlBlock::class,     new BlockRenderer\HtmlBlockRenderer(),     0)
+            ->addBlockRenderer(BlockElement\IndentedCode::class,  new BlockRenderer\IndentedCodeRenderer(),  0)
+            ->addBlockRenderer(BlockElement\ListBlock::class,     new BlockRenderer\ListBlockRenderer(),     0)
+            ->addBlockRenderer(BlockElement\ListItem::class,      new BlockRenderer\ListItemRenderer(),      0)
+            ->addBlockRenderer(BlockElement\Paragraph::class,     new BlockRenderer\ParagraphRenderer(),     0)
+            ->addBlockRenderer(BlockElement\ThematicBreak::class, new BlockRenderer\ThematicBreakRenderer(), 0)
 
-            ->addInlineRenderer('League\CommonMark\Inline\Element\Code',       new InlineRenderer\CodeRenderer(),       0)
-            ->addInlineRenderer('League\CommonMark\Inline\Element\Emphasis',   new InlineRenderer\EmphasisRenderer(),   0)
-            ->addInlineRenderer('League\CommonMark\Inline\Element\HtmlInline', new InlineRenderer\HtmlInlineRenderer(), 0)
-            ->addInlineRenderer('League\CommonMark\Inline\Element\Image',      new InlineRenderer\ImageRenderer(),      0)
-            ->addInlineRenderer('League\CommonMark\Inline\Element\Link',       new InlineRenderer\LinkRenderer(),       0)
-            ->addInlineRenderer('League\CommonMark\Inline\Element\Newline',    new InlineRenderer\NewlineRenderer(),    0)
-            ->addInlineRenderer('League\CommonMark\Inline\Element\Strong',     new InlineRenderer\StrongRenderer(),     0)
-            ->addInlineRenderer('League\CommonMark\Inline\Element\Text',       new InlineRenderer\TextRenderer(),       0)
+            ->addInlineRenderer(InlineElement\Code::class,       new InlineRenderer\CodeRenderer(),       0)
+            ->addInlineRenderer(InlineElement\Emphasis::class,   new InlineRenderer\EmphasisRenderer(),   0)
+            ->addInlineRenderer(InlineElement\HtmlInline::class, new InlineRenderer\HtmlInlineRenderer(), 0)
+            ->addInlineRenderer(InlineElement\Image::class,      new InlineRenderer\ImageRenderer(),      0)
+            ->addInlineRenderer(InlineElement\Link::class,       new InlineRenderer\LinkRenderer(),       0)
+            ->addInlineRenderer(InlineElement\Newline::class,    new InlineRenderer\NewlineRenderer(),    0)
+            ->addInlineRenderer(InlineElement\Strong::class,     new InlineRenderer\StrongRenderer(),     0)
+            ->addInlineRenderer(InlineElement\Text::class,       new InlineRenderer\TextRenderer(),       0)
         ;
     }
 }
