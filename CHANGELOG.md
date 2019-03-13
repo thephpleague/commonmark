@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Extracted two new base interfaces from `Environment`:
    - `EnvironmentInterface`
    - `ConfigurableEnvironmentInterface`
+ - Made some minor optimizations here and there
 
 ### Changed
 

@@ -197,7 +197,10 @@ final class RegexHelper
      */
     public static function matchAll(string $pattern, string $subject, int $offset = 0): ?array
     {
-        $subject = substr($subject, $offset);
+        if ($offset !== 0) {
+            $subject = substr($subject, $offset);
+        }
+
         preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
 
         $fullMatches = reset($matches);
@@ -211,11 +214,7 @@ final class RegexHelper
             }
         }
 
-        if (!empty($matches)) {
-            return $matches;
-        }
-
-        return null;
+        return $matches ?: null;
     }
 
     /**
