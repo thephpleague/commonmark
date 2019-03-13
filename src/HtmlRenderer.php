@@ -41,7 +41,7 @@ class HtmlRenderer implements ElementRendererInterface
      * @param string $option
      * @param mixed  $default
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function getOption(string $option, $default = null)
     {

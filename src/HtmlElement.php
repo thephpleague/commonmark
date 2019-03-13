@@ -25,10 +25,10 @@ class HtmlElement
     protected $selfClosing = false;
 
     /**
-     * @param string                           $tagName
-     * @param string[]                         $attributes
-     * @param HtmlElement|HtmlElement[]|string $contents
-     * @param bool                             $selfClosing
+     * @param string                                $tagName
+     * @param string[]                              $attributes
+     * @param HtmlElement|HtmlElement[]|string|null $contents
+     * @param bool                                  $selfClosing
      */
     public function __construct(string $tagName, array $attributes = [], $contents = '', bool $selfClosing = false)
     {
@@ -36,7 +36,7 @@ class HtmlElement
         $this->attributes = $attributes;
         $this->selfClosing = $selfClosing;
 
-        $this->setContents($contents);
+        $this->setContents($contents ?: '');
     }
 
     /**
@@ -107,7 +107,7 @@ class HtmlElement
      */
     public function setContents($contents): self
     {
-        $this->contents = $contents !== null ? $contents : '';
+        $this->contents = $contents ?: '';
 
         return $this;
     }
