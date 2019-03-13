@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Tests\Unit\Inline\Parser;
 
+use League\CommonMark\Block\Element as BlockElement;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Parser\BacktickParser;
 use League\CommonMark\InlineParserContext;
@@ -30,7 +31,7 @@ class BacktickParserTest extends TestCase
      */
     public function testParse($string, $expectedContents)
     {
-        $nodeStub = $this->createMock(\League\CommonMark\Block\Element\AbstractBlock::class);
+        $nodeStub = $this->createMock(BlockElement\AbstractBlock::class);
         $nodeStub->expects($this->any())->method('getStringContent')->willReturn($string);
         $nodeStub
             ->expects($this->once())

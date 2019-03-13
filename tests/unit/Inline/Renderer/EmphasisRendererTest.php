@@ -15,6 +15,7 @@
 namespace League\CommonMark\Tests\Unit\Inline\Renderer;
 
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Inline\Element as InlineElement;
 use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Renderer\EmphasisRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
@@ -51,7 +52,7 @@ class EmphasisRendererTest extends TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass(\League\CommonMark\Inline\Element\AbstractInline::class);
+        $inline = $this->getMockForAbstractClass(InlineElement\AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

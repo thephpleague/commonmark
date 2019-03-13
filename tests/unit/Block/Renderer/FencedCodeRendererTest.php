@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Renderer;
 
+use League\CommonMark\Block\Element as BlockElement;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\FencedCode;
 use League\CommonMark\Block\Renderer\FencedCodeRenderer;
@@ -94,7 +95,7 @@ class FencedCodeRendererTest extends TestCase
      */
     public function testRenderWithInvalidType()
     {
-        $inline = $this->getMockForAbstractClass(\League\CommonMark\Block\Element\AbstractBlock::class);
+        $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

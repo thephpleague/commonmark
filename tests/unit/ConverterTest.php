@@ -14,7 +14,7 @@ class ConverterTest extends TestCase
         $expectedHtml = '<strong>Strong</strong>';
 
         /** @var Converter|PHPUnit_Framework_MockObject_MockObject $converter */
-        $converter = $this->getMockBuilder(\League\CommonMark\Converter::class)
+        $converter = $this->getMockBuilder(Converter::class)
             ->disableOriginalConstructor()
             ->setMethods(['convertToHtml'])
             ->getMock();
