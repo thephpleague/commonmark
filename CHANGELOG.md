@@ -50,8 +50,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `RegexHelper::getLinkDestinationBracesRegex()`
    - `RegexHelper::getThematicBreakRegex()`
 
-### Changed
-
 ## [0.18.1] - 2018-12-29
 
 This is a **security update** release.
