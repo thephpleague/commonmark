@@ -170,8 +170,6 @@ class Context implements ContextInterface
 
     /**
      * @param AbstractBlock $block
-     *
-     * @return AbstractBlock
      */
     public function addBlock(AbstractBlock $block)
     {
@@ -184,8 +182,6 @@ class Context implements ContextInterface
         $this->tip->appendChild($block);
         $this->tip = $block;
         $this->container = $block;
-
-        return $block;
     }
 
     /**

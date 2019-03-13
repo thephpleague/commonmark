@@ -57,16 +57,12 @@ interface ContextInterface
     public function getContainer(): AbstractBlock;
 
     /**
-     * @param AbstractBlock $getDocument
-     *
-     * @return $this
+     * @param AbstractBlock $container
      */
     public function setContainer(AbstractBlock $container);
 
     /**
      * @param AbstractBlock $block
-     *
-     * @return AbstractBlock
      */
     public function addBlock(AbstractBlock $block);
 
