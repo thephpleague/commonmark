@@ -8,7 +8,7 @@ parsing engine, which itself is based on the CommonMark spec.
 
 ## Current Custom Parsers and Renderers
 
-* **Strikethrough:** Parser and Renderer. Allows users to use `~~` in order to indicate text that should be rendered within `<del>` tags.  To use it, add it to your environment object with `$env->addExtension(new \CommonMarkExt\Strikethrough\StrikethroughExtension())`.
+* **Strikethrough:** Parser and Renderer. Allows users to use `~~` in order to indicate text that should be rendered within `<del>` tags.  To use it, add it to your environment object with `$env->addExtension(new \League\CommonMark\Ext\Strikethrough\StrikethroughExtension())`.
 
 ## Installation
 

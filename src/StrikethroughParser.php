@@ -1,15 +1,24 @@
 <?php
-namespace CommonMarkExt\Strikethrough;
 
-use League\CommonMark\ContextInterface;
+/*
+ * This file is part of the league/commonmark-ext-strikethrough package.
+ *
+ * (c) Colin O'Dell <colinodell@gmail.com> and uAfrica.com (http://uafrica.com)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace League\CommonMark\Ext\Strikethrough;
+
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Parser\AbstractInlineParser;
 use League\CommonMark\InlineParserContext;
 
-class StrikethroughParser extends AbstractInlineParser
+final class StrikethroughParser extends AbstractInlineParser
 {
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getCharacters()
     {
@@ -17,14 +26,11 @@ class StrikethroughParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface $context
-     * @param InlineParserContext $inline_context
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function parse(InlineParserContext $inline_context)
+    public function parse(InlineParserContext $inlineContext)
     {
-        $cursor = $inline_context->getCursor();
+        $cursor = $inlineContext->getCursor();
         $character = $cursor->getCharacter();
         if ($cursor->peek(1) !== $character) {
             return false;
@@ -34,18 +40,21 @@ class StrikethroughParser extends AbstractInlineParser
         if ($tildes === '') {
             return false;
         }
+
         $previous_state = $cursor->saveState();
         while ($matching_tildes = $cursor->match('/~~+/m')) {
             if ($matching_tildes === $tildes) {
                 $text = mb_substr( $cursor->getPreviousText(), 0, -mb_strlen($tildes) );
                 $text = preg_replace('/[ \n]+/', ' ', $text);
-                $inline_context->getContainer()->appendChild(new Strikethrough(trim($text)));
+                $inlineContext->getContainer()->appendChild(new Strikethrough(trim($text)));
                 return true;
             }
         }
+
         // If we got here, we didn't match a closing tilde pair sequence
         $cursor->restoreState($previous_state);
-        $inline_context->getContainer()->appendChild(new Text($tildes));
+        $inlineContext->getContainer()->appendChild(new Text($tildes));
+
         return true;
     }
 }

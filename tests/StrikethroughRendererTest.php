@@ -1,9 +1,18 @@
 <?php
-namespace CommonMarkExt\Tests\Strikethrough;
 
-use CommonMarkExt\Strikethrough\Strikethrough;
-use CommonMarkExt\Strikethrough\StrikethroughRenderer;
-use CommonMarkExt\Tests\FakeHtmlRenderer;
+/*
+ * This file is part of the league/commonmark-ext-strikethrough package.
+ *
+ * (c) Colin O'Dell <colinodell@gmail.com> and uAfrica.com (http://uafrica.com)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace League\CommonMark\Ext\Strikethrough\Test;
+
+use League\CommonMark\Ext\Strikethrough\Strikethrough;
+use League\CommonMark\Ext\Strikethrough\StrikethroughRenderer;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Renderer\CodeRenderer;
 
@@ -23,21 +32,13 @@ class StrikethroughRendererTest extends \PHPUnit_Framework_TestCase
     {
         $inline = new Strikethrough('reviewed text');
         $inline->data['attributes'] = ['id' => 'some"&amp;id'];
-        $fake_renderer = new FakeHtmlRenderer();
-        $result = $this->renderer->render($inline, $fake_renderer);
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $result = $this->renderer->render($inline, $fakeRenderer);
+
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('del', $result->getTagName());
         $this->assertContains('reviewed text', $result->getContents(true));
         $this->assertEquals(['id' => 'some&quot;&amp;id'], $result->getAllAttributes());
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testRenderWithInvalidType()
-    {
-        $inline = $this->getMockForAbstractClass('League\CommonMark\Inline\Element\AbstractInline');
-        $fake_renderer = new FakeHtmlRenderer();
-        $this->renderer->render($inline, $fake_renderer);
     }
 }

@@ -1,29 +1,43 @@
 {
-    "name": "uafrica/commonmark-ext",
+    "name": "league/commonmark-ext-strikethrough",
     "type": "commonmark-extension",
-    "description": "Extended parsers and renderers for The PHP League CommonMark parser",
-    "keywords": ["markdown", "strikethrough", "strikeout", "commonmark"],
-    "require": {
-        "league/commonmark": "^0.18"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "5"
-    },
+    "description": "Strikethrough support for the PHP League's CommonMark Markdown parser",
+    "keywords": ["markdown", "commonmark", "extension", "strikethrough", "strikeout"],
+    "homepage": "https://github.com/thephpleague/commonmark-ext-strikethrough",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Colin O'Dell",
+            "email": "colinodell@gmail.com"
+        },
         {
             "name": "Johan Meiring",
             "email": "johan@uafrica.com"
         }
     ],
+    "require": {
+        "php": ">=5.6",
+        "league/commonmark": "^0.18"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
     "autoload": {
         "psr-4": {
-            "CommonMarkExt\\": "src/"
+            "League\\CommonMark\\Ext\\Strikethrough\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "CommonMarkExt\\Tests\\": "tests/"
+            "League\\CommonMark\\Ext\\Strikethrough\\Test\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
         }
     }
 }

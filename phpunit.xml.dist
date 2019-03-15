@@ -10,7 +10,7 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="commonmark-ext Test Suite">
+        <testsuite name="commonmark-ext-strikethrough Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

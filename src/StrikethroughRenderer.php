@@ -1,5 +1,15 @@
 <?php
-namespace CommonMarkExt\Strikethrough;
+
+/*
+ * This file is part of the league/commonmark-ext-strikethrough package.
+ *
+ * (c) Colin O'Dell <colinodell@gmail.com> and uAfrica.com (http://uafrica.com)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace League\CommonMark\Ext\Strikethrough;
 
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
@@ -7,19 +17,17 @@ use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\Xml;
 
-class StrikethroughRenderer implements InlineRendererInterface
+final class StrikethroughRenderer implements InlineRendererInterface
 {
     /**
-     * @param AbstractInline $inline
-     * @param ElementRendererInterface $htmlRenderer
-     *
-     * @return HtmlElement|string
+     * {@inheritdoc}
      */
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Strikethrough)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
+
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
             $attrs[$key] = Xml::escape($value, true);

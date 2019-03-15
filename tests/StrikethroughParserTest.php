@@ -1,9 +1,19 @@
 <?php
-namespace CommonMarkExt\Tests\Strikethrough;
 
-use CommonMarkExt\Strikethrough\Strikethrough;
-use CommonMarkExt\Strikethrough\StrikethroughParser;
-use League\CommonMark\Cursor;
+/*
+ * This file is part of the league/commonmark-ext-strikethrough package.
+ *
+ * (c) Colin O'Dell <colinodell@gmail.com> and uAfrica.com (http://uafrica.com)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace League\CommonMark\Ext\Strikethrough\Test;
+
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Ext\Strikethrough\Strikethrough;
+use League\CommonMark\Ext\Strikethrough\StrikethroughParser;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Reference\ReferenceMap;
 
@@ -17,7 +27,7 @@ class StrikethroughParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParse($string, $expected)
     {
-        $nodeStub = $this->getMock(\League\CommonMark\Block\Element\AbstractBlock::class);
+        $nodeStub = $this->createMock(AbstractBlock::class);
         $nodeStub->expects($this->any())->method('getStringContent')->willReturn($string);
         $nodeStub
             ->expects($this->once())
