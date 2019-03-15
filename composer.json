@@ -1,0 +1,41 @@
+{
+    "name": "league/commonmark-ext-autolink",
+    "type": "commonmark-extension",
+    "description": "Extension for league/commonmark which autolinks URLs, emails, and @-mentions",
+    "keywords": ["markdown", "commonmark", "extension", "autolink", "twitter", "github"],
+    "homepage": "https://github.com/thephpleague/commonmark-ext-autolink",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Colin O'Dell",
+            "email": "colinodell@gmail.com",
+            "homepage": "https://www.colinodell.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.6",
+        "league/commonmark": "^0.18.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "League\\CommonMark\\Ext\\Autolink\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "League\\CommonMark\\Ext\\Autolink\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    }
+}
