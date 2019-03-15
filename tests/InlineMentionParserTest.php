@@ -22,10 +22,16 @@ final class InlineMentionParserTest extends TestCase
     {
         $input = <<<EOT
 You can follow the author of this library on Twitter - he's @colinodell!
+
+Usernames like @commonmarkisthebestmarkdownspec are too long.
+
+Security issues should be emailed to colinodell@gmail.com
 EOT;
 
         $expected = <<<EOT
 <p>You can follow the author of this library on Twitter - he's <a href="https://twitter.com/colinodell">@colinodell</a>!</p>
+<p>Usernames like @commonmarkisthebestmarkdownspec are too long.</p>
+<p>Security issues should be emailed to colinodell@gmail.com</p>
 
 EOT;
 
