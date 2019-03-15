@@ -36,7 +36,7 @@ $environment->addExtension(new AutolinkExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new CommonMarkConverter([], $environment);
-echo $converter->convertToHtml('I successfully instead the https://github.com/thephpleague/commonmark-ext-autolink extension!');
+echo $converter->convertToHtml('I successfully installed the https://github.com/thephpleague/commonmark-ext-autolink extension!');
 ```
 
 ## `@mention` Autolinking
@@ -55,14 +55,14 @@ $environment->addInlineParser(InlineMentionParser::createTwitterHandleParser());
 // TODO: Instantiate your converter and convert some Markdown
 ```
 
-For Github:
+For GitHub:
 
 ```php
 use League\CommonMark\Environment;
 use League\CommonMark\Ext\Autolink\InlineMentionParser;
 
 $environment = Environment::createCommonMarkEnvironment();
-$environment->addInlineParser(InlineMentionParser::createTwitterHandleParser());
+$environment->addInlineParser(InlineMentionParser::createGithubHandleParser());
 
 // TODO: Instantiate your converter and convert some Markdown
 ```
