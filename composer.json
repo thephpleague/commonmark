@@ -1,5 +1,6 @@
 {
     "name": "uafrica/commonmark-ext",
+    "type": "commonmark-extension",
     "description": "Extended parsers and renderers for The PHP League CommonMark parser",
     "keywords": ["markdown", "strikethrough", "strikeout", "commonmark"],
     "require": {
