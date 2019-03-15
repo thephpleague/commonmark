@@ -1,6 +1,6 @@
 {
     "name": "webuni/commonmark-table-extension",
-    "type": "library",
+    "type": "commonmark-extension",
     "description": "The table extension for CommonMark PHP implementation",
     "keywords": ["markdown","table","commonmark"],
     "homepage": "https://github.com/webuni/commonmark-table-extension",
