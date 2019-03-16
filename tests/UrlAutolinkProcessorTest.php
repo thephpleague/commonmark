@@ -61,5 +61,12 @@ final class UrlAutolinkProcessorTest extends TestCase
         yield ['www.google.com/search?q=Markup+(business)', '<p><a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a></p>'];
         yield ['(www.google.com/search?q=Markup+(business))', '<p>(<a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a>)</p>'];
         yield ['www.google.com/search?q=(business))+ok', '<p><a href="http://www.google.com/search?q=(business))+ok">www.google.com/search?q=(business))+ok</a></p>'];
+
+        // Tests involving semi-colon endings
+        yield ['www.google.com/search?q=commonmark&hl=en', '<p><a href="http://www.google.com/search?q=commonmark&amp;hl=en">www.google.com/search?q=commonmark&amp;hl=en</a></p>'];
+        yield ['www.google.com/search?q=commonmark&hl;', '<p><a href="http://www.google.com/search?q=commonmark">www.google.com/search?q=commonmark</a>&amp;hl;</p>'];
+
+        // Test that < immediately terminates an autolink
+        yield ['www.commonmark.org/he<lp', '<p><a href="http://www.commonmark.org/he">www.commonmark.org/he</a>&lt;lp</p>'];
     }
 }
