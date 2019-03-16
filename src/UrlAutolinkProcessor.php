@@ -81,6 +81,13 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
                             // Add the punctuation later
                             $content = $matches[1];
                             $leftovers = $matches[2];
+                        }
+
+                        // Does the URL need its closing paren chopped off?
+                        if (substr($content, -1) === ')' && self::hasMoreCloserParensThanOpeners($content)) {
+                            $content = substr($content, 0, -1);
+                            $leftovers .= ')';
+                        }
 
                         // Auto-prefix 'http://' onto 'www' URLs
                         if (substr($content, 0, 4) === 'www.') {
@@ -94,5 +101,26 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
                 $node->detach();
             }
         }
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return bool
+     */
+    private static function hasMoreCloserParensThanOpeners($content)
+    {
+        // Scan the entire autolink for the total number of parentheses.
+        // If there is a greater number of closing parentheses than opening ones,
+        // we don’t consider the last character part of the autolink, in order to
+        // facilitate including an autolink inside a parenthesis.
+        preg_match_all('/[()]/', $content, $matches);
+
+        $charCount = ['(' => 0, ')' => 0];
+        foreach ($matches[0] as $char) {
+            $charCount[$char]++;
+        }
+
+        return $charCount[')'] > $charCount['('];
     }
 }
