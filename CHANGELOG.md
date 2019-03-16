@@ -7,10 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.1.0...HEAD
-
 ## [0.1.0] - 2019-03-14
 
 Initial release!
 
+[unreleased]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/thephpleague/commonmark-ext-autolink/commits/v0.1.0
