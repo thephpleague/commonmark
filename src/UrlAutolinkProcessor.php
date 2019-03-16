@@ -44,7 +44,7 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
 
     private $allowedProtocols;
 
-    public function __construct(array $allowedProtocols = ['http', 'https'])
+    public function __construct(array $allowedProtocols = ['http', 'https', 'ftp'])
     {
         $this->allowedProtocols = $allowedProtocols;
     }
