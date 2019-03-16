@@ -29,7 +29,7 @@ class InlineParserContext
     {
         $this->referenceMap = $referenceMap;
         $this->container = $container;
-        $this->cursor = new Cursor(trim($container->getStringContent()));
+        $this->cursor = new Cursor(\trim($container->getStringContent()));
         $this->delimiterStack = new DelimiterStack();
     }
 

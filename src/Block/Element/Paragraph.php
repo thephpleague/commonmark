@@ -66,7 +66,7 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
     {
         parent::finalize($context, $endLineNumber);
 
-        $this->finalStringContents = preg_replace('/^  */m', '', implode("\n", $this->getStrings()));
+        $this->finalStringContents = \preg_replace('/^  */m', '', \implode("\n", $this->getStrings()));
 
         // Short-circuit
         if ($this->finalStringContents === '' || $this->finalStringContents[0] !== '[') {

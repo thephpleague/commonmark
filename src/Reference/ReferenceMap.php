@@ -72,6 +72,6 @@ class ReferenceMap
      */
     public function listReferences(): iterable
     {
-        return array_values($this->references);
+        return \array_values($this->references);
     }
 }

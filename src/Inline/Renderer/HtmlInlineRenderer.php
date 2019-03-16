@@ -37,7 +37,7 @@ class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareI
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof HtmlInline)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
         }
 
         // Kept for BC reasons

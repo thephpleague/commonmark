@@ -40,12 +40,12 @@ class AutolinkParser implements InlineParserInterface
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match(self::EMAIL_REGEX)) {
-            $email = substr($m, 1, -1);
+            $email = \substr($m, 1, -1);
             $inlineContext->getContainer()->appendChild(new Link('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
 
             return true;
         } elseif ($m = $cursor->match(self::OTHER_LINK_REGEX)) {
-            $dest = substr($m, 1, -1);
+            $dest = \substr($m, 1, -1);
             $inlineContext->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($dest), $dest));
 
             return true;

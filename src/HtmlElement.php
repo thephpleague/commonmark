@@ -89,12 +89,12 @@ class HtmlElement
      */
     public function getContents(bool $asString = true)
     {
-        if (!$asString || is_string($this->contents)) {
+        if (!$asString || \is_string($this->contents)) {
             return $this->contents;
         }
 
-        if (is_array($this->contents)) {
-            return implode('', $this->contents);
+        if (\is_array($this->contents)) {
+            return \implode('', $this->contents);
         }
 
         return (string) $this->contents;

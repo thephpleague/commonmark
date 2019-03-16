@@ -39,7 +39,7 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Image)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
         }
 
         $attrs = [];
@@ -55,8 +55,8 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
         }
 
         $alt = $htmlRenderer->renderInlines($inline->children());
-        $alt = preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
-        $attrs['alt'] = preg_replace('/\<[^>]*\>/', '', $alt);
+        $alt = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
+        $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt);
 
         if (isset($inline->data['title'])) {
             $attrs['title'] = Xml::escape($inline->data['title'], true);

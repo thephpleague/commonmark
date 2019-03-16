@@ -34,7 +34,7 @@ class Heading extends AbstractBlock implements InlineContainerInterface
 
         $this->level = $level;
 
-        if (!is_array($contents)) {
+        if (!\is_array($contents)) {
             $contents = [$contents];
         }
 
@@ -55,7 +55,7 @@ class Heading extends AbstractBlock implements InlineContainerInterface
     {
         parent::finalize($context, $endLineNumber);
 
-        $this->finalStringContents = implode("\n", $this->getStrings());
+        $this->finalStringContents = \implode("\n", $this->getStrings());
     }
 
     /**

@@ -41,8 +41,8 @@ class NewlineParser implements InlineParserInterface
         $spaces = 0;
         $lastInline = $inlineContext->getContainer()->lastChild();
         if ($lastInline && $lastInline instanceof Text) {
-            $trimmed = rtrim($lastInline->getContent(), ' ');
-            $spaces = strlen($lastInline->getContent()) - strlen($trimmed);
+            $trimmed = \rtrim($lastInline->getContent(), ' ');
+            $spaces = \strlen($lastInline->getContent()) - \strlen($trimmed);
             if ($spaces) {
                 $lastInline->setContent($trimmed);
             }

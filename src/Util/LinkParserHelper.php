@@ -30,7 +30,7 @@ final class LinkParserHelper
         if ($res = $cursor->match(RegexHelper::REGEX_LINK_DESTINATION_BRACES)) {
             // Chop off surrounding <..>:
             return UrlEncoder::unescapeAndEncode(
-                RegexHelper::unescape(substr($res, 1, -1))
+                RegexHelper::unescape(\substr($res, 1, -1))
             );
         }
 
@@ -49,7 +49,7 @@ final class LinkParserHelper
 
                 $cursor->advance();
                 $openParens--;
-            } elseif (preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $c)) {
+            } elseif (\preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $c)) {
                 break;
             } else {
                 $cursor->advance();
@@ -76,11 +76,11 @@ final class LinkParserHelper
     public static function parseLinkLabel(Cursor $cursor): int
     {
         $match = $cursor->match('/^\[(?:[^\\\\\[\]]|' . RegexHelper::PARTIAL_ESCAPED_CHAR . '|\\\\)*\]/');
-        if ($match === null || preg_match('/[^\\\\]\\\\\]$/', $match)) {
+        if ($match === null || \preg_match('/[^\\\\]\\\\\]$/', $match)) {
             return 0;
         }
 
-        $length = mb_strlen($match, 'utf-8');
+        $length = \mb_strlen($match, 'utf-8');
 
         if ($length > 1001) {
             return 0;

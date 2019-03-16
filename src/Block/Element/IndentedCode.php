@@ -68,17 +68,17 @@ class IndentedCode extends AbstractBlock
     {
         parent::finalize($context, $endLineNumber);
 
-        $reversed = array_reverse($this->getStrings(), true);
+        $reversed = \array_reverse($this->getStrings(), true);
         foreach ($reversed as $index => $line) {
-            if ($line === '' || $line === "\n" || preg_match('/^(\n *)$/', $line)) {
+            if ($line === '' || $line === "\n" || \preg_match('/^(\n *)$/', $line)) {
                 unset($reversed[$index]);
             } else {
                 break;
             }
         }
-        $fixed = array_reverse($reversed);
-        $tmp = implode("\n", $fixed);
-        if (substr($tmp, -1) !== "\n") {
+        $fixed = \array_reverse($reversed);
+        $tmp = \implode("\n", $fixed);
+        if (\substr($tmp, -1) !== "\n") {
             $tmp .= "\n";
         }
 

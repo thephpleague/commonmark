@@ -38,7 +38,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function first()
     {
-        return reset($this->elements);
+        return \reset($this->elements);
     }
 
     /**
@@ -46,7 +46,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function last()
     {
-        return end($this->elements);
+        return \end($this->elements);
     }
 
     /**
@@ -97,7 +97,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function remove($key)
     {
-        if (!array_key_exists($key, $this->elements)) {
+        if (!\array_key_exists($key, $this->elements)) {
             return;
         }
 
@@ -122,7 +122,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function contains($element): bool
     {
-        return in_array($element, $this->elements, true);
+        return \in_array($element, $this->elements, true);
     }
 
     /**
@@ -132,7 +132,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function indexOf($element)
     {
-        return array_search($element, $this->elements, true);
+        return \array_search($element, $this->elements, true);
     }
 
     /**
@@ -142,7 +142,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function containsKey($key): bool
     {
-        return array_key_exists($key, $this->elements);
+        return \array_key_exists($key, $this->elements);
     }
 
     /**
@@ -152,7 +152,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function count(): int
     {
-        return count($this->elements);
+        return \count($this->elements);
     }
 
     /**
@@ -218,7 +218,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function slice(int $offset, ?int $length = null): array
     {
-        return array_slice($this->elements, $offset, $length, true);
+        return \array_slice($this->elements, $offset, $length, true);
     }
 
     /**
@@ -243,6 +243,6 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
     public function removeGaps()
     {
-        $this->elements = array_filter($this->elements);
+        $this->elements = \array_filter($this->elements);
     }
 }

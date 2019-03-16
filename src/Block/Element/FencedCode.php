@@ -67,7 +67,7 @@ class FencedCode extends AbstractBlock
      */
     public function getInfoWords(): array
     {
-        return preg_split('/\s+/', $this->info);
+        return \preg_split('/\s+/', $this->info);
     }
 
     /**
@@ -188,7 +188,7 @@ class FencedCode extends AbstractBlock
         if ($this->strings->count() === 1) {
             $this->finalStringContents = '';
         } else {
-            $this->finalStringContents = implode("\n", $this->strings->slice(1)) . "\n";
+            $this->finalStringContents = \implode("\n", $this->strings->slice(1)) . "\n";
         }
     }
 
@@ -204,7 +204,7 @@ class FencedCode extends AbstractBlock
         // check for closing code fence
         if ($cursor->getIndent() <= 3 && $cursor->getNextNonSpaceCharacter() === $container->getChar()) {
             $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
-            if (strlen($match[0]) >= $container->getLength()) {
+            if (\strlen($match[0]) >= $container->getLength()) {
                 // don't add closing fence to container; instead, close it:
                 $this->setLength(-1); // -1 means we've passed closer
 

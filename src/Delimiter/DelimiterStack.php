@@ -101,13 +101,13 @@ class DelimiterStack
      */
     public function searchByCharacter($characters): ?Delimiter
     {
-        if (!is_array($characters)) {
+        if (!\is_array($characters)) {
             $characters = [$characters];
         }
 
         $opener = $this->top;
         while ($opener !== null) {
-            if (in_array($opener->getChar(), $characters)) {
+            if (\in_array($opener->getChar(), $characters)) {
                 break;
             }
             $opener = $opener->getPrevious();
@@ -123,11 +123,11 @@ class DelimiterStack
      */
     public function iterateByCharacters($characters, callable $callback, Delimiter $stackBottom = null)
     {
-        if (!is_array($characters)) {
+        if (!\is_array($characters)) {
             $characters = [$characters];
         }
 
-        $openersBottom = array_fill_keys($characters, $stackBottom);
+        $openersBottom = \array_fill_keys($characters, $stackBottom);
 
         // Find first closer above stackBottom
         $closer = $this->findEarliest($stackBottom);
@@ -135,7 +135,7 @@ class DelimiterStack
         while ($closer !== null) {
             $closerChar = $closer->getChar();
 
-            if (!$closer->canClose() || !in_array($closerChar, $characters)) {
+            if (!$closer->canClose() || !\in_array($closerChar, $characters)) {
                 $closer = $closer->getNext();
                 continue;
             }

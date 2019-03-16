@@ -374,14 +374,14 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
 
     private function buildInlineParserCharacterRegex()
     {
-        $chars = array_keys($this->inlineParsersByCharacter);
+        $chars = \array_keys($this->inlineParsersByCharacter);
 
         if (empty($chars)) {
             // If no special inline characters exist then parse the whole line
             $this->inlineParserCharacterRegex = '/^.+$/u';
         } else {
             // Match any character which inline parsers are not interested in
-            $this->inlineParserCharacterRegex = '/^[^' . preg_quote(implode('', $chars), '/') . ']+/u';
+            $this->inlineParserCharacterRegex = '/^[^' . \preg_quote(\implode('', $chars), '/') . ']+/u';
         }
     }
 

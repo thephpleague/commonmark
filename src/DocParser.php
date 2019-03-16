@@ -62,13 +62,13 @@ class DocParser
      */
     private function preProcessInput(string $input): array
     {
-        $lines = preg_split('/\r\n|\n|\r/', $input);
+        $lines = \preg_split('/\r\n|\n|\r/', $input);
 
         // Remove any newline which appears at the very end of the string.
         // We've already split the document by newlines, so we can simply drop
         // any empty element which appears on the end.
-        if (end($lines) === '') {
-            array_pop($lines);
+        if (\end($lines) === '') {
+            \array_pop($lines);
         }
 
         return $lines;
@@ -82,7 +82,7 @@ class DocParser
     public function parse(string $input): Document
     {
         $context = new Context(new Document(), $this->getEnvironment());
-        $context->setEncoding(mb_detect_encoding($input, 'ASCII,UTF-8', true) ?: 'ISO-8859-1');
+        $context->setEncoding(\mb_detect_encoding($input, 'ASCII,UTF-8', true) ?: 'ISO-8859-1');
 
         $lines = $this->preProcessInput($input);
         foreach ($lines as $line) {
@@ -90,7 +90,7 @@ class DocParser
             $this->incorporateLine($context);
         }
 
-        $lineCount = count($lines);
+        $lineCount = \count($lines);
         while ($tip = $context->getTip()) {
             $tip->finalize($context, $lineCount);
         }
@@ -226,7 +226,7 @@ class DocParser
         return $context->getTip() instanceof Paragraph &&
             !$context->getBlockCloser()->areAllClosed() &&
             !$cursor->isBlank() &&
-            count($context->getTip()->getStrings()) > 0;
+            \count($context->getTip()->getStrings()) > 0;
     }
 
     /**

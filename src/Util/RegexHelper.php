@@ -160,7 +160,7 @@ final class RegexHelper
      */
     public static function isEscapable(string $character): bool
     {
-        return preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
+        return \preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
     }
 
     /**
@@ -175,13 +175,13 @@ final class RegexHelper
     public static function matchAt(string $regex, string $string, int $offset = 0): ?int
     {
         $matches = [];
-        $string = mb_substr($string, $offset, null, 'utf-8');
-        if (!preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
+        $string = \mb_substr($string, $offset, null, 'utf-8');
+        if (!\preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
             return null;
         }
 
         // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
-        $charPos = mb_strlen(mb_strcut($string, 0, $matches[0][1], 'utf-8'), 'utf-8');
+        $charPos = \mb_strlen(\mb_strcut($string, 0, $matches[0][1], 'utf-8'), 'utf-8');
 
         return $offset + $charPos;
     }
@@ -198,19 +198,19 @@ final class RegexHelper
     public static function matchAll(string $pattern, string $subject, int $offset = 0): ?array
     {
         if ($offset !== 0) {
-            $subject = substr($subject, $offset);
+            $subject = \substr($subject, $offset);
         }
 
-        preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
+        \preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
 
-        $fullMatches = reset($matches);
+        $fullMatches = \reset($matches);
         if (empty($fullMatches)) {
             return null;
         }
 
-        if (count($fullMatches) === 1) {
+        if (\count($fullMatches) === 1) {
             foreach ($matches as &$match) {
-                $match = reset($match);
+                $match = \reset($match);
             }
         }
 
@@ -228,8 +228,8 @@ final class RegexHelper
     {
         $allEscapedChar = '/\\\\(' . self::PARTIAL_ESCAPABLE . ')/';
 
-        $escaped = preg_replace($allEscapedChar, '$1', $string);
-        $replaced = preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', function ($e) {
+        $escaped = \preg_replace($allEscapedChar, '$1', $string);
+        $replaced = \preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', function ($e) {
             return Html5Entities::decodeEntity($e[0]);
         }, $escaped);
 
@@ -293,6 +293,6 @@ final class RegexHelper
      */
     public static function isLinkPotentiallyUnsafe(string $url): bool
     {
-        return preg_match(self::REGEX_UNSAFE_PROTOCOL, $url) !== 0 && preg_match(self::REGEX_SAFE_DATA_PROTOCOL, $url) === 0;
+        return \preg_match(self::REGEX_UNSAFE_PROTOCOL, $url) !== 0 && \preg_match(self::REGEX_SAFE_DATA_PROTOCOL, $url) === 0;
     }
 }

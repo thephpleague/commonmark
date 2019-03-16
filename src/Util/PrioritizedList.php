@@ -36,7 +36,7 @@ final class PrioritizedList implements \IteratorAggregate
     public function getIterator(): iterable
     {
         if ($this->optimized === null) {
-            krsort($this->list);
+            \krsort($this->list);
 
             $sorted = [];
             foreach ($this->list as $group) {

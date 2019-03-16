@@ -70,7 +70,7 @@ class EmphasisParser implements InlineParserInterface, EnvironmentAwareInterface
     public function parse(InlineParserContext $inlineContext): bool
     {
         $character = $inlineContext->getCursor()->getCharacter();
-        if (!in_array($character, $this->getCharacters())) {
+        if (!\in_array($character, $this->getCharacters())) {
             return false;
         }
 
@@ -126,10 +126,10 @@ class EmphasisParser implements InlineParserInterface, EnvironmentAwareInterface
      */
     private function determineCanOpenOrClose(string $charBefore, string $charAfter, string $character)
     {
-        $afterIsWhitespace = preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
-        $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
-        $beforeIsWhitespace = preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
-        $beforeIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
+        $afterIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
+        $afterIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
+        $beforeIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
+        $beforeIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
 
         $leftFlanking = !$afterIsWhitespace && (!$afterIsPunctuation || $beforeIsWhitespace || $beforeIsPunctuation);
         $rightFlanking = !$beforeIsWhitespace && (!$beforeIsPunctuation || $afterIsWhitespace || $afterIsPunctuation);

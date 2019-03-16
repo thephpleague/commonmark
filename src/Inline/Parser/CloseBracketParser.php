@@ -161,7 +161,7 @@ class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInter
 
         $title = '';
         // make sure there's a space before the title:
-        if (preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $cursor->peek(-1))) {
+        if (\preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $cursor->peek(-1))) {
             $title = LinkParserHelper::parseLinkTitle($cursor) ?: '';
         }
 
@@ -191,9 +191,9 @@ class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInter
         $n = LinkParserHelper::parseLinkLabel($cursor);
         if ($n === 0 || $n === 2) {
             // Empty or missing second label
-            $reflabel = mb_substr($cursor->getLine(), $opener->getIndex(), $startPos - $opener->getIndex(), 'utf-8');
+            $reflabel = \mb_substr($cursor->getLine(), $opener->getIndex(), $startPos - $opener->getIndex(), 'utf-8');
         } else {
-            $reflabel = mb_substr($cursor->getLine(), $beforeLabel + 1, $n - 2, 'utf-8');
+            $reflabel = \mb_substr($cursor->getLine(), $beforeLabel + 1, $n - 2, 'utf-8');
         }
 
         if ($n === 0) {

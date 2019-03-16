@@ -32,14 +32,14 @@ class ListItemRenderer implements BlockRendererInterface
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!($block instanceof ListItem)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
         }
 
         $contents = $htmlRenderer->renderBlocks($block->children(), $inTightList);
-        if (substr($contents, 0, 1) === '<') {
+        if (\substr($contents, 0, 1) === '<') {
             $contents = "\n" . $contents;
         }
-        if (substr($contents, -1, 1) === '>') {
+        if (\substr($contents, -1, 1) === '>') {
             $contents .= "\n";
         }
 

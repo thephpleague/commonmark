@@ -86,9 +86,9 @@ class Cursor
     {
         $this->line = $line;
         $this->encoding = $encoding;
-        $this->length = mb_strlen($line, $this->encoding);
-        $this->isMultibyte = $this->length !== strlen($line);
-        $this->lineContainsTabs = preg_match('/\t/', $line) > 0;
+        $this->length = \mb_strlen($line, $this->encoding);
+        $this->isMultibyte = $this->length !== \strlen($line);
+        $this->lineContainsTabs = \preg_match('/\t/', $line) > 0;
     }
 
     /**
@@ -177,7 +177,7 @@ class Cursor
             return null;
         }
 
-        return $this->charCache[$index] = mb_substr($this->line, $index, 1, $this->encoding);
+        return $this->charCache[$index] = \mb_substr($this->line, $index, 1, $this->encoding);
     }
 
     /**
@@ -228,8 +228,8 @@ class Cursor
         $this->nextNonSpaceCache = null;
 
         // Optimization to avoid tab handling logic if we have no tabs
-        if (!$this->lineContainsTabs || preg_match('/\t/', $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding)) === 0) {
-            $length = min($characters, $this->length - $this->currentPosition);
+        if (!$this->lineContainsTabs || \preg_match('/\t/', $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding)) === 0) {
+            $length = \min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
             $this->column += $length;
@@ -240,7 +240,7 @@ class Cursor
         if ($characters === 1 && !empty($nextFewChars)) {
             $asArray = [$nextFewChars];
         } else {
-            $asArray = preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
+            $asArray = \preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
         }
 
         foreach ($asArray as $relPos => $c) {
@@ -313,11 +313,11 @@ class Cursor
     public function advanceToNextNonSpaceOrNewline(): int
     {
         $matches = [];
-        preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE);
+        \preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE);
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
-        $increment = $matches[0][1] + strlen($matches[0][0]);
+        $increment = $matches[0][1] + \strlen($matches[0][0]);
 
         if ($increment === 0) {
             return 0;
@@ -357,10 +357,10 @@ class Cursor
         if ($this->partiallyConsumedTab) {
             $position++;
             $charsToTab = 4 - ($this->column % 4);
-            $prefix = str_repeat(' ', $charsToTab);
+            $prefix = \str_repeat(' ', $charsToTab);
         }
 
-        return $prefix . mb_substr($this->line, $position, null, $this->encoding);
+        return $prefix . \mb_substr($this->line, $position, null, $this->encoding);
     }
 
     /**
@@ -392,7 +392,7 @@ class Cursor
     {
         $subject = $this->getRemainder();
 
-        if (!preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
+        if (!\preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
             return null;
         }
 
@@ -401,11 +401,11 @@ class Cursor
 
         if ($this->isMultibyte) {
             // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
-            $offset = mb_strlen(mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
-            $matchLength = mb_strlen($matches[0][0], $this->encoding);
+            $offset = \mb_strlen(\mb_strcut($subject, 0, $matches[0][1], $this->encoding), $this->encoding);
+            $matchLength = \mb_strlen($matches[0][0], $this->encoding);
         } else {
             $offset = $matches[0][1];
-            $matchLength = strlen($matches[0][0]);
+            $matchLength = \strlen($matches[0][0]);
         }
 
         // [0][0] contains the matched text
@@ -468,7 +468,7 @@ class Cursor
      */
     public function getPreviousText(): string
     {
-        return mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, $this->encoding);
+        return \mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, $this->encoding);
     }
 
     /**

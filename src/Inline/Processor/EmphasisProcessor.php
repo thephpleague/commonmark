@@ -35,8 +35,8 @@ class EmphasisProcessor implements InlineProcessorInterface
             // Remove used delimiters from stack elts and inlines
             $opener->setNumDelims($opener->getNumDelims() - $useDelims);
             $closer->setNumDelims($closer->getNumDelims() - $useDelims);
-            $openerInline->setContent(substr($openerInline->getContent(), 0, -$useDelims));
-            $closerInline->setContent(substr($closerInline->getContent(), 0, -$useDelims));
+            $openerInline->setContent(\substr($openerInline->getContent(), 0, -$useDelims));
+            $closerInline->setContent(\substr($closerInline->getContent(), 0, -$useDelims));
 
             // Build contents for new emph element
             if ($useDelims === 1 && $openerInline->data['emphasis_config']->getConfig('enable_em')) {

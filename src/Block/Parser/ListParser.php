@@ -40,7 +40,7 @@ class ListParser implements BlockParserInterface
         $tmpCursor->advanceToNextNonSpaceOrTab();
         $rest = $tmpCursor->getRemainder();
 
-        if (preg_match('/^[*+-]/', $rest) === 1) {
+        if (\preg_match('/^[*+-]/', $rest) === 1) {
             $data = new ListData();
             $data->markerOffset = $cursor->getIndent();
             $data->type = ListBlock::TYPE_UNORDERED;
@@ -54,7 +54,7 @@ class ListParser implements BlockParserInterface
             $data->start = (int) $matches[1];
             $data->delimiter = $matches[2];
             $data->bulletChar = null;
-            $markerLength = strlen($matches[0]);
+            $markerLength = \strlen($matches[0]);
         } else {
             return false;
         }

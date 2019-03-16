@@ -39,8 +39,8 @@ class FencedCodeParser implements BlockParserInterface
         }
 
         // fenced code block
-        $fence = ltrim($fence, " \t");
-        $fenceLength = strlen($fence);
+        $fence = \ltrim($fence, " \t");
+        $fenceLength = \strlen($fence);
         $context->addBlock(new FencedCode($fenceLength, $fence[0], $indent));
 
         return true;

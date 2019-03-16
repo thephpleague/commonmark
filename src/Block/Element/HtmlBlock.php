@@ -104,7 +104,7 @@ class HtmlBlock extends AbstractBlock
     {
         parent::finalize($context, $endLineNumber);
 
-        $this->finalStringContents = implode("\n", $this->getStrings());
+        $this->finalStringContents = \implode("\n", $this->getStrings());
     }
 
     /**

@@ -39,7 +39,7 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Link)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
         }
 
         $attrs = [];

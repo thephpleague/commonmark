@@ -38,7 +38,7 @@ class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInt
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!($block instanceof HtmlBlock)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
         }
 
         // Kept for BC reasons
@@ -51,7 +51,7 @@ class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInt
         }
 
         if ($this->config->getConfig('html_input') === EnvironmentInterface::HTML_INPUT_ESCAPE) {
-            return htmlspecialchars($block->getStringContent(), ENT_NOQUOTES);
+            return \htmlspecialchars($block->getStringContent(), ENT_NOQUOTES);
         }
 
         return $block->getStringContent();

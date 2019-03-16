@@ -66,7 +66,7 @@ class HtmlRenderer implements ElementRendererInterface
             }
         }
 
-        throw new \RuntimeException('Unable to find corresponding renderer for inline type ' . get_class($inline));
+        throw new \RuntimeException('Unable to find corresponding renderer for inline type ' . \get_class($inline));
     }
 
     /**
@@ -81,7 +81,7 @@ class HtmlRenderer implements ElementRendererInterface
             $result[] = $this->renderInline($inline);
         }
 
-        return implode('', $result);
+        return \implode('', $result);
     }
 
     /**
@@ -94,7 +94,7 @@ class HtmlRenderer implements ElementRendererInterface
      */
     public function renderBlock(AbstractBlock $block, bool $inTightList = false): string
     {
-        $renderers = $this->environment->getBlockRenderersForClass(get_class($block));
+        $renderers = $this->environment->getBlockRenderersForClass(\get_class($block));
 
         /** @var BlockRendererInterface $renderer */
         foreach ($renderers as $renderer) {
@@ -103,7 +103,7 @@ class HtmlRenderer implements ElementRendererInterface
             }
         }
 
-        throw new \RuntimeException('Unable to find corresponding renderer for block type ' . get_class($block));
+        throw new \RuntimeException('Unable to find corresponding renderer for block type ' . \get_class($block));
     }
 
     /**
@@ -121,6 +121,6 @@ class HtmlRenderer implements ElementRendererInterface
 
         $separator = $this->getOption('block_separator', "\n");
 
-        return implode($separator, $result);
+        return \implode($separator, $result);
     }
 }

@@ -277,6 +277,6 @@ abstract class AbstractBlock extends Node
      */
     public function getData(string $key, $default = null)
     {
-        return array_key_exists($key, $this->data) ? $this->data[$key] : $default;
+        return \array_key_exists($key, $this->data) ? $this->data[$key] : $default;
     }
 }
