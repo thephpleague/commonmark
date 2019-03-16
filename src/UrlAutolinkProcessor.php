@@ -19,7 +19,9 @@ use League\CommonMark\Inline\Element\Text;
 final class UrlAutolinkProcessor implements DocumentProcessorInterface
 {
     // RegEx adapted from https://github.com/symfony/symfony/blob/4.2/src/Symfony/Component/Validator/Constraints/UrlValidator.php
-    const REGEX = '~(
+    const REGEX = '~
+        (?<=^|[ \\t\\n\\x0b\\x0c\\x0d*_\\~\\(])  # Can only come at the beginning of a line, after whitespace, or certain delimiting characters
+        (
             (?:%s)://                                 # protocol
             (?:([\.\pL\pN-]+:)?([\.\pL\pN-]+)@)?      # basic auth
             (?:
@@ -60,26 +62,25 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
                 /** @var Text $node */
                 $node = $event->getNode();
 
-                $contents = preg_split($regex, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+                $contents = preg_split($regex, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
 
                 $leftovers = '';
                 foreach ($contents as $i => $content) {
                     if ($i % 2 === 0) {
-                        $node->insertBefore(new Text($leftovers.$content));
+                        $text = $leftovers.$content;
+                        if ($text !== '') {
+                            $node->insertBefore(new Text($leftovers . $content));
+                        }
                         $leftovers = '';
                     } else {
                         // Does the URL end with punctuation that should be stripped?
-                        if (preg_match('/(.+)([,.?!])+$/', $content, $matches)) {
+                        if (preg_match('/(.+)([?!.,:*_~]+)$/', $content, $matches)) {
                             // Add the punctuation later
                             $content = $matches[1];
                             $leftovers = $matches[2];
                         }
                         $node->insertBefore(new Link($content, $content));
                     }
-                }
-
-                if ($leftovers !== '') {
-                    $node->insertBefore(new Text($leftovers));
                 }
 
                 $node->detach();
