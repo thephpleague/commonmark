@@ -39,6 +39,7 @@ final class UrlAutolinkProcessorTest extends TestCase
         // Basic examples
         yield ['You can search on http://google.com for stuff.', '<p>You can search on <a href="http://google.com">http://google.com</a> for stuff.</p>'];
         yield ['https://google.com', '<p><a href="https://google.com">https://google.com</a></p>'];
+        yield ['www.google.com', '<p><a href="http://www.google.com">www.google.com</a></p>'];
         yield [' http://leadingwhitespace.example.com', '<p><a href="http://leadingwhitespace.example.com">http://leadingwhitespace.example.com</a></p>'];
         yield ['http://trailingwhitespace.example.com ', '<p><a href="http://trailingwhitespace.example.com">http://trailingwhitespace.example.com</a></p>'];
         yield ['- https://example.com/list-item', "<ul>\n<li>\n<a href=\"https://example.com/list-item\">https://example.com/list-item</a>\n</li>\n</ul>"];

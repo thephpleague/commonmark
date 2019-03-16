@@ -22,8 +22,11 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
     const REGEX = '~
         (?<=^|[ \\t\\n\\x0b\\x0c\\x0d*_\\~\\(])  # Can only come at the beginning of a line, after whitespace, or certain delimiting characters
         (
-            (?:%s)://                                 # protocol
-            (?:([\.\pL\pN-]+:)?([\.\pL\pN-]+)@)?      # basic auth
+            # Must start with a supported scheme + auth, or "www"
+            (?:
+                (?:%s)://                                 # protocol
+                (?:([\.\pL\pN-]+:)?([\.\pL\pN-]+)@)?      # basic auth
+            |www\.)
             (?:
                 (?:[\pL\pN\pS\-\.])+(?:\.?(?:[\pL\pN]|xn\-\-[\pL\pN-]+)+\.?) # a domain name
                     |                                                 # or
@@ -78,8 +81,13 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
                             // Add the punctuation later
                             $content = $matches[1];
                             $leftovers = $matches[2];
+
+                        // Auto-prefix 'http://' onto 'www' URLs
+                        if (substr($content, 0, 4) === 'www.') {
+                            $node->insertBefore(new Link('http://'.$content, $content));
+                        } else {
+                            $node->insertBefore(new Link($content, $content));
                         }
-                        $node->insertBefore(new Link($content, $content));
                     }
                 }
 
