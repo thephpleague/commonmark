@@ -46,7 +46,7 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
 
     public function __construct(array $allowedProtocols = ['http', 'https', 'ftp'])
     {
-        $this->finalRegex = sprintf(self::REGEX, implode('|', $allowedProtocols));
+        $this->finalRegex = \sprintf(self::REGEX, \implode('|', $allowedProtocols));
     }
 
     /**
@@ -67,9 +67,9 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
 
     private static function processAutolinks(Text $node, $regex)
     {
-        $contents = preg_split($regex, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
+        $contents = \preg_split($regex, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        if (count($contents) === 1) {
+        if (\count($contents) === 1) {
             return;
         }
 
@@ -90,21 +90,21 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
             $leftovers = '';
 
             // Does the URL end with punctuation that should be stripped?
-            if (preg_match('/(.+)([?!.,:*_~]+)$/', $content, $matches)) {
+            if (\preg_match('/(.+)([?!.,:*_~]+)$/', $content, $matches)) {
                 // Add the punctuation later
                 $content = $matches[1];
                 $leftovers = $matches[2];
             }
 
             // Does the URL end with something that looks like an entity reference?
-            if (preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $content, $matches)) {
+            if (\preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $content, $matches)) {
                 $content = $matches[1];
                 $leftovers = $matches[2] . $leftovers;
             }
 
             // Does the URL need its closing paren chopped off?
-            if (substr($content, -1) === ')' && self::hasMoreCloserParensThanOpeners($content)) {
-                $content = substr($content, 0, -1);
+            if (\substr($content, -1) === ')' && self::hasMoreCloserParensThanOpeners($content)) {
+                $content = \substr($content, 0, -1);
                 $leftovers .= ')';
             }
 
@@ -137,7 +137,7 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
         // If there is a greater number of closing parentheses than opening ones,
         // we don’t consider the last character part of the autolink, in order to
         // facilitate including an autolink inside a parenthesis.
-        preg_match_all('/[()]/', $content, $matches);
+        \preg_match_all('/[()]/', $content, $matches);
 
         $charCount = ['(' => 0, ')' => 0];
         foreach ($matches[0] as $char) {

@@ -38,9 +38,9 @@ final class EmailAutolinkProcessor implements DocumentProcessorInterface
 
     private static function processAutolinks(Text $node)
     {
-        $contents = preg_split(self::REGEX, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
+        $contents = \preg_split(self::REGEX, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        if (count($contents) === 1) {
+        if (\count($contents) === 1) {
             return;
         }
 
@@ -57,14 +57,14 @@ final class EmailAutolinkProcessor implements DocumentProcessorInterface
             }
 
             // Does the URL end with punctuation that should be stripped?
-            if (substr($content, -1) === '.') {
+            if (\substr($content, -1) === '.') {
                 // Add the punctuation later
-                $content = substr($content, 0, -1);
+                $content = \substr($content, 0, -1);
                 $leftovers = '.';
             }
 
             // The last character cannot be - or _
-            if (in_array(substr($content, -1), ['-', '_'])) {
+            if (\in_array(\substr($content, -1), ['-', '_'])) {
                 $node->insertBefore(new Text($content . $leftovers));
                 $leftovers = '';
                 continue;
