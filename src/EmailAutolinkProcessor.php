@@ -40,7 +40,7 @@ final class EmailAutolinkProcessor implements DocumentProcessorInterface
                     if ($i % 2 === 0) {
                         $node->insertBefore(new Text($content));
                     } else {
-                        $node->insertBefore(new Link('mailto:'.$content, $content));
+                        $node->insertBefore(new Link('mailto:' . $content, $content));
                     }
                 }
 

@@ -70,7 +70,7 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
                 $leftovers = '';
                 foreach ($contents as $i => $content) {
                     if ($i % 2 === 0) {
-                        $text = $leftovers.$content;
+                        $text = $leftovers . $content;
                         if ($text !== '') {
                             $node->insertBefore(new Text($leftovers . $content));
                         }
@@ -99,7 +99,7 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
 
                         // Auto-prefix 'http://' onto 'www' URLs
                         if (substr($content, 0, 4) === 'www.') {
-                            $node->insertBefore(new Link('http://'.$content, $content));
+                            $node->insertBefore(new Link('http://' . $content, $content));
                         } else {
                             $node->insertBefore(new Link($content, $content));
                         }

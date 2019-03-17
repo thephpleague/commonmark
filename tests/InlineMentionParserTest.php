@@ -20,7 +20,7 @@ final class InlineMentionParserTest extends TestCase
 {
     public function testTwitterMentionParser()
     {
-        $input = <<<EOT
+        $input = <<<'EOT'
 You can follow the author of this library on Twitter - he's @colinodell!
 
 Usernames like @commonmarkisthebestmarkdownspec are too long.
@@ -28,7 +28,7 @@ Usernames like @commonmarkisthebestmarkdownspec are too long.
 Security issues should be emailed to colinodell@gmail.com
 EOT;
 
-        $expected = <<<EOT
+        $expected = <<<'EOT'
 <p>You can follow the author of this library on Twitter - he's <a href="https://twitter.com/colinodell">@colinodell</a>!</p>
 <p>Usernames like @commonmarkisthebestmarkdownspec are too long.</p>
 <p>Security issues should be emailed to colinodell@gmail.com</p>
@@ -45,11 +45,11 @@ EOT;
 
     public function testGithubMentionParser()
     {
-        $input = <<<EOT
+        $input = <<<'EOT'
 You can follow the author of this library on Github - he's @colinodell!
 EOT;
 
-        $expected = <<<EOT
+        $expected = <<<'EOT'
 <p>You can follow the author of this library on Github - he's <a href="https://www.github.com/colinodell">@colinodell</a>!</p>
 
 EOT;
