@@ -122,4 +122,4 @@ This library is licensed under the BSD-3 license.  See the [License File](LICENS
 [link-author]: https://github.com/colinodell
 [link-contributors]: ../../contributors
 [link-league-commonmark]: https://github.com/thephpleague/commonmark
-[link-gfm-spec-autolinking]: https://github.github.com/gfm/
+[link-gfm-spec-autolinking]: https://github.github.com/gfm/#autolinks-extension-
