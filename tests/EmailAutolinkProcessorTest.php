@@ -39,5 +39,13 @@ final class EmailAutolinkProcessorTest extends TestCase
         yield ['You can try emailing foo@example.com but that inbox doesn\'t actually exist.', '<p>You can try emailing <a href="mailto:foo@example.com">foo@example.com</a> but that inbox doesn\'t actually exist.</p>'];
         yield ['> This processor can even handle email addresses like foo@example.com inside of blockquotes!', "<blockquote>\n<p>This processor can even handle email addresses like <a href=\"mailto:foo@example.com\">foo@example.com</a> inside of blockquotes!</p>\n</blockquote>"];
         yield ['@invalid', '<p>@invalid</p>'];
+
+        // GFM spec tests
+        yield ['foo@bar.baz', '<p><a href="mailto:foo@bar.baz">foo@bar.baz</a></p>'];
+        yield ['hello@mail+xyz.example isn\'t valid, but hello+xyz@mail.example is.', '<p>hello@mail+xyz.example isn\'t valid, but <a href="mailto:hello+xyz@mail.example">hello+xyz@mail.example</a> is.</p>'];
+        yield ['a.b-c_d@a.b', '<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a></p>'];
+        yield ['a.b-c_d@a.b.', '<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a>.</p>'];
+        yield ['a.b-c_d@a.b-', '<p>a.b-c_d@a.b-</p>'];
+        yield ['a.b-c_d@a.b_', '<p>a.b-c_d@a.b_</p>'];
     }
 }

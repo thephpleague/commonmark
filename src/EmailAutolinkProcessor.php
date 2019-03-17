@@ -18,8 +18,7 @@ use League\CommonMark\Inline\Element\Text;
 
 final class EmailAutolinkProcessor implements DocumentProcessorInterface
 {
-    // RegEx adapted from https://github.com/symfony/symfony/blob/4.2/src/Symfony/Component/Validator/Constraints/EmailValidator.php
-    const REGEX = '/([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+)/';
+    const REGEX = '/([A-Za-z0-9.\-_+]+@[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_.]+)/';
 
     /**
      * @param Document $document
@@ -36,11 +35,30 @@ final class EmailAutolinkProcessor implements DocumentProcessorInterface
                 $node = $event->getNode();
 
                 $contents = preg_split(self::REGEX, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
+
+                $leftovers = '';
                 foreach ($contents as $i => $content) {
                     if ($i % 2 === 0) {
-                        $node->insertBefore(new Text($content));
+                        $text = $leftovers.$content;
+                        if ($text !== '') {
+                            $node->insertBefore(new Text($leftovers . $content));
+                        }
+                        $leftovers = '';
                     } else {
-                        $node->insertBefore(new Link('mailto:' . $content, $content));
+                        // Does the URL end with punctuation that should be stripped?
+                        if (substr($content, -1) === '.') {
+                            // Add the punctuation later
+                            $content = substr($content, 0, -1);
+                            $leftovers = '.';
+                        }
+
+                        // The last character cannot be - or _
+                        if (in_array(substr($content, -1), ['-', '_'])) {
+                            $node->insertBefore(new Text($content . $leftovers));
+                            $leftovers = '';
+                        } else {
+                            $node->insertBefore(new Link('mailto:' . $content, $content));
+                        }
                     }
                 }
 
