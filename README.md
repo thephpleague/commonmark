@@ -197,7 +197,7 @@ Also a huge thank you to [JetBrains](https://www.jetbrains.com/) for supporting 
 
 ## License ##
 
-**league/commonmark** is licensed under the BSD-3 license.  See the `LICENSE` file for more details.
+**league/commonmark** is licensed under the BSD-3 license.  See the [`LICENSE`](LICENSE) file for more details.
 
 ## Governance
 
