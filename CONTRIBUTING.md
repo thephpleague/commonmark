@@ -10,6 +10,8 @@ We accept contributions via Pull Requests on [Github](https://github.com/thephpl
 
 - **Add tests!** - Your patch won't be accepted if it doesn't have tests.
 
+- **Adhere to the spec!** - Any changes should align with the (official GFM spec)[https://github.github.com/gfm/]
+
 - **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
 
 - **Consider our release cycle** - We try to follow [SemVer v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.

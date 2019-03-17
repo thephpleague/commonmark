@@ -18,47 +18,34 @@ use PHPUnit\Framework\TestCase;
 
 final class EmailAutolinkProcessorTest extends TestCase
 {
-    public function testEmailAutolinks()
+    /**
+     * @param string $input
+     * @param string $expected
+     *
+     * @dataProvider dataProviderForEmailAutolinks
+     */
+    public function testEmailAutolinks($input, $expected)
     {
-        $input = <<<EOT
-This is some test content.
-
-You can try emailing foo@example.com but that inbox doesn't actually exist.
-
-> This processor can even handle email addresses like foo@example.com inside of blockquotes!
-
-More fake emails:
-
- - foo@example.com
- - bar@example.com
-
-However, @foo is not an email address and should be left as-is.
-EOT;
-
-        $expected = <<<EOT
-<p>This is some test content.</p>
-<p>You can try emailing <a href="mailto:foo@example.com">foo@example.com</a> but that inbox doesn't actually exist.</p>
-<blockquote>
-<p>This processor can even handle email addresses like <a href="mailto:foo@example.com">foo@example.com</a> inside of blockquotes!</p>
-</blockquote>
-<p>More fake emails:</p>
-<ul>
-<li>
-<a href="mailto:foo@example.com">foo@example.com</a>
-</li>
-<li>
-<a href="mailto:bar@example.com">bar@example.com</a>
-</li>
-</ul>
-<p>However, @foo is not an email address and should be left as-is.</p>
-
-EOT;
-
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new AutolinkExtension());
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, $converter->convertToHtml($input));
+        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+    }
+
+    public function dataProviderForEmailAutolinks()
+    {
+        yield ['You can try emailing foo@example.com but that inbox doesn\'t actually exist.', '<p>You can try emailing <a href="mailto:foo@example.com">foo@example.com</a> but that inbox doesn\'t actually exist.</p>'];
+        yield ['> This processor can even handle email addresses like foo@example.com inside of blockquotes!', "<blockquote>\n<p>This processor can even handle email addresses like <a href=\"mailto:foo@example.com\">foo@example.com</a> inside of blockquotes!</p>\n</blockquote>"];
+        yield ['@invalid', '<p>@invalid</p>'];
+
+        // GFM spec tests
+        yield ['foo@bar.baz', '<p><a href="mailto:foo@bar.baz">foo@bar.baz</a></p>'];
+        yield ['hello@mail+xyz.example isn\'t valid, but hello+xyz@mail.example is.', '<p>hello@mail+xyz.example isn\'t valid, but <a href="mailto:hello+xyz@mail.example">hello+xyz@mail.example</a> is.</p>'];
+        yield ['a.b-c_d@a.b', '<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a></p>'];
+        yield ['a.b-c_d@a.b.', '<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a>.</p>'];
+        yield ['a.b-c_d@a.b-', '<p>a.b-c_d@a.b-</p>'];
+        yield ['a.b-c_d@a.b_', '<p>a.b-c_d@a.b_</p>'];
     }
 }

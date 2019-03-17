@@ -78,7 +78,7 @@ final class InlineMentionParser implements InlineParserInterface
             return false;
         }
 
-        $url = sprintf($this->linkPattern, $handle);
+        $url = \sprintf($this->linkPattern, $handle);
 
         $inlineContext->getContainer()->appendChild(new Link($url, '@' . $handle));
 

@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [0.2.0] - 2019-03-16
+
+This release brings the email and URL autolink processors into alignment with the official GFM spec.
+
+### Changed
+
+ - Made `ftp` a default protocol
+ - Revised the email regex to match the GFM spec
+
+### Fixed
+
+ - Fixed bug where links at the start or end of lines failed to be parsed
+
 ## [0.1.0] - 2019-03-14
 
 Initial release!
