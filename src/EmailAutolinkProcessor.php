@@ -40,6 +40,10 @@ final class EmailAutolinkProcessor implements DocumentProcessorInterface
     {
         $contents = preg_split(self::REGEX, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
 
+        if (count($contents) === 1) {
+            return;
+        }
+
         $leftovers = '';
         foreach ($contents as $i => $content) {
             if ($i % 2 === 0) {

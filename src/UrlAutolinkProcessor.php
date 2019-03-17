@@ -69,6 +69,10 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
     {
         $contents = preg_split($regex, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
 
+        if (count($contents) === 1) {
+            return;
+        }
+
         $leftovers = '';
         foreach ($contents as $i => $content) {
             // Even-indexed elements are things before/after the URLs
