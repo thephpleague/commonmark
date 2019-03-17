@@ -2,7 +2,7 @@
     "name": "league/commonmark-ext-autolink",
     "type": "commonmark-extension",
     "description": "Extension for league/commonmark which autolinks URLs, emails, and @-mentions",
-    "keywords": ["markdown", "commonmark", "extension", "autolink", "twitter", "github"],
+    "keywords": ["markdown", "commonmark", "extension", "autolink", "twitter", "github", "gfm"],
     "homepage": "https://github.com/thephpleague/commonmark-ext-autolink",
     "license": "BSD-3-Clause",
     "authors": [
@@ -35,7 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.2-dev"
+            "dev-master": "0.3-dev"
         }
     }
 }
