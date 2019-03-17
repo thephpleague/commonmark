@@ -41,6 +41,8 @@ class InlineParserEngine
         }
 
         $this->processInlines($inlineParserContext);
+
+        $this->collapseAdjoiningTextElements($inlineParserContext);
     }
 
     /**
@@ -96,6 +98,23 @@ class InlineParserEngine
             $lastInline->append($text);
         } else {
             $container->appendChild(new Text($text));
+        }
+    }
+
+    private function collapseAdjoiningTextElements(InlineParserContext $context)
+    {
+        $walker = $context->getContainer()->walker();
+
+        while (($event = $walker->next()) !== null) {
+            if ($event->isEntering()) {
+                $node = $event->getNode();
+                if ($node instanceof Text) {
+                    while (($next = $node->next()) && $next instanceof Text) {
+                        $node->append($next->getContent());
+                        $next->detach();
+                    }
+                }
+            }
         }
     }
 }
