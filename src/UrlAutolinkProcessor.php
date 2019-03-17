@@ -42,11 +42,11 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
             (?:\# (?:[\pL\pN\-._\~!$&\'()*+,;=:@/?]|%%[0-9A-Fa-f]{2})* )?   # a fragment (optional)
         )~ixu';
 
-    private $allowedProtocols;
+    private $finalRegex;
 
     public function __construct(array $allowedProtocols = ['http', 'https', 'ftp'])
     {
-        $this->allowedProtocols = $allowedProtocols;
+        $this->finalRegex = sprintf(self::REGEX, implode('|', $allowedProtocols));
     }
 
     /**
@@ -56,59 +56,70 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
      */
     public function processDocument(Document $document)
     {
-        $regex = sprintf(self::REGEX, implode('|', $this->allowedProtocols));
-
         $walker = $document->walker();
 
         while ($event = $walker->next()) {
-            if ($event->isEntering() && $event->getNode() instanceof Text) {
-                /** @var Text $node */
-                $node = $event->getNode();
-
-                $contents = preg_split($regex, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
-
-                $leftovers = '';
-                foreach ($contents as $i => $content) {
-                    if ($i % 2 === 0) {
-                        $text = $leftovers . $content;
-                        if ($text !== '') {
-                            $node->insertBefore(new Text($leftovers . $content));
-                        }
-                        $leftovers = '';
-                    } else {
-                        $leftovers = '';
-
-                        // Does the URL end with punctuation that should be stripped?
-                        if (preg_match('/(.+)([?!.,:*_~]+)$/', $content, $matches)) {
-                            // Add the punctuation later
-                            $content = $matches[1];
-                            $leftovers = $matches[2];
-                        }
-
-                        // Does the URL end with something that looks like an entity reference?
-                        if (preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $content, $matches)) {
-                            $content = $matches[1];
-                            $leftovers = $matches[2] . $leftovers;
-                        }
-
-                        // Does the URL need its closing paren chopped off?
-                        if (substr($content, -1) === ')' && self::hasMoreCloserParensThanOpeners($content)) {
-                            $content = substr($content, 0, -1);
-                            $leftovers .= ')';
-                        }
-
-                        // Auto-prefix 'http://' onto 'www' URLs
-                        if (substr($content, 0, 4) === 'www.') {
-                            $node->insertBefore(new Link('http://' . $content, $content));
-                        } else {
-                            $node->insertBefore(new Link($content, $content));
-                        }
-                    }
-                }
-
-                $node->detach();
+            if ($event->getNode() instanceof Text) {
+                self::processAutolinks($event->getNode(), $this->finalRegex);
             }
         }
+    }
+
+    private static function processAutolinks(Text $node, $regex)
+    {
+        $contents = preg_split($regex, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        $leftovers = '';
+        foreach ($contents as $i => $content) {
+            // Even-indexed elements are things before/after the URLs
+            if ($i % 2 === 0) {
+                // Insert any left-over characters here as well
+                $text = $leftovers . $content;
+                if ($text !== '') {
+                    $node->insertBefore(new Text($leftovers . $content));
+                }
+
+                $leftovers = '';
+                continue;
+            }
+
+            $leftovers = '';
+
+            // Does the URL end with punctuation that should be stripped?
+            if (preg_match('/(.+)([?!.,:*_~]+)$/', $content, $matches)) {
+                // Add the punctuation later
+                $content = $matches[1];
+                $leftovers = $matches[2];
+            }
+
+            // Does the URL end with something that looks like an entity reference?
+            if (preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $content, $matches)) {
+                $content = $matches[1];
+                $leftovers = $matches[2] . $leftovers;
+            }
+
+            // Does the URL need its closing paren chopped off?
+            if (substr($content, -1) === ')' && self::hasMoreCloserParensThanOpeners($content)) {
+                $content = substr($content, 0, -1);
+                $leftovers .= ')';
+            }
+
+            self::addLink($node, $content);
+        }
+
+        $node->detach();
+    }
+
+    private static function addLink(Text $node, $url)
+    {
+        // Auto-prefix 'http://' onto 'www' URLs
+        if (\substr($url, 0, 4) === 'www.') {
+            $node->insertBefore(new Link('http://' . $url, $url));
+
+            return;
+        }
+
+        $node->insertBefore(new Link($url, $url));
     }
 
     /**
