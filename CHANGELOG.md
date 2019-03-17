@@ -4,6 +4,16 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.18.2] - 2019-03-16
+
+### Fixed
+
+ - Fixed adjoining `Text` elements not being collapsed after delimiter processing
+
+### Deprecated
+
+ - Deprecated the `CommonmarkConverter::VERSION` constant for removal in 1.0.0
+
 ## [0.18.1] - 2018-12-29
 
 This is a **security update** release.
@@ -665,7 +675,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.2...HEAD
+[0.18.2]: https://github.com/thephpleague/commonmark/compare/0.18.1...0.18.2
 [0.18.1]: https://github.com/thephpleague/commonmark/compare/0.18.0...0.18.1
 [0.18.0]: https://github.com/thephpleague/commonmark/compare/0.17.5...0.18.0
 [0.17.5]: https://github.com/thephpleague/commonmark/compare/0.17.4...0.17.5
