@@ -76,11 +76,19 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
                         }
                         $leftovers = '';
                     } else {
+                        $leftovers = '';
+
                         // Does the URL end with punctuation that should be stripped?
                         if (preg_match('/(.+)([?!.,:*_~]+)$/', $content, $matches)) {
                             // Add the punctuation later
                             $content = $matches[1];
                             $leftovers = $matches[2];
+                        }
+
+                        // Does the URL end with something that looks like an entity reference?
+                        if (preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $content, $matches)) {
+                            $content = $matches[1];
+                            $leftovers = $matches[2] . $leftovers;
                         }
 
                         // Does the URL need its closing paren chopped off?
