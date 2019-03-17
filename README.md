@@ -105,7 +105,7 @@ If you discover any security related issues, please email colinodell@gmail.com i
 
 ## License
 
-This library is licensed under the BSD-3 license.  See the [License File](LICENSE.md) for more information.
+This library is licensed under the BSD-3 license.  See the [License File](LICENSE) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/league/commonmark-ext-autolink.svg?style=flat-square
 [ico-license]: http://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square
