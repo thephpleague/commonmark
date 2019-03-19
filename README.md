@@ -74,7 +74,7 @@ use League\CommonMark\Environment;
 use League\CommonMark\Ext\Autolink\InlineMentionParser;
 
 $environment = Environment::createCommonMarkEnvironment();
-$environment->addInlineParser(new InlineMentionParser('https://www.example.com/users/%s/profile', ''));
+$environment->addInlineParser(new InlineMentionParser('https://www.example.com/users/%s/profile'));
 
 // TODO: Instantiate your converter and convert some Markdown
 ```
