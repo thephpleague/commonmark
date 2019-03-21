@@ -21,22 +21,11 @@ final class Xml
 {
     /**
      * @param string $string
-     * @param bool   $preserveEntities
      *
      * @return string
      */
-    public static function escape($string, $preserveEntities = null)
+    public static function escape($string)
     {
-        if ($preserveEntities === true) {
-            @trigger_error('Preserving entities in Xml::escape() has been deprecated and will be removed in the next release', E_USER_DEPRECATED);
-            $string = preg_replace('/[&](?![#](x[a-f0-9]{1,8}|[0-9]{1,8});|[a-z][a-z0-9]{1,31};)/i', '&amp;', $string);
-        } elseif ($preserveEntities === false) {
-            @trigger_error('The $preserveEntities argument of Xml::escape() has been deprecated and will be removed in the next release', E_USER_DEPRECATED);
-            $string = str_replace('&', '&amp;', $string);
-        } else {
-            $string = \str_replace('&', '&amp;', $string);
-        }
-
-        return \str_replace(['<', '>', '"'], ['&lt;', '&gt;', '&quot;'], $string);
+        return \str_replace(['&', '<', '>', '"'], ['&amp;', '&lt;', '&gt;', '&quot;'], $string);
     }
 }

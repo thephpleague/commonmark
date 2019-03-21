@@ -50,6 +50,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `RegexHelper::getLinkTitleRegex()`
    - `RegexHelper::getLinkDestinationBracesRegex()`
    - `RegexHelper::getThematicBreakRegex()`
+ - Removed the second `$preserveEntities` parameters from `Xml:escape()`
 
 ## [0.18.3] - 2019-03-21
 

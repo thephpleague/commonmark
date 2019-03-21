@@ -21,6 +21,8 @@ After doing this, the two abstract classes mentioned above had notthing left in 
 
 `InlineContainer` was also removed.
 
+`Xml::escape()` no longer accepts the deprecated `$preserveEntities` parameter.
+
 ### Removed deprecated `RegexHelper` methods
 
 Several previously-deprecated methods inside of `RegexHelper` were finally removed.  That functionality was made available with static methods and constants, so use those instead.
