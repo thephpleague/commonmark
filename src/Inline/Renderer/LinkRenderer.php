@@ -44,16 +44,16 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
 
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
+            $attrs[$key] = Xml::escape($value);
         }
 
         $forbidUnsafeLinks = $this->config->getConfig('safe') || !$this->config->getConfig('allow_unsafe_links');
         if (!($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl()))) {
-            $attrs['href'] = Xml::escape($inline->getUrl(), true);
+            $attrs['href'] = Xml::escape($inline->getUrl());
         }
 
         if (isset($inline->data['title'])) {
-            $attrs['title'] = Xml::escape($inline->data['title'], true);
+            $attrs['title'] = Xml::escape($inline->data['title']);
         }
 
         if (isset($attrs['target']) && $attrs['target'] === '_blank' && !isset($attrs['rel'])) {

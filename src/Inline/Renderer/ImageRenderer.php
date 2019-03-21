@@ -44,14 +44,14 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
 
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
+            $attrs[$key] = Xml::escape($value);
         }
 
         $forbidUnsafeLinks = $this->config->getConfig('safe') || !$this->config->getConfig('allow_unsafe_links');
         if ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl())) {
             $attrs['src'] = '';
         } else {
-            $attrs['src'] = Xml::escape($inline->getUrl(), true);
+            $attrs['src'] = Xml::escape($inline->getUrl());
         }
 
         $alt = $htmlRenderer->renderInlines($inline->children());
@@ -59,7 +59,7 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
         $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt);
 
         if (isset($inline->data['title'])) {
-            $attrs['title'] = Xml::escape($inline->data['title'], true);
+            $attrs['title'] = Xml::escape($inline->data['title']);
         }
 
         return new HtmlElement('img', $attrs, '', true);

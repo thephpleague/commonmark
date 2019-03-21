@@ -37,7 +37,7 @@ class BlockQuoteRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
+            $attrs[$key] = Xml::escape($value);
         }
 
         $filling = $htmlRenderer->renderBlocks($block->children());
