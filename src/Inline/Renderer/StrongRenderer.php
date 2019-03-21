@@ -36,7 +36,7 @@ class StrongRenderer implements InlineRendererInterface
 
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
+            $attrs[$key] = Xml::escape($value);
         }
 
         return new HtmlElement('strong', $attrs, $htmlRenderer->renderInlines($inline->children()));

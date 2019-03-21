@@ -44,7 +44,7 @@ class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterf
 
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
+            $attrs[$key] = Xml::escape($value);
         }
 
         $forbidUnsafeLinks = $this->config->getConfig('safe') || !$this->config->getConfig('allow_unsafe_links');

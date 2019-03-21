@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - XML/HTML entities in attributes will no longer be preserved when rendering (#353)
+
 ### Fixed
 
  - Fix XSS vulnerability caused by improper preservation of entities when rendering (#353)

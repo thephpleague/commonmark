@@ -37,7 +37,7 @@ class IndentedCodeRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
+            $attrs[$key] = Xml::escape($value);
         }
 
         return new HtmlElement(
