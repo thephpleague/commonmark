@@ -12,6 +12,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
  - Fix XSS vulnerability caused by improper preservation of entities when rendering (#353)
 
+### Deprecated
+
+ - Deprecated the `$preserveEntites` argument of `Xml::escape()` for removal in the next release (#353)
+
 ## [0.18.2] - 2019-03-16
 
 ### Fixed
