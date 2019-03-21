@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+## [0.18.3] - 2019-03-21
+
+This is a **security update** release.
+
 ### Changed
 
  - XML/HTML entities in attributes will no longer be preserved when rendering (#353)
@@ -687,7 +691,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.2...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.3...HEAD
+[0.18.3]: https://github.com/thephpleague/commonmark/compare/0.18.2...0.18.3
 [0.18.2]: https://github.com/thephpleague/commonmark/compare/0.18.1...0.18.2
 [0.18.1]: https://github.com/thephpleague/commonmark/compare/0.18.0...0.18.1
 [0.18.0]: https://github.com/thephpleague/commonmark/compare/0.17.5...0.18.0

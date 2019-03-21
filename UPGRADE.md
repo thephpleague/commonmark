@@ -1,5 +1,11 @@
 # Upgrade Instructions
 
+## 0.18.3
+
+### Deprecated `Xml::escape()` argument
+
+Starting in `0.19.0`, the `Xml::escape()` function will no longer accept the second `$preserveEntities` argument as this can lead to XSS issues.  Remove this argument if your code uses it.  See https://github.com/thephpleague/commonmark/issues/353 for further details.
+
 ## 0.18.0
 
 No breaking changes were introduced, but we did add a new interface: `ConverterInface`. Consider depending on this interface in your code instead of the concrete implementation. (See #330)
