@@ -43,7 +43,7 @@ class FencedCodeRenderer implements BlockRendererInterface
         $infoWords = $block->getInfoWords();
         if (count($infoWords) !== 0 && strlen($infoWords[0]) !== 0) {
             $attrs['class'] = isset($attrs['class']) ? $attrs['class'] . ' ' : '';
-            $attrs['class'] .= 'language-' . Xml::escape($infoWords[0], true);
+            $attrs['class'] .= 'language-' . Xml::escape($infoWords[0]);
         }
 
         return new HtmlElement(

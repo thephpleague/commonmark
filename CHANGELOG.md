@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fix XSS vulnerability caused by improper preservation of entities when rendering (#353)
+
 ## [0.18.2] - 2019-03-16
 
 ### Fixed
