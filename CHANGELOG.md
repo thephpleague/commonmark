@@ -9,6 +9,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Modified how URL normalization decodes certain characters in order to align with the JS library's output
  - Disallowed unescaped `(` in parenthesized link title
 
+### Fixed
+
+ - Fixed two exponential backtracking issues
+
 ## [0.18.3] - 2019-03-21
 
 This is a **security update** release.

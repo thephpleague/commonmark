@@ -75,8 +75,8 @@ final class LinkParserHelper
      */
     public static function parseLinkLabel(Cursor $cursor)
     {
-        $match = $cursor->match('/^\[(?:[^\\\\\[\]]|' . RegexHelper::PARTIAL_ESCAPED_CHAR . '|\\\\)*\]/');
-        if ($match === null || preg_match('/[^\\\\]\\\\\]$/', $match)) {
+        $match = $cursor->match('/^\[(?:[^\\\\\[\]]|\\\\.){0,1000}\]/');
+        if ($match === null) {
             return 0;
         }
 

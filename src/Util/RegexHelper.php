@@ -151,7 +151,7 @@ final class RegexHelper
     const REGEX_WHITESPACE = '/[ \t\n\x0b\x0c\x0d]+/';
     const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
     const REGEX_THEMATIC_BREAK = '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})[ \t]*$/';
-    const REGEX_LINK_DESTINATION_BRACES = '/^(?:' . '[<](?:[^ <>\\t\\n\\\\\\x00]' . '|' . self::PARTIAL_ESCAPED_CHAR . '|' . '\\\\)*[>]' . ')/';
+    const REGEX_LINK_DESTINATION_BRACES = '/^(?:<(?:[^ <>\\t\\n\\\\\\x00]|\\\\.)*>)/';
 
     /**
      * @deprecated Instance methods will be removed in 0.18 or 1.0 (whichever comes first)
