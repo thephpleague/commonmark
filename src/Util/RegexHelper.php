@@ -134,7 +134,7 @@ final class RegexHelper
         '\/' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s>]|$)' . '|' . '[?!])';
     const PARTIAL_LINK_TITLE = '^(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"' .
         '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*\'' .
-        '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^)\x00])*\))';
+        '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*\))';
 
     /** @deprecated Use PARTIAL_ESCAPABLE instead */
     const REGEX_ESCAPABLE = self::PARTIAL_ESCAPABLE;

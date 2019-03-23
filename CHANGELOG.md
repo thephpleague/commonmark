@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 
  - Modified how URL normalization decodes certain characters in order to align with the JS library's output
+ - Disallowed unescaped `(` in parenthesized link title
 
 ## [0.18.3] - 2019-03-21
 
