@@ -52,6 +52,17 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `RegexHelper::getThematicBreakRegex()`
  - Removed the second `$preserveEntities` parameters from `Xml:escape()`
 
+## [0.18.4] - 2019-03-23
+
+### Changed
+
+ - Modified how URL normalization decodes certain characters in order to align with the JS library's output
+ - Disallowed unescaped `(` in parenthesized link title
+
+### Fixed
+
+ - Fixed two exponential backtracking issues
+
 ## [0.18.3] - 2019-03-21
 
 This is a **security update** release.
@@ -739,7 +750,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.3...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.4...HEAD
+[0.18.4]: https://github.com/thephpleague/commonmark/compare/0.18.3...0.18.4
 [0.18.3]: https://github.com/thephpleague/commonmark/compare/0.18.2...0.18.3
 [0.18.2]: https://github.com/thephpleague/commonmark/compare/0.18.1...0.18.2
 [0.18.1]: https://github.com/thephpleague/commonmark/compare/0.18.0...0.18.1

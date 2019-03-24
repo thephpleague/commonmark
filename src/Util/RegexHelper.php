@@ -134,7 +134,7 @@ final class RegexHelper
         '\/' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s>]|$)' . '|' . '[?!])';
     const PARTIAL_LINK_TITLE = '^(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"' .
         '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*\'' .
-        '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^)\x00])*\))';
+        '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*\))';
 
     /** @deprecated Use PARTIAL_ESCAPABLE instead */
     const REGEX_ESCAPABLE = self::PARTIAL_ESCAPABLE;
@@ -151,7 +151,7 @@ final class RegexHelper
     const REGEX_WHITESPACE = '/[ \t\n\x0b\x0c\x0d]+/';
     const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
     const REGEX_THEMATIC_BREAK = '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})[ \t]*$/';
-    const REGEX_LINK_DESTINATION_BRACES = '/^(?:' . '[<](?:[^ <>\\t\\n\\\\\\x00]' . '|' . self::PARTIAL_ESCAPED_CHAR . '|' . '\\\\)*[>]' . ')/';
+    const REGEX_LINK_DESTINATION_BRACES = '/^(?:<(?:[^ <>\\t\\n\\\\\\x00]|\\\\.)*>)/';
 
     /**
      * @param string $character
