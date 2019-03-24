@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Modified how URL normalization decodes certain characters in order to align with the JS library's output
+
 ## [0.18.3] - 2019-03-21
 
 This is a **security update** release.
