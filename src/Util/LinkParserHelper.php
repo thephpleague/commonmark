@@ -34,6 +34,10 @@ final class LinkParserHelper
             );
         }
 
+        if ($cursor->getCharacter() === '<') {
+            return null;
+        }
+
         $oldState = $cursor->saveState();
         $openParens = 0;
         while (($c = $cursor->getCharacter()) !== null) {
