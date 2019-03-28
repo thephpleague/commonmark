@@ -14,9 +14,6 @@
 
 namespace League\CommonMark\Tests\functional;
 
-use League\CommonMark\CommonMarkConverter;
-use PHPUnit\Framework\TestCase;
-
 /**
  * Tests the parser against the CommonMark spec
  */
