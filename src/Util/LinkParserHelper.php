@@ -104,7 +104,7 @@ final class LinkParserHelper
     {
         if ($title = $cursor->match('/' . RegexHelper::PARTIAL_LINK_TITLE . '/')) {
             // Chop off quotes from title and unescape
-            return RegexHelper::unescape(substr($title, 1, -1));
+            return RegexHelper::unescape(\substr($title, 1, -1));
         }
 
         return null;

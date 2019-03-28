@@ -52,6 +52,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `RegexHelper::getThematicBreakRegex()`
  - Removed the second `$preserveEntities` parameters from `Xml:escape()`
 
+## [0.18.5] - 2019-03-28
+
+### Fixed
+
+ - Fixed the adjoining `Text` collapser not handling the full tree (thephpleague/commonmark-ext-autolink#10)
+
 ## [0.18.4] - 2019-03-23
 
 ### Changed
@@ -750,7 +756,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.4...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.5...HEAD
+[0.18.5]: https://github.com/thephpleague/commonmark/compare/0.18.4...0.18.5
 [0.18.4]: https://github.com/thephpleague/commonmark/compare/0.18.3...0.18.4
 [0.18.3]: https://github.com/thephpleague/commonmark/compare/0.18.2...0.18.3
 [0.18.2]: https://github.com/thephpleague/commonmark/compare/0.18.1...0.18.2
