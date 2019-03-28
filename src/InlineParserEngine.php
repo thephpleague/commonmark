@@ -14,6 +14,7 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Inline\AdjoiningTextCollapser;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\ReferenceMap;
@@ -42,7 +43,7 @@ class InlineParserEngine
 
         $this->processInlines($inlineParserContext);
 
-        $this->collapseAdjoiningTextElements($inlineParserContext);
+        AdjoiningTextCollapser::collapseTextNodes($container);
     }
 
     /**
@@ -98,23 +99,6 @@ class InlineParserEngine
             $lastInline->append($text);
         } else {
             $container->appendChild(new Text($text));
-        }
-    }
-
-    private function collapseAdjoiningTextElements(InlineParserContext $context)
-    {
-        $walker = $context->getContainer()->walker();
-
-        while (($event = $walker->next()) !== null) {
-            if ($event->isEntering()) {
-                $node = $event->getNode();
-                if ($node instanceof Text) {
-                    while (($next = $node->next()) && $next instanceof Text) {
-                        $node->append($next->getContent());
-                        $next->detach();
-                    }
-                }
-            }
         }
     }
 }
