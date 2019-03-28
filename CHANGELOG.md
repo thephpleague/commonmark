@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed the adjoining `Text` collapser not handling the full tree (thephpleague/commonmark-ext-autolink#10)
+
 ## [0.18.4] - 2019-03-23
 
 ### Changed

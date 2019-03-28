@@ -30,11 +30,12 @@ final class AdjoiningTextCollapser
         while (($event = $walker->next()) !== null) {
             if ($event->isEntering()) {
                 $node = $event->getNode();
-                if ($node instanceof Text) {
-                    while (($next = $node->next()) && $next instanceof Text) {
-                        $node->append($next->getContent());
-                        $next->detach();
-                    }
+                $next = $node->next();
+                if ($node instanceof Text && $next instanceof Text) {
+                    $node->append($next->getContent());
+                    $next->detach();
+                    // Re-start the next `while` iteration at the same spot as before
+                    $walker->resumeAt($node, true);
                 }
             }
         }
