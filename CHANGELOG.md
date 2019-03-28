@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [0.2.1] - 2019-03-28
+
+### Changed
+
+ - Increased the minimum `league/commonmark` version due to a now-fixed bug with `Text` collapsing (#10)
+
 ## [0.2.0] - 2019-03-16
 
 This release brings the email and URL autolink processors into alignment with the official GFM spec.
@@ -29,6 +35,7 @@ This release brings the email and URL autolink processors into alignment with th
 
 Initial release!
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.2.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/thephpleague/commonmark-ext-autolink/commits/v0.1.0
