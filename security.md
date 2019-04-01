@@ -36,6 +36,8 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 
 **Failing to set this option could make your site vulnerable to cross-site scripting (XSS) attacks!**
 
+When passing HTML from untrusted soruce unescaped, you must do some kind of HTML sanitizing, for example XXX.
+
 See the [configuration](/configuration/) section for more information.
 
 ## Unsafe Links
