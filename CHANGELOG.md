@@ -39,7 +39,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `BlockParserInterface::getName()`
    - `InlinerParserInterface::getName()`
  - Removed the now-useless classes:
-   - `AbstractBlock`
+   - `AbstractBlockParser`
    - `AbstractInlinerParser`
    - `InlineContainer`
  - Removed previously-deprecated functionality:
