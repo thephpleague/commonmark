@@ -25,7 +25,7 @@ interface BlockRendererInterface
      * @param ElementRendererInterface $htmlRenderer
      * @param bool                     $inTightList
      *
-     * @return HtmlElement|string
+     * @return HtmlElement|string|null
      */
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false);
 }
