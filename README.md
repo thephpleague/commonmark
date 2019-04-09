@@ -45,60 +45,13 @@ echo $converter->convertToHtml('# Hello World!');
 
 If you also do choose to allow raw HTML input from untrusted users, considering using a library (like [HTML Purifier](https://github.com/ezyang/htmlpurifier)) to provide additional HTML filtering.
 
-## Advanced Usage & Customization
-
-The actual conversion process requires two steps:
-
- 1. Parsing the Markdown input into an AST
- 2. Rendering the AST document as HTML
-
-Although the `CommonMarkConverter` wrapper simplifies this process for you, advanced users will likely want to do this themselves:
-
-```php
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
-
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-$environment = Environment::createCommonMarkEnvironment();
-
-// Optional: Add your own parsers, renderers, extensions, etc. (if desired)
-// For example:  $environment->addInlineParser(new TwitterHandleParser());
-
-// Define your configuration:
-$config = [
-  'html_input' => 'escape',
-  'renderer' => [
-    // To configure GitHub style newlines to create line breaks:
-    'soft_break' => "<br />\n",
-  ],
-];
-
-// Create the converter
-$converter = new CommonMarkConverter($config, $environment);
-
-// Here's our sample input
-$markdown = '# Hello World!';
-
-// Let's render it!
-echo $converter->convertToHtml($markdown);
-
-// The output should be:
-// <h1>Hello World!</h1>
-```
-
-This approach allows you to access/modify the AST before rendering it.
-
-You can also add custom parsers/renderers by [registering them with the `Environment` class](https://commonmark.thephpleague.com/customization/environment/).
-The [documentation][docs] provides several [customization examples][docs-examples] such as:
-
-- [Parsing Twitter handles into profile links][docs-example-twitter]
-- [Converting smilies into emoticon images][docs-example-smilies]
-
-You can also reference the core CommonMark parsers/renderers as they use the same functionality available to you.
-
 ## Documentation
 
-Documentation can be found at [commonmark.thephpleague.com][docs].
+Full documentation on advanced usage, configuration, and customization can be found at [commonmark.thephpleague.com][docs].
+
+## Upgrading
+
+Information on how to upgrade to newer versions of this library can be found at <https://commonmark.thephpleague.com/releases>.
 
 ## Related Packages
 

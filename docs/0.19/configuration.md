@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Configuration
-permalink: /configuration/
 ---
 
 Configuration
@@ -61,4 +60,4 @@ The `Environment` also exposes three methods for managing the configuration:
 * `mergeConfig(array $config = [])` - Recursively merge the current configuration with the given options
 * `getConfig(string $key, $default = null)` - Returns the config value. For nested configs, use a `/`-separate path; for example: `renderer/soft_break`
 
-[Learn more about customizing the Environment](/customization/environment/)
+[Learn more about customizing the Environment](/0.19/customization/environment/)

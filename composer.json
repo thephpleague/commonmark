@@ -3,7 +3,7 @@
     "type": "library",
     "description": "PHP Markdown parser based on the CommonMark spec",
     "keywords": ["markdown","parser","commonmark"],
-    "homepage": "https://github.com/thephpleague/commonmark",
+    "homepage": "https://commonmark.thephpleague.com",
     "license": "BSD-3-Clause",
     "authors": [
         {

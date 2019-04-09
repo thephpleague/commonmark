@@ -13,7 +13,7 @@ We accept contributions via Pull Requests on [GitHub](https://github.com/thephpl
 
 - **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
 
-- **Consider our release cycle** - We try to follow [SemVer v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.
+- **Consider our release cycle** - We try to follow [SemVer v2.0.0](https://semver.org/). Randomly breaking public APIs is not an option.
 
 - **Create feature branches** - Don't ask us to pull from your master branch.
 
@@ -25,7 +25,7 @@ We accept contributions via Pull Requests on [GitHub](https://github.com/thephpl
 ## Running Tests
 
 ``` bash
-$ phpunit
+$ composer test
 ```
 
 

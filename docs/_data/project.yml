@@ -1,4 +1,28 @@
 title: CommonMark
 tagline: Markdown done right
-description: Markdown parser for PHP based on the CommonMark spec
-google_analytics_tracking_id: 
+description: PHP Markdown parser based on the CommonMark spec
+google_analytics_tracking_id: UA-137970568-1
+repository: commonmark
+releases:
+  next:
+    version: '0.19'
+    requires: 'PHP >= 7.1'
+    latest: 'TBD'
+    documentation_link: '/0.19/'
+  current:
+    version: '0.18'
+    requires: 'PHP >= 5.6.5'
+    latest: '0.18.5 - 2019-03-28'
+    documentation_link: '/0.18/'
+author:
+    name: Colin O'Dell
+    twitter_account: colinodell
+    website: https://www.colinodell.com
+highlights:
+    description: "The PHP <code>CommonMark</code> parser is a robust, highly-extensible Markdown parser for PHP based on the <a href=\"https://spec.commonmark.org/\">CommonMark spec</a>."
+    features:
+        - The only PHP library fully compatible with the CommonMark spec
+        - Highly extensible architecture supports custom syntax and other customizations
+        - Community extensions and integrations for popular frameworks and CMSes
+        - Easy-to-use API
+composer: "$ composer require league/commonmark"

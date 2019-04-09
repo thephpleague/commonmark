@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Block Rendering
-permalink: /customization/block-rendering/
+redirect_from: /customization/block-rendering/
 ---
 
 Block Rendering

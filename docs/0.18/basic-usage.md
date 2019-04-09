@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Basic Usage
-permalink: /basic-usage/
+redirect_from: /basic-usage/
 ---
 
 Basic Usage
@@ -19,6 +19,9 @@ echo $converter->convertToHtml('# Hello World!');
 
 // <h1>Hello World!</h1>
 ~~~
+
+<i class="fa fa-exclamation-triangle"></i>
+**Important:** See the [security](/0.18/security/) section for important details on avoiding security misconfigurations.
 
 The actual conversion process requires three steps:
 

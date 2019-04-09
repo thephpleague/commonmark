@@ -1,5 +1,7 @@
 /.idea/
 /build/
+/docs/_site/
+/docs/Gemfile.lock
 composer.lock
 composer.phar
 /vendor/

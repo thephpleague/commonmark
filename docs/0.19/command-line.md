@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Command Line
-permalink: /command-line/
 ---
 
 Command Line

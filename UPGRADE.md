@@ -1,5 +1,7 @@
 # Upgrade Instructions
 
+**Note:** This file has been deprecated.  Future upgrade instructions can be found on our website: <https://commonmark.thephpleague.com/releases>
+
 ## UNRELEASED
 
 The `Environment` and extension framework underwent some major changes in this release.

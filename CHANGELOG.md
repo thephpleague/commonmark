@@ -1,6 +1,6 @@
 # Change Log
 All notable changes to this project will be documented in this file.
-Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
+Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [Unreleased][unreleased]
 
@@ -53,7 +53,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `RegexHelper::getLinkTitleRegex()`
    - `RegexHelper::getLinkDestinationBracesRegex()`
    - `RegexHelper::getThematicBreakRegex()`
- - Removed the second `$preserveEntities` parameters from `Xml:escape()`
+ - Removed the second `$preserveEntities` parameter from `Xml:escape()`
 
 ## [0.18.5] - 2019-03-28
 

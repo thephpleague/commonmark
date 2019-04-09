@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Inline Parsing
-permalink: /customization/inline-parsing/
+redirect_from: /customization/inline-parsing/
 ---
 
 Inline Parsing
@@ -22,11 +22,11 @@ This method will be called if both conditions are met:
 
 ### Parameters
 
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the `Cursor` used to parse the current line.
+* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/0.18/customization/cursor/) used to parse the current line.
 
 ### Return value
 
-`parse()` should return `false` if it's unable to handle the current line/character for any reason.  (The `Cursor` state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the character will be added as plain text.
+`parse()` should return `false` if it's unable to handle the current line/character for any reason.  (The [`Cursor`](/0.18/customization/cursor/) state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the character will be added as plain text.
 
 Returning `true` tells the engine that you've successfully parsed the character (and related ones after it).  It is your responsibility to:
 

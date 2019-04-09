@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Block Parsing
-permalink: /customization/block-parsing/
+redirect_from: /customization/block-parsing/
 ---
 
 Block Parsing
@@ -16,11 +16,11 @@ When parsing a new line, the `DocParser` iterates through all registered block p
 ### Parameters
 
 * `ContextInterface $context` - Provides information about the current context of the DocParser. Includes access to things like the document, current block container, and more.
-* `Cursor $cursor` - Encapsulates the current state of the line being parsed and provides helpers for looking around the current position.
+* `Cursor $cursor` - The [`Cursor`](/0.18/customization/cursor/) Encapsulates the current state of the line being parsed and provides helpers for looking around the current position.
 
 ### Return value
 
-`parse()` should return `false` if it's unable to handle the current line for any reason.  (The `Cursor` state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the line will be parsed as text.
+`parse()` should return `false` if it's unable to handle the current line for any reason.  (The [`Cursor`](/0.18/customization/cursor/) state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the line will be parsed as text.
 
 Returning `true` tells the engine that you've successfully parsed the block at the given position.  It is your responsibility to:
 

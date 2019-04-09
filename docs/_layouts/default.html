@@ -1,115 +1,121 @@
+{% assign version = page.url | remove_first: "/" | split: "/" | first %}
+{% assign upgrading = false %}
+{% if version == '' or version == 'releases' %}
+    {% assign version = site.data.project.releases.current.version %}
+    {% assign upgrading = true %}
+{% endif %}
+{% capture version_home %}/{{ version }}/{% endcapture %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if site.data.project.description %}
+        <meta name="description" content="{{ site.data.project.description }}">
+    {% endif %}
     {% if page.url == '/' %}
         <title>{{ site.data.project.title }} - {{ site.data.project.tagline }}</title>
     {% else %}
         <title>{{ page.title }} - {{ site.data.project.title }}</title>
     {% endif %}
-    {% if site.data.project.description %}
-        <meta name="description" content="{{ site.data.project.description }}">
-    {% endif %}
-    {% if site.data.images.favicon %}
-        <link rel="icon" type="image/x-icon" href="{{ site.data.images.favicon }}" />
-    {% else %}
-        <link rel="icon" type="image/x-icon" href="https://theme.thephpleague.com/img/favicon.ico" />
-    {% endif %}
-    {% if site.data.images.apple_touch %}
-        <link rel="apple-touch-icon-precomposed" href="{{ site.data.images.apple_touch }}">
-    {% else %}
-        <link rel="apple-touch-icon-precomposed" href="https://theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
-    {% endif %}
-    <link rel="stylesheet" href="https://theme.thephpleague.com/css/all.css?2">
-    <link rel="stylesheet" href="/css/header-links.css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?{{ site.data.hash }}">
+    <link rel="stylesheet" href="/custom.css?{{ site.data.hash }}">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.data.project.google_analytics_tracking_id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{  site.data.project.google_analytics_tracking_id }}');
+    </script>
 </head>
 <body>
-
-<section class="all_packages">
-    <a href="https://thephpleague.com/">
-        <img src="https://theme.thephpleague.com/img/loep_logo.png" width="195" height="200" alt="The League of Extraordinary Packages">
-    </a>
-    <h2>Our Packages:</h2>
-    <ul>
-        <!-- Loaded via JavaScript -->
-    </ul>
-</section>
-
 <header>
-    <a class="logo" href="/">
-        {% if site.data.images.logo %}
-            <span class="icon">
-                <img src="{{ site.data.images.logo }}" width="50" height="40" alt="{{ site.data.project.title }} - {{ site.data.project.tagline }}">
-            </span>
-        {% endif %}
-        <span class="name">{{ site.data.project.title }}</span>
-        <span class="tagline">{{ site.data.project.tagline }}</span>
-    </a>
-    <a href="https://thephpleague.com/" class="league">
-        Presented by The League of Extraordinary Packages
-    </a>
+    <div class="header-content">
+        <h1 class="title"><a href="/">{{ site.data.project.title }}</a></h1>
+        <div class="search">&nbsp;</div>
+        <nav class="versions">
+            <h2>{% if upgrading == true %}Notes{% else %}v{{ version }}{% endif %} &#9662;</h2>
+            <ul>
+            {% for v in site.data.menu.version %}
+                <li {% if version == v[0] and upgrading == false %}class="selected"{% endif %}><a href="/{{ v[0] }}/">v{{ v[0] }}</a></li>
+            {% endfor %}
+                <li {% if upgrading == true %}class="selected"{% endif %}><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <input type="checkbox" id="menu">
 <label for="menu" onclick>
-    <div class="closed">&#9776; Menu</div>
-    <div class="open">&#9776; Hide Menu</div>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
 </label>
 
 <main>
     <menu>
-        {% for section in site.data.menu %}
-            <h2>{{ section[0] }}</h2>
+        <div class="versions-small">
+        <h2>Versions</h2>
             <ul>
-                {% for link in section[1] %}
-                    <li {% if page.url == link[1] %}class="selected"{% endif %}>
-                        <a href="{{ link[1] }}">{{ link[0] }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+        {% for v in site.data.menu.version %}
+                <li {% if version == v[0] and upgrading == false %}class="selected"{% endif %}>
+                    <a href="/{{ v[0] }}/">{{ v[0] }}</a>
+                </li>
         {% endfor %}
+                <li {% if upgrading == true %}class="selected"{% endif %}><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        {% if upgrading == false %}
+            {% for section in site.data.menu.version[version] %}
+            <div class="menu-section">
+                <h2>{{ section[0] }}</h2>
+                <ul>
+                    {% for link in section[1] %}
+                        <li {% if page.url == link[1] %}class="selected"{% endif %}>
+                            <a href="{{ link[1] }}">{{ link[0] }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        {% else %}
+            {% for section in site.data.menu.upgrading %}
+                <h2>{{ section[0] }}</h2>
+                <ul>
+                    {% for link in section[1] %}
+                        <li {% if page.url == link[1] %}class="selected"{% endif %}>
+                            <a href="{{ link[1] }}">{{ link[0] }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        {% endif %}
     </menu>
     <article>
+    {% if version == site.data.project.releases.next.version %}
+        <p class="message-notice">This is the documentation for the upcoming <code>version {{ version }}</code>. This is a work in progress</p>
+    {% endif %}
+
+    {% if version == site.data.project.releases.previous.version %}
+        <p class="message-notice">This is the documentation for <code>version {{ version }}</code>. Please consider upgrading your code to <a href="{{ site.data.project.releases.current.documentation_link }}">the latest stable version</a></p>
+    {% endif %}
+
+    {% if version == site.data.project.releases.legacy.version %}
+        <p class="message-notice">This is the documentation for the unsupported <code>version {{ version }}</code>. Please consider upgrading your code to <a href="{{ site.data.project.releases.current.documentation_link }}">the latest stable version</a></p>
+    {% endif %}
+
         {{ content }}
     </article>
 </main>
 
 <footer>
-    <span>&copy; Copyright <a href="https://thephpleague.com">The League of Extraordinary Packages</a>.</span>
-    <span>Site design by <a href="https://reinink.ca">Jonathan Reinink</a>.</span>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
 </footer>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="https://theme.thephpleague.com/js/scripts.js"></script>
-
-<script>
-    // Header anchor links (based on http://ben.balter.com/2014/03/13/pages-anchor-links/)
-    $(function() {
-        return $("h2, h3, h4, h5, h6", "main").each(function(i, el) {
-            var $el, icon, id;
-            $el = $(el);
-            id = $el.attr('id');
-            icon = '<i class="fa fa-link"></i>';
-            if (id) {
-                return $el.append($("<a />").addClass("header-link").attr("href", "#" + id).html(icon));
-            }
-        });
-    });
-</script>
-
-{% if site.data.project.google_analytics_tracking_id %}
-    <script>
-        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-        e.src='//www.google-analytics.com/analytics.js';
-        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-        ga('create','{{  site.data.project.google_analytics_tracking_id }}');ga('send','pageview');
-    </script>
-{% endif %}
-
+<script src="/custom.js?{{ site.data.hash }}"></script>
 </body>
 </html>

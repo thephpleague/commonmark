@@ -1,7 +1,7 @@
 ---
 layout: default
 title: The Environment
-permalink: /customization/environment/
+redirect_from: /customization/environment/
 ---
 
 The Environment
@@ -34,7 +34,7 @@ public function addBlockParser(BlockParserInterface $parser);
 
 Registers the given `BlockParserInterface` with the environment.
 
-See [Block Parsing](/customization/block-parsing/) for details.
+See [Block Parsing](/0.18/customization/block-parsing/) for details.
 
 ## addBlockRenderer()
 
@@ -46,7 +46,7 @@ public function addBlockRenderer($blockClass, BlockRendererInterface $blockRende
 
 Registers a `BlockRendererInterface` to handle a specific type of block (`$blockClass`).
 
-See [Block Rendering](/customization/block-rendering/) for details.
+See [Block Rendering](/0.18/customization/block-rendering/) for details.
 
 ## addInlineParser()
 
@@ -58,7 +58,7 @@ public function addInlineParser(InlineParserInterface $parser);
 
 Registers the given `InlineParserInterface` with the environment.
 
-See [Inline Parsing](/customization/inline-parsing/) for details.
+See [Inline Parsing](/0.18/customization/inline-parsing/) for details.
 
 ## addInlineProcessor()
 
@@ -83,7 +83,7 @@ public function addInlineRenderer($inlineClass, InlineRendererInterface $rendere
 Registers an `InlineRendererInterface` to handle a specific type of inline (`$inlineClass`).
 A single renderer can handle multiple inline classes, but you must register it separately for each type. (The same renderer instance can be re-used if desired.)
 
-See [Inline Rendering](/customization/inline-rendering/) for details.
+See [Inline Rendering](/0.18/customization/inline-rendering/) for details.
 
 ## addDocumentProcessor()
 
@@ -93,4 +93,4 @@ See [Inline Rendering](/customization/inline-rendering/) for details.
 public function addDocumentProcessor(DocumentProcessorInterface $processor)
 ~~~
 
-Adds a new Document Processor which will [manipulate the AST](/customization/abstract-syntax-tree/) after parsing the document but before rendering it.
+Adds a new Document Processor which will [manipulate the AST](/0.18/customization/abstract-syntax-tree/) after parsing the document but before rendering it.

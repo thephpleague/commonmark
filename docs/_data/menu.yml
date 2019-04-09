@@ -1,16 +1,48 @@
-Getting Started:
-    'Introduction': '/'
-    'Changelog': '/changelog/'
-    'Installation': '/installation/'
-    'Basic Usage': '/basic-usage/'
-    'Configuration': '/configuration/'
-    'Security': '/security/'
-    'Command Line': '/command-line/'
-Customization:
-    'Overview': '/customization/overview/'
-    'Environment': '/customization/environment/'
-    'Abstract Syntax Tree': '/customization/abstract-syntax-tree/'
-    'Block parsing': '/customization/block-parsing/'
-    'Block rendering': '/customization/block-rendering/'
-    'Inline parsing': '/customization/inline-parsing/'
-    'Inline rendering': '/customization/inline-rendering/'
+version:
+    '0.19':
+        Getting Started:
+            'Overview': '/0.19/'
+            'Installation': '/0.19/installation/'
+            'Upgrading from 0.18': '/0.19/upgrading/'
+            'Changelog': '/0.19/changelog/'
+        Usage:
+            'Basic Usage': '/0.19/basic-usage/'
+            'Configuration': '/0.19/configuration/'
+            'Security': '/0.19/security/'
+            'Command Line': '/0.19/command-line/'
+        Customization:
+            'Overview': '/0.19/customization/overview/'
+            'Environment': '/0.19/customization/environment/'
+            'Extensions': '/0.19/customization/extensions/'
+            'Cursor': '/0.19/customization/cursor/'
+            'Block parsing': '/0.19/customization/block-parsing/'
+            'Inline parsing': '/0.19/customization/inline-parsing/'
+            'Abstract Syntax Tree': '/0.19/customization/abstract-syntax-tree/'
+            'Document Processing': '/0.19/customization/document-processing/'
+            'Block rendering': '/0.19/customization/block-rendering/'
+            'Inline rendering': '/0.19/customization/inline-rendering/'
+    '0.18':
+        Getting Started:
+            'Overview': '/0.18/'
+            'Installation': '/0.18/installation/'
+            'Upgrading from 0.17': '/0.18/upgrading/'
+            'Changelog': '/0.18/changelog/'
+        Usage:
+            'Basic Usage': '/0.18/basic-usage/'
+            'Configuration': '/0.18/configuration/'
+            'Security': '/0.18/security/'
+            'Command Line': '/0.18/command-line/'
+        Customization:
+            'Overview': '/0.18/customization/overview/'
+            'Environment': '/0.18/customization/environment/'
+            'Abstract Syntax Tree': '/0.18/customization/abstract-syntax-tree/'
+            'Cursor': '/0.18/customization/cursor/'
+            'Block parsing': '/0.18/customization/block-parsing/'
+            'Block rendering': '/0.18/customization/block-rendering/'
+            'Inline parsing': '/0.18/customization/inline-parsing/'
+            'Inline rendering': '/0.18/customization/inline-rendering/'
+upgrading:
+    Upgrading Guide:
+        Release Notes: '/releases/'
+        From 0.18 to 0.19: '/0.19/upgrading'
+        From 0.17 to 0.18: '/0.18/upgrading'
