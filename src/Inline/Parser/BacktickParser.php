@@ -50,7 +50,7 @@ class BacktickParser implements InlineParserInterface
                 $code = \mb_substr($cursor->getLine(), $currentPosition, $cursor->getPosition() - $currentPosition - \strlen($ticks), 'utf-8');
                 $c = \preg_replace('/\n/m', ' ', $code);
 
-                if ($c !== '' && \mb_substr($c, 0, 1) === ' ' && \mb_substr($c, -1, 1) === ' ') {
+                if ($c !== '' && \preg_match('/[^ ]/', $c) && \mb_substr($c, 0, 1) === ' ' && \mb_substr($c, -1, 1) === ' ') {
                     $c = \mb_substr($c, 1, -1);
                 }
 
