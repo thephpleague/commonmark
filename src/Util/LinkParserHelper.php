@@ -38,42 +38,13 @@ final class LinkParserHelper
             return null;
         }
 
-        $oldPosition = $cursor->getPosition();
-        $oldState = $cursor->saveState();
-        $openParens = 0;
-        while (($c = $cursor->getCharacter()) !== null) {
-            if ($c === '\\' && RegexHelper::isEscapable($cursor->peek())) {
-                $cursor->advanceBy(2);
-            } elseif ($c === '(') {
-                $cursor->advance();
-                $openParens++;
-            } elseif ($c === ')') {
-                if ($openParens < 1) {
-                    break;
-                }
-
-                $cursor->advance();
-                $openParens--;
-            } elseif (\preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $c)) {
-                break;
-            } else {
-                $cursor->advance();
-            }
-        }
-
-        if ($cursor->getPosition() === $oldPosition && $c !== ')') {
+        $destination = self::manuallyParseLinkDestination($cursor);
+        if ($destination === null) {
             return null;
         }
 
-        $newPos = $cursor->getPosition();
-        $cursor->restoreState($oldState);
-
-        $cursor->advanceBy($newPos - $cursor->getPosition());
-
-        $res = $cursor->getPreviousText();
-
         return UrlEncoder::unescapeAndEncode(
-            RegexHelper::unescape($res)
+            RegexHelper::unescape($destination)
         );
     }
 
@@ -113,5 +84,48 @@ final class LinkParserHelper
         }
 
         return null;
+    }
+
+    /**
+     * @param Cursor $cursor
+     *
+     * @return string|null
+     */
+    private static function manuallyParseLinkDestination(Cursor $cursor): ?string
+    {
+        $oldPosition = $cursor->getPosition();
+        $oldState = $cursor->saveState();
+
+        $openParens = 0;
+        while (($c = $cursor->getCharacter()) !== null) {
+            if ($c === '\\' && RegexHelper::isEscapable($cursor->peek())) {
+                $cursor->advanceBy(2);
+            } elseif ($c === '(') {
+                $cursor->advance();
+                $openParens++;
+            } elseif ($c === ')') {
+                if ($openParens < 1) {
+                    break;
+                }
+
+                $cursor->advance();
+                $openParens--;
+            } elseif (\preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $c)) {
+                break;
+            } else {
+                $cursor->advance();
+            }
+        }
+
+        if ($cursor->getPosition() === $oldPosition && $c !== ')') {
+            return null;
+        }
+
+        $newPos = $cursor->getPosition();
+        $cursor->restoreState($oldState);
+
+        $cursor->advanceBy($newPos - $cursor->getPosition());
+
+        return $cursor->getPreviousText();
     }
 }
