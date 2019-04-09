@@ -81,7 +81,7 @@ class SetExtHeadingParser implements BlockParserInterface
             }
         }
 
-        return \array_filter($strings, function($s) {
+        return \array_filter($strings, function ($s) {
             return $s !== '';
         });
     }
