@@ -39,10 +39,7 @@ class ParagraphRenderer implements BlockRendererInterface
             return $htmlRenderer->renderInlines($block->children());
         }
 
-        $attrs = [];
-        foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
-        }
+        $attrs = $block->getData('attributes', []);
 
         return new HtmlElement('p', $attrs, $htmlRenderer->renderInlines($block->children()));
     }

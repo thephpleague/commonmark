@@ -39,10 +39,7 @@ class ListBlockRenderer implements BlockRendererInterface
 
         $tag = $listData->type === ListBlock::TYPE_UNORDERED ? 'ul' : 'ol';
 
-        $attrs = [];
-        foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
-        }
+        $attrs = $block->getData('attributes', []);
 
         if ($listData->start !== null && $listData->start !== 1) {
             $attrs['start'] = (string) $listData->start;

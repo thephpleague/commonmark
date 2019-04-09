@@ -42,18 +42,15 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
         }
 
-        $attrs = [];
-        foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
-        }
+        $attrs = $inline->getData('attributes', []);
 
         $forbidUnsafeLinks = $this->config->getConfig('safe') || !$this->config->getConfig('allow_unsafe_links');
         if (!($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl()))) {
-            $attrs['href'] = Xml::escape($inline->getUrl());
+            $attrs['href'] = $inline->getUrl();
         }
 
         if (isset($inline->data['title'])) {
-            $attrs['title'] = Xml::escape($inline->data['title']);
+            $attrs['title'] = $inline->data['title'];
         }
 
         if (isset($attrs['target']) && $attrs['target'] === '_blank' && !isset($attrs['rel'])) {

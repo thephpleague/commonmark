@@ -95,6 +95,13 @@ class HtmlElementTest extends TestCase
         $this->assertEquals('<div><p></p><img /></div>', $div->__toString());
     }
 
+    public function testToStringWithUnescapedAttribute()
+    {
+        $element = new HtmlElement('p', ['id' => 'foo', 'class' => 'test" onclick="javascript:doBadThings();'], 'click me');
+
+        $this->assertEquals('<p id="foo" class="test&quot; onclick=&quot;javascript:doBadThings();">click me</p>', $element->__toString());
+    }
+
     public function testNullContentConstructor()
     {
         $img = new HtmlElement('img', [], null);

@@ -35,15 +35,12 @@ class FencedCodeRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
         }
 
-        $attrs = [];
-        foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
-        }
+        $attrs = $block->getData('attributes', []);
 
         $infoWords = $block->getInfoWords();
         if (count($infoWords) !== 0 && \strlen($infoWords[0]) !== 0) {
             $attrs['class'] = isset($attrs['class']) ? $attrs['class'] . ' ' : '';
-            $attrs['class'] .= 'language-' . Xml::escape($infoWords[0]);
+            $attrs['class'] .= 'language-' . $infoWords[0];
         }
 
         return new HtmlElement(

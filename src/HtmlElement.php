@@ -2,6 +2,8 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Util\Xml;
+
 class HtmlElement
 {
     /**
@@ -25,10 +27,10 @@ class HtmlElement
     protected $selfClosing = false;
 
     /**
-     * @param string                                $tagName
-     * @param string[]                              $attributes
-     * @param HtmlElement|HtmlElement[]|string|null $contents
-     * @param bool                                  $selfClosing
+     * @param string                                $tagName     Name of the HTML tag
+     * @param string[]                              $attributes  Array of attributes (values should be unescaped)
+     * @param HtmlElement|HtmlElement[]|string|null $contents    Inner contents, pre-escaped if needed
+     * @param bool                                  $selfClosing Whether the tag is self-closing
      */
     public function __construct(string $tagName, array $attributes = [], $contents = '', bool $selfClosing = false)
     {
@@ -101,6 +103,8 @@ class HtmlElement
     }
 
     /**
+     * Sets the inner contents of the tag (must be pre-escaped if needed)
+     *
      * @param HtmlElement|HtmlElement[]|string $contents
      *
      * @return $this
@@ -120,7 +124,7 @@ class HtmlElement
         $result = '<' . $this->tagName;
 
         foreach ($this->attributes as $key => $value) {
-            $result .= ' ' . $key . '="' . $value . '"';
+            $result .= ' ' . $key . '="' . Xml::escape($value) . '"';
         }
 
         if ($this->contents !== '') {

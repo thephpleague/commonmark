@@ -43,10 +43,7 @@ class ListItemRenderer implements BlockRendererInterface
             $contents .= "\n";
         }
 
-        $attrs = [];
-        foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
-        }
+        $attrs = $block->getData('attributes', []);
 
         $li = new HtmlElement('li', $attrs, $contents);
 

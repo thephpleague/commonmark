@@ -37,10 +37,7 @@ class HeadingRenderer implements BlockRendererInterface
 
         $tag = 'h' . $block->getLevel();
 
-        $attrs = [];
-        foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
-        }
+        $attrs = $block->getData('attributes', []);
 
         return new HtmlElement($tag, $attrs, $htmlRenderer->renderInlines($block->children()));
     }

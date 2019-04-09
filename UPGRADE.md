@@ -8,6 +8,12 @@ The `Environment` and extension framework underwent some major changes in this r
 
 This library no longer supports PHP 5.6 or 7.0.  Feel free to remove support for those from your extensions as well.
 
+### HTML attribute escaping
+
+Previously, any attributes passed into an `HtmlElement` would need to be pre-escaped. This is now done for you so be sure to remove any references to `Xml::escape()` when applied to attributes.
+
+This does not affect inner contents which may still need pre-escaping of untrusted user input.
+
 ### Removed classes and interface methods
 
 The `getName()` method has been removed from several classes:
