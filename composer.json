@@ -64,6 +64,9 @@
         }
     },
     "bin": ["bin/commonmark"],
+    "scripts": {
+        "test": "phpunit"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "0.19-dev"
