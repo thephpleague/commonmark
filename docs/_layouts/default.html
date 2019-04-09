@@ -21,8 +21,8 @@
     {% endif %}
     <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
     <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
-    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?{{ site.data.hash }}">
-    <link rel="stylesheet" href="/custom.css?{{ site.data.hash }}">
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?{{ site.github.build_revision }}">
+    <link rel="stylesheet" href="/custom.css?{{ site.github.build_revision }}">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.data.project.google_analytics_tracking_id }}"></script>
     <script>
@@ -116,6 +116,6 @@
     <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
     <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
 </footer>
-<script src="/custom.js?{{ site.data.hash }}"></script>
+<script src="/custom.js?{{ site.github.build_revision }}"></script>
 </body>
 </html>
