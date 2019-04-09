@@ -216,7 +216,7 @@ abstract class AbstractBlock extends Node
     /**
      * @return string[]
      */
-    public function getStrings(): iterable
+    public function getStrings(): array
     {
         return $this->strings->toArray();
     }

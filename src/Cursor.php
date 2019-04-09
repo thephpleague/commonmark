@@ -91,6 +91,11 @@ class Cursor
         $this->lineContainsTabs = \preg_match('/\t/', $line) > 0;
     }
 
+    public function getEncoding(): string
+    {
+        return $this->encoding;
+    }
+
     /**
      * Returns the position of the next character which is not a space (or tab)
      *
