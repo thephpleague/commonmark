@@ -21,7 +21,6 @@ use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\RegexHelper;
-use League\CommonMark\Util\Xml;
 
 class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {

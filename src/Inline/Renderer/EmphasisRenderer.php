@@ -18,7 +18,6 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Emphasis;
-use League\CommonMark\Util\Xml;
 
 class EmphasisRenderer implements InlineRendererInterface
 {

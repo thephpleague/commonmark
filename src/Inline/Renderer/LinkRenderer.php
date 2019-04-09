@@ -21,7 +21,6 @@ use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\RegexHelper;
-use League\CommonMark\Util\Xml;
 
 class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
