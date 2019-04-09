@@ -1,6 +1,7 @@
 title: CommonMark
 tagline: Markdown done right
 description: PHP Markdown parser based on the CommonMark spec
+site_title: CommonMark for PHP
 google_analytics_tracking_id: UA-137970568-1
 repository: commonmark
 releases:
