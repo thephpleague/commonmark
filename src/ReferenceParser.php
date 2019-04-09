@@ -74,7 +74,7 @@ class ReferenceParser
         $cursor->advanceToNextNonSpaceOrNewline();
 
         $destination = LinkParserHelper::parseLinkDestination($cursor);
-        if (empty($destination)) {
+        if ($destination === null) {
             $cursor->restoreState($initialState);
 
             return false;

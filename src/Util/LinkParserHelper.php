@@ -38,6 +38,7 @@ final class LinkParserHelper
             return null;
         }
 
+        $oldPosition = $cursor->getPosition();
         $oldState = $cursor->saveState();
         $openParens = 0;
         while (($c = $cursor->getCharacter()) !== null) {
@@ -58,6 +59,10 @@ final class LinkParserHelper
             } else {
                 $cursor->advance();
             }
+        }
+
+        if ($cursor->getPosition() === $oldPosition && $c !== ')') {
+            return null;
         }
 
         $newPos = $cursor->getPosition();
