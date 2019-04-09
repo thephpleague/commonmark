@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\ReferenceParser;
 use League\CommonMark\Util\RegexHelper;
 
 class SetExtHeadingParser implements BlockParserInterface
@@ -46,8 +47,42 @@ class SetExtHeadingParser implements BlockParserInterface
         $level = $match[0][0] === '=' ? 1 : 2;
         $strings = $context->getContainer()->getStrings();
 
+        $strings = $this->resolveReferenceLinkDefinitions($strings, $cursor->getEncoding(), $context->getReferenceParser());
+        if (empty($strings)) {
+            return false;
+        }
+
         $context->replaceContainerBlock(new Heading($level, $strings));
 
         return true;
+    }
+
+    /**
+     * Resolve reference link definition
+     *
+     * @see https://github.com/commonmark/commonmark.js/commit/993bbe335931af847460effa99b2411eb643577d
+     *
+     * @param string[]        $strings
+     * @param string          $encoding
+     * @param ReferenceParser $referenceParser
+     *
+     * @return string[]
+     */
+    private function resolveReferenceLinkDefinitions(array $strings, string $encoding, ReferenceParser $referenceParser): array
+    {
+        foreach ($strings as &$string) {
+            $cursor = new Cursor($string, $encoding);
+            while ($cursor->getCharacter() === '[' && $referenceParser->parse($cursor)) {
+                $string = $cursor->getRemainder();
+            }
+
+            if ($string !== '') {
+                break;
+            }
+        }
+
+        return \array_filter($strings, function ($s) {
+            return $s !== '';
+        });
     }
 }
