@@ -14,5 +14,6 @@ disabled:
 
 finder:
   not-name:
+    - ".phpstorm.meta.php"
     - "CommonMarkCoreExtension.php"
     - "FakeEmptyHtmlRenderer.php"

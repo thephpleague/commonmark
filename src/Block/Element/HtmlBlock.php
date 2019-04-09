@@ -20,6 +20,7 @@ use League\CommonMark\Util\RegexHelper;
 
 class HtmlBlock extends AbstractBlock
 {
+    // Any changes to these constants should be reflected in .phpstorm.meta.php
     const TYPE_1_CODE_CONTAINER = 1;
     const TYPE_2_COMMENT = 2;
     const TYPE_3 = 3;

@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
    - `EnvironmentInterface`
    - `ConfigurableEnvironmentInterface`
  - Added `Cursor::getEncoding()` method
+ - Added `.phpstorm.meta.php` file for better IDE code completion
  - Made some minor optimizations here and there
 
 ### Changed

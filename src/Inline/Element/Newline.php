@@ -16,6 +16,7 @@ namespace League\CommonMark\Inline\Element;
 
 class Newline extends AbstractInline
 {
+    // Any changes to these constants should be reflected in .phpstorm.meta.php
     const HARDBREAK = 0;
     const SOFTBREAK = 1;
 
