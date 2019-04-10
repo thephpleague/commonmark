@@ -50,14 +50,7 @@ abstract class AbstractStringContainerBlock extends AbstractBlock implements Str
      * @param ContextInterface $context
      * @param Cursor           $cursor
      */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
-    {
-        // TODO: Is this even really needed? Can/should this be abstract instead?
-        // create paragraph container for line
-        $context->addBlock(new Paragraph());
-        $cursor->advanceToNextNonSpaceOrTab();
-        $context->getTip()->addLine($cursor->getRemainder());
-    }
+    abstract public function handleRemainingContents(ContextInterface $context, Cursor $cursor);
 
     public function getStringContent(): string
     {
