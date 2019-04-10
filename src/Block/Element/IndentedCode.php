@@ -81,6 +81,8 @@ class IndentedCode extends AbstractStringContainerBlock
      */
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
-        $context->getTip()->addLine($cursor->getRemainder());
+        /** @var self $tip */
+        $tip = $context->getTip();
+        $tip->addLine($cursor->getRemainder());
     }
 }

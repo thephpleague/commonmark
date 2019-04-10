@@ -98,7 +98,10 @@ class Paragraph extends AbstractStringContainerBlock implements InlineContainerI
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
         $cursor->advanceToNextNonSpaceOrTab();
-        $context->getTip()->addLine($cursor->getRemainder());
+
+        /** @var self $tip */
+        $tip = $context->getTip();
+        $tip->addLine($cursor->getRemainder());
     }
 
     /**

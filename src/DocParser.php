@@ -116,10 +116,7 @@ class DocParser
 
         // What remains at the offset is a text line.  Add the text to the appropriate container.
         // First check for a lazy paragraph continuation:
-        if ($this->isLazyParagraphContinuation($context, $cursor)) {
-            // lazy paragraph continuation
-            $context->getTip()->addLine($cursor->getRemainder());
-
+        if ($this->handleLazyParagraphContinuation($context, $cursor)) {
             return;
         }
 
@@ -135,9 +132,10 @@ class DocParser
             $context->getContainer()->handleRemainingContents($context, $cursor);
         } elseif (!$cursor->isBlank()) {
             // Create paragraph container for line
-            $context->addBlock(new Paragraph());
+            $p = new Paragraph();
+            $context->addBlock($p);
             $cursor->advanceToNextNonSpaceOrTab();
-            $context->getTip()->addLine($cursor->getRemainder());
+            $p->addLine($cursor->getRemainder());
         }
     }
 
@@ -223,12 +221,22 @@ class DocParser
      *
      * @return bool
      */
-    private function isLazyParagraphContinuation(ContextInterface $context, Cursor $cursor): bool
+    private function handleLazyParagraphContinuation(ContextInterface $context, Cursor $cursor): bool
     {
-        return $context->getTip() instanceof Paragraph &&
+        $tip = $context->getTip();
+
+        if ($tip instanceof Paragraph &&
             !$context->getBlockCloser()->areAllClosed() &&
             !$cursor->isBlank() &&
-            \count($context->getTip()->getStrings()) > 0;
+            \count($tip->getStrings()) > 0) {
+
+            // lazy paragraph continuation
+            $tip->addLine($cursor->getRemainder());
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

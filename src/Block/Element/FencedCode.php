@@ -188,7 +188,7 @@ class FencedCode extends AbstractStringContainerBlock
      */
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
-        /** @var FencedCode $container */
+        /** @var self $container */
         $container = $context->getContainer();
 
         // check for closing code fence
@@ -202,7 +202,7 @@ class FencedCode extends AbstractStringContainerBlock
             }
         }
 
-        $context->getTip()->addLine($cursor->getRemainder());
+        $container->addLine($cursor->getRemainder());
     }
 
     /**
