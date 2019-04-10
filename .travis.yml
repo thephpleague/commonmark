@@ -33,7 +33,6 @@ sudo: false
 before_script:
   - travis_retry composer self-update
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
-  - if [[ $PHPSTAN ]]; then composer require --dev phpstan/phpstan-shim --no-interaction --prefer-dist; fi
 
 script:
   - if [[ $PHPSTAN ]]; then vendor/bin/phpstan analyse -l 4 src; fi
