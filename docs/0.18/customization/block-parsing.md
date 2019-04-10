@@ -30,3 +30,23 @@ Returning `true` tells the engine that you've successfully parsed the block at t
 ## Tips
 
 * For best performance, `return false` as soon as possible
+
+## Block Elements
+
+In addition to creating a block parser, you may also want to have it return a custom "block element" - this is a class that extends from `AbstractBlock` and represents that particular block within the AST.
+
+Block elements also play a role during the parsing process as they tell the underlying engine how to handle subsequent blocks that are found.
+
+### `AbstractBlockElement` Methods
+
+| Method                         | Purpose                                                                                                          |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `canContain(...)`              | Tell the engine whether a subsequent block can be added as a child of yours                                      |
+| `acceptsLines()`               | Whether this block can accept lines of text (inline nodes). If `true`, `handleRemainingContents()` may be called |
+| `handleRemainingContents(...)` | This is called when a block has been created but some other text still exists on that line                       |
+| `isCode()`                     | Returns whether this block represents `<code>`                                                                   |
+| `matchesNextLine(...)`         | Returns whether this block continues onto the next line (some blocks are multi-line)                             |
+| `shouldLastLineBeBlank()`      | Returns whether the last line should be blank (primarily used by `ListItem` elements)                            |
+| `finalize(...)`                | Finalizes the block after all child items have been added, thus marking it as closed for modification            |
+
+For examples on how these methods are used, see the core block element classes included with this library.
