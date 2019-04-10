@@ -28,14 +28,14 @@
     },
     "require-dev": {
         "cebe/markdown": "~1.0",
-        "erusev/parsedown": "~1.0",
         "commonmark/commonmark.js": "0.29.0",
+        "erusev/parsedown": "~1.0",
         "michelf/php-markdown": "~1.4",
         "mikehaertl/php-shellcommand": "^1.4",
         "phpstan/phpstan-shim": "^0.11.5",
         "phpunit/phpunit": "^7.5",
-        "symfony/finder": "^4.2",
-        "scrutinizer/ocular": "^1.5"
+        "scrutinizer/ocular": "^1.5",
+        "symfony/finder": "^4.2"
     },
     "suggest": {
         "league/commonmark-extras": "Library of useful extensions including smart punctuation"
@@ -55,7 +55,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "League\\CommonMark\\": "src/"
+            "League\\CommonMark\\": "src"
         }
     },
     "autoload-dev": {
@@ -66,14 +66,19 @@
     },
     "bin": ["bin/commonmark"],
     "scripts": {
+        "phpstan": "phpstan analyse -l 4 src",
+        "phpunit": "phpunit --no-coverage",
         "test": [
-            "phpstan analyse -l 4 src",
-            "phpunit"
+            "@phpstan",
+            "@phpunit"
         ]
     },
     "extra": {
         "branch-alias": {
             "dev-master": "0.19-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
