@@ -49,6 +49,23 @@ We have extracted two interfaces from the `Environment` class:
 
 As a result, `EnvironmentAwareInterface` now requires an `EnvironmentInterface` instead of an `Environment`, so update your parsers/processors/renderers accordingly.
 
+### Block Elements
+
+A few methods from `AbstractBlock` have been extracted into a new `AbstractStringContainerBlock` class and corresponding `StringContainerInterface` interface:
+
+ - `addLine(string $line)`
+ - `getStringContent()`
+ - `handleRemainingContents(ContextInterface $context, Cursor $cursor)`
+
+These are used to represent a block which can contain strings of text inside (even if those strings do not contain "inline" elements but just plain text).
+
+To determine how to best upgrade your existing block element classes, look at the value returned by the `acceptsLines()` method:
+
+ - If `acceptsLines()` returns `false`, simply remove the three methods from the bulleted list above, along with `acceptsLines()` and any calls to `parent::__construct()`.
+ - If `acceptsLines()` returns `true`, change your base class from `AbstractBlock` to `AbstractStringContainerBlock` and remove `acceptsLines()`.
+
+Additionally, `StringContainerInterface` now extends this new `StringContainerInterface` interface. Just make sure you've implemented the change mentioned above and you should be fine.
+
 ## Extensions
 
 Extensions work much differently now.  In the past, you'd have functions returning an array of things that the `Environment` would register for you.

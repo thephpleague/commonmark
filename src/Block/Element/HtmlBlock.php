@@ -18,7 +18,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class HtmlBlock extends AbstractBlock
+class HtmlBlock extends AbstractStringContainerBlock
 {
     // Any changes to these constants should be reflected in .phpstorm.meta.php
     const TYPE_1_CODE_CONTAINER = 1;
@@ -73,16 +73,6 @@ class HtmlBlock extends AbstractBlock
     }
 
     /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    public function acceptsLines(): bool
-    {
-        return true;
-    }
-
-    /**
      * Whether this is a code block
      *
      * @return bool
@@ -105,7 +95,7 @@ class HtmlBlock extends AbstractBlock
     {
         parent::finalize($context, $endLineNumber);
 
-        $this->finalStringContents = \implode("\n", $this->getStrings());
+        $this->finalStringContents = \implode("\n", $this->strings->toArray());
     }
 
     /**

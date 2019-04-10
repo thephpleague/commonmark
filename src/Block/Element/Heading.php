@@ -17,7 +17,7 @@ namespace League\CommonMark\Block\Element;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class Heading extends AbstractBlock implements InlineContainerInterface
+class Heading extends AbstractStringContainerBlock implements InlineContainerInterface
 {
     /**
      * @var int
@@ -55,7 +55,7 @@ class Heading extends AbstractBlock implements InlineContainerInterface
     {
         parent::finalize($context, $endLineNumber);
 
-        $this->finalStringContents = \implode("\n", $this->getStrings());
+        $this->finalStringContents = \implode("\n", $this->strings->toArray());
     }
 
     /**
@@ -68,16 +68,6 @@ class Heading extends AbstractBlock implements InlineContainerInterface
     public function canContain(AbstractBlock $block): bool
     {
         return false;
-    }
-
-    /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    public function acceptsLines(): bool
-    {
-        return true;
     }
 
     /**
@@ -101,6 +91,6 @@ class Heading extends AbstractBlock implements InlineContainerInterface
      */
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
-        // nothing to do; we already added the contents.
+        // nothing to do; contents were already added via the constructor.
     }
 }

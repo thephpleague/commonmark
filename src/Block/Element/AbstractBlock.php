@@ -32,16 +32,6 @@ abstract class AbstractBlock extends Node
     public $data = [];
 
     /**
-     * @var ArrayCollection|string[]
-     */
-    protected $strings;
-
-    /**
-     * @var string
-     */
-    protected $finalStringContents = '';
-
-    /**
      * @var bool
      */
     protected $open = true;
@@ -60,14 +50,6 @@ abstract class AbstractBlock extends Node
      * @var int
      */
     protected $endLine;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->strings = new ArrayCollection();
-    }
 
     /**
      * @param Node|null $node
@@ -107,13 +89,6 @@ abstract class AbstractBlock extends Node
     abstract public function canContain(AbstractBlock $block): bool;
 
     /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    abstract public function acceptsLines(): bool;
-
-    /**
      * Whether this is a code block
      *
      * @return bool
@@ -126,18 +101,6 @@ abstract class AbstractBlock extends Node
      * @return bool
      */
     abstract public function matchesNextLine(Cursor $cursor): bool;
-
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
-    {
-        // create paragraph container for line
-        $context->addBlock(new Paragraph());
-        $cursor->advanceToNextNonSpaceOrTab();
-        $context->getTip()->addLine($cursor->getRemainder());
-    }
 
     /**
      * @param int $startLine
@@ -214,26 +177,6 @@ abstract class AbstractBlock extends Node
     }
 
     /**
-     * @return string[]
-     */
-    public function getStrings(): array
-    {
-        return $this->strings->toArray();
-    }
-
-    /**
-     * @param string $line
-     */
-    public function addLine(string $line)
-    {
-        if (!$this->acceptsLines()) {
-            throw new \LogicException('You cannot add lines to a block which cannot accept them');
-        }
-
-        $this->strings->add($line);
-    }
-
-    /**
      * Whether the block is open for modifications
      *
      * @return bool
@@ -259,14 +202,6 @@ abstract class AbstractBlock extends Node
         $this->endLine = $endLineNumber;
 
         $context->setTip($context->getTip()->parent());
-    }
-
-    /**
-     * @return string
-     */
-    public function getStringContent(): string
-    {
-        return $this->finalStringContents;
     }
 
     /**

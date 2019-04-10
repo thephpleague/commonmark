@@ -18,7 +18,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class FencedCode extends AbstractBlock
+class FencedCode extends AbstractStringContainerBlock
 {
     /**
      * @var string
@@ -140,16 +140,6 @@ class FencedCode extends AbstractBlock
     public function canContain(AbstractBlock $block): bool
     {
         return false;
-    }
-
-    /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    public function acceptsLines(): bool
-    {
-        return true;
     }
 
     /**

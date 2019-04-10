@@ -38,14 +38,26 @@ Block elements also play a role during the parsing process as they tell the unde
 
 ### `AbstractBlockElement` Methods
 
-| Method                         | Purpose                                                                                                          |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| `canContain(...)`              | Tell the engine whether a subsequent block can be added as a child of yours                                      |
-| `acceptsLines()`               | Whether this block can accept lines of text (inline nodes). If `true`, `handleRemainingContents()` may be called |
-| `handleRemainingContents(...)` | This is called when a block has been created but some other text still exists on that line                       |
-| `isCode()`                     | Returns whether this block represents `<code>`                                                                   |
-| `matchesNextLine(...)`         | Returns whether this block continues onto the next line (some blocks are multi-line)                             |
-| `shouldLastLineBeBlank()`      | Returns whether the last line should be blank (primarily used by `ListItem` elements)                            |
-| `finalize(...)`                | Finalizes the block after all child items have been added, thus marking it as closed for modification            |
+| Method                    | Purpose                                                                                               |
+| ------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `canContain(...)`         | Tell the engine whether a subsequent block can be added as a child of yours                           |
+| `isCode()`                | Returns whether this block represents `<code>`                                                        |
+| `matchesNextLine(...)`    | Returns whether this block continues onto the next line (some blocks are multi-line)                  |
+| `shouldLastLineBeBlank()` | Returns whether the last line should be blank (primarily used by `ListItem` elements)                 |
+| `finalize(...)`           | Finalizes the block after all child items have been added, thus marking it as closed for modification |
 
 For examples on how these methods are used, see the core block element classes included with this library.
+
+### `AbstractStringContainerBlock`
+
+If your element can contain strings of text, you should extend `AbstractStringContainerBlock` instead of `AbstractBlock`.  This provides some additional methods needed to manage that inner text:
+
+| Method                         | Purpose                                                                                    |
+| ------------------------------ | ------------------------------------------------------------------------------------------ |
+| `handleRemainingContents(...)` | This is called when a block has been created but some other text still exists on that line |
+| `addLine(...)`                 | Adds the given line of text to the block element                                           |
+| `getStringContent()`           | Returns the strings contained with that block element                                      |
+
+#### `InlineContainerInterface`
+
+If the text contained by your block should be parsed for inline elements, you should also implement the `InlineContainerInterface`. This doesn't add any new methods but does signal to the engine that inline parsing is required.

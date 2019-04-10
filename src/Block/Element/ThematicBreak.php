@@ -31,16 +31,6 @@ class ThematicBreak extends AbstractBlock
     }
 
     /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    public function acceptsLines(): bool
-    {
-        return false;
-    }
-
-    /**
      * Whether this is a code block
      *
      * @return bool

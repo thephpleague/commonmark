@@ -18,6 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Block\Element\StringContainerInterface;
 
 class DocParser
 {
@@ -130,7 +131,7 @@ class DocParser
         $this->setAndPropagateLastLineBlank($context, $cursor);
 
         // Handle any remaining cursor contents
-        if ($context->getContainer()->acceptsLines()) {
+        if ($context->getContainer() instanceof StringContainerInterface) {
             $context->getContainer()->handleRemainingContents($context, $cursor);
         } elseif (!$cursor->isBlank()) {
             // Create paragraph container for line
@@ -209,7 +210,7 @@ class DocParser
                 }
             }
 
-            if (!$parsed || $context->getContainer()->acceptsLines() || $context->getTip()->getDepth() >= $this->maxNestingLevel) {
+            if (!$parsed || $context->getContainer() instanceof StringContainerInterface || $context->getTip()->getDepth() >= $this->maxNestingLevel) {
                 $context->setBlocksParsed(true);
                 break;
             }

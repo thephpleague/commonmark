@@ -34,8 +34,6 @@ class ListBlock extends AbstractBlock
 
     public function __construct(ListData $listData)
     {
-        parent::__construct();
-
         $this->listData = $listData;
     }
 
@@ -73,16 +71,6 @@ class ListBlock extends AbstractBlock
     public function canContain(AbstractBlock $block): bool
     {
         return $block instanceof ListItem;
-    }
-
-    /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    public function acceptsLines(): bool
-    {
-        return false;
     }
 
     /**

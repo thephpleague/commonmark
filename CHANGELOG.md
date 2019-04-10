@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Extracted two new base interfaces from `Environment`:
    - `EnvironmentInterface`
    - `ConfigurableEnvironmentInterface`
+ - Extracted a new `AbstractStringContainerBlock` base class and corresponding `StringContainerInterface` from `AbstractBlock`
  - Added `Cursor::getEncoding()` method
  - Added `.phpstorm.meta.php` file for better IDE code completion
  - Made some minor optimizations here and there
@@ -26,6 +27,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - `Context::addBlock()` no longer returns the same block instance you passed into the method, as this served no useful purpose
  - `RegexHelper::isEscapable()` no longer accepts `null` values
  - `Node::replaceChildren()` now accepts any type of `iterable`, not just `array`s
+ - Some block elements now extend `AbstractStringContainerBlock` instead of `AbstractBlock`
+ - `InlineContainerInterface` now extends the new `StringContainerInterface`
 
 ### Removed
 
@@ -44,6 +47,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `AbstractBlockParser`
    - `AbstractInlinerParser`
    - `InlineContainer`
+ - Removed the `AbstractBlock::acceptsLines()` method
+ - Removed the now-useless constructor from `AbstractBlock`
  - Removed previously-deprecated functionality:
    - `InlineContainer` class
    - `RegexHelper::$instance`

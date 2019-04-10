@@ -17,7 +17,7 @@ namespace League\CommonMark\Block\Element;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class IndentedCode extends AbstractBlock
+class IndentedCode extends AbstractStringContainerBlock
 {
     /**
      * Returns true if this block can contain the given block as a child node
@@ -29,16 +29,6 @@ class IndentedCode extends AbstractBlock
     public function canContain(AbstractBlock $block): bool
     {
         return false;
-    }
-
-    /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    public function acceptsLines(): bool
-    {
-        return true;
     }
 
     /**
@@ -68,7 +58,7 @@ class IndentedCode extends AbstractBlock
     {
         parent::finalize($context, $endLineNumber);
 
-        $reversed = \array_reverse($this->getStrings(), true);
+        $reversed = \array_reverse($this->strings->toArray(), true);
         foreach ($reversed as $index => $line) {
             if ($line === '' || $line === "\n" || \preg_match('/^(\n *)$/', $line)) {
                 unset($reversed[$index]);

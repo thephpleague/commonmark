@@ -17,7 +17,7 @@ namespace League\CommonMark\Block\Element;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class Paragraph extends AbstractBlock implements InlineContainerInterface
+class Paragraph extends AbstractStringContainerBlock implements InlineContainerInterface
 {
     /**
      * Returns true if this block can contain the given block as a child node
@@ -29,16 +29,6 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
     public function canContain(AbstractBlock $block): bool
     {
         return false;
-    }
-
-    /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    public function acceptsLines(): bool
-    {
-        return true;
     }
 
     /**
@@ -109,5 +99,13 @@ class Paragraph extends AbstractBlock implements InlineContainerInterface
     {
         $cursor->advanceToNextNonSpaceOrTab();
         $context->getTip()->addLine($cursor->getRemainder());
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getStrings(): array
+    {
+        return $this->strings->toArray();
     }
 }

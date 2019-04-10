@@ -26,8 +26,6 @@ class Document extends AbstractBlock
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->setStartLine(1);
 
         $this->referenceMap = new ReferenceMap();
@@ -51,16 +49,6 @@ class Document extends AbstractBlock
     public function canContain(AbstractBlock $block): bool
     {
         return true;
-    }
-
-    /**
-     * Returns true if block type can accept lines of text
-     *
-     * @return bool
-     */
-    public function acceptsLines(): bool
-    {
-        return false;
     }
 
     /**
