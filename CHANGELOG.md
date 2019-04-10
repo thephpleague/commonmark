@@ -28,8 +28,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - `RegexHelper::isEscapable()` no longer accepts `null` values
  - `Node::replaceChildren()` now accepts any type of `iterable`, not just `array`s
  - Some block elements now extend `AbstractStringContainerBlock` instead of `AbstractBlock`
- - `InlineContainerInterface` now extends the new `StringContainerInterface`
- - The `handleRemainingContents()` method (formerly on `AbstractBlock`, now on `AbstractStringContainerBlock`) is now an `abstract method
+   - `InlineContainerInterface` now extends the new `StringContainerInterface`
+   - The `handleRemainingContents()` method (formerly on `AbstractBlock`, now on `AbstractStringContainerBlock`) is now an `abstract method
+   - The `InlineParserContext` constructor now requires an `AbstractStringContainerBlock` instead of an `AbstractBlock`
 
 ### Removed
 
