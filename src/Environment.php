@@ -303,7 +303,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      *
      * @return $this
      */
-    public function addExtension(ExtensionInterface $extension): self
+    public function addExtension(ExtensionInterface $extension): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add extension.');
 

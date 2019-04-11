@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added the missing `addExtension()` method to the new `ConfigurableEnvironmentInterface`
+
 ## [0.19.0] - 2019-04-10
 
 ### Added

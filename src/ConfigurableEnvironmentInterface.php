@@ -13,6 +13,7 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
@@ -31,6 +32,15 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
      * @param array $config
      */
     public function setConfig(array $config = []);
+
+    /**
+     * Registers the given extension with the Environment
+     *
+     * @param ExtensionInterface $extension
+     *
+     * @return ConfigurableEnvironmentInterface
+     */
+    public function addExtension(ExtensionInterface $extension): ConfigurableEnvironmentInterface;
 
     /**
      * Registers the given block parser with the Environment
