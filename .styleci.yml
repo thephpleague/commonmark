@@ -7,3 +7,7 @@ enabled:
 disabled:
   - concat_without_spaces
   - phpdoc_summary
+
+finder:
+  not-name:
+    - "InlinesOnlyExtension.php"
