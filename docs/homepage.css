@@ -249,13 +249,13 @@ main div > code {
     text-decoration: none;
 }
 
-@media screen and (min-width: 404px) {
+@media screen and (max-width: 549px) {
     .homepage header {
         padding:3em 0;
     }
 
     .homepage header h1 {
-        font-size:96px;
+        font-size:48px;
     }
 
     .homepage .composer span {
@@ -266,6 +266,7 @@ main div > code {
 @media screen and (min-width: 549px) {
     .homepage header h1 {
         margin:0 auto;
+        font-size:54px;
     }
 
     .inner-content {
@@ -317,5 +318,10 @@ main div > code {
         float:left;
         width:30%;
         margin:1%;
+    }
+
+    .homepage header h1 {
+        margin:0 auto;
+        font-size:96px;
     }
 }
