@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [0.19.1] - 2019-04-10
+
 ### Added
 
  - Added the missing `addExtension()` method to the new `ConfigurableEnvironmentInterface`
@@ -776,7 +778,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.19.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.19.1...HEAD
+[0.19.1]: https://github.com/thephpleague/commonmark/compare/0.19.0...0.19.1
 [0.19.0]: https://github.com/thephpleague/commonmark/compare/0.18.5...0.19.0
 [0.18.5]: https://github.com/thephpleague/commonmark/compare/0.18.4...0.18.5
 [0.18.4]: https://github.com/thephpleague/commonmark/compare/0.18.3...0.18.4
