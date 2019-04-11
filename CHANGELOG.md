@@ -4,7 +4,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
-## [0.19.0]
+## [0.19.0] - 2019-04-10
 
 ### Added
 
