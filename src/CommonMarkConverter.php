@@ -26,7 +26,7 @@ class CommonMarkConverter extends Converter
      *
      * @deprecated This will be removed in 1.0.0
      */
-    const VERSION = '0.19-dev';
+    const VERSION = '0.19.0';
 
     /**
      * Create a new commonmark converter instance.
