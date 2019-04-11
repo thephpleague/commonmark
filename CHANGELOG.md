@@ -8,6 +8,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Added the missing `addExtension()` method to the new `ConfigurableEnvironmentInterface`
 
+### Fixed
+
+ - Fixed extensions not being able to register other extensions
+
 ## [0.19.0] - 2019-04-10
 
 ### Added

@@ -33,6 +33,11 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     private $extensions = [];
 
     /**
+     * @var ExtensionInterface[]
+     */
+    private $uninitializedExtensions = [];
+
+    /**
      * @var bool
      */
     private $extensionsInitialized = false;
@@ -308,6 +313,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
         $this->assertUninitialized('Failed to add extension.');
 
         $this->extensions[] = $extension;
+        $this->uninitializedExtensions[] = $extension;
 
         return $this;
     }
@@ -320,8 +326,11 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
         }
 
         // Ask all extensions to register their components
-        foreach ($this->extensions as $extension) {
-            $extension->register($this);
+        while (!empty($this->uninitializedExtensions)) {
+            foreach ($this->uninitializedExtensions as $i => $extension) {
+                $extension->register($this);
+                unset($this->uninitializedExtensions[$i]);
+            }
         }
 
         $this->extensionsInitialized = true;
