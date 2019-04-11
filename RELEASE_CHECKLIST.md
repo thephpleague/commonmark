@@ -13,15 +13,15 @@
 
  - [ ] Update the relevant documentation in `./docs/`
  - [ ] Migrate any relevant `UPGRADE` changes into the docs
- - [ ] If releasing a new major version, clone the previous one and make the necessary changes. Don't forget to update version numbers in links and the homepage!
+ - [ ] If releasing a new major version, clone the previous one and make the necessary changes. Don't forget to update version numbers in project.yml! And update the redirects too.
  - [ ] Build and preview the docs locally
 
 ## Release
 
  - [ ] Create a new release branch.
  - [ ] Update the `CommonMarkConverter::VERSION` constant and commit just that one change to that release branch. Make sure tests still pass.
- - [ ] Create a release in Github **BASED ON THE RELEASE BRANCH, NOT MASTER!**; tag should be named `xx.yy.zz`. Copy `CHANGELOG` section into release notes.
- - [ ] Remove that release branch once tagged
- - [ ] Bump constraints in league/commonmark-extras and tag a new release
+ - [ ] Create a signed tag locally and push it up. Tag should be named `xx.yy.zz`.
+ - [ ] Go to Github and add release notes from the relevant `CHANGELOG` section.
+ - [ ] Bump constraints in league/commonmark-extras (and other official extensions) and tag a new release of them
  - [ ] ???
  - [ ] PROFIT!!
