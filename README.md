@@ -98,7 +98,7 @@ Check out the other cool things people are doing with `league/commonmark`: <http
 
 This project aims to fully support the entire [CommonMark spec]. Other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [JS reference implementation][commonmark.js] should eventually find their way back into this codebase.
 
-league/commonmark 0.15.5 and higher supports version 0.28 of the [CommonMark spec].
+league/commonmark 0.19.0 and higher supports version 0.29 of the [CommonMark spec].
 
 (This package is **not** part of CommonMark, but rather a compatible derivative.)
 

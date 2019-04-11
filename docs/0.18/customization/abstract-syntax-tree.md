@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Abstract Syntax Tree
-redirect_from: /customization/abstract-syntax-tree/
 ---
 
 Abstract Syntax Tree

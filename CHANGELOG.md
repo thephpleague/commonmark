@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [0.19.0]
+
 ### Added
 
  - The priority of parsers, processors, and renderers can now be set when `add()`ing them; you no longer need to rely on the order in which they are added
@@ -766,7 +768,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.18.5...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.19.0...HEAD
+[0.19.0]: https://github.com/thephpleague/commonmark/compare/0.18.5...0.19.0
 [0.18.5]: https://github.com/thephpleague/commonmark/compare/0.18.4...0.18.5
 [0.18.4]: https://github.com/thephpleague/commonmark/compare/0.18.3...0.18.4
 [0.18.3]: https://github.com/thephpleague/commonmark/compare/0.18.2...0.18.3

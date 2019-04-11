@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Block Rendering
+redirect_from: /customization/block-rendering/
 ---
 
 Block Rendering

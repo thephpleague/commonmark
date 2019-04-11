@@ -5,15 +5,11 @@ site_title: CommonMark for PHP
 google_analytics_tracking_id: UA-137970568-1
 repository: commonmark
 releases:
-  next:
-    version: '0.19'
-    requires: 'PHP >= 7.1'
-    latest: 'TBD'
-    documentation_link: '/0.19/'
   current:
+    version: '0.19'
+    documentation_link: '/0.19/'
+  previous:
     version: '0.18'
-    requires: 'PHP >= 5.6.5'
-    latest: '0.18.5 - 2019-03-28'
     documentation_link: '/0.18/'
 author:
     name: Colin O'Dell

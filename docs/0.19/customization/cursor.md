@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Cursor
+redirect_from: /customization/cursor/
 ---
 
 Cursor

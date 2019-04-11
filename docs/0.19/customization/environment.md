@@ -1,6 +1,7 @@
 ---
 layout: default
 title: The Environment
+redirect_from: /customization/environment/
 ---
 
 The Environment
