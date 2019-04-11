@@ -11,15 +11,14 @@
 
 namespace League\CommonMark\Ext\Autolink;
 
-use League\CommonMark\Extension\Extension;
+use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Extension\ExtensionInterface;
 
-final class AutolinkExtension extends Extension
+final class AutolinkExtension implements ExtensionInterface
 {
-    public function getDocumentProcessors()
+    public function register(ConfigurableEnvironmentInterface $environment)
     {
-        return [
-            new EmailAutolinkProcessor(),
-            new UrlAutolinkProcessor(),
-        ];
+        $environment->addDocumentProcessor(new EmailAutolinkProcessor());
+        $environment->addDocumentProcessor(new UrlAutolinkProcessor());
     }
 }

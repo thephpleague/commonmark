@@ -36,15 +36,7 @@ final class InlineMentionParser implements InlineParserInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'mention';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['@'];
     }
@@ -52,7 +44,7 @@ final class InlineMentionParser implements InlineParserInterface
     /**
      * {@inheritdoc}
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 
