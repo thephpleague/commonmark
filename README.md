@@ -105,7 +105,7 @@ league/commonmark 0.15.5 and higher supports version 0.28 of the [CommonMark spe
 ## Testing
 
 ``` bash
-$ ./vendor/bin/phpunit
+$ composer test
 ```
 
 This will also test league/commonmark against the latest supported spec.
