@@ -14,8 +14,8 @@
 
 namespace League\CommonMark\Tests\Unit\Block\Element;
 
-use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\Block\Element\ListData;
+use League\CommonMark\Block\Element\ListItem;
 use PHPUnit\Framework\TestCase;
 
 class ListItemTest extends TestCase
