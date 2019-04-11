@@ -14,21 +14,21 @@
         }
     ],
     "require": {
-        "php" : ">=5.6",
-        "league/commonmark": "^0.13|^0.14|^0.15|^0.16|^0.17|^0.18"
+        "php" : "^7.1",
+        "league/commonmark": "^0.19"
     },
     "require-dev": {
-        "jgm/smartpunct": "0.28",
-        "phpunit/phpunit": "^5.7"
+        "jgm/smartpunct": "0.29",
+        "phpunit/phpunit": "^7.5"
     },
     "repositories": [
         {
             "type": "package",
             "package": {
                 "name": "jgm/smartpunct",
-                "version": "0.28",
+                "version": "0.29",
                 "dist": {
-                    "url": "https://raw.githubusercontent.com/jgm/commonmark.js/0.28.0/test/smart_punct.txt",
+                    "url": "https://raw.githubusercontent.com/jgm/commonmark.js/0.29.0/test/smart_punct.txt",
                     "type": "file"
                 }
             }
@@ -49,7 +49,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.2-dev"
+            "dev-master": "0.3-dev"
         }
     }
 }

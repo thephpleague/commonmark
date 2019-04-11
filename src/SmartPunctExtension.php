@@ -17,51 +17,25 @@ namespace League\CommonMark\Ext\SmartPunct;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Renderer as CoreBlockRenderer;
-use League\CommonMark\Extension\Extension;
+use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Renderer as CoreInlineRenderer;
 
-class SmartPunctExtension extends Extension
+class SmartPunctExtension implements ExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineParsers()
+    public function register(ConfigurableEnvironmentInterface $environment)
     {
-        return [
-            new QuoteParser(),
-            new PunctuationParser(),
-        ];
-    }
+        $environment
+            ->addInlineParser(new QuoteParser(), 10)
+            ->addInlineParser(new PunctuationParser(), 0)
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineProcessors()
-    {
-        return [
-            new QuoteProcessor(),
-        ];
-    }
+            ->addInlineProcessor(new QuoteProcessor(), 10)
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockRenderers()
-    {
-        return [
-            Document::class  => new CoreBlockRenderer\DocumentRenderer(),
-            Paragraph::class => new CoreBlockRenderer\ParagraphRenderer(),
-        ];
-    }
+            ->addBlockRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)
+            ->addBlockRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineRenderers()
-    {
-        return [
-            Text::class => new CoreInlineRenderer\TextRenderer(),
-        ];
+            ->addInlineRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0)
+        ;
     }
 }

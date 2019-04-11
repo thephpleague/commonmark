@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v0.1.0...HEAD
+## [0.2.0] - 2019-04-10
+
+### Changed
+
+ - Made extension compatible with `league/commonmark` 0.19
 
 ## [0.1.0] - 2019-03-11
 
 Split this extension out of the old `league/commonmark-extras` library.
 
+[unreleased]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/thephpleague/commonmark-ext-smartpunct/commits/v0.1.0

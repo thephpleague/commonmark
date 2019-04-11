@@ -16,11 +16,11 @@ namespace League\CommonMark\Ext\SmartPunct;
 
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Inline\Parser\AbstractInlineParser;
+use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
-class QuoteParser extends AbstractInlineParser
+class QuoteParser implements InlineParserInterface
 {
     protected $double = ['"', '“', '”'];
     protected $single = ["'", '‘', '’'];
@@ -28,7 +28,7 @@ class QuoteParser extends AbstractInlineParser
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return array_merge($this->double, $this->single);
     }
@@ -38,7 +38,7 @@ class QuoteParser extends AbstractInlineParser
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         $character = $this->getCharacterType($cursor->getCharacter());

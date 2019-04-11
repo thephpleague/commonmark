@@ -15,15 +15,15 @@
 namespace League\CommonMark\Ext\SmartPunct;
 
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Inline\Parser\AbstractInlineParser;
+use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 
-class PunctuationParser extends AbstractInlineParser
+class PunctuationParser implements InlineParserInterface
 {
     /**
      * @return string[]
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['-', '.'];
     }
@@ -33,7 +33,7 @@ class PunctuationParser extends AbstractInlineParser
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         $ch = $cursor->getCharacter();
