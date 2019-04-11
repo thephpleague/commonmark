@@ -28,7 +28,7 @@ final class ChildRenderer implements BlockRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         $out = '';
 

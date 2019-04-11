@@ -17,80 +17,46 @@ namespace League\CommonMark\Ext\InlinesOnly;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Parser as BlockParser;
-use League\CommonMark\Extension\Extension;
+use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Element as InlineElement;
 use League\CommonMark\Inline\Parser as InlineParser;
 use League\CommonMark\Inline\Processor as InlineProcessor;
 use League\CommonMark\Inline\Renderer as InlineRenderer;
 
-final class InlinesOnlyExtension extends Extension
+final class InlinesOnlyExtension implements ExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockParsers()
+    public function register(ConfigurableEnvironmentInterface $environment)
     {
-        return [
-            new BlockParser\LazyParagraphParser(),
-        ];
-    }
+        $childRenderer = new ChildRenderer();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineParsers()
-    {
-        return [
-            new InlineParser\NewlineParser(),
-            new InlineParser\BacktickParser(),
-            new InlineParser\EscapableParser(),
-            new InlineParser\EntityParser(),
-            new InlineParser\EmphasisParser(),
-            new InlineParser\AutolinkParser(),
-            new InlineParser\HtmlInlineParser(),
-            new InlineParser\CloseBracketParser(),
-            new InlineParser\OpenBracketParser(),
-            new InlineParser\BangParser(),
-        ];
-    }
+        $environment
+            ->addBlockParser(new BlockParser\LazyParagraphParser(), -200)
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineProcessors()
-    {
-        return [
-            new InlineProcessor\EmphasisProcessor(),
-        ];
-    }
+            ->addInlineParser(new InlineParser\NewlineParser(),     200)
+            ->addInlineParser(new InlineParser\BacktickParser(),    150)
+            ->addInlineParser(new InlineParser\EscapableParser(),    80)
+            ->addInlineParser(new InlineParser\EntityParser(),       70)
+            ->addInlineParser(new InlineParser\EmphasisParser(),     60)
+            ->addInlineParser(new InlineParser\AutolinkParser(),     50)
+            ->addInlineParser(new InlineParser\HtmlInlineParser(),   40)
+            ->addInlineParser(new InlineParser\CloseBracketParser(), 30)
+            ->addInlineParser(new InlineParser\OpenBracketParser(),  20)
+            ->addInlineParser(new InlineParser\BangParser(),         10)
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockRenderers()
-    {
-        $renderer = new ChildRenderer();
+            ->addInlineProcessor(new InlineProcessor\EmphasisProcessor(), 0)
 
-        return [
-            Document::class  => $renderer,
-            Paragraph::class => $renderer,
-        ];
-    }
+            ->addBlockRenderer(Document::class, $childRenderer, 0)
+            ->addBlockRenderer(Paragraph::class, $childRenderer, 0)
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineRenderers()
-    {
-        return [
-            InlineElement\Code::class       => new InlineRenderer\CodeRenderer(),
-            InlineElement\Emphasis::class   => new InlineRenderer\EmphasisRenderer(),
-            InlineElement\HtmlInline::class => new InlineRenderer\HtmlInlineRenderer(),
-            InlineElement\Image::class      => new InlineRenderer\ImageRenderer(),
-            InlineElement\Link::class       => new InlineRenderer\LinkRenderer(),
-            InlineElement\Newline::class    => new InlineRenderer\NewlineRenderer(),
-            InlineElement\Strong::class     => new InlineRenderer\StrongRenderer(),
-            InlineElement\Text::class       => new InlineRenderer\TextRenderer(),
-        ];
+            ->addInlineRenderer(InlineElement\Code::class,       new InlineRenderer\CodeRenderer(),       0)
+            ->addInlineRenderer(InlineElement\Emphasis::class,   new InlineRenderer\EmphasisRenderer(),   0)
+            ->addInlineRenderer(InlineElement\HtmlInline::class, new InlineRenderer\HtmlInlineRenderer(), 0)
+            ->addInlineRenderer(InlineElement\Image::class,      new InlineRenderer\ImageRenderer(),      0)
+            ->addInlineRenderer(InlineElement\Link::class,       new InlineRenderer\LinkRenderer(),       0)
+            ->addInlineRenderer(InlineElement\Newline::class,    new InlineRenderer\NewlineRenderer(),    0)
+            ->addInlineRenderer(InlineElement\Strong::class,     new InlineRenderer\StrongRenderer(),     0)
+            ->addInlineRenderer(InlineElement\Text::class,       new InlineRenderer\TextRenderer(),       0)
+        ;
     }
 }
