@@ -1,4 +1,26 @@
 version:
+    '0.20':
+        Getting Started:
+            'Overview': '/0.20/'
+            'Installation': '/0.20/installation/'
+            'Upgrading from 0.19': '/0.20/upgrading/'
+            'Changelog': '/0.20/changelog/'
+        Usage:
+            'Basic Usage': '/0.20/basic-usage/'
+            'Configuration': '/0.20/configuration/'
+            'Security': '/0.20/security/'
+            'Command Line': '/0.20/command-line/'
+        Customization:
+            'Overview': '/0.20/customization/overview/'
+            'Environment': '/0.20/customization/environment/'
+            'Extensions': '/0.20/customization/extensions/'
+            'Cursor': '/0.20/customization/cursor/'
+            'Block parsing': '/0.20/customization/block-parsing/'
+            'Inline parsing': '/0.20/customization/inline-parsing/'
+            'Abstract Syntax Tree': '/0.20/customization/abstract-syntax-tree/'
+            'Document Processing': '/0.20/customization/document-processing/'
+            'Block rendering': '/0.20/customization/block-rendering/'
+            'Inline rendering': '/0.20/customization/inline-rendering/'
     '0.19':
         Getting Started:
             'Overview': '/0.19/'
