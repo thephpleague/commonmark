@@ -28,11 +28,6 @@ final class StrikethroughRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        $attrs = [];
-        foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
-        }
-
-        return new HtmlElement('del', $attrs, Xml::escape($inline->getContent()));
+        return new HtmlElement('del', $inline->getData('attributes', []), Xml::escape($inline->getContent()));
     }
 }

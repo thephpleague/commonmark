@@ -15,8 +15,9 @@ use League\CommonMark\Ext\Strikethrough\StrikethroughExtension;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
+use PHPUnit\Framework\TestCase;
 
-class IntegrationTest extends \PHPUnit_Framework_TestCase
+class IntegrationTest extends TestCase
 {
     /**
      * @param string $string

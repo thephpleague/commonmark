@@ -11,13 +11,14 @@
 
 namespace League\CommonMark\Ext\Strikethrough\Test;
 
-use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Ext\Strikethrough\Strikethrough;
 use League\CommonMark\Ext\Strikethrough\StrikethroughParser;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Reference\ReferenceMap;
+use PHPUnit\Framework\TestCase;
 
-class StrikethroughParserTest extends \PHPUnit_Framework_TestCase
+class StrikethroughParserTest extends TestCase
 {
     /**
      * @param $string
@@ -27,7 +28,7 @@ class StrikethroughParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParse($string, $expected)
     {
-        $nodeStub = $this->createMock(AbstractBlock::class);
+        $nodeStub = $this->createMock(Paragraph::class);
         $nodeStub->expects($this->any())->method('getStringContent')->willReturn($string);
         $nodeStub
             ->expects($this->once())

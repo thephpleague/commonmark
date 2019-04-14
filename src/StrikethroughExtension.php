@@ -11,39 +11,15 @@
 
 namespace League\CommonMark\Ext\Strikethrough;
 
-use League\CommonMark\Extension\Extension;
-use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\Inline\Processor\InlineProcessorInterface;
-use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Extension\ExtensionInterface;
 
-final class StrikethroughExtension extends Extension
+final class StrikethroughExtension implements ExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'strikethrough';
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineParsers()
+    public function register(ConfigurableEnvironmentInterface $environment)
     {
-        return [
-            new StrikethroughParser(),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineRenderers()
-    {
-        return [
-            Strikethrough::class => new StrikethroughRenderer(),
-        ];
+        $environment->addInlineParser(new StrikethroughParser());
+        $environment->addInlineRenderer(Strikethrough::class, new StrikethroughRenderer());
     }
 }
-

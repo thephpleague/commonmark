@@ -12,15 +12,15 @@
 namespace League\CommonMark\Ext\Strikethrough;
 
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Inline\Parser\AbstractInlineParser;
+use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 
-final class StrikethroughParser extends AbstractInlineParser
+final class StrikethroughParser implements InlineParserInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['~'];
     }
@@ -28,7 +28,7 @@ final class StrikethroughParser extends AbstractInlineParser
     /**
      * {@inheritdoc}
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         $character = $cursor->getCharacter();
