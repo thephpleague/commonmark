@@ -13,8 +13,8 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
 interface EnvironmentInterface
@@ -44,9 +44,9 @@ interface EnvironmentInterface
     public function getInlineParsersForCharacter(string $character): iterable;
 
     /**
-     * @return iterable<InlineProcessorInterface>
+     * @return DelimiterProcessorCollection
      */
-    public function getInlineProcessors(): iterable;
+    public function getDelimiterProcessors(): DelimiterProcessorCollection;
 
     /**
      * @return iterable<DocumentProcessorInterface>

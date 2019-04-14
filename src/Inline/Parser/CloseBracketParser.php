@@ -16,9 +16,9 @@ namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\Cursor;
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Delimiter\DelimiterStack;
 use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\EnvironmentInterface;
+use League\CommonMark\Inline\AdjacentTextMerger;
 use League\CommonMark\Inline\Element\AbstractWebResource;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
@@ -87,14 +87,14 @@ class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInter
             $inline->appendChild($label);
         }
 
+        // Process delimiters such as emphasis inside link/image
         $delimiterStack = $inlineContext->getDelimiterStack();
         $stackBottom = $opener->getPrevious();
-        foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($delimiterStack, $stackBottom);
-        }
-        if ($delimiterStack instanceof DelimiterStack) {
-            $delimiterStack->removeAll($stackBottom);
-        }
+        $delimiterStack->processDelimiters($stackBottom, $this->environment->getDelimiterProcessors());
+        $delimiterStack->removeAll($stackBottom);
+
+        // Merge any adjacent Text nodes together
+        AdjacentTextMerger::mergeChildNodes($inline);
 
         // processEmphasis will remove this and later delimiters.
         // Now, for a link, we also remove earlier link openers (no links in links)

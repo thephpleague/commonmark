@@ -17,12 +17,12 @@ namespace League\CommonMark\Tests\Unit;
 use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\DocumentProcessorInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use PHPUnit\Framework\TestCase;
@@ -59,7 +59,6 @@ class EnvironmentTest extends TestCase
 
         // Trigger initialization
         $environment->getBlockParsers();
-        $environment->getInlineProcessors();
     }
 
     public function testConstructor()
@@ -235,28 +234,29 @@ class EnvironmentTest extends TestCase
         $this->assertEmpty($environment->getInlineParsersForCharacter('a'));
     }
 
-    public function testAddInlineProcessor()
+    public function testAddDelimiterProcessor()
     {
         $environment = new Environment();
 
-        $processor = $this->createMock(InlineProcessorInterface::class);
-        $environment->addInlineProcessor($processor);
+        $processor = $this->createMock(DelimiterProcessorInterface::class);
+        $processor->method('getCharacter')->willReturn('*');
+        $environment->addDelimiterProcessor($processor);
 
-        $this->assertContains($processor, $environment->getInlineProcessors());
+        $this->assertSame($processor, $environment->getDelimiterProcessors()->getDelimiterProcessor('*'));
     }
 
     /**
      * @expectedException \RuntimeException
      */
-    public function testAddInlineProcessorFailsAfterInitialization()
+    public function testAddDelimiterProcessorFailsAfterInitialization()
     {
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getInlineProcessors();
+        $environment->getDelimiterProcessors();
 
-        $processor = $this->createMock(InlineProcessorInterface::class);
-        $environment->addInlineProcessor($processor);
+        $processor = $this->createMock(DelimiterProcessorInterface::class);
+        $environment->addDelimiterProcessor($processor);
     }
 
     public function testAddInlineRenderer()
@@ -417,25 +417,6 @@ class EnvironmentTest extends TestCase
         $this->assertSame($parser2, $parsers[0]);
         $this->assertSame($parser1, $parsers[1]);
         $this->assertSame($parser3, $parsers[2]);
-    }
-
-    public function testInlineProcessorPrioritization()
-    {
-        $environment = new Environment();
-
-        $processor1 = $this->createMock(InlineProcessorInterface::class);
-        $processor2 = $this->createMock(InlineProcessorInterface::class);
-        $processor3 = $this->createMock(InlineProcessorInterface::class);
-
-        $environment->addInlineProcessor($processor1);
-        $environment->addInlineProcessor($processor2, 50);
-        $environment->addInlineProcessor($processor3);
-
-        $parsers = iterator_to_array($environment->getInlineProcessors());
-
-        $this->assertSame($processor2, $parsers[0]);
-        $this->assertSame($processor1, $parsers[1]);
-        $this->assertSame($processor3, $parsers[2]);
     }
 
     public function testDocumentProcessorPrioritization()

@@ -14,12 +14,12 @@
 
 namespace League\CommonMark;
 
-use League\CommonMark\Inline\AdjoiningTextCollapser;
+use League\CommonMark\Inline\AdjacentTextMerger;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\ReferenceMap;
 
-class InlineParserEngine
+final class InlineParserEngine
 {
     protected $environment;
 
@@ -43,7 +43,7 @@ class InlineParserEngine
 
         $this->processInlines($inlineParserContext);
 
-        AdjoiningTextCollapser::collapseTextNodes($container);
+        AdjacentTextMerger::mergeChildNodes($container);
     }
 
     /**
@@ -52,7 +52,7 @@ class InlineParserEngine
      *
      * @return bool Whether we successfully parsed a character at that position
      */
-    protected function parseCharacter(string $character, InlineParserContext $inlineParserContext): bool
+    private function parseCharacter(string $character, InlineParserContext $inlineParserContext): bool
     {
         foreach ($this->environment->getInlineParsersForCharacter($character) as $parser) {
             if ($parser->parse($inlineParserContext)) {
@@ -66,13 +66,10 @@ class InlineParserEngine
     /**
      * @param InlineParserContext $inlineParserContext
      */
-    protected function processInlines(InlineParserContext $inlineParserContext)
+    private function processInlines(InlineParserContext $inlineParserContext)
     {
         $delimiterStack = $inlineParserContext->getDelimiterStack();
-
-        foreach ($this->environment->getInlineProcessors() as $inlineProcessor) {
-            $inlineProcessor->processInlines($delimiterStack);
-        }
+        $delimiterStack->processDelimiters(null, $this->environment->getDelimiterProcessors());
 
         // Remove all delimiters
         $delimiterStack->removeAll();

@@ -4,6 +4,31 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added support for custom delimiters
+   - `addDelimiterProcessor()` added to `ConfigurableEnvironmentInterface` and `Environment`
+ - Added `AdjacentTextMerger::mergeTextNodesBetweenExclusive()`
+
+### Changed
+
+ - Renamed the `AdjoiningTextCollapser` class to `AdjacentTextMerger`
+   - Replaced its `collapseTextNodes()` method with the new `mergeChildNodes()` method
+ - `DelimiterStack::findEarliest()` changed from `public` to `private`
+ - Changed `InlineParserEngine` to be `final` and changed its `protected` methods to `private`
+
+### Removed
+
+ - Removed inline processor functionality now that we have proper delimiter support:
+   - Removed `addInlineProcessor()` from `ConfigurableEnvironmentInterface` and `Environment`
+   - Removed `getInlineProcessors()` from `EnvironmentInterface` and `Environment`
+   - Removed `EmphasisProcessor`
+   - Removed `InlineProcessorInterface`
+ - Removed now-unused methods
+   - Removed `DelimiterStack::getTop()` (no replacement)
+   - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
+   - Removed the protected `DelimiterStack::findMatchingOpener()` method
+
 ## [0.19.1] - 2019-04-10
 
 ### Added
