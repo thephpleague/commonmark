@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [0.4.0] - 2019-04-09
+
 We split this extension out of the old `uafrica/commonmark-ext` library for this release.
 
 ### Changed
@@ -31,6 +33,7 @@ These older releases come from the original `uafrica/commonmark-ext` library.
 
  - Updated to `league/commonmark` v0.17
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-strikethrough/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark-ext-strikethrough/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/thephpleague/commonmark-ext-strikethrough/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/thephpleague/commonmark-ext-strikethrough/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/thephpleague/commonmark-ext-strikethrough/compare/v0.1.1...v0.2.0
