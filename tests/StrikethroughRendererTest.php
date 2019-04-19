@@ -14,6 +14,7 @@ namespace League\CommonMark\Ext\Strikethrough\Test;
 use League\CommonMark\Ext\Strikethrough\Strikethrough;
 use League\CommonMark\Ext\Strikethrough\StrikethroughRenderer;
 use League\CommonMark\HtmlElement;
+use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Renderer\CodeRenderer;
 use PHPUnit\Framework\TestCase;
 
@@ -41,5 +42,16 @@ class StrikethroughRendererTest extends TestCase
         $this->assertEquals('del', $result->getTagName());
         $this->assertContains('reviewed text', $result->getContents(true));
         $this->assertEquals(['id' => 'some"&amp;id'], $result->getAllAttributes());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testRenderWithInvalidNodeType()
+    {
+        $inline = new Text('ruh roh');
+        $fakeRenderer = new FakeHtmlRenderer();
+
+        $this->renderer->render($inline, $fakeRenderer);
     }
 }
