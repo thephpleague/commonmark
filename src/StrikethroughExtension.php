@@ -16,7 +16,6 @@ use League\CommonMark\Extension\ExtensionInterface;
 
 final class StrikethroughExtension implements ExtensionInterface
 {
-
     public function register(ConfigurableEnvironmentInterface $environment)
     {
         $environment->addInlineParser(new StrikethroughParser());
