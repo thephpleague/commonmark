@@ -44,9 +44,10 @@ final class StrikethroughParser implements InlineParserInterface
         $previous_state = $cursor->saveState();
         while ($matching_tildes = $cursor->match('/~~+/m')) {
             if ($matching_tildes === $tildes) {
-                $text = mb_substr( $cursor->getPreviousText(), 0, -mb_strlen($tildes) );
+                $text = mb_substr($cursor->getPreviousText(), 0, -mb_strlen($tildes));
                 $text = preg_replace('/[ \n]+/', ' ', $text);
                 $inlineContext->getContainer()->appendChild(new Strikethrough(trim($text)));
+
                 return true;
             }
         }

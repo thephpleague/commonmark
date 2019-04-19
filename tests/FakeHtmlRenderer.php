@@ -20,7 +20,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
     protected $options;
 
     /**
-     * @param string $option
+     * @param string     $option
      * @param mixed|null $value
      */
     public function setOption($option, $value)
@@ -29,7 +29,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
     }
 
     /**
-     * @param string $option
+     * @param string     $option
      * @param mixed|null $default
      *
      * @return mixed|null
@@ -45,7 +45,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
 
     /**
      * @param string $string
-     * @param bool $preserveEntities
+     * @param bool   $preserveEntities
      *
      * @return string
      */
@@ -66,7 +66,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
 
     /**
      * @param AbstractBlock $block
-     * @param bool $inTightList
+     * @param bool          $inTightList
      *
      * @throws \RuntimeException
      *
@@ -79,7 +79,7 @@ class FakeHtmlRenderer implements ElementRendererInterface
 
     /**
      * @param AbstractBlock[] $blocks
-     * @param bool $inTightList
+     * @param bool            $inTightList
      *
      * @return string
      */

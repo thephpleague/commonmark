@@ -11,9 +11,9 @@
 
 namespace League\CommonMark\Ext\Strikethrough\Test\StrikethroughTests;
 
-use League\CommonMark\Ext\Strikethrough\StrikethroughExtension;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
+use League\CommonMark\Ext\Strikethrough\StrikethroughExtension;
 use League\CommonMark\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
