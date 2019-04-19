@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
-Split this extension out of the old `uafrica/commonmark-ext` library.
+We split this extension out of the old `uafrica/commonmark-ext` library for this release.
+
+### Changed
+
+ - Changed the project name and namespace
+ - Updated to `league/commonmark` v0.19
+ - Made most of the classes `final`
+
+# Older Releases
+
+These older releases come from the original `uafrica/commonmark-ext` library.
 
 ## [0.3.0] - 2019-01-08
 
