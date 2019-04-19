@@ -33,6 +33,9 @@
             "League\\CommonMark\\Ext\\Strikethrough\\Test\\": "tests/"
         }
     },
+    "replace": {
+        "uafrica/commonmark-ext": ">=0.1.1"
+    },
     "scripts": {
         "test": "phpunit"
     },
