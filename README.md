@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-This extension adds strikethrough Markdown support for the (`league/commonmark`)[link-league-commonmark] Markdown parsing engine, which itself is based on the CommonMark spec.
+This extension adds strikethrough Markdown support for the [league/commonmark](link-league-commonmark) PHP Markdown parsing engine, which itself is based on the CommonMark spec.
 
 It allows users to use `~~` in order to indicate text that should be rendered within `<del>` tags.
 
