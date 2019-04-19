@@ -1,0 +1,13 @@
+preset: recommended
+
+enabled:
+  - concat_with_spaces
+  - strict
+
+disabled:
+  - concat_without_spaces
+  - phpdoc_summary
+
+finder:
+  not-name:
+    - "SmartPunctExtension.php"
