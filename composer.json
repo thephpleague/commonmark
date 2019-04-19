@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
+        "ext-mbstring": "*",
         "league/commonmark": "^0.19"
     },
     "require-dev": {
