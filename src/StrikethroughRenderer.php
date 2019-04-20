@@ -15,7 +15,6 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
-use League\CommonMark\Util\Xml;
 
 final class StrikethroughRenderer implements InlineRendererInterface
 {
@@ -28,6 +27,6 @@ final class StrikethroughRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        return new HtmlElement('del', $inline->getData('attributes', []), Xml::escape($inline->getContent()));
+        return new HtmlElement('del', $inline->getData('attributes', []), $htmlRenderer->renderInlines($inline->children()));
     }
 }

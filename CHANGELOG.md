@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Updated to the next version of `league/commonmark`
+ - Refactored pretty much everything to use the new delimiter processing functionality
+ - The `Strikethrough` node now extends from `AbstractInline`
+
+### Removed
+ - Removed `StrikethroughParser` as we're now leveraging delimiter processors and no longer need a dedicated parser
+
 ## [0.4.0] - 2019-04-09
 
 We split this extension out of the old `uafrica/commonmark-ext` library for this release.

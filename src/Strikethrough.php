@@ -11,8 +11,15 @@
 
 namespace League\CommonMark\Ext\Strikethrough;
 
-use League\CommonMark\Inline\Element\AbstractStringContainer;
+use League\CommonMark\Inline\Element\AbstractInline;
 
-class Strikethrough extends AbstractStringContainer
+class Strikethrough extends AbstractInline
 {
+    /**
+     * @return bool
+     */
+    public function isContainer(): bool
+    {
+        return true;
+    }
 }

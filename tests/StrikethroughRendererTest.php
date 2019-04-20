@@ -32,7 +32,7 @@ class StrikethroughRendererTest extends TestCase
 
     public function testRender()
     {
-        $inline = new Strikethrough('reviewed text');
+        $inline = new Strikethrough();
         $inline->data['attributes'] = ['id' => 'some"&amp;id'];
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -40,7 +40,7 @@ class StrikethroughRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('del', $result->getTagName());
-        $this->assertContains('reviewed text', $result->getContents(true));
+        $this->assertContains('::inlines::', $result->getContents(true));
         $this->assertEquals(['id' => 'some"&amp;id'], $result->getAllAttributes());
     }
 
