@@ -13,9 +13,9 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
 /**
@@ -63,14 +63,13 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
     public function addInlineParser(InlineParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface;
 
     /**
-     * Registers the given inline processor with the Environment
+     * Registers the given delimiter processor with the Environment
      *
-     * @param InlineProcessorInterface $processor Inline processor instance
-     * @param int                      $priority  Priority (a higher number will be executed earlier)
+     * @param DelimiterProcessorInterface $processor Delimiter processors instance
      *
-     * @return self
+     * @return ConfigurableEnvironmentInterface
      */
-    public function addInlineProcessor(InlineProcessorInterface $processor, int $priority = 0): ConfigurableEnvironmentInterface;
+    public function addDelimiterProcessor(DelimiterProcessorInterface $processor): ConfigurableEnvironmentInterface;
 
     /**
      * Registers the given document processor with the Environment

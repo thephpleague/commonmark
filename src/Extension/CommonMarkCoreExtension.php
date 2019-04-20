@@ -18,9 +18,9 @@ use League\CommonMark\Block\Element as BlockElement;
 use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Renderer as BlockRenderer;
 use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor;
 use League\CommonMark\Inline\Element as InlineElement;
 use League\CommonMark\Inline\Parser as InlineParser;
-use League\CommonMark\Inline\Processor as InlineProcessor;
 use League\CommonMark\Inline\Renderer as InlineRenderer;
 
 final class CommonMarkCoreExtension implements ExtensionInterface
@@ -49,7 +49,8 @@ final class CommonMarkCoreExtension implements ExtensionInterface
             ->addInlineParser(new InlineParser\OpenBracketParser(),  20)
             ->addInlineParser(new InlineParser\BangParser(),         10)
 
-            ->addInlineProcessor(new InlineProcessor\EmphasisProcessor(), 0)
+            ->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'))
+            ->addDelimiterProcessor(new EmphasisDelimiterProcessor('_'))
 
             ->addBlockRenderer(BlockElement\BlockQuote::class,    new BlockRenderer\BlockQuoteRenderer(),    0)
             ->addBlockRenderer(BlockElement\Document::class,      new BlockRenderer\DocumentRenderer(),      0)

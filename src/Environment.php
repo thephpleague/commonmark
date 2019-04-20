@@ -16,10 +16,11 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
+use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Extension\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
@@ -63,9 +64,9 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     private $documentProcessors;
 
     /**
-     * @var PrioritizedList<InlineProcessorInterface>
+     * @var DelimiterProcessorCollection
      */
-    private $inlineProcessors;
+    private $delimiterProcessors;
 
     /**
      * @var array<string, PrioritizedList<BlockRendererInterface>>
@@ -94,7 +95,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
         $this->blockParsers = new PrioritizedList();
         $this->inlineParsers = new PrioritizedList();
         $this->documentProcessors = new PrioritizedList();
-        $this->inlineProcessors = new PrioritizedList();
+        $this->delimiterProcessors = new DelimiterProcessorCollection();
     }
 
     /**
@@ -162,11 +163,10 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addInlineProcessor(InlineProcessorInterface $processor, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addDelimiterProcessor(DelimiterProcessorInterface $processor): ConfigurableEnvironmentInterface
     {
-        $this->assertUninitialized('Failed to add inline processor.');
-
-        $this->inlineProcessors->add($processor, $priority);
+        $this->assertUninitialized('Failed to add delimiter processor.');
+        $this->delimiterProcessors->add($processor);
         $this->injectEnvironmentAndConfigurationIfNeeded($processor);
 
         return $this;
@@ -246,11 +246,11 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function getInlineProcessors(): iterable
+    public function getDelimiterProcessors(): DelimiterProcessorCollection
     {
         $this->initializeExtensions();
 
-        return $this->inlineProcessors->getIterator();
+        return $this->delimiterProcessors;
     }
 
     /**
