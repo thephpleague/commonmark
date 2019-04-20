@@ -19,6 +19,9 @@ use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\ReferenceMap;
 
+/**
+ * @internal
+ */
 final class InlineParserEngine
 {
     protected $environment;

@@ -16,6 +16,9 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 
+/**
+ * @internal
+ */
 class UnmatchedBlockCloser
 {
     /**
