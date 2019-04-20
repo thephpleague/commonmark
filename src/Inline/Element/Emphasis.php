@@ -17,7 +17,7 @@ namespace League\CommonMark\Inline\Element;
 class Emphasis extends AbstractInline
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isContainer(): bool
     {

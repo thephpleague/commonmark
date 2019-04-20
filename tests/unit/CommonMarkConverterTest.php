@@ -4,10 +4,7 @@ namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\ConfigurableEnvironmentInterface;
-use League\CommonMark\Converter;
-use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
-use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMarkCoreExtension;
 use PHPUnit\Framework\TestCase;
 
