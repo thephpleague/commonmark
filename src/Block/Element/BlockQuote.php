@@ -16,6 +16,9 @@ namespace League\CommonMark\Block\Element;
 
 use League\CommonMark\Cursor;
 
+/**
+ * @method children() AbstractBlock[]
+ */
 class BlockQuote extends AbstractBlock
 {
     /**

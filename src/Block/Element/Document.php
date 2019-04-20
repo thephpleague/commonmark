@@ -17,6 +17,9 @@ namespace League\CommonMark\Block\Element;
 use League\CommonMark\Cursor;
 use League\CommonMark\Reference\ReferenceMap;
 
+/**
+ * @method children() AbstractBlock[]
+ */
 class Document extends AbstractBlock
 {
     /***

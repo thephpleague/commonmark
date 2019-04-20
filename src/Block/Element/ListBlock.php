@@ -17,6 +17,9 @@ namespace League\CommonMark\Block\Element;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
+/**
+ * @method children() AbstractBlock[]
+ */
 class ListBlock extends AbstractBlock
 {
     const TYPE_UNORDERED = 'Bullet';
