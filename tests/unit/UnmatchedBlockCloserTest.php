@@ -33,7 +33,6 @@ class UnmatchedBlockCloserTest extends TestCase
         $closer->setLastMatchedContainer($tip);
         $closer->resetTip();
 
-
         $this->assertTrue($closer->areAllClosed());
     }
 
