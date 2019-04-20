@@ -21,6 +21,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Un-deprecated the `CommonmarkConverter::VERSION` constant
  - The `Converter` constructor now requires an instance of `DocParserInterface` instead of the concrete `DocParser`
 
+### Deprecated
+
+ - Deprecated `DocParser::getEnvironment()` (you should obtain it some other way)
+
 ### Removed
 
  - Removed inline processor functionality now that we have proper delimiter support:

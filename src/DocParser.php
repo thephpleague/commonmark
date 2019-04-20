@@ -49,9 +49,13 @@ class DocParser implements DocParserInterface
 
     /**
      * @return EnvironmentInterface
+     *
+     * @deprecated
      */
     public function getEnvironment(): EnvironmentInterface
     {
+        @trigger_error('DocParser::getEnvironment() has been deprecated and will be removed in a future release.', E_USER_DEPRECATED);
+
         return $this->environment;
     }
 
@@ -81,7 +85,7 @@ class DocParser implements DocParserInterface
      */
     public function parse(string $input): Document
     {
-        $context = new Context(new Document(), $this->getEnvironment());
+        $context = new Context(new Document(), $this->environment);
         $context->setEncoding(\mb_detect_encoding($input, 'ASCII,UTF-8', true) ?: 'ISO-8859-1');
 
         $lines = $this->preProcessInput($input);
@@ -141,7 +145,7 @@ class DocParser implements DocParserInterface
 
     private function processDocument(ContextInterface $context)
     {
-        foreach ($this->getEnvironment()->getDocumentProcessors() as $documentProcessor) {
+        foreach ($this->environment->getDocumentProcessors() as $documentProcessor) {
             $documentProcessor->processDocument($context->getDocument());
         }
     }
