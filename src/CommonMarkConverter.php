@@ -26,6 +26,9 @@ class CommonMarkConverter extends Converter
      */
     const VERSION = '0.19-dev';
 
+    /** @var EnvironmentInterface */
+    protected $environment;
+
     /**
      * Create a new commonmark converter instance.
      *
@@ -42,6 +45,16 @@ class CommonMarkConverter extends Converter
             $environment->mergeConfig($config);
         }
 
+        $this->environment = $environment;
+
         parent::__construct(new DocParser($environment), new HtmlRenderer($environment));
+    }
+
+    /**
+     * @return EnvironmentInterface
+     */
+    public function getEnvironment(): EnvironmentInterface
+    {
+        return $this->environment;
     }
 }

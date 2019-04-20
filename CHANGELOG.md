@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added support for custom delimiters
    - `addDelimiterProcessor()` added to `ConfigurableEnvironmentInterface` and `Environment`
  - Added `AdjacentTextMerger::mergeTextNodesBetweenExclusive()`
+ - Added `CommonMarkConveter::getEnvironment()`
  - Extracted a new `DocParserInterface` from the `DocParser`
 
 ### Changed

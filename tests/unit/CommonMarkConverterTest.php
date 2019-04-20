@@ -18,7 +18,7 @@ class CommonMarkConverterTest extends TestCase
         $converter = new CommonMarkConverter();
         $expectedEnvironment = Environment::createCommonMarkEnvironment();
 
-        $environment = $this->getEnvironmentFromConverter($converter);
+        $environment = $converter->getEnvironment();
 
         $this->assertCount(1, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
@@ -30,7 +30,7 @@ class CommonMarkConverterTest extends TestCase
         $config = ['foo' => 'bar'];
         $converter = new CommonMarkConverter($config);
 
-        $environment = $this->getEnvironmentFromConverter($converter);
+        $environment = $converter->getEnvironment();
 
         $this->assertCount(1, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
@@ -47,21 +47,8 @@ class CommonMarkConverterTest extends TestCase
 
         $converter = new CommonMarkConverter($config, $mockEnvironment);
 
-        $environment = $this->getEnvironmentFromConverter($converter);
+        $environment = $converter->getEnvironment();
 
         $this->assertSame($mockEnvironment, $environment);
-    }
-
-    /**
-     * @param Converter $converter
-     *
-     * @return EnvironmentInterface
-     */
-    private function getEnvironmentFromConverter(Converter $converter)
-    {
-        /** @var DocParser $docParser */
-        $docParser = $this->readAttribute($converter, 'docParser');
-
-        return $docParser->getEnvironment();
     }
 }
