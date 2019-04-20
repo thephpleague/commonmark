@@ -20,12 +20,12 @@ use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Element\StringContainerInterface;
 
-class DocParser implements DocParserInterface
+final class DocParser implements DocParserInterface
 {
     /**
      * @var EnvironmentInterface
      */
-    protected $environment;
+    private $environment;
 
     /**
      * @var InlineParserEngine
