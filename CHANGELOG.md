@@ -26,6 +26,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Fixed
 
  - Fixed null errors when inserting sibling `Node`s without parents
+ - Fixed `NodeWalkerEvent` not requiring a `Node` via its constructor
 
 ### Deprecated
 
