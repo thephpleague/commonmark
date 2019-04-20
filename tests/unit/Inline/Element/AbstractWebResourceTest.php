@@ -39,4 +39,14 @@ class AbstractWebResourceTest extends TestCase
 
         $this->assertEquals($url2, $element->getUrl());
     }
+
+    public function testIsContainer()
+    {
+        /** @var AbstractWebResource $element */
+        $element = $this->getMockBuilder(AbstractWebResource::class)
+            ->setConstructorArgs(['https://www.example.com'])
+            ->getMockForAbstractClass();
+
+        $this->assertTrue($element->isContainer());
+    }
 }
