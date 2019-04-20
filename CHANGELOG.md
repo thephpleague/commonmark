@@ -17,6 +17,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - `DelimiterStack::findEarliest()` changed from `public` to `private`
  - Changed `InlineParserEngine` to be `final` and changed its `protected` methods to `private`
  - Exposed `EmphasisParser::determineCanOpenOrClose()` as a `public static` method (used to be `private`)
+ - Un-deprecated the `CommonmarkConverter::VERSION` constant
 
 ### Removed
 
