@@ -1,5 +1,7 @@
 parameters:
-  level: 5
+  level: 6
   paths:
     - src
-
+  ignoreErrors:
+    - "#should return string but returns League\\CommonMark\\HtmlElement|string#"
+    - "#expects int, float|int given#"
