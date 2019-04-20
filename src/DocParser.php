@@ -15,8 +15,8 @@
 namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\AbstractStringContainerBlock;
 use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Element\StringContainerInterface;
 
@@ -160,7 +160,7 @@ final class DocParser implements DocParserInterface
             }
 
             $node = $event->getNode();
-            if ($node instanceof InlineContainerInterface) {
+            if ($node instanceof AbstractStringContainerBlock) {
                 $this->inlineParserEngine->parse($node, $context->getDocument()->getReferenceMap());
             }
         }
