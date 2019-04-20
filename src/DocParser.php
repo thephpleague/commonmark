@@ -20,7 +20,7 @@ use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Element\StringContainerInterface;
 
-class DocParser
+class DocParser implements DocParserInterface
 {
     /**
      * @var EnvironmentInterface
