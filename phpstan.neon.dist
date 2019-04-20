@@ -1,7 +1,9 @@
 parameters:
-  level: 6
+  level: 7
   paths:
     - src
   ignoreErrors:
     - "#should return string but returns League\\CommonMark\\HtmlElement|string#"
     - "#expects int, float|int given#"
+    - path: src/Delimiter/DelimiterStack.php
+      message: "#Cannot call method .+ on League\\CommonMark\\Delimiter\\Delimiter|null#"

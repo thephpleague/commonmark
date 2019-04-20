@@ -68,6 +68,10 @@ class UnmatchedBlockCloser
 
     public function resetTip()
     {
+        if ($this->context->getTip() === null) {
+            throw new \RuntimeException('No tip to reset to');
+        }
+
         $this->oldTip = $this->context->getTip();
     }
 

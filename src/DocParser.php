@@ -212,7 +212,7 @@ final class DocParser implements DocParserInterface
                 }
             }
 
-            if (!$parsed || $context->getContainer() instanceof StringContainerInterface || $context->getTip()->getDepth() >= $this->maxNestingLevel) {
+            if (!$parsed || $context->getContainer() instanceof StringContainerInterface || (($tip = $context->getTip()) && $tip->getDepth() >= $this->maxNestingLevel)) {
                 $context->setBlocksParsed(true);
                 break;
             }
