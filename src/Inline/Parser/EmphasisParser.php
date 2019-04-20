@@ -102,7 +102,7 @@ class EmphasisParser implements InlineParserInterface, EnvironmentAwareInterface
             $charAfter = "\n";
         }
 
-        list($canOpen, $canClose) = $this->determineCanOpenOrClose($charBefore, $charAfter, $character);
+        list($canOpen, $canClose) = self::determineCanOpenOrClose($charBefore, $charAfter, $character);
 
         $node = new Text($cursor->getPreviousText(), [
             'delim'           => true,
@@ -124,7 +124,7 @@ class EmphasisParser implements InlineParserInterface, EnvironmentAwareInterface
      *
      * @return bool[]
      */
-    private function determineCanOpenOrClose(string $charBefore, string $charAfter, string $character)
+    public static function determineCanOpenOrClose(string $charBefore, string $charAfter, string $character)
     {
         $afterIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
         $afterIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);

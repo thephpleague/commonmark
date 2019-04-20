@@ -16,6 +16,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - Replaced its `collapseTextNodes()` method with the new `mergeChildNodes()` method
  - `DelimiterStack::findEarliest()` changed from `public` to `private`
  - Changed `InlineParserEngine` to be `final` and changed its `protected` methods to `private`
+ - Exposed `EmphasisParser::determineCanOpenOrClose()` as a `public static` method (used to be `private`)
 
 ### Removed
 
