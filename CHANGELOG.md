@@ -23,6 +23,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Un-deprecated the `CommonmarkConverter::VERSION` constant
  - The `Converter` constructor now requires an instance of `DocParserInterface` instead of the concrete `DocParser`
 
+### Fixed
+
+ - Fixed null errors when inserting sibling `Node`s without parents
+
 ### Deprecated
 
  - Deprecated `DocParser::getEnvironment()` (you should obtain it some other way)
