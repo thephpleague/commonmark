@@ -26,6 +26,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Deprecated
 
  - Deprecated `DocParser::getEnvironment()` (you should obtain it some other way)
+ - Deprecated `AbstractInlineContainer` (use `AbstractInline` instead and make `isContainer()` return `true`)
 
 ### Removed
 
