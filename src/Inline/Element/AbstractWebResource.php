@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Inline\Element;
 
-abstract class AbstractWebResource extends AbstractInlineContainer
+abstract class AbstractWebResource extends AbstractInline
 {
     /**
      * @var string
@@ -44,5 +44,13 @@ abstract class AbstractWebResource extends AbstractInlineContainer
         $this->url = $url;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isContainer(): bool
+    {
+        return true;
     }
 }

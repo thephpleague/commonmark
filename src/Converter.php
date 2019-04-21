@@ -22,7 +22,7 @@ class Converter implements ConverterInterface
     /**
      * The document parser instance.
      *
-     * @var \League\CommonMark\DocParser
+     * @var \League\CommonMark\DocParserInterface
      */
     protected $docParser;
 
@@ -36,10 +36,10 @@ class Converter implements ConverterInterface
     /**
      * Create a new commonmark converter instance.
      *
-     * @param DocParser                $docParser
+     * @param DocParserInterface       $docParser
      * @param ElementRendererInterface $htmlRenderer
      */
-    public function __construct(DocParser $docParser, ElementRendererInterface $htmlRenderer)
+    public function __construct(DocParserInterface $docParser, ElementRendererInterface $htmlRenderer)
     {
         $this->docParser = $docParser;
         $this->htmlRenderer = $htmlRenderer;

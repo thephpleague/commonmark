@@ -85,7 +85,7 @@ abstract class Node
         $this->next = $sibling;
         $sibling->setParent($this->parent);
 
-        if (!$sibling->next) {
+        if (!$sibling->next && $sibling->parent) {
             $sibling->parent->lastChild = $sibling;
         }
     }
@@ -108,7 +108,7 @@ abstract class Node
         $this->previous = $sibling;
         $sibling->setParent($this->parent);
 
-        if (!$sibling->previous) {
+        if (!$sibling->previous && $sibling->parent) {
             $sibling->parent->firstChild = $sibling;
         }
     }

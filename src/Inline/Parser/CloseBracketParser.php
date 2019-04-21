@@ -186,6 +186,10 @@ class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInter
      */
     protected function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos): ?Reference
     {
+        if ($opener->getIndex() === null) {
+            return null;
+        }
+
         $savePos = $cursor->saveState();
         $beforeLabel = $cursor->getPosition();
         $n = LinkParserHelper::parseLinkLabel($cursor);

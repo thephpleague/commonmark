@@ -100,4 +100,67 @@ class NodeTest extends TestCase
         $this->assertSame($root, $newChild2->parent());
         $this->assertNull($oldChild->parent());
     }
+
+    public function testInsertAfterWithParent()
+    {
+        $root = new SimpleNode();
+        $root->appendChild($child1 = new SimpleNode());
+        $root->appendChild($child2 = new SimpleNode());
+
+        $otherRoot = new SimpleNode();
+        $otherRoot->appendChild($child3 = new SimpleNode());
+        $otherRoot->appendChild($child4 = new SimpleNode());
+
+        $child1->insertAfter($child3);
+
+        $this->assertCount(3, $root->children());
+        $this->assertCount(1, $otherRoot->children());
+        $this->assertSame($child1, $root->firstChild());
+        $this->assertSame($child2, $root->lastChild());
+        $this->assertSame($root, $child2->parent());
+    }
+
+    public function testInsertAfterWithoutParent()
+    {
+        $node1 = new SimpleNode();
+        $node2 = new SimpleNode();
+
+        $node1->insertAfter($node2);
+
+        $this->assertSame($node2, $node1->next());
+        $this->assertSame($node1, $node2->previous());
+    }
+
+    public function testInsertBeforeWithParent()
+    {
+        $root = new SimpleNode();
+        $root->appendChild($child1 = new SimpleNode());
+        $root->appendChild($child2 = new SimpleNode());
+        $root->appendChild($child3 = new SimpleNode());
+
+        $otherRoot = new SimpleNode();
+        $otherRoot->appendChild($child4 = new SimpleNode());
+        $otherRoot->appendChild($child5 = new SimpleNode());
+
+        $child2->insertBefore($child4);
+
+        $this->assertCount(4, $root->children());
+        $this->assertCount(1, $otherRoot->children());
+        $this->assertSame($child1, $root->children()[0]);
+        $this->assertSame($child4, $root->children()[1]);
+        $this->assertSame($child2, $root->children()[2]);
+        $this->assertSame($child3, $root->children()[3]);
+        $this->assertSame($root, $child4->parent());
+    }
+
+    public function testInsertBeforeWithoutParent()
+    {
+        $node1 = new SimpleNode();
+        $node2 = new SimpleNode();
+
+        $node1->insertBefore($node2);
+
+        $this->assertSame($node1, $node2->next());
+        $this->assertSame($node2, $node1->previous());
+    }
 }

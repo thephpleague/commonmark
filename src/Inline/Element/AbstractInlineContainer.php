@@ -14,6 +14,11 @@
 
 namespace League\CommonMark\Inline\Element;
 
+@trigger_error('AbstractInlineContainer is deprecated and will be removed in a future version', E_USER_DEPRECATED);
+
+/**
+ * @deprecated
+ */
 abstract class AbstractInlineContainer extends AbstractInline
 {
     /**

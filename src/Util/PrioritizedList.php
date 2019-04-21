@@ -14,6 +14,9 @@
 
 namespace League\CommonMark\Util;
 
+/**
+ * @internal
+ */
 final class PrioritizedList implements \IteratorAggregate
 {
     private $list = [];

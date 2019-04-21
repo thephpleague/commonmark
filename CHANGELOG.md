@@ -9,6 +9,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added support for custom delimiters
    - `addDelimiterProcessor()` added to `ConfigurableEnvironmentInterface` and `Environment`
  - Added `AdjacentTextMerger::mergeTextNodesBetweenExclusive()`
+ - Added `CommonMarkConveter::getEnvironment()`
+ - Extracted a new `DocParserInterface` from the `DocParser`
 
 ### Changed
 
@@ -16,8 +18,20 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - Replaced its `collapseTextNodes()` method with the new `mergeChildNodes()` method
  - `DelimiterStack::findEarliest()` changed from `public` to `private`
  - Changed `InlineParserEngine` to be `final` and changed its `protected` methods to `private`
+ - Changed `DocParser` to be `final`
  - Exposed `EmphasisParser::determineCanOpenOrClose()` as a `public static` method (used to be `private`)
  - Un-deprecated the `CommonmarkConverter::VERSION` constant
+ - The `Converter` constructor now requires an instance of `DocParserInterface` instead of the concrete `DocParser`
+
+### Fixed
+
+ - Fixed null errors when inserting sibling `Node`s without parents
+ - Fixed `NodeWalkerEvent` not requiring a `Node` via its constructor
+
+### Deprecated
+
+ - Deprecated `DocParser::getEnvironment()` (you should obtain it some other way)
+ - Deprecated `AbstractInlineContainer` (use `AbstractInline` instead and make `isContainer()` return `true`)
 
 ### Removed
 

@@ -18,6 +18,9 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\ArrayCollection;
 
+/**
+ * @method children() AbstractInline[]
+ */
 abstract class AbstractStringContainerBlock extends AbstractBlock implements StringContainerInterface
 {
     /**

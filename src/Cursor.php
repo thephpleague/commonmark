@@ -86,7 +86,7 @@ class Cursor
     {
         $this->line = $line;
         $this->encoding = $encoding;
-        $this->length = \mb_strlen($line, $this->encoding);
+        $this->length = \mb_strlen($line, $this->encoding) ?: 0;
         $this->isMultibyte = $this->length !== \strlen($line);
         $this->lineContainsTabs = \preg_match('/\t/', $line) > 0;
     }

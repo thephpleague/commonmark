@@ -66,7 +66,7 @@
     },
     "bin": ["bin/commonmark"],
     "scripts": {
-        "phpstan": "phpstan analyse -l 4 src",
+        "phpstan": "phpstan analyse",
         "phpunit": "phpunit --no-coverage",
         "test": [
             "@phpstan",

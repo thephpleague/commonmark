@@ -240,6 +240,8 @@ final class RegexHelper
      * @param int $type HTML block type
      *
      * @return string|null
+     *
+     * @internal
      */
     public static function getHtmlBlockOpenRegex(int $type): ?string
     {
@@ -267,6 +269,8 @@ final class RegexHelper
      * @param int $type HTML block type
      *
      * @return string|null
+     *
+     * @internal
      */
     public static function getHtmlBlockCloseRegex(int $type): ?string
     {
