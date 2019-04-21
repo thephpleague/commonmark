@@ -20,3 +20,7 @@ Additionally, the `getEnvironment()` method has been deprecated and excluded fro
 ## `AbstractInlineContainer`
 
 The `AbstractInlineContainer` class added an unnecessary level of inheritance and was therefore deprecated. If you previously extended this class, you should now extend from `AbstractInline` and override `isContainer()` to return `true`.
+
+## `AdjoiningTextCollapser`
+
+The `AdjoiningTextCollapser` is an internal class used to combine multiple `Text` elements into one.  If you were using this yourself (unlikely) you'll need to refer to its new name instead: `AdjacentTextMerger`. And if you previously used `collapseTextNodes()` you'll want to switch to using `mergeChildNodes()` instead.

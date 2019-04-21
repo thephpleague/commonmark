@@ -66,6 +66,12 @@ To determine how to best upgrade your existing block element classes, look at th
 
 Additionally, `StringContainerInterface` now extends this new `StringContainerInterface` interface. Just make sure you've implemented the change mentioned above and you should be fine.
 
+Finally, please note that the `getStrings()` method does no longer exists on the `AbstractBlock` class.  If you previously relied on this, consider making these changes to your block element class:
+
+1. Extend from `AbstractStringContainerBlock` instead of `AbstractBlock`
+2. Override its `finalize()` method to set the final contents like so: `$this->finalStringContents = implode("\n", $this->strings);`
+3. Call the `getStringContent()` method wherever you need to obtain those finalized string contents
+
 ## Extensions
 
 Extensions work much differently now.  In the past, you'd have functions returning an array of things that the `Environment` would register for you.

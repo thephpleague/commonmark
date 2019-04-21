@@ -62,3 +62,8 @@ If your element can contain strings of text, you should extend `AbstractStringCo
 #### `InlineContainerInterface`
 
 If the text contained by your block should be parsed for inline elements, you should also implement the `InlineContainerInterface`. This doesn't add any new methods but does signal to the engine that inline parsing is required.
+
+### Multi-line Code Blocks
+
+If you have a block which spans multiple lines and doesn't contain any child blocks, consider having `isCode()` return `true`.  Code blocks have a special feature which enables "greedy parsing" - once it first parses your block, the engine will assume that most of the subsequent lines of Markdown belong to your block - it won't try using any other parsers until your parser's `matchesNextLine()` method returns `false`, indicating that we've reached the end of that code block.
+
