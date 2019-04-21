@@ -74,6 +74,7 @@ The PHP League offers useful extensions that add extra syntax and features:
  - [`league/commonmark-extras`](https://github.com/thephpleague/commonmark-extras) - Bundles the extensions below into a single dependency for convenience
    - [`league/commonmark-ext-autolink`](https://github.com/thephpleague/commonmark-ext-autolink) - Extension for league/commonmark which autolinks URLs, emails, and (optionally) @-mentions
    - [`league/commonmark-ext-smartpunct`](https://github.com/thephpleague/commonmark-ext-smartpunct) - Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents
+   - [`league/commonmark-ext-strikethrough`](https://github.com/thephpleague/commonmark-ext-strikethrough) - Adds support for `~~strikethrough~~` syntax
  - [`league/commonmark-ext-inlines-only`](https://github.com/thephpleague/commonmark-ext-inlines-only) - Renders inline text without paragraph tags or other block-level elements
 
 You can add them to your project or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
@@ -85,7 +86,6 @@ Custom parsers/renderers can be bundled into extensions which extend CommonMark.
  - [CommonMark Table Extension](https://github.com/webuni/commonmark-table-extension) - Adds the ability to create tables in CommonMark documents.
  - [CommonMark Attributes Extension](https://github.com/webuni/commonmark-attributes-extension) - Adds a syntax to define attributes on the various HTML elements.
  - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark.
- - [uafrica/commonmark-ext](https://github.com/uafrica/commonmark-ext) - Adds strikethrough support.
  - [Sup Sub extensions](https://github.com/OWS/commonmark-sup-sub-extensions) - Adds support of superscript and subscript (`<sup>` and `<sub>` HTML tags)
 
 If you build your own, feel free to submit a PR to add it to this list!
