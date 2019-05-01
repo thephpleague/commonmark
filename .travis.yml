@@ -6,7 +6,8 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - master
+  - 7.4snapshot
+  - nightly
 env:
   - 'PHPUNIT=true'
   
@@ -27,7 +28,8 @@ matrix:
       env: 'RIPS=true'
       sudo: true
   allow_failures:
-    - php: master
+    - php: 7.4snapshot
+    - php: nightly
   fast_finish: true
 
 # This triggers builds to run on the new TravisCI infrastructure.
