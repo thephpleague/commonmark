@@ -30,6 +30,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Fixed null errors when inserting sibling `Node`s without parents
  - Fixed `NodeWalkerEvent` not requiring a `Node` via its constructor
+ - Fixed `Reference::normalizeReference()` improperly converting to uppercase instead of performing proper Unicode case-folding
 
 ### Deprecated
 
