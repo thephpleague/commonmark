@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [0.1.0] - 2019-05-12
+
 Initial release!
 
 [unreleased]: https://github.com/thephpleague/commonmark-ext-task-list/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/thephpleague/commonmark-ext-task-list/commits/v0.1.0
