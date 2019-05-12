@@ -17,15 +17,17 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Renamed the `AdjoiningTextCollapser` class to `AdjacentTextMerger`
    - Replaced its `collapseTextNodes()` method with the new `mergeChildNodes()` method
- - `DelimiterStack::findEarliest()` changed from `public` to `private`
- - Changed `InlineParserEngine` to be `final` and changed its `protected` methods to `private`
+ - Made several classes `final`:
+   - `DocParser`
+   - `InlineParserEngine`
+ - Reduced visibility of several internal methods to `private`:
+    - `DelimiterStack::findEarliest()`
+    - All `protected` methods in `InlineParserEngine`
+ - Marked some classes and methods as `@internal`
  - Changed `InlineParserEngine::parse()` to require an `AbstractStringContainerBlock` instead of the generic `Node` class
- - Changed `DocParser` to be `final`
- - Exposed `EmphasisParser::determineCanOpenOrClose()` as a `public static` method (used to be `private`)
  - Un-deprecated the `CommonmarkConverter::VERSION` constant
  - The `Converter` constructor now requires an instance of `DocParserInterface` instead of the concrete `DocParser`
  - Changed `Emphasis`, `Strong`, and `AbstractWebResource` to directly extend `AbstractInline` instead of the (now-deprecated) intermediary `AbstractInlineContainer` class
- - Marked some classes and methods as `@internal`
 
 ### Fixed
 
