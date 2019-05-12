@@ -28,7 +28,12 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
         $closing = $processor->getClosingCharacter();
 
         if ($opening === $closing) {
-            $this->addDelimiterProcessorForChar($opening, $processor);
+            $old = $this->processorsByChar[$opening] ?? null;
+            if ($old !== null && $old->getOpeningCharacter() === $old->getClosingCharacter()) {
+                $this->addStaggeredDelimiterProcessorForChar($opening, $old, $processor);
+            } else {
+                $this->addDelimiterProcessorForChar($opening, $processor);
+            }
         } else {
             $this->addDelimiterProcessorForChar($opening, $processor);
             $this->addDelimiterProcessorForChar($closing, $processor);
@@ -52,5 +57,17 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
         }
 
         $this->processorsByChar[$delimiterChar] = $processor;
+    }
+
+    private function addStaggeredDelimiterProcessorForChar(string $opening, DelimiterProcessorInterface $old, DelimiterProcessorInterface $new): void
+    {
+        if ($old instanceof StaggeredDelimiterProcessor) {
+            $s = $old;
+        } else {
+            $s = new StaggeredDelimiterProcessor($opening, $old);
+        }
+
+        $s->add($new);
+        $this->processorsByChar[$opening] = $s;
     }
 }

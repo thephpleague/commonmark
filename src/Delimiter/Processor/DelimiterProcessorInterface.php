@@ -46,6 +46,15 @@ interface DelimiterProcessorInterface
     public function getClosingCharacter(): string;
 
     /**
+     * Minimum number of delimiter characters that are needed to active this.
+     *
+     * Must be at least 1.
+     *
+     * @return int
+     */
+    public function getMinLength(): int;
+
+    /**
      * Determine how many (if any) of the delimiter characters should be used.
      *
      * This allows implementations to decide how many characters to be used

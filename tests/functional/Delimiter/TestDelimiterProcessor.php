@@ -21,10 +21,12 @@ use League\CommonMark\Inline\Element\Text;
 final class TestDelimiterProcessor implements DelimiterProcessorInterface
 {
     private $char;
+    private $length;
 
-    public function __construct(string $char)
+    public function __construct(string $char, int $length)
     {
         $this->char = $char;
+        $this->length = $length;
     }
 
     /**
@@ -48,7 +50,7 @@ final class TestDelimiterProcessor implements DelimiterProcessorInterface
      */
     public function getMinLength(): int
     {
-        return 1;
+        return $this->length;
     }
 
     /**
@@ -56,7 +58,7 @@ final class TestDelimiterProcessor implements DelimiterProcessorInterface
      */
     public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
     {
-        return 1;
+        return $this->length;
     }
 
     /**
@@ -64,5 +66,7 @@ final class TestDelimiterProcessor implements DelimiterProcessorInterface
      */
     public function process(Text $opener, Text $closer, int $delimiterUse)
     {
+        $opener->insertAfter(new Text('(' . $this->length . ')'));
+        $closer->insertBefore(new Text('(/' . $this->length . ')'));
     }
 }

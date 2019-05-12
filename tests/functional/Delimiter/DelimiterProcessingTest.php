@@ -61,13 +61,25 @@ final class DelimiterProcessingTest extends TestCase
         yield ['{} {foo}', "<p> FOO</p>\n"];
     }
 
+    public function testMultipleDelimitersWithDifferentLengths()
+    {
+        $e = Environment::createCommonMarkEnvironment();
+        $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
+        $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 2));
+
+        $c = new CommonMarkConverter([], $e);
+
+        $this->assertEquals("<p>(1)one(/1) (2)two(/2)</p>\n", $c->convertToHtml('@one@ @@two@@'));
+        $this->assertEquals("<p>(1)(2)both(/2)(/1)</p>\n", $c->convertToHtml('@@@both@@@'));
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testMultipleDelimiters()
+    public function testMultipleDelimitersWithSameLength()
     {
         $e = Environment::createCommonMarkEnvironment();
-        $e->addDelimiterProcessor(new TestDelimiterProcessor('@'));
-        $e->addDelimiterProcessor(new TestDelimiterProcessor('@'));
+        $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
+        $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
     }
 }

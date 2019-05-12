@@ -59,6 +59,14 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
     /**
      * {@inheritdoc}
      */
+    public function getMinLength(): int
+    {
+        return 1;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
     {
         // "Multiple of 3" rule for internal delimiter runs
