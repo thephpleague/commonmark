@@ -24,11 +24,15 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
 
     public function add(DelimiterProcessorInterface $processor)
     {
-        if (isset($this->processorsByChar[$processor->getCharacter()])) {
-            throw new \InvalidArgumentException(sprintf('Delim processor for character "%s" already exists', $processor->getCharacter()));
-        }
+        $opening = $processor->getOpeningCharacter();
+        $closing = $processor->getClosingCharacter();
 
-        $this->processorsByChar[$processor->getCharacter()] = $processor;
+        if ($opening === $closing) {
+            $this->addDelimiterProcessorForChar($opening, $processor);
+        } else {
+            $this->addDelimiterProcessorForChar($opening, $processor);
+            $this->addDelimiterProcessorForChar($closing, $processor);
+        }
     }
 
     public function getDelimiterProcessor(string $char): ?DelimiterProcessorInterface
@@ -39,5 +43,14 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
     public function getDelimiterCharacters(): array
     {
         return array_keys($this->processorsByChar);
+    }
+
+    private function addDelimiterProcessorForChar(string $delimiterChar, DelimiterProcessorInterface $processor)
+    {
+        if (isset($this->processorsByChar[$delimiterChar])) {
+            throw new \InvalidArgumentException(sprintf('Delim processor for character "%s" already exists', $processor->getOpeningCharacter()));
+        }
+
+        $this->processorsByChar[$delimiterChar] = $processor;
     }
 }

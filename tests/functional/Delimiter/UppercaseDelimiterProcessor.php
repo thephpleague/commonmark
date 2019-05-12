@@ -18,24 +18,14 @@ use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Inline\Element\Text;
 
-final class FakeDelimiterProcessor implements DelimiterProcessorInterface
+final class UppercaseDelimiterProcessor implements DelimiterProcessorInterface
 {
-    private $delimiterChar;
-
-    private $delimiterUse;
-
-    public function __construct(string $delimiterChar, int $delimiterUse)
-    {
-        $this->delimiterChar = $delimiterChar;
-        $this->delimiterUse = $delimiterUse;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getOpeningCharacter(): string
     {
-        return $this->delimiterChar;
+        return '{';
     }
 
     /**
@@ -43,7 +33,7 @@ final class FakeDelimiterProcessor implements DelimiterProcessorInterface
      */
     public function getClosingCharacter(): string
     {
-        return $this->delimiterChar;
+        return '}';
     }
 
     /**
@@ -59,7 +49,7 @@ final class FakeDelimiterProcessor implements DelimiterProcessorInterface
      */
     public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
     {
-        return $this->delimiterUse;
+        return 1;
     }
 
     /**
@@ -67,5 +57,13 @@ final class FakeDelimiterProcessor implements DelimiterProcessorInterface
      */
     public function process(Text $opener, Text $closer, int $delimiterUse)
     {
+        $upperCase = new UppercaseText();
+        $tmp = $opener->next();
+        while ($tmp !== null && $tmp !== $closer) {
+            $next = $tmp->next();
+            $upperCase->appendChild($tmp);
+            $tmp = $next;
+        }
+        $opener->insertAfter($upperCase);
     }
 }

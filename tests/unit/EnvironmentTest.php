@@ -239,7 +239,7 @@ class EnvironmentTest extends TestCase
         $environment = new Environment();
 
         $processor = $this->createMock(DelimiterProcessorInterface::class);
-        $processor->method('getCharacter')->willReturn('*');
+        $processor->method('getOpeningCharacter')->willReturn('*');
         $environment->addDelimiterProcessor($processor);
 
         $this->assertSame($processor, $environment->getDelimiterProcessors()->getDelimiterProcessor('*'));

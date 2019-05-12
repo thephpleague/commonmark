@@ -32,6 +32,33 @@ final class DelimiterProcessingTest extends TestCase
         $this->assertEquals("<p>;test;</p>\n", $c->convertToHtml(';test;'));
     }
 
+    /**
+     * @dataProvider asymmetricDelimiterDataProvider
+     */
+    public function testAsymmetricDelimiterProcessing(string $input, string $expected)
+    {
+        $e = Environment::createCommonMarkEnvironment();
+        $e->addDelimiterProcessor(new UppercaseDelimiterProcessor());
+        $e->addInlineRenderer(UppercaseText::class, new UppercaseTextRenderer());
+
+        $converter = new CommonMarkConverter([], $e);
+
+        $this->assertEquals($expected, $converter->convertToHtml($input));
+    }
+
+    public function asymmetricDelimiterDataProvider()
+    {
+        yield ['{foo} bar', "<p>FOO bar</p>\n"];
+        yield ['f{oo ba}r', "<p>fOO BAr</p>\n"];
+        yield ['{{foo} bar', "<p>{FOO bar</p>\n"];
+        yield ['{foo}} bar', "<p>FOO} bar</p>\n"];
+        yield ['{{foo} bar}', "<p>FOO BAR</p>\n"];
+        yield ['{foo bar', "<p>{foo bar</p>\n"];
+        yield ['foo} bar', "<p>foo} bar</p>\n"];
+        yield ['}foo} bar', "<p>}foo} bar</p>\n"];
+        yield ['{foo{ bar', "<p>{foo{ bar</p>\n"];
+        yield ['}foo{ bar', "<p>}foo{ bar</p>\n"];
+        yield ['{} {foo}', "<p> FOO</p>\n"];
     }
 
     /**

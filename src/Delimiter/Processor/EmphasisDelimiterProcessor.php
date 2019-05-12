@@ -43,7 +43,15 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
     /**
      * {@inheritdoc}
      */
-    public function getCharacter(): string
+    public function getOpeningCharacter(): string
+    {
+        return $this->char;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getClosingCharacter(): string
     {
         return $this->char;
     }

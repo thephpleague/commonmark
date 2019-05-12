@@ -26,13 +26,24 @@ use League\CommonMark\Inline\Element\Text;
 interface DelimiterProcessorInterface
 {
     /**
-     * Returns the character this processor handles delimiters of.
+     * Returns the character that marks the beginning of a delimited node.
      *
      * This must not clash with any other processors being added to the environment.
      *
      * @return string
      */
-    public function getCharacter(): string;
+    public function getOpeningCharacter(): string;
+
+    /**
+     * Returns the character that marks the ending of a delimited node.
+     *
+     * This must not clash with any other processors being added to the environment.
+     *
+     * Note that for a symmetric delimiter such as "*", this is the same as the opening.
+     *
+     * @return string
+     */
+    public function getClosingCharacter(): string;
 
     /**
      * Determine how many (if any) of the delimiter characters should be used.

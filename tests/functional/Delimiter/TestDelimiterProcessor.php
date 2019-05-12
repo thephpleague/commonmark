@@ -30,7 +30,15 @@ final class TestDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCharacter(): string
+    public function getOpeningCharacter(): string
+    {
+        return $this->char;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getClosingCharacter(): string
     {
         return $this->char;
     }
