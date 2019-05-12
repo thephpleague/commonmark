@@ -19,6 +19,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - Replaced its `collapseTextNodes()` method with the new `mergeChildNodes()` method
  - Made several classes `final`:
    - `DocParser`
+   - `HtmlRenderer`
    - `InlineParserEngine`
  - Reduced visibility of several internal methods to `private`:
     - `DelimiterStack::findEarliest()`
