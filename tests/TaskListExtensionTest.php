@@ -16,7 +16,7 @@ use League\CommonMark\Environment;
 use League\CommonMark\Ext\TaskList\TaskListExtension;
 use PHPUnit\Framework\TestCase;
 
-final class TaskListTest extends TestCase
+final class TaskListExtensionTest extends TestCase
 {
     public function testTaskLists()
     {
@@ -36,6 +36,7 @@ Some examples which should not match:
 
  - Checkbox [x] in the middle
  - Checkbox at the end [ ]
+ - [  ] too many spaces
  - **[x] Checkbox inside of emphasis**
  - No text, as shown in these examples:
    - [x]
@@ -71,6 +72,7 @@ EOT;
 <ul>
 <li>Checkbox [x] in the middle</li>
 <li>Checkbox at the end [ ]</li>
+<li>[  ] too many spaces</li>
 <li>
 <strong>[x] Checkbox inside of emphasis</strong>
 </li>
