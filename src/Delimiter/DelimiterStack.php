@@ -151,12 +151,14 @@ class DelimiterStack
                 continue;
             }
 
+            $openingDelimiterChar = $delimiterProcessor->getOpeningCharacter();
+
             $useDelims = 0;
             $openerFound = false;
             $potentialOpenerFound = false;
             $opener = $closer->getPrevious();
             while ($opener !== null && $opener !== $stackBottom && $opener !== ($openersBottom[$delimiterChar] ?? null)) {
-                if ($opener->canOpen() && $opener->getChar() === $delimiterChar) {
+                if ($opener->canOpen() && $opener->getChar() === $openingDelimiterChar) {
                     $potentialOpenerFound = true;
                     $useDelims = $delimiterProcessor->getDelimiterUse($opener, $closer);
                     if ($useDelims > 0) {

@@ -22,10 +22,15 @@ use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Element\Strong;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Util\Configuration;
+use League\CommonMark\Util\ConfigurationAwareInterface;
 
-final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface
+final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, ConfigurationAwareInterface
 {
+    /** @var string */
     private $char;
+
+    /** @var Configuration|null */
+    private $config;
 
     /**
      * @param string $char The emphasis character to use (typically '*' or '_')
@@ -38,9 +43,25 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCharacter(): string
+    public function getOpeningCharacter(): string
     {
         return $this->char;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getClosingCharacter(): string
+    {
+        return $this->char;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMinLength(): int
+    {
+        return 1;
     }
 
     /**
@@ -55,10 +76,18 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface
 
         // Calculate actual number of delimiters used from this closer
         if ($opener->getNumDelims() >= 2 && $closer->getNumDelims() >= 2) {
-            return 2;
+            if ($this->config && $this->config->getConfig('enable_strong', true)) {
+                return 2;
+            }
+
+            return 0;
         }
 
-        return 1;
+        if ($this->config && $this->config->getConfig('enable_em', true)) {
+            return 1;
+        }
+
+        return 0;
     }
 
     /**
@@ -66,12 +95,9 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface
      */
     public function process(Text $opener, Text $closer, int $delimiterUse)
     {
-        /** @var Configuration|null $emphasisConfig */
-        $emphasisConfig = $opener->getData('emphasis_config');
-
-        if ($delimiterUse === 1 && ($emphasisConfig === null || $emphasisConfig->getConfig('enable_em', true))) {
+        if ($delimiterUse === 1) {
             $emphasis = new Emphasis();
-        } elseif ($delimiterUse === 2 && ($emphasisConfig === null || $emphasisConfig->getConfig('enable_strong', true))) {
+        } elseif ($delimiterUse === 2) {
             $emphasis = new Strong();
         } else {
             return;
@@ -85,5 +111,13 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface
         }
 
         $opener->insertAfter($emphasis);
+    }
+
+    /**
+     * @param Configuration $configuration
+     */
+    public function setConfiguration(Configuration $configuration)
+    {
+        $this->config = $configuration;
     }
 }

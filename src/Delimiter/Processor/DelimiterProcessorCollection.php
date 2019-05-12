@@ -19,19 +19,55 @@ namespace League\CommonMark\Delimiter\Processor;
 
 final class DelimiterProcessorCollection implements DelimiterProcessorCollectionInterface
 {
+    /** @var array<string,DelimiterProcessorInterface>|DelimiterProcessorInterface[] */
     private $processorsByChar = [];
 
     public function add(DelimiterProcessorInterface $processor)
     {
-        if (isset($this->processorsByChar[$processor->getCharacter()])) {
-            throw new \InvalidArgumentException(sprintf('Delim processor for character "%s" already exists', $processor->getCharacter()));
-        }
+        $opening = $processor->getOpeningCharacter();
+        $closing = $processor->getClosingCharacter();
 
-        $this->processorsByChar[$processor->getCharacter()] = $processor;
+        if ($opening === $closing) {
+            $old = $this->processorsByChar[$opening] ?? null;
+            if ($old !== null && $old->getOpeningCharacter() === $old->getClosingCharacter()) {
+                $this->addStaggeredDelimiterProcessorForChar($opening, $old, $processor);
+            } else {
+                $this->addDelimiterProcessorForChar($opening, $processor);
+            }
+        } else {
+            $this->addDelimiterProcessorForChar($opening, $processor);
+            $this->addDelimiterProcessorForChar($closing, $processor);
+        }
     }
 
     public function getDelimiterProcessor(string $char): ?DelimiterProcessorInterface
     {
         return $this->processorsByChar[$char] ?? null;
+    }
+
+    public function getDelimiterCharacters(): array
+    {
+        return array_keys($this->processorsByChar);
+    }
+
+    private function addDelimiterProcessorForChar(string $delimiterChar, DelimiterProcessorInterface $processor)
+    {
+        if (isset($this->processorsByChar[$delimiterChar])) {
+            throw new \InvalidArgumentException(sprintf('Delim processor for character "%s" already exists', $processor->getOpeningCharacter()));
+        }
+
+        $this->processorsByChar[$delimiterChar] = $processor;
+    }
+
+    private function addStaggeredDelimiterProcessorForChar(string $opening, DelimiterProcessorInterface $old, DelimiterProcessorInterface $new): void
+    {
+        if ($old instanceof StaggeredDelimiterProcessor) {
+            $s = $old;
+        } else {
+            $s = new StaggeredDelimiterProcessor($opening, $old);
+        }
+
+        $s->add($new);
+        $this->processorsByChar[$opening] = $s;
     }
 }

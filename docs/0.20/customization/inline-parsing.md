@@ -6,24 +6,44 @@ title: Inline Parsing
 Inline Parsing
 ==============
 
+There are two ways to implement custom inline syntax:
+
+ - Inline Parsers (covered here)
+ - [Delimiter Processors](/0.20/customization/delimiter-processing/)
+
+The difference between normal inlines and delimiter-run-based inlines is subtle but important to understand.  In a nutshell, delimiter-run-based inlines:
+
+ - Are denoted by "wrapping" text with one or more characters before **and** after those inner contents
+ - Can contain other delimiter runs or inlines inside of them
+
+An example of this would be emphasis:
+
+~~~markdown
+This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after. 
+~~~
+
+If your syntax looks like that, consider using a [delimiter processor](/0.20/customization/delimiter-processing/) instead.  Otherwise, an inline parser is your best bet. 
+
+## Implementing Inline Parsers
+
 Inline parsers should implement `InlineParserInterface` and the following two methods:
 
-## getCharacters()
+### getCharacters()
 
 This method should return an array of single characters which the inline parser engine should stop on.  When it does find a match in the current line the `parse()` method below may be called.
 
-## parse()
+### parse()
 
 This method will be called if both conditions are met:
 
 1. The engine has stopped at a matching character; and,
 2. No other inline parsers have successfully parsed the character
 
-### Parameters
+#### Parameters
 
 * `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/0.20/customization/cursor/) used to parse the current line.
 
-### Return value
+#### Return value
 
 `parse()` should return `false` if it's unable to handle the current line/character for any reason.  (The [`Cursor`](/0.20/customization/cursor/) state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the character will be added as plain text.
 
@@ -32,7 +52,7 @@ Returning `true` tells the engine that you've successfully parsed the character 
 1. Advance the cursor to the end of the parsed text
 2. Add the parsed inline to the container (`$inlineContext->getContainer()->appendChild(...)`)
 
-## Examples
+## Inline Parser Examples
 
 ### Example 1 - Twitter Handles
 

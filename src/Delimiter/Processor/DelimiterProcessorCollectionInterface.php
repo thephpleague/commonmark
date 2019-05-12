@@ -36,4 +36,11 @@ interface DelimiterProcessorCollectionInterface
      * @return DelimiterProcessorInterface|null
      */
     public function getDelimiterProcessor(string $char): ?DelimiterProcessorInterface;
+
+    /**
+     * Returns an array of delimiter characters who have associated processors
+     *
+     * @return string[]
+     */
+    public function getDelimiterCharacters(): array;
 }

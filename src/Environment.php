@@ -383,7 +383,10 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
 
     private function buildInlineParserCharacterRegex()
     {
-        $chars = \array_keys($this->inlineParsersByCharacter);
+        $chars = \array_unique(\array_merge(
+            \array_keys($this->inlineParsersByCharacter),
+            $this->delimiterProcessors->getDelimiterCharacters()
+        ));
 
         if (empty($chars)) {
             // If no special inline characters exist then parse the whole line

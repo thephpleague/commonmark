@@ -15,13 +15,13 @@ version:
             'Environment': '/0.20/customization/environment/'
             'Extensions': '/0.20/customization/extensions/'
             'Cursor': '/0.20/customization/cursor/'
-            'Block parsing': '/0.20/customization/block-parsing/'
-            'Inline parsing': '/0.20/customization/inline-parsing/'
-            'Delimiter Processing': '/0.20/customization/delimiter-parsing/'
+            'Block Parsing': '/0.20/customization/block-parsing/'
+            'Inline Parsing': '/0.20/customization/inline-parsing/'
+            'Delimiter Processing': '/0.20/customization/delimiter-processing/'
             'Abstract Syntax Tree': '/0.20/customization/abstract-syntax-tree/'
             'Document Processing': '/0.20/customization/document-processing/'
-            'Block rendering': '/0.20/customization/block-rendering/'
-            'Inline rendering': '/0.20/customization/inline-rendering/'
+            'Block Rendering': '/0.20/customization/block-rendering/'
+            'Inline Rendering': '/0.20/customization/inline-rendering/'
     '0.19':
         Getting Started:
             'Overview': '/0.19/'

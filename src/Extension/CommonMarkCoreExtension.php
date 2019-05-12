@@ -42,15 +42,11 @@ final class CommonMarkCoreExtension implements ExtensionInterface
             ->addInlineParser(new InlineParser\BacktickParser(),    150)
             ->addInlineParser(new InlineParser\EscapableParser(),    80)
             ->addInlineParser(new InlineParser\EntityParser(),       70)
-            ->addInlineParser(new InlineParser\EmphasisParser(),     60)
             ->addInlineParser(new InlineParser\AutolinkParser(),     50)
             ->addInlineParser(new InlineParser\HtmlInlineParser(),   40)
             ->addInlineParser(new InlineParser\CloseBracketParser(), 30)
             ->addInlineParser(new InlineParser\OpenBracketParser(),  20)
             ->addInlineParser(new InlineParser\BangParser(),         10)
-
-            ->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'))
-            ->addDelimiterProcessor(new EmphasisDelimiterProcessor('_'))
 
             ->addBlockRenderer(BlockElement\BlockQuote::class,    new BlockRenderer\BlockQuoteRenderer(),    0)
             ->addBlockRenderer(BlockElement\Document::class,      new BlockRenderer\DocumentRenderer(),      0)
@@ -72,5 +68,13 @@ final class CommonMarkCoreExtension implements ExtensionInterface
             ->addInlineRenderer(InlineElement\Strong::class,     new InlineRenderer\StrongRenderer(),     0)
             ->addInlineRenderer(InlineElement\Text::class,       new InlineRenderer\TextRenderer(),       0)
         ;
+
+        if ($environment->getConfig('use_asterisk', true)) {
+            $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));
+        }
+
+        if ($environment->getConfig('use_underscore', true)) {
+            $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('_'));
+        }
     }
 }

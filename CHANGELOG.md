@@ -6,8 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
- - Added support for custom delimiters
+ - Added proper support for delimiters, including custom delimiters
    - `addDelimiterProcessor()` added to `ConfigurableEnvironmentInterface` and `Environment`
+ - Basic delimiters no longer need custom parsers - they'll be parsed automatically
  - Added `AdjacentTextMerger::mergeTextNodesBetweenExclusive()`
  - Added `CommonMarkConveter::getEnvironment()`
  - Extracted a new `DocParserInterface` from the `DocParser`
@@ -16,21 +17,26 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Renamed the `AdjoiningTextCollapser` class to `AdjacentTextMerger`
    - Replaced its `collapseTextNodes()` method with the new `mergeChildNodes()` method
- - `DelimiterStack::findEarliest()` changed from `public` to `private`
- - Changed `InlineParserEngine` to be `final` and changed its `protected` methods to `private`
+ - Made several classes `final`:
+   - `DocParser`
+   - `HtmlRenderer`
+   - `InlineParserEngine`
+ - Reduced visibility of several internal methods to `private`:
+    - `DelimiterStack::findEarliest()`
+    - All `protected` methods in `InlineParserEngine`
+ - Marked some classes and methods as `@internal`
+ - `ElementRendererInterface` now requires a public `renderInline()` method; added this to `HtmlRenderer`
  - Changed `InlineParserEngine::parse()` to require an `AbstractStringContainerBlock` instead of the generic `Node` class
- - Changed `DocParser` to be `final`
- - Exposed `EmphasisParser::determineCanOpenOrClose()` as a `public static` method (used to be `private`)
  - Un-deprecated the `CommonmarkConverter::VERSION` constant
  - The `Converter` constructor now requires an instance of `DocParserInterface` instead of the concrete `DocParser`
  - Changed `Emphasis`, `Strong`, and `AbstractWebResource` to directly extend `AbstractInline` instead of the (now-deprecated) intermediary `AbstractInlineContainer` class
- - Marked some classes and methods as `@internal`
 
 ### Fixed
 
  - Fixed null errors when inserting sibling `Node`s without parents
  - Fixed `NodeWalkerEvent` not requiring a `Node` via its constructor
  - Fixed `Reference::normalizeReference()` improperly converting to uppercase instead of performing proper Unicode case-folding
+ - Fixed strong emphasis delimiters not being preserved when `enable_strong` is set to `false` (it now works identically to `enable_em`)
 
 ### Deprecated
 
@@ -44,6 +50,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - Removed `getInlineProcessors()` from `EnvironmentInterface` and `Environment`
    - Removed `EmphasisProcessor`
    - Removed `InlineProcessorInterface`
+ - Removed `EmphasisParser` now that we have proper delimiter support
  - Removed now-unused methods
    - Removed `DelimiterStack::getTop()` (no replacement)
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
