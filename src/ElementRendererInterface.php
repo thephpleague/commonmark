@@ -31,6 +31,13 @@ interface ElementRendererInterface
     public function getOption(string $option, $default = null);
 
     /**
+     * @param AbstractInline $inline
+     *
+     * @return string
+     */
+    public function renderInline(AbstractInline $inline): string;
+
+    /**
      * @param AbstractInline[] $inlines
      *
      * @return string

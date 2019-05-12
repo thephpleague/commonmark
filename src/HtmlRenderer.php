@@ -55,7 +55,7 @@ final class HtmlRenderer implements ElementRendererInterface
      *
      * @return string
      */
-    protected function renderInline(AbstractInline $inline): string
+    public function renderInline(AbstractInline $inline): string
     {
         $renderers = $this->environment->getInlineRenderersForClass(get_class($inline));
 

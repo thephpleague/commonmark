@@ -25,6 +25,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - `DelimiterStack::findEarliest()`
     - All `protected` methods in `InlineParserEngine`
  - Marked some classes and methods as `@internal`
+ - `ElementRendererInterface` now requires a public `renderInline()` method; added this to `HtmlRenderer`
  - Changed `InlineParserEngine::parse()` to require an `AbstractStringContainerBlock` instead of the generic `Node` class
  - Un-deprecated the `CommonmarkConverter::VERSION` constant
  - The `Converter` constructor now requires an instance of `DocParserInterface` instead of the concrete `DocParser`
