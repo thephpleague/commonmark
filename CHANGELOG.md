@@ -6,8 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
- - Added support for custom delimiters
+ - Added proper support for delimiters, including custom delimiters
    - `addDelimiterProcessor()` added to `ConfigurableEnvironmentInterface` and `Environment`
+ - Basic delimiters no longer need custom parsers - they'll be parsed automatically
  - Added `AdjacentTextMerger::mergeTextNodesBetweenExclusive()`
  - Added `CommonMarkConveter::getEnvironment()`
  - Extracted a new `DocParserInterface` from the `DocParser`
@@ -31,6 +32,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Fixed null errors when inserting sibling `Node`s without parents
  - Fixed `NodeWalkerEvent` not requiring a `Node` via its constructor
  - Fixed `Reference::normalizeReference()` improperly converting to uppercase instead of performing proper Unicode case-folding
+ - Fixed strong emphasis delimiters not being preserved when `enable_strong` is set to `false` (it now works identically to `enable_em`)
 
 ### Deprecated
 
@@ -44,6 +46,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - Removed `getInlineProcessors()` from `EnvironmentInterface` and `Environment`
    - Removed `EmphasisProcessor`
    - Removed `InlineProcessorInterface`
+ - Removed `EmphasisParser` now that we have proper delimiter support
  - Removed now-unused methods
    - Removed `DelimiterStack::getTop()` (no replacement)
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)

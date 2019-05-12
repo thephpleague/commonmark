@@ -19,6 +19,7 @@ namespace League\CommonMark\Delimiter\Processor;
 
 final class DelimiterProcessorCollection implements DelimiterProcessorCollectionInterface
 {
+    /** @var array<string,DelimiterProcessorInterface>|DelimiterProcessorInterface[] */
     private $processorsByChar = [];
 
     public function add(DelimiterProcessorInterface $processor)
@@ -33,5 +34,10 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
     public function getDelimiterProcessor(string $char): ?DelimiterProcessorInterface
     {
         return $this->processorsByChar[$char] ?? null;
+    }
+
+    public function getDelimiterCharacters(): array
+    {
+        return array_keys($this->processorsByChar);
     }
 }
