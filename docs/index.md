@@ -37,3 +37,12 @@ This library allows you to add custom syntax, renderers, and more.  Check out th
 ## Integrations & Community Extensions
 
 An updated list of pre-built integrations and extensions can be found in the [Related Packages](https://github.com/thephpleague/commonmark#related-packages) section of the `README`.
+
+# Sponsors
+
+We'd like to thank the following people for supporting the ongoing development of this project:
+
+ - [RIPS Technologies](https://www.ripstech.com/) for supporting this project with a complimentary [RIPS SaaS](https://www.ripstech.com/product/) license
+ - [JetBrains](https://www.jetbrains.com/) for supporting this project with complimentary [PhpStorm](https://www.jetbrains.com/phpstorm/) licenses
+
+Are you interested in sponsoring this project? [Make a pledge via Patreon](https://www.patreon.com/join/colinodell) and we may include your name here!

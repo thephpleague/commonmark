@@ -12,14 +12,14 @@
 
 [![Support development with Patreon](https://img.shields.io/badge/patreon-donate-red.svg)](https://www.patreon.com/colinodell)
 
-**league/commonmark** is a PHP-based Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
+**league/commonmark** is a PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
 
 ## Goals
 
-* Fully support the CommonMark spec (100% compliance)
-* Match the C and JavaScript implementations of CommonMark to make a logical and similar API
-* Continuously improve performance without sacrificing quality or compliance
+* Fully support the [CommonMark] spec (100% compliance)
 * Provide an extensible parser/renderer which users may customize as needed
+* Continuously improve performance without sacrificing quality or compliance
+* Match the official reference implementations of CommonMark
 
 ## Installation
 
@@ -44,9 +44,7 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
-:warning: **Security warning:** If you will be parsing untrusted input from users, please consider setting the `html_input` and `allow_unsafe_links` options. See <https://commonmark.thephpleague.com/security/> for more details.
-
-If you also do choose to allow raw HTML input from untrusted users, considering using a library (like [HTML Purifier](https://github.com/ezyang/htmlpurifier)) to provide additional HTML filtering.
+:warning: **Security warning:** If you will be parsing untrusted input from users, please consider setting the `html_input` and `allow_unsafe_links` options. See <https://commonmark.thephpleague.com/security/> for more details. If you also do choose to allow raw HTML input from untrusted users, considering using a library (like [HTML Purifier](https://github.com/ezyang/htmlpurifier)) to provide additional HTML filtering.
 
 ## Documentation
 
@@ -78,6 +76,7 @@ The PHP League offers useful extensions that add extra syntax and features:
    - [`league/commonmark-ext-autolink`](https://github.com/thephpleague/commonmark-ext-autolink) - Extension for league/commonmark which autolinks URLs, emails, and (optionally) @-mentions
    - [`league/commonmark-ext-smartpunct`](https://github.com/thephpleague/commonmark-ext-smartpunct) - Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents
    - [`league/commonmark-ext-strikethrough`](https://github.com/thephpleague/commonmark-ext-strikethrough) - Adds support for `~~strikethrough~~` syntax
+   - [`league/commonmark-ext-task-list`]()(https://github.com/thephpleague/commonmark-ext-task-list) - Support for Github-style task lists
  - [`league/commonmark-ext-inlines-only`](https://github.com/thephpleague/commonmark-ext-inlines-only) - Renders inline text without paragraph tags or other block-level elements
 
 You can add them to your project or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
@@ -167,6 +166,8 @@ We'd also like to extend our sincere thanks the following sponsors who support o
 
  - [RIPS Technologies](https://www.ripstech.com/) for supporting this project with a complimentary [RIPS SaaS](https://www.ripstech.com/product/) license
  - [JetBrains](https://www.jetbrains.com/) for supporting this project with complimentary [PhpStorm](https://www.jetbrains.com/phpstorm/) licenses
+
+Are you interested in sponsoring development of this project? [Make a pledge](https://www.patreon.com/join/colinodell) of $10 or more and we'll include your name [on our website](https://commonmark.thephpleague.com/#sponsors)!
 
 ## License ##
 
