@@ -346,3 +346,7 @@ table th {
 h2 code {
     font-size: 0.8em;
 }
+
+.features ul {
+    list-style-type: none;
+}
