@@ -65,7 +65,6 @@ Information on how to upgrade to newer versions of this library can be found at 
 - [Symfony 2 & 3](https://github.com/webuni/commonmark-bundle)
 - [Symfony 4](https://github.com/avensome/commonmark-bundle)
 - [Twig Markdown extension](https://github.com/twigphp/markdown-extension)
-- [Twig-based renderer](https://github.com/webuni/commonmark-twig-renderer)
 - [Twig filter and tag](https://github.com/aptoma/twig-markdown)
 
 ### League Extensions
