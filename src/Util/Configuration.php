@@ -72,7 +72,7 @@ class Configuration
      *
      * @return mixed
      */
-    protected function getConfigByPath(string $keyPath, ?string $default = null)
+    protected function getConfigByPath(string $keyPath, $default = null)
     {
         $keyArr = \explode('/', $keyPath);
         $data = $this->config;

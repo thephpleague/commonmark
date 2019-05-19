@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed bug where default values for nested configuration paths were inadvertently cast to strings
+
 ## [0.19.1] - 2019-04-10
 
 ### Added
