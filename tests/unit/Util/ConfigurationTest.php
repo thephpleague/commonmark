@@ -33,6 +33,12 @@ class ConfigurationTest extends TestCase
         // Test getting a path that's one level too deep
         $this->assertNull($config->getConfig('a/b/c'));
 
+        // Test getting a path with no existing components
+        $this->assertNull($config->getConfig('x/y/z'));
+
+        // Test getting a path with a default that isn't a string or null
+        $this->assertSame(true, $config->getConfig('x/y/z', true));
+
         // Test getting a non-existent element
         $this->assertNull($config->getConfig('test'));
 
