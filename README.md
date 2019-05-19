@@ -109,6 +109,7 @@ class MyCustomLinkRenderer implements InlineRendererInterface
         
         // ...
     }
+}
 ```
 
 ## Changelog
