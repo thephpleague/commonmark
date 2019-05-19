@@ -34,10 +34,10 @@ final class ExternalLinkProcessorTest extends TestCase
 
         $config = [
             'external_link' => [
-                'internal_hosts' => ['commonmark.thephpleague.com'],
+                'internal_hosts'     => ['commonmark.thephpleague.com'],
                 'open_in_new_window' => true,
-                'html_class' => 'external-link',
-            ]
+                'html_class'         => 'external-link',
+            ],
         ];
 
         $this->assertEquals($expected, $this->parse(self::INPUT, $config));
