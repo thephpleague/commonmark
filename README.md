@@ -77,7 +77,7 @@ The PHP League offers useful extensions that add extra syntax and features:
    - [`league/commonmark-ext-strikethrough`](https://github.com/thephpleague/commonmark-ext-strikethrough) - Adds support for `~~strikethrough~~` syntax
    - [`league/commonmark-ext-task-list`]()(https://github.com/thephpleague/commonmark-ext-task-list) - Support for Github-style task lists
  - [`league/commonmark-ext-inlines-only`](https://github.com/thephpleague/commonmark-ext-inlines-only) - Renders inline text without paragraph tags or other block-level elements
- - [`league/commonmark-ext-external-link`](https://packagist.org/packages/league/commonmark-ext-external-link) - Mark external links, make them open in new windows, etc.
+ - [`league/commonmark-ext-external-link`](https://github.com/thephpleague/commonmark-ext-external-link) - Mark external links, make them open in new windows, etc.
 
 You can add them to your project or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
 
