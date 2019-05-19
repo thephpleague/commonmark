@@ -1,0 +1,41 @@
+{
+    "name": "league/commonmark-ext-external-link",
+    "type": "commonmark-extension",
+    "description": "Extension for league/commonmark which adds extra classes and HTML attributes to external links",
+    "keywords": ["markdown", "commonmark", "extension", "links"],
+    "homepage": "https://github.com/thephpleague/commonmark-ext-external-link",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Colin O'Dell",
+            "email": "colinodell@gmail.com",
+            "homepage": "https://www.colinodell.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php" : "^7.1",
+        "league/commonmark": "^0.19.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "League\\CommonMark\\Ext\\ExternalLink\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "League\\CommonMark\\Ext\\ExternalLink\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.4-dev"
+        }
+    }
+}

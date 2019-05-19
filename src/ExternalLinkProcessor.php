@@ -1,0 +1,107 @@
+<?php
+
+/*
+ * This file is part of the league/commonmark-ext-external-link package.
+ *
+ * (c) Colin O'Dell <colinodell@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace League\CommonMark\Ext\ExternalLink;
+
+use League\CommonMark\Block\Element\Document;
+use League\CommonMark\DocumentProcessorInterface;
+use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Util\Configuration;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+
+final class ExternalLinkProcessor implements DocumentProcessorInterface, ConfigurationAwareInterface
+{
+    /** @var Configuration */
+    private $configuration;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setConfiguration(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function processDocument(Document $document)
+    {
+        $internalHosts = $this->configuration->getConfig('external_link/internal_hosts', []);
+        $openInNewWindow = $this->configuration->getConfig('external_link/open_in_new_window', false);
+        $classes = $this->configuration->getConfig('external_link/html_class', '');
+
+        $walker = $document->walker();
+        while ($event = $walker->next()) {
+            if ($event->isEntering() && $event->getNode() instanceof Link) {
+                /** @var Link $link */
+                $link = $event->getNode();
+
+                $host = parse_url($link->getUrl(), PHP_URL_HOST);
+                if (empty($host)) {
+                    // Something is terribly wrong with this URL
+                    continue;
+                }
+
+                if (self::hostMatches($host, $internalHosts)) {
+                    $link->data['external'] = false;
+                    continue;
+                }
+
+                // Host does not match our list
+                $this->markLinkAsExternal($link, $openInNewWindow, $classes);
+            }
+        }
+    }
+
+    /**
+     * @param Link   $link
+     * @param bool   $openInNewWindow
+     * @param string $classes
+     */
+    private function markLinkAsExternal(Link $link, bool $openInNewWindow, string $classes): void
+    {
+        $link->data['external'] = true;
+        $link->data['attributes'] = $link->getData('attributes', []);
+        $link->data['attributes']['rel'] = 'noopener noreferrer';
+
+        if ($openInNewWindow) {
+            $link->data['attributes']['target'] = '_blank';
+        }
+
+        if (!empty($classes)) {
+            $link->data['attributes']['class'] = trim(($link->data['attributes']['class'] ?? '') . ' ' . $classes);
+        }
+    }
+
+    /**
+     * @param string $host
+     * @param mixed  $compareTo
+     *
+     * @return bool
+     *
+     * @internal This method is only public so we can easily test it. DO NOT USE THIS OUTSIDE OF THIS EXTENSION!
+     */
+    public static function hostMatches(string $host, $compareTo)
+    {
+        foreach ((array) $compareTo as $c) {
+            if (strpos($c, '/') === 0) {
+                if (preg_match($c, $host)) {
+                    return true;
+                }
+            } elseif ($c === $host) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}

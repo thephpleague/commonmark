@@ -1,0 +1,24 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+env:
+  matrix:
+    - COMPOSER_FLAGS=""
+    - COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+
+sudo: false
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
+
+script:
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_script:
+  - wget https://github.com/scrutinizer-ci/ocular/releases/download/1.5.2/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

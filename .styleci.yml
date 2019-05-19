@@ -1,0 +1,13 @@
+preset: recommended
+
+enabled:
+  - concat_with_spaces
+  - no_useless_else
+  - strict
+
+disabled:
+  - concat_without_spaces
+  - no_trailing_comma_in_list_call
+  - phpdoc_summary
+  - post_increment
+  - self_accessor
