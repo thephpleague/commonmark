@@ -152,7 +152,7 @@ Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/master
 
 ## Security
 
-If you discover any security related issues, please email your report privately to colinodell@gmail.com instead of using the issue tracker.
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).         Tidelift will coordinate the fix and disclosure with us.
 
 ## Credits & Acknowledgements
 
