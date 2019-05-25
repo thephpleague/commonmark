@@ -8,7 +8,7 @@ namespace League\CommonMark\Util;
 interface ConfigurationAwareInterface
 {
     /**
-     * @param Configuration $configuration
+     * @param ConfigurationInterface $configuration
      */
-    public function setConfiguration(Configuration $configuration);
+    public function setConfiguration(ConfigurationInterface $configuration);
 }

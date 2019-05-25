@@ -9,15 +9,25 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added proper support for delimiters, including custom delimiters
    - `addDelimiterProcessor()` added to `ConfigurableEnvironmentInterface` and `Environment`
  - Basic delimiters no longer need custom parsers - they'll be parsed automatically
- - Added `AdjacentTextMerger::mergeTextNodesBetweenExclusive()`
- - Added `CommonMarkConveter::getEnvironment()`
- - Extracted a new `DocParserInterface` from the `DocParser`
+ - Added new methods:
+   - `AdjacentTextMerger::mergeTextNodesBetweenExclusive()`
+   - `CommonMarkConveter::getEnvironment()`
+   - `Configuration::set()`
+ - Extracted some new interfaces from base classes:
+   - `DocParserInterface` created from `DocParser`
+   - `ConfigurationInterface` created from `Configuration`
 
 ### Changed
 
+ - Renamed several methods of the `Configuration` class:
+   - `getConfig()` renamed to `get()`
+   - `mergeConfig()` renamed to `merge()`
+   - `setConfig()` renamed to `replace()`
+ - Changed `ConfigurationAwareInterface::setConfiguration()` to accept the new `ConfigurationInterface` instead of the concrete class
  - Renamed the `AdjoiningTextCollapser` class to `AdjacentTextMerger`
    - Replaced its `collapseTextNodes()` method with the new `mergeChildNodes()` method
  - Made several classes `final`:
+   - `Configuration`
    - `DocParser`
    - `HtmlRenderer`
    - `InlineParserEngine`

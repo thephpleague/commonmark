@@ -21,15 +21,15 @@ use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Element\Strong;
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
 
 final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, ConfigurationAwareInterface
 {
     /** @var string */
     private $char;
 
-    /** @var Configuration|null */
+    /** @var ConfigurationInterface|null */
     private $config;
 
     /**
@@ -76,14 +76,14 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
 
         // Calculate actual number of delimiters used from this closer
         if ($opener->getNumDelims() >= 2 && $closer->getNumDelims() >= 2) {
-            if ($this->config && $this->config->getConfig('enable_strong', true)) {
+            if ($this->config && $this->config->get('enable_strong', true)) {
                 return 2;
             }
 
             return 0;
         }
 
-        if ($this->config && $this->config->getConfig('enable_em', true)) {
+        if ($this->config && $this->config->get('enable_em', true)) {
             return 1;
         }
 
@@ -114,9 +114,9 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
     }
 
     /**
-     * @param Configuration $configuration
+     * @param ConfigurationInterface $configuration
      */
-    public function setConfiguration(Configuration $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;
     }

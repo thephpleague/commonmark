@@ -22,6 +22,19 @@ The `DocParser` class is now `final` as it was never intended to be extended, es
 
 Additionally, the `getEnvironment()` method has been deprecated and excluded from that new interface, as it was only used internally by the `DocParser` and other better ways exist to obtain an environment where needed.
 
+## `Configuration`
+
+The `Configuration` class is now `final` and implements a new `ConfigurationInterface`.  If any of your parsers/renders/etc implement `ConfigurationAwareInterface` you'll need to update that method to accept the new interface instead of the concrete class.
+
+We also renamed/added the following methods:
+
+| Old Name        | New Name    |
+|-----------------|-------------|
+| `getConfig()`   | `get()`     |
+| _n/a_           | `set()`     |
+| `setConfig()`   | `replace()` |
+| `mergeConfig()` | `merge()`   |
+
 ## `AbstractInlineContainer`
 
 The `AbstractInlineContainer` class added an unnecessary level of inheritance and was therefore deprecated. If you previously extended this class, you should now extend from `AbstractInline` and override `isContainer()` to return `true`.
