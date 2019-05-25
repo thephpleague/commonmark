@@ -103,11 +103,11 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
             return;
         }
 
-        $tmp = $opener->next();
-        while ($tmp !== null && $tmp !== $closer) {
-            $next = $tmp->next();
-            $emphasis->appendChild($tmp);
-            $tmp = $next;
+        $next = $opener->next();
+        while ($next !== null && $next !== $closer) {
+            $tmp = $next->next();
+            $emphasis->appendChild($next);
+            $next = $tmp;
         }
 
         $opener->insertAfter($emphasis);

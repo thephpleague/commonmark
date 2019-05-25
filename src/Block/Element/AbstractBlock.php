@@ -21,7 +21,7 @@ use League\CommonMark\Node\Node;
 /**
  * Block-level element
  *
- * @method parent() ?self
+ * @method parent() ?AbstractBlock
  */
 abstract class AbstractBlock extends Node
 {

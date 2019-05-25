@@ -15,6 +15,8 @@ namespace League\CommonMark\Util;
  * Array collection
  *
  * Provides a wrapper around a standard PHP array.
+ *
+ * @internal
  */
 class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 {
