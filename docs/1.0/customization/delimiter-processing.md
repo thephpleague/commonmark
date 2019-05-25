@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Delimiter Processing
+redirect_from: /0.20/customization/delimiter-processing/
 ---
 
 Delimiter Processing
@@ -18,11 +19,11 @@ This is an example of **emphasis**. Note how the text is *wrapped* with the same
 ~~~
 
 
-When implementing something with these characteristics you should consider leveraging delimiter runs; otherwise, a basic [inline parser](/0.20/inline-parsing/) should be sufficient.
+When implementing something with these characteristics you should consider leveraging delimiter runs; otherwise, a basic [inline parser](/1.0/inline-parsing/) should be sufficient.
 
 ## Delimiter Priority
 
-Delimiter processors have a lower priority than inline parsers - if an [inline parser](/0.20/inline-parsing/) successfully handles the same special character you're interested in then your delimiter processor will not be called.
+Delimiter processors have a lower priority than inline parsers - if an [inline parser](/1.0/inline-parsing/) successfully handles the same special character you're interested in then your delimiter processor will not be called.
 
 ## Implementing Standalone Delimiter Processors
 
@@ -76,7 +77,7 @@ Note that `$opener` and `$closer` will be automatically removed for you after th
 
 ## Combining Inline Parsers with Delimiter Processors
 
-Basic delimiter processors, as covered above, do not require any custom inline parsers - they'll "just work".  But in some rare cases you may want to pair it with a custom [inline parser](/0.20/customization/inline-parsing/): the inline parser will identify the delimiter, adding an entry to the delimiter stack for the processor to process later.  Note that this is an advanced use case and you probably don't need this.  But if you do then read on.
+Basic delimiter processors, as covered above, do not require any custom inline parsers - they'll "just work".  But in some rare cases you may want to pair it with a custom [inline parser](/1.0/customization/inline-parsing/): the inline parser will identify the delimiter, adding an entry to the delimiter stack for the processor to process later.  Note that this is an advanced use case and you probably don't need this.  But if you do then read on.
 
 ### Inline Parsers and the Delimiter Stack
 

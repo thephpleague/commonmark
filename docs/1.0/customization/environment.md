@@ -1,6 +1,7 @@
 ---
 layout: default
 title: The Environment
+redirect_from: /0.20/customization/environment/
 ---
 
 The Environment
@@ -33,7 +34,7 @@ public function addBlockParser(BlockParserInterface $parser, int $priority = 0);
 
 Registers the given `BlockParserInterface` with the environment with the given priority (a higher number will be executed earlier).
 
-See [Block Parsing](/0.20/customization/block-parsing/) for details.
+See [Block Parsing](/1.0/customization/block-parsing/) for details.
 
 ## addBlockRenderer()
 
@@ -45,7 +46,7 @@ public function addBlockRenderer(string $blockClass, BlockRendererInterface $blo
 
 Registers a `BlockRendererInterface` to handle a specific type of block (`$blockClass`)  with the given priority (a higher number will be executed earlier).
 
-See [Block Rendering](/0.20/customization/block-rendering/) for details.
+See [Block Rendering](/1.0/customization/block-rendering/) for details.
 
 ## addInlineParser()
 
@@ -57,7 +58,7 @@ public function addInlineParser(InlineParserInterface $parser, int $priority = 0
 
 Registers the given `InlineParserInterface` with the environment with the given priority (a higher number will be executed earlier).
 
-See [Inline Parsing](/0.20/customization/inline-parsing/) for details.
+See [Inline Parsing](/1.0/customization/inline-parsing/) for details.
 
 ## addInlineProcessor()
 
@@ -82,7 +83,7 @@ public function addInlineRenderer(string $inlineClass, InlineRendererInterface $
 Registers an `InlineRendererInterface` to handle a specific type of inline (`$inlineClass`) with the given priority (a higher number will be executed earlier).
 A single renderer can handle multiple inline classes, but you must register it separately for each type. (The same renderer instance can be re-used if desired.)
 
-See [Inline Rendering](/0.20/customization/inline-rendering/) for details.
+See [Inline Rendering](/1.0/customization/inline-rendering/) for details.
 
 ## addDocumentProcessor()
 
@@ -92,7 +93,7 @@ See [Inline Rendering](/0.20/customization/inline-rendering/) for details.
 public function addDocumentProcessor(DocumentProcessorInterface $processor, int $priority = 0);
 ~~~
 
-Adds a new Document Processor which will [manipulate the AST](/0.20/customization/abstract-syntax-tree/) after parsing the document but before rendering it.
+Adds a new Document Processor which will [manipulate the AST](/1.0/customization/abstract-syntax-tree/) after parsing the document but before rendering it.
 
 ## Priority
 

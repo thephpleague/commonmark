@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Overview
+redirect_from: /0.20/
 ---
 
 # Overview
@@ -20,10 +21,10 @@ title: Overview
 This library can be installed via Composer:
 
 ~~~bash
-composer require league/commonmark:^0.20
+composer require league/commonmark
 ~~~
 
-See the [installation](/0.20/installation/) section for more details.
+See the [installation](/1.0/installation/) section for more details.
 
 ## Basic Usage
 
@@ -41,4 +42,4 @@ echo $converter->convertToHtml('# Hello World!');
 ~~~
 
 <i class="fa fa-exclamation-triangle"></i>
-**Important:** See the [basic usage](/0.20/basic-usage/) and [security](/0.20/security/) sections for important details.
+**Important:** See the [basic usage](/1.0/basic-usage/) and [security](/1.0/security/) sections for important details.
