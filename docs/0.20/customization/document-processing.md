@@ -31,9 +31,9 @@ class ExternalLinkProcessor implements DocumentProcessorInterface, Configuration
     private $config;
 
     /**
-     * @param Configuration $configuration
+     * @param ConfigurationInterface $configuration
      */
-    public function setConfiguration(Configuration $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;
     }
@@ -75,7 +75,7 @@ class ExternalLinkProcessor implements DocumentProcessorInterface, Configuration
 
         $host = parse_url($url, PHP_URL_HOST);
 
-        return $host != $this->config->getConfig('host');
+        return $host != $this->config->get('host');
     }
 }
 ~~~

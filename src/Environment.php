@@ -105,7 +105,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->assertUninitialized('Failed to modify configuration.');
 
-        $this->config->mergeConfig($config);
+        $this->config->merge($config);
     }
 
     /**
@@ -115,7 +115,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->assertUninitialized('Failed to modify configuration.');
 
-        $this->config->setConfig($config);
+        $this->config->replace($config);
     }
 
     /**
@@ -123,7 +123,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      */
     public function getConfig($key = null, $default = null)
     {
-        return $this->config->getConfig($key, $default);
+        return $this->config->get($key, $default);
     }
 
     /**

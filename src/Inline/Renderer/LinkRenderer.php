@@ -18,14 +18,14 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
-use League\CommonMark\Util\Configuration;
 use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
 use League\CommonMark\Util\RegexHelper;
 
 class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
     /**
-     * @var Configuration
+     * @var ConfigurationInterface
      */
     protected $config;
 
@@ -43,7 +43,7 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
 
         $attrs = $inline->getData('attributes', []);
 
-        $forbidUnsafeLinks = $this->config->getConfig('safe') || !$this->config->getConfig('allow_unsafe_links');
+        $forbidUnsafeLinks = $this->config->get('safe') || !$this->config->get('allow_unsafe_links');
         if (!($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl()))) {
             $attrs['href'] = $inline->getUrl();
         }
@@ -60,9 +60,9 @@ class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterfa
     }
 
     /**
-     * @param Configuration $configuration
+     * @param ConfigurationInterface $configuration
      */
-    public function setConfiguration(Configuration $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;
     }

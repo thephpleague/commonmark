@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Util;
 
-class Configuration
+final class Configuration implements ConfigurationInterface
 {
-    protected $config;
+    private $config;
 
     /**
      * @param array $config
@@ -27,28 +27,25 @@ class Configuration
     }
 
     /**
-     * @param array $config
+     * {@inheritdoc}
      */
-    public function mergeConfig(array $config = [])
+    public function merge(array $config = [])
     {
         $this->config = \array_replace_recursive($this->config, $config);
     }
 
     /**
-     * @param array $config
+     * {@inheritdoc}
      */
-    public function setConfig(array $config = [])
+    public function replace(array $config = [])
     {
         $this->config = $config;
     }
 
     /**
-     * @param string|null $key
-     * @param mixed       $default
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function getConfig(?string $key = null, $default = null)
+    public function get(?string $key = null, $default = null)
     {
         if ($key === null) {
             return $this->config;
@@ -67,12 +64,25 @@ class Configuration
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function set(string $key, $value = null)
+    {
+        // accept a/b/c as ['a']['b']['c']
+        if (\strpos($key, '/')) {
+            $this->setByPath($key, $value);
+        }
+
+        $this->config[$key] = $value;
+    }
+
+    /**
      * @param string      $keyPath
      * @param string|null $default
      *
-     * @return mixed
+     * @return mixed|null
      */
-    protected function getConfigByPath(string $keyPath, $default = null)
+    private function getConfigByPath(string $keyPath, $default = null)
     {
         $keyArr = \explode('/', $keyPath);
         $data = $this->config;
@@ -85,5 +95,28 @@ class Configuration
         }
 
         return $data;
+    }
+
+    /**
+     * @param string      $keyPath
+     * @param string|null $value
+     */
+    private function setByPath(string $keyPath, $value = null)
+    {
+        $keyArr = \explode('/', $keyPath);
+        $pointer = &$this->config;
+        while (($k = array_shift($keyArr)) !== null) {
+            if (!\is_array($pointer)) {
+                $pointer = [];
+            }
+
+            if (!isset($pointer[$k])) {
+                $pointer[$k] = null;
+            }
+
+            $pointer = &$pointer[$k];
+        }
+
+        $pointer = $value;
     }
 }
