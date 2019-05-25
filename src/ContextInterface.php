@@ -87,9 +87,4 @@ interface ContextInterface
      * @return ReferenceParser
      */
     public function getReferenceParser(): ReferenceParser;
-
-    /**
-     * @return string
-     */
-    public function getEncoding(): string;
 }

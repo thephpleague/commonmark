@@ -63,11 +63,6 @@ class Context implements ContextInterface
     protected $blocksParsed = false;
 
     /**
-     * @var string
-     */
-    protected $encoding = 'UTF-8';
-
-    /**
      * @var ReferenceParser
      */
     protected $referenceParser;
@@ -230,25 +225,5 @@ class Context implements ContextInterface
     public function getReferenceParser(): ReferenceParser
     {
         return $this->referenceParser;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEncoding(): string
-    {
-        return $this->encoding;
-    }
-
-    /**
-     * @param string $encoding
-     *
-     * @return $this
-     */
-    public function setEncoding(string $encoding): self
-    {
-        $this->encoding = $encoding;
-
-        return $this;
     }
 }
