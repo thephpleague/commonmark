@@ -19,7 +19,7 @@ use League\CommonMark\Block\Element\BlockQuote;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class BlockQuoteRenderer implements BlockRendererInterface
+final class BlockQuoteRenderer implements BlockRendererInterface
 {
     /**
      * @param BlockQuote               $block

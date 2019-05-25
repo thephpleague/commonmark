@@ -18,7 +18,7 @@ use League\CommonMark\Inline\Element\Newline;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 
-class NewlineParser implements InlineParserInterface
+final class NewlineParser implements InlineParserInterface
 {
     /**
      * @return string[]

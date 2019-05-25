@@ -16,6 +16,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Extracted some new interfaces from base classes:
    - `DocParserInterface` created from `DocParser`
    - `ConfigurationInterface` created from `Configuration`
+   - `ReferenceInterface` created from `Reference`
 
 ### Changed
 
@@ -31,6 +32,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `DocParser`
    - `HtmlRenderer`
    - `InlineParserEngine`
+   - `NodeWalker`
+   - `Reference`
+   - All of the block/inline parsers and renderers
  - Reduced visibility of several internal methods to `private`:
     - `DelimiterStack::findEarliest()`
     - All `protected` methods in `InlineParserEngine`

@@ -23,17 +23,17 @@ use League\CommonMark\Inline\Element\AbstractWebResource;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
-use League\CommonMark\Reference\Reference;
+use League\CommonMark\Reference\ReferenceInterface;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Util\LinkParserHelper;
 use League\CommonMark\Util\RegexHelper;
 
-class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInterface
+final class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInterface
 {
     /**
      * @var EnvironmentInterface
      */
-    protected $environment;
+    private $environment;
 
     /**
      * @return string[]
@@ -121,7 +121,7 @@ class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInter
      *
      * @return array|bool
      */
-    protected function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos)
+    private function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos)
     {
         // Check to see if we have a link/image
         // Inline link?
@@ -141,7 +141,7 @@ class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInter
      *
      * @return array|bool
      */
-    protected function tryParseInlineLinkAndTitle(Cursor $cursor)
+    private function tryParseInlineLinkAndTitle(Cursor $cursor)
     {
         if ($cursor->getCharacter() !== '(') {
             return false;
@@ -182,9 +182,9 @@ class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInter
      * @param Delimiter    $opener
      * @param int          $startPos
      *
-     * @return Reference|null
+     * @return ReferenceInterface|null
      */
-    protected function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos): ?Reference
+    private function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos): ?ReferenceInterface
     {
         if ($opener->getIndex() === null) {
             return null;
@@ -215,7 +215,7 @@ class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInter
      *
      * @return AbstractWebResource
      */
-    protected function createInline(string $url, string $title, bool $isImage)
+    private function createInline(string $url, string $title, bool $isImage)
     {
         if ($isImage) {
             return new Image($url, null, $title);

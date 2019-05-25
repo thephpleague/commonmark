@@ -19,7 +19,7 @@ use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Util\Xml;
 
-class TextRenderer implements InlineRendererInterface
+final class TextRenderer implements InlineRendererInterface
 {
     /**
      * @param Text                     $inline

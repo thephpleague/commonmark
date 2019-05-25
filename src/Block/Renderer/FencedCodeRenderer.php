@@ -20,7 +20,7 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Util\Xml;
 
-class FencedCodeRenderer implements BlockRendererInterface
+final class FencedCodeRenderer implements BlockRendererInterface
 {
     /**
      * @param FencedCode               $block

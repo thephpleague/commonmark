@@ -21,7 +21,7 @@ use League\CommonMark\Cursor;
 use League\CommonMark\ReferenceParser;
 use League\CommonMark\Util\RegexHelper;
 
-class SetExtHeadingParser implements BlockParserInterface
+final class SetExtHeadingParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context

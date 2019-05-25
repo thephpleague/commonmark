@@ -19,7 +19,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class ATXHeadingParser implements BlockParserInterface
+final class ATXHeadingParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context

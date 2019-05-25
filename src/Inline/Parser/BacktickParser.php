@@ -18,7 +18,7 @@ use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 
-class BacktickParser implements InlineParserInterface
+final class BacktickParser implements InlineParserInterface
 {
     /**
      * @return string[]

@@ -19,7 +19,7 @@ use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
-class EscapableParser implements InlineParserInterface
+final class EscapableParser implements InlineParserInterface
 {
     /**
      * @return string[]

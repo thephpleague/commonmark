@@ -2,7 +2,7 @@
 
 namespace League\CommonMark\Node;
 
-class NodeWalker
+final class NodeWalker
 {
     /**
      * @var Node

@@ -17,7 +17,7 @@ namespace League\CommonMark\Block\Parser;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class LazyParagraphParser implements BlockParserInterface
+final class LazyParagraphParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context

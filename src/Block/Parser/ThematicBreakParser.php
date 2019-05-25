@@ -19,7 +19,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class ThematicBreakParser implements BlockParserInterface
+final class ThematicBreakParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context
