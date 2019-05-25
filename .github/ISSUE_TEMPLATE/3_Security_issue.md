@@ -4,8 +4,7 @@ about: See the README instructions for reporting security issues
 
 ---
 
-⚠ PLEASE DON'T DISCLOSE SECURITY-RELATED ISSUES PUBLICLY, SEE BELOW.
+⚠ PLEASE DON'T DISCLOSE SECURITY-RELATED ISSUES PUBLICLY
 
-If you have found a security issue in `thephpleague/commonmark`, please send the details to
-colinodell [at] gmail.com and don't disclose it publicly until we can provide a
-fix for it.
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).
+Tidelift will coordinate the fix and disclosure with us.
