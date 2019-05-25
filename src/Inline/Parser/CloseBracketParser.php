@@ -23,7 +23,7 @@ use League\CommonMark\Inline\Element\AbstractWebResource;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
-use League\CommonMark\Reference\Reference;
+use League\CommonMark\Reference\ReferenceInterface;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Util\LinkParserHelper;
 use League\CommonMark\Util\RegexHelper;
@@ -182,9 +182,9 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
      * @param Delimiter    $opener
      * @param int          $startPos
      *
-     * @return Reference|null
+     * @return ReferenceInterface|null
      */
-    private function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos): ?Reference
+    private function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos): ?ReferenceInterface
     {
         if ($opener->getIndex() === null) {
             return null;

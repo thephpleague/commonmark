@@ -14,10 +14,7 @@
 
 namespace League\CommonMark\Reference;
 
-/**
- * Link reference
- */
-class Reference
+final class Reference implements ReferenceInterface
 {
     /**
      * @var string
@@ -59,7 +56,7 @@ class Reference
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getLabel(): string
     {
@@ -67,7 +64,7 @@ class Reference
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getDestination(): string
     {
@@ -75,7 +72,7 @@ class Reference
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getTitle(): string
     {
