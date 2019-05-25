@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Basic Usage
+redirect_from: /0.20/basic-usage/
 ---
 
 Basic Usage
@@ -20,7 +21,7 @@ echo $converter->convertToHtml('# Hello World!');
 ~~~
 
 <i class="fa fa-exclamation-triangle"></i>
-**Important:** See the [security](/0.20/security/) section for important details on avoiding security misconfigurations.
+**Important:** See the [security](/1.0/security/) section for important details on avoiding security misconfigurations.
 
 The actual conversion process requires three steps:
 
@@ -49,6 +50,6 @@ echo $htmlRenderer->renderBlock($document);
 // <h1>Hello World!</h1>
 ~~~
 
-[Additional customization](/0.20/customization/overview/) is also possible.
+[Additional customization](/1.0/customization/overview/) is also possible.
 
 Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.

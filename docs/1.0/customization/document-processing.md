@@ -1,12 +1,13 @@
 ---
 layout: default
 title: Document Processing
+redirect_from: /0.20/customization/document-processing/
 ---
 
 Document Processing
 ===================
 
-The best way to manipulate the [Abstract Syntax Tree](/0.20/customization/abstract-syntax-tree/) is by implementing a custom Document Processor.  These are executed once all other processing is done and the document is ready to be rendered. Simply create a class which implements the `DocumentProcessorInterface` which contains a single method:
+The best way to manipulate the [Abstract Syntax Tree](/1.0/customization/abstract-syntax-tree/) is by implementing a custom Document Processor.  These are executed once all other processing is done and the document is ready to be rendered. Simply create a class which implements the `DocumentProcessorInterface` which contains a single method:
 
 ~~~php
 <?php

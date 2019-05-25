@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Security
+redirect_from: /0.20/security/
 ---
 
 Security
@@ -35,7 +36,7 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 
 **Failing to set this option could make your site vulnerable to cross-site scripting (XSS) attacks!**
 
-See the [configuration](/0.20/configuration/) section for more information.
+See the [configuration](/1.0/configuration/) section for more information.
 
 ## Unsafe Links
 
@@ -75,4 +76,4 @@ echo $converter->convertToHtml($markdown);
 // </blockquote>
 ~~~
 
-See the [configuration](/0.20/configuration/) section for more information.
+See the [configuration](/1.0/configuration/) section for more information.

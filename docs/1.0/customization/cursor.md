@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Cursor
+redirect_from: /0.20/customization/cursor/
 ---
 
 Cursor
@@ -22,7 +23,7 @@ use League\CommonMark\Cursor;
 $cursor = new Cursor('Hello World!');
 ```
 
-Or, if you're creating a custom [block parser](/0.20/customization/block-parsing/) or [inline renderer](/0.20/customization/inline-parsing/), a pre-configured `Cursor` will be provided to you with (with the `Cursor` already set to the current `position` trying to be parsed).
+Or, if you're creating a custom [block parser](/1.0/customization/block-parsing/) or [inline renderer](/0.20/customization/inline-parsing/), a pre-configured `Cursor` will be provided to you with (with the `Cursor` already set to the current `position` trying to be parsed).
 
 ## Methods
 

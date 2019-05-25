@@ -1,9 +1,16 @@
 ---
 layout: default
-title: Upgrading from 0.19 to 0.20
+title: Upgrading from 0.19 to 1.0
+redirect_from: /0.20/upgrading/
 ---
 
-# Upgrading from 0.19 to 0.20
+# Upgrading from 0.19 to 1.0
+
+### Text Encoding
+
+This library used to claim it supported ISO-8859-1 encoding but that never truly worked - everything assumed the text was encoded as UTF-8 or ASCII. We've therefore dropped support for ISO-8859-1 and any other unexpected encodings. If you were using some other encoding, you'll now need to convert your Markdown to UTF-8 prior to running it through this library.
+
+Additionally, all public `getEncoding()` or `setEncoding()` methods have been removed, so assume that you're working with UTF-8.
 
 ### Inline Processors
 
@@ -16,6 +23,19 @@ No direct upgrade path exists as this implementation was not widely used, or onl
 The `DocParser` class is now `final` as it was never intended to be extended, especially given how so much logic was in `private` methods.  Any custom implementations should implement the new `DocParserInterface` interface instead.
 
 Additionally, the `getEnvironment()` method has been deprecated and excluded from that new interface, as it was only used internally by the `DocParser` and other better ways exist to obtain an environment where needed.
+
+## `Configuration`
+
+The `Configuration` class is now `final` and implements a new `ConfigurationInterface`.  If any of your parsers/renders/etc implement `ConfigurationAwareInterface` you'll need to update that method to accept the new interface instead of the concrete class.
+
+We also renamed/added the following methods:
+
+| Old Name        | New Name    |
+|-----------------|-------------|
+| `getConfig()`   | `get()`     |
+| _n/a_           | `set()`     |
+| `setConfig()`   | `replace()` |
+| `mergeConfig()` | `merge()`   |
 
 ## `AbstractInlineContainer`
 

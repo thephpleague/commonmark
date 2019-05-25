@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Extensions
+redirect_from: /0.20/customization/extensions/
 ---
 
 Extensions

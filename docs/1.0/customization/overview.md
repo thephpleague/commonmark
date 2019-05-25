@@ -1,6 +1,9 @@
 ---
 layout: default
 title: Customization Overview
+redirect_from:
+  - /0.20/customization/
+  - /0.20/customization/overview/
 ---
 
 Customization Overview
@@ -21,32 +24,32 @@ This resulting AST contains both blocks (structural elements like paragraphs, li
 
 There are two main types of parsers:
 
-- [Block parsers](/0.20/customization/block-parsing/)
-- [Inline parsers](/0.20/customization/inline-parsing/)
+- [Block parsers](/1.0/customization/block-parsing/)
+- [Inline parsers](/1.0/customization/inline-parsing/)
 
-The parsing approach is identical for both types - examine text at the current position (via the [`Cursor`](/0.20/customization/cursor/)) and determine if you can handle it;
+The parsing approach is identical for both types - examine text at the current position (via the [`Cursor`](/1.0/customization/cursor/)) and determine if you can handle it;
 if so, create the corresponding AST element,
 otherwise you abort and the engine will try other parsers.  If no parser succeeds then the current text is treated as plain text.
 
-Simple delimiter-based inlines (like emphasis, strikethrough, etc.) can be parsed without needing a dedicated inline parser by leveraging the new [Delimiter Processing](/0.20/customization/delimiter-processing/) functionality.
+Simple delimiter-based inlines (like emphasis, strikethrough, etc.) can be parsed without needing a dedicated inline parser by leveraging the new [Delimiter Processing](/1.0/customization/delimiter-processing/) functionality.
 
 ## Customize HTML Output with Custom Renderers
 
 Renders convert the parsed blocks/inlines from the AST representation into HTML.  There are two types of renderers:
 
-- [Block renderers](/0.20/customization/block-rendering/)
-- [Inline renderers](/0.20/customization/inline-rendering/)
+- [Block renderers](/1.0/customization/block-rendering/)
+- [Inline renderers](/1.0/customization/inline-rendering/)
 
 When registering these with the environment, you must tell it which block/inline classes it should handle.  This allows you
 to essentially "swap out" built-in renderers with your own.
 
 ## AST manipulation
 
-Once the [Abstract Syntax Tree](/0.20/customization/abstract-syntax-tree/) is parsed, you are free to access/manipulate it as needed before it's passed into the rendering engine.
+Once the [Abstract Syntax Tree](/1.0/customization/abstract-syntax-tree/) is parsed, you are free to access/manipulate it as needed before it's passed into the rendering engine.
 
 ## Examples
 
 Some examples of what's possible:
 
-* [Parse Twitter handles into profile links](/0.20/customization/inline-parsing#example-1---twitter-handles)
-* [Convert smilies into emoticon images](/0.20/customization/inline-parsing#example-2---emoticons)
+* [Parse Twitter handles into profile links](/1.0/customization/inline-parsing#example-1---twitter-handles)
+* [Convert smilies into emoticon images](/1.0/customization/inline-parsing#example-2---emoticons)
