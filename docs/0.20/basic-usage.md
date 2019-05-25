@@ -50,3 +50,5 @@ echo $htmlRenderer->renderBlock($document);
 ~~~
 
 [Additional customization](/0.20/customization/overview/) is also possible.
+
+Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.

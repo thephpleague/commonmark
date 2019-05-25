@@ -86,7 +86,7 @@ final class DocParser implements DocParserInterface
     public function parse(string $input): Document
     {
         $context = new Context(new Document(), $this->environment);
-        $context->setEncoding(\mb_detect_encoding($input, 'ASCII,UTF-8', true) ?: 'ISO-8859-1');
+        $context->setEncoding(\mb_detect_encoding($input, 'ASCII,UTF-8', true) ?: 'UTF-8');
 
         $lines = $this->preProcessInput($input);
         foreach ($lines as $line) {
