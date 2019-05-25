@@ -86,7 +86,6 @@ final class DocParser implements DocParserInterface
     public function parse(string $input): Document
     {
         $context = new Context(new Document(), $this->environment);
-        $context->setEncoding(\mb_detect_encoding($input, 'ASCII,UTF-8', true) ?: 'UTF-8');
 
         $lines = $this->preProcessInput($input);
         foreach ($lines as $line) {
@@ -111,7 +110,7 @@ final class DocParser implements DocParserInterface
         $context->getBlockCloser()->resetTip();
         $context->setBlocksParsed(false);
 
-        $cursor = new Cursor($context->getLine(), $context->getEncoding());
+        $cursor = new Cursor($context->getLine());
 
         $this->resetContainer($context, $cursor);
         $context->getBlockCloser()->setLastMatchedContainer($context->getContainer());

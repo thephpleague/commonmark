@@ -52,6 +52,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - Removed `InlineProcessorInterface`
  - Removed `EmphasisParser` now that we have proper delimiter support
  - Removed support for non-UTF-8-compatible encodings
+    - Removed `getEncoding()` from `ContextInterface`
+    - Removed `getEncoding()`, `setEncoding()`, and `$encoding` from `Context`
+    - Removed `getEncoding()` and the second `$encoding` constructor param from `Cursor`
  - Removed now-unused methods
    - Removed `DelimiterStack::getTop()` (no replacement)
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
