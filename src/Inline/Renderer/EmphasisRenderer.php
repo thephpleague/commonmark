@@ -19,7 +19,7 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Emphasis;
 
-class EmphasisRenderer implements InlineRendererInterface
+final class EmphasisRenderer implements InlineRendererInterface
 {
     /**
      * @param Emphasis                 $inline

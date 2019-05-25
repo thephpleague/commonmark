@@ -19,7 +19,7 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Newline;
 
-class NewlineRenderer implements InlineRendererInterface
+final class NewlineRenderer implements InlineRendererInterface
 {
     /**
      * @param Newline                  $inline

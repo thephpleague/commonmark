@@ -19,7 +19,7 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Strong;
 
-class StrongRenderer implements InlineRendererInterface
+final class StrongRenderer implements InlineRendererInterface
 {
     /**
      * @param Strong                   $inline

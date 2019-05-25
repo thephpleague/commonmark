@@ -21,7 +21,7 @@ use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
 
-class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface
+final class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface

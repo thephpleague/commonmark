@@ -19,7 +19,7 @@ use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class HeadingRenderer implements BlockRendererInterface
+final class HeadingRenderer implements BlockRendererInterface
 {
     /**
      * @param Heading                  $block

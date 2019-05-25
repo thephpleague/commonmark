@@ -18,7 +18,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\ElementRendererInterface;
 
-class DocumentRenderer implements BlockRendererInterface
+final class DocumentRenderer implements BlockRendererInterface
 {
     /**
      * @param AbstractBlock|Document   $block

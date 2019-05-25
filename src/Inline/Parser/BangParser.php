@@ -18,7 +18,7 @@ use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
 
-class BangParser implements InlineParserInterface
+final class BangParser implements InlineParserInterface
 {
     /**
      * @return string[]

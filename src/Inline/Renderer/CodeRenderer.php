@@ -20,7 +20,7 @@ use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Util\Xml;
 
-class CodeRenderer implements InlineRendererInterface
+final class CodeRenderer implements InlineRendererInterface
 {
     /**
      * @param Code                     $inline

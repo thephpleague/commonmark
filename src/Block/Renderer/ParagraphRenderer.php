@@ -19,7 +19,7 @@ use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class ParagraphRenderer implements BlockRendererInterface
+final class ParagraphRenderer implements BlockRendererInterface
 {
     /**
      * @param Paragraph                $block

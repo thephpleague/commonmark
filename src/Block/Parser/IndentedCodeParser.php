@@ -19,7 +19,7 @@ use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class IndentedCodeParser implements BlockParserInterface
+final class IndentedCodeParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context

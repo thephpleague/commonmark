@@ -21,7 +21,7 @@ use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
 
-class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
+final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface

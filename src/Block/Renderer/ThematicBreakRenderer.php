@@ -19,7 +19,7 @@ use League\CommonMark\Block\Element\ThematicBreak;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class ThematicBreakRenderer implements BlockRendererInterface
+final class ThematicBreakRenderer implements BlockRendererInterface
 {
     /**
      * @param ThematicBreak            $block

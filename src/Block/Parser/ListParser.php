@@ -22,7 +22,7 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class ListParser implements BlockParserInterface
+final class ListParser implements BlockParserInterface
 {
     /**
      * @param ContextInterface $context

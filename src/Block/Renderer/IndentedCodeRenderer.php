@@ -20,7 +20,7 @@ use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Util\Xml;
 
-class IndentedCodeRenderer implements BlockRendererInterface
+final class IndentedCodeRenderer implements BlockRendererInterface
 {
     /**
      * @param AbstractBlock            $block

@@ -31,6 +31,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `DocParser`
    - `HtmlRenderer`
    - `InlineParserEngine`
+   - All of the block/inline parsers and renderers
  - Reduced visibility of several internal methods to `private`:
     - `DelimiterStack::findEarliest()`
     - All `protected` methods in `InlineParserEngine`

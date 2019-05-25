@@ -22,7 +22,7 @@ use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
 use League\CommonMark\Util\RegexHelper;
 
-class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterface
+final class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface

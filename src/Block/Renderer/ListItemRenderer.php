@@ -19,7 +19,7 @@ use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 
-class ListItemRenderer implements BlockRendererInterface
+final class ListItemRenderer implements BlockRendererInterface
 {
     /**
      * @param ListItem                 $block
