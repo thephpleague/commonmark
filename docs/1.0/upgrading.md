@@ -27,6 +27,20 @@ The "inline processor" functionality has been removed and replaced with a proper
 
 No direct upgrade path exists as this implementation was not widely used, or only used for implementing delimiter processing.  If you fall in the latter category, simply leverage the new functionality instead.  Otherwise, if you have another good use case for inline processors, please let us know in the issue tracker.
 
+## Delimiters
+
+Now that we have proper delimiter handling, we've `final`ized the `Delimiter` class and extracted a `DelimiterInterface` from it.  If you previous extended from `Delimiter` you'll need to implement this new interface instead.
+
+We also deleted these unused `Delimiter` methods:
+
+ - `setCanOpen()`
+ - `setCanClose()`
+ - `setChar()`
+ - `setIndex()`
+ - `setInlineNode()`
+
+And all of the remaining `Delimiter::set___()` methods no longer return `$this`.
+
 ## `DocParser`
 
 The `DocParser` class is now `final` as it was never intended to be extended, especially given how so much logic was in `private` methods.  Any custom implementations should implement the new `DocParserInterface` interface instead.

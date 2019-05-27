@@ -15,7 +15,7 @@
 namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\Cursor;
-use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Inline\AdjacentTextMerger;
@@ -114,14 +114,14 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     }
 
     /**
-     * @param Cursor       $cursor
-     * @param ReferenceMap $referenceMap
-     * @param Delimiter    $opener
-     * @param int          $startPos
+     * @param Cursor             $cursor
+     * @param ReferenceMap       $referenceMap
+     * @param DelimiterInterface $opener
+     * @param int                $startPos
      *
      * @return array|bool
      */
-    private function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos)
+    private function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, DelimiterInterface $opener, int $startPos)
     {
         // Check to see if we have a link/image
         // Inline link?
@@ -177,14 +177,14 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     }
 
     /**
-     * @param Cursor       $cursor
-     * @param ReferenceMap $referenceMap
-     * @param Delimiter    $opener
-     * @param int          $startPos
+     * @param Cursor             $cursor
+     * @param ReferenceMap       $referenceMap
+     * @param DelimiterInterface $opener
+     * @param int                $startPos
      *
      * @return ReferenceInterface|null
      */
-    private function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, Delimiter $opener, int $startPos): ?ReferenceInterface
+    private function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, DelimiterInterface $opener, int $startPos): ?ReferenceInterface
     {
         if ($opener->getIndex() === null) {
             return null;

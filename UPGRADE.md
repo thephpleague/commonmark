@@ -2,6 +2,30 @@
 
 **Note:** This file has been deprecated.  Future upgrade instructions can be found on our website: <https://commonmark.thephpleague.com/releases>
 
+## UNRELEASED
+
+### More Delimiter Changes
+
+The `Delimiter` class is now `final`.  We've extracted a `DelimiterInterface` you can use to mock a `Delimiter` or create your own custom ones if needed.  All `Delimiter` type hints have been replaced with a type hint for the interface.
+
+We also renamed the following methods:
+
+| Old Name          | New Name              |
+|-------------------|-----------------------|
+| `getOrigDelims()` | `getOriginalLength()` |
+| `getNumDelims() ` | `getLength()`         |
+| `setNumDelims()`  | `setLength()`         |
+
+And deleted these ones:
+
+ - `setCanOpen()`
+ - `setCanClose()`
+ - `setChar()`
+ - `setIndex()`
+ - `setInlineNode()`
+
+Lastly, the various `Delimiter::set___()` methods no longer return `$this`.
+
 ## 1.0.0-beta2
 
 ### Delimiter Processing

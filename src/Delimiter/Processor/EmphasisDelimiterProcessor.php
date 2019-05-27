@@ -17,7 +17,7 @@
 
 namespace League\CommonMark\Delimiter\Processor;
 
-use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Inline\Element\AbstractStringContainer;
 use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Element\Strong;
@@ -67,15 +67,15 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
     /**
      * {@inheritdoc}
      */
-    public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
+    public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
     {
         // "Multiple of 3" rule for internal delimiter runs
-        if (($opener->canClose() || $closer->canOpen()) && $closer->getOrigDelims() % 3 !== 0 && ($opener->getOrigDelims() + $closer->getOrigDelims()) % 3 === 0) {
+        if (($opener->canClose() || $closer->canOpen()) && $closer->getOriginalLength() % 3 !== 0 && ($opener->getOriginalLength() + $closer->getOriginalLength()) % 3 === 0) {
             return 0;
         }
 
         // Calculate actual number of delimiters used from this closer
-        if ($opener->getNumDelims() >= 2 && $closer->getNumDelims() >= 2) {
+        if ($opener->getLength() >= 2 && $closer->getLength() >= 2) {
             if ($this->config && $this->config->get('enable_strong', true)) {
                 return 2;
             }
