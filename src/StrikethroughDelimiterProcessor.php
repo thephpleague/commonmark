@@ -13,7 +13,7 @@ namespace League\CommonMark\Ext\Strikethrough;
 
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterface
 {
@@ -24,6 +24,7 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
     {
         return '~';
     }
+
     /**
      * {@inheritdoc}
      */
@@ -53,7 +54,7 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
     /**
      * {@inheritdoc}
      */
-    public function process(Text $opener, Text $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
     {
         $strikethrough = new Strikethrough();
 
