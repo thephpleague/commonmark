@@ -6,7 +6,7 @@ All notable changes will be documented in this file.
 
 ## [1.0.0-beta1] - 2019-05-27
 
-## Changed
+### Changed
 
  - Made compatible with `league/commonmark` 1.0.0-beta1
 
