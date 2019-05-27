@@ -55,6 +55,16 @@ class FakeHtmlRenderer implements ElementRendererInterface
     }
 
     /**
+     * @param AbstractInline $inline
+     *
+     * @return string
+     */
+    public function renderInline(AbstractInline $inline): string
+    {
+        return '::inline::';
+    }
+
+    /**
      * @param AbstractInline[] $inlines
      *
      * @return string

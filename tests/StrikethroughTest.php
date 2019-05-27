@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Ext\Strikethrough;
+namespace League\CommonMark\Ext\Strikethrough\Test;
 
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Ext\Strikethrough\Strikethrough;
+use PHPUnit\Framework\TestCase;
 
-class Strikethrough extends AbstractInline
+final class StrikethroughTest extends TestCase
 {
-    /**
-     * @return bool
-     */
-    public function isContainer(): bool
+    public function testIsContainer()
     {
-        return true;
+        $s = new Strikethrough();
+
+        $this->assertTrue($s->isContainer());
     }
 }
