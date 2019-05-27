@@ -30,11 +30,13 @@ class SmartPunctExtension implements ExtensionInterface
             ->addInlineParser(new QuoteParser(), 10)
             ->addInlineParser(new PunctuationParser(), 0)
 
-            ->addInlineProcessor(new QuoteProcessor(), 10)
+            ->addDelimiterProcessor(QuoteProcessor::createDoubleQuoteProcessor())
+            ->addDelimiterProcessor(QuoteProcessor::createSingleQuoteProcessor())
 
             ->addBlockRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)
             ->addBlockRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
 
+            ->addInlineRenderer(Quote::class, new QuoteRenderer(), 100)
             ->addInlineRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0)
         ;
     }
