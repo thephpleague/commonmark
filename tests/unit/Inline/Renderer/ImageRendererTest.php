@@ -97,21 +97,6 @@ class ImageRendererTest extends TestCase
         $this->assertEquals('', $result->getAttribute('src'));
     }
 
-    public function testRenderUnsafeUrlWithSafeOption()
-    {
-        $this->renderer->setConfiguration(new Configuration([
-            'safe' => true,
-        ]));
-
-        $inline = new Image('javascript:void(0)');
-        $fakeRenderer = new FakeHtmlRenderer();
-
-        $result = $this->renderer->render($inline, $fakeRenderer);
-
-        $this->assertTrue($result instanceof HtmlElement);
-        $this->assertEquals('', $result->getAttribute('src'));
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      */

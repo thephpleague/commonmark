@@ -21,87 +21,6 @@ use League\CommonMark\Block\Element\HtmlBlock;
  */
 final class RegexHelper
 {
-    /** @deprecated Use PARTIAL_ESCAPABLE instead */
-    const ESCAPABLE = 0;
-
-    /** @deprecated Use PARTIAL_ESCAPED_CHAR instead */
-    const ESCAPED_CHAR = 1;
-
-    /** @deprecated Use PARTIAL_IN_DOUBLE_QUOTES instead */
-    const IN_DOUBLE_QUOTES = 2;
-
-    /** @deprecated Use PARTIAL_IN_SINGLE_QUOTES instead */
-    const IN_SINGLE_QUOTES = 3;
-
-    /** @deprecated Use PARTIAL_IN_PARENS instead */
-    const IN_PARENS = 4;
-
-    /** @deprecated Use PARTIAL_REG_CHAR instead */
-    const REG_CHAR = 5;
-
-    /** @deprecated Use PARTIAL_IN_PARENS_NOSP instead */
-    const IN_PARENS_NOSP = 6;
-
-    /** @deprecated Use PARTIAL_TAGNAME instead */
-    const TAGNAME = 7;
-
-    /** @deprecated Use PARTIAL_BLOCKTAGNAME instead */
-    const BLOCKTAGNAME = 8;
-
-    /** @deprecated Use PARTIAL_ATTRIBUTENAME instead */
-    const ATTRIBUTENAME = 9;
-
-    /** @deprecated Use PARTIAL_UNQUOTEDVALUE instead */
-    const UNQUOTEDVALUE = 10;
-
-    /** @deprecated Use PARTIAL_SINGLEQUOTEDVALUE instead */
-    const SINGLEQUOTEDVALUE = 11;
-
-    /** @deprecated Use PARTIAL_DOUBLEQUOTEDVALUE instead */
-    const DOUBLEQUOTEDVALUE = 12;
-
-    /** @deprecated Use PARTIAL_ATTRIBUTEVALUE instead */
-    const ATTRIBUTEVALUE = 13;
-
-    /** @deprecated Use PARTIAL_ATTRIBUTEVALUESPEC instead */
-    const ATTRIBUTEVALUESPEC = 14;
-
-    /** @deprecated Use PARTIAL_ATTRIBUTE instead */
-    const ATTRIBUTE = 15;
-
-    /** @deprecated Use PARTIAL_OPENTAG instead */
-    const OPENTAG = 16;
-
-    /** @deprecated Use PARTIAL_CLOSETAG instead */
-    const CLOSETAG = 17;
-
-    /** @deprecated Use PARTIAL_OPENBLOCKTAG instead */
-    const OPENBLOCKTAG = 18;
-
-    /** @deprecated Use PARTIAL_CLOSEBLOCKTAG instead */
-    const CLOSEBLOCKTAG = 19;
-
-    /** @deprecated Use PARTIAL_HTMLCOMMENT instead */
-    const HTMLCOMMENT = 20;
-
-    /** @deprecated Use PARTIAL_PROCESSINGINSTRUCTION instead */
-    const PROCESSINGINSTRUCTION = 21;
-
-    /** @deprecated Use PARTIAL_DECLARATION instead */
-    const DECLARATION = 22;
-
-    /** @deprecated Use PARTIAL_CDATA instead */
-    const CDATA = 23;
-
-    /** @deprecated Use PARTIAL_HTMLTAG instead */
-    const HTMLTAG = 24;
-
-    /** @deprecated Use PARTIAL_HTMLBLOCKOPEN instead */
-    const HTMLBLOCKOPEN = 25;
-
-    /** @deprecated Use PARTIAL_LINK_TITLE instead */
-    const LINK_TITLE = 26;
-
     // Partial regular expressions (wrap with `/` on each side before use)
     const PARTIAL_ENTITY = '&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});';
     const PARTIAL_ESCAPABLE = '[!"#$%&\'()*+,.\/:;<=>?@[\\\\\]^_`{|}~-]';
@@ -135,12 +54,6 @@ final class RegexHelper
     const PARTIAL_LINK_TITLE = '^(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"' .
         '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*\'' .
         '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*\))';
-
-    /** @deprecated Use PARTIAL_ESCAPABLE instead */
-    const REGEX_ESCAPABLE = self::PARTIAL_ESCAPABLE;
-
-    /** @deprecated Use PARTIAL_ENTITY instead */
-    const REGEX_ENTITY = self::PARTIAL_ENTITY;
 
     const REGEX_PUNCTUATION = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\p{Pc}\p{Pd}\p{Pe}\p{Pf}\p{Pi}\p{Po}\p{Ps}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
     const REGEX_UNSAFE_PROTOCOL = '/^javascript:|vbscript:|file:|data:/i';

@@ -40,11 +40,6 @@ final class HtmlInlineRenderer implements InlineRendererInterface, Configuration
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
         }
 
-        // Kept for BC reasons
-        if ($this->config->get('safe') === true) {
-            return '';
-        }
-
         if ($this->config->get('html_input') === EnvironmentInterface::HTML_INPUT_STRIP) {
             return '';
         }

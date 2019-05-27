@@ -41,11 +41,6 @@ final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAw
             throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
         }
 
-        // Kept for BC reasons
-        if ($this->config->get('safe') === true) {
-            return '';
-        }
-
         if ($this->config->get('html_input') === EnvironmentInterface::HTML_INPUT_STRIP) {
             return '';
         }

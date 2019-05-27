@@ -9,6 +9,15 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - `DelimiterProcessorInterface::process()` will accept any type of `AbstractStringContainer` now, not just `Text` nodes
  - The `Delimiter` constructor, `getInlineNode()`, and `setInlineNode()` no longer accept generic `Node` elements - only `AbstractStringContainer`s
 
+
+### Removed
+
+ - Removed all deprecated functionality:
+   - The `safe` option (use `html_input` and `allow_unsafe_links` options instead)
+   - All deprecated `RegexHelper` constants
+   - `DocParser::getEnvironment()` (you should obtain it some other way)
+   - `AbstractInlineContainer` (use `AbstractInline` instead and make `isContainer()` return `true`)
+
 ## [1.0.0-beta1] - 2019-05-26
 
 ### Added

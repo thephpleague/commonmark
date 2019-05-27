@@ -43,7 +43,7 @@ final class LinkRenderer implements InlineRendererInterface, ConfigurationAwareI
 
         $attrs = $inline->getData('attributes', []);
 
-        $forbidUnsafeLinks = $this->config->get('safe') || !$this->config->get('allow_unsafe_links');
+        $forbidUnsafeLinks = !$this->config->get('allow_unsafe_links');
         if (!($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl()))) {
             $attrs['href'] = $inline->getUrl();
         }

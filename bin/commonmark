@@ -15,11 +15,14 @@ $options_raw = getopt('', array(
 ));
 foreach ($options_raw as $option => $value) {
     switch ($option) {
+        case 'safe':
+            $options['html_input'] = 'strip';
+            $options['allow_unsafe_links'] = false;
+            break;
         case 'use-asterisk':
         case 'use-underscore':
         case 'enable-strong':
         case 'enable-em':
-        case 'safe':
             if ($value !== true && $value !== false) {
                 fail("Invalid value '$value' for option '$option'");
             }

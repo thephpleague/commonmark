@@ -128,8 +128,8 @@ class BinTest extends AbstractBinTest
     public function testSafe()
     {
         $cmd = $this->createCommand();
-        $cmd->addArg($this->getPathToData('safe/input.md'));
         $cmd->addArg('--safe');
+        $cmd->addArg($this->getPathToData('safe/input.md'));
         $cmd->execute();
 
         $this->assertEquals(0, $cmd->getExitCode());
