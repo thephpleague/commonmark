@@ -46,21 +46,6 @@ class HtmlInlineRendererTest extends TestCase
         $this->assertContains('<h1>Test</h1>', $result);
     }
 
-    public function testRenderSafeMode()
-    {
-        $this->renderer->setConfiguration(new Configuration([
-            'safe' => true,
-        ]));
-
-        $inline = new HtmlInline('<h1>Test</h1>');
-        $fakeRenderer = new FakeHtmlRenderer();
-
-        $result = $this->renderer->render($inline, $fakeRenderer);
-
-        $this->assertInternalType('string', $result);
-        $this->assertEquals('', $result);
-    }
-
     public function testRenderAllowHtml()
     {
         $this->renderer->setConfiguration(new Configuration([

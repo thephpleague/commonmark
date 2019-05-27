@@ -13,6 +13,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Removed
 
  - Removed all deprecated functionality:
+   - The `safe` option (use `html_input` and `allow_unsafe_links` options instead)
    - All deprecated `RegexHelper` constants
    - `DocParser::getEnvironment()` (you should obtain it some other way)
    - `AbstractInlineContainer` (use `AbstractInline` instead and make `isContainer()` return `true`)

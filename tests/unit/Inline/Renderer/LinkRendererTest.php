@@ -95,21 +95,6 @@ class LinkRendererTest extends TestCase
         $this->assertEquals('', $result->getAttribute('href'));
     }
 
-    public function testRenderUnsafeLinkWithSafeOption()
-    {
-        $this->renderer->setConfiguration(new Configuration([
-            'safe' => true,
-        ]));
-
-        $inline = new Link('javascript:void(0)');
-        $fakeRenderer = new FakeHtmlRenderer();
-
-        $result = $this->renderer->render($inline, $fakeRenderer);
-
-        $this->assertTrue($result instanceof HtmlElement);
-        $this->assertEquals('', $result->getAttribute('href'));
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      */
