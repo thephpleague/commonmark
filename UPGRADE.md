@@ -2,6 +2,12 @@
 
 **Note:** This file has been deprecated.  Future upgrade instructions can be found on our website: <https://commonmark.thephpleague.com/releases>
 
+## UNRELEASED
+
+### Delimiter Processing
+
+We've standardized the new delimiter processing to work with `AbstractStringContainer` nodes.  Previously in 1.0.0-beta1, some parts (incorrectly) accepted any type of `Node`, while others forced you to use `Text` elements instead.
+
 ## 1.0.0-beta1
 
 ### Text Encoding

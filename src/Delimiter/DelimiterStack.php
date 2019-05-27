@@ -19,7 +19,6 @@ namespace League\CommonMark\Delimiter;
 
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Inline\AdjacentTextMerger;
-use League\CommonMark\Inline\Element\Text;
 
 class DelimiterStack
 {
@@ -189,9 +188,7 @@ class DelimiterStack
                 continue;
             }
 
-            /** @var Text $openerNode */
             $openerNode = $opener->getInlineNode();
-            /** @var Text $closerNode */
             $closerNode = $closer->getInlineNode();
 
             // Remove number of used delimiters from stack and inline nodes.

@@ -15,7 +15,7 @@
 namespace League\CommonMark\Delimiter\Processor;
 
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 /**
  * An implementation of DelimiterProcessorInterface that dispatches all calls to two or more other DelimiterProcessors
@@ -92,7 +92,7 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function process(Text $opener, Text $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
     {
         return $this->findProcessor($delimiterUse)->process($opener, $closer, $delimiterUse);
     }

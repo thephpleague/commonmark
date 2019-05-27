@@ -18,9 +18,9 @@
 namespace League\CommonMark\Delimiter\Processor;
 
 use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 use League\CommonMark\Inline\Element\Emphasis;
 use League\CommonMark\Inline\Element\Strong;
-use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
 
@@ -93,7 +93,7 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
     /**
      * {@inheritdoc}
      */
-    public function process(Text $opener, Text $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
     {
         if ($delimiterUse === 1) {
             $emphasis = new Emphasis();

@@ -16,6 +16,7 @@ namespace League\CommonMark\Tests\Functional\Delimiter;
 
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 use League\CommonMark\Inline\Element\Text;
 
 final class TestDelimiterProcessor implements DelimiterProcessorInterface
@@ -64,7 +65,7 @@ final class TestDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function process(Text $opener, Text $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
     {
         $opener->insertAfter(new Text('(' . $this->length . ')'));
         $closer->insertBefore(new Text('(/' . $this->length . ')'));
