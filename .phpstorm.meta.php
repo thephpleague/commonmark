@@ -27,4 +27,9 @@ namespace PHPSTORM_META
     registerArgumentsSet('league_commonmark_newline_types', \League\CommonMark\Inline\Element\Newline::HARDBREAK, \League\CommonMark\Inline\Element\Newline::SOFTBREAK);
     expectedArguments(\League\CommonMark\Inline\Element\Newline::__construct(), 0, argumentsSet('league_commonmark_newline_types'));
     expectedReturnValues(\League\CommonMark\Inline\Element\Newline::getType(), argumentsSet('league_commonmark_newline_types'));
+
+    registerArgumentsSet('league_commonmark_options', 'renderer', 'enable_em', 'enable_strong', 'use_asterisk', 'use_underscore', 'html_input', 'allow_unsafe_links', 'max_nesting_level');
+    expectedArguments(\League\CommonMark\EnvironmentInterface::getConfig(), 0, argumentsSet('league_commonmark_options'));
+    expectedArguments(\League\CommonMark\Util\ConfigurationInterface::get(), 0, argumentsSet('league_commonmark_options'));
+    expectedArguments(\League\CommonMark\Util\ConfigurationInterface::set(), 0, argumentsSet('league_commonmark_options'));
 }
