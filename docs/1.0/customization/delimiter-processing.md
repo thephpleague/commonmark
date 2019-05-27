@@ -44,7 +44,7 @@ This method tells the engine the minimum number of characters needed to match or
 ### `getDelimiterUse()`
 
 ~~~php
-public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int;
+public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int;
 ~~~
 
 This method is used to tell the engine how many characters from the matching delimiters should be consumed.  For simple processors you'll likely return `1` (or whatever your minimum length is).  In more advanced cases, you can examine the opening and closing delimiters and perform additional logic to determine whether they should be fully or partially consumed.  You can also return `0` if you'd like.
@@ -81,7 +81,7 @@ Basic delimiter processors, as covered above, do not require any custom inline p
 
 ### Inline Parsers and the Delimiter Stack
 
-As your identifies potential delimiter-based inlines, it should create a new `AbstractStringContainer` node (either `Text` or something custom) with the inner contents and also push a new `Delimiter` onto the `DelimiterStack`:
+As your identifies potential delimiter-based inlines, it should create a new `AbstractStringContainer` node (either `Text` or something custom) with the inner contents and also push a new `DelimiterInterface` onto the `DelimiterStack`:
 
 ~~~php
 $node = new Text($cursor->getPreviousText(), [

@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Delimiter\Processor;
 
-use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 /**
@@ -84,7 +84,7 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
+    public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
     {
         return $this->findProcessor($opener->getLength())->getDelimiterUse($opener, $closer);
     }

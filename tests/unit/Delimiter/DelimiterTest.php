@@ -49,15 +49,6 @@ class DelimiterTest extends TestCase
         $this->assertTrue($delimiter->canClose());
     }
 
-    public function testSetCanOpen()
-    {
-        $node = $this->createMock(AbstractStringContainer::class);
-        $delimiter = new Delimiter('*', 2, $node, true, false, null);
-
-        $delimiter->setCanOpen(false);
-        $this->assertFalse($delimiter->canOpen());
-    }
-
     public function testSetActive()
     {
         $node = $this->createMock(AbstractStringContainer::class);
@@ -68,27 +59,6 @@ class DelimiterTest extends TestCase
 
         $delimiter->setActive(false);
         $this->assertFalse($delimiter->isActive());
-    }
-
-    public function testSetChar()
-    {
-        $node = $this->createMock(AbstractStringContainer::class);
-        $delimiter = new Delimiter('*', 2, $node, true, false, null);
-
-        $delimiter->setChar('_');
-        $this->assertSame('_', $delimiter->getChar());
-    }
-
-    public function testSetIndex()
-    {
-        $node = $this->createMock(AbstractStringContainer::class);
-        $delimiter = new Delimiter('*', 2, $node, true, false, null);
-
-        $delimiter->setIndex(7);
-        $this->assertSame(7, $delimiter->getIndex());
-
-        $delimiter->setIndex(null);
-        $this->assertNull($delimiter->getIndex());
     }
 
     public function testSetNext()
@@ -111,17 +81,6 @@ class DelimiterTest extends TestCase
         $delimiter->setLength(3);
         $this->assertSame(3, $delimiter->getLength());
         $this->assertSame(2, $delimiter->getOriginalLength());
-    }
-
-    public function testSetInlineNode()
-    {
-        $node = $this->createMock(AbstractStringContainer::class);
-        $delimiter = new Delimiter('*', 2, $node, true, false, null);
-
-        $node2 = $this->createMock(AbstractStringContainer::class);
-
-        $delimiter->setInlineNode($node2);
-        $this->assertSame($node2, $delimiter->getInlineNode());
     }
 
     public function testSetPrevious()

@@ -6,7 +6,7 @@
 
 ### More Delimiter Changes
 
-The `Delimiter` class is now `final`.  Due to how the class methods are very specific to how the (unstable) spec defines how to parse delimiters, we will not support custom delimiter sub-classes in the near future.
+The `Delimiter` class is now `final`.  We've extracted a `DelimiterInterface` you can use to mock a `Delimiter` or create your own custom ones if needed.  All `Delimiter` type hints have been replaced with a type hint for the interface.
 
 We also renamed the following methods:
 
@@ -15,6 +15,16 @@ We also renamed the following methods:
 | `getOrigDelims()` | `getOriginalLength()` |
 | `getNumDelims() ` | `getLength()`         |
 | `setNumDelims()`  | `setLength()`         |
+
+And deleted these ones:
+
+ - `setCanOpen()`
+ - `setCanClose()`
+ - `setChar()`
+ - `setIndex()`
+ - `setInlineNode()`
+
+Lastly, the various `Delimiter::set___()` methods no longer return `$this`.
 
 ## 1.0.0-beta2
 

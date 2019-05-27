@@ -17,7 +17,7 @@
 
 namespace League\CommonMark\Delimiter\Processor;
 
-use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 /**
@@ -62,12 +62,12 @@ interface DelimiterProcessorInterface
      * return 0 when it doesn't want to allow this particular combination of
      * delimiter runs.
      *
-     * @param Delimiter $opener The opening delimiter run
-     * @param Delimiter $closer The closing delimiter run
+     * @param DelimiterInterface $opener The opening delimiter run
+     * @param DelimiterInterface $closer The closing delimiter run
      *
      * @return int
      */
-    public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int;
+    public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int;
 
     /**
      * Process the matched delimiters, e.g. by wrapping the nodes between opener
