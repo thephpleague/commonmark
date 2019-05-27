@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.0.0-beta2] - 2019-05-27
+
 ### Changed
 
  - `DelimiterProcessorInterface::process()` will accept any type of `AbstractStringContainer` now, not just `Text` nodes
@@ -870,7 +872,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta2...HEAD
+[1.0.0-beta2]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta1...1.0.0-beta2
 [1.0.0-beta1]: https://github.com/thephpleague/commonmark/compare/0.19.2...1.0.0-beta1
 [0.19.2]: https://github.com/thephpleague/commonmark/compare/0.19.1...0.19.2
 [0.19.1]: https://github.com/thephpleague/commonmark/compare/0.19.0...0.19.1

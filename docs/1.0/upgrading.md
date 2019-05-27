@@ -6,13 +6,22 @@ redirect_from: /0.20/upgrading/
 
 # Upgrading from 0.19 to 1.0
 
-### Text Encoding
+## Previous Deprecations Removed
+
+All previously-deprecated code has been removed. This includes:
+
+ - The `safe` option (use `html_input` and `allow_unsafe_links` options instead)
+ - All deprecated `RegexHelper` constants
+ - `DocParser::getEnvironment()` (you should obtain it some other way)
+ - `AbstractInlineContainer` (use `AbstractInline` instead and make `isContainer()` return `true`)
+
+## Text Encoding
 
 This library used to claim it supported ISO-8859-1 encoding but that never truly worked - everything assumed the text was encoded as UTF-8 or ASCII. We've therefore dropped support for ISO-8859-1 and any other unexpected encodings. If you were using some other encoding, you'll now need to convert your Markdown to UTF-8 prior to running it through this library.
 
 Additionally, all public `getEncoding()` or `setEncoding()` methods have been removed, so assume that you're working with UTF-8.
 
-### Inline Processors
+## Inline Processors
 
 The "inline processor" functionality has been removed and replaced with a proper "delimiter processor" feature geared specifically towards dealing with delimiters (which is what the previous implementation tried to do - poorly).
 
