@@ -15,30 +15,92 @@
 namespace League\CommonMark\Ext\SmartPunct;
 
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Delimiter\DelimiterStack;
-use League\CommonMark\Inline\Processor\InlineProcessorInterface;
+use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 
-class QuoteProcessor implements InlineProcessorInterface
+final class QuoteProcessor implements DelimiterProcessorInterface
 {
-    public function processInlines(DelimiterStack $delimiterStack, Delimiter $stackBottom = null)
+    /** @var string */
+    private $normalizedCharacter;
+
+    /** @var string */
+    private $openerCharacter;
+
+    /** @var string */
+    private $closerCharacter;
+
+    /**
+     * QuoteProcessor constructor.
+     *
+     * @param string $char
+     * @param string $opener
+     * @param string $closer
+     */
+    private function __construct(string $char, string $opener, string $closer)
     {
-        $callback = function (Delimiter $opener, Delimiter $closer) {
-            // Open quote
-            $openerInline = $opener->getInlineNode();
-            $openerInline->setContent(
-                $openerInline->getContent() === '“' ? '“' : '‘'
-            );
+        $this->normalizedCharacter = $char;
+        $this->openerCharacter = $opener;
+        $this->closerCharacter = $closer;
+    }
 
-            // Close quote
-            $closerInline = $closer->getInlineNode();
-            $closerInline->setContent(
-                $closerInline->getContent() === '“' ? '”' : '’'
-            );
+    /**
+     * {@inheritdoc}
+     */
+    public function getOpeningCharacter(): string
+    {
+        return $this->normalizedCharacter;
+    }
 
-            return $closer->getNext();
-        };
+    /**
+     * {@inheritdoc}
+     */
+    public function getClosingCharacter(): string
+    {
+        return $this->normalizedCharacter;
+    }
 
-        // Process the emphasis characters
-        $delimiterStack->iterateByCharacters(['“', '’'], $callback, $stackBottom);
+    /**
+     * {@inheritdoc}
+     */
+    public function getMinLength(): int
+    {
+        return 1;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
+    {
+        return 1;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    {
+        $opener->insertAfter(new Quote($this->openerCharacter));
+        $closer->insertBefore(new Quote($this->closerCharacter));
+    }
+
+    /**
+     * Create a double-quote processor
+     *
+     * @return QuoteProcessor
+     */
+    public static function createDoubleQuoteProcessor(): self
+    {
+        return new self(Quote::DOUBLE_QUOTE, Quote::DOUBLE_QUOTE_OPENER, Quote::DOUBLE_QUOTE_CLOSER);
+    }
+
+    /**
+     * Create a single-quote processor
+     *
+     * @return QuoteProcessor
+     */
+    public static function createSingleQuoteProcessor(): self
+    {
+        return new self(Quote::SINGLE_QUOTE, Quote::SINGLE_QUOTE_OPENER, Quote::SINGLE_QUOTE_CLOSER);
     }
 }
