@@ -48,18 +48,6 @@ final class DocParser implements DocParserInterface
     }
 
     /**
-     * @return EnvironmentInterface
-     *
-     * @deprecated
-     */
-    public function getEnvironment(): EnvironmentInterface
-    {
-        @trigger_error('DocParser::getEnvironment() has been deprecated and will be removed in a future release.', E_USER_DEPRECATED);
-
-        return $this->environment;
-    }
-
-    /**
      * @param string $input
      *
      * @return string[]
