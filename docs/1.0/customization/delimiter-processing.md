@@ -52,7 +52,7 @@ This method is used to tell the engine how many characters from the matching del
 ### `process()`
 
 ~~~php
-public function process(Text $opener, Text $closer, int $delimiterUse);
+public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse);
 ~~~
 
 This is where the magic happens.  Once the engine determines it can use the delimiter it found (by looking at all the other methods above) it'll call this method.  Your job is to take everything between the `$opener` and `$closer` and wrap that in whatever custom inline element you'd like.  Here's a basic example of wrapping the inner contents inside a new `Emphasis` element:
@@ -81,7 +81,7 @@ Basic delimiter processors, as covered above, do not require any custom inline p
 
 ### Inline Parsers and the Delimiter Stack
 
-As your identifies potential delimiter-based inlines, it should create a new `Text` node with the inner contents and also push a new `Delimiter` onto the `DelimiterStack`:
+As your identifies potential delimiter-based inlines, it should create a new `AbstractStringContainer` node (either `Text` or something custom) with the inner contents and also push a new `Delimiter` onto the `DelimiterStack`:
 
 ~~~php
 $node = new Text($cursor->getPreviousText(), [
