@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Tests\Functional\Delimiter;
 
-use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Inline\Element\AbstractStringContainer;
 
@@ -47,7 +47,7 @@ final class UppercaseDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
+    public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
     {
         return 1;
     }

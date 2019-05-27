@@ -6,7 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Changed
 
- - Made the `Delimiter` class final
+ - Made the `Delimiter` class final and extracted a new `DelimiterInterface`
+   - Modified most external usages to use this new interface
  - Renamed three `Delimiter` methods:
    - `getOrigDelims()` renamed to `getOriginalLength()`
    - `getNumDelims()` renamed to `getLength()`

@@ -23,11 +23,11 @@ use League\CommonMark\Inline\AdjacentTextMerger;
 class DelimiterStack
 {
     /**
-     * @var Delimiter|null
+     * @var DelimiterInterface|null
      */
     private $top;
 
-    public function push(Delimiter $newDelimiter)
+    public function push(DelimiterInterface $newDelimiter)
     {
         $newDelimiter->setPrevious($this->top);
 
@@ -39,11 +39,11 @@ class DelimiterStack
     }
 
     /**
-     * @param Delimiter|null $stackBottom
+     * @param DelimiterInterface|null $stackBottom
      *
-     * @return Delimiter|null
+     * @return DelimiterInterface|null
      */
-    private function findEarliest(Delimiter $stackBottom = null): ?Delimiter
+    private function findEarliest(DelimiterInterface $stackBottom = null): ?DelimiterInterface
     {
         $delimiter = $this->top;
         while ($delimiter !== null && $delimiter->getPrevious() !== $stackBottom) {
@@ -54,9 +54,9 @@ class DelimiterStack
     }
 
     /**
-     * @param Delimiter $delimiter
+     * @param DelimiterInterface $delimiter
      */
-    public function removeDelimiter(Delimiter $delimiter)
+    public function removeDelimiter(DelimiterInterface $delimiter)
     {
         if ($delimiter->getPrevious() !== null) {
             $delimiter->getPrevious()->setNext($delimiter->getNext());
@@ -70,13 +70,13 @@ class DelimiterStack
         }
     }
 
-    private function removeDelimiterAndNode(Delimiter $delimiter)
+    private function removeDelimiterAndNode(DelimiterInterface $delimiter)
     {
         $delimiter->getInlineNode()->detach();
         $this->removeDelimiter($delimiter);
     }
 
-    private function removeDelimitersBetween(Delimiter $opener, Delimiter $closer)
+    private function removeDelimitersBetween(DelimiterInterface $opener, DelimiterInterface $closer)
     {
         $delimiter = $closer->getPrevious();
         while ($delimiter !== null && $delimiter !== $opener) {
@@ -87,9 +87,9 @@ class DelimiterStack
     }
 
     /**
-     * @param Delimiter|null $stackBottom
+     * @param DelimiterInterface|null $stackBottom
      */
-    public function removeAll(Delimiter $stackBottom = null)
+    public function removeAll(DelimiterInterface $stackBottom = null)
     {
         while ($this->top && $this->top !== $stackBottom) {
             $this->removeDelimiter($this->top);
@@ -114,9 +114,9 @@ class DelimiterStack
     /**
      * @param string|string[] $characters
      *
-     * @return Delimiter|null
+     * @return DelimiterInterface|null
      */
-    public function searchByCharacter($characters): ?Delimiter
+    public function searchByCharacter($characters): ?DelimiterInterface
     {
         if (!\is_array($characters)) {
             $characters = [$characters];
@@ -133,7 +133,7 @@ class DelimiterStack
         return $opener;
     }
 
-    public function processDelimiters(?Delimiter $stackBottom, DelimiterProcessorCollection $processors)
+    public function processDelimiters(?DelimiterInterface $stackBottom, DelimiterProcessorCollection $processors)
     {
         $openersBottom = [];
 
