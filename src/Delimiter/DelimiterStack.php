@@ -20,7 +20,7 @@ namespace League\CommonMark\Delimiter;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Inline\AdjacentTextMerger;
 
-class DelimiterStack
+final class DelimiterStack
 {
     /**
      * @var DelimiterInterface|null
