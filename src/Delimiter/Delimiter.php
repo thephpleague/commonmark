@@ -16,37 +16,37 @@ namespace League\CommonMark\Delimiter;
 
 use League\CommonMark\Inline\Element\AbstractStringContainer;
 
-class Delimiter
+final class Delimiter
 {
     /** @var string */
-    protected $char;
+    private $char;
 
     /** @var int */
-    protected $numDelims;
+    private $numDelims;
 
     /** @var int */
-    protected $origDelims;
+    private $origDelims;
 
     /** @var AbstractStringContainer */
-    protected $inlineNode;
+    private $inlineNode;
 
     /** @var Delimiter|null */
-    protected $previous;
+    private $previous;
 
     /** @var Delimiter|null */
-    protected $next;
+    private $next;
 
     /** @var bool */
-    protected $canOpen;
+    private $canOpen;
 
     /** @var bool */
-    protected $canClose;
+    private $canClose;
 
     /** @var bool */
-    protected $active;
+    private $active;
 
     /** @var int|null */
-    protected $index;
+    private $index;
 
     /**
      * @param string                  $char

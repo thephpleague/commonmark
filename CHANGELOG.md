@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Made the `Delimiter` class final
+
 ## [1.0.0-beta2] - 2019-05-27
 
 ### Changed

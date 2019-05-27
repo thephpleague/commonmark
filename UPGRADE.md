@@ -2,6 +2,12 @@
 
 **Note:** This file has been deprecated.  Future upgrade instructions can be found on our website: <https://commonmark.thephpleague.com/releases>
 
+## UNRELEASED
+
+### More Delimiter Changes
+
+The `Delimiter` class is now `final`.  Due to how the class methods are very specific to how the (unstable) spec defines how to parse delimiters, we will not support custom delimiter sub-classes in the near future.
+
 ## 1.0.0-beta2
 
 ### Delimiter Processing
