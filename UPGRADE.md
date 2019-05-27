@@ -8,6 +8,14 @@
 
 The `Delimiter` class is now `final`.  Due to how the class methods are very specific to how the (unstable) spec defines how to parse delimiters, we will not support custom delimiter sub-classes in the near future.
 
+We also renamed the following methods:
+
+| Old Name          | New Name              |
+|-------------------|-----------------------|
+| `getOrigDelims()` | `getOriginalLength()` |
+| `getNumDelims() ` | `getLength()`         |
+| `setNumDelims()`  | `setLength()`         |
+
 ## 1.0.0-beta2
 
 ### Delimiter Processing

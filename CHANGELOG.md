@@ -7,6 +7,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 
  - Made the `Delimiter` class final
+ - Renamed three `Delimiter` methods:
+   - `getOrigDelims()` renamed to `getOriginalLength()`
+   - `getNumDelims()` renamed to `getLength()`
+   - `setNumDelims()` renamed to `setLength()`
 
 ## [1.0.0-beta2] - 2019-05-27
 

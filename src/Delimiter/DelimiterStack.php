@@ -192,8 +192,8 @@ class DelimiterStack
             $closerNode = $closer->getInlineNode();
 
             // Remove number of used delimiters from stack and inline nodes.
-            $opener->setNumDelims($opener->getNumDelims() - $useDelims);
-            $closer->setNumDelims($closer->getNumDelims() - $useDelims);
+            $opener->setLength($opener->getLength() - $useDelims);
+            $closer->setLength($closer->getLength() - $useDelims);
 
             $openerNode->setContent(\substr($openerNode->getContent(), 0, -$useDelims));
             $closerNode->setContent(\substr($closerNode->getContent(), 0, -$useDelims));
@@ -205,11 +205,11 @@ class DelimiterStack
             $delimiterProcessor->process($openerNode, $closerNode, $useDelims);
 
             // No delimiter characters left to process, so we can remove delimiter and the now empty node.
-            if ($opener->getNumDelims() === 0) {
+            if ($opener->getLength() === 0) {
                 $this->removeDelimiterAndNode($opener);
             }
 
-            if ($closer->getNumDelims() === 0) {
+            if ($closer->getLength() === 0) {
                 $next = $closer->getNext();
                 $this->removeDelimiterAndNode($closer);
                 $closer = $next;

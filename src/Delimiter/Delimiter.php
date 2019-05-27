@@ -22,10 +22,10 @@ final class Delimiter
     private $char;
 
     /** @var int */
-    private $numDelims;
+    private $length;
 
     /** @var int */
-    private $origDelims;
+    private $originalLength;
 
     /** @var AbstractStringContainer */
     private $inlineNode;
@@ -59,8 +59,8 @@ final class Delimiter
     public function __construct(string $char, int $numDelims, AbstractStringContainer $node, bool $canOpen, bool $canClose, ?int $index = null)
     {
         $this->char = $char;
-        $this->numDelims = $numDelims;
-        $this->origDelims = $numDelims;
+        $this->length = $numDelims;
+        $this->originalLength = $numDelims;
         $this->inlineNode = $node;
         $this->canOpen = $canOpen;
         $this->canClose = $canClose;
@@ -191,19 +191,19 @@ final class Delimiter
     /**
      * @return int
      */
-    public function getNumDelims(): int
+    public function getLength(): int
     {
-        return $this->numDelims;
+        return $this->length;
     }
 
     /**
-     * @param int $numDelims
+     * @param int $length
      *
      * @return $this
      */
-    public function setNumDelims(int $numDelims)
+    public function setLength(int $length)
     {
-        $this->numDelims = $numDelims;
+        $this->length = $length;
 
         return $this;
     }
@@ -211,9 +211,9 @@ final class Delimiter
     /**
      * @return int
      */
-    public function getOrigDelims(): int
+    public function getOriginalLength(): int
     {
-        return $this->origDelims;
+        return $this->originalLength;
     }
 
     /**

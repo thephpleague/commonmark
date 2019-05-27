@@ -70,12 +70,12 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
     public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
     {
         // "Multiple of 3" rule for internal delimiter runs
-        if (($opener->canClose() || $closer->canOpen()) && $closer->getOrigDelims() % 3 !== 0 && ($opener->getOrigDelims() + $closer->getOrigDelims()) % 3 === 0) {
+        if (($opener->canClose() || $closer->canOpen()) && $closer->getOriginalLength() % 3 !== 0 && ($opener->getOriginalLength() + $closer->getOriginalLength()) % 3 === 0) {
             return 0;
         }
 
         // Calculate actual number of delimiters used from this closer
-        if ($opener->getNumDelims() >= 2 && $closer->getNumDelims() >= 2) {
+        if ($opener->getLength() >= 2 && $closer->getLength() >= 2) {
             if ($this->config && $this->config->get('enable_strong', true)) {
                 return 2;
             }

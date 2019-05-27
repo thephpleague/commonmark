@@ -86,7 +86,7 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
      */
     public function getDelimiterUse(Delimiter $opener, Delimiter $closer): int
     {
-        return $this->findProcessor($opener->getNumDelims())->getDelimiterUse($opener, $closer);
+        return $this->findProcessor($opener->getLength())->getDelimiterUse($opener, $closer);
     }
 
     /**
