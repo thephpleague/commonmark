@@ -16,7 +16,7 @@ namespace League\CommonMark\Tests\Functional\Delimiter;
 
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 final class FakeDelimiterProcessor implements DelimiterProcessorInterface
 {
@@ -65,7 +65,7 @@ final class FakeDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function process(Text $opener, Text $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
     {
     }
 }

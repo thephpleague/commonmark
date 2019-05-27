@@ -18,7 +18,7 @@
 namespace League\CommonMark\Delimiter\Processor;
 
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 /**
  * Interface for a delimiter processor
@@ -76,9 +76,9 @@ interface DelimiterProcessorInterface
      * Note that removal of the delimiter from the delimiter nodes and detaching
      * them is done by the caller.
      *
-     * @param Text $opener       The Text node that contained the opening delimiter
-     * @param Text $closer       The text node that contained the closing delimiter
-     * @param int  $delimiterUse The number of delimiters that were used
+     * @param AbstractStringContainer $opener       The node that contained the opening delimiter
+     * @param AbstractStringContainer $closer       The node that contained the closing delimiter
+     * @param int                     $delimiterUse The number of delimiters that were used
      */
-    public function process(Text $opener, Text $closer, int $delimiterUse);
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse);
 }

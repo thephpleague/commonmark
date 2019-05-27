@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Delimiter;
 
-use League\CommonMark\Node\Node;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 class Delimiter
 {
@@ -27,7 +27,7 @@ class Delimiter
     /** @var int */
     protected $origDelims;
 
-    /** @var Node */
+    /** @var AbstractStringContainer */
     protected $inlineNode;
 
     /** @var Delimiter|null */
@@ -49,14 +49,14 @@ class Delimiter
     protected $index;
 
     /**
-     * @param string   $char
-     * @param int      $numDelims
-     * @param Node     $node
-     * @param bool     $canOpen
-     * @param bool     $canClose
-     * @param int|null $index
+     * @param string                  $char
+     * @param int                     $numDelims
+     * @param AbstractStringContainer $node
+     * @param bool                    $canOpen
+     * @param bool                    $canClose
+     * @param int|null                $index
      */
-    public function __construct(string $char, int $numDelims, Node $node, bool $canOpen, bool $canClose, ?int $index = null)
+    public function __construct(string $char, int $numDelims, AbstractStringContainer $node, bool $canOpen, bool $canClose, ?int $index = null)
     {
         $this->char = $char;
         $this->numDelims = $numDelims;
@@ -217,19 +217,19 @@ class Delimiter
     }
 
     /**
-     * @return Node
+     * @return AbstractStringContainer
      */
-    public function getInlineNode(): Node
+    public function getInlineNode(): AbstractStringContainer
     {
         return $this->inlineNode;
     }
 
     /**
-     * @param Node $node
+     * @param AbstractStringContainer $node
      *
      * @return $this
      */
-    public function setInlineNode(Node $node)
+    public function setInlineNode(AbstractStringContainer $node)
     {
         $this->inlineNode = $node;
 
