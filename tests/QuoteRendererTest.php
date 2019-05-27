@@ -63,13 +63,13 @@ final class QuoteRendererTest extends TestCase
     public function dataForTestRender()
     {
         // Single-quotes should render as an apostrophe
-        yield ["'", "’"];
+        yield ["'", '’'];
 
         // Double-quotes should render as an opening quote
         yield ['"', '“'];
 
         // Already-stylized quotes should be rendered as-is
-        yield ["’", "’"];
+        yield ['’', '’'];
         yield ['“', '“'];
     }
 }
