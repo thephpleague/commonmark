@@ -8,11 +8,14 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Made the `Delimiter` class final and extracted a new `DelimiterInterface`
    - Modified most external usages to use this new interface
- - Made the `DelimiterStack` class final
  - Renamed three `Delimiter` methods:
    - `getOrigDelims()` renamed to `getOriginalLength()`
    - `getNumDelims()` renamed to `getLength()`
    - `setNumDelims()` renamed to `setLength()`
+ - Made additional classes final:
+   - `DelimiterStack`
+   - `ReferenceMap`
+   - `ReferenceParser`
  - Moved `ReferenceParser` into the `Reference` sub-namespace
 
 ### Removed

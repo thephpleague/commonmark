@@ -17,7 +17,7 @@ namespace League\CommonMark\Reference;
 /**
  * A collection of references, indexed by label
  */
-class ReferenceMap
+final class ReferenceMap
 {
     /**
      * @var ReferenceInterface[]
