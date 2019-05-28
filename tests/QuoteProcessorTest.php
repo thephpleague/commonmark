@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Ext\SmartPunct\Tests;
 
-use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Ext\SmartPunct\QuoteProcessor;
 use League\CommonMark\Inline\Element\Text;
 use PHPUnit\Framework\TestCase;
@@ -26,7 +26,7 @@ final class QuoteProcessorTest extends TestCase
 {
     public function testSingleQuoteProcessor()
     {
-        $mockDelimiter = $this->createMock(Delimiter::class);
+        $mockDelimiter = $this->createMock(DelimiterInterface::class);
 
         $processor = QuoteProcessor::createSingleQuoteProcessor();
 
@@ -46,7 +46,7 @@ final class QuoteProcessorTest extends TestCase
 
     public function testDoubleQuoteProcessor()
     {
-        $mockDelimiter = $this->createMock(Delimiter::class);
+        $mockDelimiter = $this->createMock(DelimiterInterface::class);
 
         $processor = QuoteProcessor::createDoubleQuoteProcessor();
 

@@ -15,7 +15,7 @@
     ],
     "require": {
         "php" : "^7.1",
-        "league/commonmark": "^1.0.0-beta2"
+        "league/commonmark": "^1.0.0-beta3"
     },
     "require-dev": {
         "jgm/smartpunct": "0.29",
