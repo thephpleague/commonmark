@@ -22,6 +22,8 @@ use League\CommonMark\Inline\Element\AbstractStringContainer;
  * depending on the length of the delimiter run. All child DelimiterProcessors must have different minimum
  * lengths. A given delimiter run is dispatched to the child with the largest acceptable minimum length. If no
  * child is applicable, the one with the largest minimum length is chosen.
+ *
+ * @internal
  */
 final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
 {
