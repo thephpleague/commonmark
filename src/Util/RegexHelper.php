@@ -152,11 +152,11 @@ final class RegexHelper
     /**
      * @param int $type HTML block type
      *
-     * @return string|null
+     * @return string
      *
      * @internal
      */
-    public static function getHtmlBlockOpenRegex(int $type): ?string
+    public static function getHtmlBlockOpenRegex(int $type): string
     {
         switch ($type) {
             case HtmlBlock::TYPE_1_CODE_CONTAINER:
@@ -175,17 +175,17 @@ final class RegexHelper
                 return '/^(?:' . self::PARTIAL_OPENTAG . '|' . self::PARTIAL_CLOSETAG . ')\\s*$/i';
         }
 
-        return null;
+        throw new \InvalidArgumentException('Invalid HTML block type');
     }
 
     /**
      * @param int $type HTML block type
      *
-     * @return string|null
+     * @return string
      *
      * @internal
      */
-    public static function getHtmlBlockCloseRegex(int $type): ?string
+    public static function getHtmlBlockCloseRegex(int $type): string
     {
         switch ($type) {
             case HtmlBlock::TYPE_1_CODE_CONTAINER:
@@ -200,7 +200,7 @@ final class RegexHelper
                 return '/\]\]>/';
         }
 
-        return null;
+        throw new \InvalidArgumentException('Invalid HTML block type');
     }
 
     /**

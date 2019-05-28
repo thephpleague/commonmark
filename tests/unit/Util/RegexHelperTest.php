@@ -11,6 +11,7 @@
 
 namespace League\CommonMark\Tests\Unit\Util;
 
+use League\CommonMark\Block\Element\HtmlBlock;
 use League\CommonMark\Util\RegexHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -306,5 +307,71 @@ class RegexHelperTest extends TestCase
             ['/ /', 'это тест', 0, 3],
             ['/ /', 'это тест', 1, 3],
         ];
+    }
+
+    /**
+     * @param int $type
+     *
+     * @dataProvider blockTypesWithValidOpenerRegexes
+     */
+    public function testValidHtmlBlockOpenRegex(int $type)
+    {
+        $this->assertNotEmpty(RegexHelper::getHtmlBlockOpenRegex($type));
+    }
+
+    public function blockTypesWithValidOpenerRegexes()
+    {
+        yield [HtmlBlock::TYPE_1_CODE_CONTAINER];
+        yield [HtmlBlock::TYPE_2_COMMENT];
+        yield [HtmlBlock::TYPE_3];
+        yield [HtmlBlock::TYPE_4];
+        yield [HtmlBlock::TYPE_5_CDATA];
+        yield [HtmlBlock::TYPE_6_BLOCK_ELEMENT];
+        yield [HtmlBlock::TYPE_7_MISC_ELEMENT];
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidHtmlBlockOpenRegex()
+    {
+        RegexHelper::getHtmlBlockOpenRegex(8);
+    }
+
+    /**
+     * @param int $type
+     *
+     * @dataProvider blockTypesWithValidCloserRegexes
+     */
+    public function testValidHtmlBlockCloseRegex(int $type)
+    {
+        $this->assertNotEmpty(RegexHelper::getHtmlBlockOpenRegex($type));
+    }
+
+    public function blockTypesWithValidCloserRegexes()
+    {
+        yield [HtmlBlock::TYPE_1_CODE_CONTAINER];
+        yield [HtmlBlock::TYPE_2_COMMENT];
+        yield [HtmlBlock::TYPE_3];
+        yield [HtmlBlock::TYPE_4];
+        yield [HtmlBlock::TYPE_5_CDATA];
+    }
+
+    /**
+     * @param int $type
+     *
+     * @dataProvider blockTypesWithInvalidCloserRegexes
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidHtmlBlockCloseRegex(int $type)
+    {
+        RegexHelper::getHtmlBlockCloseRegex($type);
+    }
+
+    public function blockTypesWithInvalidCloserRegexes()
+    {
+        yield [HtmlBlock::TYPE_6_BLOCK_ELEMENT];
+        yield [HtmlBlock::TYPE_7_MISC_ELEMENT];
+        yield [8];
     }
 }
