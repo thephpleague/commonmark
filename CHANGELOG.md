@@ -13,6 +13,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `getOrigDelims()` renamed to `getOriginalLength()`
    - `getNumDelims()` renamed to `getLength()`
    - `setNumDelims()` renamed to `setLength()`
+ - Moved `ReferenceParser` into the `Reference` sub-namespace
 
 ### Removed
 

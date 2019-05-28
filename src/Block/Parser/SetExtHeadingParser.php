@@ -18,7 +18,7 @@ use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\ReferenceParser;
+use League\CommonMark\Reference\ReferenceParser;
 use League\CommonMark\Util\RegexHelper;
 
 final class SetExtHeadingParser implements BlockParserInterface

@@ -67,3 +67,7 @@ The `AbstractInlineContainer` class added an unnecessary level of inheritance an
 ## `AdjoiningTextCollapser`
 
 The `AdjoiningTextCollapser` is an internal class used to combine multiple `Text` elements into one.  If you were using this yourself (unlikely) you'll need to refer to its new name instead: `AdjacentTextMerger`. And if you previously used `collapseTextNodes()` you'll want to switch to using `mergeChildNodes()` instead.
+
+## References
+
+The `ReferenceParser` was moved into the `Reference` sub-namespace, so update your imports accordingly.

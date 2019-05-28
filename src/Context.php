@@ -16,6 +16,7 @@ namespace League\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Reference\ReferenceParser;
 
 /**
  * Maintains the current state of the Markdown parser engine

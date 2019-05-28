@@ -12,10 +12,9 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark;
+namespace League\CommonMark\Reference;
 
-use League\CommonMark\Reference\Reference;
-use League\CommonMark\Reference\ReferenceMap;
+use League\CommonMark\Cursor;
 use League\CommonMark\Util\LinkParserHelper;
 
 class ReferenceParser
@@ -23,7 +22,7 @@ class ReferenceParser
     /**
      * @var ReferenceMap
      */
-    protected $referenceMap;
+    private $referenceMap;
 
     public function __construct(ReferenceMap $referenceMap)
     {

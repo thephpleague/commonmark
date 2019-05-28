@@ -26,6 +26,10 @@ And deleted these ones:
 
 Lastly, the various `Delimiter::set___()` methods no longer return `$this`.
 
+### References
+
+The `ReferenceParser` was moved into the `Reference` sub-namespace, so update your imports accordingly.
+
 ## 1.0.0-beta2
 
 ### Delimiter Processing
