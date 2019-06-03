@@ -14,6 +14,7 @@ version:
             'Overview': '/1.0/customization/overview/'
             'Environment': '/1.0/customization/environment/'
             'Extensions': '/1.0/customization/extensions/'
+            'Event Dispatcher': '/1.0/customization/event-dispatcher/'
             'Cursor': '/1.0/customization/cursor/'
             'Block Parsing': '/1.0/customization/block-parsing/'
             'Inline Parsing': '/1.0/customization/inline-parsing/'

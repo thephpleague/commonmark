@@ -24,6 +24,7 @@ use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Tests\Unit\Event\FakeEvent;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -474,5 +475,54 @@ class EnvironmentTest extends TestCase
         $this->assertSame($renderer2, $parsers[0]);
         $this->assertSame($renderer1, $parsers[1]);
         $this->assertSame($renderer3, $parsers[2]);
+    }
+
+    public function testEventDispatching()
+    {
+        $environment = new Environment();
+        $event = new FakeEvent();
+
+        $actualOrder = [];
+
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+            $this->assertSame($event, $e);
+            $actualOrder[] = 'a';
+        });
+
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+            $this->assertSame($event, $e);
+            $actualOrder[] = 'b';
+            $e->stopPropagation();
+        });
+
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+            $this->assertSame($event, $e);
+            $actualOrder[] = 'c';
+        }, 10);
+
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+            $this->fail('Propogation should have been stopped before here');
+        });
+
+        $environment->dispatch($event);
+
+        $this->assertCount(3, $actualOrder);
+        $this->assertEquals('c', $actualOrder[0]);
+        $this->assertEquals('a', $actualOrder[1]);
+        $this->assertEquals('b', $actualOrder[2]);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddEventListenerFailsAfterInitialization()
+    {
+        $environment = new Environment();
+        $event = $this->createMock(AbstractEvent::class);
+
+        $environment->dispatch($event);
+
+        $environment->addEventListener(AbstractEvent::class, function (AbstractEvent $e) {
+        });
     }
 }
