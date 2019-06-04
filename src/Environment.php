@@ -18,6 +18,7 @@ use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
@@ -77,6 +78,11 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      * @var array<string, PrioritizedList<InlineRendererInterface>>
      */
     private $inlineRenderersByClass = [];
+
+    /**
+     * @var array<string, PrioritizedList<callable>>
+     */
+    private $listeners = [];
 
     /**
      * @var Configuration
@@ -378,6 +384,40 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     public function getInlineParserCharacterRegex(): string
     {
         return $this->inlineParserCharacterRegex;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addEventListener(string $eventClass, callable $listener, int $priority = 0): ConfigurableEnvironmentInterface
+    {
+        $this->assertUninitialized('Failed to add event listener.');
+
+        if (!isset($this->listeners[$eventClass])) {
+            $this->listeners[$eventClass] = new PrioritizedList();
+        }
+
+        $this->listeners[$eventClass]->add($listener, $priority);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function dispatch(AbstractEvent $event): void
+    {
+        $this->initializeExtensions();
+
+        $type = get_class($event);
+
+        foreach ($this->listeners[$type] ?? [] as $listener) {
+            if ($event->isPropagationStopped()) {
+                return;
+            }
+
+            $listener($event);
+        }
     }
 
     private function buildInlineParserCharacterRegex()

@@ -100,4 +100,15 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
      * @return self
      */
     public function addInlineRenderer(string $inlineClass, InlineRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface;
+
+    /**
+     * Registers the given event listener
+     *
+     * @param string   $eventClass Fully-qualified class name of the event this listener should respond to
+     * @param callable $listener   Listener to be executed
+     * @param int      $priority   Priority (a higher number will be executed earlier)
+     *
+     * @return self
+     */
+    public function addEventListener(string $eventClass, callable $listener, int $priority = 0): ConfigurableEnvironmentInterface;
 }

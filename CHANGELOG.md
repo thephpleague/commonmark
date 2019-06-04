@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added event dispatcher functionality (#359, #372)
+
 ## [1.0.0-beta3] - 2019-05-27
 
 ### Changed

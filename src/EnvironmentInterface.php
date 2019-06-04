@@ -14,6 +14,7 @@ namespace League\CommonMark;
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
+use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
@@ -75,4 +76,11 @@ interface EnvironmentInterface
      * @return string
      */
     public function getInlineParserCharacterRegex(): string;
+
+    /**
+     * Dispatches the given event to listeners
+     *
+     * @param AbstractEvent $event
+     */
+    public function dispatch(AbstractEvent $event): void;
 }
