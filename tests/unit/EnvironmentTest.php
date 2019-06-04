@@ -18,7 +18,6 @@ use League\CommonMark\Block\Parser as BlockParser;
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
-use League\CommonMark\DocumentProcessorInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Extension\ExtensionInterface;
@@ -326,30 +325,6 @@ class EnvironmentTest extends TestCase
         $environment->addExtension($extension);
     }
 
-    public function testAddDocumentProcessor()
-    {
-        $environment = new Environment();
-
-        $processor = $this->createMock(DocumentProcessorInterface::class);
-        $environment->addDocumentProcessor($processor);
-
-        $this->assertContains($processor, $environment->getDocumentProcessors());
-    }
-
-    /**
-     * @expectedException \RuntimeException
-     */
-    public function testAddDocumentProcessorFailsAfterInitialization()
-    {
-        $environment = new Environment();
-
-        // This triggers the initialization
-        $environment->getDocumentProcessors();
-
-        $processor = $this->createMock(DocumentProcessorInterface::class);
-        $environment->addDocumentProcessor($processor);
-    }
-
     public function testGetInlineParserCharacterRegexForEmptyEnvironment()
     {
         $environment = new Environment();
@@ -418,25 +393,6 @@ class EnvironmentTest extends TestCase
         $this->assertSame($parser2, $parsers[0]);
         $this->assertSame($parser1, $parsers[1]);
         $this->assertSame($parser3, $parsers[2]);
-    }
-
-    public function testDocumentProcessorPrioritization()
-    {
-        $environment = new Environment();
-
-        $processor1 = $this->createMock(DocumentProcessorInterface::class);
-        $processor2 = $this->createMock(DocumentProcessorInterface::class);
-        $processor3 = $this->createMock(DocumentProcessorInterface::class);
-
-        $environment->addDocumentProcessor($processor1);
-        $environment->addDocumentProcessor($processor2, 50);
-        $environment->addDocumentProcessor($processor3);
-
-        $parsers = iterator_to_array($environment->getDocumentProcessors());
-
-        $this->assertSame($processor2, $parsers[0]);
-        $this->assertSame($processor1, $parsers[1]);
-        $this->assertSame($processor3, $parsers[2]);
     }
 
     public function testBlockRendererPrioritization()

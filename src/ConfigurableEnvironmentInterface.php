@@ -72,16 +72,6 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
     public function addDelimiterProcessor(DelimiterProcessorInterface $processor): ConfigurableEnvironmentInterface;
 
     /**
-     * Registers the given document processor with the Environment
-     *
-     * @param DocumentProcessorInterface $processor Document processor instance
-     * @param int                        $priority  Priority (a higher number will be executed earlier)
-     *
-     * @return self
-     */
-    public function addDocumentProcessor(DocumentProcessorInterface $processor, int $priority = 0): ConfigurableEnvironmentInterface;
-
-    /**
      * @param string                 $blockClass    The fully-qualified block element class name the renderer below should handle
      * @param BlockRendererInterface $blockRenderer The renderer responsible for rendering the type of element given above
      * @param int                    $priority      Priority (a higher number will be executed earlier)

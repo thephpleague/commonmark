@@ -1,6 +1,9 @@
 ---
 layout: default
 title: Event Dispatcher
+redirect_from:
+  - /0.20/customization/document-processing/
+  - /1.0/customization/document-processing/
 ---
 
 Event Dispatcher
@@ -61,3 +64,96 @@ $environment->dispatch(new MyCustomEvent());
 Listeners will be called in order of priority (higher priorities will be called first).  If multiple listeners have the same priority, they'll be called in the order in which they were registered.  If you'd like your listener to prevent other subsequent events from running, simply call `$event->stopPropagation()`.
 
 Listeners may call any method on the event to get more information about the event, make changes to event data, etc.
+
+## List of Available Events
+
+This library supports the following default events which you can register listeners for:
+
+### `DocumentParsedEvent`
+
+This event is dispatched once all other processing is done.  This offers extensions the opportunity to inspect and modify the [Abstract Syntax Tree](/1.0/customization/abstract-syntax-tree/) prior to rendering.
+
+## Example
+
+Here's an example of a listener which uses the `DocumentParsedEvent` to add an `external-link` class to external URLs:
+
+~~~php
+<?php
+
+use League\CommonMark\EnvironmentInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Inline\Element\Link;
+
+class ExternalLinkProcessor
+{
+    private $environment;
+
+    public function __construct(EnvironmentInterface $environment)
+    {
+        $this->environment = $environment;
+    }
+
+    public function onDocumentParsed(DocumentParsedEvent $event)
+    {
+        $document = $event->getDocument();
+        $walker = $document->walker();
+        while ($event = $walker->next()) {
+            $node = $event->getNode();
+
+            // Only stop at Link nodes when we first encounter them
+            if (!($node instanceof Link) || !$event->isEntering()) {
+                continue;
+            }
+
+            $url = $node->getUrl();
+            if ($this->isUrlExternal($url)) {
+                $node->data['attributes']['class'] = 'external-link';
+            }
+        }
+    }
+
+    private function isUrlExternal(string $url): bool
+    {
+        // Only look at http and https URLs
+        if (!preg_match('/^https?:\/\//', $url)) {
+            return false;
+        }
+
+        $host = parse_url($url, PHP_URL_HOST);
+
+        return $host != $this->environment->getConfig('host');
+    }
+}
+~~~
+
+And here's how you'd use it:
+
+~~~php
+<?php
+
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use League\CommonMark\Event\DocumentParsedEvent;
+
+$env = Environment::createCommonMarkEnvironment();
+
+$listener = new ExternalLinkProcessor($env);
+$env->addEventListener(DocumentParsedEvent::class, [$listener, 'onDocumentParsed']);
+
+$converter = new CommonMarkConverter(['host' => 'commonmark.thephpleague.com'], $env);
+
+$input = 'My two favorite sites are <https://google.com> and <https://commonmark.thephpleague.com>';
+
+echo $converter->convertToHtml($input);
+~~~
+
+Output (formatted for readability):
+
+~~~html
+<p>
+    My two favorite sites are
+    <a class="external-link" href="https://google.com">https://google.com</a>
+    and
+    <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a>
+</p>
+~~~

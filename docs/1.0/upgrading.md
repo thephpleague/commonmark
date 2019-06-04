@@ -15,6 +15,43 @@ All previously-deprecated code has been removed. This includes:
  - `DocParser::getEnvironment()` (you should obtain it some other way)
  - `AbstractInlineContainer` (use `AbstractInline` instead and make `isContainer()` return `true`)
 
+## Document Processors Removed
+
+We no longer support Document Processors because we now have [event dispatching](/1.0/customization/event-dispatcher/) which can fill that same role!  Simply remove the interface from your processor and register it as a listener; for example, instead of this:
+
+```php
+class MyDocumentProcessor implements DocumentProcessorInterface
+{
+    public function processDocument(Document $document)
+    {
+        // TODO: Do things with the $document
+    }
+}
+
+// ...
+
+$processor = new MyDocumentProcessor();
+$environment->addDocumentProcessor($processor);
+```
+
+Simply do this:
+
+```php
+class MyDocumentProcessor
+{
+    public function onDocumentParsed(DocumentParsedEvent $event)
+    {
+        $document = $event->getDocument();
+        // TODO: Do things with the $document
+    }
+}
+
+// ...
+
+$processor = new MyDocumentProcessor();
+$environment->addEventListener(DocumentParsedEvent::class, [$processor, 'onDocumentParsed']);
+```
+
 ## Text Encoding
 
 This library used to claim it supported ISO-8859-1 encoding but that never truly worked - everything assumed the text was encoded as UTF-8 or ASCII. We've therefore dropped support for ISO-8859-1 and any other unexpected encodings. If you were using some other encoding, you'll now need to convert your Markdown to UTF-8 prior to running it through this library.
