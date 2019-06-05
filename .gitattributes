@@ -10,6 +10,7 @@
 /.styleci.yml         export-ignore
 /.travis.yml          export-ignore
 /docs                 export-ignore
+/phpstan.neon.dist    export-ignore
 /phpunit.xml.dist     export-ignore
 /RELEASE_CHECKLIST.md export-ignore
 /tests                export-ignore
