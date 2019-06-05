@@ -11,23 +11,22 @@
 
 namespace League\CommonMark\Ext\Autolink;
 
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\DocumentProcessorInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Element\Text;
 
-final class EmailAutolinkProcessor implements DocumentProcessorInterface
+final class EmailAutolinkProcessor
 {
     const REGEX = '/([A-Za-z0-9.\-_+]+@[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_.]+)/';
 
     /**
-     * @param Document $document
+     * @param DocumentParsedEvent $e
      *
      * @return void
      */
-    public function processDocument(Document $document)
+    public function __invoke(DocumentParsedEvent $e)
     {
-        $walker = $document->walker();
+        $walker = $e->getDocument()->walker();
 
         while ($event = $walker->next()) {
             if ($event->getNode() instanceof Text) {

@@ -11,12 +11,11 @@
 
 namespace League\CommonMark\Ext\Autolink;
 
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\DocumentProcessorInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Element\Text;
 
-final class UrlAutolinkProcessor implements DocumentProcessorInterface
+final class UrlAutolinkProcessor
 {
     // RegEx adapted from https://github.com/symfony/symfony/blob/4.2/src/Symfony/Component/Validator/Constraints/UrlValidator.php
     const REGEX = '~
@@ -50,13 +49,13 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
     }
 
     /**
-     * @param Document $document
+     * @param DocumentParsedEvent $e
      *
      * @return void
      */
-    public function processDocument(Document $document)
+    public function __invoke(DocumentParsedEvent $e)
     {
-        $walker = $document->walker();
+        $walker = $e->getDocument()->walker();
 
         while ($event = $walker->next()) {
             if ($event->getNode() instanceof Text) {
