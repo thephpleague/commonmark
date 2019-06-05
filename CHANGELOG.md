@@ -4,9 +4,15 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.0.0-beta4] - 2019-06-05
+
 ### Added
 
  - Added event dispatcher functionality (#359, #372)
+
+### Removed
+
+ - Removed `DocumentProcessorInterface` functionality in favor of event dispatching (#373)
 
 ## [1.0.0-beta3] - 2019-05-27
 
@@ -902,7 +908,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta3...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta4...HEAD
+[1.0.0-beta4]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta3...1.0.0-beta4
 [1.0.0-beta3]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta2...1.0.0-beta3
 [1.0.0-beta2]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta1...1.0.0-beta2
 [1.0.0-beta1]: https://github.com/thephpleague/commonmark/compare/0.19.2...1.0.0-beta1

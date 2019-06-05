@@ -2,7 +2,7 @@
 
 **Note:** This file has been deprecated.  Future upgrade instructions can be found on our website: <https://commonmark.thephpleague.com/releases>
 
-## UNRELEASED
+## 1.0.0-beta4
 
 ### Document Processor Removed
 
