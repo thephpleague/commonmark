@@ -12,12 +12,13 @@
 namespace League\CommonMark\Ext\ExternalLink;
 
 use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 
 final class ExternalLinkExtension implements ExtensionInterface
 {
     public function register(ConfigurableEnvironmentInterface $environment)
     {
-        $environment->addDocumentProcessor(new ExternalLinkProcessor());
+        $environment->addEventListener(DocumentParsedEvent::class, new ExternalLinkProcessor($environment));
     }
 }

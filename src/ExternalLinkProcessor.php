@@ -11,35 +11,33 @@
 
 namespace League\CommonMark\Ext\ExternalLink;
 
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\DocumentProcessorInterface;
+use League\CommonMark\EnvironmentInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Inline\Element\Link;
-use League\CommonMark\Util\Configuration;
-use League\CommonMark\Util\ConfigurationAwareInterface;
 
-final class ExternalLinkProcessor implements DocumentProcessorInterface, ConfigurationAwareInterface
+final class ExternalLinkProcessor
 {
-    /** @var Configuration */
-    private $configuration;
+    /** @var EnvironmentInterface */
+    private $environment;
 
     /**
-     * {@inheritdoc}
+     * @param EnvironmentInterface $environment
      */
-    public function setConfiguration(Configuration $configuration)
+    public function __construct(EnvironmentInterface $environment)
     {
-        $this->configuration = $configuration;
+        $this->environment = $environment;
     }
 
     /**
-     * {@inheritdoc}
+     * @param DocumentParsedEvent $e
      */
-    public function processDocument(Document $document)
+    public function __invoke(DocumentParsedEvent $e)
     {
-        $internalHosts = $this->configuration->getConfig('external_link/internal_hosts', []);
-        $openInNewWindow = $this->configuration->getConfig('external_link/open_in_new_window', false);
-        $classes = $this->configuration->getConfig('external_link/html_class', '');
+        $internalHosts = $this->environment->getConfig('external_link/internal_hosts', []);
+        $openInNewWindow = $this->environment->getConfig('external_link/open_in_new_window', false);
+        $classes = $this->environment->getConfig('external_link/html_class', '');
 
-        $walker = $document->walker();
+        $walker = $e->getDocument()->walker();
         while ($event = $walker->next()) {
             if ($event->isEntering() && $event->getNode() instanceof Link) {
                 /** @var Link $link */
