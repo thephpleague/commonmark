@@ -92,6 +92,9 @@ abstract class AbstractBlock extends Node
     /**
      * Whether this is a code block
      *
+     * Code blocks are extra-greedy - they'll try to consume all subsequent
+     * lines of content without calling matchesNextLine() each time.
+     *
      * @return bool
      */
     abstract public function isCode(): bool;
