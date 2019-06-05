@@ -2,6 +2,17 @@
 
 **Note:** This file has been deprecated.  Future upgrade instructions can be found on our website: <https://commonmark.thephpleague.com/releases>
 
+## UNRELEASED
+
+### Document Processor Removed
+
+Now that we have support for an event dispatcher, we can leverage generic event listeners to obtain and manipulate the `Document` once parsing is completed instead of having a special `DocumentParserInterface` for this purpose.
+
+You'll need to make two changes:
+
+ - Instead of your processor implementing `DocumentProcessorInterface`, have a function which accepts a `DocumentParsedEvent` and obtains the `Document` from there.
+ - Change `$environment->addDocumentProcessor()` to `$environment->addEventListener(DocumentParsedEvent::class, /* your listener here */)` to register it with the environment
+
 ## 1.0.0-beta3
 
 ### More Delimiter Changes

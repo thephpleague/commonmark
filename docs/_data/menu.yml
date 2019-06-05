@@ -20,7 +20,6 @@ version:
             'Inline Parsing': '/1.0/customization/inline-parsing/'
             'Delimiter Processing': '/1.0/customization/delimiter-processing/'
             'Abstract Syntax Tree': '/1.0/customization/abstract-syntax-tree/'
-            'Document Processing': '/1.0/customization/document-processing/'
             'Block Rendering': '/1.0/customization/block-rendering/'
             'Inline Rendering': '/1.0/customization/inline-rendering/'
     '0.19':

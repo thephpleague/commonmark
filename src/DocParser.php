@@ -19,6 +19,7 @@ use League\CommonMark\Block\Element\AbstractStringContainerBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Element\StringContainerInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
 
 final class DocParser implements DocParserInterface
 {
@@ -73,7 +74,8 @@ final class DocParser implements DocParserInterface
      */
     public function parse(string $input): Document
     {
-        $context = new Context(new Document(), $this->environment);
+        $document = new Document();
+        $context = new Context($document, $this->environment);
 
         $lines = $this->preProcessInput($input);
         foreach ($lines as $line) {
@@ -88,9 +90,9 @@ final class DocParser implements DocParserInterface
 
         $this->processInlines($context);
 
-        $this->processDocument($context);
+        $this->environment->dispatch(new DocumentParsedEvent($document));
 
-        return $context->getDocument();
+        return $document;
     }
 
     private function incorporateLine(ContextInterface $context)
@@ -127,13 +129,6 @@ final class DocParser implements DocParserInterface
             $context->addBlock($p);
             $cursor->advanceToNextNonSpaceOrTab();
             $p->addLine($cursor->getRemainder());
-        }
-    }
-
-    private function processDocument(ContextInterface $context)
-    {
-        foreach ($this->environment->getDocumentProcessors() as $documentProcessor) {
-            $documentProcessor->processDocument($context->getDocument());
         }
     }
 

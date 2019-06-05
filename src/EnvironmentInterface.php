@@ -50,11 +50,6 @@ interface EnvironmentInterface
     public function getDelimiterProcessors(): DelimiterProcessorCollection;
 
     /**
-     * @return iterable<DocumentProcessorInterface>
-     */
-    public function getDocumentProcessors(): iterable;
-
-    /**
      * @param string $blockClass
      *
      * @return iterable<BlockRendererInterface>
@@ -81,6 +76,8 @@ interface EnvironmentInterface
      * Dispatches the given event to listeners
      *
      * @param AbstractEvent $event
+     *
+     * @return void
      */
     public function dispatch(AbstractEvent $event): void;
 }

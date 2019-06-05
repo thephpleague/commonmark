@@ -60,11 +60,6 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     private $inlineParsersByCharacter = [];
 
     /**
-     * @var PrioritizedList<DocumentProcessorInterface>
-     */
-    private $documentProcessors;
-
-    /**
      * @var DelimiterProcessorCollection
      */
     private $delimiterProcessors;
@@ -100,7 +95,6 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
 
         $this->blockParsers = new PrioritizedList();
         $this->inlineParsers = new PrioritizedList();
-        $this->documentProcessors = new PrioritizedList();
         $this->delimiterProcessors = new DelimiterProcessorCollection();
     }
 
@@ -181,19 +175,6 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     /**
      * {@inheritdoc}
      */
-    public function addDocumentProcessor(DocumentProcessorInterface $processor, int $priority = 0): ConfigurableEnvironmentInterface
-    {
-        $this->assertUninitialized('Failed to add document processor.');
-
-        $this->documentProcessors->add($processor, $priority);
-        $this->injectEnvironmentAndConfigurationIfNeeded($processor);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, int $priority = 0): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add block renderer.');
@@ -257,16 +238,6 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
         $this->initializeExtensions();
 
         return $this->delimiterProcessors;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDocumentProcessors(): iterable
-    {
-        $this->initializeExtensions();
-
-        return $this->documentProcessors->getIterator();
     }
 
     /**
