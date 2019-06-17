@@ -58,8 +58,9 @@ final class UrlAutolinkProcessor
         $walker = $e->getDocument()->walker();
 
         while ($event = $walker->next()) {
-            if ($event->getNode() instanceof Text) {
-                self::processAutolinks($event->getNode(), $this->finalRegex);
+            $node = $event->getNode();
+            if ($node instanceof Text && !($node->parent() instanceof Link)) {
+                self::processAutolinks($node, $this->finalRegex);
             }
         }
     }
