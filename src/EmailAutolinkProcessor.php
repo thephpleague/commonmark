@@ -30,8 +30,9 @@ final class EmailAutolinkProcessor implements DocumentProcessorInterface
         $walker = $document->walker();
 
         while ($event = $walker->next()) {
-            if ($event->getNode() instanceof Text) {
-                self::processAutolinks($event->getNode());
+            $node = $event->getNode();
+            if ($node instanceof Text && !($node->parent() instanceof Link)) {
+                self::processAutolinks($node);
             }
         }
     }

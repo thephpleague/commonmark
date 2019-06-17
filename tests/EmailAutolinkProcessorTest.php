@@ -47,5 +47,8 @@ final class EmailAutolinkProcessorTest extends TestCase
         yield ['a.b-c_d@a.b.', '<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a>.</p>'];
         yield ['a.b-c_d@a.b-', '<p>a.b-c_d@a.b-</p>'];
         yield ['a.b-c_d@a.b_', '<p>a.b-c_d@a.b_</p>'];
+
+        // Regression: CommonMark autolinks should not be double-linked
+        yield ['<foo@example.com>', '<p><a href="mailto:foo@example.com">foo@example.com</a></p>'];
     }
 }

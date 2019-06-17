@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [0.3.1] - 2019-06-17
+
+### Fixed
+
+ - Fixed extension incorrectly double-linking standard CommonMark autolinks (#12)
+
 ## [0.3.0] - 2019-04-10
 
 ### Changed
@@ -41,7 +47,8 @@ This release brings the email and URL autolink processors into alignment with th
 
 Initial release!
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v0.1.0...v0.2.0

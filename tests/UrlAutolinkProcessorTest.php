@@ -72,5 +72,8 @@ final class UrlAutolinkProcessorTest extends TestCase
 
         // Regression: two links with one underscore each
         yield ["https://eventum.example.net/history.php?iss_id=107092\nhttps://gitlab.example.net/group/project/merge_requests/39#note_150630", "<p><a href=\"https://eventum.example.net/history.php?iss_id=107092\">https://eventum.example.net/history.php?iss_id=107092</a>\n<a href=\"https://gitlab.example.net/group/project/merge_requests/39#note_150630\">https://gitlab.example.net/group/project/merge_requests/39#note_150630</a></p>"];
+
+        // Regression: CommonMark autolinks should not be double-linked
+        yield ['<https://www.google.com>', '<p><a href="https://www.google.com">https://www.google.com</a></p>'];
     }
 }

@@ -59,8 +59,9 @@ final class UrlAutolinkProcessor implements DocumentProcessorInterface
         $walker = $document->walker();
 
         while ($event = $walker->next()) {
-            if ($event->getNode() instanceof Text) {
-                self::processAutolinks($event->getNode(), $this->finalRegex);
+            $node = $event->getNode();
+            if ($node instanceof Text && !($node->parent() instanceof Link)) {
+                self::processAutolinks($node, $this->finalRegex);
             }
         }
     }
