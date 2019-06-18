@@ -46,4 +46,4 @@ script:
   - if [[ $RIPS ]]; then docker run --rm -it -e RIPS_BASE_URI -e RIPS_PASSWORD -e RIPS_EMAIL -v `pwd`:/data rips/rips-cli:3 rips:scan:start -p /data -T "$TRAVIS_BRANCH" -t high:0 -t critical:0 -t 5 -a 698; fi
 
 after_script:
-  - if [[ $PHPUNIT ]]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [[ $PHPUNIT ]] && [ "$TRAVIS_PHP_VERSION" != "7.4snapshot" ] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
