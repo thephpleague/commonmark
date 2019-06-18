@@ -4,6 +4,16 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Extracted a `ReferenceMapInterface` from the `ReferenceMap` class
+ - Added optional `ReferenceMapInterface` parameter to the `Document` constructor
+
+### Changed
+
+ - Replaced all references to `ReferenceMap` with `ReferenceMapInterface`
+ - `ReferenceMap::addReference()` no longer returns `$this`
+
 ## [1.0.0-beta4] - 2019-06-05
 
 ### Added

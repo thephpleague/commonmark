@@ -108,3 +108,5 @@ The `AdjoiningTextCollapser` is an internal class used to combine multiple `Text
 ## References
 
 The `ReferenceParser` was moved into the `Reference` sub-namespace, so update your imports accordingly.
+
+Virtually all usages of `ReferenceMap` in type hints have been replaced with the new `ReferenceMapInterface`.  This interface has the same methods, with one small change: `addReference()` no longer returns `$this`.

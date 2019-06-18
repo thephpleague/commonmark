@@ -20,7 +20,7 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Inline\AdjacentTextMerger;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
-use League\CommonMark\Reference\ReferenceMap;
+use League\CommonMark\Reference\ReferenceMapInterface;
 use League\CommonMark\Util\RegexHelper;
 
 /**
@@ -37,9 +37,9 @@ final class InlineParserEngine
 
     /**
      * @param AbstractStringContainerBlock $container
-     * @param ReferenceMap                 $referenceMap
+     * @param ReferenceMapInterface        $referenceMap
      */
-    public function parse(AbstractStringContainerBlock $container, ReferenceMap $referenceMap)
+    public function parse(AbstractStringContainerBlock $container, ReferenceMapInterface $referenceMap)
     {
         $inlineParserContext = new InlineParserContext($container, $referenceMap);
         while (($character = $inlineParserContext->getCursor()->getCharacter()) !== null) {

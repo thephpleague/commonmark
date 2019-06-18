@@ -18,7 +18,7 @@ use League\CommonMark\Block\Element as BlockElement;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Parser\BacktickParser;
 use League\CommonMark\InlineParserContext;
-use League\CommonMark\Reference\ReferenceMap;
+use League\CommonMark\Reference\ReferenceMapInterface;
 use PHPUnit\Framework\TestCase;
 
 class BacktickParserTest extends TestCase
@@ -39,7 +39,7 @@ class BacktickParserTest extends TestCase
             ->with($this->callback(function (Code $code) use ($expectedContents) {
                 return $code instanceof Code && $expectedContents === $code->getContent();
             }));
-        $inlineContext = new InlineParserContext($nodeStub, new ReferenceMap());
+        $inlineContext = new InlineParserContext($nodeStub, $this->createMock(ReferenceMapInterface::class));
 
         // Move to just before the first backtick
         $firstBacktickPos = mb_strpos($string, '`', null, 'utf-8');

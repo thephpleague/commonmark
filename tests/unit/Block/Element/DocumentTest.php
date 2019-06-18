@@ -18,15 +18,25 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Cursor;
 use League\CommonMark\Reference\ReferenceMap;
+use League\CommonMark\Reference\ReferenceMapInterface;
 use PHPUnit\Framework\TestCase;
 
 class DocumentTest extends TestCase
 {
-    public function testConstructorAndGetReferenceMap()
+    public function testDefaultConstructorAndGetReferenceMap()
     {
         $document = new Document();
 
         $this->assertInstanceOf(ReferenceMap::class, $document->getReferenceMap());
+    }
+
+    public function testReferenceMapPassedIntoConstructor()
+    {
+        $map = $this->createMock(ReferenceMapInterface::class);
+
+        $document = new Document($map);
+
+        $this->assertSame($map, $document->getReferenceMap());
     }
 
     public function testCanContain()

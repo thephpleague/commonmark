@@ -17,7 +17,7 @@ namespace League\CommonMark;
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\AbstractStringContainerBlock;
 use League\CommonMark\Delimiter\DelimiterStack;
-use League\CommonMark\Reference\ReferenceMap;
+use League\CommonMark\Reference\ReferenceMapInterface;
 
 class InlineParserContext
 {
@@ -26,7 +26,7 @@ class InlineParserContext
     private $cursor;
     private $delimiterStack;
 
-    public function __construct(AbstractStringContainerBlock $container, ReferenceMap $referenceMap)
+    public function __construct(AbstractStringContainerBlock $container, ReferenceMapInterface $referenceMap)
     {
         $this->referenceMap = $referenceMap;
         $this->container = $container;
@@ -43,9 +43,9 @@ class InlineParserContext
     }
 
     /**
-     * @return ReferenceMap
+     * @return ReferenceMapInterface
      */
-    public function getReferenceMap(): ReferenceMap
+    public function getReferenceMap(): ReferenceMapInterface
     {
         return $this->referenceMap;
     }

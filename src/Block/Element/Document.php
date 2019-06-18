@@ -16,6 +16,7 @@ namespace League\CommonMark\Block\Element;
 
 use League\CommonMark\Cursor;
 use League\CommonMark\Reference\ReferenceMap;
+use League\CommonMark\Reference\ReferenceMapInterface;
 
 /**
  * @method children() AbstractBlock[]
@@ -23,21 +24,21 @@ use League\CommonMark\Reference\ReferenceMap;
 class Document extends AbstractBlock
 {
     /***
-     * @var ReferenceMap
+     * @var ReferenceMapInterface
      */
     protected $referenceMap;
 
-    public function __construct()
+    public function __construct(?ReferenceMapInterface $referenceMap = null)
     {
         $this->setStartLine(1);
 
-        $this->referenceMap = new ReferenceMap();
+        $this->referenceMap = $referenceMap ?? new ReferenceMap();
     }
 
     /**
-     * @return ReferenceMap
+     * @return ReferenceMapInterface
      */
-    public function getReferenceMap(): ReferenceMap
+    public function getReferenceMap(): ReferenceMapInterface
     {
         return $this->referenceMap;
     }

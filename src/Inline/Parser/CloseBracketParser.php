@@ -24,7 +24,7 @@ use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Reference\ReferenceInterface;
-use League\CommonMark\Reference\ReferenceMap;
+use League\CommonMark\Reference\ReferenceMapInterface;
 use League\CommonMark\Util\LinkParserHelper;
 use League\CommonMark\Util\RegexHelper;
 
@@ -114,14 +114,14 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     }
 
     /**
-     * @param Cursor             $cursor
-     * @param ReferenceMap       $referenceMap
-     * @param DelimiterInterface $opener
-     * @param int                $startPos
+     * @param Cursor                $cursor
+     * @param ReferenceMapInterface $referenceMap
+     * @param DelimiterInterface    $opener
+     * @param int                   $startPos
      *
      * @return array|bool
      */
-    private function tryParseLink(Cursor $cursor, ReferenceMap $referenceMap, DelimiterInterface $opener, int $startPos)
+    private function tryParseLink(Cursor $cursor, ReferenceMapInterface $referenceMap, DelimiterInterface $opener, int $startPos)
     {
         // Check to see if we have a link/image
         // Inline link?
@@ -177,14 +177,14 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     }
 
     /**
-     * @param Cursor             $cursor
-     * @param ReferenceMap       $referenceMap
-     * @param DelimiterInterface $opener
-     * @param int                $startPos
+     * @param Cursor                $cursor
+     * @param ReferenceMapInterface $referenceMap
+     * @param DelimiterInterface    $opener
+     * @param int                   $startPos
      *
      * @return ReferenceInterface|null
      */
-    private function tryParseReference(Cursor $cursor, ReferenceMap $referenceMap, DelimiterInterface $opener, int $startPos): ?ReferenceInterface
+    private function tryParseReference(Cursor $cursor, ReferenceMapInterface $referenceMap, DelimiterInterface $opener, int $startPos): ?ReferenceInterface
     {
         if ($opener->getIndex() === null) {
             return null;

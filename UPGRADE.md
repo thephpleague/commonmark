@@ -2,6 +2,12 @@
 
 **Note:** This file has been deprecated.  Future upgrade instructions can be found on our website: <https://commonmark.thephpleague.com/releases>
 
+## UNRELEASED
+
+### `ReferenceMap`
+
+Virtually all usages of `ReferenceMap` in type hints have been replaced with the new `ReferenceMapInterface`.  This interface has the same methods, with one small change: `addReference()` no longer returns `$this`.
+
 ## 1.0.0-beta4
 
 ### Document Processor Removed

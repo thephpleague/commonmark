@@ -20,11 +20,11 @@ use League\CommonMark\Util\LinkParserHelper;
 final class ReferenceParser
 {
     /**
-     * @var ReferenceMap
+     * @var ReferenceMapInterface
      */
     private $referenceMap;
 
-    public function __construct(ReferenceMap $referenceMap)
+    public function __construct(ReferenceMapInterface $referenceMap)
     {
         $this->referenceMap = $referenceMap;
     }

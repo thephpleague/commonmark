@@ -17,7 +17,7 @@ namespace League\CommonMark\Reference;
 /**
  * A collection of references, indexed by label
  */
-final class ReferenceMap
+final class ReferenceMap implements ReferenceMapInterface
 {
     /**
      * @var ReferenceInterface[]
@@ -25,22 +25,16 @@ final class ReferenceMap
     protected $references = [];
 
     /**
-     * @param ReferenceInterface $reference
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function addReference(ReferenceInterface $reference)
+    public function addReference(ReferenceInterface $reference): void
     {
         $key = Reference::normalizeReference($reference->getLabel());
         $this->references[$key] = $reference;
-
-        return $this;
     }
 
     /**
-     * @param string $label
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function contains(string $label): bool
     {
@@ -50,9 +44,7 @@ final class ReferenceMap
     }
 
     /**
-     * @param string $label
-     *
-     * @return ReferenceInterface|null
+     * {@inheritdoc}
      */
     public function getReference(string $label): ?ReferenceInterface
     {
@@ -66,9 +58,7 @@ final class ReferenceMap
     }
 
     /**
-     * Lists all registered references.
-     *
-     * @return ReferenceInterface[]
+     * {@inheritdoc}
      */
     public function listReferences(): iterable
     {
