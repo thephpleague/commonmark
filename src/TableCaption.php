@@ -15,12 +15,14 @@ declare(strict_types=1);
 namespace Webuni\CommonMark\TableExtension;
 
 use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\AbstractStringContainerBlock;
 use League\CommonMark\Block\Element\InlineContainerInterface;
+use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Node\Node;
 
-class TableCaption extends AbstractBlock implements InlineContainerInterface
+class TableCaption extends AbstractStringContainerBlock implements InlineContainerInterface
 {
     public $id;
 
@@ -57,5 +59,9 @@ class TableCaption extends AbstractBlock implements InlineContainerInterface
     public function children(): array
     {
         return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractInline; });
+    }
+
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
+    {
     }
 }

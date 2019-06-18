@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "league/commonmark": "^0.17|^0.18|^0.19@dev"
+        "league/commonmark": "^0.19"
     },
     "require-dev": {
         "phpstan/phpstan": "~0.11",

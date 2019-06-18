@@ -12,13 +12,10 @@ php:
   - 7.3
 
 env:
-  - COMMONMARK_VERSION=0.17.*
-  - COMMONMARK_VERSION=0.18.*
   - COMMONMARK_VERSION=0.19.*@dev
 
 before_script:
   - if [ $TRAVIS_PHP_VERSION = '7.3' ]; then PHPUNIT_COVERAGE="--coverage-clover=coverage.clover"; fi
-  - if [ $TRAVIS_PHP_VERSION = '7.1' ]; then COMPOSER_FLAGS="--prefer-lowest"; fi
   - composer self-update
   - composer require "league/commonmark:${COMMONMARK_VERSION}" --prefer-dist --no-interaction $COMPOSER_FLAGS
 

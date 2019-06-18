@@ -22,7 +22,7 @@ use League\CommonMark\Util\Xml;
 
 class TableCaptionRenderer implements BlockRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!$block instanceof TableCaption) {
             throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
@@ -30,7 +30,7 @@ class TableCaptionRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
+            $attrs[$key] = Xml::escape($value);
         }
 
         if ($block->id) {

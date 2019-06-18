@@ -15,12 +15,12 @@ declare(strict_types=1);
 namespace Webuni\CommonMark\TableExtension;
 
 use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Block\Parser\AbstractBlockParser;
+use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-class TableParser extends AbstractBlockParser
+class TableParser implements BlockParserInterface
 {
     const REGEXP_DEFINITION = '/(?: *(:?) *-+ *(:?) *)+(?=\||$)/';
     const REGEXP_CELLS = '/(?:`[^`]*`|\\\\\||\\\\|[^|`\\\\]+)+(?=\||$)/';

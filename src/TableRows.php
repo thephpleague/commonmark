@@ -15,11 +15,13 @@ declare(strict_types=1);
 namespace Webuni\CommonMark\TableExtension;
 
 use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\AbstractStringContainerBlock;
+use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Node\Node;
 
-class TableRows extends AbstractBlock
+class TableRows extends AbstractStringContainerBlock implements InlineContainerInterface
 {
     const TYPE_HEAD = 'thead';
     const TYPE_BODY = 'tbody';

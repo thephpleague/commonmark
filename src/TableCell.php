@@ -15,13 +15,14 @@ declare(strict_types=1);
 namespace Webuni\CommonMark\TableExtension;
 
 use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\AbstractStringContainerBlock;
 use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Node\Node;
 
-class TableCell extends AbstractBlock implements InlineContainerInterface
+class TableCell extends AbstractStringContainerBlock implements InlineContainerInterface
 {
     const TYPE_HEAD = 'th';
     const TYPE_BODY = 'td';
@@ -72,4 +73,5 @@ class TableCell extends AbstractBlock implements InlineContainerInterface
     {
         return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractInline; });
     }
+
 }

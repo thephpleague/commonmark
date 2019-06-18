@@ -14,30 +14,20 @@ declare(strict_types=1);
 
 namespace Webuni\CommonMark\TableExtension;
 
-use League\CommonMark\Extension\Extension;
+use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Extension\ExtensionInterface;
 
-class TableExtension extends Extension
+final class TableExtension implements ExtensionInterface
 {
-    public function getBlockParsers(): array
-    {
-        return [
-            new TableParser(),
-        ];
-    }
+    public function register(ConfigurableEnvironmentInterface $environment) {
+        $environment
+            ->addBlockParser(new TableParser())
 
-    public function getBlockRenderers(): array
-    {
-        return [
-            __NAMESPACE__.'\\Table' => new TableRenderer(),
-            __NAMESPACE__.'\\TableCaption' => new TableCaptionRenderer(),
-            __NAMESPACE__.'\\TableRows' => new TableRowsRenderer(),
-            __NAMESPACE__.'\\TableRow' => new TableRowRenderer(),
-            __NAMESPACE__.'\\TableCell' => new TableCellRenderer(),
-        ];
-    }
+            ->addBlockRenderer(Table::class, new TableRenderer())
+            ->addBlockRenderer(TableCaption::class, new TableCaptionRenderer())
+            ->addBlockRenderer(TableRows::class, new TableRowsRenderer())
+            ->addBlockRenderer(TableRow::class, new TableRowRenderer())
+            ->addBlockRenderer(TableCell::class, new TableCellRenderer());
 
-    public function getName(): string
-    {
-        return 'table';
     }
 }

@@ -22,7 +22,7 @@ use League\CommonMark\Util\Xml;
 
 class TableRowRenderer implements BlockRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!$block instanceof TableRow) {
             throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
@@ -30,7 +30,7 @@ class TableRowRenderer implements BlockRendererInterface
 
         $attrs = [];
         foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value, true);
+            $attrs[$key] = Xml::escape($value);
         }
 
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
