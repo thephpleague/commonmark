@@ -138,6 +138,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
+## [0.19.3] - 2019-06-18
+
+### Fixed
+
+ - Fixed bug where elements with content of `"0"` wouldn't be rendered (#376)
+
 ## [0.19.2] - 2019-05-19
 
 ### Fixed
@@ -923,6 +929,7 @@ An unused constant and static method were deprecated and will be removed in a fu
 [1.0.0-beta3]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta2...1.0.0-beta3
 [1.0.0-beta2]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta1...1.0.0-beta2
 [1.0.0-beta1]: https://github.com/thephpleague/commonmark/compare/0.19.2...1.0.0-beta1
+[0.19.3]: https://github.com/thephpleague/commonmark/compare/0.19.2...0.19.3
 [0.19.2]: https://github.com/thephpleague/commonmark/compare/0.19.1...0.19.2
 [0.19.1]: https://github.com/thephpleague/commonmark/compare/0.19.0...0.19.1
 [0.19.0]: https://github.com/thephpleague/commonmark/compare/0.18.5...0.19.0

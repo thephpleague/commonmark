@@ -114,4 +114,17 @@ class HtmlElementTest extends TestCase
         $img->setContents(null);
         $this->assertTrue($img->getContents(false) === '');
     }
+
+    /**
+     * See https://github.com/thephpleague/commonmark/issues/376
+     */
+    public function testRegressionWith0NotBeingRendered()
+    {
+        $element = new HtmlElement('em');
+        $element->setContents('0');
+        $this->assertSame('0', $element->getContents());
+
+        $element = new HtmlElement('em', [], '0');
+        $this->assertSame('0', $element->getContents());
+    }
 }

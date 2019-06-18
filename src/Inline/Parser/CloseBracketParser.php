@@ -162,7 +162,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         $title = '';
         // make sure there's a space before the title:
         if (\preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $cursor->peek(-1))) {
-            $title = LinkParserHelper::parseLinkTitle($cursor) ?: '';
+            $title = LinkParserHelper::parseLinkTitle($cursor) ?? '';
         }
 
         $cursor->advanceToNextNonSpaceOrNewline();
