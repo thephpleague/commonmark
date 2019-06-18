@@ -16,22 +16,18 @@
 
 ## 🎯 Goals
 
-* Fully support the [CommonMark] spec (100% compliance)
+* Fully support the [CommonMark spec] (100% compliance)
 * Provide an extensible parser/renderer which users may customize as needed
 * Continuously improve performance without sacrificing quality or compliance
 * Match the official reference implementations of CommonMark
 
-## 📦 Installation
+## 📦 Installation & Basic Usage
 
 This project can be installed via [Composer]:
 
 ``` bash
-$ composer require league/commonmark
+$ composer require league/commonmark:^0.19
 ```
-
-**Note:** See [Versioning](#versioning) for important information on which version constraints you should use.
-
-## ✨ Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
@@ -44,9 +40,13 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
+Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.
+
+## 🔒 Security
+
 :warning: **Security warning:** If you will be parsing untrusted input from users, please consider setting the `html_input` and `allow_unsafe_links` options. See <https://commonmark.thephpleague.com/security/> for more details. If you also do choose to allow raw HTML input from untrusted users, considering using a library (like [HTML Purifier](https://github.com/ezyang/htmlpurifier)) to provide additional HTML filtering.
 
-Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).         Tidelift will coordinate the fix and disclosure with us.
 
 ## 📓 Documentation
 
@@ -100,30 +100,6 @@ If you build your own, feel free to submit a PR to add it to this list!
 
 Check out the other cool things people are doing with `league/commonmark`: <https://packagist.org/packages/league/commonmark/dependents>
 
-## 🌐 Compatibility with CommonMark ##
-
-This project aims to fully support the entire [CommonMark spec]. Other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [JS reference implementation][commonmark.js] should eventually find their way back into this codebase.
-
-league/commonmark 0.19.0 and higher supports version 0.29 of the [CommonMark spec].
-
-(This package is **not** part of CommonMark, but rather a compatible derivative.)
-
-## 🧪 Testing
-
-``` bash
-$ composer test
-```
-
-This will also test league/commonmark against the latest supported spec.
-
-## 🚀 Performance Benchmarks
-
-You can compare the performance of **league/commonmark** to other popular parsers by running the included benchmark tool:
-
-``` bash
-$ ./tests/benchmark/benchmark.php
-```
-
 ## 🏷️ Versioning
 
 [SemVer](http://semver.org/) will be followed closely.  0.x.0 versions will introduce breaking changes to the codebase, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.18`.  This is equivalent to `>=0.18.0 <0.19.0`.
@@ -152,9 +128,21 @@ Major refactoring should be avoided for now so that we can easily follow updates
 
 Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/master/CONTRIBUTING.md) for additional details.
 
-## 🔒 Security
+## 🧪 Testing
 
-To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).         Tidelift will coordinate the fix and disclosure with us.
+``` bash
+$ composer test
+```
+
+This will also test league/commonmark against the latest supported spec.
+
+## 🚀 Performance Benchmarks
+
+You can compare the performance of **league/commonmark** to other popular parsers by running the included benchmark tool:
+
+``` bash
+$ ./tests/benchmark/benchmark.php
+```
 
 ## 👥 Credits & Acknowledgements
 
