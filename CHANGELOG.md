@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [0.19.3] - 2019-06-18
+
 ### Fixed
 
  - Fixed bug where elements with content of `"0"` wouldn't be rendered (#376)
@@ -788,7 +790,8 @@ An unused constant and static method were deprecated and will be removed in a fu
 ### Added
  - Initial commit (compatible with jgm/stmd:spec.txt @ 0275f34)
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/0.19.2...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/0.19.3...HEAD
+[0.19.3]: https://github.com/thephpleague/commonmark/compare/0.19.2...0.19.3
 [0.19.2]: https://github.com/thephpleague/commonmark/compare/0.19.1...0.19.2
 [0.19.1]: https://github.com/thephpleague/commonmark/compare/0.19.0...0.19.1
 [0.19.0]: https://github.com/thephpleague/commonmark/compare/0.18.5...0.19.0
