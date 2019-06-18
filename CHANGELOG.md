@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed bug where elements with content of `"0"` wouldn't be rendered (#376)
+
 ## [0.19.2] - 2019-05-19
 
 ### Fixed

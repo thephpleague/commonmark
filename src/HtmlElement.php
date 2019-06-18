@@ -38,7 +38,7 @@ class HtmlElement
         $this->attributes = $attributes;
         $this->selfClosing = $selfClosing;
 
-        $this->setContents($contents ?: '');
+        $this->setContents($contents ?? '');
     }
 
     /**
@@ -111,7 +111,7 @@ class HtmlElement
      */
     public function setContents($contents): self
     {
-        $this->contents = $contents ?: '';
+        $this->contents = $contents ?? '';
 
         return $this;
     }
