@@ -14,14 +14,14 @@
 
 **league/commonmark** is a PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
 
-## Goals
+## 🎯 Goals
 
 * Fully support the [CommonMark] spec (100% compliance)
 * Provide an extensible parser/renderer which users may customize as needed
 * Continuously improve performance without sacrificing quality or compliance
 * Match the official reference implementations of CommonMark
 
-## Installation
+## 📦 Installation
 
 This project can be installed via [Composer]:
 
@@ -31,7 +31,7 @@ $ composer require league/commonmark
 
 **Note:** See [Versioning](#versioning) for important information on which version constraints you should use.
 
-## Basic Usage
+## ✨ Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
@@ -48,15 +48,15 @@ echo $converter->convertToHtml('# Hello World!');
 
 Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.
 
-## Documentation
+## 📓 Documentation
 
 Full documentation on advanced usage, configuration, and customization can be found at [commonmark.thephpleague.com][docs].
 
-## Upgrading
+## ⏫ Upgrading
 
 Information on how to upgrade to newer versions of this library can be found at <https://commonmark.thephpleague.com/releases>.
 
-## Related Packages
+## 🗃️ Related Packages
 
 ### Integrations
 
@@ -100,7 +100,7 @@ If you build your own, feel free to submit a PR to add it to this list!
 
 Check out the other cool things people are doing with `league/commonmark`: <https://packagist.org/packages/league/commonmark/dependents>
 
-## Compatibility with CommonMark ##
+## 🌐 Compatibility with CommonMark ##
 
 This project aims to fully support the entire [CommonMark spec]. Other flavors of Markdown may work but are not supported.  Any/all changes made to the [spec][CommonMark spec] or [JS reference implementation][commonmark.js] should eventually find their way back into this codebase.
 
@@ -108,7 +108,7 @@ league/commonmark 0.19.0 and higher supports version 0.29 of the [CommonMark spe
 
 (This package is **not** part of CommonMark, but rather a compatible derivative.)
 
-## Testing
+## 🧪 Testing
 
 ``` bash
 $ composer test
@@ -116,7 +116,7 @@ $ composer test
 
 This will also test league/commonmark against the latest supported spec.
 
-## Performance Benchmarks
+## 🚀 Performance Benchmarks
 
 You can compare the performance of **league/commonmark** to other popular parsers by running the included benchmark tool:
 
@@ -124,7 +124,7 @@ You can compare the performance of **league/commonmark** to other popular parser
 $ ./tests/benchmark/benchmark.php
 ```
 
-## Versioning
+## 🏷️ Versioning
 
 [SemVer](http://semver.org/) will be followed closely.  0.x.0 versions will introduce breaking changes to the codebase, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.18`.  This is equivalent to `>=0.18.0 <0.19.0`.
 
@@ -132,13 +132,13 @@ $ ./tests/benchmark/benchmark.php
 
 If you're only using the `CommonMarkConverter` class or `ConverterInterface` to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.18`, `>0.18`, etc.  I personally promise to never break this specific class in any future 0.x release.
 
-## Stability
+## 🏗️ Stability
 
 While this package does work well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
 
 Major release 1.0.0 will be reserved for when either the CommonMark spec or this project are considered stable (see [outstanding CommonMark spec issues](http://talk.commonmark.org/t/issues-to-resolve-before-1-0-release/1287)).  0.x.y will be used until that happens.
 
-## Contributing
+## 👷‍♀️ Contributing
 
 If you encounter a bug in the spec, please report it to the [CommonMark] project.  Any resulting fix will eventually be implemented in this project as well.
 
@@ -152,11 +152,11 @@ Major refactoring should be avoided for now so that we can easily follow updates
 
 Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/master/CONTRIBUTING.md) for additional details.
 
-## Security
+## 🔒 Security
 
 To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).         Tidelift will coordinate the fix and disclosure with us.
 
-## Credits & Acknowledgements
+## 👥 Credits & Acknowledgements
 
 - [Colin O'Dell][@colinodell]
 - [John MacFarlane][@jgm]
@@ -173,11 +173,11 @@ We'd also like to extend our sincere thanks the following sponsors who support o
 
 Are you interested in sponsoring development of this project? [Make a pledge](https://www.patreon.com/join/colinodell) of $10 or more and we'll include your name [on our website](https://commonmark.thephpleague.com/#sponsors)!
 
-## License ##
+## 📄 License
 
 **league/commonmark** is licensed under the BSD-3 license.  See the [`LICENSE`](LICENSE) file for more details.
 
-## Governance
+## 🏛️ Governance
 
 This project is primarily maintained by [Colin O'Dell][@colinodell].  Members of the [PHP League] Leadership Team may occasionally assist with some of these duties.
 
