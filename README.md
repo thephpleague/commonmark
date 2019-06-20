@@ -17,7 +17,7 @@
 This project can be installed via [Composer]:
 
 ``` bash
-$ composer require league/commonmark:^0.19
+$ composer require league/commonmark
 ```
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
@@ -93,11 +93,9 @@ Check out the other cool things people are doing with `league/commonmark`: <http
 
 ## 🏷️ Versioning
 
-[SemVer](http://semver.org/) is followed closely.  0.x.0 versions will introduce breaking changes to the codebase, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.18`.  This is equivalent to `>=0.18.0 <0.19.0`.
+[SemVer](http://semver.org/) is followed closely. Minor and patch releases should not introduce breaking changes to the codebase; however, they might change the resulting AST or HTML output of parsed Markdown (due to bug fixes, spec changes, etc.)  As a result, you might get slightly different HTML, but any custom code built onto this library should still function correctly.
 
-0.x.y releases should not introduce breaking changes to the codebase; however, they might change the resulting AST or HTML output of parsed Markdown (due to bug fixes, spec changes, etc.)  As a result, you might get slightly different HTML, but any custom code built onto this library should still function correctly.
-
-If you're only using the `CommonMarkConverter` class or `ConverterInterface` to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.18`, `>0.18`, etc.  I personally promise to never break this specific class in any future 0.x or 1.0 release.
+Any classes or methods marked `@internal` are not intended for use outside of this library and are subject to breaking changes at any time, so please avoid using them.
 
 ## 🛠️ Maintenance & Support
 
