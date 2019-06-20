@@ -325,3 +325,7 @@ main div > code {
         font-size:96px;
     }
 }
+
+#sponsors + p + ul {
+    list-style-type: none;
+}
