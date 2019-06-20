@@ -12,14 +12,7 @@
 
 [![Support development with Patreon](https://img.shields.io/badge/patreon-donate-red.svg)](https://www.patreon.com/colinodell)
 
-**league/commonmark** is a PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
-
-## 🎯 Goals
-
-* Fully support the [CommonMark spec] (100% compliance)
-* Provide an extensible parser/renderer which users may customize as needed
-* Continuously improve performance without sacrificing quality or compliance
-* Match the official reference implementations of CommonMark
+**league/commonmark** is a highly-extensible PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
 
 ## 📦 Installation & Basic Usage
 
@@ -34,7 +27,11 @@ The `CommonMarkConverter` class provides a simple wrapper for converting CommonM
 ```php
 use League\CommonMark\CommonMarkConverter;
 
-$converter = new CommonMarkConverter();
+$converter = new CommonMarkConverter([
+    'html_input' => 'strip',
+    'allow_unsafe_links' => false,
+]);
+
 echo $converter->convertToHtml('# Hello World!');
 
 // <h1>Hello World!</h1>
@@ -42,11 +39,7 @@ echo $converter->convertToHtml('# Hello World!');
 
 Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.
 
-## 🔒 Security
-
-:warning: **Security warning:** If you will be parsing untrusted input from users, please consider setting the `html_input` and `allow_unsafe_links` options. See <https://commonmark.thephpleague.com/security/> for more details. If you also do choose to allow raw HTML input from untrusted users, considering using a library (like [HTML Purifier](https://github.com/ezyang/htmlpurifier)) to provide additional HTML filtering.
-
-To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).         Tidelift will coordinate the fix and disclosure with us.
+🔒 If you will be parsing untrusted input from users, please consider setting the `html_input` and `allow_unsafe_links` options per the example above. See <https://commonmark.thephpleague.com/security/> for more details. If you also do choose to allow raw HTML input from untrusted users, considering using a library (like [HTML Purifier](https://github.com/ezyang/htmlpurifier)) to provide additional HTML filtering.
 
 ## 📓 Documentation
 
@@ -102,31 +95,28 @@ Check out the other cool things people are doing with `league/commonmark`: <http
 
 ## 🏷️ Versioning
 
-[SemVer](http://semver.org/) will be followed closely.  0.x.0 versions will introduce breaking changes to the codebase, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.18`.  This is equivalent to `>=0.18.0 <0.19.0`.
+[SemVer](http://semver.org/) is followed closely.  0.x.0 versions will introduce breaking changes to the codebase, so be careful which version constraints you use. **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^0.18`.  This is equivalent to `>=0.18.0 <0.19.0`.
 
-0.x.y releases should not introduce breaking changes to the codebase; however, they might change the resulting AST or HTML output of parsed Markdown (due to bug fixes, minor spec changes, etc.)  As a result, you might get slightly different HTML, but any custom code built onto this library will still function correctly.
+0.x.y releases should not introduce breaking changes to the codebase; however, they might change the resulting AST or HTML output of parsed Markdown (due to bug fixes, spec changes, etc.)  As a result, you might get slightly different HTML, but any custom code built onto this library should still function correctly.
 
-If you're only using the `CommonMarkConverter` class or `ConverterInterface` to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.18`, `>0.18`, etc.  I personally promise to never break this specific class in any future 0.x release.
-
-## 🏗️ Stability
-
-While this package does work well, the underlying code should not be considered "stable" yet.  The original spec and JS parser may undergo changes in the near future which will result in corresponding changes to this code.  Any methods tagged with `@api` are not expected to change, but other methods/classes might.
-
-Major release 1.0.0 will be reserved for when either the CommonMark spec or this project are considered stable (see [outstanding CommonMark spec issues](http://talk.commonmark.org/t/issues-to-resolve-before-1-0-release/1287)).  0.x.y will be used until that happens.
+If you're only using the `CommonMarkConverter` class or `ConverterInterface` to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.18`, `>0.18`, etc.  I personally promise to never break this specific class in any future 0.x or 1.0 release.
 
 ## 👷‍♀️ Contributing
 
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure with us.
+
 If you encounter a bug in the spec, please report it to the [CommonMark] project.  Any resulting fix will eventually be implemented in this project as well.
 
-For now, I'd like to maintain similar logic as the [JS reference implementation][commonmark.js] until everything is stable.  I'll gladly accept any contributions which:
+Contributions to this library are **welcome**, especially ones that:
 
+ * Improve usability or flexibility without compromising our ability to adhere to the [CommonMark spec]
  * Mirror fixes made to the [reference implementation][commonmark.js]
- * Optimize existing methods or regular expressions
- * Fix issues with adhering to the spec examples
+ * Optimize performance
+ * Fix issues with adhering to the [CommonMark spec]
 
-Major refactoring should be avoided for now so that we can easily follow updates made to [the reference implementation][commonmark.js].  This restriction will likely be lifted once the CommonMark specs and implementations are considered stable.
+Major refactoring to core parsing logic should be avoided if possible so that we can easily follow updates made to [the reference implementation][commonmark.js]. That being said, we will absolutely consider changes which don't deviate too far from the reference spec or which are favored by other popular CommonMark implementations.
 
-Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/master/CONTRIBUTING.md) for additional details.
+Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/master/.github/CONTRIBUTING.md) for additional details.
 
 ## 🧪 Testing
 
@@ -150,7 +140,7 @@ $ ./tests/benchmark/benchmark.php
 - [John MacFarlane][@jgm]
 - [All Contributors]
 
-This code is a port of the [CommonMark JS reference implementation][commonmark.js] which is written, maintained and copyrighted by [John MacFarlane].  This project simply wouldn't exist without his work.
+This code is partially based on the [CommonMark JS reference implementation][commonmark.js] which is written, maintained and copyrighted by [John MacFarlane].  This project simply wouldn't exist without his work.
 
 ### Sponsors
 

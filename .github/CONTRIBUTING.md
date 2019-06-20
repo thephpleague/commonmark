@@ -1,9 +1,15 @@
 # Contributing
 
-Contributions are **welcome** and will be fully **credited**.
+Contributions are **welcome** and will be fully **credited**. We accept contributions via Pull Requests on [GitHub](https://github.com/thephpleague/commonmark).
 
-We accept contributions via Pull Requests on [GitHub](https://github.com/thephpleague/commonmark).
+## Project Goals
 
+Please keep these project goals in mind as you propose changes:
+
+* Fully support the [CommonMark spec] (100% compliance)
+* Provide an extensible parser/renderer which users may customize as needed
+* Continuously improve performance without sacrificing quality or compliance
+* Match the underlying logic of the official reference implementations of CommonMark
 
 ## Pull Requests
 
