@@ -36,7 +36,7 @@ This library allows you to add custom syntax, renderers, and more.  Check out th
 
 ## Integrations & Community Extensions
 
-An updated list of pre-built integrations and extensions can be found in the [Related Packages](https://github.com/thephpleague/commonmark#related-packages) section of the `README`.
+An updated list of pre-built integrations and extensions can be found in the [Related Packages](https://github.com/thephpleague/commonmark#%EF%B8%8F-related-packages) section of the `README`.
 
 # Sponsors
 
