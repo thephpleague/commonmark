@@ -99,6 +99,14 @@ Check out the other cool things people are doing with `league/commonmark`: <http
 
 If you're only using the `CommonMarkConverter` class or `ConverterInterface` to convert Markdown (no other class references, custom parsers, etc.), then it should be safe to use a broader constraint like `~0.18`, `>0.18`, etc.  I personally promise to never break this specific class in any future 0.x or 1.0 release.
 
+## 🛠️ Maintenance & Support
+
+When a new **minor** version (`1.x`) is released, the previous one will continue to receive security and bug fixes for *at least* 3 months.
+
+When a new **major** version is released (`1.0`, `2.0`, etc), the previous one will receive bug fixes for *at least* 3 months and security updates for 6 months after that new release comes out.
+
+(This policy may change in the future and exceptions may be made on a case-by-case basis.)
+
 ## 👷‍♀️ Contributing
 
 To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure with us.
