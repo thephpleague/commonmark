@@ -10,6 +10,8 @@
 
 [![Support development with Patreon](https://img.shields.io/badge/patreon-donate-red.svg)](https://www.patreon.com/colinodell)
 
+![league/commonmark](commonmark-banner.png)
+
 **league/commonmark** is a highly-extensible PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
 
 ## 📦 Installation & Basic Usage
