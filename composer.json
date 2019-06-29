@@ -15,7 +15,7 @@
     ],
     "require": {
         "php" : "^7.1",
-        "league/commonmark": "^1.0-beta"
+        "league/commonmark": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5"
@@ -35,7 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.1-dev"
         }
     }
 }
