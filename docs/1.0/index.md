@@ -4,7 +4,7 @@ title: Overview
 redirect_from: /0.20/
 ---
 
-![](/images/commonmark-banner.png)
+<img class="banner" src="/images/commonmark-banner.png" alt="CommonMark for PHP" />
 
 # Overview
 

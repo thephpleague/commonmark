@@ -37,7 +37,7 @@ header .title {
     font-weight: bold;
     margin:0;
     padding:0;
-    width:225px;
+    width:400px;
 }
 
 header .title a {
@@ -48,8 +48,12 @@ header .title a {
 header .search {
     float:left;
     text-align:right;
-    width:calc(100% - 305px);
+    width:calc(100% - 480px);
     padding-right:.3em;
+}
+
+.banner {
+    max-width: 100%;
 }
 
 #doc-search {
@@ -278,6 +282,15 @@ table th {
     background: #1672ce;
 }
 
+header .logo .name {
+    font-size: 38px;
+}
+
+header .logo em {
+    color: #777;
+    font-style: normal;
+}
+
 @media screen and (max-width: 400px) {
     header .title {
         display: none;
@@ -329,6 +342,12 @@ table th {
     main article p,
     main article li {
         font-size:.9em;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    #doc-search {
+        display: none;
     }
 }
 
