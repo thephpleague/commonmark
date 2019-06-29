@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.0.0] - 2019-06-29
+
+No changes were made since 1.0.0-rc1.
+
 ## [1.0.0-rc1] - 2019-06-19
 
 ### Added
@@ -144,7 +148,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.0.0-rc1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.0.0...HEAD
+[1.0.0]: https://github.com/thephpleague/commonmark/compare/1.0.0-rc1...1.0.0
 [1.0.0-rc1]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta4...1.0.0-rc1
 [1.0.0-beta4]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta3...1.0.0-beta4
 [1.0.0-beta3]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta2...1.0.0-beta3

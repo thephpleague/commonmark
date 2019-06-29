@@ -5,13 +5,13 @@ site_title: CommonMark for PHP
 google_analytics_tracking_id: UA-137970568-1
 repository: commonmark
 releases:
-  next:
+  current:
     version: '1.0'
     documentation_link: '/1.0/'
-  current:
+  previous:
     version: '0.19'
     documentation_link: '/0.19/'
-  previous:
+  legacy:
     version: '0.18'
     documentation_link: '/0.18/'
 author:
