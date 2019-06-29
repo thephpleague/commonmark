@@ -18,4 +18,4 @@ All notable changes made in `1.x` releases are shown below. See the [full list o
 
 ## Older Versions
 
-See the [full list of releases](/releases) for the complete changelog.
+Please see the [full list of releases](/releases) for the complete changelog.
