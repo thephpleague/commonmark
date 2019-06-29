@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Block Rendering
+description: How to customize the rendering of block-level elements
 redirect_from: /0.20/customization/block-rendering/
 ---
 

@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Basic Usage
+description: Basic usage of the CommonMark parser
 redirect_from: /0.20/basic-usage/
 ---
 

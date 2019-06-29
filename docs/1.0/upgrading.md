@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Upgrading from 0.19 to 1.0
+description: Guide to upgrading to newer versions of this library
 redirect_from: /0.20/upgrading/
 ---
 

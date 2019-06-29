@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Abstract Syntax Tree
+description: Using the Abstract Syntax Tree (AST) to manipulate the parsed content
 redirect_from: /0.20/customization/abstract-syntax-tree/
 ---
 

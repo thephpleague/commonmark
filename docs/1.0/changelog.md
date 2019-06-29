@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Changelog
+description: Important changes made in recent versions
 redirect_from: /0.20/changelog/
 ---
 

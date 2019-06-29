@@ -11,7 +11,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% if site.data.project.description %}
+    {% if page.description %}
+        <meta name="description" content="{{ page.description }}">
+    {% else if site.data.project.description %}
         <meta name="description" content="{{ site.data.project.description }}">
     {% endif %}
     <meta name="docsearch:version" content="{{ version }}">
@@ -22,6 +24,21 @@
     {% endif %}
     <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
     <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com{{ page.url }}" />
+    {% if page.url == '/' %}
+        <meta property="og:title" content="{{ site.data.project.site_title }} - {{ site.data.project.tagline }}" />
+    {% else %}
+        <meta property="og:title" content="{{ page.title }} - {{ site.data.project.site_title }}" />
+    {% endif %}
+    {% if page.description %}
+        <meta property="og:description" content="{{ page.description }}" />
+    {% else %}
+        <meta property="og:description" content="{{ site.data.project.description }}" />
+    {% endif %}
+    <meta property="og:image" content="/images/commonmark-social.png" />
     <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?{{ site.github.build_revision }}">
     <link rel="stylesheet" href="/custom.css?{{ site.github.build_revision }}">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">

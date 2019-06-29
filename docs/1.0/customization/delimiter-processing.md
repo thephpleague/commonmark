@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Delimiter Processing
+description: Processing CommonMark delimiter runs with a custom processor
 redirect_from: /0.20/customization/delimiter-processing/
 ---
 

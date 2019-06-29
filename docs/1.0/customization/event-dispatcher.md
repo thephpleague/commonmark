@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Event Dispatcher
+description: How to leverate the event dispatcher to hook into the library
 redirect_from:
   - /0.20/customization/document-processing/
   - /1.0/customization/document-processing/

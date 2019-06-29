@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Block Parsing
+description: How to parse block-level elements
 redirect_from: /0.20/customization/block-parsing/
 ---
 
