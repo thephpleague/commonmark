@@ -60,7 +60,7 @@ use League\CommonMark\CommonMarkConverter;
 
 $markdown = str_repeat('> ', 10000) . ' Foo';
 
-$converter = new CommonMarkConverter(['max_nesting_level' => '5']);
+$converter = new CommonMarkConverter(['max_nesting_level' => 5]);
 echo $converter->convertToHtml($markdown);
 
 // <blockquote>
