@@ -168,6 +168,18 @@ Are you interested in sponsoring development of this project? [Make a pledge](ht
 
 This project is primarily maintained by [Colin O'Dell][@colinodell].  Members of the [PHP League] Leadership Team may occasionally assist with some of these duties.
 
+---
+
+<div align="center">
+	<b>
+		<a href="https://tidelift.com/subscription/pkg/packagist-league-commonmark?utm_source=packagist-league-commonmark&utm_medium=referral&utm_campaign=readme">Get professional support for league/commonmark with a Tidelift subscription</a>
+	</b>
+	<br>
+	<sub>
+		Tidelift helps make open source sustainable for maintainers while giving companies<br>assurances about security, maintenance, and licensing for their dependencies.
+	</sub>
+</div>
+
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
 [commonmark.js]: https://github.com/jgm/commonmark.js
