@@ -107,6 +107,8 @@ When a new **major** version is released (`1.0`, `2.0`, etc), the previous one (
 
 (This policy may change in the future and exceptions may be made on a case-by-case basis.)
 
+**Professional support, including notification of new releases and security updates, is available through a [Tidelift Subscription](https://tidelift.com/subscription/pkg/packagist-league-commonmark?utm_source=packagist-league-commonmark&utm_medium=referral&utm_campaign=readme).**
+
 ## 👷‍♀️ Contributing
 
 To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure with us.
@@ -152,6 +154,7 @@ This code is partially based on the [CommonMark JS reference implementation][com
 
 We'd also like to extend our sincere thanks the following sponsors who support ongoing development of this project:
 
+ - [Tidelift](https://tidelift.com/subscription/pkg/packagist-league-commonmark?utm_source=packagist-league-commonmark&utm_medium=referral&utm_campaign=readme) for offering support to both the maintainers and end-users through their [professional support](https://tidelift.com/subscription/pkg/packagist-league-commonmark?utm_source=packagist-league-commonmark&utm_medium=referral&utm_campaign=readme) program
  - [RIPS Technologies](https://www.ripstech.com/) for supporting this project with a complimentary [RIPS SaaS](https://www.ripstech.com/product/) license
  - [JetBrains](https://www.jetbrains.com/) for supporting this project with complimentary [PhpStorm](https://www.jetbrains.com/phpstorm/) licenses
 
