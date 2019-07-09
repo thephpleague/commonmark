@@ -1,10 +1,27 @@
 #!/usr/bin/env sh
 set -e
 
+url="https://raw.githubusercontent.com/webuni/shell-task-runner/master/runner"
+[ -f ./.runner ] || wget -q "$url" -O- > .runner || curl -fso .runner "$url"
+. ./.runner
+
+_decorator()(
+    if [ -n "$(command -v docker)" ]; then
+        _docker_run webuni/php:7.3 ./run "$@"
+    else
+        "$@"
+    fi
+)
+
 # Static analyse
 task_analyse()(
     ./vendor/bin/phpstan analyse -l7 src "$@"
     ./vendor/bin/psalm
+)
+
+# Run composer
+task_composer()(
+      composer "$@"
 )
 
 # Fix code style
@@ -16,7 +33,3 @@ task_cs_fix()(
 task_tests()(
     ./vendor/bin/phpunit "$@"
 )
-
-url="https://raw.githubusercontent.com/webuni/shell-task-runner/master/runner"
-! if [ -n "$(command -v 'wget')" ]; then r="$(wget -qT 1 "$url" -O-)" && echo "$r" > .runner; else curl --connect-timeout 1 -fso .runner "$url"; fi
-. ./.runner

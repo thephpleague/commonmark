@@ -5,4 +5,5 @@
 /.travis.yml export-ignore
 /phpunit.xml.dist export-ignore
 /psalm.xml
+/run
 /tests export-ignore

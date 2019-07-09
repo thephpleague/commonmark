@@ -12,16 +12,18 @@ php:
   - 7.3
 
 env:
-  - COMMONMARK_VERSION=0.19.*@dev
+  - COMMONMARK_VERSION=0.19
+  - COMMONMARK_VERSION=1.0
 
 before_script:
   - if [ $TRAVIS_PHP_VERSION = '7.3' ]; then PHPUNIT_COVERAGE="--coverage-clover=coverage.clover"; fi
+  - if [ $TRAVIS_PHP_VERSION = '7.1' ]; then COMPOSER_FLAGS="--prefer-lowest"; fi
   - composer self-update
   - composer require "league/commonmark:${COMMONMARK_VERSION}" --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
-  - vendor/bin/psalm
-  - phpunit $PHPUNIT_COVERAGE
+  - if [ $TRAVIS_PHP_VERSION != '7.1' ]; then ./run analyse; fi
+  - ./run test $PHPUNIT_COVERAGE
 
 after_script:
   - if [[ "$PHPUNIT_COVERAGE" != "" ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
