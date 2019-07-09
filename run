@@ -5,9 +5,12 @@ url="https://raw.githubusercontent.com/webuni/shell-task-runner/master/runner"
 [ -f ./.runner ] || wget -q "$url" -O- > .runner || curl -fso .runner "$url"
 . ./.runner
 
+! mkdir -p $HOME/.composer/cache
+if [ ! -f $HOME/.composer/auth.json ]; then echo "{}" > $HOME/.composer/auth.json; fi
+
 _decorator()(
     if [ -n "$(command -v docker)" ]; then
-        _docker_run webuni/php:7.3 ./run "$@"
+        _docker_run -v "$HOME/.composer/cache:/composer-cache" -v "$HOME/.composer/auth.json:/composer/auth.json" webuni/php:7.3 ./run "$@"
     else
         "$@"
     fi
