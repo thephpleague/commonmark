@@ -22,7 +22,7 @@ before_script:
   - composer require "league/commonmark:${COMMONMARK_VERSION}" --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
-  - if [ $COMMONMARK_VERSION != '~0.19.3' ]; then ./run analyse; fi
+  - if [ $COMMONMARK_VERSION != '~0.19.3' ] &&  [ $TRAVIS_PHP_VERSION != '7.1' ]; then ./run analyse; fi
   - ./run test $PHPUNIT_COVERAGE
 
 after_script:
