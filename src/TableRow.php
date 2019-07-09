@@ -26,11 +26,6 @@ class TableRow extends AbstractBlock
         return $block instanceof TableCell;
     }
 
-    public function acceptsLines(): bool
-    {
-        return false;
-    }
-
     public function isCode(): bool
     {
         return false;
@@ -48,8 +43,8 @@ class TableRow extends AbstractBlock
     /**
      * @return AbstractBlock[]
      */
-    public function children(): array
+    public function children(): iterable
     {
-        return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractBlock; });
+        return array_filter((array) parent::children(), static function (Node $child): bool { return $child instanceof AbstractBlock; });
     }
 }

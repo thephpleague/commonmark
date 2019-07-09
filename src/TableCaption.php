@@ -19,8 +19,6 @@ use League\CommonMark\Block\Element\AbstractStringContainerBlock;
 use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Node\Node;
 
 class TableCaption extends AbstractStringContainerBlock implements InlineContainerInterface
 {
@@ -38,11 +36,6 @@ class TableCaption extends AbstractStringContainerBlock implements InlineContain
         return false;
     }
 
-    public function acceptsLines(): bool
-    {
-        return false;
-    }
-
     public function isCode(): bool
     {
         return false;
@@ -51,14 +44,6 @@ class TableCaption extends AbstractStringContainerBlock implements InlineContain
     public function matchesNextLine(Cursor $cursor): bool
     {
         return false;
-    }
-
-    /**
-     * @return AbstractInline[]
-     */
-    public function children(): array
-    {
-        return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractInline; });
     }
 
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void

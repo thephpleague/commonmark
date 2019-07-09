@@ -19,8 +19,6 @@ use League\CommonMark\Block\Element\AbstractStringContainerBlock;
 use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Node\Node;
 
 class TableCell extends AbstractStringContainerBlock implements InlineContainerInterface
 {
@@ -38,16 +36,12 @@ class TableCell extends AbstractStringContainerBlock implements InlineContainerI
     {
         parent::__construct();
         $this->finalStringContents = $string;
+        $this->addLine($string);
         $this->type = $type;
         $this->align = $align;
     }
 
     public function canContain(AbstractBlock $block): bool
-    {
-        return false;
-    }
-
-    public function acceptsLines(): bool
     {
         return false;
     }
@@ -65,13 +59,4 @@ class TableCell extends AbstractStringContainerBlock implements InlineContainerI
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
     }
-
-    /**
-     * @return AbstractInline[]
-     */
-    public function children(): array
-    {
-        return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractInline; });
-    }
-
 }

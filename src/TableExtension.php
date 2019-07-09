@@ -19,7 +19,8 @@ use League\CommonMark\Extension\ExtensionInterface;
 
 final class TableExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment) {
+    public function register(ConfigurableEnvironmentInterface $environment): void
+    {
         $environment
             ->addBlockParser(new TableParser())
 
@@ -27,7 +28,7 @@ final class TableExtension implements ExtensionInterface
             ->addBlockRenderer(TableCaption::class, new TableCaptionRenderer())
             ->addBlockRenderer(TableRows::class, new TableRowsRenderer())
             ->addBlockRenderer(TableRow::class, new TableRowRenderer())
-            ->addBlockRenderer(TableCell::class, new TableCellRenderer());
-
+            ->addBlockRenderer(TableCell::class, new TableCellRenderer())
+        ;
     }
 }

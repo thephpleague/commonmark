@@ -19,7 +19,6 @@ use League\CommonMark\Block\Element\AbstractStringContainerBlock;
 use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
-use League\CommonMark\Node\Node;
 
 class TableRows extends AbstractStringContainerBlock implements InlineContainerInterface
 {
@@ -49,11 +48,6 @@ class TableRows extends AbstractStringContainerBlock implements InlineContainerI
         return $block instanceof TableRow;
     }
 
-    public function acceptsLines(): bool
-    {
-        return false;
-    }
-
     public function isCode(): bool
     {
         return false;
@@ -66,13 +60,5 @@ class TableRows extends AbstractStringContainerBlock implements InlineContainerI
 
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
-    }
-
-    /**
-     * @return AbstractBlock[]
-     */
-    public function children(): array
-    {
-        return array_filter(parent::children(), function (Node $child): bool { return $child instanceof AbstractBlock; });
     }
 }
