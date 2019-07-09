@@ -110,3 +110,12 @@ Result:
 </table>
 <table>
 ```
+
+Development
+-----------
+
+You need to have *php* or *docker* installed to develop the library. To list all available commands run:
+
+```bash
+./run
+```

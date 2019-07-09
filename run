@@ -16,6 +16,11 @@ _decorator()(
     fi
 )
 
+# Install dependencies
+task_deps()(
+    composer install
+)
+
 # Static analyse
 task_analyse()(
     ./vendor/bin/phpstan analyse -l7 src "$@"

@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "league/commonmark": "~0.19|^1.0"
+        "league/commonmark": "~0.19.3|^1.0"
     },
     "require-dev": {
         "phpstan/phpstan": "~0.11",
@@ -31,9 +31,12 @@
             "Webuni\\CommonMark\\TableExtension\\": "src"
         }
     },
+    "config": {
+        "preferred-install": "dist"
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.10-dev"
+            "dev-master": "1.0-dev"
         }
     }
 }
