@@ -43,7 +43,7 @@ final class TaskListItemMarkerParser implements InlineParserInterface
         $cursor = $inlineContext->getCursor();
         $oldState = $cursor->saveState();
 
-        $m = $cursor->match('/\[( |x)\]/i');
+        $m = $cursor->match('/\[[ xX]\]/');
         if ($m === null) {
             return false;
         }
