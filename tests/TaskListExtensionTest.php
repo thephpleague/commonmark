@@ -26,6 +26,10 @@ final class TaskListExtensionTest extends TestCase
   - [X] baz
 - [ ] bim
 
+* [x] foo
+* [X] bar
+* [ ] baz
+
 This works for ordered lists too:
 
 1. [x] foo
@@ -43,6 +47,15 @@ Some examples which should not match:
    - [ ]
    -    [x]
    -           [x]
+
+Here's a test using `<del>`:
+
+ - [x] <del>Checkbox inside of strikeout</del>
+
+And another which does not render the checkbox:
+
+ - <del>[x] Checkbox inside of strikeout</del>
+
 EOT;
 
         $expected = <<<'EOT'
@@ -58,6 +71,14 @@ EOT;
 </li>
 <li>
 <input disabled="" type="checkbox" /> bim</li>
+</ul>
+<ul>
+<li>
+<input disabled="" type="checkbox" checked="" /> foo</li>
+<li>
+<input disabled="" type="checkbox" checked="" /> bar</li>
+<li>
+<input disabled="" type="checkbox" /> baz</li>
 </ul>
 <p>This works for ordered lists too:</p>
 <ol>
@@ -86,6 +107,18 @@ EOT;
 </code></pre>
 </li>
 </ul>
+</li>
+</ul>
+<p>Here's a test using <code>&lt;del&gt;</code>:</p>
+<ul>
+<li>
+<input disabled="" type="checkbox" checked="" /> <del>Checkbox inside of strikeout</del>
+</li>
+</ul>
+<p>And another which does not render the checkbox:</p>
+<ul>
+<li>
+<del>[x] Checkbox inside of strikeout</del>
 </li>
 </ul>
 
