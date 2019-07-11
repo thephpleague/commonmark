@@ -1,71 +1,118 @@
-CHANGELOG
-=========
+# Changelog
 
-1.0.0 (2019-07-09)
--------------------
+All notable changes to this project will be documented in this file.
 
- * Increased minimum PHP version to 7.1
- * Updated to the commonmark 0.19 and 1.0
- * Removed support for commonmark 0.16, 0.17 and 0.18
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-0.9.0 (2018-11-28)
-------------------
+## [Unreleased][unreleased]
 
- * Allowed the commonmark 0.18
+## [1.0.0] - 2019-07-09
+### Changed
 
-0.8.0 (2018-01-24)
-------------------
+ - Increased minimum PHP version to 7.1
+ - Updated to the commonmark 0.19 and 1.0
 
- * Replaced align attribute with text-align style
+### Removed
 
-0.7.1 (2018-01-23)
-------------------
+ - Removed support for commonmark 0.16, 0.17 and 0.18
 
- * Fixed undefined method in commonmark 0.17
+## [0.9.0] - 2018-11-28
+### Changed
 
-0.7.0 (2018-01-09)
-------------------
+ - Allowed the commonmark 0.18
 
- * Increased minimum PHP version to 5.6
- * Removed support for commonmark 0.14 and 0.15 API
- * Updated to the commonmark 0.16 and 0.17 API
- * Fixed a problem with parsing whitespaces at the end of line
+## [0.8.0] - 2018-01-24
+### Changed
 
-0.6.1 (2017-01-11)
-------------------
+ - Replaced align attribute with text-align style
 
- * Fixed parsing of one column tables
+## [0.7.1] - 2018-01-23
+### Fixed
 
-0.6.0 (2016-09-26)
-------------------
+ - Fixed undefined method in commonmark 0.17
 
- * Updated to the commonmark 0.15 API
- * Moved twig template to [webuni/commonmark-twig-renderer](https://packagist.org/packages/webuni/commonmark-twig-renderer)
+## [0.7.0] - 2018-01-09
+### Changed
 
-0.5.0 (2016-07-13)
-------------------
+ - Increased minimum PHP version to 5.6
+ - Updated to the commonmark 0.16 and 0.17 API
+ 
+### Fixed
 
- * Added support for table caption (MultiMarkdown)
- * Added a template for twig renderer
- * Updated to the commonmark 0.14 API
+ - Fixed a problem with parsing whitespaces at the end of line
+ 
+### Removed
 
-0.4.0 (2015-09-21)
-------------------
+ - Removed support for commonmark 0.14 and 0.15 API
 
- * Updated to the new commonmark 0.11 API
+## [0.6.1] - 2017-01-11
+### Fixed
 
-0.3.0 (2015-07-27)
-------------------
+ - Fixed parsing of one column tables
 
- * Added support for custom attributes in renderers
+## [0.6.0] - 2016-09-26
+### Changed
+ - Updated to the commonmark 0.15 API
+ - Moved twig template to [webuni/commonmark-twig-renderer](https://packagist.org/packages/webuni/commonmark-twig-renderer)
 
-0.2.0 (2015-07-27)
-------------------
+## [0.5.0] - 2016-07-13
+### Added
 
- * Updated to the new commonmark 0.10 API
+ - Added support for table caption (MultiMarkdown)
+ - Added a template for twig renderer
 
-0.1.0 (2015-06-24)
-------------------
+### Changed
 
- * Implemented GFM tables
+ - Updated to the commonmark 0.14 API
 
+## [0.4.3] - 2016-01-14
+### Added
+
+ - Added support for commonmark 0.13 API
+
+## [0.4.2] - 2015-11-05
+### Added
+
+ - Added support for commonmark 0.12 API
+
+## [0.4.1] - 2015-09-22
+### Added
+
+ - Added missing tests
+
+## [0.4.0] - 2015-09-21
+### Changed
+
+ - Updated to the new commonmark 0.11 API
+
+## [0.3.0] - 2015-07-27
+### Added
+
+ - Added support for custom attributes in renderers
+
+## [0.2.0] - 2015-07-27
+### Changed
+
+ - Updated to the new commonmark 0.10 API
+
+## [0.1.0] - 2015-06-24
+### Added
+ - Implemented GFM tables
+
+[unreleased]: https://github.com/thephpleague/commonmark-ext-table/compare/1.0.0...HEAD
+[1.0.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.9.0...1.0.0
+[0.9.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.8.0...0.9.0
+[0.8.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.7.1...0.8.0
+[0.7.1]: https://github.com/thephpleague/commonmark-ext-table/compare/0.7.0...0.7.1
+[0.7.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.6.1...0.7.0
+[0.6.1]: https://github.com/thephpleague/commonmark-ext-table/compare/0.6.0...0.6.1
+[0.6.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.5.0...0.6.0
+[0.5.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.4.3...0.5.0
+[0.4.3]: https://github.com/thephpleague/commonmark-ext-table/compare/0.4.2...0.4.3
+[0.4.2]: https://github.com/thephpleague/commonmark-ext-table/compare/0.4.1...0.4.2
+[0.4.1]: https://github.com/thephpleague/commonmark-ext-table/compare/0.4.0...0.4.1
+[0.4.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.3.0...0.4.0
+[0.3.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.2.0...0.3.0
+[0.2.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.1.0...0.2.0
+[0.1.0]: https://github.com/thephpleague/commonmark-ext-table/commits/0.2.0
