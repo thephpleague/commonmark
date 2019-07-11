@@ -2,9 +2,9 @@ CommonMark Table Extension
 ==========================
 
 [![Latest Version](https://img.shields.io/packagist/v/league/commonmark-ext-table.svg?style=flat-square)](https://packagist.org/packages/league/commonmark-ext-table)
-[![Build Status](https://img.shields.io/travis/league/commonmark-ext-table.svg?style=flat-square)](https://travis-ci.org/league/commonmark-ext-table)
-[![Code Quality](https://img.shields.io/scrutinizer/g/league/commonmark-ext-table.svg?style=flat-square)](https://scrutinizer-ci.com/g/league/commonmark-ext-table/code-structure)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/league/commonmark-ext-table.svg?style=flat-square)](https://scrutinizer-ci.com/g/league/commonmark-ext-table)
+[![Build Status](https://img.shields.io/travis/thephpleague/commonmark-ext-table.svg?style=flat-square)](https://travis-ci.org/thephpleague/commonmark-ext-table)
+[![Code Quality](https://img.shields.io/scrutinizer/g/thephpleague/commonmark-ext-table.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark-ext-table/code-structure)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/thephpleague/commonmark-ext-table.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark-ext-table)
 
 The Table extension adds the ability to create tables in CommonMark documents.
 
