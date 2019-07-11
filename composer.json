@@ -36,6 +36,13 @@
             "League\\CommonMark\\Ext\\Table\\": "src"
         }
     },
+    "scripts": {
+        "test": ["@phpunit", "@phpstan", "@psalm"],
+        "phpstan": "phpstan analyse -l7 src",
+        "phpunit": "phpunit",
+        "psalm": "psalm",
+        "cs-fix": "php-cs-fixer fix --allow-risky=yes"
+    },
     "config": {
         "preferred-install": "dist"
     },
