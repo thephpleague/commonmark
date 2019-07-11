@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Fixed code not reusing an existing variable
+
 ## [1.0.0] - 2019-06-29
 
 No code changes have been introduced since 1.0.0-beta1.

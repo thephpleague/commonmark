@@ -56,7 +56,7 @@ final class TaskListItemMarkerParser implements InlineParserInterface
 
         $isChecked = $m !== '[ ]';
 
-        $inlineContext->getContainer()->appendChild(new TaskListItemMarker($isChecked));
+        $container->appendChild(new TaskListItemMarker($isChecked));
 
         return true;
     }
