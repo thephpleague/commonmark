@@ -1,10 +1,10 @@
 CommonMark Table Extension
 ==========================
 
-[![Latest Version](https://img.shields.io/packagist/v/webuni/commonmark-table-extension.svg?style=flat-square)](https://packagist.org/packages/webuni/commonmark-table-extension)
-[![Build Status](https://img.shields.io/travis/webuni/commonmark-table-extension.svg?style=flat-square)](https://travis-ci.org/webuni/commonmark-table-extension)
-[![Code Quality](https://img.shields.io/scrutinizer/g/webuni/commonmark-table-extension.svg?style=flat-square)](https://scrutinizer-ci.com/g/webuni/commonmark-table-extension/code-structure)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/webuni/commonmark-table-extension.svg?style=flat-square)](https://scrutinizer-ci.com/g/webuni/commonmark-table-extension)
+[![Latest Version](https://img.shields.io/packagist/v/league/commonmark-ext-table.svg?style=flat-square)](https://packagist.org/packages/league/commonmark-ext-table)
+[![Build Status](https://img.shields.io/travis/league/commonmark-ext-table.svg?style=flat-square)](https://travis-ci.org/league/commonmark-ext-table)
+[![Code Quality](https://img.shields.io/scrutinizer/g/league/commonmark-ext-table.svg?style=flat-square)](https://scrutinizer-ci.com/g/league/commonmark-ext-table/code-structure)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/league/commonmark-ext-table.svg?style=flat-square)](https://scrutinizer-ci.com/g/league/commonmark-ext-table)
 
 The Table extension adds the ability to create tables in CommonMark documents.
 
@@ -13,7 +13,7 @@ Installation
 
 This project can be installed via Composer:
 
-    composer require webuni/commonmark-table-extension
+    composer require league/commonmark-ext-table
 
 Usage
 -----

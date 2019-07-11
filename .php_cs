@@ -1,7 +1,7 @@
 <?php
 
 $header = <<<EOF
-This is part of the webuni/commonmark-table-extension package.
+This is part of the league/commonmark-ext-table package.
 
 (c) Martin Hasoň <martin.hason@gmail.com>
 (c) Webuni s.r.o. <info@webuni.cz>

@@ -1,9 +1,9 @@
 {
-    "name": "webuni/commonmark-table-extension",
+    "name": "league/commonmark-ext-table",
     "type": "commonmark-extension",
-    "description": "The table extension for CommonMark PHP implementation",
-    "keywords": ["markdown","table","commonmark"],
-    "homepage": "https://github.com/webuni/commonmark-table-extension",
+    "description": "Table extension for league/commonmark",
+    "keywords": ["markdown", "commonmark", "extension", "table"],
+    "homepage": "https://github.com/thephpleague/commonmark-ext-table",
     "license": "MIT",
     "authors": [
         {
