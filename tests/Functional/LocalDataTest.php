@@ -12,14 +12,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Webuni\CommonMark\TableExtension\Tests\Functional;
+namespace League\CommonMark\Ext\Table\Tests\Functional;
 
 use League\CommonMark\DocParser;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Environment;
+use League\CommonMark\Ext\Table\TableExtension;
 use League\CommonMark\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
-use Webuni\CommonMark\TableExtension\TableExtension;
 
 /**
  * @internal

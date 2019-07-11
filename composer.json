@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Webuni\\CommonMark\\TableExtension\\": "src"
+            "League\\CommonMark\\Ext\\Table\\": "src"
         }
     },
     "config": {
