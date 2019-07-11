@@ -13,6 +13,11 @@
         {
             "name": "Webuni s.r.o.",
             "homepage": "https://www.webuni.cz"
+        },
+        {
+            "name": "Colin O'Dell",
+            "email": "colinodell@gmail.com",
+            "homepage": "https://www.colinodell.com"
         }
     ],
     "require": {
