@@ -24,7 +24,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @coversNothing
  */
 class LocalDataTest extends TestCase
 {
