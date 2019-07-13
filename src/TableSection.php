@@ -21,7 +21,7 @@ use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class TableRows extends AbstractStringContainerBlock implements InlineContainerInterface
+class TableSection extends AbstractStringContainerBlock implements InlineContainerInterface
 {
     const TYPE_HEAD = 'thead';
     const TYPE_BODY = 'tbody';

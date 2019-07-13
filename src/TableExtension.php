@@ -27,7 +27,7 @@ final class TableExtension implements ExtensionInterface
 
             ->addBlockRenderer(Table::class, new TableRenderer())
             ->addBlockRenderer(TableCaption::class, new TableCaptionRenderer())
-            ->addBlockRenderer(TableRows::class, new TableRowsRenderer())
+            ->addBlockRenderer(TableSection::class, new TableSectionRenderer())
             ->addBlockRenderer(TableRow::class, new TableRowRenderer())
             ->addBlockRenderer(TableCell::class, new TableCellRenderer())
         ;

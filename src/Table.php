@@ -31,14 +31,14 @@ class Table extends AbstractStringContainerBlock implements InlineContainerInter
     public function __construct(\Closure $parser)
     {
         parent::__construct();
-        $this->appendChild($this->head = new TableRows(TableRows::TYPE_HEAD));
-        $this->appendChild($this->body = new TableRows(TableRows::TYPE_BODY));
+        $this->appendChild($this->head = new TableSection(TableSection::TYPE_HEAD));
+        $this->appendChild($this->body = new TableSection(TableSection::TYPE_BODY));
         $this->parser = $parser;
     }
 
     public function canContain(AbstractBlock $block): bool
     {
-        return $block instanceof TableRows || $block instanceof TableCaption;
+        return $block instanceof TableSection || $block instanceof TableCaption;
     }
 
     public function isCode(): bool
@@ -64,12 +64,12 @@ class Table extends AbstractStringContainerBlock implements InlineContainerInter
         return $this->caption;
     }
 
-    public function getHead(): TableRows
+    public function getHead(): TableSection
     {
         return $this->head;
     }
 
-    public function getBody(): TableRows
+    public function getBody(): TableSection
     {
         return $this->body;
     }
