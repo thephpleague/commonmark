@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [2.0.0] - 2019-07-13
+
+### Changed
+
+ - Changed the namespace to `League\CommonMark\Ext\Table`
+ - Renamed `TableRows` to `TableSection`
+ - Made the parser and renderers `final`
+
+### Removed
+
+ - Removed the unused `TableRow::handleRemainingContents()` function
+
 ## [1.0.0] - 2019-07-09
 ### Changed
 
@@ -100,7 +112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  - Implemented GFM tables
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-table/compare/1.0.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark-ext-table/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/thephpleague/commonmark-ext-table/compare/1.0.0...v2.0.0
 [1.0.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.9.0...1.0.0
 [0.9.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.8.0...0.9.0
 [0.8.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.7.1...0.8.0
