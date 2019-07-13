@@ -23,7 +23,7 @@ before_script:
 
 script:
   - if [ $COMMONMARK_VERSION != '~0.19.3' ] &&  [ $TRAVIS_PHP_VERSION != '7.1' ]; then ./run analyse; fi
-  - ./run test $PHPUNIT_COVERAGE
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
   - if [[ "$PHPUNIT_COVERAGE" != "" ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
