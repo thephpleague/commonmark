@@ -37,10 +37,6 @@ class TableRow extends AbstractBlock
         return false;
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
-    {
-    }
-
     /**
      * @return AbstractBlock[]
      */
