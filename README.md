@@ -18,6 +18,8 @@ This project can be installed via Composer:
 Usage
 -----
 
+Configure your `Environment` as usual and simply add the `TableExtension` provided by this package:
+
 ```php
 use League\CommonMark\Converter;
 use League\CommonMark\DocParser;
@@ -25,9 +27,13 @@ use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
 use League\CommonMark\Ext\Table\TableExtension;
 
+// Obtain a pre-configured Environment with all the standard CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
+
+// Add this extension
 $environment->addExtension(new TableExtension());
 
+// Instantiate the converter engine and start converting some Markdown!
 $converter = new Converter(new DocParser($environment), new HtmlRenderer($environment));
 
 echo $converter->convertToHtml('# Hello World!');
@@ -35,6 +41,8 @@ echo $converter->convertToHtml('# Hello World!');
 
 Syntax
 ------
+
+This package is fully compatible with GFM-style tables:
 
 ### Simple
 
@@ -111,6 +119,11 @@ Result:
 <table>
 ```
 
+Changelog
+---------
+
+Please refer to the [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
 Development
 -----------
 
@@ -119,3 +132,21 @@ You need to have *php* or *docker* installed to develop the library. To list all
 ```bash
 ./run
 ```
+
+Security
+--------
+
+If you discover any security related issues, please email colinodell@gmail.com instead of using the issue tracker.
+
+Credits
+-------
+
+- [Martin Hasoň](https://github.com/hason)
+- [Webuni s.r.o.](https://www.webuni.cz)
+- [Colin O'Dell](https://github.com/colinodell)
+- [All Contributors][../../contributors]
+
+License
+-------
+
+This library is licensed under the MIT license.  See the [License File](LICENSE) for more information.
