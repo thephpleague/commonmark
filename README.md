@@ -144,7 +144,7 @@ Credits
 - [Martin Hasoň](https://github.com/hason)
 - [Webuni s.r.o.](https://www.webuni.cz)
 - [Colin O'Dell](https://github.com/colinodell)
-- [All Contributors][../../contributors]
+- [All Contributors](../../contributors)
 
 License
 -------
