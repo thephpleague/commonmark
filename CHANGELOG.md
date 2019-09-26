@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [2.1.0] - 2019-09-26
+
+### Fixed
+
+ - Fixed attributes being double-escaped (#31)
+
 ## [2.0.0] - 2019-07-13
 
 ### Changed
@@ -112,7 +118,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  - Implemented GFM tables
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-table/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark-ext-table/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/thephpleague/commonmark-ext-table/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/thephpleague/commonmark-ext-table/compare/1.0.0...v2.0.0
 [1.0.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.9.0...1.0.0
 [0.9.0]: https://github.com/thephpleague/commonmark-ext-table/compare/0.8.0...0.9.0
