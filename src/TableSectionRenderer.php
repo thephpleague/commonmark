@@ -19,7 +19,6 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\Util\Xml;
 
 final class TableSectionRenderer implements BlockRendererInterface
 {
@@ -33,10 +32,7 @@ final class TableSectionRenderer implements BlockRendererInterface
             return '';
         }
 
-        $attrs = [];
-        foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
-        }
+        $attrs = $block->getData('attributes', []);
 
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 

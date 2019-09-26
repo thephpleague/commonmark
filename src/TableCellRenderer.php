@@ -19,7 +19,6 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
-use League\CommonMark\Util\Xml;
 
 final class TableCellRenderer implements BlockRendererInterface
 {
@@ -29,10 +28,7 @@ final class TableCellRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
         }
 
-        $attrs = [];
-        foreach ($block->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = Xml::escape($value);
-        }
+        $attrs = $block->getData('attributes', []);
 
         if ($block->align) {
             $attrs['style'] = (isset($attrs['style']) ? $attrs['style'].' ' : '').'text-align: '.$block->align;
