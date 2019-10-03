@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [1.1.0] - 2019-10-03
+
+### Added
+
+Added the ability to customize the opener and closer characters (#5)
+
 ## [1.0.0] - 2019-06-29
 
 No code changes have been introduced since 1.0.0-beta2.
@@ -33,7 +39,8 @@ No code changes have been introduced since 1.0.0-beta2.
 
 Split this extension out of the old `league/commonmark-extras` library.
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v1.0.0-beta2...v1.0.0
 [1.0.0-beta2]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v1.0.0-beta1...v1.0.0-beta2
 [1.0.0-beta1]: https://github.com/thephpleague/commonmark-ext-smartpunct/compare/v0.2.0...v1.0.0-beta1
