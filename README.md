@@ -44,6 +44,16 @@ $environment = Environment::createCommonMarkEnvironment();
 // Add this extension
 $environment->addExtension(new SmartPunctExtension());
 
+// Set your configuration
+$config = [
+    'smartpunct' => [
+        'double_quote_opener' => '“',
+        'double_quote_closer' => '”',
+        'single_quote_opener' => '‘',
+        'single_quote_closer' => '’',
+    ],
+];
+
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new CommonMarkConverter($config, $environment);
 echo $converter->convertToHtml('# Hello World!');
