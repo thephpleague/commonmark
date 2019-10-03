@@ -87,20 +87,26 @@ final class QuoteProcessor implements DelimiterProcessorInterface
     /**
      * Create a double-quote processor
      *
+     * @param string $opener
+     * @param string $closer
+     *
      * @return QuoteProcessor
      */
-    public static function createDoubleQuoteProcessor(): self
+    public static function createDoubleQuoteProcessor(string $opener = Quote::DOUBLE_QUOTE_OPENER, string $closer = Quote::DOUBLE_QUOTE_CLOSER): self
     {
-        return new self(Quote::DOUBLE_QUOTE, Quote::DOUBLE_QUOTE_OPENER, Quote::DOUBLE_QUOTE_CLOSER);
+        return new self(Quote::DOUBLE_QUOTE, $opener, $closer);
     }
 
     /**
      * Create a single-quote processor
      *
+     * @param string $opener
+     * @param string $closer
+     *
      * @return QuoteProcessor
      */
-    public static function createSingleQuoteProcessor(): self
+    public static function createSingleQuoteProcessor(string $opener = Quote::SINGLE_QUOTE_OPENER, string $closer = Quote::SINGLE_QUOTE_CLOSER): self
     {
-        return new self(Quote::SINGLE_QUOTE, Quote::SINGLE_QUOTE_OPENER, Quote::SINGLE_QUOTE_CLOSER);
+        return new self(Quote::SINGLE_QUOTE, $opener, $closer);
     }
 }

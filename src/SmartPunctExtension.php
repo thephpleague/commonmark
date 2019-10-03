@@ -30,8 +30,14 @@ class SmartPunctExtension implements ExtensionInterface
             ->addInlineParser(new QuoteParser(), 10)
             ->addInlineParser(new PunctuationParser(), 0)
 
-            ->addDelimiterProcessor(QuoteProcessor::createDoubleQuoteProcessor())
-            ->addDelimiterProcessor(QuoteProcessor::createSingleQuoteProcessor())
+            ->addDelimiterProcessor(QuoteProcessor::createDoubleQuoteProcessor(
+                $environment->getConfig('smartpunct/double_quote_opener', Quote::DOUBLE_QUOTE_OPENER),
+                $environment->getConfig('smartpunct/double_quote_closer', Quote::DOUBLE_QUOTE_CLOSER)
+            ))
+            ->addDelimiterProcessor(QuoteProcessor::createSingleQuoteProcessor(
+                $environment->getConfig('smartpunct/single_quote_opener', Quote::SINGLE_QUOTE_OPENER),
+                $environment->getConfig('smartpunct/single_quote_closer', Quote::SINGLE_QUOTE_CLOSER)
+            ))
 
             ->addBlockRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)
             ->addBlockRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
