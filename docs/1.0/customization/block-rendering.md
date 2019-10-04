@@ -45,7 +45,7 @@ Instead of manually building the HTML output yourself, you can leverage the `Htm
 
 use League\CommonMark\HtmlElement;
 
-$link = new HtmlElement('a', ['href' => 'https://github.com'], 'Github');
+$link = new HtmlElement('a', ['href' => 'https://github.com'], 'GitHub');
 $img = new HtmlElement('img', ['src' => 'logo.jpg'], '', true);
 ~~~
 
