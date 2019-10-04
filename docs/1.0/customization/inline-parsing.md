@@ -144,6 +144,6 @@ $environment->addInlineParser(new SmilieParserParser());
 
 ## Tips
 
-* For best performance, `return false` **as soon as possible**
+* For best performance, `return false` **as soon as possible**.
 * You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
 * You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).
