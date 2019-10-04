@@ -8,7 +8,7 @@ redirect_from: /0.20/customization/cursor/
 Cursor
 ======
 
-At it's core, a `Cursor` is just a fancy string that remembers your current position as you parse it  It contains a set of highly-optimized methods making it easy to parse characters, match regular expressions, and more.  
+A `Cursor` is essentially a fancy string wrapper that remembers your current position as you parse it.  It contains a set of highly-optimized methods making it easy to parse characters, match regular expressions, and more.
 
 ## Supported Encodings
 
@@ -16,7 +16,7 @@ As of now, only UTF-8 (and, by extension, ASCII) encoding is supported.
 
 ## Usage
 
-Instantiating a new `Cursor` is as simple as this:
+Instantiating a new `Cursor` is as simple as:
 
 ```php
 use League\CommonMark\Cursor;
@@ -24,7 +24,7 @@ use League\CommonMark\Cursor;
 $cursor = new Cursor('Hello World!');
 ```
 
-Or, if you're creating a custom [block parser](/1.0/customization/block-parsing/) or [inline renderer](/0.20/customization/inline-parsing/), a pre-configured `Cursor` will be provided to you with (with the `Cursor` already set to the current `position` trying to be parsed).
+Or, if you're creating a custom [block parser](/1.0/customization/block-parsing/) or [inline parser](/1.0/customization/inline-parsing/), a pre-configured `Cursor` will be provided to you with (with the `Cursor` already set to the current `position` trying to be parsed).
 
 ## Methods
 
@@ -42,6 +42,7 @@ You can then call any of the following methods to parse the string within that `
 | `peek(int $offset)`                | Returns the character `$offset` chars away without changing the current `position` of the cursor                                |
 | `getNextNonSpacePosition()`        | Returns the position of the next character which is not a space or tab                                                          |
 | `getNextNonSpaceCharacter()`       | Returns the next character which isn't a space (or tab)                                                                         |
+| `advance()`                        | Moves the cursor forward by 1 character                                                                                         |
 | `advanceBy(int $characters)`       | Moves the cursor forward by `$characters` characters                                                                            |
 | `advanceBy(int $characters, true)` | Moves the cursor forward by `$characters` characters, handling tabs as columns                                                  |
 | `advanceBySpaceOrTab()`            | Advances forward one character (and returns `true`) if it's a space or tab; returns false otherwise                             |

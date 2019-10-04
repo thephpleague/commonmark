@@ -8,7 +8,7 @@ redirect_from: /0.20/customization/extensions/
 Extensions
 ==========
 
-Extensions provide a way to group multiple related parsers, processors, and/or renderers together with pre-defined priorities.  They are perfect for distributing your customizations as reusable, open-source packages that others can plug into their own projects!
+Extensions provide a way to group related parsers, renderers, etc. together with pre-defined priorities, configuration settings, etc.  They are perfect for distributing your customizations as reusable, open-source packages that others can plug into their own projects!
 
 To create an extension, simply create a new class implementing `ExtensionInterface`.  This has a single method where you're given a `ConfigurableEnvironmentInterface` to register whatever things you need to. For example:
 
@@ -19,7 +19,6 @@ final class EmojiExtension implements ExtensionInterface
     {
         $environment
             ->addInlineParser(new EmojiParser(), 20)
-            ->addDocumentProcessor(new ReplaceUnicodeEmojiProcessor(), 0)
             ->addInlineRenderer(Emoji::class, new EmojiRenderer(), 0)
         ;
     }

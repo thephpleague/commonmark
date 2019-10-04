@@ -12,7 +12,13 @@ Block parsers should implement `BlockParserInterface` and implement the followin
 
 ## parse()
 
-When parsing a new line, the `DocParser` iterates through all registered block parsers and calls their `parse()` method.  Each parser must determine whether it can handle the given line; if so, it should parse the given block and return true.
+~~~php
+<?php
+
+public function parse(ContextInterface $context, Cursor $cursor): bool;
+~~~
+
+When parsing a new line, the `DocParser` iterates through all registered block parsers and calls their `parse()` method.  Each parser must determine whether it can handle the given line; if so, it should parse the given block and return `true`.
 
 ### Parameters
 
@@ -31,6 +37,7 @@ Returning `true` tells the engine that you've successfully parsed the block at t
 ## Tips
 
 * For best performance, `return false` as soon as possible
+* Your `parse()` method may be called thousands of times so be sure your code is optimized
 
 ## Block Elements
 
@@ -43,7 +50,7 @@ Block elements also play a role during the parsing process as they tell the unde
 | Method                    | Purpose                                                                                               |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | `canContain(...)`         | Tell the engine whether a subsequent block can be added as a child of yours                           |
-| `isCode()`                | Returns whether this block represents `<code>`                                                        |
+| `isCode()`                | Returns whether this block represents an extra-greedy `<code>` block                                  |
 | `matchesNextLine(...)`    | Returns whether this block continues onto the next line (some blocks are multi-line)                  |
 | `shouldLastLineBeBlank()` | Returns whether the last line should be blank (primarily used by `ListItem` elements)                 |
 | `finalize(...)`           | Finalizes the block after all child items have been added, thus marking it as closed for modification |

@@ -14,6 +14,12 @@ All block renderers should implement `BlockRendererInterface` and its `render()`
 
 ## render()
 
+~~~php
+<?php
+
+public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false);
+~~~
+
 The `HtmlRenderer` will call this method whenever a supported block element is encountered in the AST being rendered.
 
 If the method can only handle certain block types, be sure to verify that you've been passed the correct type.
@@ -28,11 +34,24 @@ If the method can only handle certain block types, be sure to verify that you've
 
 The method must return the final HTML representation of the block and any of its contents. This can be an `HtmlElement` object (preferred; castable to a string), a string of raw HTML, or `null` if it could not render (and perhaps another renderer should give it a try).
 
-You are responsible for handling any escaping that may be necessary.
+If you choose to return an HTML `string` you are responsible for handling any escaping that may be necessary.
+
+#### `HtmlElement`
+
+Instead of manually building the HTML output yourself, you can leverage the `HtmlElement` to generate that for you.  For example:
+
+~~~php
+<?php
+
+use League\CommonMark\HtmlElement;
+
+$link = new HtmlElement('a', ['href' => 'https://github.com'], 'GitHub');
+$img = new HtmlElement('img', ['src' => 'logo.jpg'], '', true);
+~~~
 
 ## Designating Block Renderers
 
-When registering your render, you must tell the `Environment` which block element class your renderer should handle. For example:
+When registering your renderer, you must tell the `Environment` which block element class your renderer should handle. For example:
 
 ~~~php
 <?php

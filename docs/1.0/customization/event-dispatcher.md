@@ -35,7 +35,7 @@ public function addEventListener(string $eventClass, callable $listener, int $pr
 The parameters for this method are:
 
 1. The fully-qualified name of the event class you wish to observe
-2. Any PHP callable to execute when that type of event is dispatched
+2. Any [PHP callable](https://www.php.net/manual/en/language.types.callable.php) to execute when that type of event is dispatched
 3. An optional priority (defaults to `0`)
 
 For example:
@@ -70,7 +70,7 @@ Listeners may call any method on the event to get more information about the eve
 
 This library supports the following default events which you can register listeners for:
 
-### `DocumentParsedEvent`
+### `League\CommonMark\Event\DocumentParsedEvent`
 
 This event is dispatched once all other processing is done.  This offers extensions the opportunity to inspect and modify the [Abstract Syntax Tree](/1.0/customization/abstract-syntax-tree/) prior to rendering.
 

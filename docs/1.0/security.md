@@ -8,6 +8,14 @@ redirect_from: /0.20/security/
 Security
 ========
 
+In order to be fully compliant with the CommonMark spec, certain security settings are disabled by default.  You will want to configure these settings if untrusted users will be providing the Markdown content:
+
+ - `html_input`: How to handle raw HTML
+ - `allow_unsafe_links`: Whether unsafe links are permitted
+ - `max_nesting_level`: Protected against long render times or segfaults
+
+Further information about each option can be found below.
+
 ## HTML Input
 
 **All HTML input is unescaped by default.**  This behavior ensures that league/commonmark is 100% compliant with the CommonMark spec.
