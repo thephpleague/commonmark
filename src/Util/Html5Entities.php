@@ -16,7 +16,6 @@ namespace League\CommonMark\Util;
 
 final class Html5Entities
 {
-
     /**
      * @param string $entity
      *
