@@ -24,13 +24,13 @@ echo $converter->convertToHtml('# Hello World!');
 <i class="fa fa-exclamation-triangle"></i>
 **Important:** See the [security](/1.0/security/) section for important details on avoiding security misconfigurations.
 
-The actual conversion process requires three steps:
+The actual conversion process has three steps:
 
- 1. Create an `Environment`, adding whichever extensions/parser/renders you need
+ 1. Creating an `Environment`, adding whichever extensions/parser/renders you need
  2. Parsing the Markdown input into an AST
  3. Rendering the AST document as HTML
 
-You can do this yourself if you wish:
+`CommonMarkConverter` handles this for you, but you can execute that process yourself if you wish:
 
 ~~~php
 <?php
@@ -52,5 +52,7 @@ echo $htmlRenderer->renderBlock($document);
 ~~~
 
 [Additional customization](/1.0/customization/overview/) is also possible.
+
+## Supported Character Encodings
 
 Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.

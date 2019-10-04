@@ -34,6 +34,10 @@ otherwise you abort and the engine will try other parsers.  If no parser succeed
 
 Simple delimiter-based inlines (like emphasis, strikethrough, etc.) can be parsed without needing a dedicated inline parser by leveraging the new [Delimiter Processing](/1.0/customization/delimiter-processing/) functionality.
 
+## AST manipulation
+
+Once the [Abstract Syntax Tree](/1.0/customization/abstract-syntax-tree/) is parsed, you are free to access/manipulate it as needed before it's passed into the rendering engine.
+
 ## Customize HTML Output with Custom Renderers
 
 Renders convert the parsed blocks/inlines from the AST representation into HTML.  There are two types of renderers:
@@ -43,10 +47,6 @@ Renders convert the parsed blocks/inlines from the AST representation into HTML.
 
 When registering these with the environment, you must tell it which block/inline classes it should handle.  This allows you
 to essentially "swap out" built-in renderers with your own.
-
-## AST manipulation
-
-Once the [Abstract Syntax Tree](/1.0/customization/abstract-syntax-tree/) is parsed, you are free to access/manipulate it as needed before it's passed into the rendering engine.
 
 ## Examples
 

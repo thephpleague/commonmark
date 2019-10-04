@@ -8,7 +8,7 @@ redirect_from: /0.20/customization/environment/
 The Environment
 ===============
 
-All parsers, renderers, etc. must be registered with the `Environment` class so that the library is aware of them.
+The `Environment` contains all of the parsers, renderers, configurations, etc. that the library uses during the conversion process.  You therefore must register all parsers, renderers, etc. with the `Environment` so that the library is aware of them.
 
 A pre-configured `Environment` can be obtained like this:
 
@@ -20,10 +20,39 @@ use League\CommonMark;
 $environment = Environment::createCommonMarkEnvironment();
 ~~~
 
-All of the core renders, parsers, etc. will be pre-registered and ready to go.
+All of the core renders, parsers, etc. needed to implement the CommonMark spec will be pre-registered and ready to go.
 
 You can customize this default `Environment` (or even a new, empty one) using any of the methods below (from the `ConfigurableEnvironmentInterface` interface).
-(These are the same methods used by `Environment::createCommonMarkEnvironment()` to register the standard functionality.)
+
+## mergeConfig()
+
+~~~php
+<?php
+
+public function mergeConfig(array $config = []);
+~~~
+
+Merges the given [configuration](/1.0/configuration/) settings into any existing ones.
+
+## setConfig()
+
+~~~php
+<?php
+
+public function setConfig(array $config = []);
+~~~
+
+Completely replaces the previous [configuration](/1.0/configuration/) settings with the new `$config` you provide.
+
+## addExtension()
+
+~~~php
+<?php
+
+public function addExtension(ExtensionInterface $extension);
+~~~
+
+Registers the given [extension](/1.0/customization/extensions/) with the environment.  This is typically how you'd integrate third-party extensions with this library.
 
 ## addBlockParser()
 
@@ -61,18 +90,6 @@ Registers the given `InlineParserInterface` with the environment with the given 
 
 See [Inline Parsing](/1.0/customization/inline-parsing/) for details.
 
-## addInlineProcessor()
-
-~~~php
-<?php
-
-public function addInlineProcessor(InlineProcessorInterface $processor);
-~~~
-
-Registers the given `InlineProcessorInterface` with the environment.
-
-**TODO:** Add documentation for this.
-
 ## addInlineRenderer()
 
 ~~~php
@@ -86,16 +103,30 @@ A single renderer can handle multiple inline classes, but you must register it s
 
 See [Inline Rendering](/1.0/customization/inline-rendering/) for details.
 
-## addDocumentProcessor()
+## addDelimiterProcessor()
 
 ~~~php
 <?php
 
-public function addDocumentProcessor(DocumentProcessorInterface $processor, int $priority = 0);
+public function addDelimiterProcessor(DelimiterProcessorInterface $processor);
 ~~~
 
-Adds a new Document Processor which will [manipulate the AST](/1.0/customization/abstract-syntax-tree/) after parsing the document but before rendering it.
+Registers the given `DelimiterProcessorInterface` with the environment.
+
+See [Inline Parsing](/1.0/customization/delimiter-processing/) for details.
+
+## addEventListener()
+
+~~~php
+<?php
+
+public function addEventListener(string $eventClass, callable $listener, int $priority = 0);
+~~~
+
+Registers the given event listener with the environment.
+
+See [Event Dispatcher](/1.0/customization/event-dispatcher/) for details.
 
 ## Priority
 
-Each of these methods allows you to specify a numeric `$priority`.  In cases where multiple things are registered, the internal engine will attempt to use the higher-priority ones first, falling back to lower priority ones if the first one(s) were unable to handle things.
+Several of these methods allows you to specify a numeric `$priority`.  In cases where multiple things are registered, the internal engine will attempt to use the higher-priority ones first, falling back to lower priority ones if the first one(s) were unable to handle things.
