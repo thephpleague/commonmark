@@ -26,7 +26,7 @@ $converter = new CommonMarkConverter([
     'use_underscore' => true,
     'html_input' => 'escape',
     'allow_unsafe_links' => false,
-    'max_nesting_level' => INF
+    'max_nesting_level' => INF,
 ]);
 ~~~
 

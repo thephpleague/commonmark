@@ -26,7 +26,7 @@ The `getName()` method has been removed from several classes:
 
 This method was originally intended for supporting XML rendering, which was never implemented, and will likely define names a bit differently if/when we do add support.
 
-After doing this, the two abstract classes mentioned above had notthing left in them, so those were removed.  Any parsers previously extending them should directly implement the corresponding interface instead.
+After doing this, the two abstract classes mentioned above had nothing left in them, so those were removed.  Any parsers previously extending them should directly implement the corresponding interface instead.
 
 `InlineContainer` was also removed.
 
