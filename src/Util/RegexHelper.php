@@ -143,7 +143,7 @@ final class RegexHelper
 
         $escaped = \preg_replace($allEscapedChar, '$1', $string);
         $replaced = \preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', function ($e) {
-            return Html5Entities::decodeEntity($e[0]);
+            return Html5EntityDecoder::decodeEntity($e[0]);
         }, $escaped);
 
         return $replaced;
