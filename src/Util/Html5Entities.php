@@ -14,8 +14,14 @@
 
 namespace League\CommonMark\Util;
 
+/**
+ * @deprecated Use Html5EntityDecoder instead
+ */
 final class Html5Entities
 {
+    /**
+     * @deprecated
+     */
     public static $entitiesByName = [
         'Aacute'                          => 'Á',
         'Aacut'                           => 'Á',
@@ -2246,33 +2252,20 @@ final class Html5Entities
      * @param string $entity
      *
      * @return string
+     *
+     * @deprecated Use Html5EntityDecoder::decode() instead
      */
     public static function decodeEntity(string $entity): string
     {
-        if (\substr($entity, -1) !== ';') {
-            return $entity;
-        }
-
-        if (\substr($entity, 0, 2) === '&#') {
-            if (\strtolower(\substr($entity, 2, 1)) === 'x') {
-                return self::fromHex(\substr($entity, 3, -1));
-            }
-
-            return self::fromDecimal(\substr($entity, 2, -1));
-        }
-
-        $name = \substr($entity, 1, -1);
-        if (isset(self::$entitiesByName[$name])) {
-            return self::$entitiesByName[$name];
-        }
-
-        return $entity;
+        return Html5EntityDecoder::decode($entity);
     }
 
     /**
      * @param mixed $number
      *
      * @return string
+     *
+     * @deprecated This method will be removed in v2.0.0
      */
     public static function fromDecimal($number): string
     {
@@ -2296,6 +2289,8 @@ final class Html5Entities
      * @param string $hexChars
      *
      * @return string
+     *
+     * @deprecated This method will be removed in v2.0.0
      */
     public static function fromHex(string $hexChars): string
     {

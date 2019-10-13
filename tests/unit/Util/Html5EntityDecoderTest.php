@@ -9,11 +9,11 @@ class Html5EntityDecoderTest extends TestCase
 {
     public function testEntityToChar()
     {
-        $this->assertEquals('©', Html5EntityDecoder::decodeEntity('&copy;'));
-        $this->assertEquals('&copy', Html5EntityDecoder::decodeEntity('&copy'));
-        $this->assertEquals('&MadeUpEntity;', Html5EntityDecoder::decodeEntity('&MadeUpEntity;'));
-        $this->assertEquals('#', Html5EntityDecoder::decodeEntity('&#35;'));
-        $this->assertEquals('Æ', Html5EntityDecoder::decodeEntity('&AElig;'));
-        $this->assertEquals('Ď', Html5EntityDecoder::decodeEntity('&Dcaron;'));
+        $this->assertEquals('©', Html5EntityDecoder::decode('&copy;'));
+        $this->assertEquals('&copy', Html5EntityDecoder::decode('&copy'));
+        $this->assertEquals('&MadeUpEntity;', Html5EntityDecoder::decode('&MadeUpEntity;'));
+        $this->assertEquals('#', Html5EntityDecoder::decode('&#35;'));
+        $this->assertEquals('Æ', Html5EntityDecoder::decode('&AElig;'));
+        $this->assertEquals('Ď', Html5EntityDecoder::decode('&Dcaron;'));
     }
 }

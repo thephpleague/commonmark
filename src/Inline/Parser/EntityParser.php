@@ -37,7 +37,7 @@ final class EntityParser implements InlineParserInterface
     public function parse(InlineParserContext $inlineContext): bool
     {
         if ($m = $inlineContext->getCursor()->match('/^' . RegexHelper::PARTIAL_ENTITY . '/i')) {
-            $inlineContext->getContainer()->appendChild(new Text(Html5EntityDecoder::decodeEntity($m)));
+            $inlineContext->getContainer()->appendChild(new Text(Html5EntityDecoder::decode($m)));
 
             return true;
         }
