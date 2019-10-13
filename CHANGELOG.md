@@ -4,6 +4,18 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added a new `Html5EntityDecoder` class (#387)
+
+### Changed
+
+ - Made entity decoding less memory-intensive (#386)
+
+### Deprecated
+
+ - Deprecated the `Html5Entities` class - use `Html5EntityDecoder` instead (#387)
+
 ## [1.0.0] - 2019-06-29
 
 No changes were made since 1.0.0-rc1.
