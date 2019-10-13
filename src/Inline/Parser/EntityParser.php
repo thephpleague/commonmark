@@ -16,7 +16,7 @@ namespace League\CommonMark\Inline\Parser;
 
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\InlineParserContext;
-use League\CommonMark\Util\Html5Entities;
+use League\CommonMark\Util\Html5EntityDecoder;
 use League\CommonMark\Util\RegexHelper;
 
 final class EntityParser implements InlineParserInterface
@@ -37,7 +37,7 @@ final class EntityParser implements InlineParserInterface
     public function parse(InlineParserContext $inlineContext): bool
     {
         if ($m = $inlineContext->getCursor()->match('/^' . RegexHelper::PARTIAL_ENTITY . '/i')) {
-            $inlineContext->getContainer()->appendChild(new Text(Html5Entities::decodeEntity($m)));
+            $inlineContext->getContainer()->appendChild(new Text(Html5EntityDecoder::decode($m)));
 
             return true;
         }
