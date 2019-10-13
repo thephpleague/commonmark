@@ -12,6 +12,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Made entity decoding less memory-intensive (#386)
 
+### Fixed
+
+ - Fixed PHP 7.4 compatibility issue
+
 ### Deprecated
 
  - Deprecated the `Html5Entities` class - use `Html5EntityDecoder` instead (#387)
