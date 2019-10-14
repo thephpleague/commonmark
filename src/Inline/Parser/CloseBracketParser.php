@@ -116,10 +116,10 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     }
 
     /**
-     * @param Cursor $cursor
+     * @param Cursor                $cursor
      * @param ReferenceMapInterface $referenceMap
-     * @param DelimiterInterface $opener
-     * @param int $startPos
+     * @param DelimiterInterface    $opener
+     * @param int                   $startPos
      *
      * @return array|bool
      */
@@ -183,10 +183,10 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     }
 
     /**
-     * @param Cursor $cursor
+     * @param Cursor                $cursor
      * @param ReferenceMapInterface $referenceMap
-     * @param DelimiterInterface $opener
-     * @param int $startPos
+     * @param DelimiterInterface    $opener
+     * @param int                   $startPos
      *
      * @return ReferenceInterface|null
      */
@@ -228,7 +228,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     /**
      * @param string $url
      * @param string $title
-     * @param bool $isImage
+     * @param bool   $isImage
      *
      * @return AbstractWebResource
      */

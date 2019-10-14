@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -222,7 +224,7 @@ class Cursor
     /**
      * Move the cursor forwards
      *
-     * @param int $characters Number of characters to advance by
+     * @param int  $characters       Number of characters to advance by
      * @param bool $advanceByColumns Whether to advance by columns instead of spaces
      */
     public function advanceBy(int $characters, bool $advanceByColumns = false)
