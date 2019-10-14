@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Util;
 
+use function count;
 use InvalidArgumentException;
 use League\CommonMark\Block\Element\HtmlBlock;
-use function count;
 use function mb_strcut;
 use function mb_strlen;
 use function mb_substr;
