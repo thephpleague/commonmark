@@ -203,7 +203,7 @@ if ($config['exec'] === 'exec') {
 
 $run = function (array $config, string $parser) use ($exec) : array {
     if ($config['flags']['isolate']) {
-        $bin = realpath($config['exec']);
+        $bin = str_replace(' ', '\ ', realpath($config['exec']));
         $argv =
             '--exec exec ' .
             "--parser \"{$parser}\" " .
