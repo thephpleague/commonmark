@@ -22,6 +22,7 @@ use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Reference\ReferenceMapInterface;
 use League\CommonMark\Util\RegexHelper;
+use function preg_match;
 
 /**
  * @internal
@@ -160,10 +161,10 @@ final class InlineParserEngine
      */
     private static function determineCanOpenOrClose(string $charBefore, string $charAfter, string $character, DelimiterProcessorInterface $delimiterProcessor)
     {
-        $afterIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
-        $afterIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
-        $beforeIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
-        $beforeIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
+        $afterIsWhitespace = preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
+        $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
+        $beforeIsWhitespace = preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
+        $beforeIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
 
         $leftFlanking = !$afterIsWhitespace && (!$afterIsPunctuation || $beforeIsWhitespace || $beforeIsPunctuation);
         $rightFlanking = !$beforeIsWhitespace && (!$beforeIsPunctuation || $afterIsWhitespace || $afterIsPunctuation);

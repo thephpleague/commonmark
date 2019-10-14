@@ -16,6 +16,7 @@ namespace League\CommonMark\Reference;
 
 use League\CommonMark\Cursor;
 use League\CommonMark\Util\LinkParserHelper;
+use function preg_match;
 
 final class ReferenceParser
 {
@@ -54,7 +55,7 @@ final class ReferenceParser
         // We need to trim the opening and closing brackets from the previously-matched text
         $label = \substr($cursor->getPreviousText(), 1, -1);
 
-        if (\preg_match('/[^\s]/', $label) === 0) {
+        if (preg_match('/[^\s]/', $label) === 0) {
             $cursor->restoreState($initialState);
 
             return false;

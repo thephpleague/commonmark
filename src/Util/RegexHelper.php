@@ -14,7 +14,18 @@
 
 namespace League\CommonMark\Util;
 
+use InvalidArgumentException;
 use League\CommonMark\Block\Element\HtmlBlock;
+use function count;
+use function mb_strcut;
+use function mb_strlen;
+use function mb_substr;
+use function preg_match;
+use function preg_match_all;
+use function preg_replace;
+use function preg_replace_callback;
+use function reset;
+use function substr;
 
 /**
  * Provides regular expressions and utilities for parsing Markdown
@@ -22,49 +33,49 @@ use League\CommonMark\Block\Element\HtmlBlock;
 final class RegexHelper
 {
     // Partial regular expressions (wrap with `/` on each side before use)
-    const PARTIAL_ENTITY = '&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});';
-    const PARTIAL_ESCAPABLE = '[!"#$%&\'()*+,.\/:;<=>?@[\\\\\]^_`{|}~-]';
-    const PARTIAL_ESCAPED_CHAR = '\\\\' . self::PARTIAL_ESCAPABLE;
-    const PARTIAL_IN_DOUBLE_QUOTES = '"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"';
-    const PARTIAL_IN_SINGLE_QUOTES = '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*\'';
-    const PARTIAL_IN_PARENS = '\\((' . self::PARTIAL_ESCAPED_CHAR . '|[^)\x00])*\\)';
-    const PARTIAL_REG_CHAR = '[^\\\\()\x00-\x20]';
-    const PARTIAL_IN_PARENS_NOSP = '\((' . self::PARTIAL_REG_CHAR . '|' . self::PARTIAL_ESCAPED_CHAR . '|\\\\)*\)';
-    const PARTIAL_TAGNAME = '[A-Za-z][A-Za-z0-9-]*';
-    const PARTIAL_BLOCKTAGNAME = '(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h1|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|section|source|title|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)';
-    const PARTIAL_ATTRIBUTENAME = '[a-zA-Z_:][a-zA-Z0-9:._-]*';
-    const PARTIAL_UNQUOTEDVALUE = '[^"\'=<>`\x00-\x20]+';
-    const PARTIAL_SINGLEQUOTEDVALUE = '\'[^\']*\'';
-    const PARTIAL_DOUBLEQUOTEDVALUE = '"[^"]*"';
-    const PARTIAL_ATTRIBUTEVALUE = '(?:' . self::PARTIAL_UNQUOTEDVALUE . '|' . self::PARTIAL_SINGLEQUOTEDVALUE . '|' . self::PARTIAL_DOUBLEQUOTEDVALUE . ')';
-    const PARTIAL_ATTRIBUTEVALUESPEC = '(?:' . '\s*=' . '\s*' . self::PARTIAL_ATTRIBUTEVALUE . ')';
-    const PARTIAL_ATTRIBUTE = '(?:' . '\s+' . self::PARTIAL_ATTRIBUTENAME . self::PARTIAL_ATTRIBUTEVALUESPEC . '?)';
-    const PARTIAL_OPENTAG = '<' . self::PARTIAL_TAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
-    const PARTIAL_CLOSETAG = '<\/' . self::PARTIAL_TAGNAME . '\s*[>]';
-    const PARTIAL_OPENBLOCKTAG = '<' . self::PARTIAL_BLOCKTAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
-    const PARTIAL_CLOSEBLOCKTAG = '<\/' . self::PARTIAL_BLOCKTAGNAME . '\s*[>]';
-    const PARTIAL_HTMLCOMMENT = '<!---->|<!--(?:-?[^>-])(?:-?[^-])*-->';
-    const PARTIAL_PROCESSINGINSTRUCTION = '[<][?].*?[?][>]';
-    const PARTIAL_DECLARATION = '<![A-Z]+' . '\s+[^>]*>';
-    const PARTIAL_CDATA = '<!\[CDATA\[[\s\S]*?]\]>';
-    const PARTIAL_HTMLTAG = '(?:' . self::PARTIAL_OPENTAG . '|' . self::PARTIAL_CLOSETAG . '|' . self::PARTIAL_HTMLCOMMENT . '|' .
+    public const PARTIAL_ENTITY = '&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});';
+    public const PARTIAL_ESCAPABLE = '[!"#$%&\'()*+,.\/:;<=>?@[\\\\\]^_`{|}~-]';
+    public const PARTIAL_ESCAPED_CHAR = '\\\\' . self::PARTIAL_ESCAPABLE;
+    public const PARTIAL_IN_DOUBLE_QUOTES = '"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"';
+    public const PARTIAL_IN_SINGLE_QUOTES = '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*\'';
+    public const PARTIAL_IN_PARENS = '\\((' . self::PARTIAL_ESCAPED_CHAR . '|[^)\x00])*\\)';
+    public const PARTIAL_REG_CHAR = '[^\\\\()\x00-\x20]';
+    public const PARTIAL_IN_PARENS_NOSP = '\((' . self::PARTIAL_REG_CHAR . '|' . self::PARTIAL_ESCAPED_CHAR . '|\\\\)*\)';
+    public const PARTIAL_TAGNAME = '[A-Za-z][A-Za-z0-9-]*';
+    public const PARTIAL_BLOCKTAGNAME = '(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h1|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|section|source|title|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)';
+    public const PARTIAL_ATTRIBUTENAME = '[a-zA-Z_:][a-zA-Z0-9:._-]*';
+    public const PARTIAL_UNQUOTEDVALUE = '[^"\'=<>`\x00-\x20]+';
+    public const PARTIAL_SINGLEQUOTEDVALUE = '\'[^\']*\'';
+    public const PARTIAL_DOUBLEQUOTEDVALUE = '"[^"]*"';
+    public const PARTIAL_ATTRIBUTEVALUE = '(?:' . self::PARTIAL_UNQUOTEDVALUE . '|' . self::PARTIAL_SINGLEQUOTEDVALUE . '|' . self::PARTIAL_DOUBLEQUOTEDVALUE . ')';
+    public const PARTIAL_ATTRIBUTEVALUESPEC = '(?:' . '\s*=' . '\s*' . self::PARTIAL_ATTRIBUTEVALUE . ')';
+    public const PARTIAL_ATTRIBUTE = '(?:' . '\s+' . self::PARTIAL_ATTRIBUTENAME . self::PARTIAL_ATTRIBUTEVALUESPEC . '?)';
+    public const PARTIAL_OPENTAG = '<' . self::PARTIAL_TAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
+    public const PARTIAL_CLOSETAG = '<\/' . self::PARTIAL_TAGNAME . '\s*[>]';
+    public const PARTIAL_OPENBLOCKTAG = '<' . self::PARTIAL_BLOCKTAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
+    public const PARTIAL_CLOSEBLOCKTAG = '<\/' . self::PARTIAL_BLOCKTAGNAME . '\s*[>]';
+    public const PARTIAL_HTMLCOMMENT = '<!---->|<!--(?:-?[^>-])(?:-?[^-])*-->';
+    public const PARTIAL_PROCESSINGINSTRUCTION = '[<][?].*?[?][>]';
+    public const PARTIAL_DECLARATION = '<![A-Z]+' . '\s+[^>]*>';
+    public const PARTIAL_CDATA = '<!\[CDATA\[[\s\S]*?]\]>';
+    public const PARTIAL_HTMLTAG = '(?:' . self::PARTIAL_OPENTAG . '|' . self::PARTIAL_CLOSETAG . '|' . self::PARTIAL_HTMLCOMMENT . '|' .
         self::PARTIAL_PROCESSINGINSTRUCTION . '|' . self::PARTIAL_DECLARATION . '|' . self::PARTIAL_CDATA . ')';
-    const PARTIAL_HTMLBLOCKOPEN = '<(?:' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s\/>]|$)' . '|' .
+    public const PARTIAL_HTMLBLOCKOPEN = '<(?:' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s\/>]|$)' . '|' .
         '\/' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s>]|$)' . '|' . '[?!])';
-    const PARTIAL_LINK_TITLE = '^(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"' .
+    public const PARTIAL_LINK_TITLE = '^(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"' .
         '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*\'' .
         '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*\))';
 
-    const REGEX_PUNCTUATION = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\p{Pc}\p{Pd}\p{Pe}\p{Pf}\p{Pi}\p{Po}\p{Ps}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
-    const REGEX_UNSAFE_PROTOCOL = '/^javascript:|vbscript:|file:|data:/i';
-    const REGEX_SAFE_DATA_PROTOCOL = '/^data:image\/(?:png|gif|jpeg|webp)/i';
-    const REGEX_NON_SPACE = '/[^ \t\f\v\r\n]/';
+    public const REGEX_PUNCTUATION = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\p{Pc}\p{Pd}\p{Pe}\p{Pf}\p{Pi}\p{Po}\p{Ps}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
+    public const REGEX_UNSAFE_PROTOCOL = '/^javascript:|vbscript:|file:|data:/i';
+    public const REGEX_SAFE_DATA_PROTOCOL = '/^data:image\/(?:png|gif|jpeg|webp)/i';
+    public const REGEX_NON_SPACE = '/[^ \t\f\v\r\n]/';
 
-    const REGEX_WHITESPACE_CHAR = '/^[ \t\n\x0b\x0c\x0d]/';
-    const REGEX_WHITESPACE = '/[ \t\n\x0b\x0c\x0d]+/';
-    const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
-    const REGEX_THEMATIC_BREAK = '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})[ \t]*$/';
-    const REGEX_LINK_DESTINATION_BRACES = '/^(?:<(?:[^<>\\n\\\\\\x00]|\\\\.)*>)/';
+    public const REGEX_WHITESPACE_CHAR = '/^[ \t\n\x0b\x0c\x0d]/';
+    public const REGEX_WHITESPACE = '/[ \t\n\x0b\x0c\x0d]+/';
+    public const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
+    public const REGEX_THEMATIC_BREAK = '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})[ \t]*$/';
+    public const REGEX_LINK_DESTINATION_BRACES = '/^(?:<(?:[^<>\\n\\\\\\x00]|\\\\.)*>)/';
 
     /**
      * @param string $character
@@ -73,7 +84,7 @@ final class RegexHelper
      */
     public static function isEscapable(string $character): bool
     {
-        return \preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
+        return preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
     }
 
     /**
@@ -88,13 +99,13 @@ final class RegexHelper
     public static function matchAt(string $regex, string $string, int $offset = 0): ?int
     {
         $matches = [];
-        $string = \mb_substr($string, $offset, null, 'utf-8');
-        if (!\preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
+        $string = mb_substr($string, $offset);
+        if (!preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
             return null;
         }
 
         // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
-        $charPos = \mb_strlen(\mb_strcut($string, 0, $matches[0][1], 'utf-8'), 'utf-8');
+        $charPos = mb_strlen(mb_strcut($string, 0, $matches[0][1], 'utf-8'), 'utf-8');
 
         return $offset + $charPos;
     }
@@ -111,19 +122,19 @@ final class RegexHelper
     public static function matchAll(string $pattern, string $subject, int $offset = 0): ?array
     {
         if ($offset !== 0) {
-            $subject = \substr($subject, $offset);
+            $subject = substr($subject, $offset);
         }
 
-        \preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
+        preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
 
-        $fullMatches = \reset($matches);
+        $fullMatches = reset($matches);
         if (empty($fullMatches)) {
             return null;
         }
 
-        if (\count($fullMatches) === 1) {
+        if (count($fullMatches) === 1) {
             foreach ($matches as &$match) {
-                $match = \reset($match);
+                $match = reset($match);
             }
         }
 
@@ -141,8 +152,8 @@ final class RegexHelper
     {
         $allEscapedChar = '/\\\\(' . self::PARTIAL_ESCAPABLE . ')/';
 
-        $escaped = \preg_replace($allEscapedChar, '$1', $string);
-        $replaced = \preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', function ($e) {
+        $escaped = preg_replace($allEscapedChar, '$1', $string);
+        $replaced = preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', function ($e) {
             return Html5EntityDecoder::decode($e[0]);
         }, $escaped);
 
@@ -175,7 +186,7 @@ final class RegexHelper
                 return '/^(?:' . self::PARTIAL_OPENTAG . '|' . self::PARTIAL_CLOSETAG . ')\\s*$/i';
         }
 
-        throw new \InvalidArgumentException('Invalid HTML block type');
+        throw new InvalidArgumentException('Invalid HTML block type');
     }
 
     /**
@@ -200,7 +211,7 @@ final class RegexHelper
                 return '/\]\]>/';
         }
 
-        throw new \InvalidArgumentException('Invalid HTML block type');
+        throw new InvalidArgumentException('Invalid HTML block type');
     }
 
     /**
@@ -210,6 +221,6 @@ final class RegexHelper
      */
     public static function isLinkPotentiallyUnsafe(string $url): bool
     {
-        return \preg_match(self::REGEX_UNSAFE_PROTOCOL, $url) !== 0 && \preg_match(self::REGEX_SAFE_DATA_PROTOCOL, $url) === 0;
+        return preg_match(self::REGEX_UNSAFE_PROTOCOL, $url) !== 0 && preg_match(self::REGEX_SAFE_DATA_PROTOCOL, $url) === 0;
     }
 }
