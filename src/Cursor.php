@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -13,7 +15,7 @@ namespace League\CommonMark;
 
 class Cursor
 {
-    const INDENT_LEVEL = 4;
+    public const INDENT_LEVEL = 4;
 
     /**
      * @var string
@@ -87,7 +89,7 @@ class Cursor
         $this->length = \mb_strlen($line, 'UTF-8') ?: 0;
         $this->isMultibyte = $this->length !== \strlen($line);
         $this->encoding = $this->isMultibyte ? 'UTF-8' : 'ASCII';
-        $this->lineContainsTabs = \preg_match('/\t/', $line) > 0;
+        $this->lineContainsTabs = false !== \strpos($line, chr(9));
     }
 
     /**
@@ -176,7 +178,9 @@ class Cursor
             return null;
         }
 
-        return $this->charCache[$index] = \mb_substr($this->line, $index, 1, $this->encoding);
+        return $this->charCache[$index] = $this->isMultibyte ?
+            \mb_substr($this->line, $index, 1, $this->encoding) :
+            \substr($this->line, $index, 1);
     }
 
     /**
@@ -226,8 +230,12 @@ class Cursor
         $this->previousPosition = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
+        $nextFewChars = $this->isMultibyte ?
+            \mb_substr($this->line, $this->currentPosition, $characters, $this->encoding) :
+            \substr($this->line, $this->currentPosition, $characters);
+
         // Optimization to avoid tab handling logic if we have no tabs
-        if (!$this->lineContainsTabs || \preg_match('/\t/', $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding)) === 0) {
+        if (!$this->lineContainsTabs || false === \strpos($nextFewChars, \chr(9))) {
             $length = \min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
@@ -239,7 +247,7 @@ class Cursor
         if ($characters === 1 && !empty($nextFewChars)) {
             $asArray = [$nextFewChars];
         } else {
-            $asArray = \preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
+            $asArray = \str_split($nextFewChars);
         }
 
         foreach ($asArray as $relPos => $c) {
@@ -359,7 +367,11 @@ class Cursor
             $prefix = \str_repeat(' ', $charsToTab);
         }
 
-        return $prefix . \mb_substr($this->line, $position, null, $this->encoding);
+        $subString = $this->isMultibyte ?
+            \mb_substr($this->line, $position, null, $this->encoding) :
+            \substr($this->line, $position);
+
+        return $prefix . $subString;
     }
 
     /**
@@ -476,5 +488,15 @@ class Cursor
     public function getColumn(): int
     {
         return $this->column;
+    }
+
+    public function getEncoding(): string
+    {
+        return $this->encoding;
+    }
+
+    public function isMultiByte(): bool
+    {
+        return $this->isMultibyte;
     }
 }
