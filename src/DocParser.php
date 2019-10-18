@@ -45,7 +45,7 @@ final class DocParser implements DocParserInterface
     {
         $this->environment = $environment;
         $this->inlineParserEngine = new InlineParserEngine($environment);
-        $this->maxNestingLevel = $environment->getConfig('max_nesting_level', INF);
+        $this->maxNestingLevel = $environment->getConfig('max_nesting_level', \INF);
     }
 
     /**

@@ -247,7 +247,7 @@ class Cursor
         if ($characters === 1 && !empty($nextFewChars)) {
             $asArray = [$nextFewChars];
         } elseif ($this->isMultibyte) {
-            $asArray = \preg_split('//u', $nextFewChars, -1, PREG_SPLIT_NO_EMPTY);
+            $asArray = \preg_split('//u', $nextFewChars, -1, \PREG_SPLIT_NO_EMPTY);
         } else {
             $asArray = \str_split($nextFewChars);
         }
@@ -322,7 +322,7 @@ class Cursor
     public function advanceToNextNonSpaceOrNewline(): int
     {
         $matches = [];
-        \preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE);
+        \preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, \PREG_OFFSET_CAPTURE);
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
@@ -405,7 +405,7 @@ class Cursor
     {
         $subject = $this->getRemainder();
 
-        if (!\preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
+        if (!\preg_match($regex, $subject, $matches, \PREG_OFFSET_CAPTURE)) {
             return null;
         }
 

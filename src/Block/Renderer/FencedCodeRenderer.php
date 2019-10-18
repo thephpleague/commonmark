@@ -38,7 +38,7 @@ final class FencedCodeRenderer implements BlockRendererInterface
         $attrs = $block->getData('attributes', []);
 
         $infoWords = $block->getInfoWords();
-        if (count($infoWords) !== 0 && \strlen($infoWords[0]) !== 0) {
+        if (\count($infoWords) !== 0 && \strlen($infoWords[0]) !== 0) {
             $attrs['class'] = isset($attrs['class']) ? $attrs['class'] . ' ' : '';
             $attrs['class'] .= 'language-' . $infoWords[0];
         }

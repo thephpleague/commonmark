@@ -89,7 +89,7 @@ final class RegexHelper
     {
         $matches = [];
         $string = \mb_substr($string, $offset, null, 'utf-8');
-        if (!\preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE)) {
+        if (!\preg_match($regex, $string, $matches, \PREG_OFFSET_CAPTURE)) {
             return null;
         }
 
@@ -114,7 +114,7 @@ final class RegexHelper
             $subject = \substr($subject, $offset);
         }
 
-        \preg_match_all($pattern, $subject, $matches, PREG_PATTERN_ORDER);
+        \preg_match_all($pattern, $subject, $matches, \PREG_PATTERN_ORDER);
 
         $fullMatches = \reset($matches);
         if (empty($fullMatches)) {

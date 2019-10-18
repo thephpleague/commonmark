@@ -45,7 +45,7 @@ final class HtmlInlineRenderer implements InlineRendererInterface, Configuration
         }
 
         if ($this->config->get('html_input') === EnvironmentInterface::HTML_INPUT_ESCAPE) {
-            return htmlspecialchars($inline->getContent(), ENT_NOQUOTES);
+            return \htmlspecialchars($inline->getContent(), \ENT_NOQUOTES);
         }
 
         return $inline->getContent();
