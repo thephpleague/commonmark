@@ -89,7 +89,7 @@ class Cursor
         $this->length = \mb_strlen($line, 'UTF-8') ?: 0;
         $this->isMultibyte = $this->length !== \strlen($line);
         $this->encoding = $this->isMultibyte ? 'UTF-8' : 'ASCII';
-        $this->lineContainsTabs = false !== \strpos($line, chr(9));
+        $this->lineContainsTabs = false !== \strpos($line, "\t");
     }
 
     /**
