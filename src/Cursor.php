@@ -230,12 +230,12 @@ class Cursor
         $this->previousPosition = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
-        $nextFewChars = $this->isMultibyte ?
-            \mb_substr($this->line, $this->currentPosition, $characters, $this->encoding) :
-            \substr($this->line, $this->currentPosition, $characters);
-
         // Optimization to avoid tab handling logic if we have no tabs
-        if (!$this->lineContainsTabs || false === \strpos($nextFewChars, \chr(9))) {
+        if (!$this->lineContainsTabs || false === \strpos(
+            $nextFewChars = $this->isMultibyte ?
+                \mb_substr($this->line, $this->currentPosition, $characters, $this->encoding) :
+                \substr($this->line, $this->currentPosition, $characters),
+            "\t")) {
             $length = \min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
