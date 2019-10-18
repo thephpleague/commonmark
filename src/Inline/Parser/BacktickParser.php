@@ -52,10 +52,10 @@ final class BacktickParser implements InlineParserInterface
                 $c = \preg_replace('/\n/m', ' ', $code);
 
                 if (
-                    false === empty($c) &&
-                    \preg_match('/[^ ]/', $c) &&
-                    \strpos($c, ' ') === 0 &&
-                    $c[\strlen($c) - 1] === ' '
+                    !empty($c) &&
+                    \substr($c, 0, 1) === ' ' &&
+                    \substr($c, -1, 1) === ' ' &&
+                    \preg_match('/[^ ]/', $c)
                 ) {
                     $c = \substr($c, 1, -1);
                 }
