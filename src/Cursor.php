@@ -485,20 +485,27 @@ class Cursor
     }
 
     /**
+     * @param int      $start
+     * @param int|null $length
+     *
+     * @return string
+     */
+    public function getSubstring(int $start, ?int $length = null): string
+    {
+        if ($this->isMultibyte) {
+            return \mb_substr($this->line, $start, $length, $this->encoding);
+        } elseif ($length !== null) {
+            return \substr($this->line, $start, $length);
+        }
+
+        return \substr($this->line, $start);
+    }
+
+    /**
      * @return int
      */
     public function getColumn(): int
     {
         return $this->column;
-    }
-
-    public function getEncoding(): string
-    {
-        return $this->encoding;
-    }
-
-    public function isMultiByte(): bool
-    {
-        return $this->isMultibyte;
     }
 }

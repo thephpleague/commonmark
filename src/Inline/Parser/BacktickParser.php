@@ -47,20 +47,7 @@ final class BacktickParser implements InlineParserInterface
 
         while ($matchingTicks = $cursor->match('/`+/m')) {
             if ($matchingTicks === $ticks) {
-                if ($cursor->isMultiByte()) {
-                    $code = \mb_substr(
-                        $cursor->getLine(),
-                        $currentPosition,
-                        $cursor->getPosition() - $currentPosition - \strlen($ticks),
-                        $cursor->getEncoding()
-                    );
-                } else {
-                    $code = \substr(
-                        $cursor->getLine(),
-                        $currentPosition,
-                        $cursor->getPosition() - $currentPosition - \strlen($ticks),
-                    );
-                }
+                $code = $cursor->getSubstring($currentPosition, $cursor->getPosition() - $currentPosition - \strlen($ticks));
 
                 $c = \preg_replace('/\n/m', ' ', $code);
 

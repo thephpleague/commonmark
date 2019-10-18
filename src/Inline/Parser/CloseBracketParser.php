@@ -201,11 +201,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
             $length = $n - 2;
         }
 
-        if ($cursor->isMultiByte()) {
-            $referenceLabel = \mb_substr($cursor->getLine(), $start, $length, $cursor->getEncoding());
-        } else {
-            $referenceLabel = \substr($cursor->getLine(), $start, $length);
-        }
+        $referenceLabel = $cursor->getSubstring($start, $length);
 
         if ($n === 0) {
             // If shortcut reference link, rewind before spaces we skipped
