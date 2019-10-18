@@ -343,7 +343,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
             ],
             'html_input'         => self::HTML_INPUT_ALLOW,
             'allow_unsafe_links' => true,
-            'max_nesting_level'  => INF,
+            'max_nesting_level'  => \INF,
         ]);
 
         return $environment;
@@ -380,7 +380,7 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
     {
         $this->initializeExtensions();
 
-        $type = get_class($event);
+        $type = \get_class($event);
 
         foreach ($this->listeners[$type] ?? [] as $listener) {
             if ($event->isPropagationStopped()) {

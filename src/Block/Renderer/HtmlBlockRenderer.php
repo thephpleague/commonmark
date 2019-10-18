@@ -46,7 +46,7 @@ final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAw
         }
 
         if ($this->config->get('html_input') === EnvironmentInterface::HTML_INPUT_ESCAPE) {
-            return \htmlspecialchars($block->getStringContent(), ENT_NOQUOTES);
+            return \htmlspecialchars($block->getStringContent(), \ENT_NOQUOTES);
         }
 
         return $block->getStringContent();

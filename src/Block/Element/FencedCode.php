@@ -173,7 +173,7 @@ class FencedCode extends AbstractStringContainerBlock
         parent::finalize($context, $endLineNumber);
 
         // first line becomes info string
-        $this->info = RegexHelper::unescape(trim($this->strings->first()));
+        $this->info = RegexHelper::unescape(\trim($this->strings->first()));
 
         if ($this->strings->count() === 1) {
             $this->finalStringContents = '';

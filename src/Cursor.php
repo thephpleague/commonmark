@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -13,7 +15,7 @@ namespace League\CommonMark;
 
 class Cursor
 {
-    const INDENT_LEVEL = 4;
+    public const INDENT_LEVEL = 4;
 
     /**
      * @var string
@@ -87,7 +89,7 @@ class Cursor
         $this->length = \mb_strlen($line, 'UTF-8') ?: 0;
         $this->isMultibyte = $this->length !== \strlen($line);
         $this->encoding = $this->isMultibyte ? 'UTF-8' : 'ASCII';
-        $this->lineContainsTabs = \preg_match('/\t/', $line) > 0;
+        $this->lineContainsTabs = false !== \strpos($line, "\t");
     }
 
     /**
@@ -176,7 +178,9 @@ class Cursor
             return null;
         }
 
-        return $this->charCache[$index] = \mb_substr($this->line, $index, 1, $this->encoding);
+        return $this->charCache[$index] = $this->isMultibyte ?
+            \mb_substr($this->line, $index, 1, $this->encoding) :
+            \substr($this->line, $index, 1);
     }
 
     /**
@@ -227,7 +231,11 @@ class Cursor
         $this->nextNonSpaceCache = null;
 
         // Optimization to avoid tab handling logic if we have no tabs
-        if (!$this->lineContainsTabs || \preg_match('/\t/', $nextFewChars = mb_substr($this->line, $this->currentPosition, $characters, $this->encoding)) === 0) {
+        if (!$this->lineContainsTabs || false === \strpos(
+            $nextFewChars = $this->isMultibyte ?
+                \mb_substr($this->line, $this->currentPosition, $characters, $this->encoding) :
+                \substr($this->line, $this->currentPosition, $characters),
+            "\t")) {
             $length = \min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
@@ -238,8 +246,10 @@ class Cursor
 
         if ($characters === 1 && !empty($nextFewChars)) {
             $asArray = [$nextFewChars];
+        } elseif ($this->isMultibyte) {
+            $asArray = \preg_split('//u', $nextFewChars, -1, \PREG_SPLIT_NO_EMPTY);
         } else {
-            $asArray = \preg_split('//u', $nextFewChars, null, PREG_SPLIT_NO_EMPTY);
+            $asArray = \str_split($nextFewChars);
         }
 
         foreach ($asArray as $relPos => $c) {
@@ -312,7 +322,7 @@ class Cursor
     public function advanceToNextNonSpaceOrNewline(): int
     {
         $matches = [];
-        \preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, PREG_OFFSET_CAPTURE);
+        \preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, \PREG_OFFSET_CAPTURE);
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
@@ -359,7 +369,11 @@ class Cursor
             $prefix = \str_repeat(' ', $charsToTab);
         }
 
-        return $prefix . \mb_substr($this->line, $position, null, $this->encoding);
+        $subString = $this->isMultibyte ?
+            \mb_substr($this->line, $position, null, $this->encoding) :
+            \substr($this->line, $position);
+
+        return $prefix . $subString;
     }
 
     /**
@@ -391,7 +405,7 @@ class Cursor
     {
         $subject = $this->getRemainder();
 
-        if (!\preg_match($regex, $subject, $matches, PREG_OFFSET_CAPTURE)) {
+        if (!\preg_match($regex, $subject, $matches, \PREG_OFFSET_CAPTURE)) {
             return null;
         }
 
@@ -468,6 +482,23 @@ class Cursor
     public function getPreviousText(): string
     {
         return \mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, $this->encoding);
+    }
+
+    /**
+     * @param int      $start
+     * @param int|null $length
+     *
+     * @return string
+     */
+    public function getSubstring(int $start, ?int $length = null): string
+    {
+        if ($this->isMultibyte) {
+            return \mb_substr($this->line, $start, $length, $this->encoding);
+        } elseif ($length !== null) {
+            return \substr($this->line, $start, $length);
+        }
+
+        return \substr($this->line, $start);
     }
 
     /**

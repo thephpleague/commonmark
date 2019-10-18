@@ -105,7 +105,7 @@ final class Configuration implements ConfigurationInterface
     {
         $keyArr = \explode('/', $keyPath);
         $pointer = &$this->config;
-        while (($k = array_shift($keyArr)) !== null) {
+        while (($k = \array_shift($keyArr)) !== null) {
             if (!\is_array($pointer)) {
                 $pointer = [];
             }

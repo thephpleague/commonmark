@@ -194,18 +194,21 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         $beforeLabel = $cursor->getPosition();
         $n = LinkParserHelper::parseLinkLabel($cursor);
         if ($n === 0 || $n === 2) {
-            // Empty or missing second label
-            $reflabel = \mb_substr($cursor->getLine(), $opener->getIndex(), $startPos - $opener->getIndex(), 'utf-8');
+            $start = $opener->getIndex();
+            $length = $startPos - $opener->getIndex();
         } else {
-            $reflabel = \mb_substr($cursor->getLine(), $beforeLabel + 1, $n - 2, 'utf-8');
+            $start = $beforeLabel + 1;
+            $length = $n - 2;
         }
+
+        $referenceLabel = $cursor->getSubstring($start, $length);
 
         if ($n === 0) {
             // If shortcut reference link, rewind before spaces we skipped
             $cursor->restoreState($savePos);
         }
 
-        return $referenceMap->getReference($reflabel);
+        return $referenceMap->getReference($referenceLabel);
     }
 
     /**
@@ -215,7 +218,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
      *
      * @return AbstractWebResource
      */
-    private function createInline(string $url, string $title, bool $isImage)
+    private function createInline(string $url, string $title, bool $isImage): AbstractWebResource
     {
         if ($isImage) {
             return new Image($url, null, $title);
