@@ -5,7 +5,7 @@
  - [ ] Ensure all tests are passing (including Travis and StyleCI).
  - [ ] Ensure changes are documented in `CHANGELOG.md`. Release titles should be linked to Github.
  - [ ] If breaking changes or deprecations are introduced, document the upgrade process in the doc site's upgrade page.
- - [ ] Bump the `branch-alias` in `composer.json` if needed.
+ - [ ] Bump the `branch-alias` in `composer.json` and the dev `VERSION` in `CommonMarkConverter` if needed.
  - [ ] Ensure all changes above make it into the `master` branch
 
 ## Documentation
