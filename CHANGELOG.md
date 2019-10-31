@@ -4,17 +4,20 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.1.0] - 2019-10-31
+
 ### Added
 
  - Added a new `Html5EntityDecoder` class (#387)
 
 ### Changed
 
- - Made entity decoding less memory-intensive (#386)
+ - Improved performance by 10% (#389)
+ - Made entity decoding less memory-intensive (#386, #387)
 
 ### Fixed
 
- - Fixed PHP 7.4 compatibility issue
+ - Fixed PHP 7.4 compatibility issues
 
 ### Deprecated
 
@@ -164,7 +167,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.0.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/thephpleague/commonmark/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/thephpleague/commonmark/compare/1.0.0-rc1...1.0.0
 [1.0.0-rc1]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta4...1.0.0-rc1
 [1.0.0-beta4]: https://github.com/thephpleague/commonmark/compare/1.0.0-beta3...1.0.0-beta4
