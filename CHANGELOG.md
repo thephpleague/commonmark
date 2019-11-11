@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Fixed
 
  - Fixed handling of link destinations with unbalanced unescaped parens
+ - Fixed adding delimiters to stack which can neither open nor close a run
 
 ## [1.1.0] - 2019-10-31
 

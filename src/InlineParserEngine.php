@@ -108,8 +108,10 @@ final class InlineParserEngine
         $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack to this opener
-        $delimiter = new Delimiter($character, $numDelims, $node, $canOpen, $canClose);
-        $inlineContext->getDelimiterStack()->push($delimiter);
+        if ($canOpen || $canClose) {
+            $delimiter = new Delimiter($character, $numDelims, $node, $canOpen, $canClose);
+            $inlineContext->getDelimiterStack()->push($delimiter);
+        }
 
         return true;
     }
