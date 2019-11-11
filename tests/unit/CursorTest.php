@@ -458,4 +458,27 @@ class CursorTest extends TestCase
             ['Это тест', '/т/u', 2, 5, 'т'],
         ];
     }
+
+    /**
+     * @param string   $string
+     * @param int      $start
+     * @param int|null $length
+     * @param string   $expectedResult
+     *
+     * @dataProvider dataForTestGetSubstring
+     */
+    public function testGetSubstring($string, $start, $length, $expectedResult)
+    {
+        $cursor = new Cursor($string);
+
+        $this->assertSame($expectedResult, $cursor->getSubstring($start, $length));
+    }
+
+    public function dataForTestGetSubstring()
+    {
+        yield ['Hello', 0, 2, 'He'];
+        yield ['Hello', 1, 3, 'ell'];
+        yield ['Hello', 1, null, 'ello'];
+        yield ['Это тест', 1, -1, 'то тес'];
+    }
 }
