@@ -117,6 +117,10 @@ final class LinkParserHelper
             }
         }
 
+        if ($openParens !== 0) {
+            return null;
+        }
+
         if ($cursor->getPosition() === $oldPosition && $c !== ')') {
             return null;
         }

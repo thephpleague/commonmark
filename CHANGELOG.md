@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed handling of link destinations with unbalanced unescaped parens
+
 ## [1.1.0] - 2019-10-31
 
 ### Added
