@@ -37,7 +37,11 @@ install:
 script:
   - if [[ $PHPSTAN ]]; then vendor/bin/phpstan analyse; fi
   - if [[ $PHPUNIT ]]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
-  - if [[ $RIPS ]]; then docker run --rm -it -e RIPS_BASE_URI -e RIPS_PASSWORD -e RIPS_EMAIL -v `pwd`:/data rips/rips-cli:3 rips:scan:start -p /data -T "$TRAVIS_BRANCH" -t high:0 -t critical:0 -t 5 -a 698; fi
+  - |
+    if [[ $RIPS ]]; then
+      docker run --rm -it -e RIPS_BASE_URI -e RIPS_PASSWORD -e RIPS_EMAIL -v `pwd`:/data rips/rips-cli:3 \
+        rips:scan:start --api-url "https://api-3.ripstech.com" -p /data -T "$TRAVIS_BRANCH" -t high:0 -t critical:0 -t 5 -a 698
+    fi
 
 after_script:
   - if [[ $PHPUNIT ]] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
