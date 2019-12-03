@@ -31,8 +31,7 @@ matrix:
     - php: nightly
   fast_finish: true
 
-before_script:
-  - travis_retry composer self-update
+install:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
 
 script:
