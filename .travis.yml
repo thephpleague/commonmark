@@ -1,6 +1,6 @@
 language: php
 
-sudo: false
+dist: bionic
 
 cache:
   directories:
@@ -10,6 +10,7 @@ php:
   - 7.1
   - 7.2
   - 7.3
+  - 7.4
 
 env:
   - COMMONMARK_VERSION=~0.19.3
