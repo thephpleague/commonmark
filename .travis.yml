@@ -1,19 +1,19 @@
 language: php
 
+dist: bionic
+
 php:
   - 7.1
   - 7.2
   - 7.3
+  - 7.4
 
 env:
   matrix:
     - COMPOSER_FLAGS=""
     - COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
 
-sudo: false
-
-before_script:
-  - travis_retry composer self-update
+install:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
 script:
