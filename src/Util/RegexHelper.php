@@ -141,7 +141,10 @@ final class RegexHelper
     {
         $allEscapedChar = '/\\\\(' . self::PARTIAL_ESCAPABLE . ')/';
 
+        /** @var string $escaped */
         $escaped = \preg_replace($allEscapedChar, '$1', $string);
+
+        /** @var string $replaced */
         $replaced = \preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', function ($e) {
             return Html5EntityDecoder::decode($e[0]);
         }, $escaped);

@@ -103,15 +103,11 @@ class HtmlElement
      */
     public function getContents(bool $asString = true)
     {
-        if (!$asString || \is_string($this->contents)) {
+        if (!$asString) {
             return $this->contents;
         }
 
-        if (\is_array($this->contents)) {
-            return \implode('', $this->contents);
-        }
-
-        return (string) $this->contents;
+        return $this->getContentsAsString();
     }
 
     /**
@@ -140,7 +136,7 @@ class HtmlElement
         }
 
         if ($this->contents !== '') {
-            $result .= '>' . $this->getContents() . '</' . $this->tagName . '>';
+            $result .= '>' . $this->getContentsAsString() . '</' . $this->tagName . '>';
         } elseif ($this->selfClosing) {
             $result .= ' />';
         } else {
@@ -148,5 +144,18 @@ class HtmlElement
         }
 
         return $result;
+    }
+
+    private function getContentsAsString(): string
+    {
+        if (\is_string($this->contents)) {
+            return $this->contents;
+        }
+
+        if (\is_array($this->contents)) {
+            return \implode('', $this->contents);
+        }
+
+        return (string) $this->contents;
     }
 }

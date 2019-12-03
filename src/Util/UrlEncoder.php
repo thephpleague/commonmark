@@ -74,7 +74,8 @@ final class UrlEncoder
      */
     private static function decode(string $uri): string
     {
-        return \preg_replace_callback('/%([0-9a-f]{2})/iu', function ($matches) {
+        /** @var string $ret */
+        $ret = \preg_replace_callback('/%([0-9a-f]{2})/iu', function ($matches) {
             $char = \chr(\hexdec($matches[1]));
 
             if (\in_array($char, self::$dontDecode, true)) {
@@ -83,6 +84,8 @@ final class UrlEncoder
 
             return $char;
         }, $uri);
+
+        return $ret;
     }
 
     /**
@@ -94,7 +97,8 @@ final class UrlEncoder
      */
     private static function encode(string $uri): string
     {
-        return \preg_replace_callback('/(%[0-9a-f]{2})|./isu', function ($matches) {
+        /** @var string $ret */
+        $ret = \preg_replace_callback('/(%[0-9a-f]{2})|./isu', function ($matches) {
             // Keep already-encoded characters as-is
             if (\count($matches) > 1) {
                 return $matches[0];
@@ -108,5 +112,7 @@ final class UrlEncoder
             // Otherwise, encode the character
             return \rawurlencode($matches[0]);
         }, $uri);
+
+        return $ret;
     }
 }
