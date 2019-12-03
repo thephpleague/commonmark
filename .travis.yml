@@ -1,12 +1,12 @@
 language: php
 
-dist: trusty
+dist: bionic
 
 php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
   - nightly
 env:
   - 'PHPUNIT=true'
@@ -28,16 +28,10 @@ matrix:
       env: 'RIPS=true'
       sudo: true
   allow_failures:
-    - php: 7.4snapshot
     - php: nightly
   fast_finish: true
 
-# This triggers builds to run on the new TravisCI infrastructure.
-# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
-
-before_script:
-  - travis_retry composer self-update
+install:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
 
 script:
@@ -46,4 +40,4 @@ script:
   - if [[ $RIPS ]]; then docker run --rm -it -e RIPS_BASE_URI -e RIPS_PASSWORD -e RIPS_EMAIL -v `pwd`:/data rips/rips-cli:3 rips:scan:start -p /data -T "$TRAVIS_BRANCH" -t high:0 -t critical:0 -t 5 -a 698; fi
 
 after_script:
-  - if [[ $PHPUNIT ]] && [ "$TRAVIS_PHP_VERSION" != "7.4snapshot" ] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [[ $PHPUNIT ]] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
