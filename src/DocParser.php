@@ -55,6 +55,7 @@ final class DocParser implements DocParserInterface
      */
     private function preProcessInput(string $input): array
     {
+        /** @var string[] $lines */
         $lines = \preg_split('/\r\n|\n|\r/', $input);
 
         // Remove any newline which appears at the very end of the string.

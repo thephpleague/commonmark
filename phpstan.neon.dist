@@ -3,7 +3,15 @@ parameters:
   paths:
     - src
   ignoreErrors:
-    - "#should return string but returns League\\CommonMark\\HtmlElement|string#"
-    - "#expects int, float|int given#"
+    - '#expects int, float\|int given\.$#'
+
+    # Errors caused by chaining preg_ functions together
+    - '#expects string, string\|null given\.$#'
+    - '#expects array\|string, string\|null given\.$#'
+
     - path: src/Delimiter/DelimiterStack.php
-      message: "#Cannot call method .+ on League\\CommonMark\\Delimiter\\Delimiter|null#"
+      message: '#Cannot call method .+ on League\\CommonMark\\Delimiter\\DelimiterInterface\|null\.$#'
+    - path: src/Delimiter/DelimiterStack.php
+      message: '#expects League\\CommonMark\\Delimiter\\DelimiterInterface, League\\CommonMark\\Delimiter\\DelimiterInterface\|null given\.$#'
+    - path: src/Block/Element/Paragraph.php
+      message: '#\$finalStringContents \(string\) does not accept string\|null\.$#'
