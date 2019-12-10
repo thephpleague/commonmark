@@ -75,7 +75,7 @@ final class UrlEncoder
     private static function decode(string $uri): string
     {
         /** @var string $ret */
-        $ret = \preg_replace_callback('/((%[0-9a-f]{2})+)/iu', function ($matches) {
+        $ret = \preg_replace_callback('/((?:%[0-9a-f]{2})+)/iu', function ($matches) {
             $bytes = \hex2bin(\str_replace('%', '', $matches[1]));
 
             // Invalid UTF-8 sequences should be kept as-is
