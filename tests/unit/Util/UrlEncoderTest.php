@@ -82,6 +82,7 @@ class UrlEncoderTest extends TestCase
             ['%40', '%40'],
             ['%5F', '_'],
             ['%7E', '~'],
+            ['%ED', '%ED'],
             ['java%0ascript:alert("XSS")', 'java%0Ascript:alert(%22XSS%22)'],
             ['java%0Ascript:alert("XSS")', 'java%0Ascript:alert(%22XSS%22)'],
             ["java\nscript:alert('XSS')", "java%0Ascript:alert('XSS')"],
@@ -92,6 +93,8 @@ class UrlEncoderTest extends TestCase
             ['http://example.com/a%62%63%2fd%3Fe', 'http://example.com/abc%2Fd%3Fe'],
             ['http://ko.wikipedia.org/wiki/위키백과:대문', 'http://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8'],
             ['http://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8', 'http://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8'],
+            ['http://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8', 'http://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8'],
+            ['http://www.inpec.gov.co/portal/page/portal/Inpec/Institucion/Estad%EDsticas/Estadisticas/Informes%20y%20Boletines%20Estad%EDsticos/1%20INFORME%20ENERO%202017.pdf', 'http://www.inpec.gov.co/portal/page/portal/Inpec/Institucion/Estad%EDsticas/Estadisticas/Informes%20y%20Boletines%20Estad%EDsticos/1%20INFORME%20ENERO%202017.pdf'],
         ];
     }
 }
