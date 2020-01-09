@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Modify URL normalization to better match the JS library
+
 ## [1.1.2] - 2019-12-09
 
 ### Fixed
