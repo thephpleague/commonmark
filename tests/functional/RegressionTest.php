@@ -12,7 +12,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\functional;
+namespace League\CommonMark\Tests\Functional;
 
 /**
  * Tests the parser against the CommonMark spec
