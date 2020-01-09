@@ -4,9 +4,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.2.0] - 2020-01-09
+
 ### Changed
 
- - Modify URL normalization to better match the JS library
+ - Removed URL decoding step before encoding (more performant and better matches the JS library)
+ - Removed redundant token from HTML tag regex
 
 ## [1.1.2] - 2019-12-09
 
@@ -184,7 +187,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.1.2...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/thephpleague/commonmark/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/thephpleague/commonmark/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/thephpleague/commonmark/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/thephpleague/commonmark/compare/1.0.0...1.1.0
