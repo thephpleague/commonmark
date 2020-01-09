@@ -165,7 +165,7 @@ if (count($config['parser'])) {
     }, ARRAY_FILTER_USE_KEY);
 }
 
-$exec = function (array $config, string $parser) use ($parsers) : array {
+$exec = function (array $config, string $parser) use ($parsers): array {
     $parse = $parsers[$parser];
 
     $start = microtime(true);
@@ -201,7 +201,7 @@ if ($config['exec'] === 'exec') {
     exit(0);
 }
 
-$run = function (array $config, string $parser) use ($exec) : array {
+$run = function (array $config, string $parser) use ($exec): array {
     if ($config['flags']['isolate']) {
         $bin = str_replace(' ', '\ ', realpath($config['exec']));
         $argv =
@@ -247,7 +247,7 @@ $run = function (array $config, string $parser) use ($exec) : array {
     return $exec($config, $parser);
 };
 
-$display = function (array $config, string $title, array $fmt, array $results, string $formatName, string $formatResult) : void {
+$display = function (array $config, string $title, array $fmt, array $results, string $formatName, string $formatResult): void {
     $space = $config['iterations'] - 7;
     $position = 1;
     $top = 0;
