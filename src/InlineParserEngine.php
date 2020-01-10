@@ -102,7 +102,7 @@ final class InlineParserEngine
 
         list($canOpen, $canClose) = self::determineCanOpenOrClose($charBefore, $charAfter, $character, $delimiterProcessor);
 
-        $node = new Text($cursor->getPreviousText(), [
+        $node = new Text(\str_repeat($character, $numDelims), [
             'delim' => true,
         ]);
         $inlineContext->getContainer()->appendChild($node);
