@@ -318,16 +318,21 @@ class Cursor
      */
     public function advanceToNextNonSpaceOrNewline(): int
     {
+        $remainder = $this->getRemainder();
+
+        // Optimization: Avoid the regex if we know there are no spaces or newlines
+        if (empty($remainder) || ($remainder[0] !== ' ' && $remainder[0] !== "\n")) {
+            $this->previousPosition = $this->currentPosition;
+
+            return 0;
+        }
+
         $matches = [];
-        \preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, \PREG_OFFSET_CAPTURE);
+        \preg_match('/^ *(?:\n *)?/', $remainder, $matches, \PREG_OFFSET_CAPTURE);
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
         $increment = $matches[0][1] + \strlen($matches[0][0]);
-
-        if ($increment === 0) {
-            return 0;
-        }
 
         $this->advanceBy($increment);
 
