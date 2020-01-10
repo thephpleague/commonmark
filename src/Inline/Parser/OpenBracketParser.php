@@ -39,7 +39,7 @@ final class OpenBracketParser implements InlineParserInterface
             return false;
         }
 
-        $inlineContext->getCursor()->advance();
+        $inlineContext->getCursor()->advanceBy(1);
         $node = new Text('[', ['delim' => true]);
         $inlineContext->getContainer()->appendChild($node);
 

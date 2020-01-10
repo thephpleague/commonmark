@@ -37,7 +37,7 @@ final class BlockQuoteParser implements BlockParserInterface
         }
 
         $cursor->advanceToNextNonSpaceOrTab();
-        $cursor->advance();
+        $cursor->advanceBy(1);
         $cursor->advanceBySpaceOrTab();
 
         $context->addBlock(new BlockQuote());

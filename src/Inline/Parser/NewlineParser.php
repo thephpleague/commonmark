@@ -35,7 +35,7 @@ final class NewlineParser implements InlineParserInterface
      */
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $inlineContext->getCursor()->advance();
+        $inlineContext->getCursor()->advanceBy(1);
 
         // Check previous inline for trailing spaces
         $spaces = 0;
