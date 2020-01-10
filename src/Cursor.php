@@ -169,18 +169,20 @@ class Cursor
             $index = $this->currentPosition;
         }
 
-        if (isset($this->charCache[$index])) {
-            return $this->charCache[$index];
-        }
-
         // Index out-of-bounds, or we're at the end
         if ($index < 0 || $index >= $this->length) {
             return null;
         }
 
-        return $this->charCache[$index] = $this->isMultibyte ?
-            \mb_substr($this->line, $index, 1, $this->encoding) :
-            \substr($this->line, $index, 1);
+        if ($this->isMultibyte) {
+            if (isset($this->charCache[$index])) {
+                return $this->charCache[$index];
+            }
+
+            return $this->charCache[$index] = \mb_substr($this->line, $index, 1, $this->encoding);
+        }
+
+        return $this->line[$index];
     }
 
     /**
