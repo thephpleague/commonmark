@@ -105,7 +105,7 @@ final class UrlAutolinkProcessor
             // Does the URL need its closing paren chopped off?
             if (\substr($content, -1) === ')' && self::hasMoreCloserParensThanOpeners($content)) {
                 $content = \substr($content, 0, -1);
-                $leftovers .= ')';
+                $leftovers = ')' . $leftovers;
             }
 
             self::addLink($node, $content);
