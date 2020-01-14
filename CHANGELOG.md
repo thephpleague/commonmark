@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased][unreleased]
 
+## [1.0.1] - 2020-01-13
+
 ### Fixed
 
  - Fixed incorrect parenthesis order (#13)
@@ -73,7 +75,8 @@ This release brings the email and URL autolink processors into alignment with th
 
 Initial release!
 
-[unreleased]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v1.0.0-beta3...v1.0.0
 [1.0.0-beta2]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v1.0.0-beta2...v1.0.0-beta3
 [1.0.0-beta2]: https://github.com/thephpleague/commonmark-ext-autolink/compare/v1.0.0-beta1...v1.0.0-beta2
