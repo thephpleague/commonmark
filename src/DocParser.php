@@ -72,6 +72,8 @@ final class DocParser implements DocParserInterface
      * @param string $input
      *
      * @return Document
+     *
+     * @throws \RuntimeException
      */
     public function parse(string $input): Document
     {

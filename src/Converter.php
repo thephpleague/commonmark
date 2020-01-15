@@ -52,6 +52,8 @@ class Converter implements ConverterInterface
      *
      * @return string
      *
+     * @throws \RuntimeException
+     *
      * @api
      */
     public function convertToHtml(string $commonMark): string
@@ -69,6 +71,8 @@ class Converter implements ConverterInterface
      * @param string $commonMark
      *
      * @return string
+     *
+     * @throws \RuntimeException
      */
     public function __invoke(string $commonMark): string
     {
