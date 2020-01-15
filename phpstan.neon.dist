@@ -3,8 +3,6 @@ parameters:
   paths:
     - src
   ignoreErrors:
-    - '#expects int, float\|int given\.$#'
-
     # Errors caused by chaining preg_ functions together
     - '#expects string, string\|null given\.$#'
     - '#expects array\|string, string\|null given\.$#'

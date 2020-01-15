@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Introduced several micro-optimizations, reducing the parse time by 8%
+
 ## [1.2.0] - 2020-01-09
 
 ### Changed

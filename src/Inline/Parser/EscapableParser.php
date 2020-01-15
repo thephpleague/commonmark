@@ -55,7 +55,7 @@ final class EscapableParser implements InlineParserInterface
             return true;
         }
 
-        $cursor->advance();
+        $cursor->advanceBy(1);
         $inlineContext->getContainer()->appendChild(new Text('\\'));
 
         return true;
