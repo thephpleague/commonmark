@@ -186,6 +186,10 @@ This project is primarily maintained by [Colin O'Dell][@colinodell].  Members of
 	</sub>
 </div>
 
+## 🗺️ Who Uses It?
+
+This project is used by [Laravel Framework](https://laravel.com/), [Cachet](https://cachethq.io/), [Firefly III](https://firefly-iii.org/), [Neos](https://www.neos.io/), [Daux.io](https://daux.io/), and [more](https://packagist.org/packages/league/commonmark/dependents)!
+
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
 [commonmark.js]: https://github.com/jgm/commonmark.js
