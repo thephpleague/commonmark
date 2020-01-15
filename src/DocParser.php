@@ -243,7 +243,7 @@ final class DocParser implements DocParserInterface
         $lastLineBlank = $container->shouldLastLineBeBlank($cursor, $context->getLineNumber());
 
         // Propagate lastLineBlank up through parents:
-        while ($container instanceof AbstractBlock) {
+        while ($container instanceof AbstractBlock && $container->endsWithBlankLine() !== $lastLineBlank) {
             $container->setLastLineBlank($lastLineBlank);
             $container = $container->parent();
         }
