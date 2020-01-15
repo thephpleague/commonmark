@@ -50,9 +50,9 @@ class Converter implements ConverterInterface
      *
      * @param string $commonMark
      *
-     * @return string
-     *
      * @throws \RuntimeException
+     *
+     * @return string
      *
      * @api
      */
@@ -70,9 +70,9 @@ class Converter implements ConverterInterface
      *
      * @param string $commonMark
      *
-     * @return string
-     *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function __invoke(string $commonMark): string
     {
