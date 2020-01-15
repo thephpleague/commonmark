@@ -167,11 +167,13 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         $cursor->advanceToNextNonSpaceOrNewline();
 
-        if ($cursor->match('/^\\)/') === null) {
+        if ($cursor->getCharacter() !== ')') {
             $cursor->restoreState($previousState);
 
             return false;
         }
+
+        $cursor->advanceBy(1);
 
         return ['url' => $dest, 'title' => $title];
     }
