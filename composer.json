@@ -1,7 +1,7 @@
 {
     "name": "league/commonmark",
     "type": "library",
-    "description": "PHP Markdown parser based on the CommonMark spec",
+    "description": "Highly-extensible PHP Markdown parser which fully supports the CommonMark spec",
     "keywords": ["markdown","parser","commonmark"],
     "homepage": "https://commonmark.thephpleague.com",
     "license": "BSD-3-Clause",
