@@ -4,6 +4,14 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.2.2] - 2019-01-15
+
+This release contains the same changes as 1.1.3:
+
+### Fixed
+
+ - Fixed link parsing edge case (#403)
+
 ## [1.1.3] - 2019-01-15
 
 ### Fixed
@@ -199,7 +207,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.2.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.2.2...HEAD
+[1.2.2]: https://github.com/thephpleague/commonmark/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/thephpleague/commonmark/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/thephpleague/commonmark/compare/1.1.2...1.2.0
 [1.1.3]: https://github.com/thephpleague/commonmark/compare/1.1.2...1.1.3
