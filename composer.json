@@ -19,9 +19,6 @@
         "rss": "https://github.com/thephpleague/commonmark/releases.atom",
         "source": "https://github.com/thephpleague/commonmark"
     },
-    "replace": {
-        "colinodell/commonmark-php": "*"
-    },
     "require": {
         "php": "^7.1",
         "ext-mbstring": "*"

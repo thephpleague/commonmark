@@ -10,7 +10,7 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="commonmark-php Test Suite">
+        <testsuite name="league/commonmark Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
