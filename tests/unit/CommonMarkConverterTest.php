@@ -60,4 +60,13 @@ class CommonMarkConverterTest extends TestCase
 
         $this->assertSame($mockEnvironment, $environment);
     }
+
+    /**
+     * @expectedException \League\CommonMark\Exception\UnexpectedEncodingException
+     */
+    public function testConvertingInvalidUTF8()
+    {
+        $converter = new CommonMarkConverter();
+        $converter->convertToHtml("\x09\xca\xca");
+    }
 }

@@ -20,6 +20,7 @@ use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Element\StringContainerInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Exception\UnexpectedEncodingException;
 
 final class DocParser implements DocParserInterface
 {
@@ -71,6 +72,8 @@ final class DocParser implements DocParserInterface
     /**
      * @param string $input
      *
+     * @throws \RuntimeException
+     *
      * @return Document
      */
     public function parse(string $input): Document
@@ -78,6 +81,7 @@ final class DocParser implements DocParserInterface
         $document = new Document();
         $context = new Context($document, $this->environment);
 
+        $this->assertValidUTF8($input);
         $lines = $this->preProcessInput($input);
         foreach ($lines as $line) {
             $context->setNextLine($line);
@@ -246,6 +250,13 @@ final class DocParser implements DocParserInterface
         while ($container instanceof AbstractBlock && $container->endsWithBlankLine() !== $lastLineBlank) {
             $container->setLastLineBlank($lastLineBlank);
             $container = $container->parent();
+        }
+    }
+
+    private function assertValidUTF8(string $input)
+    {
+        if (!\mb_check_encoding($input, 'UTF-8')) {
+            throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
         }
     }
 }

@@ -18,6 +18,8 @@ interface DocParserInterface
     /**
      * @param string $input
      *
+     * @throws \RuntimeException
+     *
      * @return Document
      */
     public function parse(string $input): Document;

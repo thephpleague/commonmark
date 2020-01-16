@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added check to ensure Markdown input is valid UTF-8 (#401, #405)
+
 ## [1.2.2] - 2019-01-15
 
 This release contains the same changes as 1.1.3:
