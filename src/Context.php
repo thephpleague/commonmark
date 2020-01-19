@@ -169,7 +169,7 @@ class Context implements ContextInterface
      */
     public function addBlock(AbstractBlock $block)
     {
-        $this->getBlockCloser()->closeUnmatchedBlocks();
+        $this->blockCloser->closeUnmatchedBlocks();
         $block->setStartLine($this->lineNumber);
 
         while ($this->tip !== null && !$this->tip->canContain($block)) {
@@ -190,14 +190,14 @@ class Context implements ContextInterface
      */
     public function replaceContainerBlock(AbstractBlock $replacement)
     {
-        $this->getBlockCloser()->closeUnmatchedBlocks();
-        $this->getContainer()->replaceWith($replacement);
+        $this->blockCloser->closeUnmatchedBlocks();
+        $this->container->replaceWith($replacement);
 
-        if ($this->getTip() === $this->getContainer()) {
-            $this->setTip($replacement);
+        if ($this->tip === $this->container) {
+            $this->tip = $replacement;
         }
 
-        $this->setContainer($replacement);
+        $this->container = $replacement;
     }
 
     /**
