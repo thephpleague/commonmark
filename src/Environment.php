@@ -211,7 +211,9 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      */
     public function getBlockParsers(): iterable
     {
-        $this->initializeExtensions();
+        if (!$this->extensionsInitialized) {
+            $this->initializeExtensions();
+        }
 
         return $this->blockParsers->getIterator();
     }
@@ -221,7 +223,9 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      */
     public function getInlineParsersForCharacter(string $character): iterable
     {
-        $this->initializeExtensions();
+        if (!$this->extensionsInitialized) {
+            $this->initializeExtensions();
+        }
 
         if (!isset($this->inlineParsersByCharacter[$character])) {
             return [];
@@ -235,7 +239,9 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      */
     public function getDelimiterProcessors(): DelimiterProcessorCollection
     {
-        $this->initializeExtensions();
+        if (!$this->extensionsInitialized) {
+            $this->initializeExtensions();
+        }
 
         return $this->delimiterProcessors;
     }
@@ -245,7 +251,9 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      */
     public function getBlockRenderersForClass(string $blockClass): iterable
     {
-        $this->initializeExtensions();
+        if (!$this->extensionsInitialized) {
+            $this->initializeExtensions();
+        }
 
         if (!isset($this->blockRenderersByClass[$blockClass])) {
             return [];
@@ -259,7 +267,9 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      */
     public function getInlineRenderersForClass(string $inlineClass): iterable
     {
-        $this->initializeExtensions();
+        if (!$this->extensionsInitialized) {
+            $this->initializeExtensions();
+        }
 
         if (!isset($this->inlineRenderersByClass[$inlineClass])) {
             return [];
@@ -297,11 +307,6 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
 
     private function initializeExtensions()
     {
-        // Only initialize them once
-        if ($this->extensionsInitialized) {
-            return;
-        }
-
         // Ask all extensions to register their components
         while (!empty($this->uninitializedExtensions)) {
             foreach ($this->uninitializedExtensions as $i => $extension) {
@@ -378,7 +383,9 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
      */
     public function dispatch(AbstractEvent $event): void
     {
-        $this->initializeExtensions();
+        if (!$this->extensionsInitialized) {
+            $this->initializeExtensions();
+        }
 
         $type = \get_class($event);
 
