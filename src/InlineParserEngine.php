@@ -42,7 +42,8 @@ final class InlineParserEngine
     public function parse(AbstractStringContainerBlock $container, ReferenceMapInterface $referenceMap)
     {
         $inlineParserContext = new InlineParserContext($container, $referenceMap);
-        while (($character = $inlineParserContext->getCursor()->getCharacter()) !== null) {
+        $cursor = $inlineParserContext->getCursor();
+        while (($character = $cursor->getCharacter()) !== null) {
             if (!$this->parseCharacter($character, $inlineParserContext)) {
                 $this->addPlainText($character, $container, $inlineParserContext);
             }
@@ -76,10 +77,10 @@ final class InlineParserEngine
 
     private function parseDelimiters(DelimiterProcessorInterface $delimiterProcessor, InlineParserContext $inlineContext): bool
     {
-        $character = $inlineContext->getCursor()->getCharacter();
+        $cursor = $inlineContext->getCursor();
+        $character = $cursor->getCharacter();
         $numDelims = 0;
 
-        $cursor = $inlineContext->getCursor();
         $charBefore = $cursor->peek(-1);
         if ($charBefore === null) {
             $charBefore = "\n";
