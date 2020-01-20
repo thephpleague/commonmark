@@ -416,7 +416,7 @@ class Cursor
 
         if ($this->isMultibyte) {
             // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
-            $offset = \mb_strlen(\mb_strcut($subject, 0, $matches[0][1], 'UTF-8'), 'UTF-8');
+            $offset = \mb_strlen(\substr($subject, 0, $matches[0][1]), 'UTF-8');
             $matchLength = \mb_strlen($matches[0][0], 'UTF-8');
         } else {
             $offset = $matches[0][1];
