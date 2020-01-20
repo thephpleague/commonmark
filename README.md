@@ -16,7 +16,7 @@
 
 ## 📦 Installation & Basic Usage
 
-This project can be installed via [Composer]:
+This project requires PHP 7.1 or higher with the `mbstring` extension.  To install it via [Composer] simply run:
 
 ``` bash
 $ composer require league/commonmark
