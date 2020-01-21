@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Extension\Autolink\Test\Email;
+namespace League\CommonMark\Tests\Unit\Extension\Autolink;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;

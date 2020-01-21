@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the league/commonmark-ext-external-link package.
+ * This file is part of the league/commonmark package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *

@@ -67,7 +67,7 @@ class SmartPunctFunctionalTest extends TestCase
      */
     public function dataProvider()
     {
-        $filename = __DIR__ . '/../vendor/jgm/smartpunct/smart_punct.txt';
+        $filename = __DIR__ . '/../../../../vendor/commonmark/commonmark.js/test/smart_punct.txt';
         if (($data = file_get_contents($filename)) === false) {
             $this->fail(sprintf('Failed to load spec from %s', $filename));
         }
