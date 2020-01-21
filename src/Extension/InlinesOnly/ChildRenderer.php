@@ -19,6 +19,7 @@ use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Inline\Element\AbstractInline;
 
 /**
  * Simply renders child elements as-is, adding newlines as needed.
@@ -33,9 +34,13 @@ final class ChildRenderer implements BlockRendererInterface
         $out = '';
 
         if ($block instanceof InlineContainerInterface) {
-            $out .= $htmlRenderer->renderInlines($block->children());
+            /** @var iterable<AbstractInline> $children */
+            $children = $block->children();
+            $out .= $htmlRenderer->renderInlines($children);
         } else {
-            $out .= $htmlRenderer->renderBlocks($block->children());
+            /** @var iterable<AbstractBlock> $children */
+            $children = $block->children();
+            $out .= $htmlRenderer->renderBlocks($children);
         }
 
         if (!($block instanceof Document)) {

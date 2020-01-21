@@ -56,7 +56,7 @@ final class QuoteParser implements InlineParserInterface
             $charAfter = "\n";
         }
 
-        list($leftFlanking, $rightFlanking) = $this->determineFlanking($charBefore, $charAfter);
+        [$leftFlanking, $rightFlanking] = $this->determineFlanking($charBefore, $charAfter);
         $canOpen = $leftFlanking && !$rightFlanking;
         $canClose = $rightFlanking;
 
@@ -89,7 +89,7 @@ final class QuoteParser implements InlineParserInterface
      * @param string $charBefore
      * @param string $charAfter
      *
-     * @return string[]
+     * @return bool[]
      */
     private function determineFlanking($charBefore, $charAfter)
     {

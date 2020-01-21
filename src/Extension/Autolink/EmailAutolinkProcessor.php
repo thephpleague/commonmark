@@ -40,7 +40,7 @@ final class EmailAutolinkProcessor
     {
         $contents = \preg_split(self::REGEX, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        if (\count($contents) === 1) {
+        if ($contents === false || \count($contents) === 1) {
             return;
         }
 
