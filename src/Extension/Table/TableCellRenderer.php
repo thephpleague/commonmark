@@ -31,7 +31,7 @@ final class TableCellRenderer implements BlockRendererInterface
         $attrs = $block->getData('attributes', []);
 
         if ($block->align) {
-            $attrs['style'] = (isset($attrs['style']) ? $attrs['style'].' ' : '').'text-align: '.$block->align;
+            $attrs['align'] = $block->align;
         }
 
         return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->children()));
