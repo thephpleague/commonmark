@@ -53,6 +53,11 @@ abstract class AbstractSpecTest extends TestCase
 
     public function dataProvider()
     {
+        yield from $this->loadSpecExamples();
+    }
+
+    public function loadSpecExamples()
+    {
         if (($data = file_get_contents($this->getFileName())) === false) {
             $this->fail('Could not load tests from ' . $this->getFileName());
         }
@@ -61,26 +66,27 @@ abstract class AbstractSpecTest extends TestCase
         // Normalize newlines for platform independence
         $data = preg_replace('/\r\n?/', "\n", $data);
         $data = preg_replace('/<!-- END TESTS -->.*$/', '', $data);
-        preg_match_all('/^`{32} example\n([\s\S]*?)^\.\n([\s\S]*?)^`{32}$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
+        preg_match_all('/^`{32} (example ?\w*)\n([\s\S]*?)^\.\n([\s\S]*?)^`{32}$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
 
         $examples = [];
         $currentSection = 'Example';
         $exampleNumber = 0;
 
         foreach ($matches as $match) {
-            if (isset($match[3])) {
-                $currentSection = $match[3];
+            if (isset($match[4])) {
+                $currentSection = $match[4];
             } else {
                 $exampleNumber++;
 
                 $testName = trim($currentSection . ' #' . $exampleNumber);
 
-                $markdown = $match[1];
+                $markdown = $match[2];
                 $markdown = str_replace('→', "\t", $markdown);
 
                 yield $testName => [
                     'markdown' => $markdown,
-                    'html'     => $match[2],
+                    'html'     => $match[3],
+                    'type'     => $match[1],
                 ];
             }
         }
