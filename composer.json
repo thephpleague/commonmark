@@ -35,9 +35,6 @@
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^4.2"
     },
-    "suggest": {
-        "league/commonmark-extras": "Library of useful extensions including smart punctuation"
-    },
     "repositories": [
         {
             "type": "package",

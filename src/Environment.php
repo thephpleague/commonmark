@@ -21,6 +21,7 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\Configuration;
@@ -350,6 +351,14 @@ final class Environment implements EnvironmentInterface, ConfigurableEnvironment
             'allow_unsafe_links' => true,
             'max_nesting_level'  => \INF,
         ]);
+
+        return $environment;
+    }
+
+    public static function createGFMEnvironment(): EnvironmentInterface
+    {
+        $environment = self::createCommonMarkEnvironment();
+        $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
         return $environment;
     }

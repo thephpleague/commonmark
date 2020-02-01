@@ -31,7 +31,7 @@ $config = [
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new CommonMarkConverter($config, $environment);
-echo $converter->convertToHtml('I successfully installed the https://github.com/thephpleague/commonmark-ext-external-link extension!');
+echo $converter->convertToHtml('I successfully installed the https://github.com/thephpleague/commonmark project with the Autolink extension!');
 ```
 
 ## Configuration

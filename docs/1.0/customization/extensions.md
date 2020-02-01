@@ -34,3 +34,31 @@ $environment->addExtension(new EmojiExtension();
 $converter = new CommonMarkConverter([], $environment);
 echo $converter->convertToHtml('Hello! :wave:');
 ```
+
+## Included Extensions
+
+Starting in v1.3, this library includes several extensions to support Github-Flavored Markdown.  You can manually add the GFM extension to your environment like this:
+
+```php
+$environment = Environment::createCommonMarkExtension();
+$environment->addExtension(new GithubFlavoredMarkdownExtension();
+
+$converter = new CommonMarkConverter([], $environment);
+echo $converter->convertToHtml('Hello GFM!');
+
+```
+
+Or, if you only want a subset of GFM extensions, you can add them individually like this instead:
+
+```php
+$environment = Environment::createCommonMarkExtension();
+// Remove any of the lines below if you don't want those features
+$environment->addExtension(new AutolinkExtension());
+$environment->addExtension(new DisallowedRawHtmlExtension());
+$environment->addExtension(new StrikethroughExtension());
+$environment->addExtension(new TableExtension());
+$environment->addExtension(new TaskListExtension());
+
+$converter = new CommonMarkConverter([], $environment);
+echo $converter->convertToHtml('Hello GFM!');
+```
