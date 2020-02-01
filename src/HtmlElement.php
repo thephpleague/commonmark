@@ -137,6 +137,8 @@ class HtmlElement
 
         if ($this->contents !== '') {
             $result .= '>' . $this->getContentsAsString() . '</' . $this->tagName . '>';
+        } elseif ($this->selfClosing && $this->tagName === 'input') {
+            $result .= '>';
         } elseif ($this->selfClosing) {
             $result .= ' />';
         } else {

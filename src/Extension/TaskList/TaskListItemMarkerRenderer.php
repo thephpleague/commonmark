@@ -30,11 +30,14 @@ final class TaskListItemMarkerRenderer implements InlineRendererInterface
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
         }
 
-        $checkbox = new HtmlElement('input', ['disabled' => '', 'type' => 'checkbox'], '', true);
+        $checkbox = new HtmlElement('input', [], '', true);
 
         if ($inline->isChecked()) {
             $checkbox->setAttribute('checked', '');
         }
+
+        $checkbox->setAttribute('disabled', '');
+        $checkbox->setAttribute('type', 'checkbox');
 
         return $checkbox;
     }

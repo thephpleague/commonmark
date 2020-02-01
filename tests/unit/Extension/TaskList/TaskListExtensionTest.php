@@ -60,34 +60,24 @@ EOT;
 
         $expected = <<<'EOT'
 <ul>
-<li>
-<input disabled="" type="checkbox" checked="" /> foo
+<li><input checked="" disabled="" type="checkbox"> foo
 <ul>
-<li>
-<input disabled="" type="checkbox" /> bar</li>
-<li>
-<input disabled="" type="checkbox" checked="" /> baz</li>
+<li><input disabled="" type="checkbox"> bar</li>
+<li><input checked="" disabled="" type="checkbox"> baz</li>
 </ul>
 </li>
-<li>
-<input disabled="" type="checkbox" /> bim</li>
+<li><input disabled="" type="checkbox"> bim</li>
 </ul>
 <ul>
-<li>
-<input disabled="" type="checkbox" checked="" /> foo</li>
-<li>
-<input disabled="" type="checkbox" checked="" /> bar</li>
-<li>
-<input disabled="" type="checkbox" /> baz</li>
+<li><input checked="" disabled="" type="checkbox"> foo</li>
+<li><input checked="" disabled="" type="checkbox"> bar</li>
+<li><input disabled="" type="checkbox"> baz</li>
 </ul>
 <p>This works for ordered lists too:</p>
 <ol>
-<li>
-<input disabled="" type="checkbox" checked="" /> foo</li>
-<li>
-<input disabled="" type="checkbox" checked="" /> bar</li>
-<li>
-<input disabled="" type="checkbox" /> baz</li>
+<li><input checked="" disabled="" type="checkbox"> foo</li>
+<li><input checked="" disabled="" type="checkbox"> bar</li>
+<li><input disabled="" type="checkbox"> baz</li>
 </ol>
 <p>Some examples which should not match:</p>
 <ul>
@@ -111,8 +101,7 @@ EOT;
 </ul>
 <p>Here's a test using <code>&lt;del&gt;</code>:</p>
 <ul>
-<li>
-<input disabled="" type="checkbox" checked="" /> <del>Checkbox inside of strikeout</del>
+<li><input checked="" disabled="" type="checkbox"> <del>Checkbox inside of strikeout</del>
 </li>
 </ul>
 <p>And another which does not render the checkbox:</p>
