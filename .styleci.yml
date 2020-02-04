@@ -17,5 +17,8 @@ finder:
     - ".phpstorm.meta.php"
     - "CommonMarkCoreExtension.php"
     - "FakeEmptyHtmlRenderer.php"
+    - "InlinesOnlyExtension.php"
+    - "SmartPunctExtension.php"
+    - "TableExtension.php"
   not-path:
     - ".ripstech"

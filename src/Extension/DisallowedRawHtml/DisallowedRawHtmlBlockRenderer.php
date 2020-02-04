@@ -27,7 +27,7 @@ final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, Co
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
@@ -42,7 +42,7 @@ final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, Co
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setConfiguration(ConfigurationInterface $configuration)
     {

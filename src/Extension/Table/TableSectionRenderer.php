@@ -25,7 +25,7 @@ final class TableSectionRenderer implements BlockRendererInterface
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!$block instanceof TableSection) {
-            throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
         if (!$block->hasChildren()) {
@@ -36,6 +36,6 @@ final class TableSectionRenderer implements BlockRendererInterface
 
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 
-        return new HtmlElement($block->type, $attrs, $separator.$htmlRenderer->renderBlocks($block->children()).$separator);
+        return new HtmlElement($block->type, $attrs, $separator . $htmlRenderer->renderBlocks($block->children()) . $separator);
     }
 }

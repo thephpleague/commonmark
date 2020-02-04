@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Table;
 
 use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Node\Node;
 
@@ -42,6 +41,8 @@ class TableRow extends AbstractBlock
      */
     public function children(): iterable
     {
-        return array_filter((array) parent::children(), static function (Node $child): bool { return $child instanceof AbstractBlock; });
+        return array_filter((array) parent::children(), static function (Node $child): bool {
+            return $child instanceof AbstractBlock;
+        });
     }
 }

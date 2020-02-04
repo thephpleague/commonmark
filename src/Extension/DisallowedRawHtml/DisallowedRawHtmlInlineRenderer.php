@@ -27,7 +27,7 @@ final class DisallowedRawHtmlInlineRenderer implements InlineRendererInterface, 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
@@ -42,7 +42,7 @@ final class DisallowedRawHtmlInlineRenderer implements InlineRendererInterface, 
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setConfiguration(ConfigurationInterface $configuration)
     {

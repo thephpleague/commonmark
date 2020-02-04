@@ -25,13 +25,13 @@ final class TableRowRenderer implements BlockRendererInterface
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!$block instanceof TableRow) {
-            throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
         $attrs = $block->getData('attributes', []);
 
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 
-        return new HtmlElement('tr', $attrs, $separator.$htmlRenderer->renderBlocks($block->children()).$separator);
+        return new HtmlElement('tr', $attrs, $separator . $htmlRenderer->renderBlocks($block->children()) . $separator);
     }
 }

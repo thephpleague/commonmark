@@ -56,12 +56,14 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
 
         if (empty($columns)) {
             $cursor->restoreState($oldState);
+
             return false;
         }
 
-        $head = $this->parseRow(trim((string)array_pop($lines)), $columns, TableCell::TYPE_HEAD);
+        $head = $this->parseRow(trim((string) array_pop($lines)), $columns, TableCell::TYPE_HEAD);
         if (null === $head) {
             $cursor->restoreState($oldState);
+
             return false;
         }
 
@@ -271,7 +273,7 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setEnvironment(EnvironmentInterface $environment)
     {

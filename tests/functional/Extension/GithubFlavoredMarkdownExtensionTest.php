@@ -23,7 +23,7 @@ class GithubFlavoredMarkdownExtensionTest extends AbstractSpecTest
 
     protected function getFileName(): string
     {
-        return __DIR__.'/../../../vendor/github/gfm/test/spec.txt';
+        return __DIR__ . '/../../../vendor/github/gfm/test/spec.txt';
     }
 
     public function dataProvider()

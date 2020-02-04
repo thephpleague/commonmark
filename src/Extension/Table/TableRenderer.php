@@ -25,7 +25,7 @@ final class TableRenderer implements BlockRendererInterface
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!$block instanceof Table) {
-            throw new \InvalidArgumentException('Incompatible block type: '.get_class($block));
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
         }
 
         $attrs = $block->getData('attributes', []);
@@ -34,6 +34,6 @@ final class TableRenderer implements BlockRendererInterface
 
         $children = $htmlRenderer->renderBlocks($block->children());
 
-        return new HtmlElement('table', $attrs, $separator.\trim($children).$separator);
+        return new HtmlElement('table', $attrs, $separator . \trim($children) . $separator);
     }
 }

@@ -20,7 +20,7 @@ class DisallowedRawHtmlExtensionTest extends TestCase
 {
     public function testDisallowedRawHtmlExtensionWithSpecExample()
     {
-        $input = <<<MD
+        $input = <<<'MD'
 <strong> <title> <style> <em>
 
 <blockquote>
@@ -28,14 +28,13 @@ class DisallowedRawHtmlExtensionTest extends TestCase
 </blockquote>
 MD;
 
-        $expected = <<<HTML
+        $expected = <<<'HTML'
 <p><strong> &lt;title> &lt;style> <em></p>
 <blockquote>
   &lt;xmp> is disallowed.  &lt;XMP> is also disallowed.
 </blockquote>
 
 HTML;
-
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new DisallowedRawHtmlExtension());
@@ -46,7 +45,7 @@ HTML;
 
     public function testIndividualHtmlTagsAsBlocks()
     {
-        $input = <<<MD
+        $input = <<<'MD'
 <title>My Cool Website</title>
 <textarea>
   foo=bar
@@ -67,7 +66,7 @@ HTML;
 <plaintext>foo</plaintext>
 MD;
 
-        $expected = <<<HTML
+        $expected = <<<'HTML'
 &lt;title>My Cool Website&lt;/title>
 &lt;textarea>
   foo=bar

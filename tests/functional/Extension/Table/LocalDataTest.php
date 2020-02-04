@@ -53,10 +53,10 @@ class LocalDataTest extends TestCase
     public function dataProvider()
     {
         $ret = [];
-        foreach (glob(__DIR__.'/data/*.md') as $markdownFile) {
+        foreach (glob(__DIR__ . '/data/*.md') as $markdownFile) {
             $testName = basename($markdownFile, '.md');
             $markdown = file_get_contents($markdownFile);
-            $html = file_get_contents(__DIR__.'/data/'.$testName.'.html');
+            $html = file_get_contents(__DIR__ . '/data/' . $testName . '.html');
 
             $ret[] = [$markdown, $html, $testName];
         }
@@ -70,9 +70,9 @@ class LocalDataTest extends TestCase
         $actualResult = $renderer->renderBlock($documentAST);
 
         $failureMessage = sprintf('Unexpected result for "%s" test', $testName);
-        $failureMessage .= "\n=== markdown ===============\n".$markdown;
-        $failureMessage .= "\n=== expected ===============\n".$html;
-        $failureMessage .= "\n=== got ====================\n".$actualResult;
+        $failureMessage .= "\n=== markdown ===============\n" . $markdown;
+        $failureMessage .= "\n=== expected ===============\n" . $html;
+        $failureMessage .= "\n=== got ====================\n" . $actualResult;
 
         $this->assertEquals($html, $actualResult, $failureMessage);
     }
