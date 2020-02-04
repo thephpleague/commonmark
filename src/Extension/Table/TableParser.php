@@ -15,46 +15,65 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
+use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Parser\BlockParserInterface;
+use League\CommonMark\Context;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\EnvironmentAwareInterface;
+use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Util\RegexHelper;
 
-final class TableParser implements BlockParserInterface
+final class TableParser implements BlockParserInterface, EnvironmentAwareInterface
 {
-    const REGEXP_DEFINITION = '/(?: *(:?) *-+ *(:?) *)+(?=\||$)/';
-    const REGEXP_CELLS = '/(?:`[^`]*`|\\\\\||\\\\|[^|`\\\\]+)+(?=\||$)/';
     const REGEXP_CAPTION = '/^\[(.+?)\](?:\[(.+)\])?\s*$/';
+
+    /**
+     * @var EnvironmentInterface
+     */
+    private $environment;
 
     public function parse(ContextInterface $context, Cursor $cursor): bool
     {
         $container = $context->getContainer();
-
         if (!$container instanceof Paragraph) {
             return false;
         }
 
         $lines = $container->getStrings();
-        if (count($lines) < 1) {
+        if (count($lines) !== 1) {
             return false;
         }
 
-        $expressionOffset = $cursor->getNextNonSpacePosition();
-
-        $match = RegexHelper::matchAll(self::REGEXP_DEFINITION, $cursor->getLine(), $expressionOffset);
-        if (null === $match) {
+        if (\strpos($lines[0], '|') === false) {
             return false;
         }
 
-        $columns = $this->parseColumns($match);
-        $head = $this->parseRow(trim((string) array_pop($lines)), $columns, TableCell::TYPE_HEAD);
+        $oldState = $cursor->saveState();
+        $cursor->advanceToNextNonSpaceOrTab();
+        $columns = $this->parseColumns($cursor);
+
+        if (empty($columns)) {
+            $cursor->restoreState($oldState);
+            return false;
+        }
+
+        $head = $this->parseRow(trim((string)array_pop($lines)), $columns, TableCell::TYPE_HEAD);
         if (null === $head) {
+            $cursor->restoreState($oldState);
             return false;
         }
 
         $table = new Table(function (Cursor $cursor, Table $table) use ($columns): bool {
-            $row = $this->parseRow($cursor->getLine(), $columns);
+            // The next line cannot be a new block start
+            // This is a bit inefficient, but it's the only feasible way to check
+            // given the current v1 API.
+            if (self::isANewBlock($this->environment, $cursor->getLine())) {
+                return false;
+            }
+
+            $row = $this->parseRow(\trim($cursor->getLine()), $columns);
             if (null === $row) {
                 if (null !== $table->getCaption()) {
                     return false;
@@ -91,40 +110,27 @@ final class TableParser implements BlockParserInterface
         return true;
     }
 
-    private function parseColumns(array $match): array
-    {
-        $columns = [];
-        foreach ((array) $match[0] as $i => $column) {
-            if (isset($match[1][$i]) && $match[1][$i] && isset($match[2][$i]) && $match[2][$i]) {
-                $columns[] = TableCell::ALIGN_CENTER;
-            } elseif (isset($match[1][$i]) && $match[1][$i]) {
-                $columns[] = TableCell::ALIGN_LEFT;
-            } elseif (isset($match[2][$i]) && $match[2][$i]) {
-                $columns[] = TableCell::ALIGN_RIGHT;
-            } else {
-                $columns[] = '';
-            }
-        }
-
-        return $columns;
-    }
-
     private function parseRow(string $line, array $columns, string $type = TableCell::TYPE_BODY): ?TableRow
     {
-        $cells = RegexHelper::matchAll(self::REGEXP_CELLS, $line);
+        $cells = $this->split(new Cursor(\trim($line)));
 
-        if (null === $cells || $line === $cells[0]) {
+        if (empty($cells)) {
+            return null;
+        }
+
+        // The header row must match the delimiter row in the number of cells
+        if ($type === TableCell::TYPE_HEAD && \count($cells) !== \count($columns)) {
             return null;
         }
 
         $i = 0;
         $row = new TableRow();
-        foreach ((array) $cells[0] as $i => $cell) {
-            if (!isset($columns[$i])) {
+        foreach ($cells as $i => $cell) {
+            if (!array_key_exists($i, $columns)) {
                 return $row;
             }
 
-            $row->appendChild(new TableCell(trim($cell), $type, isset($columns[$i]) ? $columns[$i] : null));
+            $row->appendChild(new TableCell(trim($cell), $type, $columns[$i]));
         }
 
         for ($j = count($columns) - 1; $j > $i; --$j) {
@@ -132,6 +138,46 @@ final class TableParser implements BlockParserInterface
         }
 
         return $row;
+    }
+
+    private function split(Cursor $cursor): array
+    {
+        if ($cursor->getCharacter() === '|') {
+            $cursor->advanceBy(1);
+        }
+
+        $cells = [];
+        $sb = '';
+
+        while (!$cursor->isAtEnd()) {
+            switch ($c = $cursor->getCharacter()) {
+                case '\\':
+                    if ($cursor->peek() === '|') {
+                        // Pipe is special for table parsing. An escaped pipe doesn't result in a new cell, but is
+                        // passed down to inline parsing as an unescaped pipe. Note that that applies even for the `\|`
+                        // in an input like `\\|` - in other words, table parsing doesn't support escaping backslashes.
+                        $sb .= '|';
+                        $cursor->advanceBy(1);
+                    } else {
+                        // Preserve backslash before other characters or at end of line.
+                        $sb .= '\\';
+                    }
+                    break;
+                case '|':
+                    $cells[] = $sb;
+                    $sb = '';
+                    break;
+                default:
+                    $sb .= $c;
+            }
+            $cursor->advanceBy(1);
+        }
+
+        if ($sb !== '') {
+            $cells[] = $sb;
+        }
+
+        return $cells;
     }
 
     private function parseCaption(string $line): ?TableCaption
@@ -143,5 +189,108 @@ final class TableParser implements BlockParserInterface
         }
 
         return new TableCaption($caption[1], $caption[2]);
+    }
+
+    /**
+     * @param Cursor $cursor
+     *
+     * @return array
+     */
+    private function parseColumns(Cursor $cursor): array
+    {
+        $columns = [];
+        $pipes = 0;
+        $valid = false;
+
+        while (!$cursor->isAtEnd()) {
+            switch ($c = $cursor->getCharacter()) {
+                case '|':
+                    $cursor->advanceBy(1);
+                    $pipes++;
+                    if ($pipes > 1) {
+                        // More than one adjacent pipe not allowed
+                        return [];
+                    }
+
+                    // Need at least one pipe, even for a one-column table
+                    $valid = true;
+                    break;
+                case '-':
+                case ':':
+                    if ($pipes === 0 && !empty($columns)) {
+                        // Need a pipe after the first column (first column doesn't need to start with one)
+                        return [];
+                    }
+                    $left = false;
+                    $right = false;
+                    if ($c === ':') {
+                        $left = true;
+                        $cursor->advanceBy(1);
+                    }
+                    if ($cursor->match('/^-+/') === null) {
+                        // Need at least one dash
+                        return [];
+                    }
+                    if ($cursor->getCharacter() === ':') {
+                        $right = true;
+                        $cursor->advanceBy(1);
+                    }
+                    $columns[] = $this->getAlignment($left, $right);
+                    // Next, need another pipe
+                    $pipes = 0;
+                    break;
+                case ' ':
+                case "\t":
+                    // White space is allowed between pipes and columns
+                    $cursor->advanceToNextNonSpaceOrTab();
+                    break;
+                default:
+                    // Any other character is invalid
+                    return [];
+            }
+        }
+
+        if (!$valid) {
+            return [];
+        }
+
+        return $columns;
+    }
+
+    private static function getAlignment(bool $left, bool $right): ?string
+    {
+        if ($left && $right) {
+            return TableCell::ALIGN_CENTER;
+        } elseif ($left) {
+            return TableCell::ALIGN_LEFT;
+        } elseif ($right) {
+            return TableCell::ALIGN_RIGHT;
+        }
+
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setEnvironment(EnvironmentInterface $environment)
+    {
+        $this->environment = $environment;
+    }
+
+    private static function isANewBlock(EnvironmentInterface $environment, string $line): bool
+    {
+        $context = new Context(new Document(), $environment);
+        $context->setNextLine($line);
+        $cursor = new Cursor($line);
+
+        /** @var BlockParserInterface $parser */
+        foreach ($environment->getBlockParsers() as $parser) {
+            if ($parser->parse($context, $cursor)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

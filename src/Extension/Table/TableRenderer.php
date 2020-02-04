@@ -32,6 +32,8 @@ final class TableRenderer implements BlockRendererInterface
 
         $separator = $htmlRenderer->getOption('inner_separator', "\n");
 
-        return new HtmlElement('table', $attrs, $separator.$htmlRenderer->renderBlocks($block->children()).$separator);
+        $children = $htmlRenderer->renderBlocks($block->children());
+
+        return new HtmlElement('table', $attrs, $separator.\trim($children).$separator);
     }
 }
