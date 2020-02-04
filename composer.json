@@ -36,6 +36,9 @@
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^4.2"
     },
+    "conflict": {
+        "scrutinizer/ocular": "1.7.*"
+    },
     "repositories": [
         {
             "type": "package",
