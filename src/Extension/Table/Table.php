@@ -23,7 +23,6 @@ use League\CommonMark\Cursor;
 
 class Table extends AbstractStringContainerBlock implements InlineContainerInterface
 {
-    private $caption;
     private $head;
     private $body;
     private $parser;
@@ -38,30 +37,12 @@ class Table extends AbstractStringContainerBlock implements InlineContainerInter
 
     public function canContain(AbstractBlock $block): bool
     {
-        return $block instanceof TableSection || $block instanceof TableCaption;
+        return $block instanceof TableSection;
     }
 
     public function isCode(): bool
     {
         return false;
-    }
-
-    public function setCaption(TableCaption $caption = null): void
-    {
-        $node = $this->getCaption();
-        if ($node instanceof TableCaption) {
-            $node->detach();
-        }
-
-        $this->caption = $caption;
-        if (null !== $caption) {
-            $this->prependChild($caption);
-        }
-    }
-
-    public function getCaption(): ?TableCaption
-    {
-        return $this->caption;
     }
 
     public function getHead(): TableSection

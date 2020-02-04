@@ -23,12 +23,9 @@ use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\EnvironmentInterface;
-use League\CommonMark\Util\RegexHelper;
 
 final class TableParser implements BlockParserInterface, EnvironmentAwareInterface
 {
-    const REGEXP_CAPTION = '/^\[(.+?)\](?:\[(.+)\])?\s*$/';
-
     /**
      * @var EnvironmentInterface
      */
@@ -77,16 +74,6 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
 
             $row = $this->parseRow(\trim($cursor->getLine()), $columns);
             if (null === $row) {
-                if (null !== $table->getCaption()) {
-                    return false;
-                }
-
-                if (null !== ($caption = $this->parseCaption($cursor->getLine()))) {
-                    $table->setCaption($caption);
-
-                    return true;
-                }
-
                 return false;
             }
 
@@ -180,17 +167,6 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
         }
 
         return $cells;
-    }
-
-    private function parseCaption(string $line): ?TableCaption
-    {
-        $caption = RegexHelper::matchAll(self::REGEXP_CAPTION, $line);
-
-        if (null === $caption) {
-            return null;
-        }
-
-        return new TableCaption($caption[1], $caption[2]);
     }
 
     /**

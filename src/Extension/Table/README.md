@@ -70,43 +70,6 @@ Result:
 | cell 2.1 | cell 2.2 | cell 2.3 |
 ```
 
-### Table caption
-
-```markdown
-header 1 | header 2
--------- | --------
-cell 1.1 | cell 1.2
-[Simple table]
-```
-
-Code:
-```markdown
-header 1 | header 2
--------- | --------
-cell 1.1 | cell 1.2
-[*Prototype* table][reference_table]
-```
-
-Result:
-```html
-<table>
-<caption id="reference_table"><em>Prototype</em> table</caption>
-<thead>
-<tr>
-<th>header 1</th>
-<th>header 2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cell 1.1</td>
-<td>cell 1.2</td>
-</tr>
-</tbody>
-</table>
-<table>
-```
-
 Credits
 -------
 
