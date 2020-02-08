@@ -21,7 +21,7 @@ use League\CommonMark\Block\Element\InlineContainerInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class Table extends AbstractStringContainerBlock implements InlineContainerInterface
+final class Table extends AbstractStringContainerBlock implements InlineContainerInterface
 {
     private $head;
     private $body;

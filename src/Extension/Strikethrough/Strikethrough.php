@@ -13,7 +13,7 @@ namespace League\CommonMark\Extension\Strikethrough;
 
 use League\CommonMark\Inline\Element\AbstractInline;
 
-class Strikethrough extends AbstractInline
+final class Strikethrough extends AbstractInline
 {
     /**
      * @return bool

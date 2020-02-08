@@ -18,7 +18,7 @@ use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 
-class PunctuationParser implements InlineParserInterface
+final class PunctuationParser implements InlineParserInterface
 {
     /**
      * @return string[]

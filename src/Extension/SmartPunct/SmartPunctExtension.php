@@ -22,7 +22,7 @@ use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Renderer as CoreInlineRenderer;
 
-class SmartPunctExtension implements ExtensionInterface
+final class SmartPunctExtension implements ExtensionInterface
 {
     public function register(ConfigurableEnvironmentInterface $environment)
     {

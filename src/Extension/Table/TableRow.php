@@ -19,7 +19,7 @@ use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Cursor;
 use League\CommonMark\Node\Node;
 
-class TableRow extends AbstractBlock
+final class TableRow extends AbstractBlock
 {
     public function canContain(AbstractBlock $block): bool
     {
