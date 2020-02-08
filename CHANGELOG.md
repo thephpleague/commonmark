@@ -14,7 +14,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Introduced several micro-optimizations for a 5-10% performance boost
 
-## [1.2.2] - 2019-01-15
+## [1.2.2] - 2020-01-15
 
 This release contains the same changes as 1.1.3:
 
@@ -22,7 +22,7 @@ This release contains the same changes as 1.1.3:
 
  - Fixed link parsing edge case (#403)
 
-## [1.1.3] - 2019-01-15
+## [1.1.3] - 2020-01-15
 
 ### Fixed
 
