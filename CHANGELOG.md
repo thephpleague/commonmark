@@ -6,7 +6,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
+ - Added (optional) **full GFM support!** 🎉🎉🎉 (#409)
  - Added check to ensure Markdown input is valid UTF-8 (#401, #405)
+ - Added new `unordered_list_markers` configuration option (#408, #411)
+
+### Changed
+
+ - Introduced several micro-optimizations for a 5-10% performance boost
 
 ## [1.2.2] - 2019-01-15
 
