@@ -20,10 +20,26 @@ use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
 use League\CommonMark\Util\RegexHelper;
 
-final class ListParser implements BlockParserInterface
+final class ListParser implements BlockParserInterface, ConfigurationAwareInterface
 {
+    /** @var ConfigurationInterface|null */
+    private $config;
+
+    /** @var string|null */
+    private $listMarkerRegex;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setConfiguration(ConfigurationInterface $configuration)
+    {
+        $this->config = $configuration;
+    }
+
     /**
      * @param ContextInterface $context
      * @param Cursor           $cursor
@@ -45,7 +61,7 @@ final class ListParser implements BlockParserInterface
         $tmpCursor->advanceToNextNonSpaceOrTab();
         $rest = $tmpCursor->getRemainder();
 
-        if (\preg_match('/^[*+-]/', $rest) === 1) {
+        if (\preg_match($this->listMarkerRegex ?? $this->generateListMarkerRegex(), $rest) === 1) {
             $data = new ListData();
             $data->markerOffset = $indent;
             $data->type = ListBlock::TYPE_UNORDERED;
@@ -120,5 +136,21 @@ final class ListParser implements BlockParserInterface
         }
 
         return $markerLength + $spacesAfterMarker;
+    }
+
+    private function generateListMarkerRegex(): string
+    {
+        // No configuration given - use the defaults
+        if ($this->config === null) {
+            return $this->listMarkerRegex = '/^[*+-]/';
+        }
+
+        $markers = $this->config->get('unordered_list_markers', ['*', '+', '-']);
+
+        if (!\is_array($markers)) {
+            throw new \RuntimeException('Invalid configuration option "unordered_list_markers": value must be an array of strings');
+        }
+
+        return $this->listMarkerRegex = '/^[' . \preg_quote(\implode('', $markers), '/') . ']/';
     }
 }

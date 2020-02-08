@@ -24,6 +24,7 @@ $converter = new CommonMarkConverter([
     'enable_strong' => true,
     'use_asterisk' => true,
     'use_underscore' => true,
+    'unordered_list_markers' => ['-', '*', '+'],
     'html_input' => 'escape',
     'allow_unsafe_links' => false,
     'max_nesting_level' => INF,
@@ -40,6 +41,7 @@ Here's a list of currently-supported options:
 * `enable_strong` - Disable `<strong>` parsing by setting to `false`; enable with `true` (default: `true`)
 * `use_asterisk` - Disable parsing of `*` for emphasis by setting to `false`; enable with `true` (default: `true`)
 * `use_underscore` - Disable parsing of `_` for emphasis by setting to `false`; enable with `true` (default: `true`)
+* `unordered_list_markers` - Array of characters that can be used to indicated a bulleted list (default: `["-", "*", "+"]`)
 * `html_input` - How to handle HTML input.  Set this option to one of the following strings:
   - `strip` - Strip all HTML (equivalent to `'safe' => true`)
   - `allow` - Allow all HTML input as-is (default value; equivalent to `'safe' => false)
