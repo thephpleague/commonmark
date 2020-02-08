@@ -7,7 +7,7 @@ redirect_from: /0.20/configuration/
 Configuration
 =============
 
-You can provide an array of configuration options to the `CommonMarkConverter` when creating it::
+You can provide an array of configuration options to the `CommonMarkConverter` when creating it:
 
 ~~~php
 <?php
@@ -34,7 +34,7 @@ Here's a list of currently-supported options:
 
 * `renderer` - Array of options for rendering HTML
   * `block_separator` - String to use for separating renderer block elements
-  * `inner_separator` - String to use for separating inner block contents 
+  * `inner_separator` - String to use for separating inner block contents
   * `soft_break` - String to use for rendering soft breaks
 * `enable_em` - Disable `<em>` parsing by setting to `false`; enable with `true` (default: `true`)
 * `enable_strong` - Disable `<strong>` parsing by setting to `false`; enable with `true` (default: `true`)
@@ -46,6 +46,8 @@ Here's a list of currently-supported options:
   - `escape` - Escape all HTML
 * `allow_unsafe_links` - Remove risky link and image URLs by setting this to `false` (default: `true`)
 * `max_nesting_level` - The maximum nesting level for blocks (default: infinite). Setting this to a positive integer can help protect against long parse times and/or segfaults if blocks are too deeply-nested. Added in 0.17.
+
+Additional configuration options are available for some of the [available extensions](/1.0/customization/extensions/) - refer to their individual documentation for more details.
 
 The following options have been deprecated.  They will no longer work once 1.0.0 is released:
 

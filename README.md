@@ -49,6 +49,33 @@ Full documentation on advanced usage, configuration, and customization can be fo
 
 Information on how to upgrade to newer versions of this library can be found at <https://commonmark.thephpleague.com/releases>.
 
+## 💻 Github-Flavored Markdown
+
+Github-Flavored Markdown can be parsed by using the `GithubFlavoredMarkdownConverter`:
+
+```php
+use League\CommonMark\GithubFlavoredMarkdownConverter;
+
+$converter = new GithubFlavoredMarkdownConverter([
+    'html_input' => 'strip',
+    'allow_unsafe_links' => false,
+]);
+
+echo $converter->convertToHtml('# Hello World!');
+
+// <h1>Hello World!</h1>
+```
+
+This is a drop-in replacement for the `CommonMarkConverter` which adds additional features found in the GFM spec:
+
+ - Autolinks
+ - Disallowed raw HTML
+ - Strikethrough
+ - Tables
+ - Task Lists
+
+See the [Extensions documentation](https://commonmark.thephpleague.com/1.0/customization/extensions/) for more details on how to include only certain GFM features if you don't want them all.
+
 ## 🗃️ Related Packages
 
 ### Integrations
@@ -62,19 +89,7 @@ Information on how to upgrade to newer versions of this library can be found at 
 - [Twig Markdown extension](https://github.com/twigphp/markdown-extension)
 - [Twig filter and tag](https://github.com/aptoma/twig-markdown)
 
-### GFM Extensions
-
-You can easily add support for Github-Flavored Markdown by installing the [`league/commonmark-extras`](https://github.com/thephpleague/commonmark-extras) package, which includes bundles all of the extensions listed below:
-
-| Feature | Package Name | Description |
-| ------- | ------------ | ----------- |
-| Autolinks | [`league/commonmark-ext-autolink`](https://github.com/thephpleague/commonmark-ext-autolink) | Automatically links URLs, emails, and (optionally) @-mentions without needing to use `<...>` |
-| Smart Punctuation | [`league/commonmark-ext-smartpunct`](https://github.com/thephpleague/commonmark-ext-smartpunct) | Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents |
-| Strikethrough | [`league/commonmark-ext-strikethrough`](https://github.com/thephpleague/commonmark-ext-strikethrough) | Adds support for `~~strikethrough~~` syntax |
-| Task Lists | [`league/commonmark-ext-task-list`](https://github.com/thephpleague/commonmark-ext-task-list) | Support for Github-style task lists |
-| Tables | [`league/commonmark-ext-table`](https://github.com/thephpleague/commonmark-ext-table) | GFM-style tables |
-
-### Other PHP League Extensions
+### Extensions
 
  - [`league/commonmark-ext-inlines-only`](https://github.com/thephpleague/commonmark-ext-inlines-only) - Renders inline text without paragraph tags or other block-level elements
  - [`league/commonmark-ext-external-link`](https://github.com/thephpleague/commonmark-ext-external-link) - Mark external links, make them open in new windows, etc.

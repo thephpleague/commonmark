@@ -16,7 +16,9 @@ namespace League\CommonMark\Block\Renderer;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\ListItem;
+use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Extension\TaskList\TaskListItemMarker;
 use League\CommonMark\HtmlElement;
 
 final class ListItemRenderer implements BlockRendererInterface
@@ -35,7 +37,7 @@ final class ListItemRenderer implements BlockRendererInterface
         }
 
         $contents = $htmlRenderer->renderBlocks($block->children(), $inTightList);
-        if (\substr($contents, 0, 1) === '<') {
+        if (\substr($contents, 0, 1) === '<' && !$this->startsTaskListItem($block)) {
             $contents = "\n" . $contents;
         }
         if (\substr($contents, -1, 1) === '>') {
@@ -47,5 +49,12 @@ final class ListItemRenderer implements BlockRendererInterface
         $li = new HtmlElement('li', $attrs, $contents);
 
         return $li;
+    }
+
+    private function startsTaskListItem(ListItem $block): bool
+    {
+        $firstChild = $block->firstChild();
+
+        return $firstChild instanceof Paragraph && $firstChild->firstChild() instanceof TaskListItemMarker;
     }
 }
