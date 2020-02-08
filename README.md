@@ -12,7 +12,7 @@
 
 ![league/commonmark](commonmark-banner.png)
 
-**league/commonmark** is a highly-extensible PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec.  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
+**league/commonmark** is a highly-extensible PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec and [Github-Flavored Markdown].  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
 
 ## 📦 Installation & Basic Usage
 
@@ -37,21 +37,7 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
-Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.
-
-🔒 If you will be parsing untrusted input from users, please consider setting the `html_input` and `allow_unsafe_links` options per the example above. See <https://commonmark.thephpleague.com/security/> for more details. If you also do choose to allow raw HTML input from untrusted users, considering using a library (like [HTML Purifier](https://github.com/ezyang/htmlpurifier)) to provide additional HTML filtering.
-
-## 📓 Documentation
-
-Full documentation on advanced usage, configuration, and customization can be found at [commonmark.thephpleague.com][docs].
-
-## ⏫ Upgrading
-
-Information on how to upgrade to newer versions of this library can be found at <https://commonmark.thephpleague.com/releases>.
-
-## 💻 Github-Flavored Markdown
-
-Github-Flavored Markdown can be parsed by using the `GithubFlavoredMarkdownConverter`:
+Or if you want Github-Flavored Markdown, use the `GithubFlavoredMarkdownConverter` class instead:
 
 ```php
 use League\CommonMark\GithubFlavoredMarkdownConverter;
@@ -66,7 +52,21 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
-This is a drop-in replacement for the `CommonMarkConverter` which adds additional features found in the GFM spec:
+Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.
+
+🔒 If you will be parsing untrusted input from users, please consider setting the `html_input` and `allow_unsafe_links` options per the example above. See <https://commonmark.thephpleague.com/security/> for more details. If you also do choose to allow raw HTML input from untrusted users, considering using a library (like [HTML Purifier](https://github.com/ezyang/htmlpurifier)) to provide additional HTML filtering.
+
+## 📓 Documentation
+
+Full documentation on advanced usage, configuration, and customization can be found at [commonmark.thephpleague.com][docs].
+
+## ⏫ Upgrading
+
+Information on how to upgrade to newer versions of this library can be found at <https://commonmark.thephpleague.com/releases>.
+
+## 💻 Github-Flavored Markdown
+
+The `GithubFlavoredMarkdownConverter` shown earlier is a drop-in replacement for the `CommonMarkConverter` which adds additional features found in the GFM spec:
 
  - Autolinks
  - Disallowed raw HTML
@@ -89,12 +89,9 @@ See the [Extensions documentation](https://commonmark.thephpleague.com/1.0/custo
 - [Twig Markdown extension](https://github.com/twigphp/markdown-extension)
 - [Twig filter and tag](https://github.com/aptoma/twig-markdown)
 
-### Extensions
+### Included Extensions
 
- - [`league/commonmark-ext-inlines-only`](https://github.com/thephpleague/commonmark-ext-inlines-only) - Renders inline text without paragraph tags or other block-level elements
- - [`league/commonmark-ext-external-link`](https://github.com/thephpleague/commonmark-ext-external-link) - Mark external links, make them open in new windows, etc.
-
-You can add them to your project or use them as examples to [develop your own custom features](https://commonmark.thephpleague.com/customization/overview/).
+See [our extension documentation](https://commonmark.thephpleague.com/1.0/customization/extensions/#included-extensions) for a full list of extensions bundled with this library.
 
 ### Community Extensions
 
@@ -208,6 +205,7 @@ This project is used by [Laravel Framework](https://laravel.com/), [Cachet](http
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
 [commonmark.js]: https://github.com/jgm/commonmark.js
+[Github-Flavored Markdown]: https://github.github.com/gfm/
 [John MacFarlane]: http://johnmacfarlane.net
 [docs]: https://commonmark.thephpleague.com/
 [docs-examples]: https://commonmark.thephpleague.com/customization/overview/#examples
