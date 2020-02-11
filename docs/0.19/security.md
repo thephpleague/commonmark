@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Security
-redirect_from: /security/
 ---
 
 Security

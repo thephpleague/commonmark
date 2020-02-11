@@ -12,7 +12,7 @@
 
  - [ ] Update the relevant documentation in `./docs/`
  - [ ] Remember to note the upgrade changes in the docs too
- - [ ] If releasing a new major version, clone the previous one and make the necessary changes. Don't forget to update version numbers in project.yml! And update the redirects too.
+ - [ ] If releasing a new major version, clone the previous one and make the necessary changes. Don't forget to update version numbers in project.yml! And update the redirects too. Especially for /security/.
  - [ ] Build and preview the docs locally
 
 ## Release
