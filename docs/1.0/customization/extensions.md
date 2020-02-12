@@ -13,6 +13,9 @@ Extensions provide a way to group related parsers, renderers, etc. together with
 To create an extension, simply create a new class implementing `ExtensionInterface`.  This has a single method where you're given a `ConfigurableEnvironmentInterface` to register whatever things you need to. For example:
 
 ```php
+use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\ConfigurableEnvironmentInterface;
+
 final class EmojiExtension implements ExtensionInterface
 {
     public function register(ConfigurableEnvironmentInterface $environment)
@@ -29,8 +32,12 @@ final class EmojiExtension implements ExtensionInterface
 To hook up your new extension to the `Environment`, simply do this:
 
 ```php
-$environment = Environment::createCommonMarkExtension();
-$environment->addExtension(new EmojiExtension();
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+
+
+$environment = Environment::createCommonMarkEnvironment();
+$environment->addExtension(new EmojiExtension());
 
 $converter = new CommonMarkConverter([], $environment);
 echo $converter->convertToHtml('Hello! :wave:');
@@ -41,8 +48,12 @@ echo $converter->convertToHtml('Hello! :wave:');
 Starting in v1.3, this library includes several extensions to support Github-Flavored Markdown.  You can manually add the GFM extension to your environment like this:
 
 ```php
-$environment = Environment::createCommonMarkExtension();
-$environment->addExtension(new GithubFlavoredMarkdownExtension();
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+
+$environment = Environment::createCommonMarkEnvironment();
+$environment->addExtension(new GithubFlavoredMarkdownExtension());
 
 $converter = new CommonMarkConverter([], $environment);
 echo $converter->convertToHtml('Hello GFM!');
@@ -52,7 +63,15 @@ echo $converter->convertToHtml('Hello GFM!');
 Or, if you only want a subset of GFM extensions, you can add them individually like this instead:
 
 ```php
-$environment = Environment::createCommonMarkExtension();
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
+use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TaskList\TaskListExtension;
+
+$environment = Environment::createCommonMarkEnvironment();
 // Remove any of the lines below if you don't want a particular feature
 $environment->addExtension(new AutolinkExtension());
 $environment->addExtension(new DisallowedRawHtmlExtension());
