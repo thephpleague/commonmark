@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed return types of `Environment::createCommonMarkEnvironment()` and `Environment::createGFMEnvironment()`
+
 ## [1.3.0] - 2020-02-08
 
 ### Added
