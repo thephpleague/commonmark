@@ -31,7 +31,9 @@ $config = [
 $usage = function (array $config, string $format, ...$args) {
     $errmsg = vsprintf("Error: {$format}", $args);
 
-    fwrite(STDERR, <<<EOD
+    fwrite(
+        STDERR,
+        <<<EOD
 {$errmsg}:
 Usage: {$config['exec']} [options] [flags]
 Options:
@@ -44,7 +46,7 @@ Flags:
     -memory                    default: off, implies isolate
 
 EOD
-);
+    );
     exit(1);
 };
 
@@ -98,21 +100,27 @@ if ($config['csv'] !== false) {
         "php://fd/{$config['csv']}" :
         realpath($config['csv']);
 
-    $fd = @fopen($stream,
+    $fd = @fopen(
+        $stream,
         $config['exec'] === 'exec' ?
-            'w' : 'w+');
+            'w' : 'w+'
+    );
 
     if (!is_resource($fd)) {
-        $usage($config,
+        $usage(
+            $config,
             'cannot fopen(%s) for writing',
-            $config['csv']);
+            $config['csv']
+        );
     }
 
     define('CSVOUT', $fd);
 
     if ($config['exec'] !== 'exec') {
-        fputcsv(CSVOUT,
-            ['Name', 'CPU', 'MEM']);
+        fputcsv(
+            CSVOUT,
+            ['Name', 'CPU', 'MEM']
+        );
         fflush(CSVOUT);
     }
 }
@@ -155,7 +163,8 @@ $parsers = [
 if (extension_loaded('cmark')) {
     $parsers['krakjoe/cmark'] = function ($markdown) {
         \CommonMark\Render\HTML(
-            \CommonMark\Parse($markdown));
+            \CommonMark\Parse($markdown)
+        );
     };
 }
 
@@ -188,7 +197,9 @@ $exec = function (array $config, string $parser) use ($parsers): array {
 
     if ($config['csv']) {
         fputcsv(
-            CSVOUT, [$parser, $cpu, $mem]);
+            CSVOUT,
+            [$parser, $cpu, $mem]
+        );
         fflush(CSVOUT);
     }
 
@@ -196,8 +207,11 @@ $exec = function (array $config, string $parser) use ($parsers): array {
 };
 
 if ($config['exec'] === 'exec') {
-    vfprintf(STDERR, '%.2f %d',
-        $exec($config, array_shift($config['parser'])));
+    vfprintf(
+        STDERR,
+        '%.2f %d',
+        $exec($config, array_shift($config['parser']))
+    );
     exit(0);
 }
 
@@ -263,12 +277,16 @@ $display = function (array $config, string $title, array $fmt, array $results, s
             $diff = $top - $result;
         }
 
-        printf("\t%d) $formatName $formatResult % {$space}s%s",
-            $position++, $name, $result,
+        printf(
+            "\t%d) $formatName $formatResult % {$space}s%s",
+            $position++,
+            $name,
+            $result,
             $diff ?
                 sprintf($formatResult, $diff) :
                 null,
-            PHP_EOL);
+            PHP_EOL
+        );
     }
 };
 
@@ -276,10 +294,14 @@ if (extension_loaded('xdebug')) {
     fwrite(STDERR, 'The xdebug extension is loaded, this can significantly skew benchmarks. Disable it for accurate results.' . PHP_EOL . PHP_EOL);
 }
 
-printf('Running Benchmarks (%s), %d Implementations, %d Iterations:%s',
-       $config['flags']['isolate'] ?
+printf(
+    'Running Benchmarks (%s), %d Implementations, %d Iterations:%s',
+    $config['flags']['isolate'] ?
            'Isolated' : 'No Isolation',
-       count($parsers), $config['iterations'], PHP_EOL);
+    count($parsers),
+    $config['iterations'],
+    PHP_EOL
+);
 
 $cpu = [];
 $mem = [];
@@ -293,16 +315,24 @@ foreach ($parsers as $name => $parser) {
     usleep(300000);
 }
 
-$display($config,
+$display(
+    $config,
     '%sBenchmark Results, CPU:%s',
-        [PHP_EOL, PHP_EOL],
-    $cpu, '%- 26s', '% 6.2f ms');
+    [PHP_EOL, PHP_EOL],
+    $cpu,
+    '%- 26s',
+    '% 6.2f ms'
+);
 
 if (!$config['flags']['memory']) {
     exit(0);
 }
 
-$display($config,
+$display(
+    $config,
     '%sBenchmark Results, Peak Memory:%s',
-        [PHP_EOL, PHP_EOL],
-    $mem, '%- 26s', '% 6d kB');
+    [PHP_EOL, PHP_EOL],
+    $mem,
+    '%- 26s',
+    '% 6d kB'
+);

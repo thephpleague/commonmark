@@ -231,7 +231,8 @@ class Cursor
             $nextFewChars = $this->isMultibyte ?
                 \mb_substr($this->line, $this->currentPosition, $characters, 'UTF-8') :
                 \substr($this->line, $this->currentPosition, $characters),
-            "\t")) {
+            "\t"
+        )) {
             $length = \min($characters, $this->length - $this->currentPosition);
             $this->partiallyConsumedTab = false;
             $this->currentPosition += $length;
