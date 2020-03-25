@@ -25,6 +25,11 @@ final class UrlEncoder
      */
     public static function unescapeAndEncode(string $uri): string
     {
+        // Optimization: if the URL only includes characters we know will be kept as-is, then just return the URL as-is.
+        if (\preg_match('/^[A-Za-z0-9~!@#$&*()\-_=+;:,.\/?]+$/', $uri)) {
+            return $uri;
+        }
+
         $result = '';
 
         /** @var string[] $chars */
