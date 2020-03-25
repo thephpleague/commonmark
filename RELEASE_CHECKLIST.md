@@ -21,7 +21,6 @@
  - [ ] Update the `CommonMarkConverter::VERSION` constant and commit just that one change to that release branch. Make sure tests still pass.
  - [ ] Create a signed tag locally and push it up. Tag should be named `xx.yy.zz`.
  - [ ] Go to Github and add release notes from the relevant `CHANGELOG` section.
- - [ ] Bump constraints in league/commonmark-extras (and other official extensions) and tag a new release of them
  - [ ] Resync project on <https://libraries.io/packagist/league%2Fcommonmark/>
  - [ ] Update release notes and supported branches on Tidelift
  - [ ] ???
