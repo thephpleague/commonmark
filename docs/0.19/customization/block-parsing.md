@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Block Parsing
-redirect_from: /customization/block-parsing/
 ---
 
 Block Parsing

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Inline Rendering
-redirect_from: /customization/inline-rendering/
 ---
 
 Inline Rendering
