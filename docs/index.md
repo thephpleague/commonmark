@@ -30,11 +30,15 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
+## Included Extensions
+
+This project includes [several built-in extensions you can use](/{{ version }}/extensions/) to enable additional features and syntax.
+
 ## Customization
 
 This library allows you to add custom syntax, renderers, and more.  Check out the [Customization](/{{ version }}/customization/overview/) section for more information.
 
-## Integrations & Community Extensions
+## Community Integrations & Extensions
 
 An updated list of pre-built integrations and extensions can be found in the [Related Packages](https://github.com/thephpleague/commonmark#%EF%B8%8F-related-packages) section of the `README`.
 
