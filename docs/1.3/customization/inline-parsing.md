@@ -2,7 +2,7 @@
 layout: default
 title: Inline Parsing
 description: Parsing inline elements with a custom parser
-redirect_from: /0.20/customization/inline-parsing/
+redirect_from: /customization/inline-parsing/
 ---
 
 Inline Parsing
@@ -11,7 +11,7 @@ Inline Parsing
 There are two ways to implement custom inline syntax:
 
  - Inline Parsers (covered here)
- - [Delimiter Processors](/1.0/customization/delimiter-processing/)
+ - [Delimiter Processors](/1.3/customization/delimiter-processing/)
 
 The difference between normal inlines and delimiter-run-based inlines is subtle but important to understand.  In a nutshell, delimiter-run-based inlines:
 
@@ -21,10 +21,10 @@ The difference between normal inlines and delimiter-run-based inlines is subtle 
 An example of this would be emphasis:
 
 ~~~markdown
-This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after. 
+This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after.
 ~~~
 
-If your syntax looks like that, consider using a [delimiter processor](/1.0/customization/delimiter-processing/) instead.  Otherwise, an inline parser is your best bet. 
+If your syntax looks like that, consider using a [delimiter processor](/1.3/customization/delimiter-processing/) instead.  Otherwise, an inline parser is your best bet.
 
 ## Implementing Inline Parsers
 
@@ -43,11 +43,11 @@ This method will be called if both conditions are met:
 
 #### Parameters
 
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/1.0/customization/cursor/) used to parse the current line.
+* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/1.3/customization/cursor/) used to parse the current line.
 
 #### Return value
 
-`parse()` should return `false` if it's unable to handle the current line/character for any reason.  (The [`Cursor`](/1.0/customization/cursor/) state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the character will be added as plain text.
+`parse()` should return `false` if it's unable to handle the current line/character for any reason.  (The [`Cursor`](/1.3/customization/cursor/) state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the character will be added as plain text.
 
 Returning `true` tells the engine that you've successfully parsed the character (and related ones after it).  It is your responsibility to:
 
@@ -126,7 +126,7 @@ class SmilieParser extends AbstractInlineParser
 
         // Advance the cursor past the 2 matched chars since we're able to parse them successfully
         $cursor->advanceBy(2);
-        
+
         // Add the corresponding image
         if ($nextChar === ')') {
             $inlineContext->getContainer()->appendChild(new Image('/img/happy.png'));

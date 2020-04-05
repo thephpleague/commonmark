@@ -3,8 +3,7 @@ layout: default
 title: Event Dispatcher
 description: How to leverage the event dispatcher to hook into the library
 redirect_from:
-  - /0.20/customization/document-processing/
-  - /1.0/customization/document-processing/
+  - /customization/document-processing/
 ---
 
 Event Dispatcher
@@ -72,7 +71,7 @@ This library supports the following default events which you can register listen
 
 ### `League\CommonMark\Event\DocumentParsedEvent`
 
-This event is dispatched once all other processing is done.  This offers extensions the opportunity to inspect and modify the [Abstract Syntax Tree](/1.0/customization/abstract-syntax-tree/) prior to rendering.
+This event is dispatched once all other processing is done.  This offers extensions the opportunity to inspect and modify the [Abstract Syntax Tree](/1.3/customization/abstract-syntax-tree/) prior to rendering.
 
 ## Example
 

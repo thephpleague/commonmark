@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Command Line
-redirect_from: /0.20/command-line/
+redirect_from: /command-line/
 ---
 
 Command Line
@@ -12,7 +12,7 @@ Markdown can be converted at the command line using the `./bin/commonmark` scrip
 ## Usage
 
     ./bin/commonmark [OPTIONS] [FILE]
-    
+
 * `-h`, `--help`: Shows help and usage information
 * `--enable-em`: Disable `<em>` parsing by setting to `0`; enable with `1` (default: `1`)
 * `--enable-strong`: Disable `<strong>` parsing by setting to `0`; enable with `1` (default: `1`)

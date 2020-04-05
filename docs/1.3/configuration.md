@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Configuration
-redirect_from: /0.20/configuration/
+redirect_from: /configuration/
 ---
 
 Configuration
@@ -49,11 +49,7 @@ Here's a list of currently-supported options:
 * `allow_unsafe_links` - Remove risky link and image URLs by setting this to `false` (default: `true`)
 * `max_nesting_level` - The maximum nesting level for blocks (default: infinite). Setting this to a positive integer can help protect against long parse times and/or segfaults if blocks are too deeply-nested. Added in 0.17.
 
-Additional configuration options are available for some of the [available extensions](/1.0/customization/extensions/) - refer to their individual documentation for more details.
-
-The following options have been deprecated.  They will no longer work once 1.0.0 is released:
-
-* `safe` - Prevents rendering of raw HTML if set to `true` (default: `false`)
+Additional configuration options are available for some of the [available extensions](/1.3/customization/extensions/) - refer to their individual documentation for more details.
 
 ## Environment
 
@@ -65,4 +61,4 @@ The `Environment` also exposes three methods for managing the configuration:
 * `mergeConfig(array $config = [])` - Recursively merge the current configuration with the given options
 * `getConfig(string $key, $default = null)` - Returns the config value. For nested configs, use a `/`-separate path; for example: `renderer/soft_break`
 
-[Learn more about customizing the Environment](/1.0/customization/environment/)
+[Learn more about customizing the Environment](/1.3/customization/environment/)

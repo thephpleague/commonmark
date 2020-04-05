@@ -2,7 +2,7 @@
 layout: default
 title: The Environment
 description: Configuring the CommonMark environment with custom options and added functionality
-redirect_from: /0.20/customization/environment/
+redirect_from: /customization/environment/
 ---
 
 The Environment
@@ -32,7 +32,7 @@ You can customize this default `Environment` (or even a new, empty one) using an
 public function mergeConfig(array $config = []);
 ~~~
 
-Merges the given [configuration](/1.0/configuration/) settings into any existing ones.
+Merges the given [configuration](/1.3/configuration/) settings into any existing ones.
 
 ## setConfig()
 
@@ -42,7 +42,7 @@ Merges the given [configuration](/1.0/configuration/) settings into any existing
 public function setConfig(array $config = []);
 ~~~
 
-Completely replaces the previous [configuration](/1.0/configuration/) settings with the new `$config` you provide.
+Completely replaces the previous [configuration](/1.3/configuration/) settings with the new `$config` you provide.
 
 ## addExtension()
 
@@ -52,7 +52,7 @@ Completely replaces the previous [configuration](/1.0/configuration/) settings w
 public function addExtension(ExtensionInterface $extension);
 ~~~
 
-Registers the given [extension](/1.0/customization/extensions/) with the environment.  This is typically how you'd integrate third-party extensions with this library.
+Registers the given [extension](/1.3/customization/extensions/) with the environment.  This is typically how you'd integrate third-party extensions with this library.
 
 ## addBlockParser()
 
@@ -64,7 +64,7 @@ public function addBlockParser(BlockParserInterface $parser, int $priority = 0);
 
 Registers the given `BlockParserInterface` with the environment with the given priority (a higher number will be executed earlier).
 
-See [Block Parsing](/1.0/customization/block-parsing/) for details.
+See [Block Parsing](/1.3/customization/block-parsing/) for details.
 
 ## addBlockRenderer()
 
@@ -76,7 +76,7 @@ public function addBlockRenderer(string $blockClass, BlockRendererInterface $blo
 
 Registers a `BlockRendererInterface` to handle a specific type of block (`$blockClass`)  with the given priority (a higher number will be executed earlier).
 
-See [Block Rendering](/1.0/customization/block-rendering/) for details.
+See [Block Rendering](/1.3/customization/block-rendering/) for details.
 
 ## addInlineParser()
 
@@ -88,7 +88,7 @@ public function addInlineParser(InlineParserInterface $parser, int $priority = 0
 
 Registers the given `InlineParserInterface` with the environment with the given priority (a higher number will be executed earlier).
 
-See [Inline Parsing](/1.0/customization/inline-parsing/) for details.
+See [Inline Parsing](/1.3/customization/inline-parsing/) for details.
 
 ## addInlineRenderer()
 
@@ -101,7 +101,7 @@ public function addInlineRenderer(string $inlineClass, InlineRendererInterface $
 Registers an `InlineRendererInterface` to handle a specific type of inline (`$inlineClass`) with the given priority (a higher number will be executed earlier).
 A single renderer can handle multiple inline classes, but you must register it separately for each type. (The same renderer instance can be re-used if desired.)
 
-See [Inline Rendering](/1.0/customization/inline-rendering/) for details.
+See [Inline Rendering](/1.3/customization/inline-rendering/) for details.
 
 ## addDelimiterProcessor()
 
@@ -113,7 +113,7 @@ public function addDelimiterProcessor(DelimiterProcessorInterface $processor);
 
 Registers the given `DelimiterProcessorInterface` with the environment.
 
-See [Inline Parsing](/1.0/customization/delimiter-processing/) for details.
+See [Inline Parsing](/1.3/customization/delimiter-processing/) for details.
 
 ## addEventListener()
 
@@ -125,7 +125,7 @@ public function addEventListener(string $eventClass, callable $listener, int $pr
 
 Registers the given event listener with the environment.
 
-See [Event Dispatcher](/1.0/customization/event-dispatcher/) for details.
+See [Event Dispatcher](/1.3/customization/event-dispatcher/) for details.
 
 ## Priority
 
