@@ -19,9 +19,9 @@ author:
     twitter_account: colinodell
     website: https://www.colinodell.com
 highlights:
-    description: "The PHP <code>CommonMark</code> parser is a robust, highly-extensible Markdown parser for PHP based on the <a href=\"https://spec.commonmark.org/\">CommonMark spec</a>."
+    description: "The PHP <code>CommonMark</code> parser is a robust, highly-extensible Markdown parser for PHP based on the <a href=\"https://spec.commonmark.org/\">CommonMark</a> and <a href=\"https://github.github.com/gfm/\">Github-Flavored Markdown</a> specifications."
     features:
-        - The only PHP library fully compatible with the CommonMark spec
+        - The only PHP library fully compatible with the CommonMark and Github-Flavored Markdown specs
         - Highly extensible architecture supports custom syntax and other customizations
         - Community extensions and integrations for popular frameworks and CMSes
         - Easy-to-use API
