@@ -340,7 +340,7 @@ class EnvironmentTest extends TestCase
         $this->assertSame($test, $matches[0]);
     }
 
-    public function testInjectablesGetInjected()
+    public function testInjectableBlockParsersGetInjected()
     {
         $environment = new Environment();
 
@@ -349,6 +349,76 @@ class EnvironmentTest extends TestCase
         $parser->expects($this->once())->method('setConfiguration');
 
         $environment->addBlockParser($parser);
+
+        // Trigger initialization
+        $environment->getBlockParsers();
+    }
+
+    public function testInjectableBlockRenderersGetInjected()
+    {
+        $environment = new Environment();
+
+        $renderer = $this->getMockBuilder([BlockRendererInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
+        $renderer->expects($this->once())->method('setEnvironment')->with($environment);
+        $renderer->expects($this->once())->method('setConfiguration');
+
+        $environment->addBlockRenderer('', $renderer);
+
+        // Trigger initialization
+        $environment->getBlockParsers();
+    }
+
+    public function testInjectableInlineParsersGetInjected()
+    {
+        $environment = new Environment();
+
+        $parser = $this->getMockBuilder([InlineParserInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
+        $parser->expects($this->once())->method('setEnvironment')->with($environment);
+        $parser->expects($this->once())->method('setConfiguration');
+
+        $environment->addInlineParser($parser);
+
+        // Trigger initialization
+        $environment->getBlockParsers();
+    }
+
+    public function testInjectableInlineRenderersGetInjected()
+    {
+        $environment = new Environment();
+
+        $renderer = $this->getMockBuilder([InlineRendererInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
+        $renderer->expects($this->once())->method('setEnvironment')->with($environment);
+        $renderer->expects($this->once())->method('setConfiguration');
+
+        $environment->addInlineRenderer('', $renderer);
+
+        // Trigger initialization
+        $environment->getBlockParsers();
+    }
+
+    public function testInjectableDelimiterProcessorsGetInjected()
+    {
+        $environment = new Environment();
+
+        $processor = $this->getMockBuilder([DelimiterProcessorInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
+        $processor->expects($this->once())->method('setEnvironment')->with($environment);
+        $processor->expects($this->once())->method('setConfiguration');
+
+        $environment->addDelimiterProcessor($processor);
+
+        // Trigger initialization
+        $environment->getBlockParsers();
+    }
+
+    public function testInjectableEventListenersGetInjected()
+    {
+        $environment = new Environment();
+
+        $listener = $this->getMockBuilder([EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->setMethods(['__invoke'])->getMock();
+        $listener->expects($this->once())->method('setEnvironment')->with($environment);
+        $listener->expects($this->once())->method('setConfiguration');
+
+        $environment->addEventListener('', $listener);
 
         // Trigger initialization
         $environment->getBlockParsers();
