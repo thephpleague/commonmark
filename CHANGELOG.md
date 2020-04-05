@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed event listeners not having the environment or configuration injected if they implemented the `EnvironmentAwareInterface` or `ConfigurationAwareInterface` (#423)
+
 ## [1.3.2] - 2020-03-25
 
 ### Fixed
