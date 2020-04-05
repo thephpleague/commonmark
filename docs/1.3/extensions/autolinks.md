@@ -1,6 +1,14 @@
-# URL and email autolinking extension for `league/commonmark`
+---
+layout: default
+title: Autolink Extension
+description: The Autolink extension automatically converts URLs in plain text to clickable links
+---
 
-This extension adds [GFM-style autolinking][link-gfm-spec-autolinking] to the [`league/commonmark` Markdown parser for PHP][link-league-commonmark].  It automatically link URLs and email addresses even when the CommonMark `<...>` autolink syntax is not used.
+# Autolink Extension
+
+_(Note: this extension is included by default within [the GFM extension](/1.3/extensions/github-flavored-markdown/))_
+
+The `AutolinkExtension` adds [GFM-style autolinking][link-gfm-spec-autolinking].  It automatically links URLs and email addresses even when the CommonMark `<...>` autolink syntax is not used.
 
 It also provides a parser to autolink `@mentions` to Twitter, Github, or any custom service you wish, though this is disabled by default.
 
@@ -24,7 +32,7 @@ $converter = new CommonMarkConverter([], $environment);
 echo $converter->convertToHtml('I successfully installed the https://github.com/thephpleague/commonmark project with the Autolink extension!');
 ```
 
-## `@mention` Autolinking
+## `@mention`-style Autolinking
 
 This extension also provides functionality to automatically link "mentions" like `@colinodell` to Twitter, Github, or any other site of your choice!
 
@@ -68,6 +76,8 @@ When creating your own, you can provide two parameters to the constructor:
 
  - A URL template where `%s` is replaced with the username (required)
  - A regular expression to parse and validate the username (optional - defaults to `'/^[A-Za-z0-9_]+(?!\w)/'`)
+
+Note that `@mention`-style linking doesn't actually require you to add the extension - just the `InlineParser` of your choice.
 
 [link-league-commonmark]: https://github.com/thephpleague/commonmark
 [link-gfm-spec-autolinking]: https://github.github.com/gfm/#autolinks-extension-

@@ -1,36 +1,39 @@
-CommonMark Table Extension
-==========================
+---
+layout: default
+title: Table Extension
+description: The TableExtension adds the ability to create tables in CommonMark documents
+---
 
-The Table extension adds the ability to create tables in CommonMark documents.
+# Table Extension
 
-Usage
------
+_(Note: this extension is included by default within [the GFM extension](/1.3/extensions/github-flavored-markdown/))_
+
+The `TableExtension` adds the ability to create tables in CommonMark documents.
+
+## Usage
 
 Configure your `Environment` as usual and simply add the `TableExtension` provided by this package:
 
 ```php
-use League\CommonMark\Converter;
-use League\CommonMark\DocParser;
+use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
 use League\CommonMark\Extension\Table\TableExtension;
 
-// Obtain a pre-configured Environment with all the standard CommonMark parsers/renderers ready-to-go
+// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
 
 // Add this extension
 $environment->addExtension(new TableExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new Converter(new DocParser($environment), new HtmlRenderer($environment));
-
-echo $converter->convertToHtml('# Hello World!');
+$converter = new CommonMarkConverter($config, $environment);
+echo $converter->convertToHtml('Some Markdown with a table in it');
 ```
 
-Syntax
-------
+## Syntax
 
-This package is fully compatible with GFM-style tables:
+This package is fully compatible with [GFM-style tables](https://github.github.com/gfm/#tables-extension-):
+
 
 ### Simple
 
@@ -48,7 +51,7 @@ Result:
 <tr>
 <th style="text-align: left">th</th>
 <th style="text-align: center">th(center)</th>
-<th style="text-align: right">th(right<)/th>
+<th style="text-align: right">th(right)/th>
 </tr>
 </thead>
 <tbody>
@@ -70,9 +73,6 @@ Result:
 | cell 2.1 | cell 2.2 | cell 2.3 |
 ```
 
-Credits
--------
+## Credits
 
-- [Martin Hasoň](https://github.com/hason)
-- [Webuni s.r.o.](https://www.webuni.cz)
-- [Colin O'Dell](https://github.com/colinodell)
+The Table functionality was originally built by [Martin Hasoň](https://github.com/hason) and [Webuni s.r.o.](https://www.webuni.cz) before it was merged into the core parser.

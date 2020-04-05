@@ -1,6 +1,12 @@
-# Extension to denote external links for `league/commonmark`
+---
+layout: default
+title: External Links Extension
+description: The ExternalLinksExtension detects external links and adjusts their HTML markup
+---
 
-This extension to the [`league/commonmark` PHP Markdown parser][link-league-commonmark] can detect links to external sites and adjust the markup accordingly:
+# External Links Extension
+
+This extension can detect links to external sites and adjust the markup accordingly:
 
  - Adds a `rel="noopener noreferrer"` attribute
  - Optionally adds any custom HTML classes
@@ -23,7 +29,7 @@ $environment->addExtension(new ExternalLinkExtension());
 // Set your configuration
 $config = [
     'external_link' => [
-        'internal_hosts' => 'www.example.com',
+        'internal_hosts' => 'www.example.com', // Don't forget to set this!
         'open_in_new_window' => true,
         'html_class' => 'external-link',
     ],
@@ -31,7 +37,7 @@ $config = [
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new CommonMarkConverter($config, $environment);
-echo $converter->convertToHtml('I successfully installed the https://github.com/thephpleague/commonmark project with the Autolink extension!');
+echo $converter->convertToHtml('I successfully installed the <https://github.com/thephpleague/commonmark> project!');
 ```
 
 ## Configuration
@@ -42,9 +48,9 @@ This extension supports three configuration options under the `external_link` co
 
 This option defines a whitelist of hosts which are considered non-external and should not receive the external link treatment.
 
-This can be a single host name, like `'example.com'`, which must match exactly.
+This can be a single host name, like `'example.com'`, which must match **exactly**.
 
-If you need to match subdomains, use a regular expression like `'/(^|\.)example\.com$/'`.  Note that you must use `/` characters to delimit your regex.
+Wildcard matching is also supported using regular expression like `'/(^|\.)example\.com$/'`.  Note that you must use `/` characters to delimit your regex.
 
 This configuration option also accepts an array of multiple strings and/or regexes:
 
@@ -68,9 +74,14 @@ This option allows you to provide a `string` containing one or more HTML classes
 
 ## Advanced Rendering
 
-When an external link is detected, the `ExternalLinkProcessor` will set the `external` data option on the `Link` node to either `true` or `false`.  You can therefore create a [custom link renderer](https://commonmark.thephpleague.com/customization/inline-rendering/) which checks this value and behaves accordingly:
+When an external link is detected, the `ExternalLinkProcessor` will set the `external` data option on the `Link` node to either `true` or `false`.  You can therefore create a [custom link renderer](/1.3/customization/inline-rendering/) which checks this value and behaves accordingly:
 
 ```php
+use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\HtmlElement;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 class MyCustomLinkRenderer implements InlineRendererInterface
 {
 
@@ -96,5 +107,3 @@ class MyCustomLinkRenderer implements InlineRendererInterface
     }
 }
 ```
-
-[link-league-commonmark]: https://github.com/thephpleague/commonmark

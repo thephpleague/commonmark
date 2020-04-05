@@ -1,6 +1,14 @@
-# GFM-style task list extension for `league/commonmark`
+---
+layout: default
+title: Task List Extension
+description: The TaskListExtension adds support for GFM-style task lists
+---
 
-This extension adds [GFM-style task list items][link-gfm-spec-task-lists] to the [`league/commonmark` Markdown parser for PHP][link-league-commonmark].
+# Task List Extension
+
+_(Note: this extension is included by default within [the GFM extension](/1.3/extensions/github-flavored-markdown/))_
+
+This extension adds support for [GFM-style task lists](https://github.github.com/gfm/#task-list-items-extension-).
 
 ## Usage
 
@@ -29,5 +37,4 @@ EOT;
 echo $converter->convertToHtml($markdown);
 ```
 
-[link-league-commonmark]: https://github.com/thephpleague/commonmark
-[link-gfm-spec-task-lists]: https://github.github.com/gfm/#task-list-items-extension-
+Please note that this extension doesn't provide any JavaScript functionality to handle people checking and unchecking boxes - you'll need to implement that yourself if needed.

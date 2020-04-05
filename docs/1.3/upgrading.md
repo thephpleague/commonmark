@@ -20,4 +20,4 @@ If you were previously using any of the `league/commonmark-ext*` libraries:
      - (In most cases, simply search your code for `League\CommonMark\Ext\` and replace it with `League\CommonMark\Extension\`)
  - Remove those `league/commonmark-ext*` dependencies from Composer
 
-Additional details can also be found in [Colin O'Dell's blog post](https://www.colinodell.com/blog/202002/league-commonmark-130-adds-full-gfm-support).
+See the [Github-Flavored Markdown extension](/1.3/extensions/github-flavored-markdown/) documentation for more information on using this extension.  Additional details can also be found in [Colin O'Dell's blog post](https://www.colinodell.com/blog/202002/league-commonmark-130-adds-full-gfm-support).

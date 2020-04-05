@@ -1,6 +1,12 @@
-# Smart Punctuation for `league/commonmark`
+---
+layout: default
+title: Smart Punctuation Extension
+description: The SmartPunctExtension intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents
+---
 
-Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents.  For use with the [`league/commonmark` Markdown parser for PHP](https://github.com/thephpleague/commonmark).
+# Smart Punctuation Extension
+
+The `SmartPunctExtension` Intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents.
 
 For example, this Markdown...
 
@@ -43,5 +49,3 @@ $config = [
 $converter = new CommonMarkConverter($config, $environment);
 echo $converter->convertToHtml('# Hello World!');
 ```
-
-[link-league-commonmark]: https://github.com/thephpleague/commonmark
