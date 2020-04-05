@@ -2,7 +2,7 @@
 layout: default
 title: Abstract Syntax Tree
 description: Using the Abstract Syntax Tree (AST) to manipulate the parsed content
-redirect_from: /0.20/customization/abstract-syntax-tree/
+redirect_from: /customization/abstract-syntax-tree/
 ---
 
 Abstract Syntax Tree
@@ -51,4 +51,4 @@ The following methods can be used to modify the AST:
 
 ## Document Processor
 
-The best way to manipulate the AST is by implementing a custom [Document Processor](/1.0/customization/document-processing/).
+The best way to manipulate the AST is by implementing a custom [Document Processor](/1.3/customization/document-processing/).

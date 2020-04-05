@@ -3,7 +3,6 @@ layout: default
 title: Security
 description: How to configure league/commonmark against possible security issues when handling untrusted user input
 redirect_from:
- - /0.20/security/
  - /security/
 ---
 
@@ -47,7 +46,7 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 
 **Failing to set this option could make your site vulnerable to cross-site scripting (XSS) attacks!**
 
-See the [configuration](/1.0/configuration/) section for more information.
+See the [configuration](/1.3/configuration/) section for more information.
 
 ## Unsafe Links
 
@@ -88,4 +87,4 @@ echo $converter->convertToHtml($markdown);
 // </blockquote>
 ~~~
 
-See the [configuration](/1.0/configuration/) section for more information.
+See the [configuration](/1.3/configuration/) section for more information.

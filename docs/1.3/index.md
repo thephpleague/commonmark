@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Overview
-redirect_from: /0.20/
 ---
 
 <img class="banner" src="/images/commonmark-banner.png" alt="CommonMark for PHP" />
@@ -26,7 +25,7 @@ This library can be installed via Composer:
 composer require league/commonmark
 ~~~
 
-See the [installation](/1.0/installation/) section for more details.
+See the [installation](/1.3/installation/) section for more details.
 
 ## Basic Usage
 
@@ -44,4 +43,4 @@ echo $converter->convertToHtml('# Hello World!');
 ~~~
 
 <i class="fa fa-exclamation-triangle"></i>
-**Important:** See the [basic usage](/1.0/basic-usage/) and [security](/1.0/security/) sections for important details.
+**Important:** See the [basic usage](/1.3/basic-usage/) and [security](/1.3/security/) sections for important details.

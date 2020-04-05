@@ -2,7 +2,7 @@
 layout: default
 title: Cursor
 description: Using the Cursor object to parse Markdown content
-redirect_from: /0.20/customization/cursor/
+redirect_from: /customization/cursor/
 ---
 
 Cursor
@@ -24,7 +24,7 @@ use League\CommonMark\Cursor;
 $cursor = new Cursor('Hello World!');
 ```
 
-Or, if you're creating a custom [block parser](/1.0/customization/block-parsing/) or [inline parser](/1.0/customization/inline-parsing/), a pre-configured `Cursor` will be provided to you with (with the `Cursor` already set to the current `position` trying to be parsed).
+Or, if you're creating a custom [block parser](/1.3/customization/block-parsing/) or [inline parser](/1.3/customization/inline-parsing/), a pre-configured `Cursor` will be provided to you with (with the `Cursor` already set to the current `position` trying to be parsed).
 
 ## Methods
 

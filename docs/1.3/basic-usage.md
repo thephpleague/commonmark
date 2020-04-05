@@ -2,13 +2,13 @@
 layout: default
 title: Basic Usage
 description: Basic usage of the CommonMark parser
-redirect_from: /0.20/basic-usage/
+redirect_from: /basic-usage/
 ---
 
 Basic Usage
 ==============
 
-The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
+The `CommonMarkConverter` class provides a simple wrapper for converting Markdown to HTML:
 
 ~~~php
 <?php
@@ -21,8 +21,21 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ~~~
 
+Or if you want Github-Flavored Markdown:
+
+```php
+<?php
+
+use League\CommonMark\GithubFlavoredMarkdownConverter;
+
+$converter = new GithubFlavoredMarkdownConverter();
+echo $converter->convertToHtml('# Hello World!');
+
+// <h1>Hello World!</h1>
+```
+
 <i class="fa fa-exclamation-triangle"></i>
-**Important:** See the [security](/1.0/security/) section for important details on avoiding security misconfigurations.
+**Important:** See the [security](/1.3/security/) section for important details on avoiding security misconfigurations.
 
 The actual conversion process has three steps:
 
@@ -51,7 +64,7 @@ echo $htmlRenderer->renderBlock($document);
 // <h1>Hello World!</h1>
 ~~~
 
-[Additional customization](/1.0/customization/overview/) is also possible.
+[Additional customization](/1.3/customization/overview/) is also possible, and we have many handy [extensions](/1.3/extensions/) to enable additional syntax and features.
 
 ## Supported Character Encodings
 
