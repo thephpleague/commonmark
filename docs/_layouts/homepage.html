@@ -19,6 +19,8 @@
     <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
     <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?{{ site.github.build_revision }}">
     <link rel="stylesheet" href="/homepage.css?{{ site.github.build_revision }}">
+    <link rel="stylesheet" href="/support.css?{{ site.github.build_revision }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <script async src="https://www.googletagmanager.com/gtag/js?id={{  site.data.project.google_analytics_tracking_id }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -82,11 +84,42 @@
         <p><a href="https://github.com/thephpleague/{{ site.data.project.repository }}">{{ site.data.project.title }}</a> was created by <a href="{{ site.data.project.author.website }}">{{ site.data.project.author.name }}</a>. Find him on Twitter at <a href="https://twitter.com/{{ site.data.project.author.twitter_account }}">@{{ site.data.project.author.twitter_account }}</a>.</p>
     </div>
   </div>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)" style="">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="support-button support-button-sponsor">
+                    <i class="fas fa-heart fa-fw"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="support-button support-button-donate">
+                    <i class="fas fa-donate fa-fw"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </aside>
 </main>
 
 <footer>
     <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
     <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </body>
 </html>
