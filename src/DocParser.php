@@ -20,6 +20,7 @@ use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Element\StringContainerInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Event\DocumentPreParsedEvent;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 
 final class DocParser implements DocParserInterface
@@ -79,6 +80,9 @@ final class DocParser implements DocParserInterface
     public function parse(string $input): Document
     {
         $document = new Document();
+
+        $this->environment->dispatch(new DocumentPreParsedEvent($document));
+
         $context = new Context($document, $this->environment);
 
         $this->assertValidUTF8($input);

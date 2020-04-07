@@ -67,6 +67,10 @@ Listeners may call any method on the event to get more information about the eve
 
 This library supports the following default events which you can register listeners for:
 
+### `League\CommonMark\Event\DocumentPreParsedEvent`
+
+This event is dispatched just before any processing is done. It can be used to pre-populate reference map of a document before any processing is performed.
+
 ### `League\CommonMark\Event\DocumentParsedEvent`
 
 This event is dispatched once all other processing is done.  This offers extensions the opportunity to inspect and modify the [Abstract Syntax Tree](/1.4/customization/abstract-syntax-tree/) prior to rendering.
