@@ -1,4 +1,39 @@
 version:
+    '1.4':
+        Getting Started:
+            'Overview': '/1.4/'
+            'Installation': '/1.4/installation/'
+            'Upgrading from 0.19': '/1.4/upgrading/'
+            'Changelog': '/1.4/changelog/'
+        Usage:
+            'Basic Usage': '/1.4/basic-usage/'
+            'Configuration': '/1.4/configuration/'
+            'Security': '/1.4/security/'
+            'Command Line': '/1.4/command-line/'
+        Extensions:
+            'Overview': '/1.4/extensions/overview/'
+            'CommonMark': '/1.4/extensions/commonmark/'
+            'Github-Flavored Markdown': '/1.4/extensions/github-flavored-markdown/'
+            'Autolinks': '/1.4/extensions/autolinks/'
+            'Disallowed Raw HTML': '/1.4/extensions/disallowed-raw-html/'
+            'External Links': '/1.4/extensions/external-links/'
+            'Inlines Only': '/1.4/extensions/inlines-only/'
+            'Smart Punctuation': '/1.4/extensions/smart-punctuation/'
+            'Strikethrough': '/1.4/extensions/strikethrough/'
+            'Tables': '/1.4/extensions/tables/'
+            'Task Lists': '/1.4/extensions/task-lists/'
+        Customization:
+            'Overview': '/1.4/customization/overview/'
+            'Environment': '/1.4/customization/environment/'
+            'Extensions': '/1.4/customization/extensions/'
+            'Event Dispatcher': '/1.4/customization/event-dispatcher/'
+            'Cursor': '/1.4/customization/cursor/'
+            'Block Parsing': '/1.4/customization/block-parsing/'
+            'Inline Parsing': '/1.4/customization/inline-parsing/'
+            'Delimiter Processing': '/1.4/customization/delimiter-processing/'
+            'Abstract Syntax Tree': '/1.4/customization/abstract-syntax-tree/'
+            'Block Rendering': '/1.4/customization/block-rendering/'
+            'Inline Rendering': '/1.4/customization/inline-rendering/'
     '1.3':
         Getting Started:
             'Overview': '/1.3/'
