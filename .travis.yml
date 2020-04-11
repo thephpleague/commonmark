@@ -9,13 +9,13 @@ php:
   - 7.4
 env:
   - 'PHPUNIT=true'
-  
+
 # Cache Composer deps
 cache:
   directories:
     - $HOME/.composer/cache
 
-matrix:
+jobs:
   include:
     - name: 'PHP: 7.1; Lowest Stable Dependencies PHPUnit'
       php: 7.1
@@ -31,6 +31,25 @@ matrix:
       env: 'RIPS=true'
       if: type != pull_request
       sudo: true
+    - name: docs
+      language: ruby
+      rvm: 2.7
+      cache: bundler
+      before_install:
+        - gem update bundler
+      install:
+        - cd docs && bundle install && cd ..
+      script:
+        - cd docs && bundle exec jekyll build && cd ..
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: "$GITHUB_TOKEN"
+        local_dir: docs/_site
+        on:
+          branch: master
+
+
   allow_failures:
     - php: nightly
       env: 'COMPOSER_FLAGS="--ignore-platform-reqs" PHPUNIT=true'
