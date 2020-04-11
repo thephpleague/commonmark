@@ -44,7 +44,7 @@ jobs:
       deploy:
         provider: pages
         skip_cleanup: true
-        github_token: "$GITHUB_TOKEN"
+        github_token: "$JEKYLL_GITHUB_TOKEN"
         local_dir: docs/_site
         on:
           branch: master
