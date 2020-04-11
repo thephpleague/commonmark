@@ -1,9 +1,10 @@
 {% assign version = page.url | remove_first: "/" | split: "/" | first %}
 {% assign upgrading = false %}
 {% if version == '' or version == 'releases' %}
-    {% assign version = site.data.project.releases.current.version %}
+    {% assign version = site.data.project.default_version %}
     {% assign upgrading = true %}
 {% endif %}
+{% capture version_type %}{{ version|get_version_type }}{% endcapture %}
 {% capture version_home %}/{{ version }}/{% endcapture %}
 <!DOCTYPE html>
 <html>
@@ -123,16 +124,16 @@
         {% endif %}
     </menu>
     <article>
-    {% if version == site.data.project.releases.next.version %}
+    {% if version_type == 'next' %}
         <p class="message-notice">This is the documentation for the upcoming <code>version {{ version }}</code>. This is a work in progress</p>
     {% endif %}
 
-    {% if version == site.data.project.releases.previous.version %}
-        <p class="message-notice">This is the documentation for <code>version {{ version }}</code>. Please consider upgrading your code to <a href="{{ site.data.project.releases.current.documentation_link }}">the latest stable version</a></p>
+    {% if version_type == 'previous' %}
+        <p class="message-notice">This is the documentation for <code>version {{ version }}</code>. Please consider upgrading your code to <a href="{{ site.data.project.default_version|get_documentation_link }}">the latest stable version</a></p>
     {% endif %}
 
-    {% if version == site.data.project.releases.legacy.version %}
-        <p class="message-notice">This is the documentation for the unsupported <code>version {{ version }}</code>. Please consider upgrading your code to <a href="{{ site.data.project.releases.current.documentation_link }}">the latest stable version</a></p>
+    {% if version_type == 'legacy' %}
+        <p class="message-warning">This is the documentation for the unsupported <code>version {{ version }}</code>. Please consider upgrading your code to <a href="{{ site.data.project.default_version|get_documentation_link }}">the latest stable version</a></p>
     {% endif %}
 
         {{ content }}

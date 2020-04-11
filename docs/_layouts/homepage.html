@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ site.data.project.description }}">
-    <meta name="docsearch:version" content="{{ site.data.project.releases.current.version }}">
+    <meta name="docsearch:version" content="{{ site.data.project.default_version }}">
     <meta name="theme-color" content="#19232D">
     <title>{{ site.data.project.site_title }} - {{ site.data.project.tagline }}</title>
     <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
@@ -38,7 +38,7 @@
       <p class="composer"><span>{{ site.data.project.composer }}</span></p>
       <ul class="hot-links clearfix">
         <li class="source"><a href="//github.com/thephpleague/{{ site.data.project.repository }}">source code</a></li>
-        <li class="documentation"><a href="{{ site.data.project.releases.current.documentation_link}}">documentation</a></li>
+        <li class="documentation"><a href="{{ site.data.project.default_version|get_documentation_link }}">documentation</a></li>
       </ul>
       <p class="footnote">{{ site.data.project.support }}</p>
     </div>

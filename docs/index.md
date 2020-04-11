@@ -2,7 +2,7 @@
 layout: homepage
 ---
 
-{% assign version = site.data.project.releases.current.version %}
+{% assign version = site.data.project.default_version %}
 
 # Features
 

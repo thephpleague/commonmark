@@ -1,4 +1,5 @@
 ---
 permalink: pretty
 plugins:
+  - jekyll-github-metadata
   - jekyll-redirect-from
