@@ -2,9 +2,11 @@
 # https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
 
 # Ignore all test and documentation with "export-ignore".
+/.editorconfig        export-ignore
 /.gitattributes       export-ignore
 /.github              export-ignore
 /.gitignore           export-ignore
+/.nojekyll            export-ignore
 /.ripstech            export-ignore
 /.scrutinizer.yml     export-ignore
 /.styleci.yml         export-ignore
