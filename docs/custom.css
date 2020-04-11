@@ -2,6 +2,10 @@ html {
     background:#f2f7fc;
 }
 
+body {
+    min-width: 460px;
+}
+
 blockquote {
     border-left: 4px solid #ccc;
     font-style:italic;
@@ -282,19 +286,27 @@ table th {
     background: #1672ce;
 }
 
+
 header .logo .name {
-    font-size: 38px;
+    font-size: 2rem;
+    line-height: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    header .logo .name {
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    header .logo .name {
+        font-size: 3rem;
+    }
 }
 
 header .logo em {
     color: #777;
     font-style: normal;
-}
-
-@media screen and (max-width: 400px) {
-    header .title {
-        display: none;
-    }
 }
 
 @media screen and (max-width: 549px) {
@@ -304,6 +316,10 @@ header .logo em {
 
     menu {
         text-align: center;
+    }
+
+    header .logo {
+        text-align: left;
     }
 }
 
