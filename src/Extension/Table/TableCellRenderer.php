@@ -30,7 +30,7 @@ final class TableCellRenderer implements BlockRendererInterface
 
         $attrs = $block->getData('attributes', []);
 
-        if ($block->align) {
+        if ($block->align !== null) {
             $attrs['align'] = $block->align;
         }
 
