@@ -21,7 +21,7 @@ final class TableRendererTest extends TestCase
 {
     public function testRenderWithTable()
     {
-        $tableRow = new Table(function(){});
+        $tableRow = new Table(function () {});
         $tableRow->data['attributes'] = ['class' => 'striped'];
 
         $elementRenderer = $this->createMock(ElementRendererInterface::class);
@@ -29,7 +29,7 @@ final class TableRendererTest extends TestCase
 
         $renderer = new TableRenderer();
 
-        $this->assertSame('<table class="striped">contents</table>', (string)$renderer->render($tableRow, $elementRenderer));
+        $this->assertSame('<table class="striped">contents</table>', (string) $renderer->render($tableRow, $elementRenderer));
     }
 
     public function testRenderWithWrongType()

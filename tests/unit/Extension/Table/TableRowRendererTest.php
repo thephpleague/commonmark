@@ -29,7 +29,7 @@ final class TableRowRendererTest extends TestCase
 
         $renderer = new TableRowRenderer();
 
-        $this->assertSame('<tr class="foo">contents</tr>', (string)$renderer->render($tableRow, $elementRenderer));
+        $this->assertSame('<tr class="foo">contents</tr>', (string) $renderer->render($tableRow, $elementRenderer));
     }
 
     public function testRenderWithWrongType()

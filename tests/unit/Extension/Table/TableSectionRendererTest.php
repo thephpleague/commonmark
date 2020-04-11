@@ -31,7 +31,7 @@ final class TableSectionRendererTest extends TestCase
 
         $renderer = new TableSectionRenderer();
 
-        $this->assertSame('<tbody class="foo">contents</tbody>', (string)$renderer->render($tableSection, $elementRenderer));
+        $this->assertSame('<tbody class="foo">contents</tbody>', (string) $renderer->render($tableSection, $elementRenderer));
     }
 
     public function testRenderWithEmptyTableSection()
@@ -42,7 +42,7 @@ final class TableSectionRendererTest extends TestCase
 
         $renderer = new TableSectionRenderer();
 
-        $this->assertSame('', (string)$renderer->render($tableSection, $elementRenderer));
+        $this->assertSame('', (string) $renderer->render($tableSection, $elementRenderer));
     }
 
     public function testRenderWithWrongType()

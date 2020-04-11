@@ -29,7 +29,7 @@ final class TableCellRendererTest extends TestCase
 
         $renderer = new TableCellRenderer();
 
-        $this->assertSame('<td class="foo">contents</td>', (string)$renderer->render($tableCell, $elementRenderer));
+        $this->assertSame('<td class="foo">contents</td>', (string) $renderer->render($tableCell, $elementRenderer));
     }
 
     public function testRenderWithTableCellHavingAlignment()
@@ -42,7 +42,7 @@ final class TableCellRendererTest extends TestCase
 
         $renderer = new TableCellRenderer();
 
-        $this->assertSame('<td class="foo" align="center">contents</td>', (string)$renderer->render($tableCell, $elementRenderer));
+        $this->assertSame('<td class="foo" align="center">contents</td>', (string) $renderer->render($tableCell, $elementRenderer));
     }
 
     public function testRenderWithWrongType()
