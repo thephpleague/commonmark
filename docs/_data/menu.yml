@@ -17,6 +17,7 @@ version:
             'Autolinks': '/1.4/extensions/autolinks/'
             'Disallowed Raw HTML': '/1.4/extensions/disallowed-raw-html/'
             'External Links': '/1.4/extensions/external-links/'
+            'Heading Permalinks': '/1.4/extensions/heading-permalinks/'
             'Inlines Only': '/1.4/extensions/inlines-only/'
             'Smart Punctuation': '/1.4/extensions/smart-punctuation/'
             'Strikethrough': '/1.4/extensions/strikethrough/'

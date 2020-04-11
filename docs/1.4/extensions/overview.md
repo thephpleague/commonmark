@@ -71,6 +71,7 @@ These extensions are not part of GFM, but can be useful in many cases:
 | Extension | Purpose | Documentation |
 | --------- | ------- | ------------- |
 | `ExternalLinkExtension` | Tags external links with additional markup | [Documentation](/1.4/extensions/external-links/) |
+| `HeadingPermalinkExtension` | Makes heading elements linkable | [Documentation](/1.4/extensions/heading-permalinks/) |
 | `InlinesOnlyExtension` | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | [Documentation](/1.4/extensions/inlines-only/) |
 | `SmartPunctExtension` | Intelligently converts ASCII quotes, dashes, and ellipses to their fancy Unicode equivalents | [Documentation](/1.4/extensions/smart-punctuation/) |
 
