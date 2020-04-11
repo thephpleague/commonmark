@@ -35,6 +35,7 @@ jobs:
       language: ruby
       rvm: 2.7
       cache: bundler
+      env: 'PHPUNIT=false'
       before_install:
         - gem update bundler
       install:
