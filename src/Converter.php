@@ -5,9 +5,6 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -22,14 +19,14 @@ class Converter implements ConverterInterface
     /**
      * The document parser instance.
      *
-     * @var \League\CommonMark\DocParserInterface
+     * @var DocParserInterface
      */
     protected $docParser;
 
     /**
      * The html renderer instance.
      *
-     * @var \League\CommonMark\ElementRendererInterface
+     * @var ElementRendererInterface
      */
     protected $htmlRenderer;
 
@@ -38,9 +35,13 @@ class Converter implements ConverterInterface
      *
      * @param DocParserInterface       $docParser
      * @param ElementRendererInterface $htmlRenderer
+     *
+     * @deprecated Instantiating a Converter class with a DocParserInterface and ElementRendererInterface is deprecated since league/commonmark 1.4. In 2.0, this constructor will require a configuration array and EnvironmentInterface.
      */
     public function __construct(DocParserInterface $docParser, ElementRendererInterface $htmlRenderer)
     {
+        @trigger_error('Instantiating a "Converter" class with a DocParserInterface and ElementRendererInterface is deprecated since league/commonmark 1.4. In 2.0, this constructor will require a configuration array and EnvironmentInterface.', E_USER_DEPRECATED);
+
         $this->docParser = $docParser;
         $this->htmlRenderer = $htmlRenderer;
     }

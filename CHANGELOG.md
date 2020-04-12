@@ -26,6 +26,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `containsKey()`
    - `replaceWith()`
    - `removeGaps()`
+ - Instantiating the `Converter` by passing a `DocParserInterface` and `ElementRendererInterface` into the constructor is deprecated
 
 ## [1.3.3] - 2020-04-05
 

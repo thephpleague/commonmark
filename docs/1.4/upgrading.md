@@ -32,3 +32,7 @@ This class has several unused methods, or methods with an existing alternative:
 | `containsKey($key)` | `isset($collection[$key])`                           |
 | `replaceWith()`     | (none provided)                                      |
 | `removeGaps()`      | (none provided)                                      |
+
+### `Converter` constructor
+
+Instantiating the `Converter` by passing a `DocParserInterface` and `ElementRendererInterface` into the constructor is deprecated. You can keep doing this for now, but in 2.0 we'll be changing the constructor instead accept a configuration array and `EnvironmentInterface`, just like `CommonMarkConverter` does today.

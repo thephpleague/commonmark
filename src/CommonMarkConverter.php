@@ -47,7 +47,8 @@ class CommonMarkConverter extends Converter
 
         $this->environment = $environment;
 
-        parent::__construct(new DocParser($environment), new HtmlRenderer($environment));
+        $this->docParser = new DocParser($environment);
+        $this->htmlRenderer = new HtmlRenderer($environment);
     }
 
     /**
