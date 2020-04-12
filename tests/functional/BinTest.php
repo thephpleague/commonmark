@@ -17,6 +17,8 @@ namespace League\CommonMark\Tests\Functional;
 use League\CommonMark\CommonMarkConverter;
 use mikehaertl\shellcommand\Command;
 
+@trigger_error(sprintf('The "%s" class is deprecated since league/commonmark 1.4.', BinTest::class), E_USER_DEPRECATED);
+
 /**
  * @deprecated
  */

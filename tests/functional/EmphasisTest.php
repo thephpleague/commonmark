@@ -14,6 +14,8 @@
 
 namespace League\CommonMark\Tests\Functional;
 
+@trigger_error(sprintf('The "%s" class is deprecated since league/commonmark 1.4.', EmphasisTest::class), E_USER_DEPRECATED);
+
 /**
  * @deprecated
  */

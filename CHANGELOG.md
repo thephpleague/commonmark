@@ -15,6 +15,17 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ## Deprecated
 
  - The `bin/commonmark` script has been deprecated
+ - The following methods of `ArrayCollection` have been deprecated:
+   - `add()`
+   - `set()`
+   - `get()`
+   - `remove()`
+   - `isEmpty()`
+   - `contains()`
+   - `indexOf()`
+   - `containsKey()`
+   - `replaceWith()`
+   - `removeGaps()`
 
 ## [1.3.3] - 2020-04-05
 

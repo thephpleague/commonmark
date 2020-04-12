@@ -15,3 +15,20 @@ Several things have been deprecated in 1.4 - they'll continue to work, but consi
 ### `bin/console` command
 
 This command has been buggy to test and is relatively unpopular, so this will be removed in 2.0. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.
+
+### `ArrayCollection` methods
+
+This class has several unused methods, or methods with an existing alternative:
+
+| Method Name         | Alternative                                          |
+| ------------------- | ---------------------------------------------------- |
+| `add($value)`       | `$collection[] = $value`                             |
+| `set($key, $value)` | `$collection[$key] = $value`                         |
+| `get($key)`         | `$collection[$key]`                                  |
+| `remove($key)`      | `unset($collection[$key])`                           |
+| `isEmpty()`         | `count($collection) === 0`                           |
+| `contains($value)`  | `in_array($value, $collection->toArray(), true)`     |
+| `indexOf($value)`   | `array_search($value, $collection->toArray(), true)` |
+| `containsKey($key)` | `isset($collection[$key])`                           |
+| `replaceWith()`     | (none provided)                                      |
+| `removeGaps()`      | (none provided)                                      |
