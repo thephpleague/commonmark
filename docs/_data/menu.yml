@@ -3,7 +3,7 @@ version:
         Getting Started:
             'Overview': '/1.4/'
             'Installation': '/1.4/installation/'
-            'Upgrading from 0.19': '/1.4/upgrading/'
+            'Upgrading from 1.3': '/1.4/upgrading/'
             'Changelog': '/1.4/changelog/'
         Usage:
             'Basic Usage': '/1.4/basic-usage/'
@@ -39,7 +39,7 @@ version:
         Getting Started:
             'Overview': '/1.3/'
             'Installation': '/1.3/installation/'
-            'Upgrading from 0.19': '/1.3/upgrading/'
+            'Upgrading from 1.0': '/1.3/upgrading/'
             'Changelog': '/1.3/changelog/'
         Usage:
             'Basic Usage': '/1.3/basic-usage/'
@@ -118,6 +118,7 @@ version:
 upgrading:
     Upgrading Guide:
         Release Notes: '/releases/'
+        From 1.3 to 1.4: '/1.4/upgrading'
         From 1.x to 1.3: '/1.3/upgrading'
         From 0.19 to 1.0: '/1.0/upgrading'
         From 0.18 to 0.19: '/0.19/upgrading'
