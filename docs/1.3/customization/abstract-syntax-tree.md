@@ -28,6 +28,9 @@ If you'd like to iterate through all the nodes, use the `walker()` method to obt
 ~~~php
 <?php
 
+use League\CommonMark\Node\NodeWalker;
+
+/** @var NodeWalker $walker */
 $walker = $document->walker();
 while ($event = $walker->next()) {
     echo 'I am ' . ($event->isEntering() ? 'entering' : 'leaving') . ' a ' . get_class($event->getNode()) . ' node' . "\n";

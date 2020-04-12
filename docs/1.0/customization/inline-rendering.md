@@ -38,6 +38,8 @@ When registering your render, you must tell the `Environment` which inline eleme
 ~~~php
 <?php
 
+use League\CommonMark\Environment;
+
 $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the inline class type that should use our renderer
@@ -51,6 +53,13 @@ Here's a custom renderer which puts a special class on links to external sites:
 
 ~~~php
 <?php
+
+use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Environment;
+use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\HtmlElement;
 
 class MyCustomLinkRenderer implements InlineRendererInterface
 {
@@ -89,7 +98,7 @@ class MyCustomLinkRenderer implements InlineRendererInterface
 }
 
 $environment = Environment::createCommonMarkEnvironment();
-$environment->addInlineRenderer('League\CommonMark\Inline\Element\Link', new MyCustomLinkRenderer());
+$environment->addInlineRenderer(Link::class, new MyCustomLinkRenderer());
 ~~~
 
 ## Tips

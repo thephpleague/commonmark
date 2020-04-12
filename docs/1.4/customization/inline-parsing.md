@@ -63,13 +63,18 @@ Let's say you wanted to autolink Twitter handles without using the link syntax. 
 ~~~php
 <?php
 
-class TwitterHandleParser extends AbstractInlineParser
+use League\CommonMark\Environment;
+use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Inline\Parser\InlineParserInterface;
+use League\CommonMark\InlineParserContext;
+
+class TwitterHandleParser implements InlineParserInterface
 {
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['@'];
     }
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         // The @ symbol must not have any other characters immediately prior
@@ -106,14 +111,19 @@ Let's say you want to automatically convert smilies (or "frownies") to emoticon 
 ~~~php
 <?php
 
-class SmilieParser extends AbstractInlineParser
+use League\CommonMark\Environment;
+use League\CommonMark\Inline\Element\Image;
+use League\CommonMark\Inline\Parser\InlineParserInterface;
+use League\CommonMark\InlineParserContext;
+
+class SmilieParser implements InlineParserInterface
 {
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return [':'];
     }
 
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 

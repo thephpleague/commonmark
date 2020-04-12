@@ -56,11 +56,14 @@ When registering your renderer, you must tell the `Environment` which block elem
 ~~~php
 <?php
 
+use League\CommonMark\Block\Element\FencedCode;
+use League\CommonMark\Environment;
+
 $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the block class type that should use our renderer
 // Second param - instance of the block renderer
-$environment->addBlockRenderer(League\CommonMark\Block\Element\FencedCode::class, new MyCustomCodeRenderer());
+$environment->addBlockRenderer(FencedCode::class, new MyCustomCodeRenderer());
 ~~~
 
 A single renderer could even be used for multiple block types:
@@ -68,12 +71,16 @@ A single renderer could even be used for multiple block types:
 ~~~php
 <?php
 
+use League\CommonMark\Block\Element\FencedCode;
+use League\CommonMark\Block\Element\IndentedCode;
+use League\CommonMark\Environment;
+
 $environment = Environment::createCommonMarkEnvironment();
 
 $myRenderer = new MyCustomCodeRenderer();
 
-$environment->addBlockRenderer(League\CommonMark\Block\Element\FencedCode::class, $myRenderer, 10);
-$environment->addBlockRenderer(League\CommonMark\Block\Element\IndentedCode::class, $myRenderer, 20);
+$environment->addBlockRenderer(FencedCode::class, $myRenderer, 10);
+$environment->addBlockRenderer(IndentedCode::class, $myRenderer, 20);
 ~~~
 
 Multiple renderers can be added per element type - when this happens, we use the result from the highest-priority renderer that returns a non-`null` result.
@@ -85,9 +92,15 @@ Here's a custom renderer which renders thematic breaks as text (instead of `<hr>
 ~~~php
 <?php
 
+use League\CommonMark\Environment;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Util\HtmlElement;
+
 class TextDividerRenderer implements BlockRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         return new HtmlElement('pre', ['class' => 'divider'], '==============================');
     }
