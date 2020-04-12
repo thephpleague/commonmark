@@ -4,6 +4,30 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## Added
+
+ - Added new [Heading Permalink extension](https://commonmark.thephpleague.com/extensions/heading-permalinks/) (#420)
+
+## Fixed
+
+ - Fixed loose comparison when checking for table alignment
+
+## Deprecated
+
+ - The `bin/commonmark` script has been deprecated
+ - The following methods of `ArrayCollection` have been deprecated:
+   - `add()`
+   - `set()`
+   - `get()`
+   - `remove()`
+   - `isEmpty()`
+   - `contains()`
+   - `indexOf()`
+   - `containsKey()`
+   - `replaceWith()`
+   - `removeGaps()`
+ - Instantiating the `Converter` by passing a `DocParserInterface` and `ElementRendererInterface` into the constructor is deprecated
+
 ## [1.3.3] - 2020-04-05
 
 ### Fixed

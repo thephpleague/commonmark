@@ -2,6 +2,7 @@
 layout: default
 title: Heading Permalink Extension
 description: The HeadingPermalinkExtension makes all header elements linkable
+redirect_from: /extensions/heading-permalinks/
 ---
 
 # Heading Permalink Extension

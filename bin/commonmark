@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+trigger_error('The "bin/commonmark" command has been deprecated since league/commonmark 1.4', E_USER_DEPRECATED);
+
 requireAutoloader();
 
 ini_set('display_errors', 'stderr');

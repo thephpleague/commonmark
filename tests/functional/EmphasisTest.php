@@ -14,6 +14,11 @@
 
 namespace League\CommonMark\Tests\Functional;
 
+@trigger_error(sprintf('The "%s" class is deprecated since league/commonmark 1.4.', EmphasisTest::class), E_USER_DEPRECATED);
+
+/**
+ * @deprecated
+ */
 class EmphasisTest extends AbstractBinTest
 {
     /**
@@ -39,7 +44,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('emstrong.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertContains($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -54,7 +59,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('em.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertContains($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -69,7 +74,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('strong.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertContains($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -85,7 +90,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('disabled.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertContains($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -100,7 +105,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('asterisks.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertContains($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -115,6 +120,6 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('underscores.html')));
-        $this->assertEquals($expectedContents, trim($cmd->getOutput()));
+        $this->assertContains($expectedContents, trim($cmd->getOutput()));
     }
 }

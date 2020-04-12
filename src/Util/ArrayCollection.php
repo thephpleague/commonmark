@@ -65,9 +65,13 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @param mixed $element
      *
      * @return bool
+     *
+     * @deprecated
      */
     public function add($element): bool
     {
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'add()', '$collection[] = $value'), E_USER_DEPRECATED);
+
         $this->elements[] = $element;
 
         return true;
@@ -76,29 +80,41 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @param mixed $key
      * @param mixed $value
+     *
+     * @deprecated
      */
     public function set($key, $value)
     {
-        $this->elements[$key] = $value;
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'set()', '$collection[$key] = $value'), E_USER_DEPRECATED);
+
+        $this->offsetSet($key, $value);
     }
 
     /**
      * @param mixed $key
      *
      * @return mixed
+     *
+     * @deprecated
      */
     public function get($key)
     {
-        return isset($this->elements[$key]) ? $this->elements[$key] : null;
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'get()', '$collection[$key]'), E_USER_DEPRECATED);
+
+        return $this->offsetGet($key);
     }
 
     /**
      * @param mixed $key
      *
      * @return mixed|null
+     *
+     * @deprecated
      */
     public function remove($key)
     {
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'remove()', 'unset($collection[$key])'), E_USER_DEPRECATED);
+
         if (!\array_key_exists($key, $this->elements)) {
             return;
         }
@@ -111,9 +127,13 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
     /**
      * @return bool
+     *
+     * @deprecated
      */
     public function isEmpty(): bool
     {
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'isEmpty()', 'count($collection) === 0'), E_USER_DEPRECATED);
+
         return empty($this->elements);
     }
 
@@ -121,9 +141,13 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @param mixed $element
      *
      * @return bool
+     *
+     * @deprecated
      */
     public function contains($element): bool
     {
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'contains()', 'in_array($value, $collection->toArray(), true)'), E_USER_DEPRECATED);
+
         return \in_array($element, $this->elements, true);
     }
 
@@ -131,9 +155,13 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @param mixed $element
      *
      * @return mixed|false
+     *
+     * @deprecated
      */
     public function indexOf($element)
     {
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'indexOf()', 'array_search($value, $collection->toArray(), true)'), E_USER_DEPRECATED);
+
         return \array_search($element, $this->elements, true);
     }
 
@@ -141,9 +169,13 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @param mixed $key
      *
      * @return bool
+     *
+     * @deprecated
      */
     public function containsKey($key): bool
     {
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'containsKey()', 'isset($collection[$key])'), E_USER_DEPRECATED);
+
         return \array_key_exists($key, $this->elements);
     }
 
@@ -166,7 +198,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function offsetExists($offset): bool
     {
-        return $this->containsKey($offset);
+        return \array_key_exists($offset, $this->elements);
     }
 
     /**
@@ -178,7 +210,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return $this->get($offset);
+        return $this->elements[$offset] ?? null;
     }
 
     /**
@@ -192,9 +224,9 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     public function offsetSet($offset, $value)
     {
         if ($offset === null) {
-            $this->add($value);
+            $this->elements[] = $value;
         } else {
-            $this->set($offset, $value);
+            $this->elements[$offset] = $value;
         }
     }
 
@@ -207,7 +239,11 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        $this->remove($offset);
+        if (!\array_key_exists($offset, $this->elements)) {
+            return;
+        }
+
+        unset($this->elements[$offset]);
     }
 
     /**
@@ -235,16 +271,25 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @param array $elements
      *
      * @return $this
+     *
+     * @deprecated
      */
     public function replaceWith(array $elements)
     {
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4.', self::class, 'replaceWith()'), E_USER_DEPRECATED);
+
         $this->elements = $elements;
 
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function removeGaps()
     {
+        @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4.', self::class, 'removeGaps()'), E_USER_DEPRECATED);
+
         $this->elements = \array_filter($this->elements);
     }
 }

@@ -46,7 +46,7 @@ abstract class AbstractStringContainerBlock extends AbstractBlock implements Str
      */
     public function addLine(string $line)
     {
-        $this->strings->add($line);
+        $this->strings[] = $line;
     }
 
     /**

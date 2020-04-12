@@ -14,6 +14,11 @@ namespace League\CommonMark\Tests\Functional;
 use mikehaertl\shellcommand\Command;
 use PHPUnit\Framework\TestCase;
 
+@trigger_error(sprintf('The "%s" class is deprecated since league/commonmark 1.4.', AbstractBinTest::class), E_USER_DEPRECATED);
+
+/**
+ * @deprecated
+ */
 abstract class AbstractBinTest extends TestCase
 {
     /**
