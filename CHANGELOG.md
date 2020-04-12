@@ -4,6 +4,14 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## Added
+
+ - Added new [Heading Permalink extension](https://commonmark.thephpleague.com/extensions/heading-permalinks/) (#420)
+
+## Fixed
+
+ - Fixed loose comparison when checking for table alignment
+
 ## [1.3.3] - 2020-04-05
 
 ### Fixed
