@@ -109,3 +109,20 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 ## `bin/commonmark` command
 
 This command was buggy to test and was relatively unpopular, so it has been removed. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.
+
+## `ArrayCollection` methods
+
+Several methods were removed from this class - here are the methods along with possible alternatives you can switch to:
+
+| Removed Method Name | Alternative                                          |
+| ------------------- | ---------------------------------------------------- |
+| `add($value)`       | `$collection[] = $value`                             |
+| `set($key, $value)` | `$collection[$key] = $value`                         |
+| `get($key)`         | `$collection[$key]`                                  |
+| `remove($key)`      | `unset($collection[$key])`                           |
+| `isEmpty()`         | `count($collection) === 0`                           |
+| `contains($value)`  | `in_array($value, $collection->toArray(), true)`     |
+| `indexOf($value)`   | `array_search($value, $collection->toArray(), true)` |
+| `containsKey($key)` | `isset($collection[$key])`                           |
+| `replaceWith()`     | (none provided)                                      |
+| `removeGaps()`      | (none provided)                                      |
