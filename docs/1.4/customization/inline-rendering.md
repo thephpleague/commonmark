@@ -2,7 +2,6 @@
 layout: default
 title: Inline Rendering
 description: Customizing the output when rendering inline elements
-redirect_from: /customization/inline-rendering/
 ---
 
 Inline Rendering
