@@ -29,13 +29,14 @@ jobs:
     - name: rips
       php: 7.1
       env: 'RIPS=true'
-      if: type != pull_request
+      if: branch = master AND type != pull_request
       sudo: true
     - name: docs
       language: ruby
       rvm: 2.7
       cache: bundler
       env: 'PHPUNIT=false'
+      if: branch = master
       before_install:
         - gem update bundler
       install:
@@ -47,9 +48,6 @@ jobs:
         skip_cleanup: true
         github_token: "$JEKYLL_GITHUB_TOKEN"
         local_dir: docs/_site
-        on:
-          branch: master
-
 
   allow_failures:
     - php: nightly
