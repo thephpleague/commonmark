@@ -30,7 +30,6 @@
         "erusev/parsedown": "~1.0",
         "github/gfm": "0.29.0",
         "michelf/php-markdown": "~1.4",
-        "mikehaertl/php-shellcommand": "^1.4",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^7.5",
         "scrutinizer/ocular": "^1.5",
@@ -74,7 +73,6 @@
             "League\\CommonMark\\Tests\\Functional\\": "tests/functional"
         }
     },
-    "bin": ["bin/commonmark"],
     "scripts": {
         "phpstan": "phpstan analyse",
         "phpunit": "phpunit --no-coverage",

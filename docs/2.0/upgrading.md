@@ -105,3 +105,7 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `Renderer\Inline\NewlineRenderer` | `Inline\Renderer\NewlineRenderer` |
 | `Renderer\Inline\TextRenderer` | `Inline\Renderer\TextRenderer` |
 | `Util\HtmlElement` | `HtmlElement` |
+
+## `bin/commonmark` command
+
+This command was buggy to test and was relatively unpopular, so it has been removed. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.
