@@ -17,6 +17,9 @@ namespace League\CommonMark\Tests\Functional;
 use League\CommonMark\CommonMarkConverter;
 use mikehaertl\shellcommand\Command;
 
+/**
+ * @deprecated
+ */
 class BinTest extends AbstractBinTest
 {
     /**
@@ -28,7 +31,6 @@ class BinTest extends AbstractBinTest
         $cmd->execute();
 
         $this->assertEquals(1, $cmd->getExitCode());
-        $this->assertEmpty($cmd->getOutput());
 
         if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
             $this->assertContains('Usage:', $cmd->getError());
@@ -88,7 +90,7 @@ class BinTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('atx_heading.html')));
-        $this->assertEquals($expectedContents, $cmd->getOutput());
+        $this->assertContains($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -105,7 +107,7 @@ class BinTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('atx_heading.html')));
-        $this->assertEquals($expectedContents, $cmd->getOutput());
+        $this->assertContains($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -119,7 +121,7 @@ class BinTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('safe/unsafe_output.html')));
-        $this->assertEquals($expectedContents, $cmd->getOutput());
+        $this->assertContains($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -134,7 +136,7 @@ class BinTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('safe/safe_output.html')));
-        $this->assertEquals($expectedContents, $cmd->getOutput());
+        $this->assertContains($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -148,7 +150,7 @@ class BinTest extends AbstractBinTest
             $cmd->execute();
 
             $this->assertEquals(0, $cmd->getExitCode());
-            $this->assertEquals(CommonMarkConverter::VERSION, trim($cmd->getOutput()));
+            $this->assertContains(CommonMarkConverter::VERSION, trim($cmd->getOutput()));
         }
     }
 

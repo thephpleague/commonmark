@@ -12,6 +12,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Fixed loose comparison when checking for table alignment
 
+## Deprecated
+
+ - The `bin/commonmark` script has been deprecated
+
 ## [1.3.3] - 2020-04-05
 
 ### Fixed

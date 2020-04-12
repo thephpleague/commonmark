@@ -14,6 +14,9 @@ namespace League\CommonMark\Tests\Functional;
 use mikehaertl\shellcommand\Command;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @deprecated
+ */
 abstract class AbstractBinTest extends TestCase
 {
     /**
