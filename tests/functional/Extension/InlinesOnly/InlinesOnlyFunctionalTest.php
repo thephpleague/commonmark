@@ -12,11 +12,8 @@
 namespace League\CommonMark\Tests\Functional\Extension\InlinesOnly;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Converter;
-use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
-use League\CommonMark\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,10 +30,7 @@ class InlinesOnlyFunctionalTest extends TestCase
     {
         $environment = new Environment();
         $environment->addExtension(new InlinesOnlyExtension());
-        $this->converter = new Converter(
-            new DocParser($environment),
-            new HtmlRenderer($environment)
-        );
+        $this->converter = new CommonMarkConverter([], $environment);
     }
 
     /**

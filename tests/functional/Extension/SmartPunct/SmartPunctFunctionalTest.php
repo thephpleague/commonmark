@@ -15,11 +15,8 @@
 namespace League\CommonMark\Tests\Unit\Extension\SmartPunct;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Converter;
-use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
-use League\CommonMark\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -36,10 +33,7 @@ class SmartPunctFunctionalTest extends TestCase
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new SmartPunctExtension());
-        $this->converter = new Converter(
-            new DocParser($environment),
-            new HtmlRenderer($environment)
-        );
+        $this->converter = new CommonMarkConverter([], $environment);
     }
 
     /**
