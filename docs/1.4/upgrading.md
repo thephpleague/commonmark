@@ -33,6 +33,8 @@ This class has several unused methods, or methods with an existing alternative:
 | `replaceWith()`     | (none provided)                                      |
 | `removeGaps()`      | (none provided)                                      |
 
-### `Converter` constructor
+### `Converter` and `ConverterInterface`
 
-Instantiating the `Converter` by passing a `DocParserInterface` and `ElementRendererInterface` into the constructor is deprecated. You can keep doing this for now, but in 2.0 we'll be changing the constructor instead accept a configuration array and `EnvironmentInterface`, just like `CommonMarkConverter` does today.
+The `Converter` class has been deprecated - switch to using `CommonMarkConverter` instead.
+
+The `ConverterInterface` has been deprecated - switch to using `MarkdownConverterInterface` instead.
