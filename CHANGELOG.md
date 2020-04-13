@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ## Added
 
  - Added new [Heading Permalink extension](https://commonmark.thephpleague.com/extensions/heading-permalinks/) (#420)
+ - Added new `MarkdownConverterInterface` as a long-term replacement for `ConverterInterface`
 
 ## Fixed
 
@@ -14,6 +15,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## Deprecated
 
+ - The `Converter` class has been deprecated; use `CommonMarkConverter` instead (#438, #439)
+ - The `ConverterInterface` has been deprecated; use `MarkdownConverterInterface` instead (#438, #439)
  - The `bin/commonmark` script has been deprecated
  - The following methods of `ArrayCollection` have been deprecated:
    - `add()`
@@ -26,7 +29,6 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `containsKey()`
    - `replaceWith()`
    - `removeGaps()`
- - Instantiating the `Converter` by passing a `DocParserInterface` and `ElementRendererInterface` into the constructor is deprecated
 
 ## [1.3.3] - 2020-04-05
 

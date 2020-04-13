@@ -13,6 +13,6 @@ parameters:
       message: '#expects League\\CommonMark\\Delimiter\\DelimiterInterface, League\\CommonMark\\Delimiter\\DelimiterInterface\|null given\.$#'
     - path: src/Block/Element/Paragraph.php
       message: '#\$finalStringContents \(string\) does not accept string\|null\.$#'
-    # Error caused by temporary deprecation
-    - path: src/CommonMarkConverter.php
-      message: '#does not call parent constructor#'
+    # "Errors" caused by deprecations
+    - path: src/ConverterInterface.php
+      message: '#If condition is always false#'
