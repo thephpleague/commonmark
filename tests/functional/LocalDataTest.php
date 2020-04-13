@@ -12,9 +12,6 @@
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Tests the parser against locally-stored examples
@@ -22,7 +19,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * This is particularly useful for testing minor variations allowed by the spec
  * or small regressions not tested by the spec.
  */
-class LocalDataTest extends TestCase
+class LocalDataTest extends AbstractLocalDataTest
 {
     /**
      * @var CommonMarkConverter
@@ -43,38 +40,14 @@ class LocalDataTest extends TestCase
      */
     public function testExample($markdown, $html, $testName)
     {
-        $actualResult = $this->converter->convertToHtml($markdown);
-
-        $failureMessage = sprintf('Unexpected result for "%s" test', $testName);
-        $failureMessage .= "\n=== markdown ===============\n" . $markdown;
-        $failureMessage .= "\n=== expected ===============\n" . $html;
-        $failureMessage .= "\n=== got ====================\n" . $actualResult;
-
-        $this->assertEquals($html, $actualResult, $failureMessage);
+        $this->assertMarkdownRendersAs($markdown, $html, $testName);
     }
 
     /**
-     * @return array
+     * @return iterable
      */
     public function dataProvider()
     {
-        $finder = new Finder();
-        $finder->files()
-            ->in(__DIR__ . '/data')
-            ->depth('== 0')
-            ->name('*.md');
-
-        $ret = [];
-
-        /** @var SplFileInfo $markdownFile */
-        foreach ($finder as $markdownFile) {
-            $testName = $markdownFile->getBasename('.md');
-            $markdown = $markdownFile->getContents();
-            $html = file_get_contents(__DIR__ . '/data/' . $testName . '.html');
-
-            $ret[] = [$markdown, $html, $testName];
-        }
-
-        return $ret;
+        yield from $this->loadTests(__DIR__ . '/data');
     }
 }
