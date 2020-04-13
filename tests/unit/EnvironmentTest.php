@@ -23,6 +23,10 @@ use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Tests\Unit\Environment\FakeBlock1;
+use League\CommonMark\Tests\Unit\Environment\FakeBlock3;
+use League\CommonMark\Tests\Unit\Environment\FakeInline1;
+use League\CommonMark\Tests\Unit\Environment\FakeInline3;
 use League\CommonMark\Tests\Unit\Event\FakeEvent;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use PHPUnit\Framework\TestCase;
@@ -283,22 +287,46 @@ class EnvironmentTest extends TestCase
         $environment->addInlineRenderer('MyClass', $renderer);
     }
 
-    public function testGetBlockRendererForNonExistantClass()
+    public function testGetBlockRendererForUnknownClass()
     {
         $environment = new Environment();
+        $mockRenderer = $this->createMock(BlockRendererInterface::class);
+        $environment->addBlockRenderer(FakeBlock3::class, $mockRenderer);
 
-        $renderer = $environment->getBlockRenderersForClass('MyClass');
-
-        $this->assertEmpty($renderer);
+        $this->assertEmpty($environment->getBlockRenderersForClass(FakeBlock1::class));
     }
 
-    public function testGetInlineRendererForNonExistantClass()
+    public function testGetBlockRendererForSubClass()
     {
         $environment = new Environment();
+        $mockRenderer = $this->createMock(BlockRendererInterface::class);
+        $environment->addBlockRenderer(FakeBlock1::class, $mockRenderer);
 
-        $renderer = $environment->getInlineRenderersForClass('MyClass');
+        // Ensure the parent renderer is returned
+        $this->assertFirstResult($mockRenderer, $environment->getBlockRenderersForClass(FakeBlock3::class));
+        // Check again to ensure any cached result is also the same
+        $this->assertFirstResult($mockRenderer, $environment->getBlockRenderersForClass(FakeBlock3::class));
+    }
 
-        $this->assertEmpty($renderer);
+    public function testGetInlineRendererForNonUnknownClass()
+    {
+        $environment = new Environment();
+        $mockRenderer = $this->createMock(InlineRendererInterface::class);
+        $environment->addInlineRenderer(FakeInline3::class, $mockRenderer);
+
+        $this->assertEmpty($environment->getInlineRenderersForClass(FakeInline1::class));
+    }
+
+    public function testGetInlineRendererForSubClass()
+    {
+        $environment = new Environment();
+        $mockRenderer = $this->createMock(InlineRendererInterface::class);
+        $environment->addInlineRenderer(FakeInline1::class, $mockRenderer);
+
+        // Ensure the parent renderer is returned
+        $this->assertFirstResult($mockRenderer, $environment->getInlineRenderersForClass(FakeInline3::class));
+        // Check again to ensure any cached result is also the same
+        $this->assertFirstResult($mockRenderer, $environment->getInlineRenderersForClass(FakeInline3::class));
     }
 
     public function testAddExtensionAndGetter()
@@ -550,5 +578,16 @@ class EnvironmentTest extends TestCase
 
         $environment->addEventListener(AbstractEvent::class, function (AbstractEvent $e) {
         });
+    }
+
+    private function assertFirstResult($expected, iterable $actual)
+    {
+        foreach ($actual as $a) {
+            $this->assertSame($expected, $a);
+
+            return;
+        }
+
+        $this->assertSame($expected, null);
     }
 }

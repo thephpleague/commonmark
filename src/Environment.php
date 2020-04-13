@@ -256,11 +256,7 @@ final class Environment implements ConfigurableEnvironmentInterface
             $this->initializeExtensions();
         }
 
-        if (!isset($this->blockRenderersByClass[$blockClass])) {
-            return [];
-        }
-
-        return $this->blockRenderersByClass[$blockClass]->getIterator();
+        return $this->getRenderersByClass($this->blockRenderersByClass, $blockClass);
     }
 
     /**
@@ -272,11 +268,7 @@ final class Environment implements ConfigurableEnvironmentInterface
             $this->initializeExtensions();
         }
 
-        if (!isset($this->inlineRenderersByClass[$inlineClass])) {
-            return [];
-        }
-
-        return $this->inlineRenderersByClass[$inlineClass]->getIterator();
+        return $this->getRenderersByClass($this->inlineRenderersByClass, $inlineClass);
     }
 
     /**
@@ -434,5 +426,30 @@ final class Environment implements ConfigurableEnvironmentInterface
         if ($this->extensionsInitialized) {
             throw new \RuntimeException($message . ' Extensions have already been initialized.');
         }
+    }
+
+    /**
+     * @param array<string, PrioritizedList> $list
+     * @param string                         $class
+     *
+     * @return iterable
+     */
+    private function getRenderersByClass(array &$list, string $class): iterable
+    {
+        // If renderers are defined for this specific class, return them immediately
+        if (isset($list[$class])) {
+            return $list[$class];
+        }
+
+        while ($parent = \get_parent_class($parent ?? $class)) {
+            if (!isset($list[$parent])) {
+                continue;
+            }
+
+            // "Cache" this result to avoid future loops
+            return $list[$class] = $list[$parent];
+        }
+
+        return [];
     }
 }

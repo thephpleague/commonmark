@@ -10,6 +10,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added new `MarkdownConverterInterface` as a long-term replacement for `ConverterInterface` (#439)
  - Added new `DocumentPreParsedEvent` event (#427, #359, #399)
 
+## Changed
+
+ - Block & inline renderers will now render child classes automatically (#222, #209)
+
 ## Fixed
 
  - Fixed loose comparison when checking for table alignment

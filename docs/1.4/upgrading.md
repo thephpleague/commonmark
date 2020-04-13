@@ -6,7 +6,32 @@ description: Guide to upgrading to newer versions of this library
 
 # Upgrading from 1.3 to 1.4
 
-There are no major changes introduced in 1.4.
+## Changes
+
+### Rendering block/inline subclasses
+
+Imagine you have the following inline elements:
+
+```php
+class Link extends AbstractWebResource { } // This is the is the standard CommonMark "Link" element
+
+class ShortLink extends Link { } // A custom inline node type you created which extends "Link"
+
+class BitlyLink extends ShortLink { } // Another custom inline node type you created
+```
+
+Prior to 1.4, you'd have to manually register corresponding inline renderers for each one:
+
+```php
+/** @var \League\CommonMark\Environment $environment */
+$environment->addInlineRenderer(Link::class, new LinkRenderer()); // this line is usually automatically done for you
+$environment->addInlineRenderer(ShortLink::class, new LinkRenderer()); // register for custom node type; required before 1.4
+$environment->addInlineRenderer(BitlyLink::class, new LinkRenderer()); // register for custom node type; required before 1.4
+```
+
+But in 1.4 onwards, you no longer need to manually register that `LinkRenderer` for subclasses (like `ShortLink` and `BitlyLink` in the example above) - if the `Environment` can't find a registered renderer for that specific block/inline node type, we'll automatically check if the node's parent classes have a registered renderer and use that instead.
+
+Previously, if you forgot to register those renderers, the rendering process would fail with a `RuntimeException` like "Unable to find corresponding renderer".
 
 ## Deprecations
 
