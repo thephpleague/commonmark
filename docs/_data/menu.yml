@@ -21,6 +21,7 @@ version:
             'Inlines Only': '/1.4/extensions/inlines-only/'
             'Smart Punctuation': '/1.4/extensions/smart-punctuation/'
             'Strikethrough': '/1.4/extensions/strikethrough/'
+            'Table of Contents': '/1.4/extensions/table-of-contents/'
             'Tables': '/1.4/extensions/tables/'
             'Task Lists': '/1.4/extensions/task-lists/'
         Customization:

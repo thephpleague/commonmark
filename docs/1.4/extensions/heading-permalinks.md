@@ -9,6 +9,8 @@ redirect_from: /extensions/heading-permalinks/
 
 This extension makes all of your heading elements (`<h1>`, `<h2>`, etc) linkable so that users can quickly grab a link to that specific part of the document - almost like the headings in this documentation!
 
+**Tip:** You can combine this with the [Table of Contents extension](/1.4/extensions/table-of-contents/) to automatically generate a list of links to the headings in your documents.
+
 ## Usage
 
 This extension can be added to any new `Environment`:
