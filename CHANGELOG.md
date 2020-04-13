@@ -7,7 +7,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ## Added
 
  - Added new [Heading Permalink extension](https://commonmark.thephpleague.com/extensions/heading-permalinks/) (#420)
- - Added new `MarkdownConverterInterface` as a long-term replacement for `ConverterInterface`
+ - Added new `MarkdownConverterInterface` as a long-term replacement for `ConverterInterface` (#439)
+ - Added new `DocumentPreParsedEvent` event (#427, #359, #399)
 
 ## Fixed
 
