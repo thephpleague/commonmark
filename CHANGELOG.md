@@ -14,6 +14,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
  - Removed support for PHP 7.1
  - Removed all previously-deprecated functionality:
+   - Removed the `Converter` class and `ConverterInterface`
    - Removed the `bin/commonmark` script
    - Removed the following `ArrayCollection` methods:
      - `add()`

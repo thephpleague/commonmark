@@ -18,12 +18,14 @@ use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Parser\DocParser;
+use League\CommonMark\Parser\DocParserInterface;
+use League\CommonMark\Renderer\ElementRendererInterface;
 use League\CommonMark\Renderer\HtmlRenderer;
 
 /**
  * Converts CommonMark-compatible Markdown to HTML.
  */
-class CommonMarkConverter extends Converter
+class CommonMarkConverter implements MarkdownConverterInterface
 {
     /**
      * The currently-installed version.
@@ -34,6 +36,12 @@ class CommonMarkConverter extends Converter
 
     /** @var EnvironmentInterface */
     protected $environment;
+
+    /** @var DocParserInterface */
+    protected $docParser;
+
+    /** @var ElementRendererInterface */
+    protected $htmlRenderer;
 
     /**
      * Create a new commonmark converter instance.
@@ -53,11 +61,46 @@ class CommonMarkConverter extends Converter
 
         $this->environment = $environment;
 
-        parent::__construct(new DocParser($environment), new HtmlRenderer($environment));
+        $this->docParser = new DocParser($environment);
+        $this->htmlRenderer = new HtmlRenderer($environment);
     }
 
     public function getEnvironment(): EnvironmentInterface
     {
         return $this->environment;
+    }
+
+    /**
+     * Converts CommonMark to HTML.
+     *
+     * @param string $commonMark
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     *
+     * @api
+     */
+    public function convertToHtml(string $commonMark): string
+    {
+        $documentAST = $this->docParser->parse($commonMark);
+
+        return $this->htmlRenderer->renderBlock($documentAST);
+    }
+
+    /**
+     * Converts CommonMark to HTML.
+     *
+     * @see Converter::convertToHtml
+     *
+     * @param string $commonMark
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    public function __invoke(string $commonMark): string
+    {
+        return $this->convertToHtml($commonMark);
     }
 }

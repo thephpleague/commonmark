@@ -69,4 +69,14 @@ class CommonMarkConverterTest extends TestCase
         $converter = new CommonMarkConverter();
         $converter->convertToHtml("\x09\xca\xca");
     }
+
+    public function testInvokeReturnsSameOutputAsConvertToHtml()
+    {
+        $inputMarkdown = '**Strong**';
+
+        $converter = new CommonMarkConverter();
+
+        $this->assertSame($converter->convertToHtml($inputMarkdown), $converter($inputMarkdown));
+    }
+
 }

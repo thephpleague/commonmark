@@ -106,6 +106,12 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `Renderer\Inline\TextRenderer` | `Inline\Renderer\TextRenderer` |
 | `Util\HtmlElement` | `HtmlElement` |
 
+## `Converter` class and `ConverterInterface` removed
+
+Any usages of `Converter` should be replaced with `CommonMarkConverter`. Note that this has a different constructor but the same methods.
+
+Any usages of `ConverterInterface` should be replaced with `MarkdownConverterInterface`.  This interface has the same methods, so it should be a drop-in replacement.
+
 ## `bin/commonmark` command
 
 This command was buggy to test and was relatively unpopular, so it has been removed. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.
