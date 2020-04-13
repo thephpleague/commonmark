@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed configuration/environment not being injected into event listeners when adding them via `[$instance, 'method']` callable syntax (#440)
+
 ## [1.3.3] - 2020-04-05
 
 ### Fixed
