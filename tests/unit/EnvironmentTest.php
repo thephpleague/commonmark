@@ -20,6 +20,7 @@ use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\EnvironmentAwareInterface;
+use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
@@ -28,6 +29,8 @@ use League\CommonMark\Tests\Unit\Environment\FakeBlock3;
 use League\CommonMark\Tests\Unit\Environment\FakeInline1;
 use League\CommonMark\Tests\Unit\Environment\FakeInline3;
 use League\CommonMark\Tests\Unit\Event\FakeEvent;
+use League\CommonMark\Tests\Unit\Event\FakeEventListener;
+use League\CommonMark\Tests\Unit\Event\FakeEventListenerInvokable;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -442,14 +445,20 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $listener = $this->getMockBuilder([EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->setMethods(['__invoke'])->getMock();
-        $listener->expects($this->once())->method('setEnvironment')->with($environment);
-        $listener->expects($this->once())->method('setConfiguration');
+        $listener1 = new FakeEventListener(function () { });
+        $listener2 = new FakeEventListenerInvokable(function () { });
 
-        $environment->addEventListener('', $listener);
+        $environment->addEventListener('', [$listener1, 'doStuff']);
+        $environment->addEventListener('', $listener2);
 
         // Trigger initialization
         $environment->getBlockParsers();
+
+        $this->assertSame($environment, $listener1->getEnvironment());
+        $this->assertSame($environment, $listener2->getEnvironment());
+
+        $this->assertNotNull($listener1->getConfiguration());
+        $this->assertNotNull($listener2->getConfiguration());
     }
 
     public function testBlockParserPrioritization()

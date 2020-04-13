@@ -35,6 +35,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `replaceWith()`
    - `removeGaps()`
 
+## [1.3.4] - 2020-04-13
+
+### Fixed
+
+ - Fixed configuration/environment not being injected into event listeners when adding them via `[$instance, 'method']` callable syntax (#440)
+
 ## [1.3.3] - 2020-04-05
 
 ### Fixed
@@ -268,7 +274,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.3.3...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.3.4...HEAD
+[1.3.4]: https://github.com/thephpleague/commonmark/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/thephpleague/commonmark/compare/1.3.2...1.3.3
 [1.3.2]: https://github.com/thephpleague/commonmark/compare/1.3.1...1.3.2
 [1.3.1]: https://github.com/thephpleague/commonmark/compare/1.3.0...1.3.1
