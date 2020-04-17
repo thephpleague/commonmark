@@ -33,6 +33,10 @@ But in 1.4 onwards, you no longer need to manually register that `LinkRenderer` 
 
 Previously, if you forgot to register those renderers, the rendering process would fail with a `RuntimeException` like "Unable to find corresponding renderer".
 
+## `ListBlock::TYPE_` constant values
+
+The two constants in the `ListBlock` class no longer contain title-cased values - the first character is now lowercased.  Ideally, you should be referencing the constants, but if you were instead hard-coding these values in your application, you may need to adjust those hard-coded strings.
+
 ## Deprecations
 
 Several things have been deprecated in 1.4 - they'll continue to work, but consider using alternatives to make your code easier to upgrade to 2.0 when these deprecated things are removed.

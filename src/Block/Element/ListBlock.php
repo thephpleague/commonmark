@@ -22,8 +22,8 @@ use League\CommonMark\Cursor;
  */
 class ListBlock extends AbstractBlock
 {
-    const TYPE_BULLET = 'Bullet';
-    const TYPE_ORDERED = 'Ordered';
+    const TYPE_BULLET = 'bullet';
+    const TYPE_ORDERED = 'ordered';
 
     /**
      * @deprecated This constant is deprecated in league/commonmark 1.4 and will be removed in 2.0; use TYPE_BULLET instead
