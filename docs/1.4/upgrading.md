@@ -37,6 +37,10 @@ Previously, if you forgot to register those renderers, the rendering process wou
 
 Several things have been deprecated in 1.4 - they'll continue to work, but consider using alternatives to make your code easier to upgrade to 2.0 when these deprecated things are removed.
 
+### `ListBlock::TYPE_UNORDERED` constant
+
+The `ListBlock::TYPE_UNORDERED` constant has been deprecated, use `ListBlock::TYPE_BULLET` instead.
+
 ### `bin/commonmark` command
 
 This command has been buggy to test and is relatively unpopular, so this will be removed in 2.0. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.
