@@ -14,6 +14,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ## Changed
 
  - Block & inline renderers will now render child classes automatically (#222, #209)
+ - The `ListBlock` constants now use fully-lowercased values instead of titlecased values
 
 ## Fixed
 
