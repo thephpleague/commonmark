@@ -64,7 +64,7 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
         if (\preg_match($this->listMarkerRegex ?? $this->generateListMarkerRegex(), $rest) === 1) {
             $data = new ListData();
             $data->markerOffset = $indent;
-            $data->type = ListBlock::TYPE_UNORDERED;
+            $data->type = ListBlock::TYPE_BULLET;
             $data->delimiter = null;
             $data->bulletChar = $rest[0];
             $markerLength = 1;

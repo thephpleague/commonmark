@@ -112,7 +112,7 @@ class ListBlockRendererTest extends TestCase
     protected function createUnorderedListBlock()
     {
         $data = new ListData();
-        $data->type = ListBlock::TYPE_UNORDERED;
+        $data->type = ListBlock::TYPE_BULLET;
 
         $block = new ListBlock($data);
         $block->data['attributes'] = ['id' => 'foo'];

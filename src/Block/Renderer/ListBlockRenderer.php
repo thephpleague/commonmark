@@ -36,7 +36,7 @@ final class ListBlockRenderer implements BlockRendererInterface
 
         $listData = $block->getListData();
 
-        $tag = $listData->type === ListBlock::TYPE_UNORDERED ? 'ul' : 'ol';
+        $tag = $listData->type === ListBlock::TYPE_BULLET ? 'ul' : 'ol';
 
         $attrs = $block->getData('attributes', []);
 

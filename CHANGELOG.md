@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added new [Heading Permalink extension](https://commonmark.thephpleague.com/extensions/heading-permalinks/) (#420)
  - Added new `MarkdownConverterInterface` as a long-term replacement for `ConverterInterface` (#439)
  - Added new `DocumentPreParsedEvent` event (#427, #359, #399)
+ - Added new `ListBlock::TYPE_BULLET` constant as a replacement for `ListBlock::TYPE_UNORDERED`
 
 ## Changed
 
@@ -34,6 +35,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `containsKey()`
    - `replaceWith()`
    - `removeGaps()`
+ - The `ListBlock::TYPE_UNORDERED` constant has been deprecated, use `ListBlock::TYPE_BULLET` instead
 
 ## [1.3.4] - 2020-04-13
 

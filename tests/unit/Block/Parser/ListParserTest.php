@@ -76,7 +76,7 @@ final class ListParserTest extends TestCase
 
         $this->assertTrue($container instanceof ListItem);
         /** @var ListItem $container */
-        $this->assertSame(ListBlock::TYPE_UNORDERED, $container->getListData()->type);
+        $this->assertSame(ListBlock::TYPE_BULLET, $container->getListData()->type);
         $this->assertSame('-', $container->getListData()->bulletChar);
     }
 
@@ -95,7 +95,7 @@ final class ListParserTest extends TestCase
 
         $this->assertTrue($container instanceof ListItem);
         /** @var ListItem $container */
-        $this->assertSame(ListBlock::TYPE_UNORDERED, $container->getListData()->type);
+        $this->assertSame(ListBlock::TYPE_BULLET, $container->getListData()->type);
         $this->assertSame('*', $container->getListData()->bulletChar);
     }
 
@@ -114,7 +114,7 @@ final class ListParserTest extends TestCase
 
         $this->assertTrue($container instanceof ListItem);
         /** @var ListItem $container */
-        $this->assertSame(ListBlock::TYPE_UNORDERED, $container->getListData()->type);
+        $this->assertSame(ListBlock::TYPE_BULLET, $container->getListData()->type);
         $this->assertSame('+', $container->getListData()->bulletChar);
     }
 
@@ -134,7 +134,7 @@ final class ListParserTest extends TestCase
 
         $this->assertTrue($container instanceof ListItem);
         /** @var ListItem $container */
-        $this->assertSame(ListBlock::TYPE_UNORDERED, $container->getListData()->type);
+        $this->assertSame(ListBlock::TYPE_BULLET, $container->getListData()->type);
         $this->assertSame('^', $container->getListData()->bulletChar);
     }
 
