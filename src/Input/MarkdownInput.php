@@ -18,7 +18,7 @@ final class MarkdownInput implements MarkdownInputInterface
     /** @var iterable<int, string>|null */
     private $lines;
 
-    /** @var string|null */
+    /** @var string */
     private $content;
 
     /** @var int|null */
