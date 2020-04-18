@@ -18,23 +18,11 @@ use League\CommonMark\Cursor;
 
 class ThematicBreak extends AbstractBlock
 {
-    /**
-     * Returns true if this block can contain the given block as a child node
-     *
-     * @param AbstractBlock $block
-     *
-     * @return bool
-     */
     public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
 
-    /**
-     * Whether this is a code block
-     *
-     * @return bool
-     */
     public function isCode(): bool
     {
         return false;

@@ -29,7 +29,7 @@ final class AsIsNormalizerStrategy implements NormalizerStrategyInterface
         $this->parentListBlock = $toc;
     }
 
-    public function addItem(int $level, ListItem $listItemToAdd)
+    public function addItem(int $level, ListItem $listItemToAdd): void
     {
         while ($level > $this->parentLevel) {
             // Descend downwards, creating new ListBlocks if needed, until we reach the correct depth

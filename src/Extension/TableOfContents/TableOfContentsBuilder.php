@@ -22,6 +22,7 @@ use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Normalizer\AsIsNormalizerStrategy;
 use League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrategy;
+use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;
 use League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Util\ConfigurationAwareInterface;
@@ -42,7 +43,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
     /** @var ConfigurationInterface */
     private $config;
 
-    public function onDocumentParsed(DocumentParsedEvent $event)
+    public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
         $toc = $this->createToc();
@@ -132,7 +133,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
     /**
      * @param Document $document
      *
-     * @return HeadingPermalink[]
+     * @return iterable<HeadingPermalink>
      */
     private function getHeadingLinks(Document $document)
     {
@@ -144,7 +145,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         }
     }
 
-    private function getNormalizer(TableOfContents $toc)
+    private function getNormalizer(TableOfContents $toc): NormalizerStrategyInterface
     {
         $strategy = $this->config->get('table_of_contents/normalize', self::NORMALIZE_RELATIVE);
         if ($strategy === self::NORMALIZE_DISABLED) {
@@ -158,9 +159,6 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         throw new InvalidOptionException(\sprintf('Invalid config option "%s" for "table_of_contents/normalize"', $strategy));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfiguration(ConfigurationInterface $config)
     {
         $this->config = $config;

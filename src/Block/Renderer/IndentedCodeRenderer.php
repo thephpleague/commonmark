@@ -23,7 +23,7 @@ use League\CommonMark\Util\Xml;
 final class IndentedCodeRenderer implements BlockRendererInterface
 {
     /**
-     * @param AbstractBlock            $block
+     * @param IndentedCode             $block
      * @param ElementRendererInterface $htmlRenderer
      * @param bool                     $inTightList
      *

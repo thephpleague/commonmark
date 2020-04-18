@@ -32,20 +32,11 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
     /** @var string|null */
     private $listMarkerRegex;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;
     }
 
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     *
-     * @return bool
-     */
     public function parse(ContextInterface $context, Cursor $cursor): bool
     {
         if ($cursor->isIndented() && !($context->getContainer() instanceof ListBlock)) {

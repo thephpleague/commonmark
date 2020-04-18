@@ -22,15 +22,12 @@ use League\CommonMark\Node\Node;
 abstract class AbstractInline extends Node
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      *
      * Used for storage of arbitrary data
      */
     public $data = [];
 
-    /**
-     * @return bool
-     */
     public function isContainer(): bool
     {
         return false;

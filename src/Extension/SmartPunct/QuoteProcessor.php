@@ -29,13 +29,6 @@ final class QuoteProcessor implements DelimiterProcessorInterface
     /** @var string */
     private $closerCharacter;
 
-    /**
-     * QuoteProcessor constructor.
-     *
-     * @param string $char
-     * @param string $opener
-     * @param string $closer
-     */
     private function __construct(string $char, string $opener, string $closer)
     {
         $this->normalizedCharacter = $char;
@@ -43,41 +36,26 @@ final class QuoteProcessor implements DelimiterProcessorInterface
         $this->closerCharacter = $closer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOpeningCharacter(): string
     {
         return $this->normalizedCharacter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClosingCharacter(): string
     {
         return $this->normalizedCharacter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMinLength(): int
     {
         return 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
     {
         return 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
     {
         $opener->insertAfter(new Quote($this->openerCharacter));

@@ -31,7 +31,7 @@
         "github/gfm": "0.29.0",
         "michelf/php-markdown": "~1.4",
         "mikehaertl/php-shellcommand": "^1.4",
-        "phpstan/phpstan-shim": "^0.11.5",
+        "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^7.5",
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^4.2"

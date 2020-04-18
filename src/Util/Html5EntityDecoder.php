@@ -16,11 +16,6 @@ namespace League\CommonMark\Util;
 
 final class Html5EntityDecoder
 {
-    /**
-     * @param string $entity
-     *
-     * @return string
-     */
     public static function decode(string $entity): string
     {
         if (\substr($entity, -1) !== ';') {
@@ -61,11 +56,6 @@ final class Html5EntityDecoder
         return $converted;
     }
 
-    /**
-     * @param string $hexChars
-     *
-     * @return string
-     */
     private static function fromHex(string $hexChars): string
     {
         return self::fromDecimal(\hexdec($hexChars));

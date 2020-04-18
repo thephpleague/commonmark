@@ -28,17 +28,11 @@ final class HeadingPermalinkRenderer implements InlineRendererInterface, Configu
     /** @var ConfigurationInterface */
     private $config;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!$inline instanceof HeadingPermalink) {

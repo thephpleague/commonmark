@@ -83,6 +83,8 @@ class Context implements ContextInterface
 
     /**
      * @param string $line
+     *
+     * @return void
      */
     public function setNextLine(string $line)
     {
@@ -90,17 +92,11 @@ class Context implements ContextInterface
         $this->line = $line;
     }
 
-    /**
-     * @return Document
-     */
     public function getDocument(): Document
     {
         return $this->doc;
     }
 
-    /**
-     * @return AbstractBlock|null
-     */
     public function getTip(): ?AbstractBlock
     {
         return $this->tip;
@@ -118,35 +114,21 @@ class Context implements ContextInterface
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getLineNumber(): int
     {
         return $this->lineNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getLine(): string
     {
         return $this->line;
     }
 
-    /**
-     * Finalize and close any unmatched blocks
-     *
-     * @return UnmatchedBlockCloser
-     */
     public function getBlockCloser(): UnmatchedBlockCloser
     {
         return $this->blockCloser;
     }
 
-    /**
-     * @return AbstractBlock
-     */
     public function getContainer(): AbstractBlock
     {
         return $this->container;
@@ -164,9 +146,6 @@ class Context implements ContextInterface
         return $this;
     }
 
-    /**
-     * @param AbstractBlock $block
-     */
     public function addBlock(AbstractBlock $block)
     {
         $this->blockCloser->closeUnmatchedBlocks();
@@ -185,9 +164,6 @@ class Context implements ContextInterface
         $this->container = $block;
     }
 
-    /**
-     * @param AbstractBlock $replacement
-     */
     public function replaceContainerBlock(AbstractBlock $replacement)
     {
         $this->blockCloser->closeUnmatchedBlocks();
@@ -200,9 +176,6 @@ class Context implements ContextInterface
         $this->container = $replacement;
     }
 
-    /**
-     * @return bool
-     */
     public function getBlocksParsed(): bool
     {
         return $this->blocksParsed;
@@ -220,9 +193,6 @@ class Context implements ContextInterface
         return $this;
     }
 
-    /**
-     * @return ReferenceParser
-     */
     public function getReferenceParser(): ReferenceParser
     {
         return $this->referenceParser;

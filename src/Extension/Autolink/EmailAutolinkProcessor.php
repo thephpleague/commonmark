@@ -36,7 +36,7 @@ final class EmailAutolinkProcessor
         }
     }
 
-    private static function processAutolinks(Text $node)
+    private static function processAutolinks(Text $node): void
     {
         $contents = \preg_split(self::REGEX, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
 

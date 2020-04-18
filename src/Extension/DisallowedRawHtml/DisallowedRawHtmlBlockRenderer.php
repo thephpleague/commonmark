@@ -19,6 +19,7 @@ use League\CommonMark\Util\ConfigurationInterface;
 
 final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
 {
+    /** @var BlockRendererInterface */
     private $htmlBlockRenderer;
 
     public function __construct(BlockRendererInterface $htmlBlockRenderer)
@@ -26,9 +27,6 @@ final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, Co
         $this->htmlBlockRenderer = $htmlBlockRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         $rendered = $this->htmlBlockRenderer->render($block, $htmlRenderer, $inTightList);
@@ -41,9 +39,6 @@ final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, Co
         return preg_replace('/<(\/?(?:title|textarea|style|xmp|iframe|noembed|noframes|script|plaintext)[ \/>])/i', '&lt;$1', $rendered);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         if ($this->htmlBlockRenderer instanceof ConfigurationAwareInterface) {

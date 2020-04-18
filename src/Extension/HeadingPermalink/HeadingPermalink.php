@@ -18,19 +18,14 @@ use League\CommonMark\Inline\Element\AbstractInline;
  */
 final class HeadingPermalink extends AbstractInline
 {
+    /** @var string */
     private $slug;
 
-    /**
-     * @param string $slug
-     */
     public function __construct(string $slug)
     {
         $this->slug = $slug;
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;

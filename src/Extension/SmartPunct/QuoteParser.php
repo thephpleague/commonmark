@@ -34,10 +34,6 @@ final class QuoteParser implements InlineParserInterface
 
     /**
      * Normalizes any quote characters found and manually adds them to the delimiter stack
-     *
-     * @param InlineParserContext $inlineContext
-     *
-     * @return bool
      */
     public function parse(InlineParserContext $inlineContext): bool
     {
@@ -69,12 +65,7 @@ final class QuoteParser implements InlineParserInterface
         return true;
     }
 
-    /**
-     * @param string $character
-     *
-     * @return string|null
-     */
-    private function getNormalizedQuoteCharacter($character)
+    private function getNormalizedQuoteCharacter(string $character): string
     {
         if (in_array($character, self::DOUBLE_QUOTES)) {
             return Quote::DOUBLE_QUOTE;
@@ -91,7 +82,7 @@ final class QuoteParser implements InlineParserInterface
      *
      * @return bool[]
      */
-    private function determineFlanking($charBefore, $charAfter)
+    private function determineFlanking(string $charBefore, string $charAfter)
     {
         $afterIsWhitespace = preg_match('/\pZ|\s/u', $charAfter);
         $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);

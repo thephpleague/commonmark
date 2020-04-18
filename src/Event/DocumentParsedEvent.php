@@ -21,17 +21,11 @@ final class DocumentParsedEvent extends AbstractEvent
     /** @var Document */
     private $document;
 
-    /**
-     * @param Document $document
-     */
     public function __construct(Document $document)
     {
         $this->document = $document;
     }
 
-    /**
-     * @return Document
-     */
     public function getDocument(): Document
     {
         return $this->document;

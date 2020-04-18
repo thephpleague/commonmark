@@ -16,10 +16,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Block & inline renderers will now render child classes automatically (#222, #209)
  - The `ListBlock` constants now use fully-lowercased values instead of titlecased values
+ - Significantly improved typing
 
 ## Fixed
 
  - Fixed loose comparison when checking for table alignment
+ - Fixed `StaggeredDelimiterProcessor` returning from a `void` function
 
 ## Deprecated
 

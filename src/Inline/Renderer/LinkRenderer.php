@@ -59,9 +59,6 @@ final class LinkRenderer implements InlineRendererInterface, ConfigurationAwareI
         return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
     }
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;

@@ -21,7 +21,7 @@ use League\CommonMark\ElementRendererInterface;
 final class DocumentRenderer implements BlockRendererInterface
 {
     /**
-     * @param AbstractBlock|Document   $block
+     * @param Document                 $block
      * @param ElementRendererInterface $htmlRenderer
      * @param bool                     $inTightList
      *

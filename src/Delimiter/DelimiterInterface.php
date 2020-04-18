@@ -18,23 +18,16 @@ use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 interface DelimiterInterface
 {
-    /**
-     * @return bool
-     */
     public function canClose(): bool;
 
-    /**
-     * @return bool
-     */
     public function canOpen(): bool;
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool;
 
     /**
      * @param bool $active
+     *
+     * @return void
      */
     public function setActive(bool $active);
 
@@ -43,48 +36,36 @@ interface DelimiterInterface
      */
     public function getChar(): string;
 
-    /**
-     * @return int|null
-     */
     public function getIndex(): ?int;
 
-    /**
-     * @return DelimiterInterface|null
-     */
     public function getNext(): ?DelimiterInterface;
 
     /**
      * @param DelimiterInterface|null $next
+     *
+     * @return void
      */
     public function setNext(?DelimiterInterface $next);
 
-    /**
-     * @return int
-     */
     public function getLength(): int;
 
     /**
      * @param int $length
+     *
+     * @return void
      */
     public function setLength(int $length);
 
-    /**
-     * @return int
-     */
     public function getOriginalLength(): int;
 
-    /**
-     * @return AbstractStringContainer
-     */
     public function getInlineNode(): AbstractStringContainer;
 
-    /**
-     * @return DelimiterInterface|null
-     */
     public function getPrevious(): ?DelimiterInterface;
 
     /**
      * @param DelimiterInterface|null $previous
+     *
+     * @return mixed|void
      */
     public function setPrevious(?DelimiterInterface $previous);
 }

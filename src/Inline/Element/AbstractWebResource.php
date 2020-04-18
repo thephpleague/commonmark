@@ -46,9 +46,6 @@ abstract class AbstractWebResource extends AbstractInline
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isContainer(): bool
     {
         return true;

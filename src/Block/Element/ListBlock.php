@@ -53,9 +53,6 @@ class ListBlock extends AbstractBlock
         return $this->listData;
     }
 
-    /**
-     * @return bool
-     */
     public function endsWithBlankLine(): bool
     {
         if ($this->lastLineBlank) {
@@ -69,23 +66,11 @@ class ListBlock extends AbstractBlock
         return false;
     }
 
-    /**
-     * Returns true if this block can contain the given block as a child node
-     *
-     * @param AbstractBlock $block
-     *
-     * @return bool
-     */
     public function canContain(AbstractBlock $block): bool
     {
         return $block instanceof ListItem;
     }
 
-    /**
-     * Whether this is a code block
-     *
-     * @return bool
-     */
     public function isCode(): bool
     {
         return false;
@@ -124,19 +109,11 @@ class ListBlock extends AbstractBlock
         }
     }
 
-    /**
-     * @return bool
-     */
     public function isTight(): bool
     {
         return $this->tight;
     }
 
-    /**
-     * @param bool $tight
-     *
-     * @return $this
-     */
     public function setTight(bool $tight): self
     {
         $this->tight = $tight;

@@ -48,11 +48,6 @@ final class LinkParserHelper
         );
     }
 
-    /**
-     * @param Cursor $cursor
-     *
-     * @return int
-     */
     public static function parseLinkLabel(Cursor $cursor): int
     {
         $match = $cursor->match('/^\[(?:[^\\\\\[\]]|\\\\.){0,1000}\]/');
@@ -86,11 +81,6 @@ final class LinkParserHelper
         return null;
     }
 
-    /**
-     * @param Cursor $cursor
-     *
-     * @return string|null
-     */
     private static function manuallyParseLinkDestination(Cursor $cursor): ?string
     {
         $oldPosition = $cursor->getPosition();

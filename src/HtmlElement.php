@@ -53,9 +53,6 @@ class HtmlElement
         $this->setContents($contents ?? '');
     }
 
-    /**
-     * @return string
-     */
     public function getTagName(): string
     {
         return $this->tagName;
@@ -69,11 +66,6 @@ class HtmlElement
         return $this->attributes;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return string|null
-     */
     public function getAttribute(string $key): ?string
     {
         if (!isset($this->attributes[$key])) {
@@ -83,12 +75,6 @@ class HtmlElement
         return $this->attributes[$key];
     }
 
-    /**
-     * @param string $key
-     * @param string $value
-     *
-     * @return $this
-     */
     public function setAttribute(string $key, string $value): self
     {
         $this->attributes[$key] = $value;
@@ -124,9 +110,6 @@ class HtmlElement
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         $result = '<' . $this->tagName;

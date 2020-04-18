@@ -15,9 +15,6 @@ use League\CommonMark\Inline\Element\AbstractInline;
 
 final class Strikethrough extends AbstractInline
 {
-    /**
-     * @return bool
-     */
     public function isContainer(): bool
     {
         return true;

@@ -19,23 +19,11 @@ use League\CommonMark\Cursor;
 
 class Paragraph extends AbstractStringContainerBlock implements InlineContainerInterface
 {
-    /**
-     * Returns true if this block can contain the given block as a child node
-     *
-     * @param AbstractBlock $block
-     *
-     * @return bool
-     */
     public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
 
-    /**
-     * Whether this is a code block
-     *
-     * @return bool
-     */
     public function isCode(): bool
     {
         return false;
@@ -91,10 +79,6 @@ class Paragraph extends AbstractStringContainerBlock implements InlineContainerI
         return $referenceFound;
     }
 
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
         $cursor->advanceToNextNonSpaceOrTab();

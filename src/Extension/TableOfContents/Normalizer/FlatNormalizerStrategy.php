@@ -24,7 +24,7 @@ final class FlatNormalizerStrategy implements NormalizerStrategyInterface
         $this->toc = $toc;
     }
 
-    public function addItem(int $level, ListItem $listItemToAdd)
+    public function addItem(int $level, ListItem $listItemToAdd): void
     {
         $this->toc->appendChild($listItemToAdd);
     }

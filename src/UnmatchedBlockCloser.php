@@ -48,12 +48,17 @@ class UnmatchedBlockCloser
 
     /**
      * @param AbstractBlock $block
+     *
+     * @return void
      */
     public function setLastMatchedContainer(AbstractBlock $block)
     {
         $this->lastMatchedContainer = $block;
     }
 
+    /**
+     * @return void
+     */
     public function closeUnmatchedBlocks()
     {
         $endLine = $this->context->getLineNumber() - 1;
@@ -66,6 +71,9 @@ class UnmatchedBlockCloser
         }
     }
 
+    /**
+     * @return void
+     */
     public function resetTip()
     {
         if ($this->context->getTip() === null) {
@@ -75,9 +83,6 @@ class UnmatchedBlockCloser
         $this->oldTip = $this->context->getTip();
     }
 
-    /**
-     * @return bool
-     */
     public function areAllClosed(): bool
     {
         return $this->context->getTip() === $this->lastMatchedContainer;

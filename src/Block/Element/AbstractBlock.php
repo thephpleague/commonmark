@@ -28,7 +28,7 @@ abstract class AbstractBlock extends Node
     /**
      * Used for storage of arbitrary data.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     public $data = [];
 
@@ -52,9 +52,6 @@ abstract class AbstractBlock extends Node
      */
     protected $endLine;
 
-    /**
-     * @param Node|null $node
-     */
     protected function setParent(Node $node = null)
     {
         if ($node && !$node instanceof self) {
@@ -64,9 +61,6 @@ abstract class AbstractBlock extends Node
         parent::setParent($node);
     }
 
-    /**
-     * @return bool
-     */
     public function isContainer(): bool
     {
         return true;
@@ -161,6 +155,8 @@ abstract class AbstractBlock extends Node
 
     /**
      * @param bool $blank
+     *
+     * @return void
      */
     public function setLastLineBlank(bool $blank)
     {
@@ -195,6 +191,8 @@ abstract class AbstractBlock extends Node
      *
      * @param ContextInterface $context
      * @param int              $endLineNumber
+     *
+     * @return void
      */
     public function finalize(ContextInterface $context, int $endLineNumber)
     {

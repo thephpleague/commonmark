@@ -36,17 +36,11 @@ final class NodeWalkerEvent
         $this->isEntering = $isEntering;
     }
 
-    /**
-     * @return Node
-     */
     public function getNode(): Node
     {
         return $this->node;
     }
 
-    /**
-     * @return bool
-     */
     public function isEntering(): bool
     {
         return $this->isEntering;

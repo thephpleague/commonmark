@@ -20,9 +20,6 @@ final class ExternalLinkProcessor
     /** @var EnvironmentInterface */
     private $environment;
 
-    /**
-     * @param EnvironmentInterface $environment
-     */
     public function __construct(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
@@ -30,6 +27,8 @@ final class ExternalLinkProcessor
 
     /**
      * @param DocumentParsedEvent $e
+     *
+     * @return void
      */
     public function __invoke(DocumentParsedEvent $e)
     {
@@ -60,11 +59,6 @@ final class ExternalLinkProcessor
         }
     }
 
-    /**
-     * @param Link   $link
-     * @param bool   $openInNewWindow
-     * @param string $classes
-     */
     private function markLinkAsExternal(Link $link, bool $openInNewWindow, string $classes): void
     {
         $link->data['external'] = true;

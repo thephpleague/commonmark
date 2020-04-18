@@ -51,9 +51,6 @@ final class HtmlInlineRenderer implements InlineRendererInterface, Configuration
         return $inline->getContent();
     }
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;

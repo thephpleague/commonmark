@@ -20,19 +20,11 @@ use League\CommonMark\InlineParserContext;
 
 final class BangParser implements InlineParserInterface
 {
-    /**
-     * @return string[]
-     */
     public function getCharacters(): array
     {
         return ['!'];
     }
 
-    /**
-     * @param InlineParserContext $inlineContext
-     *
-     * @return bool
-     */
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();

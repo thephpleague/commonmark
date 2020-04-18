@@ -27,6 +27,11 @@ final class DelimiterStack
      */
     private $top;
 
+    /**
+     * @param DelimiterInterface $newDelimiter
+     *
+     * @return void
+     */
     public function push(DelimiterInterface $newDelimiter)
     {
         $newDelimiter->setPrevious($this->top);
@@ -38,11 +43,6 @@ final class DelimiterStack
         $this->top = $newDelimiter;
     }
 
-    /**
-     * @param DelimiterInterface|null $stackBottom
-     *
-     * @return DelimiterInterface|null
-     */
     private function findEarliest(DelimiterInterface $stackBottom = null): ?DelimiterInterface
     {
         $delimiter = $this->top;
@@ -55,6 +55,8 @@ final class DelimiterStack
 
     /**
      * @param DelimiterInterface $delimiter
+     *
+     * @return void
      */
     public function removeDelimiter(DelimiterInterface $delimiter)
     {
@@ -70,13 +72,13 @@ final class DelimiterStack
         }
     }
 
-    private function removeDelimiterAndNode(DelimiterInterface $delimiter)
+    private function removeDelimiterAndNode(DelimiterInterface $delimiter): void
     {
         $delimiter->getInlineNode()->detach();
         $this->removeDelimiter($delimiter);
     }
 
-    private function removeDelimitersBetween(DelimiterInterface $opener, DelimiterInterface $closer)
+    private function removeDelimitersBetween(DelimiterInterface $opener, DelimiterInterface $closer): void
     {
         $delimiter = $closer->getPrevious();
         while ($delimiter !== null && $delimiter !== $opener) {
@@ -88,6 +90,8 @@ final class DelimiterStack
 
     /**
      * @param DelimiterInterface|null $stackBottom
+     *
+     * @return void
      */
     public function removeAll(DelimiterInterface $stackBottom = null)
     {
@@ -98,6 +102,8 @@ final class DelimiterStack
 
     /**
      * @param string $character
+     *
+     * @return void
      */
     public function removeEarlierMatches(string $character)
     {
@@ -133,6 +139,12 @@ final class DelimiterStack
         return $opener;
     }
 
+    /**
+     * @param DelimiterInterface|null      $stackBottom
+     * @param DelimiterProcessorCollection $processors
+     *
+     * @return void
+     */
     public function processDelimiters(?DelimiterInterface $stackBottom, DelimiterProcessorCollection $processors)
     {
         $openersBottom = [];

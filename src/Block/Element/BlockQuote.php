@@ -21,23 +21,11 @@ use League\CommonMark\Cursor;
  */
 class BlockQuote extends AbstractBlock
 {
-    /**
-     * Returns true if this block can contain the given block as a child node
-     *
-     * @param AbstractBlock $block
-     *
-     * @return bool
-     */
     public function canContain(AbstractBlock $block): bool
     {
         return true;
     }
 
-    /**
-     * Whether this is a code block
-     *
-     * @return bool
-     */
     public function isCode(): bool
     {
         return false;
@@ -56,12 +44,6 @@ class BlockQuote extends AbstractBlock
         return false;
     }
 
-    /**
-     * @param Cursor $cursor
-     * @param int    $currentLineNumber
-     *
-     * @return bool
-     */
     public function shouldLastLineBeBlank(Cursor $cursor, int $currentLineNumber): bool
     {
         return false;

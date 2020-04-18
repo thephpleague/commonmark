@@ -33,17 +33,11 @@ final class InlineMentionParser implements InlineParserInterface
         $this->handleRegex = $handleRegex;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCharacters(): array
     {
         return ['@'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
@@ -77,11 +71,17 @@ final class InlineMentionParser implements InlineParserInterface
         return true;
     }
 
+    /**
+     * @return InlineMentionParser
+     */
     public static function createTwitterHandleParser()
     {
         return new self('https://twitter.com/%s', '/^[A-Za-z0-9_]{1,15}(?!\w)/');
     }
 
+    /**
+     * @return InlineMentionParser
+     */
     public static function createGithubHandleParser()
     {
         // RegEx adapted from https://github.com/shinnn/github-username-regex/blob/master/index.js

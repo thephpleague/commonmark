@@ -22,7 +22,7 @@ use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 final class QuoteRenderer implements InlineRendererInterface
 {
     /**
-     * @param AbstractInline           $inline
+     * @param Quote                    $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement|string|null

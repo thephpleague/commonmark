@@ -24,18 +24,12 @@ final class ReferenceMap implements ReferenceMapInterface
      */
     protected $references = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function addReference(ReferenceInterface $reference): void
     {
         $key = Reference::normalizeReference($reference->getLabel());
         $this->references[$key] = $reference;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function contains(string $label): bool
     {
         $label = Reference::normalizeReference($label);
@@ -43,9 +37,6 @@ final class ReferenceMap implements ReferenceMapInterface
         return isset($this->references[$label]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReference(string $label): ?ReferenceInterface
     {
         $label = Reference::normalizeReference($label);
@@ -57,9 +48,6 @@ final class ReferenceMap implements ReferenceMapInterface
         return $this->references[$label];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function listReferences(): iterable
     {
         return \array_values($this->references);

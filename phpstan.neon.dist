@@ -3,16 +3,8 @@ parameters:
   paths:
     - src
   ignoreErrors:
-    # Errors caused by chaining preg_ functions together
-    - '#expects string, string\|null given\.$#'
-    - '#expects array\|string, string\|null given\.$#'
-
-    - path: src/Delimiter/DelimiterStack.php
-      message: '#Cannot call method .+ on League\\CommonMark\\Delimiter\\DelimiterInterface\|null\.$#'
-    - path: src/Delimiter/DelimiterStack.php
-      message: '#expects League\\CommonMark\\Delimiter\\DelimiterInterface, League\\CommonMark\\Delimiter\\DelimiterInterface\|null given\.$#'
-    - path: src/Block/Element/Paragraph.php
-      message: '#\$finalStringContents \(string\) does not accept string\|null\.$#'
-    # "Errors" caused by deprecations
+    # "Errors" caused in deprecations
     - path: src/ConverterInterface.php
       message: '#If condition is always false#'
+    - path: src/Util/ArrayCollection.php
+      message: '#does not accept key int#'

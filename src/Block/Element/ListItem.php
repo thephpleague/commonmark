@@ -39,23 +39,11 @@ class ListItem extends AbstractBlock
         return $this->listData;
     }
 
-    /**
-     * Returns true if this block can contain the given block as a child node
-     *
-     * @param AbstractBlock $block
-     *
-     * @return bool
-     */
     public function canContain(AbstractBlock $block): bool
     {
         return true;
     }
 
-    /**
-     * Whether this is a code block
-     *
-     * @return bool
-     */
     public function isCode(): bool
     {
         return false;
@@ -78,12 +66,6 @@ class ListItem extends AbstractBlock
         return true;
     }
 
-    /**
-     * @param Cursor $cursor
-     * @param int    $currentLineNumber
-     *
-     * @return bool
-     */
     public function shouldLastLineBeBlank(Cursor $cursor, int $currentLineNumber): bool
     {
         return $cursor->isBlank() && $this->startLine < $currentLineNumber;

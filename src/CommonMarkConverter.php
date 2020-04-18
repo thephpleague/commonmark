@@ -32,7 +32,7 @@ class CommonMarkConverter extends Converter
     /**
      * Create a new commonmark converter instance.
      *
-     * @param array                     $config
+     * @param array<string, mixed>      $config
      * @param EnvironmentInterface|null $environment
      */
     public function __construct(array $config = [], EnvironmentInterface $environment = null)
@@ -50,9 +50,6 @@ class CommonMarkConverter extends Converter
         parent::__construct(new DocParser($environment), new HtmlRenderer($environment));
     }
 
-    /**
-     * @return EnvironmentInterface
-     */
     public function getEnvironment(): EnvironmentInterface
     {
         return $this->environment;

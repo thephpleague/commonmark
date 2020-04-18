@@ -52,9 +52,6 @@ final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAw
         return $block->getStringContent();
     }
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;

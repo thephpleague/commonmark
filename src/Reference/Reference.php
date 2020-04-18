@@ -32,7 +32,7 @@ final class Reference implements ReferenceInterface
     protected $title;
 
     /**
-     * @var array
+     * @var array<int, array<int, string>>
      *
      * Source: https://github.com/symfony/polyfill-mbstring/blob/master/Mbstring.php
      */
@@ -41,13 +41,6 @@ final class Reference implements ReferenceInterface
         ['μ', 's', 'ι',        'σ', 'β',        'θ',        'φ',        'π',        'κ',        'ρ',        'ε',        "\xE1\xB9\xA1", 'ι',            'ss',       'ss'],
     ];
 
-    /**
-     * Constructor
-     *
-     * @param string $label
-     * @param string $destination
-     * @param string $title
-     */
     public function __construct(string $label, string $destination, string $title)
     {
         $this->label = self::normalizeReference($label);
@@ -55,25 +48,16 @@ final class Reference implements ReferenceInterface
         $this->title = $title;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLabel(): string
     {
         return $this->label;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDestination(): string
     {
         return $this->destination;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return $this->title;

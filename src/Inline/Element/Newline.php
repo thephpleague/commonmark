@@ -20,19 +20,14 @@ class Newline extends AbstractInline
     const HARDBREAK = 0;
     const SOFTBREAK = 1;
 
+    /** @var int */
     protected $type;
 
-    /**
-     * @param int $breakType
-     */
     public function __construct(int $breakType = self::HARDBREAK)
     {
         $this->type = $breakType;
     }
 
-    /**
-     * @return int
-     */
     public function getType(): int
     {
         return $this->type;

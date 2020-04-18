@@ -18,6 +18,8 @@ interface ConfigurationAwareInterface
 {
     /**
      * @param ConfigurationInterface $configuration
+     *
+     * @return void
      */
     public function setConfiguration(ConfigurationInterface $configuration);
 }

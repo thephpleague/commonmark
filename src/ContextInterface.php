@@ -32,6 +32,8 @@ interface ContextInterface
 
     /**
      * @param AbstractBlock|null $block
+     *
+     * @return void
      */
     public function setTip(?AbstractBlock $block);
 
@@ -59,16 +61,22 @@ interface ContextInterface
 
     /**
      * @param AbstractBlock $container
+     *
+     * @return void
      */
     public function setContainer(AbstractBlock $container);
 
     /**
      * @param AbstractBlock $block
+     *
+     * @return void
      */
     public function addBlock(AbstractBlock $block);
 
     /**
      * @param AbstractBlock $replacement
+     *
+     * @return void
      */
     public function replaceContainerBlock(AbstractBlock $replacement);
 

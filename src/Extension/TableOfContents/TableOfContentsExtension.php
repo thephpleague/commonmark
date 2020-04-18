@@ -17,7 +17,7 @@ use League\CommonMark\Extension\ExtensionInterface;
 
 final class TableOfContentsExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment->addEventListener(DocumentParsedEvent::class, [new TableOfContentsBuilder(), 'onDocumentParsed'], -150);
     }

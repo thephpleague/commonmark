@@ -23,9 +23,7 @@ use League\CommonMark\Reference\ReferenceMapInterface;
  */
 class Document extends AbstractBlock
 {
-    /***
-     * @var ReferenceMapInterface
-     */
+    /** @var ReferenceMapInterface */
     protected $referenceMap;
 
     public function __construct(?ReferenceMapInterface $referenceMap = null)
@@ -43,23 +41,11 @@ class Document extends AbstractBlock
         return $this->referenceMap;
     }
 
-    /**
-     * Returns true if this block can contain the given block as a child node
-     *
-     * @param AbstractBlock $block
-     *
-     * @return bool
-     */
     public function canContain(AbstractBlock $block): bool
     {
         return true;
     }
 
-    /**
-     * Whether this is a code block
-     *
-     * @return bool
-     */
     public function isCode(): bool
     {
         return false;

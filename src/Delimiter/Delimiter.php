@@ -68,121 +68,81 @@ final class Delimiter implements DelimiterInterface
         $this->index = $index;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canClose(): bool
     {
         return $this->canClose;
     }
 
     /**
-     * {@inheritdoc}
+     * @param bool $canClose
+     *
+     * @return void
      */
     public function setCanClose(bool $canClose)
     {
         $this->canClose = $canClose;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canOpen(): bool
     {
         return $this->canOpen;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isActive(): bool
     {
         return $this->active;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setActive(bool $active)
     {
         $this->active = $active;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChar(): string
     {
         return $this->char;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIndex(): ?int
     {
         return $this->index;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNext(): ?DelimiterInterface
     {
         return $this->next;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setNext(?DelimiterInterface $next)
     {
         $this->next = $next;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLength(): int
     {
         return $this->length;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLength(int $length)
     {
         $this->length = $length;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOriginalLength(): int
     {
         return $this->originalLength;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getInlineNode(): AbstractStringContainer
     {
         return $this->inlineNode;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPrevious(): ?DelimiterInterface
     {
         return $this->previous;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPrevious(?DelimiterInterface $previous): DelimiterInterface
     {
         $this->previous = $previous;

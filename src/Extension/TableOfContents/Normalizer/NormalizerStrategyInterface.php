@@ -15,5 +15,5 @@ use League\CommonMark\Block\Element\ListItem;
 
 interface NormalizerStrategyInterface
 {
-    public function addItem(int $level, ListItem $listItemToAdd);
+    public function addItem(int $level, ListItem $listItemToAdd): void;
 }

@@ -19,18 +19,9 @@ namespace League\CommonMark\Reference;
  */
 interface ReferenceInterface
 {
-    /**
-     * @return string
-     */
     public function getLabel(): string;
 
-    /**
-     * @return string
-     */
     public function getDestination(): string;
 
-    /**
-     * @return string
-     */
     public function getTitle(): string;
 }

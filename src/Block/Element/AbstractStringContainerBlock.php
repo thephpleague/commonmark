@@ -24,7 +24,7 @@ use League\CommonMark\Util\ArrayCollection;
 abstract class AbstractStringContainerBlock extends AbstractBlock implements StringContainerInterface
 {
     /**
-     * @var ArrayCollection|string[]
+     * @var ArrayCollection<int, string>
      */
     protected $strings;
 
@@ -41,18 +41,11 @@ abstract class AbstractStringContainerBlock extends AbstractBlock implements Str
         $this->strings = new ArrayCollection();
     }
 
-    /**
-     * @param string $line
-     */
     public function addLine(string $line)
     {
         $this->strings[] = $line;
     }
 
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
     abstract public function handleRemainingContents(ContextInterface $context, Cursor $cursor);
 
     public function getStringContent(): string

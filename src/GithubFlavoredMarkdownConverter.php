@@ -19,7 +19,7 @@ class GithubFlavoredMarkdownConverter extends CommonMarkConverter
     /**
      * Create a new commonmark converter instance.
      *
-     * @param array                     $config
+     * @param array<string, mixed>      $config
      * @param EnvironmentInterface|null $environment
      */
     public function __construct(array $config = [], EnvironmentInterface $environment = null)

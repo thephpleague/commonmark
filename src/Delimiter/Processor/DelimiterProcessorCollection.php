@@ -50,7 +50,7 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
         return \array_keys($this->processorsByChar);
     }
 
-    private function addDelimiterProcessorForChar(string $delimiterChar, DelimiterProcessorInterface $processor)
+    private function addDelimiterProcessorForChar(string $delimiterChar, DelimiterProcessorInterface $processor): void
     {
         if (isset($this->processorsByChar[$delimiterChar])) {
             throw new \InvalidArgumentException(\sprintf('Delim processor for character "%s" already exists', $processor->getOpeningCharacter()));

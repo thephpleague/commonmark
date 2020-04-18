@@ -30,7 +30,10 @@ final class TableCell extends AbstractStringContainerBlock implements InlineCont
     const ALIGN_RIGHT = 'right';
     const ALIGN_CENTER = 'center';
 
+    /** @var string */
     public $type = self::TYPE_BODY;
+
+    /** @var string|null */
     public $align;
 
     public function __construct(string $string = '', string $type = self::TYPE_BODY, string $align = null)

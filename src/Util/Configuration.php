@@ -16,35 +16,27 @@ namespace League\CommonMark\Util;
 
 final class Configuration implements ConfigurationInterface
 {
+    /** @var array<string, mixed> */
     private $config;
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      */
     public function __construct(array $config = [])
     {
         $this->config = $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function merge(array $config = [])
     {
         $this->config = \array_replace_recursive($this->config, $config);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function replace(array $config = [])
     {
         $this->config = $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get(?string $key = null, $default = null)
     {
         if ($key === null) {
@@ -63,9 +55,6 @@ final class Configuration implements ConfigurationInterface
         return $this->config[$key];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set(string $key, $value = null)
     {
         // accept a/b/c as ['a']['b']['c']
@@ -101,7 +90,7 @@ final class Configuration implements ConfigurationInterface
      * @param string      $keyPath
      * @param string|null $value
      */
-    private function setByPath(string $keyPath, $value = null)
+    private function setByPath(string $keyPath, $value = null): void
     {
         $keyArr = \explode('/', $keyPath);
         $pointer = &$this->config;

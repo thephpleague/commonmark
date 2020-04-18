@@ -18,9 +18,6 @@ use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 
 final class StrikethroughRenderer implements InlineRendererInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Strikethrough)) {

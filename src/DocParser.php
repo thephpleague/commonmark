@@ -104,7 +104,7 @@ final class DocParser implements DocParserInterface
         return $document;
     }
 
-    private function incorporateLine(ContextInterface $context)
+    private function incorporateLine(ContextInterface $context): void
     {
         $context->getBlockCloser()->resetTip();
         $context->setBlocksParsed(false);
@@ -141,7 +141,7 @@ final class DocParser implements DocParserInterface
         }
     }
 
-    private function processInlines(ContextInterface $context)
+    private function processInlines(ContextInterface $context): void
     {
         $walker = $context->getDocument()->walker();
 
@@ -163,7 +163,7 @@ final class DocParser implements DocParserInterface
      * @param ContextInterface $context
      * @param Cursor           $cursor
      */
-    private function resetContainer(ContextInterface $context, Cursor $cursor)
+    private function resetContainer(ContextInterface $context, Cursor $cursor): void
     {
         $container = $context->getDocument();
 
@@ -192,7 +192,7 @@ final class DocParser implements DocParserInterface
      * @param ContextInterface $context
      * @param Cursor           $cursor
      */
-    private function parseBlocks(ContextInterface $context, Cursor $cursor)
+    private function parseBlocks(ContextInterface $context, Cursor $cursor): void
     {
         while (!$context->getContainer()->isCode() && !$context->getBlocksParsed()) {
             $parsed = false;
@@ -210,12 +210,6 @@ final class DocParser implements DocParserInterface
         }
     }
 
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     *
-     * @return bool
-     */
     private function handleLazyParagraphContinuation(ContextInterface $context, Cursor $cursor): bool
     {
         $tip = $context->getTip();
@@ -234,11 +228,7 @@ final class DocParser implements DocParserInterface
         return false;
     }
 
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
-    private function setAndPropagateLastLineBlank(ContextInterface $context, Cursor $cursor)
+    private function setAndPropagateLastLineBlank(ContextInterface $context, Cursor $cursor): void
     {
         $container = $context->getContainer();
 
@@ -257,7 +247,7 @@ final class DocParser implements DocParserInterface
         }
     }
 
-    private function assertValidUTF8(string $input)
+    private function assertValidUTF8(string $input): void
     {
         if (!\mb_check_encoding($input, 'UTF-8')) {
             throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');

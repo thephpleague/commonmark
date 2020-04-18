@@ -34,26 +34,17 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     /** @var ConfigurationInterface */
     private $config;
 
-    /**
-     * @param SlugGeneratorInterface|null $slugGenerator
-     */
     public function __construct(SlugGeneratorInterface $slugGenerator = null)
     {
         $this->slugGenerator = $slugGenerator ?? new DefaultSlugGenerator();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;
     }
 
-    /**
-     * @param DocumentParsedEvent $e
-     */
-    public function __invoke(DocumentParsedEvent $e)
+    public function __invoke(DocumentParsedEvent $e): void
     {
         $walker = $e->getDocument()->walker();
 
@@ -65,7 +56,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
     }
 
-    private function addHeadingLink(Heading $heading)
+    private function addHeadingLink(Heading $heading): void
     {
         $text = $this->getChildText($heading);
         $slug = $this->slugGenerator->createSlug($text);
@@ -86,7 +77,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
     }
 
-    private function getChildText(Node $node)
+    private function getChildText(Node $node): string
     {
         $text = '';
 

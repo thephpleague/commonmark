@@ -20,9 +20,6 @@ use League\CommonMark\Extension\ExtensionInterface;
  */
 final class HeadingPermalinkExtension implements ExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function register(ConfigurableEnvironmentInterface $environment)
     {
         $environment->addEventListener(DocumentParsedEvent::class, new HeadingPermalinkProcessor(), -100);

@@ -22,7 +22,7 @@ use League\CommonMark\Node\Node;
  */
 final class AdjacentTextMerger
 {
-    public static function mergeChildNodes(Node $node)
+    public static function mergeChildNodes(Node $node): void
     {
         // No children or just one child node, no need for merging
         if ($node->firstChild() === $node->lastChild() || $node->firstChild() === null || $node->lastChild() === null) {
@@ -32,7 +32,7 @@ final class AdjacentTextMerger
         self::mergeTextNodesInclusive($node->firstChild(), $node->lastChild());
     }
 
-    public static function mergeTextNodesBetweenExclusive(Node $fromNode, Node $toNode)
+    public static function mergeTextNodesBetweenExclusive(Node $fromNode, Node $toNode): void
     {
         // No nodes between them
         if ($fromNode === $toNode || $fromNode->next() === $toNode || $fromNode->next() === null || $toNode->previous() === null) {
@@ -42,7 +42,7 @@ final class AdjacentTextMerger
         self::mergeTextNodesInclusive($fromNode->next(), $toNode->previous());
     }
 
-    private static function mergeTextNodesInclusive(Node $fromNode, Node $toNode)
+    private static function mergeTextNodesInclusive(Node $fromNode, Node $toNode): void
     {
         $first = null;
         $last = null;
@@ -68,7 +68,7 @@ final class AdjacentTextMerger
         self::mergeIfNeeded($first, $last);
     }
 
-    private static function mergeIfNeeded(?Text $first, ?Text $last)
+    private static function mergeIfNeeded(?Text $first, ?Text $last): void
     {
         if ($first === null || $last === null || $first === $last) {
             // No merging needed

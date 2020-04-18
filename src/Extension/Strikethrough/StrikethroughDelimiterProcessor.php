@@ -17,33 +17,21 @@ use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getOpeningCharacter(): string
     {
         return '~';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClosingCharacter(): string
     {
         return '~';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMinLength(): int
     {
         return 2;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
     {
         $min = \min($opener->getLength(), $closer->getLength());
@@ -51,9 +39,6 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
         return $min >= 2 ? $min : 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
     {
         $strikethrough = new Strikethrough();

@@ -22,12 +22,6 @@ use League\CommonMark\Util\RegexHelper;
 
 final class HtmlBlockParser implements BlockParserInterface
 {
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     *
-     * @return bool
-     */
     public function parse(ContextInterface $context, Cursor $cursor): bool
     {
         if ($cursor->isIndented()) {

@@ -46,25 +46,16 @@ abstract class Node
      */
     protected $lastChild;
 
-    /**
-     * @return Node|null
-     */
     public function previous(): ?Node
     {
         return $this->previous;
     }
 
-    /**
-     * @return Node|null
-     */
     public function next(): ?Node
     {
         return $this->next;
     }
 
-    /**
-     * @return Node|null
-     */
     public function parent(): ?Node
     {
         return $this->parent;
@@ -72,6 +63,8 @@ abstract class Node
 
     /**
      * @param Node|null $node
+     *
+     * @return void
      */
     protected function setParent(Node $node = null)
     {
@@ -83,6 +76,8 @@ abstract class Node
      * Inserts the $sibling node after $this
      *
      * @param Node $sibling
+     *
+     * @return void
      */
     public function insertAfter(Node $sibling)
     {
@@ -106,6 +101,8 @@ abstract class Node
      * Inserts the $sibling node before $this
      *
      * @param Node $sibling
+     *
+     * @return void
      */
     public function insertBefore(Node $sibling)
     {
@@ -125,6 +122,11 @@ abstract class Node
         }
     }
 
+    /**
+     * @param Node $replacement
+     *
+     * @return void
+     */
     public function replaceWith(Node $replacement)
     {
         $replacement->detach();
@@ -132,6 +134,9 @@ abstract class Node
         $this->detach();
     }
 
+    /**
+     * @return void
+     */
     public function detach()
     {
         if ($this->previous) {
@@ -152,22 +157,13 @@ abstract class Node
         $this->depth = 0;
     }
 
-    /**
-     * @return bool
-     */
     abstract public function isContainer(): bool;
 
-    /**
-     * @return Node|null
-     */
     public function firstChild(): ?Node
     {
         return $this->firstChild;
     }
 
-    /**
-     * @return Node|null
-     */
     public function lastChild(): ?Node
     {
         return $this->lastChild;
@@ -188,6 +184,8 @@ abstract class Node
 
     /**
      * @param Node $child
+     *
+     * @return void
      */
     public function appendChild(Node $child)
     {
@@ -204,6 +202,8 @@ abstract class Node
      * Adds $child as the very first child of $this
      *
      * @param Node $child
+     *
+     * @return void
      */
     public function prependChild(Node $child)
     {
@@ -218,6 +218,8 @@ abstract class Node
 
     /**
      * Detaches all child nodes of given node
+     *
+     * @return void
      */
     public function detachChildren()
     {
@@ -230,7 +232,7 @@ abstract class Node
     /**
      * Replace all children of given node with collection of another
      *
-     * @param iterable $children
+     * @param iterable<Node> $children
      *
      * @return $this
      */
@@ -244,17 +246,11 @@ abstract class Node
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getDepth(): int
     {
         return $this->depth;
     }
 
-    /**
-     * @return NodeWalker
-     */
     public function walker(): NodeWalker
     {
         return new NodeWalker($this);

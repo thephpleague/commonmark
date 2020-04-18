@@ -19,7 +19,7 @@ use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 final class TaskListItemMarkerRenderer implements InlineRendererInterface
 {
     /**
-     * @param AbstractInline           $inline
+     * @param TaskListItemMarker       $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement|string|null

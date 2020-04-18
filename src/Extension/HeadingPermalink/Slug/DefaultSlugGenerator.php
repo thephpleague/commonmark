@@ -16,9 +16,6 @@ namespace League\CommonMark\Extension\HeadingPermalink\Slug;
  */
 final class DefaultSlugGenerator implements SlugGeneratorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function createSlug(string $input): string
     {
         // Trim whitespace

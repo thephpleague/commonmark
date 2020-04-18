@@ -23,8 +23,11 @@ use League\CommonMark\Cursor;
 
 final class Table extends AbstractStringContainerBlock implements InlineContainerInterface
 {
+    /** @var TableSection */
     private $head;
+    /** @var TableSection */
     private $body;
+    /** @var \Closure */
     private $parser;
 
     public function __construct(\Closure $parser)

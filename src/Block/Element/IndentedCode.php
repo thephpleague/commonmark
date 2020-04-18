@@ -19,23 +19,11 @@ use League\CommonMark\Cursor;
 
 class IndentedCode extends AbstractStringContainerBlock
 {
-    /**
-     * Returns true if this block can contain the given block as a child node
-     *
-     * @param AbstractBlock $block
-     *
-     * @return bool
-     */
     public function canContain(AbstractBlock $block): bool
     {
         return false;
     }
 
-    /**
-     * Whether this is a code block
-     *
-     * @return bool
-     */
     public function isCode(): bool
     {
         return true;
@@ -75,10 +63,6 @@ class IndentedCode extends AbstractStringContainerBlock
         $this->finalStringContents = $tmp;
     }
 
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     */
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
     {
         /** @var self $tip */

@@ -28,7 +28,7 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
         $this->toc = $toc;
     }
 
-    public function addItem(int $level, ListItem $listItemToAdd)
+    public function addItem(int $level, ListItem $listItemToAdd): void
     {
         \end($this->listItemStack);
         $previousLevel = \key($this->listItemStack);
