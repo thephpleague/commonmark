@@ -74,7 +74,7 @@ The `GithubFlavoredMarkdownConverter` shown earlier is a drop-in replacement for
  - Tables
  - Task Lists
 
-See the [Extensions documentation](https://commonmark.thephpleague.com/1.0/customization/extensions/) for more details on how to include only certain GFM features if you don't want them all.
+See the [Extensions documentation](https://commonmark.thephpleague.com/customization/extensions/) for more details on how to include only certain GFM features if you don't want them all.
 
 ## 🗃️ Related Packages
 
@@ -91,7 +91,7 @@ See the [Extensions documentation](https://commonmark.thephpleague.com/1.0/custo
 
 ### Included Extensions
 
-See [our extension documentation](https://commonmark.thephpleague.com/1.0/customization/extensions/#included-extensions) for a full list of extensions bundled with this library.
+See [our extension documentation](https://commonmark.thephpleague.com/customization/extensions/#included-extensions) for a full list of extensions bundled with this library.
 
 ### Community Extensions
 
