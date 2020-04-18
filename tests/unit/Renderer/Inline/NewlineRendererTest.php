@@ -27,7 +27,7 @@ class NewlineRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new NewlineRenderer();
     }
@@ -39,8 +39,8 @@ class NewlineRendererTest extends TestCase
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('<br />', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('<br />', $result);
     }
 
     public function testRenderSoftbreak()
@@ -51,15 +51,14 @@ class NewlineRendererTest extends TestCase
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('::softbreakChar::', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('::softbreakChar::', $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

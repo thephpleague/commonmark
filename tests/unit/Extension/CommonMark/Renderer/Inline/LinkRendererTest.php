@@ -29,7 +29,7 @@ class LinkRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new LinkRenderer();
         $this->renderer->setConfiguration(new Configuration());
@@ -45,10 +45,10 @@ class LinkRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('a', $result->getTagName());
-        $this->assertContains('http://example.com/foo.html', $result->getAttribute('href'));
-        $this->assertContains('::title::', $result->getAttribute('title'));
-        $this->assertContains('::inlines::', $result->getContents(true));
-        $this->assertContains('::id::', $result->getAttribute('id'));
+        $this->assertStringContainsString('http://example.com/foo.html', $result->getAttribute('href'));
+        $this->assertStringContainsString('::title::', $result->getAttribute('title'));
+        $this->assertStringContainsString('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::id::', $result->getAttribute('id'));
     }
 
     public function testRenderWithoutTitle()
@@ -60,9 +60,9 @@ class LinkRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('a', $result->getTagName());
-        $this->assertContains('http://example.com/foo.html', $result->getAttribute('href'));
+        $this->assertStringContainsString('http://example.com/foo.html', $result->getAttribute('href'));
         $this->assertNull($result->getAttribute('title'));
-        $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::inlines::', $result->getContents(true));
     }
 
     public function testRenderAllowUnsafeLink()
@@ -77,7 +77,7 @@ class LinkRendererTest extends TestCase
         $result = $this->renderer->render($inline, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
-        $this->assertContains('javascript:void(0)', $result->getAttribute('href'));
+        $this->assertStringContainsString('javascript:void(0)', $result->getAttribute('href'));
     }
 
     public function testRenderDisallowUnsafeLink()
@@ -95,11 +95,10 @@ class LinkRendererTest extends TestCase
         $this->assertEquals('', $result->getAttribute('href'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -116,8 +115,8 @@ class LinkRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('a', $result->getTagName());
-        $this->assertContains('http://example.com/foo.html', $result->getAttribute('href'));
-        $this->assertContains('noopener', $result->getAttribute('rel'));
-        $this->assertContains('noreferrer', $result->getAttribute('rel'));
+        $this->assertStringContainsString('http://example.com/foo.html', $result->getAttribute('href'));
+        $this->assertStringContainsString('noopener', $result->getAttribute('rel'));
+        $this->assertStringContainsString('noreferrer', $result->getAttribute('rel'));
     }
 }

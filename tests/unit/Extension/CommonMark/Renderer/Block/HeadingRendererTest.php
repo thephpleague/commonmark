@@ -28,7 +28,7 @@ class HeadingRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new HeadingRenderer();
     }
@@ -49,7 +49,7 @@ class HeadingRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals($expectedTag, $result->getTagName());
-        $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::inlines::', $result->getContents(true));
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
@@ -65,11 +65,10 @@ class HeadingRendererTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

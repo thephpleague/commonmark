@@ -35,12 +35,11 @@ class DelimiterProcessorCollectionTest extends TestCase
         $this->assertSame($processor2, $collection->getDelimiterProcessor('_'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Delim processor for character "*" already exists
-     */
     public function testAddProcessorForCharacterAlreadyRegistered()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectErrorMessage('Delim processor for character "*" already exists');
+
         $collection = new DelimiterProcessorCollection();
 
         $processor1 = $this->getMockForAbstractClass(DelimiterProcessorInterface::class);

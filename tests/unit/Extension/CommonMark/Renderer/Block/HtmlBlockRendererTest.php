@@ -29,7 +29,7 @@ class HtmlBlockRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new HtmlBlockRenderer();
         $this->renderer->setConfiguration(new Configuration());
@@ -49,8 +49,8 @@ class HtmlBlockRendererTest extends TestCase
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('<button>Test</button>', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('<button>Test</button>', $result);
     }
 
     public function testRenderAllowHtml()
@@ -71,8 +71,8 @@ class HtmlBlockRendererTest extends TestCase
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('<button>Test</button>', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('<button>Test</button>', $result);
     }
 
     public function testRenderEscapeHtml()
@@ -93,8 +93,8 @@ class HtmlBlockRendererTest extends TestCase
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('&lt;button class="test"&gt;Test&lt;/button&gt;', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('&lt;button class="test"&gt;Test&lt;/button&gt;', $result);
     }
 
     public function testRenderStripHtml()
@@ -115,15 +115,14 @@ class HtmlBlockRendererTest extends TestCase
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
+        $this->assertIsString($result);
         $this->assertEquals('', $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

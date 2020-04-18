@@ -50,11 +50,10 @@ class TaskListItemMarkerRendererTest extends TestCase
         $this->assertNull($result->getAttribute('checked'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testWithInvalidInlineElement()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $renderer = new TaskListItemMarkerRenderer();
         $htmlRenderer = $this->getMockForAbstractClass(ElementRendererInterface::class);
 

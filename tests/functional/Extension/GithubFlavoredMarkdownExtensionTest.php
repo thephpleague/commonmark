@@ -16,7 +16,7 @@ use League\CommonMark\Tests\Functional\AbstractSpecTest;
 
 class GithubFlavoredMarkdownExtensionTest extends AbstractSpecTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new GithubFlavoredMarkdownConverter();
     }

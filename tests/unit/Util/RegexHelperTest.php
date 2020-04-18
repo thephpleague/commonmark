@@ -330,11 +330,10 @@ class RegexHelperTest extends TestCase
         yield [HtmlBlock::TYPE_7_MISC_ELEMENT];
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidHtmlBlockOpenRegex()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         RegexHelper::getHtmlBlockOpenRegex(8);
     }
 
@@ -361,10 +360,11 @@ class RegexHelperTest extends TestCase
      * @param int $type
      *
      * @dataProvider blockTypesWithInvalidCloserRegexes
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidHtmlBlockCloseRegex(int $type)
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         RegexHelper::getHtmlBlockCloseRegex($type);
     }
 

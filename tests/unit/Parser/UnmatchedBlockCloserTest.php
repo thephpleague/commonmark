@@ -36,11 +36,10 @@ class UnmatchedBlockCloserTest extends TestCase
         $this->assertTrue($closer->areAllClosed());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testResetTipWithNullTip()
     {
+        $this->expectException(\RuntimeException::class);
+
         $context = $this->getMockForAbstractClass(ContextInterface::class);
         $context->method('getTip')->willReturn(null);
 

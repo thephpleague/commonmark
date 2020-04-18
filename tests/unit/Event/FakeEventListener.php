@@ -31,7 +31,7 @@ class FakeEventListener implements ConfigurationAwareInterface, EnvironmentAware
     /**
      * {@inheritdoc}
      */
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->configuration = $configuration;
     }
@@ -39,7 +39,7 @@ class FakeEventListener implements ConfigurationAwareInterface, EnvironmentAware
     /**
      * {@inheritdoc}
      */
-    public function setEnvironment(EnvironmentInterface $environment)
+    public function setEnvironment(EnvironmentInterface $environment): void
     {
         $this->environment = $environment;
     }

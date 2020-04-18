@@ -26,7 +26,7 @@ class LocalDataTest extends AbstractLocalDataTest
      */
     protected $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new CommonMarkConverter();
     }

@@ -29,7 +29,7 @@ class ImageRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new ImageRenderer();
         $this->renderer->setConfiguration(new Configuration());
@@ -45,11 +45,11 @@ class ImageRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('img', $result->getTagName());
-        $this->assertContains('http://example.com/foo.jpg', $result->getAttribute('src'));
-        $this->assertContains('foo.jpg', $result->getAttribute('src'));
-        $this->assertContains('::inlines::', $result->getAttribute('alt'));
-        $this->assertContains('::title::', $result->getAttribute('title'));
-        $this->assertContains('::id::', $result->getAttribute('id'));
+        $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
+        $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
+        $this->assertStringContainsString('::inlines::', $result->getAttribute('alt'));
+        $this->assertStringContainsString('::title::', $result->getAttribute('title'));
+        $this->assertStringContainsString('::id::', $result->getAttribute('id'));
     }
 
     public function testRenderWithoutTitle()
@@ -61,9 +61,9 @@ class ImageRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('img', $result->getTagName());
-        $this->assertContains('http://example.com/foo.jpg', $result->getAttribute('src'));
-        $this->assertContains('foo.jpg', $result->getAttribute('src'));
-        $this->assertContains('::inlines::', $result->getAttribute('alt'));
+        $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
+        $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
+        $this->assertStringContainsString('::inlines::', $result->getAttribute('alt'));
         $this->assertNull($result->getAttribute('title'));
     }
 
@@ -79,7 +79,7 @@ class ImageRendererTest extends TestCase
         $result = $this->renderer->render($inline, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
-        $this->assertContains('javascript:void(0)', $result->getAttribute('src'));
+        $this->assertStringContainsString('javascript:void(0)', $result->getAttribute('src'));
     }
 
     public function testRenderDisallowUnsafeLink()
@@ -97,11 +97,10 @@ class ImageRendererTest extends TestCase
         $this->assertEquals('', $result->getAttribute('src'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

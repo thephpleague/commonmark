@@ -12,7 +12,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit\Extension\SmartPunct;
+namespace League\CommonMark\Tests\Functional\Extension\SmartPunct;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
@@ -29,7 +29,7 @@ class SmartPunctFunctionalTest extends TestCase
      */
     protected $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new SmartPunctExtension());

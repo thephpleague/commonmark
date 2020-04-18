@@ -31,7 +31,7 @@ class IndentedCodeRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new IndentedCodeRenderer();
     }
@@ -60,14 +60,13 @@ class IndentedCodeRendererTest extends TestCase
         $this->assertEquals('code', $code->getTagName());
         $this->assertNull($code->getAttribute('class'));
         $this->assertEquals(['id' => 'foo'], $code->getAllAttributes());
-        $this->assertContains('hello world', $code->getContents(true));
+        $this->assertStringContainsString('hello world', $code->getContents(true));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

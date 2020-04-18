@@ -24,11 +24,10 @@ class HtmlRendererTest extends TestCase
         $renderer->renderBlock(new Paragraph());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testRenderBlockWithMissingRenderer()
     {
+        $this->expectException(\RuntimeException::class);
+
         $environment = $this->createMock(EnvironmentInterface::class);
         $environment->method('getBlockRenderersForClass')->willReturn([]);
 
@@ -48,11 +47,10 @@ class HtmlRendererTest extends TestCase
         $renderer->renderInline(new Text());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testRenderInlineWithMissingRenderer()
     {
+        $this->expectException(\RuntimeException::class);
+
         $environment = $this->createMock(EnvironmentInterface::class);
         $environment->method('getInlineRenderersForClass')->willReturn([]);
 

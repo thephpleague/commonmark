@@ -29,7 +29,7 @@ final class SmartPunctExtensionTest extends TestCase
      */
     protected $environment;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->environment = Environment::createCommonMarkEnvironment();
         $this->environment->addExtension(new SmartPunctExtension());

@@ -17,6 +17,7 @@ namespace League\CommonMark\Tests\Unit;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use PHPUnit\Framework\TestCase;
 
@@ -61,11 +62,10 @@ class CommonMarkConverterTest extends TestCase
         $this->assertSame($mockEnvironment, $environment);
     }
 
-    /**
-     * @expectedException \League\CommonMark\Exception\UnexpectedEncodingException
-     */
     public function testConvertingInvalidUTF8()
     {
+        $this->expectException(UnexpectedEncodingException::class);
+
         $converter = new CommonMarkConverter();
         $converter->convertToHtml("\x09\xca\xca");
     }

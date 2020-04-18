@@ -29,7 +29,7 @@ class ListItemRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new ListItemRenderer();
     }
@@ -47,11 +47,10 @@ class ListItemRendererTest extends TestCase
         $this->assertEquals('<li id="foo">::blocks::</li>', $result->__toString());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 
