@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Delimiter;
 
-use League\CommonMark\Inline\Element\AbstractStringContainer;
+use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class Delimiter implements DelimiterInterface
 {

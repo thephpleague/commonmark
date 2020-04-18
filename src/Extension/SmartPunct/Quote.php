@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Extension\SmartPunct;
 
-use League\CommonMark\Inline\Element\AbstractStringContainer;
+use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class Quote extends AbstractStringContainer
 {

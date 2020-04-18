@@ -18,7 +18,7 @@
 namespace League\CommonMark\Delimiter;
 
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
-use League\CommonMark\Inline\AdjacentTextMerger;
+use League\CommonMark\Node\Inline\AdjacentTextMerger;
 
 final class DelimiterStack
 {

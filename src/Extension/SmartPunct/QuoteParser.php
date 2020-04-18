@@ -15,8 +15,8 @@
 namespace League\CommonMark\Extension\SmartPunct;
 
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\InlineParserContext;
+use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 final class QuoteParser implements InlineParserInterface

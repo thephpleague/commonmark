@@ -10,7 +10,7 @@ You can manually add the GFM extension to your environment like this:
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 
 $environment = Environment::createCommonMarkEnvironment();
@@ -32,7 +32,7 @@ Or, if you only want a subset of GFM extensions, you can add them individually l
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;

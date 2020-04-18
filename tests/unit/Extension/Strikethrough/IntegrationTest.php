@@ -11,10 +11,10 @@
 
 namespace League\CommonMark\Tests\Unit\Extension\Strikethrough;
 
-use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\Parser\DocParser;
+use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 class IntegrationTest extends TestCase

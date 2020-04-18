@@ -16,7 +16,7 @@ namespace League\CommonMark\Tests\Functional\Delimiter;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
-use League\CommonMark\Inline\Element\AbstractStringContainer;
+use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class UppercaseDelimiterProcessor implements DelimiterProcessorInterface
 {

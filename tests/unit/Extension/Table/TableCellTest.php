@@ -11,11 +11,11 @@
 
 namespace League\CommonMark\Tests\Unit\Extension\Table;
 
-use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\ContextInterface;
-use League\CommonMark\Cursor;
 use League\CommonMark\Extension\Table\TableCell;
 use League\CommonMark\Extension\Table\TableRow;
+use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Parser\ContextInterface;
+use League\CommonMark\Parser\Cursor;
 use PHPUnit\Framework\TestCase;
 
 final class TableCellTest extends TestCase

@@ -11,9 +11,9 @@
 
 namespace League\CommonMark\Tests\Unit\Extension\Strikethrough;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Renderer\ElementRendererInterface;
 
 class FakeHtmlRenderer implements ElementRendererInterface
 {

@@ -11,10 +11,10 @@
 
 namespace League\CommonMark\Tests\Unit\Event;
 
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Parser\DocParser;
 use PHPUnit\Framework\TestCase;
 
 final class DocumentParsedEventTest extends TestCase

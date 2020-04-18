@@ -3,7 +3,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 
 $converter = new CommonMarkConverter([
     'html_input' => Environment::HTML_INPUT_ESCAPE,

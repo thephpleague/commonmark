@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Util;
 
-use League\CommonMark\Block\Element\HtmlBlock;
+use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 
 /**
  * Provides regular expressions and utilities for parsing Markdown

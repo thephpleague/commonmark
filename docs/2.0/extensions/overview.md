@@ -13,7 +13,7 @@ For example, if you wanted to enable Github-Flavored Markdown, simply do this:
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 
 $environment = Environment::createCommonMarkEnvironment();
@@ -27,7 +27,7 @@ Or maybe you only want a subset of GFM extensions, plus the [Smart Punctuation e
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;

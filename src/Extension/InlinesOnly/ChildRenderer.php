@@ -11,12 +11,12 @@
 
 namespace League\CommonMark\Extension\InlinesOnly;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\InlineContainerInterface;
-use League\CommonMark\Block\Renderer\BlockRendererInterface;
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Block\InlineContainerInterface;
+use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Renderer\ElementRendererInterface;
 
 /**
  * Simply renders child elements as-is, adding newlines as needed.

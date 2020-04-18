@@ -12,7 +12,7 @@
 namespace League\CommonMark\Tests\Functional\Extension\HeadingPermalink;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use PHPUnit\Framework\TestCase;

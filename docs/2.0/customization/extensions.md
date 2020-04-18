@@ -13,7 +13,7 @@ To create an extension, simply create a new class implementing `ExtensionInterfa
 
 ```php
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 
 final class EmojiExtension implements ExtensionInterface
 {
@@ -32,7 +32,7 @@ To hook up your new extension to the `Environment`, simply do this:
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 
 
 $environment = Environment::createCommonMarkEnvironment();

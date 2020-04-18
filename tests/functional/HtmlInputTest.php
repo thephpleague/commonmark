@@ -15,7 +15,7 @@
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use PHPUnit\Framework\TestCase;
 
 class HtmlInputTest extends TestCase

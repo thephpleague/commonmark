@@ -16,7 +16,7 @@ Configure your `Environment` as usual and simply add the `TaskListExtension` pro
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go

@@ -17,7 +17,7 @@ Configure your `Environment` as usual and simply add the `ExternalLinkExtension`
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
@@ -77,11 +77,12 @@ This option allows you to provide a `string` containing one or more HTML classes
 When an external link is detected, the `ExternalLinkProcessor` will set the `external` data option on the `Link` node to either `true` or `false`.  You can therefore create a [custom link renderer](/2.0/customization/inline-rendering/) which checks this value and behaves accordingly:
 
 ```php
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Inline\Element\Link;
-use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+
 class MyCustomLinkRenderer implements InlineRendererInterface
 {
 

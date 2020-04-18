@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Extension\SmartPunct;
 
-use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\InlineParserContext;
+use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\InlineParserContext;
 
 final class PunctuationParser implements InlineParserInterface
 {

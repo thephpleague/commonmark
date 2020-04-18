@@ -12,7 +12,7 @@
 namespace League\CommonMark\Tests\Unit\Delimiter;
 
 use League\CommonMark\Delimiter\Delimiter;
-use League\CommonMark\Inline\Element\AbstractStringContainer;
+use League\CommonMark\Node\Inline\AbstractStringContainer;
 use PHPUnit\Framework\TestCase;
 
 class DelimiterTest extends TestCase

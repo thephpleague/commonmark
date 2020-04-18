@@ -11,8 +11,8 @@
 
 namespace League\CommonMark\Event;
 
-use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Input\MarkdownInputInterface;
+use League\CommonMark\Node\Block\Document;
 
 /**
  * Event dispatched when the document is about to be parsed

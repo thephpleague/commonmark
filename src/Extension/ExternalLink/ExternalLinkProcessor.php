@@ -11,9 +11,9 @@
 
 namespace League\CommonMark\Extension\ExternalLink;
 
-use League\CommonMark\EnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 
 final class ExternalLinkProcessor
 {

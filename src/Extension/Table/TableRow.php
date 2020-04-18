@@ -15,9 +15,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Cursor;
+use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Node;
+use League\CommonMark\Parser\Cursor;
 
 final class TableRow extends AbstractBlock
 {

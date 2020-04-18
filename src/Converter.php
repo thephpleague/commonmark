@@ -11,6 +11,9 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Parser\DocParserInterface;
+use League\CommonMark\Renderer\ElementRendererInterface;
+
 /**
  * Converts CommonMark-compatible Markdown to HTML.
  *

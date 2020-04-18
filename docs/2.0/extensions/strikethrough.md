@@ -16,7 +16,7 @@ This extension can be added to any new `Environment`:
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go

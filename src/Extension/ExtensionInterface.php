@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Extension;
 
-use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 
 interface ExtensionInterface
 {

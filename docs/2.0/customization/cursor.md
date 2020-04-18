@@ -18,7 +18,7 @@ As of now, only UTF-8 (and, by extension, ASCII) encoding is supported.
 Instantiating a new `Cursor` is as simple as:
 
 ```php
-use League\CommonMark\Cursor;
+use League\CommonMark\Parser\Cursor;
 
 $cursor = new Cursor('Hello World!');
 ```

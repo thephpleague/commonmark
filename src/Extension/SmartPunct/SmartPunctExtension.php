@@ -14,13 +14,13 @@
 
 namespace League\CommonMark\Extension\SmartPunct;
 
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Block\Renderer as CoreBlockRenderer;
-use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Inline\Renderer as CoreInlineRenderer;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Renderer\Block as CoreBlockRenderer;
+use League\CommonMark\Renderer\Inline as CoreInlineRenderer;
 
 final class SmartPunctExtension implements ExtensionInterface
 {

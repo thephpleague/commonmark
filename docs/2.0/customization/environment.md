@@ -14,7 +14,7 @@ A pre-configured `Environment` can be obtained like this:
 ~~~php
 <?php
 
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 
 $environment = Environment::createCommonMarkEnvironment();
 ~~~

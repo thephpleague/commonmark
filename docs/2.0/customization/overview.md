@@ -24,9 +24,9 @@ The actual process of converting Markdown to HTML has several steps:
 ~~~php
 <?php
 
-use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\Parser\DocParser;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Renderer\HtmlRenderer;
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->setConfig([

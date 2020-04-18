@@ -11,14 +11,14 @@
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
-use League\CommonMark\Block\Element\Heading;
+use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
 use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
-use League\CommonMark\Util\ConfigurationAwareInterface;
-use League\CommonMark\Util\ConfigurationInterface;
 
 /**
  * Searches the Document for Heading elements and adds HeadingPermalinks to each one

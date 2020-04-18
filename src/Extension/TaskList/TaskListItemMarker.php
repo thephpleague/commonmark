@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Extension\TaskList;
 
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Inline\AbstractInline;
 
 final class TaskListItemMarker extends AbstractInline
 {

@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Extension\TableOfContents;
 
-use League\CommonMark\Block\Element\ListBlock;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 
 final class TableOfContents extends ListBlock
 {

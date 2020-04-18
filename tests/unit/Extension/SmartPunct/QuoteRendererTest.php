@@ -14,10 +14,10 @@
 
 namespace League\CommonMark\Tests\Unit\Extension\SmartPunct;
 
-use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Extension\SmartPunct\Quote;
 use League\CommonMark\Extension\SmartPunct\QuoteRenderer;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Renderer\ElementRendererInterface;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -15,9 +15,9 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\ConfigurableEnvironmentInterface;
-use League\CommonMark\Environment;
-use League\CommonMark\Extension\CommonMarkCoreExtension;
+use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use PHPUnit\Framework\TestCase;
 
 class CommonMarkConverterTest extends TestCase

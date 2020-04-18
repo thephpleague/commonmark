@@ -11,9 +11,9 @@
 
 namespace League\CommonMark\Extension\Autolink;
 
-use League\CommonMark\Inline\Element\Link;
-use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\InlineParserContext;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\InlineParserContext;
 
 final class InlineMentionParser implements InlineParserInterface
 {

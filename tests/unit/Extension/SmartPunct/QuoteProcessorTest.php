@@ -16,7 +16,7 @@ namespace League\CommonMark\Tests\Unit\Extension\SmartPunct;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Extension\SmartPunct\QuoteProcessor;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Node\Inline\Text;
 use PHPUnit\Framework\TestCase;
 
 /**

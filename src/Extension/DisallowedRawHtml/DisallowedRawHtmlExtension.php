@@ -11,12 +11,12 @@
 
 namespace League\CommonMark\Extension\DisallowedRawHtml;
 
-use League\CommonMark\Block\Element\HtmlBlock;
-use League\CommonMark\Block\Renderer\HtmlBlockRenderer;
-use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
+use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
+use League\CommonMark\Extension\CommonMark\Renderer\Block\HtmlBlockRenderer;
+use League\CommonMark\Extension\CommonMark\Renderer\Inline\HtmlInlineRenderer;
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\Inline\Element\HtmlInline;
-use League\CommonMark\Inline\Renderer\HtmlInlineRenderer;
 
 final class DisallowedRawHtmlExtension implements ExtensionInterface
 {

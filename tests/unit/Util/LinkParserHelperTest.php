@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Tests\Unit\Util;
 
-use League\CommonMark\Cursor;
+use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Util\LinkParserHelper;
 use PHPUnit\Framework\TestCase;
 

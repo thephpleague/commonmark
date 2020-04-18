@@ -18,7 +18,7 @@ Configure your `Environment` as usual and simply add the `AutolinkExtension` pro
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
@@ -39,7 +39,7 @@ This extension also provides functionality to automatically link "mentions" like
 For Twitter:
 
 ```php
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\InlineMentionParser;
 
 $environment = Environment::createCommonMarkEnvironment();
@@ -51,7 +51,7 @@ $environment->addInlineParser(InlineMentionParser::createTwitterHandleParser());
 For GitHub:
 
 ```php
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\InlineMentionParser;
 
 $environment = Environment::createCommonMarkEnvironment();
@@ -63,7 +63,7 @@ $environment->addInlineParser(InlineMentionParser::createGithubHandleParser());
 Or configure your own custom one:
 
 ```php
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\InlineMentionParser;
 
 $environment = Environment::createCommonMarkEnvironment();

@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Tests\Functional\Delimiter;
 
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Inline\AbstractInline;
 
 final class UppercaseText extends AbstractInline
 {

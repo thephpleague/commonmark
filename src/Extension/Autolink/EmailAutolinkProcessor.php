@@ -12,8 +12,8 @@
 namespace League\CommonMark\Extension\Autolink;
 
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Inline\Element\Link;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Node\Inline\Text;
 
 final class EmailAutolinkProcessor
 {

@@ -2,10 +2,10 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-use League\CommonMark\Inline\Element\Link;
-use League\CommonMark\Inline\Renderer\LinkRenderer;
+use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Extension\CommonMark\Renderer\Inline\LinkRenderer;
 use League\CommonMark\Tests\Unit\FakeHtmlRenderer;
-use League\CommonMark\Util\Configuration;
 
 $renderer = new LinkRenderer();
 $renderer->setConfiguration(new Configuration([

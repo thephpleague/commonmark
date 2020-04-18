@@ -11,8 +11,8 @@
 
 namespace League\CommonMark\Extension\TableOfContents\Normalizer;
 
-use League\CommonMark\Block\Element\ListBlock;
-use League\CommonMark\Block\Element\ListItem;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Extension\TableOfContents\TableOfContents;
 
 final class RelativeNormalizerStrategy implements NormalizerStrategyInterface

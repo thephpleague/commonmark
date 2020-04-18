@@ -14,9 +14,9 @@
 
 namespace League\CommonMark\Tests\Unit\Node;
 
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\Inline\Text;
 use PHPUnit\Framework\TestCase;
 
 class NodeWalkerTest extends TestCase

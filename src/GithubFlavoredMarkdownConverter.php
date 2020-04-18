@@ -11,6 +11,9 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Environment\EnvironmentInterface;
+
 /**
  * Converts Github Flavored Markdown to HTML.
  */

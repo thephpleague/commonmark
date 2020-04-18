@@ -11,11 +11,11 @@
 
 namespace League\CommonMark\Tests\Unit\Extension\Strikethrough;
 
+use League\CommonMark\Extension\CommonMark\Renderer\Inline\CodeRenderer;
 use League\CommonMark\Extension\Strikethrough\Strikethrough;
 use League\CommonMark\Extension\Strikethrough\StrikethroughRenderer;
-use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Inline\Renderer\CodeRenderer;
+use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
 class StrikethroughRendererTest extends TestCase

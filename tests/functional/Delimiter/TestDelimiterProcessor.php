@@ -16,8 +16,8 @@ namespace League\CommonMark\Tests\Functional\Delimiter;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
-use League\CommonMark\Inline\Element\AbstractStringContainer;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Node\Inline\AbstractStringContainer;
+use League\CommonMark\Node\Inline\Text;
 
 final class TestDelimiterProcessor implements DelimiterProcessorInterface
 {

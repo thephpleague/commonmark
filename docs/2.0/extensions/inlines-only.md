@@ -14,7 +14,7 @@ Although you normally add extra extensions along with [the default CommonMark Co
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 
 // Create a new, empty environment

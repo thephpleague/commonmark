@@ -15,7 +15,7 @@
 namespace League\CommonMark\Tests\Functional\Delimiter;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use PHPUnit\Framework\TestCase;
 
 final class DelimiterProcessingTest extends TestCase

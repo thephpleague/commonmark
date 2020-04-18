@@ -11,10 +11,10 @@
 
 namespace League\CommonMark\Tests\Unit\Extension\Table;
 
-use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Extension\Table\Table;
 use League\CommonMark\Extension\Table\TableRenderer;
 use League\CommonMark\Extension\Table\TableSection;
+use League\CommonMark\Renderer\ElementRendererInterface;
 use PHPUnit\Framework\TestCase;
 
 final class TableRendererTest extends TestCase

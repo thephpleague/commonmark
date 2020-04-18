@@ -15,10 +15,10 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Renderer\BlockRendererInterface;
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\HtmlElement;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Util\HtmlElement;
 
 final class TableCellRenderer implements BlockRendererInterface
 {

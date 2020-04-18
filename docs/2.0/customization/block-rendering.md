@@ -42,7 +42,7 @@ Instead of manually building the HTML output yourself, you can leverage the `Htm
 ~~~php
 <?php
 
-use League\CommonMark\HtmlElement;
+use League\CommonMark\Util\HtmlElement;
 
 $link = new HtmlElement('a', ['href' => 'https://github.com'], 'GitHub');
 $img = new HtmlElement('img', ['src' => 'logo.jpg'], '', true);
@@ -55,8 +55,8 @@ When registering your renderer, you must tell the `Environment` which block elem
 ~~~php
 <?php
 
-use League\CommonMark\Block\Element\FencedCode;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 
 $environment = Environment::createCommonMarkEnvironment();
 
@@ -70,9 +70,9 @@ A single renderer could even be used for multiple block types:
 ~~~php
 <?php
 
-use League\CommonMark\Block\Element\FencedCode;
-use League\CommonMark\Block\Element\IndentedCode;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
+use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
 
 $environment = Environment::createCommonMarkEnvironment();
 
@@ -91,7 +91,7 @@ Here's a custom renderer which renders thematic breaks as text (instead of `<hr>
 ~~~php
 <?php
 
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\ElementRendererInterface;
@@ -106,7 +106,7 @@ class TextDividerRenderer implements BlockRendererInterface
 }
 
 $environment = Environment::createCommonMarkEnvironment();
-$environment->addBlockRenderer('League\CommonMark\Block\Element\ThematicBreak', new TextDividerRenderer());
+$environment->addBlockRenderer('League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak', new TextDividerRenderer());
 ~~~
 
 ## Tips

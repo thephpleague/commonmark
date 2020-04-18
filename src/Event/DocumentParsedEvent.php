@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Event;
 
-use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Node\Block\Document;
 
 /**
  * Event dispatched when the document has been fully parsed

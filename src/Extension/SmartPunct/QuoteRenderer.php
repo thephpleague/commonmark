@@ -14,10 +14,10 @@
 
 namespace League\CommonMark\Extension\SmartPunct;
 
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Util\HtmlElement;
 
 final class QuoteRenderer implements InlineRendererInterface
 {

@@ -82,9 +82,9 @@ Here's an example of a listener which uses the `DocumentParsedEvent` to add an `
 ~~~php
 <?php
 
-use League\CommonMark\EnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 
 class ExternalLinkProcessor
 {
@@ -134,7 +134,7 @@ And here's how you'd use it:
 <?php
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
 
 $env = Environment::createCommonMarkEnvironment();

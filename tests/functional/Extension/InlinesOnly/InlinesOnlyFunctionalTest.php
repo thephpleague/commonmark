@@ -12,7 +12,7 @@
 namespace League\CommonMark\Tests\Functional\Extension\InlinesOnly;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use PHPUnit\Framework\TestCase;
 

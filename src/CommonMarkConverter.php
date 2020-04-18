@@ -14,6 +14,12 @@
 
 namespace League\CommonMark;
 
+use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Parser\DocParser;
+use League\CommonMark\Renderer\HtmlRenderer;
+
 /**
  * Converts CommonMark-compatible Markdown to HTML.
  */

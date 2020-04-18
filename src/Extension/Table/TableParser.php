@@ -15,14 +15,14 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Block\Parser\BlockParserInterface;
-use League\CommonMark\Context;
-use League\CommonMark\ContextInterface;
-use League\CommonMark\Cursor;
-use League\CommonMark\EnvironmentAwareInterface;
-use League\CommonMark\EnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentAwareInterface;
+use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Parser\Block\BlockParserInterface;
+use League\CommonMark\Parser\Context;
+use League\CommonMark\Parser\ContextInterface;
+use League\CommonMark\Parser\Cursor;
 
 final class TableParser implements BlockParserInterface, EnvironmentAwareInterface
 {

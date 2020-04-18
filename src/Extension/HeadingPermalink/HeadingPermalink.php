@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Inline\AbstractInline;
 
 /**
  * Represents an anchor link within a heading

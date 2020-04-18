@@ -12,7 +12,7 @@
 namespace League\CommonMark\Tests\Functional\Extension\TableOfContents;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTest;

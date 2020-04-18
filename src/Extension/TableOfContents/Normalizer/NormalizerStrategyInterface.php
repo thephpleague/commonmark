@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Extension\TableOfContents\Normalizer;
 
-use League\CommonMark\Block\Element\ListItem;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 
 interface NormalizerStrategyInterface
 {

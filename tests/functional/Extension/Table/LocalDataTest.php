@@ -15,11 +15,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Table;
 
-use League\CommonMark\DocParser;
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\Parser\DocParser;
+use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 /**

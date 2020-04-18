@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Inline\AbstractInline;
 
 class FakeInline1 extends AbstractInline
 {

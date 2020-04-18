@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Node\Block\Paragraph;
 
 class FakeBlock1 extends Paragraph
 {

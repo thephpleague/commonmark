@@ -62,10 +62,10 @@ Let's say you wanted to autolink Twitter handles without using the link syntax. 
 ~~~php
 <?php
 
-use League\CommonMark\Environment;
-use League\CommonMark\Inline\Element\Link;
-use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\InlineParserContext;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\InlineParserContext;
 
 class TwitterHandleParser implements InlineParserInterface
 {
@@ -110,10 +110,10 @@ Let's say you want to automatically convert smilies (or "frownies") to emoticon 
 ~~~php
 <?php
 
-use League\CommonMark\Environment;
-use League\CommonMark\Inline\Element\Image;
-use League\CommonMark\Inline\Parser\InlineParserInterface;
-use League\CommonMark\InlineParserContext;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
+use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\InlineParserContext;
 
 class SmilieParser implements InlineParserInterface
 {

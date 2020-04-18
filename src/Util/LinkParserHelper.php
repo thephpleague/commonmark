@@ -14,7 +14,7 @@
 
 namespace League\CommonMark\Util;
 
-use League\CommonMark\Cursor;
+use League\CommonMark\Parser\Cursor;
 
 final class LinkParserHelper
 {

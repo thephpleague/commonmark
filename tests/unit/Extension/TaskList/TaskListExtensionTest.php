@@ -12,7 +12,7 @@
 namespace League\CommonMark\Tests\Unit\Extension\TaskList;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
 use PHPUnit\Framework\TestCase;
 

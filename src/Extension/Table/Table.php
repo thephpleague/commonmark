@@ -15,11 +15,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\AbstractStringContainerBlock;
-use League\CommonMark\Block\Element\InlineContainerInterface;
-use League\CommonMark\ContextInterface;
-use League\CommonMark\Cursor;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Node\Block\AbstractStringContainerBlock;
+use League\CommonMark\Node\Block\InlineContainerInterface;
+use League\CommonMark\Parser\ContextInterface;
+use League\CommonMark\Parser\Cursor;
 
 final class Table extends AbstractStringContainerBlock implements InlineContainerInterface
 {

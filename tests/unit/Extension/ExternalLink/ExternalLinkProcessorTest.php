@@ -12,7 +12,7 @@
 namespace League\CommonMark\Tests\Extension\ExternalLink;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkProcessor;
 use PHPUnit\Framework\TestCase;

@@ -11,7 +11,7 @@
 
 namespace League\CommonMark\Tests\Unit\Util;
 
-use League\CommonMark\Block\Element\HtmlBlock;
+use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Util\RegexHelper;
 use PHPUnit\Framework\TestCase;
 
