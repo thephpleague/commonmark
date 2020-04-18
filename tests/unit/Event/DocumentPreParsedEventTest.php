@@ -15,6 +15,7 @@ use League\CommonMark\Block\Element\Document;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\Event\DocumentPreParsedEvent;
+use League\CommonMark\Input\MarkdownInput;
 use PHPUnit\Framework\TestCase;
 
 final class DocumentPreParsedEventTest extends TestCase
@@ -22,10 +23,12 @@ final class DocumentPreParsedEventTest extends TestCase
     public function testGetDocument()
     {
         $document = new Document();
+        $markdown = new MarkdownInput('');
 
-        $event = new DocumentPreParsedEvent($document);
+        $event = new DocumentPreParsedEvent($document, $markdown);
 
         $this->assertSame($document, $event->getDocument());
+        $this->assertSame($markdown, $event->getMarkdown());
     }
 
     public function testEventDispatchedAtCorrectTime()

@@ -21,7 +21,7 @@ use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Element\StringContainerInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Event\DocumentPreParsedEvent;
-use League\CommonMark\Exception\UnexpectedEncodingException;
+use League\CommonMark\Input\MarkdownInput;
 
 final class DocParser implements DocParserInterface
 {
@@ -53,26 +53,6 @@ final class DocParser implements DocParserInterface
     /**
      * @param string $input
      *
-     * @return string[]
-     */
-    private function preProcessInput(string $input): array
-    {
-        /** @var string[] $lines */
-        $lines = \preg_split('/\r\n|\n|\r/', $input);
-
-        // Remove any newline which appears at the very end of the string.
-        // We've already split the document by newlines, so we can simply drop
-        // any empty element which appears on the end.
-        if (\end($lines) === '') {
-            \array_pop($lines);
-        }
-
-        return $lines;
-    }
-
-    /**
-     * @param string $input
-     *
      * @throws \RuntimeException
      *
      * @return Document
@@ -81,18 +61,18 @@ final class DocParser implements DocParserInterface
     {
         $document = new Document();
 
-        $this->environment->dispatch(new DocumentPreParsedEvent($document));
+        $preParsedEvent = new DocumentPreParsedEvent($document, new MarkdownInput($input));
+        $this->environment->dispatch($preParsedEvent);
+        $markdown = $preParsedEvent->getMarkdown();
 
         $context = new Context($document, $this->environment);
 
-        $this->assertValidUTF8($input);
-        $lines = $this->preProcessInput($input);
-        foreach ($lines as $line) {
+        foreach ($markdown->getLines() as $line) {
             $context->setNextLine($line);
             $this->incorporateLine($context);
         }
 
-        $lineCount = \count($lines);
+        $lineCount = $markdown->getLineCount();
         while ($tip = $context->getTip()) {
             $tip->finalize($context, $lineCount);
         }
@@ -244,13 +224,6 @@ final class DocParser implements DocParserInterface
         while ($container instanceof AbstractBlock && $container->endsWithBlankLine() !== $lastLineBlank) {
             $container->setLastLineBlank($lastLineBlank);
             $container = $container->parent();
-        }
-    }
-
-    private function assertValidUTF8(string $input): void
-    {
-        if (!\mb_check_encoding($input, 'UTF-8')) {
-            throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
         }
     }
 }

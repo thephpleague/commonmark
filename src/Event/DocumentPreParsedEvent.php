@@ -12,6 +12,7 @@
 namespace League\CommonMark\Event;
 
 use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Input\MarkdownInputInterface;
 
 /**
  * Event dispatched when the document is about to be parsed
@@ -21,13 +22,27 @@ final class DocumentPreParsedEvent extends AbstractEvent
     /** @var Document */
     private $document;
 
-    public function __construct(Document $document)
+    /** @var MarkdownInputInterface */
+    private $markdown;
+
+    public function __construct(Document $document, MarkdownInputInterface $markdown)
     {
         $this->document = $document;
+        $this->markdown = $markdown;
     }
 
     public function getDocument(): Document
     {
         return $this->document;
+    }
+
+    public function getMarkdown(): MarkdownInputInterface
+    {
+        return $this->markdown;
+    }
+
+    public function replaceMarkdown(MarkdownInputInterface $markdownInput): void
+    {
+        $this->markdown = $markdownInput;
     }
 }

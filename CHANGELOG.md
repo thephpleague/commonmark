@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added new `MarkdownConverterInterface` as a long-term replacement for `ConverterInterface` (#439)
  - Added new `DocumentPreParsedEvent` event (#427, #359, #399)
  - Added new `ListBlock::TYPE_BULLET` constant as a replacement for `ListBlock::TYPE_UNORDERED`
+ - Added new `MarkdownInput` class and `MarkdownInputInterface` to handle pre-parsing and allow listeners to replace Markdown contents
 
 ## Changed
 

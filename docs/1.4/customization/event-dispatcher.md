@@ -69,7 +69,7 @@ This library supports the following default events which you can register listen
 
 ### `League\CommonMark\Event\DocumentPreParsedEvent`
 
-This event is dispatched just before any processing is done. It can be used to pre-populate reference map of a document before any processing is performed.
+This event is dispatched just before any processing is done. It can be used to pre-populate reference map of a document or manipulate the Markdown contents before any processing is performed.
 
 ### `League\CommonMark\Event\DocumentParsedEvent`
 
