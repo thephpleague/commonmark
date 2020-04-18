@@ -16,6 +16,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Removed all previously-deprecated functionality:
    - Removed the `Converter` class and `ConverterInterface`
    - Removed the `bin/commonmark` script
+   - Removed the `Html5Entities` utility class
    - Removed the following `ArrayCollection` methods:
      - `add()`
      - `set()`

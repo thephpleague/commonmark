@@ -112,6 +112,10 @@ Any usages of `Converter` should be replaced with `CommonMarkConverter`. Note th
 
 Any usages of `ConverterInterface` should be replaced with `MarkdownConverterInterface`.  This interface has the same methods, so it should be a drop-in replacement.
 
+## `Html5Entities` utility class
+
+Use the `Html5EntityDecoder` utility class instead.
+
 ## `bin/commonmark` command
 
 This command was buggy to test and was relatively unpopular, so it has been removed. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.
