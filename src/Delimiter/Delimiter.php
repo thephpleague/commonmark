@@ -73,16 +73,6 @@ final class Delimiter implements DelimiterInterface
         return $this->canClose;
     }
 
-    /**
-     * @param bool $canClose
-     *
-     * @return void
-     */
-    public function setCanClose(bool $canClose)
-    {
-        $this->canClose = $canClose;
-    }
-
     public function canOpen(): bool
     {
         return $this->canOpen;

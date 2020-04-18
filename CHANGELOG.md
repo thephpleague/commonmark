@@ -28,5 +28,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
      - `containsKey()`
      - `replaceWith()`
      - `removeGaps()`
+ - Removed the unused `Delimiter::setCanClose()` method
 
 [unreleased]: https://github.com/thephpleague/commonmark/compare/1.4...master

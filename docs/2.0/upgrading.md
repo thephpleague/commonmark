@@ -136,3 +136,9 @@ Several methods were removed from this class - here are the methods along with p
 | `containsKey($key)` | `isset($collection[$key])`                           |
 | `replaceWith()`     | (none provided)                                      |
 | `removeGaps()`      | (none provided)                                      |
+
+## Unused methods
+
+The following unused methods have been removed:
+
+ - `Delimiter::setCanClose()`

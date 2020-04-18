@@ -40,15 +40,6 @@ class DelimiterTest extends TestCase
         $this->assertSame(7, $delimiter->getIndex());
     }
 
-    public function testSetCanClose()
-    {
-        $node = $this->createMock(AbstractStringContainer::class);
-        $delimiter = new Delimiter('*', 2, $node, true, false, null);
-
-        $delimiter->setCanClose(true);
-        $this->assertTrue($delimiter->canClose());
-    }
-
     public function testSetActive()
     {
         $node = $this->createMock(AbstractStringContainer::class);
