@@ -36,33 +36,6 @@ echo $converter->convertToHtml('# Hello World!');
 <i class="fa fa-exclamation-triangle"></i>
 **Important:** See the [security](/1.4/security/) section for important details on avoiding security misconfigurations.
 
-The actual conversion process has three steps:
-
- 1. Creating an `Environment`, adding whichever extensions/parser/renders you need
- 2. Parsing the Markdown input into an AST
- 3. Rendering the AST document as HTML
-
-`CommonMarkConverter` handles this for you, but you can execute that process yourself if you wish:
-
-~~~php
-<?php
-
-use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
-
-$environment = Environment::createCommonMarkEnvironment();
-$parser = new DocParser($environment);
-$htmlRenderer = new HtmlRenderer($environment);
-
-$markdown = '# Hello World!';
-
-$document = $parser->parse($markdown);
-echo $htmlRenderer->renderBlock($document);
-
-// <h1>Hello World!</h1>
-~~~
-
 [Additional customization](/1.4/customization/overview/) is also possible, and we have many handy [extensions](/1.4/extensions/) to enable additional syntax and features.
 
 ## Supported Character Encodings

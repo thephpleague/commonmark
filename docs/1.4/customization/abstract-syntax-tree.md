@@ -9,6 +9,13 @@ Abstract Syntax Tree
 
 This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent the parsed block and inline elements.  All such elements extend from the `Node` class.
 
+## `Document`
+
+The root node of the AST will always be a `Document` object.  You can obtain this node a few different ways:
+
+ - By calling the `parse()` method on the `DocParser`
+ - By calling the `getDocument()` method on either the `DocumentPreParsedEvent` or `DocumentParsedEvent` (see the (Event Dispatcher documentation)[/1.4/customization/event-dispatcher/])
+
 ## Traversal
 
 The following methods can be used to traverse the AST:

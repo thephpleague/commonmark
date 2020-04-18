@@ -7,13 +7,44 @@ description: An overview of the powerful customization features
 Customization Overview
 ======================
 
-This library uses a three-step process to convert Markdown to HTML:
+Ready to go beyond the basics of converting Markdown to HTML? This page describes some of the more advanced things you can customize this library to do.
 
-  1. Parse the various block and inline elements into an Abstract Syntax Tree (AST)
-  2. Allow users to iterate and modify the parsed AST
-  3. Render the final AST representation to HTML
+## Parsing and Rendering
 
-You can hook into any of these three steps to customize this library to suit your needs.
+The actual process of converting Markdown to HTML has several steps:
+
+ 1. Create an [`Environment`](/1.4/customization/environment/), adding whichever extensions/parser/renders you need
+ 2. Set custom configuration options within the `Environment`
+ 3. Instantiate a `DocParser` and `HtmlRenderer` using that `Environment`
+ 4. Use the `DocParser` to parse the Markdown input into an [Abstract Syntax Tree](/1.4/customization/abstract-syntax-tree/) (aka an "AST")
+ 5. Use the `HtmlRenderer` to convert the [AST `Document`](/1.4/customization/abstract-syntax-tree/#document) into HTML
+
+`CommonMarkConverter` handles all of this for you, but you can execute that process yourself if you wish:
+
+~~~php
+<?php
+
+use League\CommonMark\DocParser;
+use League\CommonMark\Environment;
+use League\CommonMark\HtmlRenderer;
+
+$environment = Environment::createCommonMarkEnvironment();
+$environment->setConfig([
+    'html_input' => 'strip',
+]);
+
+$parser = new DocParser($environment);
+$htmlRenderer = new HtmlRenderer($environment);
+
+$markdown = '# Hello World!';
+
+$document = $parser->parse($markdown);
+echo $htmlRenderer->renderBlock($document);
+
+// <h1>Hello World!</h1>
+~~~
+
+Feel free to swap out different components or add your own steps in between.  However, the best way to customize this library is to [create your own extensions](/1.4/customization/extensions/) which hook into the parsing and rendering steps - continue reading to see which kinds of extension points are available to you.
 
 ## Add Custom Syntax with Parsers
 
