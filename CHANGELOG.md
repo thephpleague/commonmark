@@ -6,4 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed information on upgrading to version 2.0.
 
+### Removed
+
+ - Removed support for PHP 7.1
+
 [unreleased]: https://github.com/thephpleague/commonmark/compare/1.4...master
