@@ -1,4 +1,40 @@
 version:
+    '2.0':
+        Getting Started:
+            'Overview': '/2.0/'
+            'Installation': '/2.0/installation/'
+            'Upgrading from 1.4': '/2.0/upgrading/'
+            'Changelog': '/2.0/changelog/'
+        Usage:
+            'Basic Usage': '/2.0/basic-usage/'
+            'Configuration': '/2.0/configuration/'
+            'Security': '/2.0/security/'
+            'Command Line': '/2.0/command-line/'
+        Extensions:
+            'Overview': '/2.0/extensions/overview/'
+            'CommonMark': '/2.0/extensions/commonmark/'
+            'Github-Flavored Markdown': '/2.0/extensions/github-flavored-markdown/'
+            'Autolinks': '/2.0/extensions/autolinks/'
+            'Disallowed Raw HTML': '/2.0/extensions/disallowed-raw-html/'
+            'External Links': '/2.0/extensions/external-links/'
+            'Heading Permalinks': '/2.0/extensions/heading-permalinks/'
+            'Inlines Only': '/2.0/extensions/inlines-only/'
+            'Smart Punctuation': '/2.0/extensions/smart-punctuation/'
+            'Strikethrough': '/2.0/extensions/strikethrough/'
+            'Tables': '/2.0/extensions/tables/'
+            'Task Lists': '/2.0/extensions/task-lists/'
+        Customization:
+            'Overview': '/2.0/customization/overview/'
+            'Environment': '/2.0/customization/environment/'
+            'Extensions': '/2.0/customization/extensions/'
+            'Event Dispatcher': '/2.0/customization/event-dispatcher/'
+            'Cursor': '/2.0/customization/cursor/'
+            'Block Parsing': '/2.0/customization/block-parsing/'
+            'Inline Parsing': '/2.0/customization/inline-parsing/'
+            'Delimiter Processing': '/2.0/customization/delimiter-processing/'
+            'Abstract Syntax Tree': '/2.0/customization/abstract-syntax-tree/'
+            'Block Rendering': '/2.0/customization/block-rendering/'
+            'Inline Rendering': '/2.0/customization/inline-rendering/'
     '1.4':
         Getting Started:
             'Overview': '/1.4/'
@@ -119,6 +155,7 @@ version:
 upgrading:
     Upgrading Guide:
         Release Notes: '/releases/'
+        From 1.4 to 2.0: '/2.0/upgrading'
         From 1.3 to 1.4: '/1.4/upgrading'
         From 1.x to 1.3: '/1.3/upgrading'
         From 0.19 to 1.0: '/1.0/upgrading'
