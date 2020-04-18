@@ -36,7 +36,7 @@ jobs:
       rvm: 2.7
       cache: bundler
       env: 'PHPUNIT=false'
-      if: branch = master
+      if: branch = master AND type != pull_request
       before_install:
         - gem update bundler
       install:
