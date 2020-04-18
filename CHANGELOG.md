@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.4.0] - 2020-04-18
+
 ## Added
 
  - Added new [Heading Permalink extension](https://commonmark.thephpleague.com/extensions/heading-permalinks/) (#420)
@@ -281,7 +283,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.3.4...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/thephpleague/commonmark/compare/1.3.4...1.4.0
 [1.3.4]: https://github.com/thephpleague/commonmark/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/thephpleague/commonmark/compare/1.3.2...1.3.3
 [1.3.2]: https://github.com/thephpleague/commonmark/compare/1.3.1...1.3.2

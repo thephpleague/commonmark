@@ -2,7 +2,6 @@
 layout: default
 title: Upgrading from 1.x - 1.3
 description: Guide to upgrading to newer versions of this library
-redirect_from: /upgrading/
 ---
 
 # Upgrading from 1.x to 1.3

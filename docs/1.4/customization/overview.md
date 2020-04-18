@@ -2,6 +2,9 @@
 layout: default
 title: Customization Overview
 description: An overview of the powerful customization features
+redirect_from:
+  - /customization/
+  - /customization/overview/
 ---
 
 Customization Overview

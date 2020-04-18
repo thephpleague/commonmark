@@ -2,6 +2,7 @@
 layout: default
 title: Extensions
 description: Creating custom extensions to add new syntax and other custom functionality
+redirect_from: /customization/extensions/
 ---
 
 Extensions

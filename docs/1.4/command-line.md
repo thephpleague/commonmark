@@ -1,10 +1,13 @@
 ---
 layout: default
 title: Command Line
+redirect_from: /command-line/
 ---
 
 Command Line
 ============
+
+**This functionality has been deprecated in version 1.4 and will be removed in 2.0.**
 
 Markdown can be converted at the command line using the `./bin/commonmark` script.
 

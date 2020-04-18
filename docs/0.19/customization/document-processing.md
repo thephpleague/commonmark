@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Document Processing
-redirect_from: /customization/document-processing/
 ---
 
 Document Processing

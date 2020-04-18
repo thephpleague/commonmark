@@ -2,9 +2,7 @@
 layout: default
 title: Security
 description: How to configure league/commonmark against possible security issues when handling untrusted user input
-redirect_from:
- - /0.20/security/
- - /security/
+redirect_from: /0.20/security/
 ---
 
 Security
