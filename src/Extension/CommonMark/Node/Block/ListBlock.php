@@ -27,11 +27,6 @@ class ListBlock extends AbstractBlock
     const TYPE_ORDERED = 'ordered';
 
     /**
-     * @deprecated This constant is deprecated in league/commonmark 1.4 and will be removed in 2.0; use TYPE_BULLET instead
-     */
-    const TYPE_UNORDERED = self::TYPE_BULLET;
-
-    /**
      * @var bool
      */
     protected $tight = false;
