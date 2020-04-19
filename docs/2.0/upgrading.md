@@ -106,6 +106,10 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `Renderer\Inline\TextRenderer` | `Inline\Renderer\TextRenderer` |
 | `Util\HtmlElement` | `HtmlElement` |
 
+## `ElementRendererInterface`
+
+`ElementRendererInterface` has been renamed to `NodeRendererInterface`.
+
 ## `Converter` class and `ConverterInterface` removed
 
 Any usages of `Converter` should be replaced with `CommonMarkConverter`. Note that this has a different constructor but the same methods.

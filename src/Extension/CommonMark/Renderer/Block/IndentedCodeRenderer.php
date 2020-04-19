@@ -17,20 +17,20 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\Xml;
 
 final class IndentedCodeRenderer implements BlockRendererInterface
 {
     /**
-     * @param IndentedCode             $block
-     * @param ElementRendererInterface $htmlRenderer
-     * @param bool                     $inTightList
+     * @param IndentedCode          $block
+     * @param NodeRendererInterface $htmlRenderer
+     * @param bool                  $inTightList
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!($block instanceof IndentedCode)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));

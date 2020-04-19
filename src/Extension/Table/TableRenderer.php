@@ -17,12 +17,12 @@ namespace League\CommonMark\Extension\Table;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
 final class TableRenderer implements BlockRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!$block instanceof Table) {
             throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));

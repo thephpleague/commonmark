@@ -19,7 +19,7 @@ use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 
 final class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface
@@ -30,12 +30,12 @@ final class HtmlInlineRenderer implements InlineRendererInterface, Configuration
     protected $config;
 
     /**
-     * @param HtmlInline               $inline
-     * @param ElementRendererInterface $htmlRenderer
+     * @param HtmlInline            $inline
+     * @param NodeRendererInterface $htmlRenderer
      *
      * @return string
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof HtmlInline)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));

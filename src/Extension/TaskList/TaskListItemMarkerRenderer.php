@@ -12,19 +12,19 @@
 namespace League\CommonMark\Extension\TaskList;
 
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
 final class TaskListItemMarkerRenderer implements InlineRendererInterface
 {
     /**
-     * @param TaskListItemMarker       $inline
-     * @param ElementRendererInterface $htmlRenderer
+     * @param TaskListItemMarker    $inline
+     * @param NodeRendererInterface $htmlRenderer
      *
      * @return HtmlElement|string|null
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof TaskListItemMarker)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));

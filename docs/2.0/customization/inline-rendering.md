@@ -56,7 +56,7 @@ Here's a custom renderer which puts a special class on links to external sites:
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
@@ -69,7 +69,7 @@ class MyCustomLinkRenderer implements InlineRendererInterface
         $this->host = $host;
     }
 
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Link)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));

@@ -14,7 +14,7 @@ namespace League\CommonMark\Extension\DisallowedRawHtml;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 
 final class DisallowedRawHtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface
@@ -27,7 +27,7 @@ final class DisallowedRawHtmlInlineRenderer implements InlineRendererInterface, 
         $this->htmlInlineRenderer = $htmlBlockRenderer;
     }
 
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         $rendered = $this->htmlInlineRenderer->render($inline, $htmlRenderer);
 

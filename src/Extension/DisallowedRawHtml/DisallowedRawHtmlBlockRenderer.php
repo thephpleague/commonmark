@@ -15,7 +15,7 @@ use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
 final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
 {
@@ -27,7 +27,7 @@ final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, Co
         $this->htmlBlockRenderer = $htmlBlockRenderer;
     }
 
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         $rendered = $this->htmlBlockRenderer->render($block, $htmlRenderer, $inTightList);
 

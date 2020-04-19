@@ -17,7 +17,7 @@ namespace League\CommonMark\Tests\Unit\Extension\SmartPunct;
 use League\CommonMark\Extension\SmartPunct\Quote;
 use League\CommonMark\Extension\SmartPunct\QuoteRenderer;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -28,13 +28,13 @@ final class QuoteRendererTest extends TestCase
     /** @var QuoteRenderer */
     private $renderer;
 
-    /** @var ElementRendererInterface */
+    /** @var NodeRendererInterface */
     private $htmlRenderer;
 
     protected function setUp(): void
     {
         $this->renderer = new QuoteRenderer();
-        $this->htmlRenderer = $this->createMock(ElementRendererInterface::class);
+        $this->htmlRenderer = $this->createMock(NodeRendererInterface::class);
     }
 
     public function testInvalidInlineType()

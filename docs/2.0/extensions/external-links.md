@@ -77,7 +77,7 @@ This option allows you to provide a `string` containing one or more HTML classes
 When an external link is detected, the `ExternalLinkProcessor` will set the `external` data option on the `Link` node to either `true` or `false`.  You can therefore create a [custom link renderer](/2.0/customization/inline-rendering/) which checks this value and behaves accordingly:
 
 ```php
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -88,11 +88,11 @@ class MyCustomLinkRenderer implements InlineRendererInterface
 
     /**
      * @param Link                     $inline
-     * @param ElementRendererInterface $htmlRenderer
+     * @param NodeRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Link)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));

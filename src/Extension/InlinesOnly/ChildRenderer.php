@@ -16,14 +16,14 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\InlineContainerInterface;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
 /**
  * Simply renders child elements as-is, adding newlines as needed.
  */
 final class ChildRenderer implements BlockRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         $out = '';
 

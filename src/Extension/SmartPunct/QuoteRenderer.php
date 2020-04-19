@@ -15,19 +15,19 @@
 namespace League\CommonMark\Extension\SmartPunct;
 
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
 final class QuoteRenderer implements InlineRendererInterface
 {
     /**
-     * @param Quote                    $inline
-     * @param ElementRendererInterface $htmlRenderer
+     * @param Quote                 $inline
+     * @param NodeRendererInterface $htmlRenderer
      *
      * @return HtmlElement|string|null
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!$inline instanceof Quote) {
             throw new \InvalidArgumentException(sprintf('Expected an instance of "%s", got "%s" instead', Quote::class, get_class($inline)));

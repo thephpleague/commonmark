@@ -18,7 +18,7 @@ use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\RegexHelper;
@@ -30,13 +30,12 @@ final class ImageRenderer implements InlineRendererInterface, ConfigurationAware
      */
     protected $config;
 
-    /**
-     * @param Image                    $inline
-     * @param ElementRendererInterface $htmlRenderer
+     * @param Image                 $inline
+     * @param NodeRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Image)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));

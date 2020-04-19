@@ -20,13 +20,15 @@ use League\CommonMark\Node\Inline\AbstractInline;
 /**
  * Renders a parsed AST to a string representation
  */
-interface ElementRendererInterface
+interface NodeRendererInterface
 {
     /**
      * @param string $option
      * @param mixed  $default
      *
      * @return mixed|null
+     *
+     * @deprecated
      */
     public function getOption(string $option, $default = null);
 

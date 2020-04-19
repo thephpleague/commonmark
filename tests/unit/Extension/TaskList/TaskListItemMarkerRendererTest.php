@@ -14,7 +14,7 @@ namespace League\CommonMark\Tests\Unit\Extension\TaskList;
 use League\CommonMark\Extension\TaskList\TaskListItemMarker;
 use League\CommonMark\Extension\TaskList\TaskListItemMarkerRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,7 @@ class TaskListItemMarkerRendererTest extends TestCase
     public function testWithCheckedItem()
     {
         $renderer = new TaskListItemMarkerRenderer();
-        $htmlRenderer = $this->getMockForAbstractClass(ElementRendererInterface::class);
+        $htmlRenderer = $this->getMockForAbstractClass(NodeRendererInterface::class);
 
         $item = new TaskListItemMarker(true);
 
@@ -38,7 +38,7 @@ class TaskListItemMarkerRendererTest extends TestCase
     public function testWithUncheckedItem()
     {
         $renderer = new TaskListItemMarkerRenderer();
-        $htmlRenderer = $this->getMockForAbstractClass(ElementRendererInterface::class);
+        $htmlRenderer = $this->getMockForAbstractClass(NodeRendererInterface::class);
 
         $item = new TaskListItemMarker(false);
 
@@ -55,7 +55,7 @@ class TaskListItemMarkerRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $renderer = new TaskListItemMarkerRenderer();
-        $htmlRenderer = $this->getMockForAbstractClass(ElementRendererInterface::class);
+        $htmlRenderer = $this->getMockForAbstractClass(NodeRendererInterface::class);
 
         $item = $this->getMockForAbstractClass(AbstractInline::class);
 

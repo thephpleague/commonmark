@@ -9,6 +9,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 ### Changed
 
  - Moved classes into different namespaces
+ - Renamed `ElementRendererInterface` to `NodeRendererInterface`
  - Added missing return types to virtually every class and interface method
  - Added `void` return types to all methods that don't return anything
  - Several methods which previously returned `$this` now return `void`

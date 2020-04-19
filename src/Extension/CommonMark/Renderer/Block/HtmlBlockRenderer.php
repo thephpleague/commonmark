@@ -20,7 +20,7 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
 final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
 {
@@ -29,14 +29,13 @@ final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAw
      */
     protected $config;
 
-    /**
-     * @param HtmlBlock                $block
-     * @param ElementRendererInterface $htmlRenderer
-     * @param bool                     $inTightList
+     * @param HtmlBlock             $block
+     * @param NodeRendererInterface $htmlRenderer
+     * @param bool                  $inTightList
      *
      * @return string
      */
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         if (!($block instanceof HtmlBlock)) {
             throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));

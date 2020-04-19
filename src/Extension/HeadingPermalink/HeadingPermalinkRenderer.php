@@ -14,7 +14,7 @@ namespace League\CommonMark\Extension\HeadingPermalink;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
@@ -33,7 +33,7 @@ final class HeadingPermalinkRenderer implements InlineRendererInterface, Configu
         $this->config = $configuration;
     }
 
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!$inline instanceof HeadingPermalink) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));

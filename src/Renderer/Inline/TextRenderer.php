@@ -16,18 +16,18 @@ namespace League\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\Xml;
 
 final class TextRenderer implements InlineRendererInterface
 {
     /**
-     * @param Text                     $inline
-     * @param ElementRendererInterface $htmlRenderer
+     * @param Text                  $inline
+     * @param NodeRendererInterface $htmlRenderer
      *
      * @return string
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Text)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));

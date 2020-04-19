@@ -16,19 +16,19 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
 final class StrongRenderer implements InlineRendererInterface
 {
     /**
-     * @param Strong                   $inline
-     * @param ElementRendererInterface $htmlRenderer
+     * @param Strong                $inline
+     * @param NodeRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Strong)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));

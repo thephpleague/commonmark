@@ -15,7 +15,7 @@ use League\CommonMark\Extension\Table\TableCell;
 use League\CommonMark\Extension\Table\TableRow;
 use League\CommonMark\Extension\Table\TableSection;
 use League\CommonMark\Extension\Table\TableSectionRenderer;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use PHPUnit\Framework\TestCase;
 
 final class TableSectionRendererTest extends TestCase
@@ -26,7 +26,7 @@ final class TableSectionRendererTest extends TestCase
         $tableSection->data['attributes'] = ['class' => 'foo'];
         $tableSection->appendChild(new TableRow());
 
-        $elementRenderer = $this->createMock(ElementRendererInterface::class);
+        $elementRenderer = $this->createMock(NodeRendererInterface::class);
         $elementRenderer->method('renderBlocks')->willReturn('contents');
 
         $renderer = new TableSectionRenderer();
@@ -37,7 +37,7 @@ final class TableSectionRendererTest extends TestCase
     public function testRenderWithEmptyTableSection()
     {
         $tableSection = new TableSection(TableSection::TYPE_BODY);
-        $elementRenderer = $this->createMock(ElementRendererInterface::class);
+        $elementRenderer = $this->createMock(NodeRendererInterface::class);
         $elementRenderer->expects($this->never())->method($this->anything());
 
         $renderer = new TableSectionRenderer();
@@ -49,6 +49,6 @@ final class TableSectionRendererTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new TableSectionRenderer())->render(new TableCell(), $this->createMock(ElementRendererInterface::class));
+        (new TableSectionRenderer())->render(new TableCell(), $this->createMock(NodeRendererInterface::class));
     }
 }

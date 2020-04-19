@@ -94,12 +94,12 @@ Here's a custom renderer which renders thematic breaks as text (instead of `<hr>
 use League\CommonMark\Environment;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
 class TextDividerRenderer implements BlockRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         return new HtmlElement('pre', ['class' => 'divider'], '==============================');
     }

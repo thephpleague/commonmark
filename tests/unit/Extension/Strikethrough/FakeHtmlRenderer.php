@@ -13,9 +13,9 @@ namespace League\CommonMark\Tests\Unit\Extension\Strikethrough;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
-class FakeHtmlRenderer implements ElementRendererInterface
+class FakeHtmlRenderer implements NodeRendererInterface
 {
     protected $options;
 

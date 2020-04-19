@@ -18,7 +18,7 @@ namespace League\CommonMark\Tests\Functional\Extension\Table;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Parser\DocParser;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
@@ -64,7 +64,7 @@ class LocalDataTest extends TestCase
         return $ret;
     }
 
-    protected function assertCommonMark(ElementRendererInterface $renderer, $markdown, $html, $testName): void
+    protected function assertCommonMark(NodeRendererInterface $renderer, $markdown, $html, $testName): void
     {
         $documentAST = $this->parser->parse($markdown);
         $actualResult = $renderer->renderBlock($documentAST);

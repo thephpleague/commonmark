@@ -14,7 +14,7 @@ namespace League\CommonMark\Tests\Unit\Extension\Table;
 use League\CommonMark\Extension\Table\TableRow;
 use League\CommonMark\Extension\Table\TableRowRenderer;
 use League\CommonMark\Extension\Table\TableSection;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use PHPUnit\Framework\TestCase;
 
 final class TableRowRendererTest extends TestCase
@@ -24,7 +24,7 @@ final class TableRowRendererTest extends TestCase
         $tableRow = new TableRow();
         $tableRow->data['attributes'] = ['class' => 'foo'];
 
-        $elementRenderer = $this->createMock(ElementRendererInterface::class);
+        $elementRenderer = $this->createMock(NodeRendererInterface::class);
         $elementRenderer->method('renderBlocks')->willReturn('contents');
 
         $renderer = new TableRowRenderer();
@@ -36,6 +36,6 @@ final class TableRowRendererTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new TableRowRenderer())->render(new TableSection(), $this->createMock(ElementRendererInterface::class));
+        (new TableRowRenderer())->render(new TableSection(), $this->createMock(NodeRendererInterface::class));
     }
 }

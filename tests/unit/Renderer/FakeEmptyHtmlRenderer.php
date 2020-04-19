@@ -16,9 +16,9 @@ namespace League\CommonMark\Tests\Unit\Renderer;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\ElementRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
-class FakeEmptyHtmlRenderer implements ElementRendererInterface
+class FakeEmptyHtmlRenderer implements NodeRendererInterface
 {
     /**
      * @param string     $option

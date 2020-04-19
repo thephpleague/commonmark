@@ -23,7 +23,7 @@ use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 /**
  * Renders a parsed AST to HTML
  */
-final class HtmlRenderer implements ElementRendererInterface
+final class HtmlRenderer implements NodeRendererInterface
 {
     /**
      * @var EnvironmentInterface
