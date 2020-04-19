@@ -16,10 +16,5 @@ namespace League\CommonMark\Configuration;
  */
 interface ConfigurationAwareInterface
 {
-    /**
-     * @param ConfigurationInterface $configuration
-     *
-     * @return void
-     */
-    public function setConfiguration(ConfigurationInterface $configuration);
+    public function setConfiguration(ConfigurationInterface $configuration): void;
 }

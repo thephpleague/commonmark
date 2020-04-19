@@ -95,7 +95,7 @@ class ExternalLinkProcessor
         $this->environment = $environment;
     }
 
-    public function onDocumentParsed(DocumentParsedEvent $event)
+    public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
         $walker = $document->walker();

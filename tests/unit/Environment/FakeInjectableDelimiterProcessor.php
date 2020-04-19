@@ -41,7 +41,7 @@ final class FakeInjectableDelimiterProcessor implements DelimiterProcessorInterf
         return 0;
     }
 
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
     }
 }

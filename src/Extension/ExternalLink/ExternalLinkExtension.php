@@ -17,7 +17,7 @@ use League\CommonMark\Extension\ExtensionInterface;
 
 final class ExternalLinkExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment->addEventListener(DocumentParsedEvent::class, new ExternalLinkProcessor($environment));
     }

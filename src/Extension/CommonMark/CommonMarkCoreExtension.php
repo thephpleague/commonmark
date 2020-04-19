@@ -23,7 +23,7 @@ use League\CommonMark\Renderer as CoreRenderer;
 
 final class CommonMarkCoreExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment
             ->addBlockParser(new Parser\Block\BlockQuoteParser(),          70)

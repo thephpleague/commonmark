@@ -33,7 +33,7 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
     /** @var string|null */
     private $listMarkerRegex;
 
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
     }

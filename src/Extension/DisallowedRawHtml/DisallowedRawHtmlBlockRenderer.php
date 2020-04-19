@@ -39,7 +39,7 @@ final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, Co
         return preg_replace('/<(\/?(?:title|textarea|style|xmp|iframe|noembed|noframes|script|plaintext)[ \/>])/i', '&lt;$1', $rendered);
     }
 
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         if ($this->htmlBlockRenderer instanceof ConfigurationAwareInterface) {
             $this->htmlBlockRenderer->setConfiguration($configuration);

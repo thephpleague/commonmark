@@ -19,12 +19,12 @@ trait FakeInjectableTrait
     protected $configInjected = false;
     protected $environmentInjected = false;
 
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->configInjected = true;
     }
 
-    public function setEnvironment(EnvironmentInterface $environment)
+    public function setEnvironment(EnvironmentInterface $environment): void
     {
         $this->environmentInjected = true;
     }

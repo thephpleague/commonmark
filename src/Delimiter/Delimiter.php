@@ -83,7 +83,7 @@ final class Delimiter implements DelimiterInterface
         return $this->active;
     }
 
-    public function setActive(bool $active)
+    public function setActive(bool $active): void
     {
         $this->active = $active;
     }
@@ -103,7 +103,7 @@ final class Delimiter implements DelimiterInterface
         return $this->next;
     }
 
-    public function setNext(?DelimiterInterface $next)
+    public function setNext(?DelimiterInterface $next): void
     {
         $this->next = $next;
     }
@@ -113,7 +113,7 @@ final class Delimiter implements DelimiterInterface
         return $this->length;
     }
 
-    public function setLength(int $length)
+    public function setLength(int $length): void
     {
         $this->length = $length;
     }
@@ -133,10 +133,8 @@ final class Delimiter implements DelimiterInterface
         return $this->previous;
     }
 
-    public function setPrevious(?DelimiterInterface $previous): DelimiterInterface
+    public function setPrevious(?DelimiterInterface $previous): void
     {
         $this->previous = $previous;
-
-        return $this;
     }
 }

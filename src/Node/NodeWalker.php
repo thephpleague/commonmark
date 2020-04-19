@@ -81,7 +81,7 @@ final class NodeWalker
      *
      * @return void
      */
-    public function resumeAt(Node $node, bool $entering = true)
+    public function resumeAt(Node $node, bool $entering = true): void
     {
         $this->current = $node;
         $this->entering = $entering;

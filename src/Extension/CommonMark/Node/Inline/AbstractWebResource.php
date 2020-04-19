@@ -28,24 +28,14 @@ abstract class AbstractWebResource extends AbstractInline
         $this->url = $url;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl(string $url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
-
-        return $this;
     }
 
     public function isContainer(): bool

@@ -27,12 +27,12 @@ final class Configuration implements ConfigurationInterface
         $this->config = $config;
     }
 
-    public function merge(array $config = [])
+    public function merge(array $config = []): void
     {
         $this->config = \array_replace_recursive($this->config, $config);
     }
 
-    public function replace(array $config = [])
+    public function replace(array $config = []): void
     {
         $this->config = $config;
     }
@@ -55,7 +55,7 @@ final class Configuration implements ConfigurationInterface
         return $this->config[$key];
     }
 
-    public function set(string $key, $value = null)
+    public function set(string $key, $value = null): void
     {
         // accept a/b/c as ['a']['b']['c']
         if (\strpos($key, '/')) {

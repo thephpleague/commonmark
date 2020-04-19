@@ -54,7 +54,7 @@ class Heading extends AbstractStringContainerBlock implements InlineContainerInt
         return $this->level;
     }
 
-    public function finalize(ContextInterface $context, int $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber): void
     {
         parent::finalize($context, $endLineNumber);
 
@@ -76,7 +76,7 @@ class Heading extends AbstractStringContainerBlock implements InlineContainerInt
         return false;
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
         // nothing to do; contents were already added via the constructor.
     }

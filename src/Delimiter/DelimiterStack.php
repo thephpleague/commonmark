@@ -27,12 +27,7 @@ final class DelimiterStack
      */
     private $top;
 
-    /**
-     * @param DelimiterInterface $newDelimiter
-     *
-     * @return void
-     */
-    public function push(DelimiterInterface $newDelimiter)
+    public function push(DelimiterInterface $newDelimiter): void
     {
         $newDelimiter->setPrevious($this->top);
 
@@ -53,12 +48,7 @@ final class DelimiterStack
         return $delimiter;
     }
 
-    /**
-     * @param DelimiterInterface $delimiter
-     *
-     * @return void
-     */
-    public function removeDelimiter(DelimiterInterface $delimiter)
+    public function removeDelimiter(DelimiterInterface $delimiter): void
     {
         if ($delimiter->getPrevious() !== null) {
             $delimiter->getPrevious()->setNext($delimiter->getNext());
@@ -88,24 +78,14 @@ final class DelimiterStack
         }
     }
 
-    /**
-     * @param DelimiterInterface|null $stackBottom
-     *
-     * @return void
-     */
-    public function removeAll(DelimiterInterface $stackBottom = null)
+    public function removeAll(DelimiterInterface $stackBottom = null): void
     {
         while ($this->top && $this->top !== $stackBottom) {
             $this->removeDelimiter($this->top);
         }
     }
 
-    /**
-     * @param string $character
-     *
-     * @return void
-     */
-    public function removeEarlierMatches(string $character)
+    public function removeEarlierMatches(string $character): void
     {
         $opener = $this->top;
         while ($opener !== null) {
@@ -139,13 +119,7 @@ final class DelimiterStack
         return $opener;
     }
 
-    /**
-     * @param DelimiterInterface|null      $stackBottom
-     * @param DelimiterProcessorCollection $processors
-     *
-     * @return void
-     */
-    public function processDelimiters(?DelimiterInterface $stackBottom, DelimiterProcessorCollection $processors)
+    public function processDelimiters(?DelimiterInterface $stackBottom, DelimiterProcessorCollection $processors): void
     {
         $openersBottom = [];
 

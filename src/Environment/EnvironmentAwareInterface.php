@@ -13,10 +13,5 @@ namespace League\CommonMark\Environment;
 
 interface EnvironmentAwareInterface
 {
-    /**
-     * @param EnvironmentInterface $environment
-     *
-     * @return void
-     */
-    public function setEnvironment(EnvironmentInterface $environment);
+    public function setEnvironment(EnvironmentInterface $environment): void;
 }

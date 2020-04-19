@@ -203,10 +203,8 @@ class Cursor
 
     /**
      * Move the cursor forwards
-     *
-     * @return void
      */
-    public function advance()
+    public function advance(): void
     {
         $this->advanceBy(1);
     }
@@ -219,7 +217,7 @@ class Cursor
      *
      * @return void
      */
-    public function advanceBy(int $characters, bool $advanceByColumns = false)
+    public function advanceBy(int $characters, bool $advanceByColumns = false): void
     {
         if ($characters === 0) {
             $this->previousPosition = $this->currentPosition;
@@ -456,7 +454,7 @@ class Cursor
      *
      * @return void
      */
-    public function restoreState($state)
+    public function restoreState($state): void
     {
         list(
             $this->currentPosition,

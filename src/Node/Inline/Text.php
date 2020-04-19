@@ -16,12 +16,7 @@ namespace League\CommonMark\Node\Inline;
 
 class Text extends AbstractStringContainer
 {
-    /**
-     * @param string $character
-     *
-     * @return void
-     */
-    public function append(string $character)
+    public function append(string $character): void
     {
         $this->content .= $character;
     }

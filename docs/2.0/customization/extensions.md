@@ -17,7 +17,7 @@ use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 
 final class EmojiExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment
             // TODO: Create the EmojiParser, Emoji, and EmojiRenderer classes

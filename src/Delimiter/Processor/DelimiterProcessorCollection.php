@@ -22,7 +22,7 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
     /** @var array<string,DelimiterProcessorInterface>|DelimiterProcessorInterface[] */
     private $processorsByChar = [];
 
-    public function add(DelimiterProcessorInterface $processor)
+    public function add(DelimiterProcessorInterface $processor): void
     {
         $opening = $processor->getOpeningCharacter();
         $closing = $processor->getClosingCharacter();

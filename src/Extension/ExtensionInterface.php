@@ -18,10 +18,5 @@ use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 
 interface ExtensionInterface
 {
-    /**
-     * @param ConfigurableEnvironmentInterface $environment
-     *
-     * @return void
-     */
-    public function register(ConfigurableEnvironmentInterface $environment);
+    public function register(ConfigurableEnvironmentInterface $environment): void;
 }

@@ -82,12 +82,7 @@ class Context implements ContextInterface
         $this->blockCloser = new UnmatchedBlockCloser($this);
     }
 
-    /**
-     * @param string $line
-     *
-     * @return void
-     */
-    public function setNextLine(string $line)
+    public function setNextLine(string $line): void
     {
         ++$this->lineNumber;
         $this->line = $line;
@@ -103,16 +98,9 @@ class Context implements ContextInterface
         return $this->tip;
     }
 
-    /**
-     * @param AbstractBlock|null $block
-     *
-     * @return $this
-     */
-    public function setTip(?AbstractBlock $block)
+    public function setTip(?AbstractBlock $block): void
     {
         $this->tip = $block;
-
-        return $this;
     }
 
     public function getLineNumber(): int
@@ -135,19 +123,12 @@ class Context implements ContextInterface
         return $this->container;
     }
 
-    /**
-     * @param AbstractBlock $container
-     *
-     * @return $this
-     */
-    public function setContainer(AbstractBlock $container)
+    public function setContainer(AbstractBlock $container): void
     {
         $this->container = $container;
-
-        return $this;
     }
 
-    public function addBlock(AbstractBlock $block)
+    public function addBlock(AbstractBlock $block): void
     {
         $this->blockCloser->closeUnmatchedBlocks();
         $block->setStartLine($this->lineNumber);
@@ -165,7 +146,7 @@ class Context implements ContextInterface
         $this->container = $block;
     }
 
-    public function replaceContainerBlock(AbstractBlock $replacement)
+    public function replaceContainerBlock(AbstractBlock $replacement): void
     {
         $this->blockCloser->closeUnmatchedBlocks();
         $this->container->replaceWith($replacement);
@@ -182,16 +163,9 @@ class Context implements ContextInterface
         return $this->blocksParsed;
     }
 
-    /**
-     * @param bool $bool
-     *
-     * @return $this
-     */
-    public function setBlocksParsed(bool $bool)
+    public function setBlocksParsed(bool $bool): void
     {
         $this->blocksParsed = $bool;
-
-        return $this;
     }
 
     public function getReferenceParser(): ReferenceParser

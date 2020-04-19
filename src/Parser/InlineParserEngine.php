@@ -37,13 +37,7 @@ final class InlineParserEngine
         $this->environment = $environment;
     }
 
-    /**
-     * @param AbstractStringContainerBlock $container
-     * @param ReferenceMapInterface        $referenceMap
-     *
-     * @return void
-     */
-    public function parse(AbstractStringContainerBlock $container, ReferenceMapInterface $referenceMap)
+    public function parse(AbstractStringContainerBlock $container, ReferenceMapInterface $referenceMap): void
     {
         $inlineParserContext = new InlineParserContext($container, $referenceMap);
         $cursor = $inlineParserContext->getCursor();
@@ -121,12 +115,7 @@ final class InlineParserEngine
         return true;
     }
 
-    /**
-     * @param InlineParserContext $inlineParserContext
-     *
-     * @return void
-     */
-    private function processInlines(InlineParserContext $inlineParserContext)
+    private function processInlines(InlineParserContext $inlineParserContext): void
     {
         $delimiterStack = $inlineParserContext->getDelimiterStack();
         $delimiterStack->processDelimiters(null, $this->environment->getDelimiterProcessors());
@@ -135,14 +124,7 @@ final class InlineParserEngine
         $delimiterStack->removeAll();
     }
 
-    /**
-     * @param string              $character
-     * @param Node                $container
-     * @param InlineParserContext $inlineParserContext
-     *
-     * @return void
-     */
-    private function addPlainText(string $character, Node $container, InlineParserContext $inlineParserContext)
+    private function addPlainText(string $character, Node $container, InlineParserContext $inlineParserContext): void
     {
         // We reach here if none of the parsers can handle the input
         // Attempt to match multiple non-special characters at once

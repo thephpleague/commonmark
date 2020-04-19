@@ -54,12 +54,7 @@ class HtmlBlock extends AbstractStringContainerBlock
         return $this->type;
     }
 
-    /**
-     * @param int $type
-     *
-     * @return void
-     */
-    public function setType(int $type)
+    public function setType(int $type): void
     {
         $this->type = $type;
     }
@@ -83,14 +78,14 @@ class HtmlBlock extends AbstractStringContainerBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context, int $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber): void
     {
         parent::finalize($context, $endLineNumber);
 
         $this->finalStringContents = \implode("\n", $this->strings->toArray());
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
         /** @var self $tip */
         $tip = $context->getTip();

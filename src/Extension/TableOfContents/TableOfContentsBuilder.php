@@ -159,7 +159,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         throw new InvalidOptionException(\sprintf('Invalid config option "%s" for "table_of_contents/normalize"', $strategy));
     }
 
-    public function setConfiguration(ConfigurationInterface $config)
+    public function setConfiguration(ConfigurationInterface $config): void
     {
         $this->config = $config;
     }

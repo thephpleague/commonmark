@@ -46,20 +46,12 @@ class UnmatchedBlockCloser
         $this->resetTip();
     }
 
-    /**
-     * @param AbstractBlock $block
-     *
-     * @return void
-     */
-    public function setLastMatchedContainer(AbstractBlock $block)
+    public function setLastMatchedContainer(AbstractBlock $block): void
     {
         $this->lastMatchedContainer = $block;
     }
 
-    /**
-     * @return void
-     */
-    public function closeUnmatchedBlocks()
+    public function closeUnmatchedBlocks(): void
     {
         $endLine = $this->context->getLineNumber() - 1;
 
@@ -71,10 +63,7 @@ class UnmatchedBlockCloser
         }
     }
 
-    /**
-     * @return void
-     */
-    public function resetTip()
+    public function resetTip(): void
     {
         if ($this->context->getTip() === null) {
             throw new \RuntimeException('No tip to reset to');

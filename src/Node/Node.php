@@ -61,12 +61,7 @@ abstract class Node
         return $this->parent;
     }
 
-    /**
-     * @param Node|null $node
-     *
-     * @return void
-     */
-    protected function setParent(Node $node = null)
+    protected function setParent(Node $node = null): void
     {
         $this->parent = $node;
         $this->depth = ($node === null) ? 0 : $node->depth + 1;
@@ -79,7 +74,7 @@ abstract class Node
      *
      * @return void
      */
-    public function insertAfter(Node $sibling)
+    public function insertAfter(Node $sibling): void
     {
         $sibling->detach();
         $sibling->next = $this->next;
@@ -104,7 +99,7 @@ abstract class Node
      *
      * @return void
      */
-    public function insertBefore(Node $sibling)
+    public function insertBefore(Node $sibling): void
     {
         $sibling->detach();
         $sibling->previous = $this->previous;
@@ -122,22 +117,14 @@ abstract class Node
         }
     }
 
-    /**
-     * @param Node $replacement
-     *
-     * @return void
-     */
-    public function replaceWith(Node $replacement)
+    public function replaceWith(Node $replacement): void
     {
         $replacement->detach();
         $this->insertAfter($replacement);
         $this->detach();
     }
 
-    /**
-     * @return void
-     */
-    public function detach()
+    public function detach(): void
     {
         if ($this->previous) {
             $this->previous->next = $this->next;
@@ -182,12 +169,7 @@ abstract class Node
         return $children;
     }
 
-    /**
-     * @param Node $child
-     *
-     * @return void
-     */
-    public function appendChild(Node $child)
+    public function appendChild(Node $child): void
     {
         if ($this->lastChild) {
             $this->lastChild->insertAfter($child);
@@ -205,7 +187,7 @@ abstract class Node
      *
      * @return void
      */
-    public function prependChild(Node $child)
+    public function prependChild(Node $child): void
     {
         if ($this->firstChild) {
             $this->firstChild->insertBefore($child);
@@ -221,7 +203,7 @@ abstract class Node
      *
      * @return void
      */
-    public function detachChildren()
+    public function detachChildren(): void
     {
         foreach ($this->children() as $children) {
             $children->setParent(null);
@@ -234,16 +216,14 @@ abstract class Node
      *
      * @param iterable<Node> $children
      *
-     * @return $this
+     * @return void
      */
-    public function replaceChildren(iterable $children)
+    public function replaceChildren(iterable $children): void
     {
         $this->detachChildren();
         foreach ($children as $item) {
             $this->appendChild($item);
         }
-
-        return $this;
     }
 
     public function getDepth(): int

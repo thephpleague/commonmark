@@ -90,7 +90,7 @@ class MyCustomLinkRenderer implements InlineRendererInterface
         return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
     }
 
-    private function isExternalUrl($url)
+    private function isExternalUrl($url): bool
     {
         return parse_url($url, PHP_URL_HOST) !== $this->host;
     }

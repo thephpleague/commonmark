@@ -112,6 +112,10 @@ Any usages of `Converter` should be replaced with `CommonMarkConverter`. Note th
 
 Any usages of `ConverterInterface` should be replaced with `MarkdownConverterInterface`.  This interface has the same methods, so it should be a drop-in replacement.
 
+## Method Return Types
+
+Return types have been added to virtually all class and interface methods.  If you implement or extend anything from this library, ensure you also have the proper return types added.
+
 ## `Html5Entities` utility class
 
 Use the `Html5EntityDecoder` utility class instead.

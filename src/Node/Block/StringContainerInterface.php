@@ -22,23 +22,9 @@ use League\CommonMark\Parser\Cursor;
  */
 interface StringContainerInterface
 {
-    /**
-     * @param string $line
-     *
-     * @return void
-     */
-    public function addLine(string $line);
+    public function addLine(string $line): void;
 
-    /**
-     * @return string
-     */
     public function getStringContent(): string;
 
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     *
-     * @return void
-     */
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor);
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void;
 }

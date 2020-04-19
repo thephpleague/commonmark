@@ -19,25 +19,10 @@ namespace League\CommonMark\Reference;
  */
 interface ReferenceMapInterface
 {
-    /**
-     * @param ReferenceInterface $reference
-     *
-     * @return void
-     */
     public function addReference(ReferenceInterface $reference): void;
 
-    /**
-     * @param string $label
-     *
-     * @return bool
-     */
     public function contains(string $label): bool;
 
-    /**
-     * @param string $label
-     *
-     * @return ReferenceInterface|null
-     */
     public function getReference(string $label): ?ReferenceInterface;
 
     /**

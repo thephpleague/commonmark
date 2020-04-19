@@ -79,7 +79,7 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
         return 0;
     }
 
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         if ($delimiterUse === 1) {
             $emphasis = new Emphasis();
@@ -99,7 +99,7 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
         $opener->insertAfter($emphasis);
     }
 
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
     }

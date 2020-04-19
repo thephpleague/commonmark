@@ -41,12 +41,12 @@ abstract class AbstractStringContainerBlock extends AbstractBlock implements Str
         $this->strings = new ArrayCollection();
     }
 
-    public function addLine(string $line)
+    public function addLine(string $line): void
     {
         $this->strings[] = $line;
     }
 
-    abstract public function handleRemainingContents(ContextInterface $context, Cursor $cursor);
+    abstract public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void;
 
     public function getStringContent(): string
     {

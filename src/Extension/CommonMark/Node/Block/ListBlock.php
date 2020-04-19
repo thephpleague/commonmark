@@ -82,7 +82,7 @@ class ListBlock extends AbstractBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context, int $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber): void
     {
         parent::finalize($context, $endLineNumber);
 

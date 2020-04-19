@@ -20,7 +20,7 @@ interface ConfigurationInterface
      *
      * @return void
      */
-    public function merge(array $config = []);
+    public function merge(array $config = []): void;
 
     /**
      * Replace the entire array with something else
@@ -29,7 +29,7 @@ interface ConfigurationInterface
      *
      * @return void
      */
-    public function replace(array $config = []);
+    public function replace(array $config = []): void;
 
     /**
      * Return the configuration value at the given key, or $default if no such config exists
@@ -53,5 +53,5 @@ interface ConfigurationInterface
      *
      * @return void
      */
-    public function set(string $key, $value = null);
+    public function set(string $key, $value = null): void;
 }

@@ -39,7 +39,7 @@ final class DisallowedRawHtmlInlineRenderer implements InlineRendererInterface, 
         return preg_replace('/<(\/?(?:title|textarea|style|xmp|iframe|noembed|noframes|script|plaintext)[ \/>])/i', '&lt;$1', $rendered);
     }
 
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         if ($this->htmlInlineRenderer instanceof ConfigurationAwareInterface) {
             $this->htmlInlineRenderer->setConfiguration($configuration);

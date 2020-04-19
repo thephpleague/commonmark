@@ -39,7 +39,7 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
         return $min >= 2 ? $min : 0;
     }
 
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         $strikethrough = new Strikethrough();
 

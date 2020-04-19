@@ -102,14 +102,14 @@ final class Environment implements ConfigurableEnvironmentInterface
         $this->delimiterProcessors = new DelimiterProcessorCollection();
     }
 
-    public function mergeConfig(array $config = [])
+    public function mergeConfig(array $config = []): void
     {
         $this->assertUninitialized('Failed to modify configuration.');
 
         $this->config->merge($config);
     }
 
-    public function setConfig(array $config = [])
+    public function setConfig(array $config = []): void
     {
         $this->assertUninitialized('Failed to modify configuration.');
 

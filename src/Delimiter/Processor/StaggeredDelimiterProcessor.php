@@ -64,7 +64,7 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
      *
      * @return void
      */
-    public function add(DelimiterProcessorInterface $processor)
+    public function add(DelimiterProcessorInterface $processor): void
     {
         $len = $processor->getMinLength();
 
@@ -83,7 +83,7 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
         return $this->findProcessor($opener->getLength())->getDelimiterUse($opener, $closer);
     }
 
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         $this->findProcessor($delimiterUse)->process($opener, $closer, $delimiterUse);
     }

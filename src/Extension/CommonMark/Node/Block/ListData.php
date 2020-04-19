@@ -46,12 +46,7 @@ class ListData
      */
     public $markerOffset;
 
-    /**
-     * @param ListData $data
-     *
-     * @return bool
-     */
-    public function equals(ListData $data)
+    public function equals(ListData $data): bool
     {
         return $this->type === $data->type &&
             $this->delimiter === $data->delimiter &&

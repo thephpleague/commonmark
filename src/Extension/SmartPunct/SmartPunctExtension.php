@@ -24,7 +24,7 @@ use League\CommonMark\Renderer\Inline as CoreInlineRenderer;
 
 final class SmartPunctExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment
             ->addInlineParser(new QuoteParser(), 10)

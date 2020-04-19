@@ -39,7 +39,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         $this->slugGenerator = $slugGenerator ?? new DefaultSlugGenerator();
     }
 
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
     }

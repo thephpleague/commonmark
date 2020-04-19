@@ -260,7 +260,7 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
         return null;
     }
 
-    public function setEnvironment(EnvironmentInterface $environment)
+    public function setEnvironment(EnvironmentInterface $environment): void
     {
         $this->environment = $environment;
     }

@@ -55,7 +55,7 @@ final class UppercaseDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         $upperCase = new UppercaseText();
         $tmp = $opener->next();

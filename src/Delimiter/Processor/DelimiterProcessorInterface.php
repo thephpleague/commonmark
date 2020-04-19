@@ -82,5 +82,5 @@ interface DelimiterProcessorInterface
      *
      * @return void
      */
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse);
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void;
 }

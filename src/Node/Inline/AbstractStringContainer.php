@@ -31,23 +31,13 @@ class AbstractStringContainer extends AbstractInline
         $this->data = $data;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $contents
-     *
-     * @return $this
-     */
-    public function setContent(string $contents)
+    public function setContent(string $contents): void
     {
         $this->content = $contents;
-
-        return $this;
     }
 }

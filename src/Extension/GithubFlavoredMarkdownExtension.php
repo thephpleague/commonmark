@@ -20,7 +20,7 @@ use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 final class GithubFlavoredMarkdownExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment->addExtension(new AutolinkExtension());
         $environment->addExtension(new DisallowedRawHtmlExtension());

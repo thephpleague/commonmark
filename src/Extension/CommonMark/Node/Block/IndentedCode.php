@@ -44,7 +44,7 @@ class IndentedCode extends AbstractStringContainerBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context, int $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber): void
     {
         parent::finalize($context, $endLineNumber);
 
@@ -65,7 +65,7 @@ class IndentedCode extends AbstractStringContainerBlock
         $this->finalStringContents = $tmp;
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
         /** @var self $tip */
         $tip = $context->getTip();

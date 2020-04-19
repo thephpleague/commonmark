@@ -40,7 +40,7 @@ class Paragraph extends AbstractStringContainerBlock implements InlineContainerI
         return true;
     }
 
-    public function finalize(ContextInterface $context, int $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber): void
     {
         parent::finalize($context, $endLineNumber);
 
@@ -62,13 +62,7 @@ class Paragraph extends AbstractStringContainerBlock implements InlineContainerI
         }
     }
 
-    /**
-     * @param ContextInterface $context
-     * @param Cursor           $cursor
-     *
-     * @return bool
-     */
-    protected function parseReferences(ContextInterface $context, Cursor $cursor)
+    protected function parseReferences(ContextInterface $context, Cursor $cursor): bool
     {
         $referenceFound = false;
         while ($cursor->getCharacter() === '[' && $context->getReferenceParser()->parse($cursor)) {
@@ -79,7 +73,7 @@ class Paragraph extends AbstractStringContainerBlock implements InlineContainerI
         return $referenceFound;
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
         $cursor->advanceToNextNonSpaceOrTab();
 

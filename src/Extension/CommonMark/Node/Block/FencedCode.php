@@ -158,7 +158,7 @@ class FencedCode extends AbstractStringContainerBlock
         return true;
     }
 
-    public function finalize(ContextInterface $context, int $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber): void
     {
         parent::finalize($context, $endLineNumber);
 
@@ -177,7 +177,7 @@ class FencedCode extends AbstractStringContainerBlock
         }
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
     {
         /** @var self $container */
         $container = $context->getContainer();

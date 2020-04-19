@@ -52,7 +52,7 @@ abstract class AbstractBlock extends Node
      */
     protected $endLine;
 
-    protected function setParent(Node $node = null)
+    protected function setParent(Node $node = null): void
     {
         if ($node && !$node instanceof self) {
             throw new \InvalidArgumentException('Parent of block must also be block (can not be inline)');
@@ -153,12 +153,7 @@ abstract class AbstractBlock extends Node
         return $this->lastLineBlank;
     }
 
-    /**
-     * @param bool $blank
-     *
-     * @return void
-     */
-    public function setLastLineBlank(bool $blank)
+    public function setLastLineBlank(bool $blank): void
     {
         $this->lastLineBlank = $blank;
     }
@@ -194,7 +189,7 @@ abstract class AbstractBlock extends Node
      *
      * @return void
      */
-    public function finalize(ContextInterface $context, int $endLineNumber)
+    public function finalize(ContextInterface $context, int $endLineNumber): void
     {
         if (!$this->open) {
             return;

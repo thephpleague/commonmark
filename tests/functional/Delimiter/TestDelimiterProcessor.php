@@ -65,7 +65,7 @@ final class TestDelimiterProcessor implements DelimiterProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         $opener->insertAfter(new Text('(' . $this->length . ')'));
         $closer->insertBefore(new Text('(/' . $this->length . ')'));

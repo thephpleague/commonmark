@@ -28,7 +28,7 @@ interface DelimiterProcessorCollectionInterface
      *
      * @return void
      */
-    public function add(DelimiterProcessorInterface $processor);
+    public function add(DelimiterProcessorInterface $processor): void;
 
     /**
      * Returns the delim processor which handles the given character if one exists

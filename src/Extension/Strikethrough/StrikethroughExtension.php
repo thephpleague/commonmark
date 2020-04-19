@@ -16,7 +16,7 @@ use League\CommonMark\Extension\ExtensionInterface;
 
 final class StrikethroughExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment->addDelimiterProcessor(new StrikethroughDelimiterProcessor());
         $environment->addInlineRenderer(Strikethrough::class, new StrikethroughRenderer());

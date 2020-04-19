@@ -19,12 +19,7 @@ final class EmailAutolinkProcessor
 {
     const REGEX = '/([A-Za-z0-9.\-_+]+@[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_.]+)/';
 
-    /**
-     * @param DocumentParsedEvent $e
-     *
-     * @return void
-     */
-    public function __invoke(DocumentParsedEvent $e)
+    public function __invoke(DocumentParsedEvent $e): void
     {
         $walker = $e->getDocument()->walker();
 

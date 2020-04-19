@@ -28,7 +28,7 @@ final class HeadingPermalinkRenderer implements InlineRendererInterface, Configu
     /** @var ConfigurationInterface */
     private $config;
 
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
     }

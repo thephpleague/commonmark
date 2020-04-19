@@ -126,7 +126,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @phpstan-param TKey|null $offset
      * @phpstan-param TValue    $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
             $this->elements[] = $value;
@@ -144,7 +144,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @phpstan-param TKey $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if (!\array_key_exists($offset, $this->elements)) {
             return;

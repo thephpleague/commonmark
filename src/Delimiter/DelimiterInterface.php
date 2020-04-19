@@ -24,37 +24,19 @@ interface DelimiterInterface
 
     public function isActive(): bool;
 
-    /**
-     * @param bool $active
-     *
-     * @return void
-     */
-    public function setActive(bool $active);
+    public function setActive(bool $active): void;
 
-    /**
-     * @return string
-     */
     public function getChar(): string;
 
     public function getIndex(): ?int;
 
     public function getNext(): ?DelimiterInterface;
 
-    /**
-     * @param DelimiterInterface|null $next
-     *
-     * @return void
-     */
-    public function setNext(?DelimiterInterface $next);
+    public function setNext(?DelimiterInterface $next): void;
 
     public function getLength(): int;
 
-    /**
-     * @param int $length
-     *
-     * @return void
-     */
-    public function setLength(int $length);
+    public function setLength(int $length): void;
 
     public function getOriginalLength(): int;
 
@@ -62,10 +44,5 @@ interface DelimiterInterface
 
     public function getPrevious(): ?DelimiterInterface;
 
-    /**
-     * @param DelimiterInterface|null $previous
-     *
-     * @return mixed|void
-     */
-    public function setPrevious(?DelimiterInterface $previous);
+    public function setPrevious(?DelimiterInterface $previous): void;
 }

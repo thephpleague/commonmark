@@ -19,7 +19,7 @@ use League\CommonMark\Extension\ExtensionInterface;
 
 final class InlinesOnlyExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $childRenderer = new ChildRenderer();
 

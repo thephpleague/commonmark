@@ -52,12 +52,7 @@ final class UrlAutolinkProcessor
         $this->finalRegex = \sprintf(self::REGEX, \implode('|', $allowedProtocols));
     }
 
-    /**
-     * @param DocumentParsedEvent $e
-     *
-     * @return void
-     */
-    public function __invoke(DocumentParsedEvent $e)
+    public function __invoke(DocumentParsedEvent $e): void
     {
         $walker = $e->getDocument()->walker();
 

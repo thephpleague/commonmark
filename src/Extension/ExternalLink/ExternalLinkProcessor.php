@@ -25,12 +25,7 @@ final class ExternalLinkProcessor
         $this->environment = $environment;
     }
 
-    /**
-     * @param DocumentParsedEvent $e
-     *
-     * @return void
-     */
-    public function __invoke(DocumentParsedEvent $e)
+    public function __invoke(DocumentParsedEvent $e): void
     {
         $internalHosts = $this->environment->getConfig('external_link/internal_hosts', []);
         $openInNewWindow = $this->environment->getConfig('external_link/open_in_new_window', false);

@@ -56,7 +56,7 @@ final class QuoteProcessor implements DelimiterProcessorInterface
         return 1;
     }
 
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         $opener->insertAfter(new Quote($this->openerCharacter));
         $closer->insertBefore(new Quote($this->closerCharacter));
