@@ -31,23 +31,13 @@ class ConverterInterfaceAliasTest extends TestCase
         $this->assertInstanceOf(ConverterInterface::class, $converterImplementation);
         $this->assertInstanceOf(MarkdownConverterInterface::class, $converterImplementation);
 
-        // Ensure the new interface is recognized as both itself and the old interface
-        $markdownConverterImplementation = new class() implements MarkdownConverterInterface {
-            public function convertToHtml(string $markdown): string
-            {
-                return '<p>test</p>';
-            }
-        };
-
-        $this->assertInstanceOf(ConverterInterface::class, $markdownConverterImplementation);
-        $this->assertInstanceOf(MarkdownConverterInterface::class, $markdownConverterImplementation);
-
         // Create a "legacy" function which requires the old interface and ensure we can still pass CommonMarkConverter (which implements the new interface) to it
         $legacyFunc = function (ConverterInterface $converter, string $markdown) {
             return $converter->convertToHtml($markdown);
         };
 
-        // Create a "new" function which requires the new interface and ensure we can still pass CommonMarkConverter to it
+        // Create a "new" function which requires the new interface and ensure we can still pass
+        // CommonMarkConverter to it
         $newFunc = function (MarkdownConverterInterface $converter, string $markdown) {
             return $converter->convertToHtml($markdown);
         };

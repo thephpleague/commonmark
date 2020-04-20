@@ -3,8 +3,5 @@ parameters:
   paths:
     - src
   ignoreErrors:
-    # "Errors" caused in deprecations
-    - path: src/ConverterInterface.php
-      message: '#If condition is always false#'
     - path: src/Util/ArrayCollection.php
       message: '#does not accept key int#'

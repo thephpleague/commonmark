@@ -16,7 +16,7 @@ namespace League\CommonMark;
  *
  * @deprecated This class is deprecated since league/commonmark 1.4, use CommonMarkConverter instead.
  */
-class Converter implements MarkdownConverterInterface
+class Converter implements ConverterInterface
 {
     /**
      * The document parser instance.
