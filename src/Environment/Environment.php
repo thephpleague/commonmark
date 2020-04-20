@@ -279,10 +279,7 @@ final class Environment implements ConfigurableEnvironmentInterface
         $this->buildInlineParserCharacterRegex();
     }
 
-    /**
-     * @param object $object
-     */
-    private function injectEnvironmentAndConfigurationIfNeeded($object): void
+    private function injectEnvironmentAndConfigurationIfNeeded(object $object): void
     {
         if ($object instanceof EnvironmentAwareInterface) {
             $object->setEnvironment($this);
