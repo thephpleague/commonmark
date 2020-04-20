@@ -11,17 +11,11 @@
 
 namespace League\CommonMark;
 
-@trigger_error(sprintf('The "%s" interface is deprecated since league/commonmark 1.4, use "%s" instead.', 'League\\CommonMark\\ConverterInterface', MarkdownConverterInterface::class), E_USER_DEPRECATED);
-
-if (false) {
-    /**
-     * Interface for a service which converts CommonMark to HTML.
-     *
-     * @deprecated ConverterInterface is deprecated since league/commonmark 1.4, use MarkdownConverterInterface instead
-     */
-    interface ConverterInterface extends MarkdownConverterInterface
-    {
-    }
+/**
+ * Interface for a service which converts CommonMark to HTML.
+ *
+ * @deprecated ConverterInterface is deprecated since league/commonmark 1.4, use MarkdownConverterInterface instead
+ */
+interface ConverterInterface extends MarkdownConverterInterface
+{
 }
-
-class_alias(MarkdownConverterInterface::class, 'League\\CommonMark\\ConverterInterface');
