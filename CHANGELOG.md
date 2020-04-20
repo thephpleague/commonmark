@@ -4,9 +4,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.4.1] - 2020-04-20
+
+### Fixed BC break caused by ConverterInterface alias not being used by some DI containers (#454)
+
 ## [1.4.0] - 2020-04-18
 
-## Added
+### Added
 
  - Added new [Heading Permalink extension](https://commonmark.thephpleague.com/extensions/heading-permalinks/) (#420)
  - Added new [Table of Contents extension](https://commonmark.thephpleague.com/extensions/table-of-contents/) (#441)
@@ -15,18 +19,18 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added new `ListBlock::TYPE_BULLET` constant as a replacement for `ListBlock::TYPE_UNORDERED`
  - Added new `MarkdownInput` class and `MarkdownInputInterface` to handle pre-parsing and allow listeners to replace Markdown contents
 
-## Changed
+### Changed
 
  - Block & inline renderers will now render child classes automatically (#222, #209)
  - The `ListBlock` constants now use fully-lowercased values instead of titlecased values
  - Significantly improved typing
 
-## Fixed
+### Fixed
 
  - Fixed loose comparison when checking for table alignment
  - Fixed `StaggeredDelimiterProcessor` returning from a `void` function
 
-## Deprecated
+### Deprecated
 
  - The `Converter` class has been deprecated; use `CommonMarkConverter` instead (#438, #439)
  - The `ConverterInterface` has been deprecated; use `MarkdownConverterInterface` instead (#438, #439)
@@ -283,7 +287,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4.1...HEAD
+[1.4.1]: https://github.com/thephpleague/commonmark/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/thephpleague/commonmark/compare/1.3.4...1.4.0
 [1.3.4]: https://github.com/thephpleague/commonmark/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/thephpleague/commonmark/compare/1.3.2...1.3.3
