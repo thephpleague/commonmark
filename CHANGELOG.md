@@ -6,7 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [1.4.1] - 2020-04-20
 
-### Fixed BC break caused by ConverterInterface alias not being used by some DI containers (#454)
+### Fixed
+
+ - Fixed BC break caused by ConverterInterface alias not being used by some DI containers (#454)
 
 ## [1.4.0] - 2020-04-18
 
