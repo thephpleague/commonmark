@@ -14,10 +14,8 @@
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\Environment;
-use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Parser\Block\BlockParserInterface;

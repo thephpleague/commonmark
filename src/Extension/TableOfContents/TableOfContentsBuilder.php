@@ -13,20 +13,20 @@ namespace League\CommonMark\Extension\TableOfContents;
 
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
-use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Node\Block\Paragraph;
-use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Normalizer\AsIsNormalizerStrategy;
 use League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrategy;
 use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;
 use League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Block\Paragraph;
 
 final class TableOfContentsBuilder implements ConfigurationAwareInterface
 {
