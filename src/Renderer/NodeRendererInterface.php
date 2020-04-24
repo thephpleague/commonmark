@@ -27,8 +27,6 @@ interface NodeRendererInterface
      * @param mixed  $default
      *
      * @return mixed|null
-     *
-     * @deprecated
      */
     public function getOption(string $option, $default = null);
 
