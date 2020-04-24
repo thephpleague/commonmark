@@ -21,6 +21,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Util\HtmlFilter;
 
 final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
 {
@@ -41,15 +42,7 @@ final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAw
             throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
         }
 
-        if ($this->config->get('html_input') === EnvironmentInterface::HTML_INPUT_STRIP) {
-            return '';
-        }
-
-        if ($this->config->get('html_input') === EnvironmentInterface::HTML_INPUT_ESCAPE) {
-            return \htmlspecialchars($block->getStringContent(), \ENT_NOQUOTES);
-        }
-
-        return $block->getStringContent();
+        return HtmlFilter::filter($block->getStringContent(), $this->config->get('html_input', HtmlFilter::ALLOW));
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

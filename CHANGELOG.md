@@ -6,10 +6,18 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed information on upgrading to version 2.0.
 
+### Added
+
+ - Added new `HtmlFilter` utility class
+
 ### Changed
 
  - Moved classes into different namespaces
  - Renamed `ElementRendererInterface` to `NodeRendererInterface`
+ - Moved and renamed the following constants:
+   - `EnvironmentInterface::HTML_INPUT_ALLOW` is now `HtmlFilter::ALLOW`
+   - `EnvironmentInterface::HTML_INPUT_ESCAPE` is now `HtmlFilter::ESCAPE`
+   - `EnvironmentInterface::HTML_INPUT_STRIP` is now `HtmlFilter::STRIP`
  - Added missing return types to virtually every class and interface method
  - Added `void` return types to all methods that don't return anything
  - Several methods which previously returned `$this` now return `void`

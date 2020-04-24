@@ -26,6 +26,7 @@ use League\CommonMark\Parser\Block\BlockParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Util\HtmlFilter;
 use League\CommonMark\Util\PrioritizedList;
 
 final class Environment implements ConfigurableEnvironmentInterface
@@ -300,7 +301,7 @@ final class Environment implements ConfigurableEnvironmentInterface
                 'inner_separator' => "\n",
                 'soft_break'      => "\n",
             ],
-            'html_input'         => self::HTML_INPUT_ALLOW,
+            'html_input'         => HtmlFilter::ALLOW,
             'allow_unsafe_links' => true,
             'max_nesting_level'  => \INF,
         ]);

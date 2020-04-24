@@ -15,7 +15,7 @@
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment\Environment;
+use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
 class HtmlInputTest extends TestCase
@@ -36,7 +36,7 @@ class HtmlInputTest extends TestCase
         $input = file_get_contents(__DIR__ . '/data/html_input/input.md');
         $expectedOutput = trim(file_get_contents(__DIR__ . '/data/html_input/unsafe_output.html'));
 
-        $converter = new CommonMarkConverter(['html_input' => Environment::HTML_INPUT_ALLOW]);
+        $converter = new CommonMarkConverter(['html_input' => HtmlFilter::ALLOW]);
         $actualOutput = trim($converter->convertToHtml($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
@@ -47,7 +47,7 @@ class HtmlInputTest extends TestCase
         $input = file_get_contents(__DIR__ . '/data/html_input/input.md');
         $expectedOutput = trim(file_get_contents(__DIR__ . '/data/html_input/escaped_output.html'));
 
-        $converter = new CommonMarkConverter(['html_input' => Environment::HTML_INPUT_ESCAPE]);
+        $converter = new CommonMarkConverter(['html_input' => HtmlFilter::ESCAPE]);
         $actualOutput = trim($converter->convertToHtml($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
@@ -58,7 +58,7 @@ class HtmlInputTest extends TestCase
         $input = file_get_contents(__DIR__ . '/data/html_input/input.md');
         $expectedOutput = trim(file_get_contents(__DIR__ . '/data/html_input/safe_output.html'));
 
-        $converter = new CommonMarkConverter(['html_input' => Environment::HTML_INPUT_STRIP]);
+        $converter = new CommonMarkConverter(['html_input' => HtmlFilter::STRIP]);
         $actualOutput = trim($converter->convertToHtml($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);

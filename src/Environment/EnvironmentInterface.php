@@ -20,10 +20,6 @@ use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 
 interface EnvironmentInterface
 {
-    const HTML_INPUT_STRIP = 'strip';
-    const HTML_INPUT_ALLOW = 'allow';
-    const HTML_INPUT_ESCAPE = 'escape';
-
     /**
      * @param string|null $key
      * @param mixed       $default

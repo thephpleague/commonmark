@@ -15,11 +15,11 @@
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Configuration\Configuration;
-use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\HtmlInlineRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
 class HtmlInlineRendererTest extends TestCase
@@ -49,7 +49,7 @@ class HtmlInlineRendererTest extends TestCase
     public function testRenderAllowHtml()
     {
         $this->renderer->setConfiguration(new Configuration([
-            'html_input' => Environment::HTML_INPUT_ALLOW,
+            'html_input' => HtmlFilter::ALLOW,
         ]));
 
         $inline = new HtmlInline('<h1>Test</h1>');
@@ -64,7 +64,7 @@ class HtmlInlineRendererTest extends TestCase
     public function testRenderEscapeHtml()
     {
         $this->renderer->setConfiguration(new Configuration([
-            'html_input' => Environment::HTML_INPUT_ESCAPE,
+            'html_input' => HtmlFilter::ESCAPE,
         ]));
 
         $inline = new HtmlInline('<h1 class="test">Test</h1>');
@@ -79,7 +79,7 @@ class HtmlInlineRendererTest extends TestCase
     public function testRenderStripHtml()
     {
         $this->renderer->setConfiguration(new Configuration([
-            'html_input' => Environment::HTML_INPUT_STRIP,
+            'html_input' => HtmlFilter::STRIP,
         ]));
 
         $inline = new HtmlInline('<h1>Test</h1>');

@@ -15,11 +15,11 @@
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Configuration\Configuration;
-use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\HtmlBlockRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
 class HtmlBlockRendererTest extends TestCase
@@ -56,7 +56,7 @@ class HtmlBlockRendererTest extends TestCase
     public function testRenderAllowHtml()
     {
         $this->renderer->setConfiguration(new Configuration([
-            'html_input' => Environment::HTML_INPUT_ALLOW,
+            'html_input' => HtmlFilter::ALLOW,
         ]));
 
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
@@ -78,7 +78,7 @@ class HtmlBlockRendererTest extends TestCase
     public function testRenderEscapeHtml()
     {
         $this->renderer->setConfiguration(new Configuration([
-            'html_input' => Environment::HTML_INPUT_ESCAPE,
+            'html_input' => HtmlFilter::ESCAPE,
         ]));
 
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
@@ -100,7 +100,7 @@ class HtmlBlockRendererTest extends TestCase
     public function testRenderStripHtml()
     {
         $this->renderer->setConfiguration(new Configuration([
-            'html_input' => Environment::HTML_INPUT_STRIP,
+            'html_input' => HtmlFilter::STRIP,
         ]));
 
         /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
