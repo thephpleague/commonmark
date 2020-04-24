@@ -30,6 +30,7 @@ final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAw
      */
     protected $config;
 
+    /*
      * @param HtmlBlock             $block
      * @param NodeRendererInterface $htmlRenderer
      * @param bool                  $inTightList

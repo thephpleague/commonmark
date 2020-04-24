@@ -30,6 +30,7 @@ final class ImageRenderer implements InlineRendererInterface, ConfigurationAware
      */
     protected $config;
 
+    /*
      * @param Image                 $inline
      * @param NodeRendererInterface $htmlRenderer
      *
