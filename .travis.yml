@@ -16,8 +16,9 @@ cache:
 
 jobs:
   include:
-    - name: 'PHP: 7.2; Lowest Stable Dependencies PHPUnit'
-      php: 7.2
+    - name: 'PHP: 7.2.5; Lowest Stable Dependencies PHPUnit'
+      dist: xenial
+      php: 7.2.5
       env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest" PHPUNIT=true'
     - name: 'PHP: 8.0-dev; PHPUnit'
       php: nightly
