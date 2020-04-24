@@ -32,11 +32,6 @@ final class DocParser implements DocParserInterface
     private $environment;
 
     /**
-     * @var InlineParserEngine
-     */
-    private $inlineParserEngine;
-
-    /**
      * @var int|float
      */
     private $maxNestingLevel;
@@ -47,7 +42,6 @@ final class DocParser implements DocParserInterface
     public function __construct(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
-        $this->inlineParserEngine = new InlineParserEngine($environment);
         $this->maxNestingLevel = $environment->getConfig('max_nesting_level', \INF);
     }
 
@@ -124,8 +118,9 @@ final class DocParser implements DocParserInterface
 
     private function processInlines(ContextInterface $context): void
     {
-        $walker = $context->getDocument()->walker();
+        $inlineParserEngine = new InlineParserEngine($this->environment, $context->getDocument()->getReferenceMap());
 
+        $walker = $context->getDocument()->walker();
         while ($event = $walker->next()) {
             if (!$event->isEntering()) {
                 continue;
@@ -133,7 +128,7 @@ final class DocParser implements DocParserInterface
 
             $node = $event->getNode();
             if ($node instanceof AbstractStringContainerBlock) {
-                $this->inlineParserEngine->parse($node, $context->getDocument()->getReferenceMap());
+                $inlineParserEngine->parse($node);
             }
         }
     }

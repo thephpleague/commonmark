@@ -30,16 +30,20 @@ use League\CommonMark\Util\RegexHelper;
 final class InlineParserEngine
 {
     /** @var EnvironmentInterface */
-    protected $environment;
+    private $environment;
 
-    public function __construct(EnvironmentInterface $environment)
+    /** @var ReferenceMapInterface */
+    private $referenceMap;
+
+    public function __construct(EnvironmentInterface $environment, ReferenceMapInterface $referenceMap)
     {
         $this->environment = $environment;
+        $this->referenceMap = $referenceMap;
     }
 
-    public function parse(AbstractStringContainerBlock $container, ReferenceMapInterface $referenceMap): void
+    public function parse(AbstractStringContainerBlock $container): void
     {
-        $inlineParserContext = new InlineParserContext($container, $referenceMap);
+        $inlineParserContext = new InlineParserContext($container, $this->referenceMap);
         $cursor = $inlineParserContext->getCursor();
         while (($character = $cursor->getCharacter()) !== null) {
             if (!$this->parseCharacter($character, $inlineParserContext)) {
