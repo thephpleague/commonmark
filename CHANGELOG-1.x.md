@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [1.4.2] - 2020-04-24
+
+### Fixed
+
+ - Fixed inline code blocks not be included within heading permalinks (#457)
+
 ## [1.4.1] - 2020-04-20
 
 ### Fixed
@@ -287,7 +293,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4.2...HEAD
+[1.4.2]: https://github.com/thephpleague/commonmark/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/thephpleague/commonmark/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/thephpleague/commonmark/compare/1.3.4...1.4.0
 [1.3.4]: https://github.com/thephpleague/commonmark/compare/1.3.3...1.3.4

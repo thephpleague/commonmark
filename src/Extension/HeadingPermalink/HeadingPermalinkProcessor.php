@@ -15,6 +15,7 @@ use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
 use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
 use League\CommonMark\Node\Inline\Text;
@@ -83,7 +84,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
         $walker = $node->walker();
         while ($event = $walker->next()) {
-            if ($event->isEntering() && ($child = $event->getNode()) instanceof Text) {
+            if ($event->isEntering() && (($child = $event->getNode()) instanceof Text || $child instanceof Code)) {
                 $text .= $child->getContent();
             }
         }
