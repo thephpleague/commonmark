@@ -14,6 +14,8 @@
 
 namespace League\CommonMark\Node;
 
+use League\CommonMark\Node\Block\AbstractBlock;
+
 final class NodeWalker
 {
     /**
@@ -53,7 +55,7 @@ final class NodeWalker
             return null;
         }
 
-        if ($entering && $current->isContainer()) {
+        if ($entering && ($current instanceof AbstractBlock || $current->hasChildren())) {
             if ($current->firstChild()) {
                 $this->current = $current->firstChild();
                 $this->entering = true;

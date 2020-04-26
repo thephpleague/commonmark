@@ -5,9 +5,6 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -18,14 +15,13 @@ use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
-use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
-use League\CommonMark\Node\Block\Paragraph;
-use League\CommonMark\Parser\Block\BlockParserInterface;
-use League\CommonMark\Parser\ContextInterface;
+use League\CommonMark\Parser\Block\BlockStart;
+use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Cursor;
+use League\CommonMark\Parser\MarkdownParserStateInterface;
 use League\CommonMark\Util\RegexHelper;
 
-final class ListParser implements BlockParserInterface, ConfigurationAwareInterface
+final class ListBlockStartParser implements BlockStartParserInterface, ConfigurationAwareInterface
 {
     /** @var ConfigurationInterface|null */
     private $config;
@@ -38,16 +34,35 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
         $this->config = $configuration;
     }
 
-    public function parse(ContextInterface $context, Cursor $cursor): bool
+    public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
-        if ($cursor->isIndented() && !($context->getContainer() instanceof ListBlock)) {
-            return false;
+        if ($cursor->isIndented()) {
+            return BlockStart::none();
         }
 
-        $indent = $cursor->getIndent();
-        if ($indent >= 4) {
-            return false;
+        $listData = $this->parseList($cursor, $parserState->getParagraphContent() !== null);
+        if ($listData === null) {
+            return BlockStart::none();
         }
+
+        $listItemParser = new ListItemParser($listData);
+
+        // prepend the list block if needed
+        $matched = $parserState->getLastMatchedBlockParser();
+        if (!($matched instanceof ListBlockParser) || !$listData->equals($matched->getBlock()->getListData())) {
+            $listBlockParser = new ListBlockParser($listData);
+            // We start out with assuming a list is tight. If we find a blank line, we set it to loose later.
+            $listBlockParser->getBlock()->setTight(true);
+
+            return BlockStart::of($listBlockParser, $listItemParser)->at($cursor);
+        }
+
+        return BlockStart::of($listItemParser)->at($cursor);
+    }
+
+    private function parseList(Cursor $cursor, bool $inParagraph): ?ListData
+    {
+        $indent = $cursor->getIndent();
 
         $tmpCursor = clone $cursor;
         $tmpCursor->advanceToNextNonSpaceOrTab();
@@ -60,7 +75,7 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
             $data->delimiter = null;
             $data->bulletChar = $rest[0];
             $markerLength = 1;
-        } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (!($context->getContainer() instanceof Paragraph) || $matches[1] === '1')) {
+        } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (!$inParagraph || $matches[1] === '1')) {
             $data = new ListData();
             $data->markerOffset = $indent;
             $data->type = ListBlock::TYPE_ORDERED;
@@ -69,35 +84,25 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
             $data->bulletChar = null;
             $markerLength = \strlen($matches[0]);
         } else {
-            return false;
+            return null;
         }
 
         // Make sure we have spaces after
         $nextChar = $tmpCursor->peek($markerLength);
         if (!($nextChar === null || $nextChar === "\t" || $nextChar === ' ')) {
-            return false;
+            return null;
         }
 
         // If it interrupts paragraph, make sure first line isn't blank
-        $container = $context->getContainer();
-        if ($container instanceof Paragraph && !RegexHelper::matchAt(RegexHelper::REGEX_NON_SPACE, $rest, $markerLength)) {
-            return false;
+        if ($inParagraph && !RegexHelper::matchAt(RegexHelper::REGEX_NON_SPACE, $rest, $markerLength)) {
+            return null;
         }
 
-        // We've got a match! Advance offset and calculate padding
         $cursor->advanceToNextNonSpaceOrTab(); // to start of marker
         $cursor->advanceBy($markerLength, true); // to end of marker
-        $data->padding = $this->calculateListMarkerPadding($cursor, $markerLength);
+        $data->padding = self::calculateListMarkerPadding($cursor, $markerLength);
 
-        // add the list if needed
-        if (!($container instanceof ListBlock) || !$data->equals($container->getListData())) {
-            $context->addBlock(new ListBlock($data));
-        }
-
-        // add the list item
-        $context->addBlock(new ListItem($data));
-
-        return true;
+        return $data;
     }
 
     /**
@@ -106,7 +111,7 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
      *
      * @return int
      */
-    private function calculateListMarkerPadding(Cursor $cursor, int $markerLength): int
+    private static function calculateListMarkerPadding(Cursor $cursor, int $markerLength): int
     {
         $start = $cursor->saveState();
         $spacesStartCol = $cursor->getColumn();

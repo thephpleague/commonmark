@@ -16,12 +16,11 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Table;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Block\AbstractStringContainerBlock;
-use League\CommonMark\Node\Block\InlineContainerInterface;
-use League\CommonMark\Parser\ContextInterface;
-use League\CommonMark\Parser\Cursor;
 
-final class TableCell extends AbstractStringContainerBlock implements InlineContainerInterface
+/**
+ * @method children() AbstractBlock[]
+ */
+final class TableCell extends AbstractBlock
 {
     const TYPE_HEAD = 'th';
     const TYPE_BODY = 'td';
@@ -36,31 +35,41 @@ final class TableCell extends AbstractStringContainerBlock implements InlineCont
     /** @var string|null */
     public $align;
 
-    public function __construct(string $string = '', string $type = self::TYPE_BODY, string $align = null)
+    public function __construct(string $type = self::TYPE_BODY, string $align = null)
     {
-        parent::__construct();
-        $this->finalStringContents = $string;
-        $this->addLine($string);
         $this->type = $type;
         $this->align = $align;
     }
 
-    public function canContain(AbstractBlock $block): bool
+    /**
+     * @return string
+     */
+    public function getType(): string
     {
-        return false;
+        return $this->type;
     }
 
-    public function isCode(): bool
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
     {
-        return false;
+        $this->type = $type;
     }
 
-    public function matchesNextLine(Cursor $cursor): bool
+    /**
+     * @return string|null
+     */
+    public function getAlign(): ?string
     {
-        return false;
+        return $this->align;
     }
 
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
+    /**
+     * @param string|null $align
+     */
+    public function setAlign(?string $align): void
     {
+        $this->align = $align;
     }
 }

@@ -17,7 +17,7 @@ namespace League\CommonMark\Parser;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
-use League\CommonMark\Node\Block\AbstractStringContainerBlock;
+use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
@@ -27,7 +27,7 @@ use League\CommonMark\Util\RegexHelper;
 /**
  * @internal
  */
-final class InlineParserEngine
+final class InlineParserEngine implements InlineParserEngineInterface
 {
     /** @var EnvironmentInterface */
     private $environment;
@@ -41,19 +41,21 @@ final class InlineParserEngine
         $this->referenceMap = $referenceMap;
     }
 
-    public function parse(AbstractStringContainerBlock $container): void
+    public function parse(string $contents, AbstractBlock $block): void
     {
-        $inlineParserContext = new InlineParserContext($container, $this->referenceMap);
+        $inlineParserContext = new InlineParserContext($contents, $block, $this->referenceMap);
         $cursor = $inlineParserContext->getCursor();
         while (($character = $cursor->getCharacter()) !== null) {
             if (!$this->parseCharacter($character, $inlineParserContext)) {
-                $this->addPlainText($character, $container, $inlineParserContext);
+                $this->addPlainText($character, $block, $inlineParserContext);
             }
         }
 
-        $this->processInlines($inlineParserContext);
+        $delimiterStack = $inlineParserContext->getDelimiterStack();
+        $delimiterStack->processDelimiters(null, $this->environment->getDelimiterProcessors());
+        $delimiterStack->removeAll();
 
-        AdjacentTextMerger::mergeChildNodes($container);
+        AdjacentTextMerger::mergeChildNodes($block);
     }
 
     /**
@@ -117,15 +119,6 @@ final class InlineParserEngine
         }
 
         return true;
-    }
-
-    private function processInlines(InlineParserContext $inlineParserContext): void
-    {
-        $delimiterStack = $inlineParserContext->getDelimiterStack();
-        $delimiterStack->processDelimiters(null, $this->environment->getDelimiterProcessors());
-
-        // Remove all delimiters
-        $delimiterStack->removeAll();
     }
 
     private function addPlainText(string $character, Node $container, InlineParserContext $inlineParserContext): void

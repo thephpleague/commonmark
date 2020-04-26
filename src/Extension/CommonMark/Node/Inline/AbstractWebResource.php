@@ -37,9 +37,4 @@ abstract class AbstractWebResource extends AbstractInline
     {
         $this->url = $url;
     }
-
-    public function isContainer(): bool
-    {
-        return true;
-    }
 }

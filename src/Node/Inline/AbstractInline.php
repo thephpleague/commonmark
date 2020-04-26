@@ -28,11 +28,6 @@ abstract class AbstractInline extends Node
      */
     public $data = [];
 
-    public function isContainer(): bool
-    {
-        return false;
-    }
-
     /**
      * @param string $key
      * @param mixed  $default

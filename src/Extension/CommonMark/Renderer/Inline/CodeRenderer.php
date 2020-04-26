@@ -16,8 +16,8 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\Xml;
 
@@ -37,6 +37,6 @@ final class CodeRenderer implements InlineRendererInterface
 
         $attrs = $inline->getData('attributes', []);
 
-        return new HtmlElement('code', $attrs, Xml::escape($inline->getContent()));
+        return new HtmlElement('code', $attrs, Xml::escape($inline->getLiteral()));
     }
 }

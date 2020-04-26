@@ -15,11 +15,11 @@ use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
+use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
+use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
 use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
-use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Node\Node;
+use League\CommonMark\Node\StringContainerHelper;
 
 /**
  * Searches the Document for Heading elements and adds HeadingPermalinks to each one
@@ -59,7 +59,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
     private function addHeadingLink(Heading $heading): void
     {
-        $text = $this->getChildText($heading);
+        $text = StringContainerHelper::getChildText($heading, [HtmlBlock::class, HtmlInline::class]);
         $slug = $this->slugGenerator->createSlug($text);
 
         $headingLinkAnchor = new HeadingPermalink($slug);
@@ -76,19 +76,5 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
             default:
                 throw new \RuntimeException("Invalid configuration value for heading_permalink/insert; expected 'before' or 'after'");
         }
-    }
-
-    private function getChildText(Node $node): string
-    {
-        $text = '';
-
-        $walker = $node->walker();
-        while ($event = $walker->next()) {
-            if ($event->isEntering() && (($child = $event->getNode()) instanceof Text || $child instanceof Code)) {
-                $text .= $child->getContent();
-            }
-        }
-
-        return $text;
     }
 }

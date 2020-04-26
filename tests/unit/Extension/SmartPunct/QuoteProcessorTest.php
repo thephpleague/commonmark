@@ -40,8 +40,8 @@ final class QuoteProcessorTest extends TestCase
 
         $processor->process($opener, $closer, 1);
 
-        $this->assertEquals('‘', $opener->next()->getContent());
-        $this->assertEquals('’', $closer->previous()->getContent());
+        $this->assertEquals('‘', $opener->next()->getLiteral());
+        $this->assertEquals('’', $closer->previous()->getLiteral());
     }
 
     public function testDoubleQuoteProcessor()
@@ -60,7 +60,7 @@ final class QuoteProcessorTest extends TestCase
 
         $processor->process($opener, $closer, 1);
 
-        $this->assertEquals('“', $opener->next()->getContent());
-        $this->assertEquals('”', $closer->previous()->getContent());
+        $this->assertEquals('“', $opener->next()->getLiteral());
+        $this->assertEquals('”', $closer->previous()->getLiteral());
     }
 }

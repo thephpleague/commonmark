@@ -5,9 +5,6 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -15,46 +12,72 @@
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
-use League\CommonMark\Node\Block\Paragraph;
-use League\CommonMark\Parser\Block\BlockParserInterface;
-use League\CommonMark\Parser\ContextInterface;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
+use League\CommonMark\Parser\Block\BlockContinue;
+use League\CommonMark\Parser\Block\BlockContinueParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
-final class HtmlBlockParser implements BlockParserInterface
+final class HtmlBlockParser extends AbstractBlockContinueParser
 {
-    public function parse(ContextInterface $context, Cursor $cursor): bool
+    /** @var HtmlBlock */
+    private $block;
+
+    /**
+     * @var string
+     */
+    private $content = '';
+
+    /** @var bool */
+    private $finished = false;
+
+    public function __construct(int $blockType)
     {
-        if ($cursor->isIndented()) {
-            return false;
+        $this->block = new HtmlBlock($blockType);
+    }
+
+    /**
+     * @return HtmlBlock
+     */
+    public function getBlock(): AbstractBlock
+    {
+        return $this->block;
+    }
+
+    public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
+    {
+        if ($this->finished) {
+            return BlockContinue::none();
         }
 
-        if ($cursor->getNextNonSpaceCharacter() !== '<') {
-            return false;
+        if ($cursor->isBlank() && \in_array($this->block->getType(), [HtmlBlock::TYPE_6_BLOCK_ELEMENT, HtmlBlock::TYPE_7_MISC_ELEMENT], true)) {
+            return BlockContinue::none();
         }
 
-        $savedState = $cursor->saveState();
+        return BlockContinue::at($cursor);
+    }
 
-        $cursor->advanceToNextNonSpaceOrTab();
-        $line = $cursor->getRemainder();
+    public function addLine(string $line): void
+    {
+        if ($this->content !== '') {
+            $this->content .= "\n";
+        }
 
-        for ($blockType = 1; $blockType <= 7; $blockType++) {
-            $match = RegexHelper::matchAt(
-                RegexHelper::getHtmlBlockOpenRegex($blockType),
-                $line
-            );
+        $this->content .= $line;
 
-            if ($match !== null && ($blockType < 7 || !($context->getContainer() instanceof Paragraph))) {
-                $cursor->restoreState($savedState);
-                $context->addBlock(new HtmlBlock($blockType));
-                $context->setBlocksParsed(true);
-
-                return true;
+        // Check for end condition
+        if ($this->block->getType() >= HtmlBlock::TYPE_1_CODE_CONTAINER && $this->block->getType() <= HtmlBlock::TYPE_5_CDATA) {
+            $cursor = new Cursor($line);
+            if ($cursor->match(RegexHelper::getHtmlBlockCloseRegex($this->block->getType())) !== null) {
+                $this->finished = true;
             }
         }
+    }
 
-        $cursor->restoreState($savedState);
-
-        return false;
+    public function closeBlock(): void
+    {
+        $this->block->setLiteral($this->content);
+        $this->content = '';
     }
 }

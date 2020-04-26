@@ -26,9 +26,9 @@ final class HtmlFilter
      * @param string $html   HTML input to be filtered
      * @param string $filter One of the HtmlFilter constants
      *
-     * @return string Filtered HTML
-     *
      * @throws \InvalidArgumentException when an invalid $filter is given
+     *
+     * @return string Filtered HTML
      */
     public static function filter(string $html, string $filter): string
     {

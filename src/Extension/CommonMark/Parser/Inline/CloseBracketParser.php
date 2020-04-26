@@ -192,7 +192,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
             $cursor->restoreState($savePos);
         }
 
-        return $referenceMap->getReference($referenceLabel);
+        return $referenceMap->get($referenceLabel);
     }
 
     private function createInline(string $url, string $title, bool $isImage): AbstractWebResource

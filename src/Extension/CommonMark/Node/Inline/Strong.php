@@ -18,8 +18,4 @@ use League\CommonMark\Node\Inline\AbstractInline;
 
 class Strong extends AbstractInline
 {
-    public function isContainer(): bool
-    {
-        return true;
-    }
 }

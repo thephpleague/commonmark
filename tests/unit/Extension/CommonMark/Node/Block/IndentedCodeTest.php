@@ -15,23 +15,15 @@
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
-use League\CommonMark\Node\Block\AbstractBlock;
 use PHPUnit\Framework\TestCase;
 
 class IndentedCodeTest extends TestCase
 {
-    public function testCanContain()
+    public function testGetAndSetLiteral()
     {
         $indentedCode = new IndentedCode();
+        $indentedCode->setLiteral('foo');
 
-        $block = $this->createMock(AbstractBlock::class);
-        $this->assertFalse($indentedCode->canContain($block));
-    }
-
-    public function testIsCode()
-    {
-        $indentedCode = new IndentedCode();
-
-        $this->assertTrue($indentedCode->isCode());
+        $this->assertSame('foo', $indentedCode->getLiteral());
     }
 }

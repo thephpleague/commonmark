@@ -14,79 +14,9 @@
 
 namespace League\CommonMark\Node\Block;
 
-use League\CommonMark\Parser\ContextInterface;
-use League\CommonMark\Parser\Cursor;
-
-class Paragraph extends AbstractStringContainerBlock implements InlineContainerInterface
+/**
+ * @method children() AbstractInline[]
+ */
+class Paragraph extends AbstractBlock
 {
-    public function canContain(AbstractBlock $block): bool
-    {
-        return false;
-    }
-
-    public function isCode(): bool
-    {
-        return false;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        if ($cursor->isBlank()) {
-            $this->lastLineBlank = true;
-
-            return false;
-        }
-
-        return true;
-    }
-
-    public function finalize(ContextInterface $context, int $endLineNumber): void
-    {
-        parent::finalize($context, $endLineNumber);
-
-        $this->finalStringContents = \preg_replace('/^  */m', '', \implode("\n", $this->getStrings()));
-
-        // Short-circuit
-        if ($this->finalStringContents === '' || $this->finalStringContents[0] !== '[') {
-            return;
-        }
-
-        $cursor = new Cursor($this->finalStringContents);
-
-        $referenceFound = $this->parseReferences($context, $cursor);
-
-        $this->finalStringContents = $cursor->getRemainder();
-
-        if ($referenceFound && $cursor->isAtEnd()) {
-            $this->detach();
-        }
-    }
-
-    protected function parseReferences(ContextInterface $context, Cursor $cursor): bool
-    {
-        $referenceFound = false;
-        while ($cursor->getCharacter() === '[' && $context->getReferenceParser()->parse($cursor)) {
-            $this->finalStringContents = $cursor->getRemainder();
-            $referenceFound = true;
-        }
-
-        return $referenceFound;
-    }
-
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
-    {
-        $cursor->advanceToNextNonSpaceOrTab();
-
-        /** @var self $tip */
-        $tip = $context->getTip();
-        $tip->addLine($cursor->getRemainder());
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getStrings(): array
-    {
-        return $this->strings->toArray();
-    }
 }

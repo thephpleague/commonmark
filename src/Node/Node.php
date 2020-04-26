@@ -144,7 +144,10 @@ abstract class Node
         $this->depth = 0;
     }
 
-    abstract public function isContainer(): bool;
+    public function hasChildren(): bool
+    {
+        return $this->firstChild !== null;
+    }
 
     public function firstChild(): ?Node
     {

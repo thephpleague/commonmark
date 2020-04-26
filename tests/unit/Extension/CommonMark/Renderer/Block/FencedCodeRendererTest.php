@@ -14,12 +14,10 @@
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 
-use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\FencedCodeRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Parser\Context;
 use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
@@ -39,15 +37,13 @@ class FencedCodeRendererTest extends TestCase
     public function testRenderWithLanguageSpecified()
     {
         $document = new Document();
-        $context = new Context($document, new Environment());
 
         $block = new FencedCode(3, '~', 0);
-        $block->addLine('php');
-        $block->addLine('echo "hello world!";');
+        $block->setInfo('php');
+        $block->setLiteral('echo "hello world!";');
         $block->data['attributes'] = ['id' => 'foo', 'class' => 'bar'];
 
         $document->appendChild($block);
-        $block->finalize($context, 1);
 
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -66,15 +62,12 @@ class FencedCodeRendererTest extends TestCase
     public function testRenderWithoutLanguageSpecified()
     {
         $document = new Document();
-        $context = new Context($document, new Environment());
 
         $block = new FencedCode(3, '~', 0);
-        $block->addLine('');
-        $block->addLine('echo "hello world!";');
+        $block->setLiteral('echo "hello world!";');
         $block->data['attributes'] = ['id' => 'foo', 'class' => 'bar'];
 
         $document->appendChild($block);
-        $block->finalize($context, 1);
 
         $fakeRenderer = new FakeHtmlRenderer();
 

@@ -21,7 +21,7 @@ final class TableCellRendererTest extends TestCase
 {
     public function testRenderWithTableCell()
     {
-        $tableCell = new TableCell('', TableCell::TYPE_BODY);
+        $tableCell = new TableCell(TableCell::TYPE_BODY);
         $tableCell->data['attributes'] = ['class' => 'foo'];
 
         $elementRenderer = $this->createMock(NodeRendererInterface::class);
@@ -34,7 +34,7 @@ final class TableCellRendererTest extends TestCase
 
     public function testRenderWithTableCellHavingAlignment()
     {
-        $tableCell = new TableCell('', TableCell::TYPE_BODY, TableCell::ALIGN_CENTER);
+        $tableCell = new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_CENTER);
         $tableCell->data['attributes'] = ['class' => 'foo'];
 
         $elementRenderer = $this->createMock(NodeRendererInterface::class);

@@ -24,8 +24,6 @@ final class InlinesOnlyExtension implements ExtensionInterface
         $childRenderer = new ChildRenderer();
 
         $environment
-            ->addBlockParser(new Core\Parser\Block\LazyParagraphParser(), -200)
-
             ->addInlineParser(new Core\Parser\Inline\NewlineParser(),           200)
             ->addInlineParser(new CommonMark\Parser\Inline\BacktickParser(),    150)
             ->addInlineParser(new CommonMark\Parser\Inline\EscapableParser(),    80)

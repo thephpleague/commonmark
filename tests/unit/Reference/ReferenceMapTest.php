@@ -25,10 +25,10 @@ class ReferenceMapTest extends TestCase
         $map = new ReferenceMap();
 
         $reference = new Reference('foo', 'bar', 'baz');
-        $map->addReference($reference);
+        $map->add($reference);
 
         $this->assertTrue($map->contains('foo'));
-        $this->assertSame($reference, $map->getReference('foo'));
+        $this->assertSame($reference, $map->get('foo'));
     }
 
     public function testUnicodeCaseFolding()
@@ -36,7 +36,7 @@ class ReferenceMapTest extends TestCase
         $map = new ReferenceMap();
 
         $reference = new Reference('ẞ', 'bar', 'baz');
-        $map->addReference($reference);
+        $map->add($reference);
 
         $this->assertTrue($map->contains('ẞ'));
         $this->assertTrue($map->contains('ß'));
@@ -49,32 +49,45 @@ class ReferenceMapTest extends TestCase
         $map = new ReferenceMap();
 
         $reference1 = new Reference('foo', 'bar', 'baz');
-        $map->addReference($reference1);
+        $map->add($reference1);
 
         $reference2 = new Reference('foo', 'baz', 'baz');
-        $map->addReference($reference2);
+        $map->add($reference2);
 
         $this->assertTrue($map->contains('foo'));
-        $this->assertSame($reference2, $map->getReference('foo'));
-        $this->assertCount(1, $map->listReferences());
+        $this->assertSame($reference2, $map->get('foo'));
+        $this->assertCount(1, $map);
     }
 
     public function testGetReferenceWhenNotExists()
     {
         $map = new ReferenceMap();
 
-        $this->assertNull($map->getReference('foo'));
+        $this->assertNull($map->get('foo'));
     }
 
-    public function testListReferences()
+    public function testGetIterator()
     {
         $map = new ReferenceMap();
 
-        $this->assertCount(0, $map->listReferences());
+        $map->add($ref1 = new Reference('foo', 'aaa', 'aaa'));
+        $map->add($ref2 = new Reference('bar', 'bbb', 'bbb'));
 
-        $map->addReference(new Reference('foo', 'aaa', 'aaa'));
-        $map->addReference(new Reference('bar', 'bbb', 'bbb'));
+        $references = iterator_to_array($map->getIterator());
 
-        $this->assertCount(2, $map->listReferences());
+        $this->assertCount(2, $references);
+        $this->assertContains($ref1, $references);
+        $this->assertContains($ref2, $references);
+    }
+
+    public function testCount()
+    {
+        $map = new ReferenceMap();
+
+        $map->add($ref1 = new Reference('foo', 'aaa', 'aaa'));
+        $map->add($ref2 = new Reference('bar', 'bbb', 'bbb'));
+
+        $this->assertSame(2, $map->count());
+        $this->assertCount(2, $map);
     }
 }

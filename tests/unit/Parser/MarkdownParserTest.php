@@ -13,17 +13,17 @@ namespace League\CommonMark\Tests\Unit\Parser;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\UnexpectedEncodingException;
-use League\CommonMark\Parser\DocParser;
+use League\CommonMark\Parser\MarkdownParser;
 use PHPUnit\Framework\TestCase;
 
-class DocParserTest extends TestCase
+class MarkdownParserTest extends TestCase
 {
     public function testParsingWithInvalidUTF8()
     {
         $this->expectException(UnexpectedEncodingException::class);
 
         $environment = Environment::createCommonMarkEnvironment();
-        $docParser = new DocParser($environment);
+        $docParser = new MarkdownParser($environment);
 
         $docParser->parse("\x09\xca\xca");
     }

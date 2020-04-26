@@ -41,7 +41,7 @@ final class IndentedCodeRenderer implements BlockRendererInterface
         return new HtmlElement(
             'pre',
             [],
-            new HtmlElement('code', $attrs, Xml::escape($block->getStringContent()))
+            new HtmlElement('code', $attrs, Xml::escape($block->getLiteral()))
         );
     }
 }

@@ -16,9 +16,11 @@ use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
+use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
+use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Normalizer\AsIsNormalizerStrategy;
@@ -27,6 +29,7 @@ use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInt
 use League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\StringContainerHelper;
 
 final class TableOfContentsBuilder implements ConfigurationAwareInterface
 {
@@ -69,7 +72,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
             $firstHeading = $firstHeading ?? $heading;
 
             // Create the new link
-            $link = new Link('#' . $headingLink->getSlug(), $heading->getStringContent());
+            $link = new Link('#' . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [HtmlBlock::class, HtmlInline::class]));
             $paragraph = new Paragraph();
             $paragraph->appendChild($link);
 

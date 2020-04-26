@@ -14,8 +14,8 @@ namespace League\CommonMark\Tests\Unit\Environment;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
 final class FakeInjectableInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface, EnvironmentAwareInterface
 {

@@ -5,9 +5,6 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -15,30 +12,75 @@
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
-use League\CommonMark\Node\Block\Paragraph;
-use League\CommonMark\Parser\Block\BlockParserInterface;
-use League\CommonMark\Parser\ContextInterface;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
+use League\CommonMark\Parser\Block\BlockContinue;
+use League\CommonMark\Parser\Block\BlockContinueParserInterface;
 use League\CommonMark\Parser\Cursor;
+use League\CommonMark\Util\ArrayCollection;
 
-final class IndentedCodeParser implements BlockParserInterface
+final class IndentedCodeParser extends AbstractBlockContinueParser
 {
-    public function parse(ContextInterface $context, Cursor $cursor): bool
-    {
-        if (!$cursor->isIndented()) {
-            return false;
-        }
+    /** @var IndentedCode */
+    private $block;
 
-        if ($context->getTip() instanceof Paragraph) {
-            return false;
+    /**
+     * @var ArrayCollection<int, string>
+     */
+    protected $strings;
+
+    public function __construct()
+    {
+        $this->block = new IndentedCode();
+        $this->strings = new ArrayCollection();
+    }
+
+    /**
+     * @return IndentedCode
+     */
+    public function getBlock(): AbstractBlock
+    {
+        return $this->block;
+    }
+
+    public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
+    {
+        if ($cursor->isIndented()) {
+            $cursor->advanceBy(Cursor::INDENT_LEVEL, true);
+
+            return BlockContinue::at($cursor);
         }
 
         if ($cursor->isBlank()) {
-            return false;
+            $cursor->advanceToNextNonSpaceOrTab();
+
+            return BlockContinue::at($cursor);
         }
 
-        $cursor->advanceBy(Cursor::INDENT_LEVEL, true);
-        $context->addBlock(new IndentedCode());
+        return BlockContinue::none();
+    }
 
-        return true;
+    public function addLine(string $line): void
+    {
+        $this->strings[] = $line;
+    }
+
+    public function closeBlock(): void
+    {
+        $reversed = \array_reverse($this->strings->toArray(), true);
+        foreach ($reversed as $index => $line) {
+            if ($line === '' || $line === "\n" || \preg_match('/^(\n *)$/', $line)) {
+                unset($reversed[$index]);
+            } else {
+                break;
+            }
+        }
+        $fixed = \array_reverse($reversed);
+        $tmp = \implode("\n", $fixed);
+        if (\substr($tmp, -1) !== "\n") {
+            $tmp .= "\n";
+        }
+
+        $this->block->setLiteral($tmp);
     }
 }

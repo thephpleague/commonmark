@@ -430,19 +430,17 @@ class Cursor
      * WARNING: Do not parse or use the return value for ANYTHING except for
      * passing it back into restoreState(), as the number of values and their
      * contents may change in any future release without warning.
-     *
-     * @return array<mixed>
      */
-    public function saveState()
+    public function saveState(): CursorState
     {
-        return [
+        return new CursorState([
             $this->currentPosition,
             $this->previousPosition,
             $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
             $this->partiallyConsumedTab,
-        ];
+        ]);
     }
 
     /**
@@ -450,20 +448,18 @@ class Cursor
      *
      * Pass in the value previously obtained by calling saveState().
      *
-     * @param array<mixed> $state
-     *
-     * @return void
+     * @param CursorState $state
      */
-    public function restoreState($state): void
+    public function restoreState(CursorState $state): void
     {
-        list(
+        [
             $this->currentPosition,
             $this->previousPosition,
             $this->nextNonSpaceCache,
             $this->indent,
             $this->column,
             $this->partiallyConsumedTab,
-          ) = $state;
+          ] = $state->toArray();
     }
 
     public function getPosition(): int

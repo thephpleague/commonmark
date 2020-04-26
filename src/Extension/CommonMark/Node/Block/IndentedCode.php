@@ -5,9 +5,6 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -15,60 +12,22 @@
 namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Block\AbstractStringContainerBlock;
-use League\CommonMark\Parser\ContextInterface;
-use League\CommonMark\Parser\Cursor;
+use League\CommonMark\Node\StringContainerInterface;
 
-class IndentedCode extends AbstractStringContainerBlock
+class IndentedCode extends AbstractBlock implements StringContainerInterface
 {
-    public function canContain(AbstractBlock $block): bool
+    /**
+     * @var string
+     */
+    protected $literal = '';
+
+    public function getLiteral(): string
     {
-        return false;
+        return $this->literal;
     }
 
-    public function isCode(): bool
+    public function setLiteral(string $literal): void
     {
-        return true;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        if ($cursor->isIndented()) {
-            $cursor->advanceBy(Cursor::INDENT_LEVEL, true);
-        } elseif ($cursor->isBlank()) {
-            $cursor->advanceToNextNonSpaceOrTab();
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function finalize(ContextInterface $context, int $endLineNumber): void
-    {
-        parent::finalize($context, $endLineNumber);
-
-        $reversed = \array_reverse($this->strings->toArray(), true);
-        foreach ($reversed as $index => $line) {
-            if ($line === '' || $line === "\n" || \preg_match('/^(\n *)$/', $line)) {
-                unset($reversed[$index]);
-            } else {
-                break;
-            }
-        }
-        $fixed = \array_reverse($reversed);
-        $tmp = \implode("\n", $fixed);
-        if (\substr($tmp, -1) !== "\n") {
-            $tmp .= "\n";
-        }
-
-        $this->finalStringContents = $tmp;
-    }
-
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
-    {
-        /** @var self $tip */
-        $tip = $context->getTip();
-        $tip->addLine($cursor->getRemainder());
+        $this->literal = $literal;
     }
 }

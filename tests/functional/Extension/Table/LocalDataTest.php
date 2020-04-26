@@ -17,9 +17,9 @@ namespace League\CommonMark\Tests\Functional\Extension\Table;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
-use League\CommonMark\Parser\DocParser;
-use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,7 +35,7 @@ class LocalDataTest extends TestCase
         $this->environment = Environment::createCommonMarkEnvironment();
         $this->environment->addExtension(new TableExtension());
 
-        $this->parser = new DocParser($this->environment);
+        $this->parser = new MarkdownParser($this->environment);
     }
 
     /**

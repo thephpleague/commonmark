@@ -66,7 +66,7 @@ final class UrlAutolinkProcessor
 
     private static function processAutolinks(Text $node, string $regex): void
     {
-        $contents = \preg_split($regex, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
+        $contents = \preg_split($regex, $node->getLiteral(), -1, PREG_SPLIT_DELIM_CAPTURE);
 
         if ($contents === false || \count($contents) === 1) {
             return;

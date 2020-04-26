@@ -37,13 +37,8 @@ class HtmlBlockRendererTest extends TestCase
 
     public function testRender()
     {
-        /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder(HtmlBlock::class)
-            ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
-            ->getMock();
-        $block->expects($this->any())
-            ->method('getStringContent')
-            ->will($this->returnValue('<button>Test</button>'));
+        $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
+        $block->setLiteral('<button>Test</button>');
 
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -59,13 +54,8 @@ class HtmlBlockRendererTest extends TestCase
             'html_input' => HtmlFilter::ALLOW,
         ]));
 
-        /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder(HtmlBlock::class)
-            ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
-            ->getMock();
-        $block->expects($this->any())
-            ->method('getStringContent')
-            ->will($this->returnValue('<button>Test</button>'));
+        $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
+        $block->setLiteral('<button>Test</button>');
 
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -81,13 +71,8 @@ class HtmlBlockRendererTest extends TestCase
             'html_input' => HtmlFilter::ESCAPE,
         ]));
 
-        /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder(HtmlBlock::class)
-            ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
-            ->getMock();
-        $block->expects($this->any())
-            ->method('getStringContent')
-            ->will($this->returnValue('<button class="test">Test</button>'));
+        $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
+        $block->setLiteral('<button class="test">Test</button>');
 
         $fakeRenderer = new FakeHtmlRenderer();
 
@@ -103,13 +88,8 @@ class HtmlBlockRendererTest extends TestCase
             'html_input' => HtmlFilter::STRIP,
         ]));
 
-        /** @var HtmlBlock|\PHPUnit_Framework_MockObject_MockObject $block */
-        $block = $this->getMockBuilder(HtmlBlock::class)
-            ->setConstructorArgs([HtmlBlock::TYPE_6_BLOCK_ELEMENT])
-            ->getMock();
-        $block->expects($this->any())
-            ->method('getStringContent')
-            ->will($this->returnValue('<button>Test</button>'));
+        $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
+        $block->setLiteral('<button>Test</button>');
 
         $fakeRenderer = new FakeHtmlRenderer();
 

@@ -16,8 +16,8 @@ namespace League\CommonMark\Tests\Functional\Delimiter;
 
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
 final class UppercaseTextRenderer implements InlineRendererInterface
 {
@@ -34,7 +34,7 @@ final class UppercaseTextRenderer implements InlineRendererInterface
 
         foreach ($inline->children() as $child) {
             if ($child instanceof Text) {
-                $child->setContent(\mb_strtoupper($child->getContent()));
+                $child->setLiteral(\mb_strtoupper($child->getLiteral()));
             }
 
             $ret .= $htmlRenderer->renderInline($child);

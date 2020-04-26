@@ -15,12 +15,11 @@
 namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Block\AbstractStringContainerBlock;
-use League\CommonMark\Node\Block\InlineContainerInterface;
-use League\CommonMark\Parser\ContextInterface;
-use League\CommonMark\Parser\Cursor;
 
-class Heading extends AbstractStringContainerBlock implements InlineContainerInterface
+/**
+ * @method children() AbstractInline[]
+ */
+class Heading extends AbstractBlock
 {
     /**
      * @var int
@@ -28,22 +27,11 @@ class Heading extends AbstractStringContainerBlock implements InlineContainerInt
     protected $level;
 
     /**
-     * @param int             $level
-     * @param string|string[] $contents
+     * @param int $level
      */
-    public function __construct(int $level, $contents)
+    public function __construct(int $level)
     {
-        parent::__construct();
-
         $this->level = $level;
-
-        if (!\is_array($contents)) {
-            $contents = [$contents];
-        }
-
-        foreach ($contents as $line) {
-            $this->addLine($line);
-        }
     }
 
     /**
@@ -52,32 +40,5 @@ class Heading extends AbstractStringContainerBlock implements InlineContainerInt
     public function getLevel(): int
     {
         return $this->level;
-    }
-
-    public function finalize(ContextInterface $context, int $endLineNumber): void
-    {
-        parent::finalize($context, $endLineNumber);
-
-        $this->finalStringContents = \implode("\n", $this->strings->toArray());
-    }
-
-    public function canContain(AbstractBlock $block): bool
-    {
-        return false;
-    }
-
-    public function isCode(): bool
-    {
-        return false;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        return false;
-    }
-
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
-    {
-        // nothing to do; contents were already added via the constructor.
     }
 }

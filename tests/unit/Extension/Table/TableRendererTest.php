@@ -21,7 +21,7 @@ final class TableRendererTest extends TestCase
 {
     public function testRenderWithTable()
     {
-        $tableRow = new Table(function () {});
+        $tableRow = new Table();
         $tableRow->data['attributes'] = ['class' => 'striped'];
 
         $elementRenderer = $this->createMock(NodeRendererInterface::class);

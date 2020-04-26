@@ -5,9 +5,6 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -15,12 +12,9 @@
 namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Block\AbstractStringContainerBlock;
-use League\CommonMark\Parser\ContextInterface;
-use League\CommonMark\Parser\Cursor;
-use League\CommonMark\Util\RegexHelper;
+use League\CommonMark\Node\StringContainerInterface;
 
-class HtmlBlock extends AbstractStringContainerBlock
+class HtmlBlock extends AbstractBlock implements StringContainerInterface
 {
     // Any changes to these constants should be reflected in .phpstorm.meta.php
     const TYPE_1_CODE_CONTAINER = 1;
@@ -37,18 +31,15 @@ class HtmlBlock extends AbstractStringContainerBlock
     protected $type;
 
     /**
-     * @param int $type
+     * @var string
      */
+    protected $literal = '';
+
     public function __construct(int $type)
     {
-        parent::__construct();
-
         $this->type = $type;
     }
 
-    /**
-     * @return int
-     */
     public function getType(): int
     {
         return $this->type;
@@ -59,43 +50,13 @@ class HtmlBlock extends AbstractStringContainerBlock
         $this->type = $type;
     }
 
-    public function canContain(AbstractBlock $block): bool
+    public function getLiteral(): string
     {
-        return false;
+        return $this->literal;
     }
 
-    public function isCode(): bool
+    public function setLiteral(string $literal): void
     {
-        return true;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        if ($cursor->isBlank() && ($this->type === self::TYPE_6_BLOCK_ELEMENT || $this->type === self::TYPE_7_MISC_ELEMENT)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function finalize(ContextInterface $context, int $endLineNumber): void
-    {
-        parent::finalize($context, $endLineNumber);
-
-        $this->finalStringContents = \implode("\n", $this->strings->toArray());
-    }
-
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
-    {
-        /** @var self $tip */
-        $tip = $context->getTip();
-        $tip->addLine($cursor->getRemainder());
-
-        // Check for end condition
-        if ($this->type >= self::TYPE_1_CODE_CONTAINER && $this->type <= self::TYPE_5_CDATA) {
-            if ($cursor->match(RegexHelper::getHtmlBlockCloseRegex($this->type)) !== null) {
-                $this->finalize($context, $context->getLineNumber());
-            }
-        }
+        $this->literal = $literal;
     }
 }

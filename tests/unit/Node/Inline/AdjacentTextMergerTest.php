@@ -40,10 +40,10 @@ class AdjacentTextMergerTest extends TestCase
         $this->assertCount(8, $children);
 
         $this->assertTrue($children[0] instanceof Text);
-        $this->assertEquals('https://eventum.example.net/history.php?iss', $children[0]->getContent());
+        $this->assertEquals('https://eventum.example.net/history.php?iss', $children[0]->getLiteral());
 
         $this->assertTrue($children[1] instanceof Text);
-        $this->assertEquals('_id=107092', $children[1]->getContent());
+        $this->assertEquals('_id=107092', $children[1]->getLiteral());
 
         $this->assertTrue($children[2] instanceof Newline);
     }
@@ -69,11 +69,11 @@ class AdjacentTextMergerTest extends TestCase
         $this->assertCount(3, $children);
 
         $this->assertTrue($children[0] instanceof Text);
-        $this->assertEquals('https://eventum.example.net/history.php?iss_id=107092', $children[0]->getContent());
+        $this->assertEquals('https://eventum.example.net/history.php?iss_id=107092', $children[0]->getLiteral());
 
         $this->assertTrue($children[1] instanceof Newline);
 
         $this->assertTrue($children[2] instanceof Text);
-        $this->assertEquals('https://gitlab.example.net/group/project/merge_requests/39#note_150630', $children[2]->getContent());
+        $this->assertEquals('https://gitlab.example.net/group/project/merge_requests/39#note_150630', $children[2]->getLiteral());
     }
 }

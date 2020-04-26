@@ -17,10 +17,10 @@ namespace League\CommonMark;
 use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentInterface;
-use League\CommonMark\Parser\DocParser;
-use League\CommonMark\Parser\DocParserInterface;
-use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Parser\MarkdownParser;
+use League\CommonMark\Parser\MarkdownParserInterface;
 use League\CommonMark\Renderer\HtmlRenderer;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
 /**
  * Converts CommonMark-compatible Markdown to HTML.
@@ -37,8 +37,8 @@ class CommonMarkConverter implements MarkdownConverterInterface
     /** @var EnvironmentInterface */
     protected $environment;
 
-    /** @var DocParserInterface */
-    protected $docParser;
+    /** @var MarkdownParserInterface */
+    protected $markdownParser;
 
     /** @var NodeRendererInterface */
     protected $htmlRenderer;
@@ -61,7 +61,7 @@ class CommonMarkConverter implements MarkdownConverterInterface
 
         $this->environment = $environment;
 
-        $this->docParser = new DocParser($environment);
+        $this->markdownParser = new MarkdownParser($environment);
         $this->htmlRenderer = new HtmlRenderer($environment);
     }
 
@@ -83,7 +83,7 @@ class CommonMarkConverter implements MarkdownConverterInterface
      */
     public function convertToHtml(string $commonMark): string
     {
-        $documentAST = $this->docParser->parse($commonMark);
+        $documentAST = $this->markdownParser->parse($commonMark);
 
         return $this->htmlRenderer->renderBlock($documentAST);
     }

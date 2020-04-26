@@ -16,7 +16,6 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
-use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
@@ -43,7 +42,7 @@ final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAw
             throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
         }
 
-        return HtmlFilter::filter($block->getStringContent(), $this->config->get('html_input', HtmlFilter::ALLOW));
+        return HtmlFilter::filter($block->getLiteral(), $this->config->get('html_input', HtmlFilter::ALLOW));
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

@@ -14,12 +14,14 @@
 
 namespace League\CommonMark\Node\Inline;
 
-class AbstractStringContainer extends AbstractInline
+use League\CommonMark\Node\StringContainerInterface;
+
+class AbstractStringContainer extends AbstractInline implements StringContainerInterface
 {
     /**
      * @var string
      */
-    protected $content = '';
+    protected $literal = '';
 
     /**
      * @param string               $contents
@@ -27,17 +29,17 @@ class AbstractStringContainer extends AbstractInline
      */
     public function __construct(string $contents = '', array $data = [])
     {
-        $this->content = $contents;
+        $this->literal = $contents;
         $this->data = $data;
     }
 
-    public function getContent(): string
+    public function getLiteral(): string
     {
-        return $this->content;
+        return $this->literal;
     }
 
-    public function setContent(string $contents): void
+    public function setLiteral(string $contents): void
     {
-        $this->content = $contents;
+        $this->literal = $contents;
     }
 }

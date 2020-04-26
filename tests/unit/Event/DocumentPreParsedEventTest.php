@@ -15,7 +15,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentPreParsedEvent;
 use League\CommonMark\Input\MarkdownInput;
 use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Parser\DocParser;
+use League\CommonMark\Parser\MarkdownParser;
 use PHPUnit\Framework\TestCase;
 
 final class DocumentPreParsedEventTest extends TestCase
@@ -40,7 +40,7 @@ final class DocumentPreParsedEventTest extends TestCase
             $wasCalled = true;
         });
 
-        $parser = new DocParser($environment);
+        $parser = new MarkdownParser($environment);
         $parser->parse('hello world');
 
         $this->assertTrue($wasCalled);

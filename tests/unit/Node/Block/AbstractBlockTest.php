@@ -16,7 +16,6 @@ namespace League\CommonMark\Tests\Unit\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Parser\ContextInterface;
 use PHPUnit\Framework\TestCase;
 
 class AbstractBlockTest extends TestCase
@@ -57,26 +56,6 @@ class AbstractBlockTest extends TestCase
 
         $block->setEndLine(42);
         $this->assertEquals(42, $block->getEndLine());
-    }
-
-    public function testFinalize()
-    {
-        $block = $this->getMockForAbstractClass(AbstractBlock::class);
-
-        $this->assertTrue($block->isOpen());
-
-        $context = $this->getMockForAbstractClass(ContextInterface::class);
-        $context->method('getTip')->willReturn($this->getMockForAbstractClass(AbstractBlock::class));
-        $block->finalize($context, 7);
-
-        $this->assertFalse($block->isOpen());
-        $this->assertEquals(7, $block->getEndLine());
-
-        // Try to re-finalize - there should be no effect
-        $block->finalize($context, 42);
-
-        $this->assertFalse($block->isOpen());
-        $this->assertEquals(7, $block->getEndLine());
     }
 
     private static function getMethod(string $name): \ReflectionMethod

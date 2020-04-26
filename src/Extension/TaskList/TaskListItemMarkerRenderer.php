@@ -12,8 +12,8 @@
 namespace League\CommonMark\Extension\TaskList;
 
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
 final class TaskListItemMarkerRenderer implements InlineRendererInterface

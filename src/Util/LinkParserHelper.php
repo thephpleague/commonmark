@@ -64,6 +64,11 @@ final class LinkParserHelper
         return $length;
     }
 
+    public static function parsePartialLinkLabel(Cursor $cursor): ?string
+    {
+        return $cursor->match('/^(?:[^\\\\\[\]]|\\\\.){0,1000}/');
+    }
+
     /**
      * Attempt to parse link title (sans quotes)
      *
@@ -79,6 +84,17 @@ final class LinkParserHelper
         }
 
         return null;
+    }
+
+    public static function parsePartialLinkTitle(Cursor $cursor, string $endDelimiter): ?string
+    {
+        $endDelimiter = \preg_quote($endDelimiter, '/');
+        $regex = \sprintf('/(%s|[^%s\x00])*(?:%s)?/', RegexHelper::PARTIAL_ESCAPED_CHAR, $endDelimiter, $endDelimiter);
+        if (($partialTitle = $cursor->match($regex)) === null) {
+            return null;
+        }
+
+        return RegexHelper::unescape($partialTitle);
     }
 
     private static function manuallyParseLinkDestination(Cursor $cursor): ?string

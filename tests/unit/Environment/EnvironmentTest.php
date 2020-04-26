@@ -18,7 +18,7 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\Parser\Block\BlockParserInterface;
+use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
@@ -58,7 +58,7 @@ class EnvironmentTest extends TestCase
         $this->assertEquals($secondExtension, $extensions[1]);
 
         // Trigger initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
     }
 
     public function testConstructor()
@@ -114,7 +114,7 @@ class EnvironmentTest extends TestCase
 
         $environment = new Environment();
         // This triggers the initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
         $environment->setConfig(['foo' => 'bar']);
     }
 
@@ -132,31 +132,31 @@ class EnvironmentTest extends TestCase
 
         $environment = new Environment();
         // This triggers the initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
         $environment->mergeConfig(['foo' => 'bar']);
     }
 
-    public function testAddBlockParserAndGetter()
+    public function testAddBlockStartParserAndGetter()
     {
         $environment = new Environment();
 
-        $parser = $this->createMock(BlockParserInterface::class);
-        $environment->addBlockParser($parser);
+        $parser = $this->createMock(BlockStartParserInterface::class);
+        $environment->addBlockStartParser($parser);
 
-        $this->assertContains($parser, $environment->getBlockParsers());
+        $this->assertContains($parser, $environment->getBlockStartParsers());
     }
 
-    public function testAddBlockParserFailsAfterInitialization()
+    public function testAddBlockStartParserFailsAfterInitialization()
     {
         $this->expectException(\RuntimeException::class);
 
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
 
-        $parser = $this->createMock(BlockParserInterface::class);
-        $environment->addBlockParser($parser);
+        $parser = $this->createMock(BlockStartParserInterface::class);
+        $environment->addBlockStartParser($parser);
     }
 
     public function testAddBlockRenderer()
@@ -358,15 +358,15 @@ class EnvironmentTest extends TestCase
         $this->assertSame($test, $matches[0]);
     }
 
-    public function testInjectableBlockParsersGetInjected()
+    public function testInjectableBlockStartParsersGetInjected()
     {
         $environment = new Environment();
 
-        $parser = new FakeInjectableBlockParser();
-        $environment->addBlockParser($parser);
+        $parser = new FakeInjectableBlockStartParser();
+        $environment->addBlockStartParser($parser);
 
         // Trigger initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
 
         $this->assertTrue($parser->bothWereInjected());
     }
@@ -379,7 +379,7 @@ class EnvironmentTest extends TestCase
         $environment->addBlockRenderer('', $renderer);
 
         // Trigger initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
 
         $this->assertTrue($renderer->bothWereInjected());
     }
@@ -392,7 +392,7 @@ class EnvironmentTest extends TestCase
         $environment->addInlineParser($parser);
 
         // Trigger initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
 
         $this->assertTrue($parser->bothWereInjected());
     }
@@ -405,7 +405,7 @@ class EnvironmentTest extends TestCase
         $environment->addInlineRenderer('', $renderer);
 
         // Trigger initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
 
         $this->assertTrue($renderer->bothWereInjected());
     }
@@ -418,7 +418,7 @@ class EnvironmentTest extends TestCase
         $environment->addDelimiterProcessor($processor);
 
         // Trigger initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
 
         $this->assertTrue($processor->bothWereInjected());
     }
@@ -434,7 +434,7 @@ class EnvironmentTest extends TestCase
         $environment->addEventListener('', $listener2);
 
         // Trigger initialization
-        $environment->getBlockParsers();
+        $environment->getBlockStartParsers();
 
         $this->assertSame($environment, $listener1->getEnvironment());
         $this->assertSame($environment, $listener2->getEnvironment());
@@ -447,15 +447,15 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $parser1 = $this->createMock(BlockParserInterface::class);
-        $parser2 = $this->createMock(BlockParserInterface::class);
-        $parser3 = $this->createMock(BlockParserInterface::class);
+        $parser1 = $this->createMock(BlockStartParserInterface::class);
+        $parser2 = $this->createMock(BlockStartParserInterface::class);
+        $parser3 = $this->createMock(BlockStartParserInterface::class);
 
-        $environment->addBlockParser($parser1);
-        $environment->addBlockParser($parser2, 50);
-        $environment->addBlockParser($parser3);
+        $environment->addBlockStartParser($parser1);
+        $environment->addBlockStartParser($parser2, 50);
+        $environment->addBlockStartParser($parser3);
 
-        $parsers = iterator_to_array($environment->getBlockParsers());
+        $parsers = iterator_to_array($environment->getBlockStartParsers());
 
         $this->assertSame($parser2, $parsers[0]);
         $this->assertSame($parser1, $parsers[1]);

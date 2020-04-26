@@ -11,9 +11,10 @@
 
 namespace League\CommonMark\Extension\InlinesOnly;
 
+use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Node\Block\InlineContainerInterface;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -21,26 +22,39 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 /**
  * Simply renders child elements as-is, adding newlines as needed.
  */
-final class ChildRenderer implements BlockRendererInterface
+final class ChildRenderer implements BlockRendererInterface, ConfigurationAwareInterface
 {
+    /** @var ConfigurationInterface */
+    private $config;
+
     public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
     {
         $out = '';
+        $lastItemWasBlock = false;
 
-        if ($block instanceof InlineContainerInterface) {
-            /** @var iterable<AbstractInline> $children */
-            $children = $block->children();
-            $out .= $htmlRenderer->renderInlines($children);
-        } else {
-            /** @var iterable<AbstractBlock> $children */
-            $children = $block->children();
-            $out .= $htmlRenderer->renderBlocks($children);
+        foreach ($block->children() as $child) {
+            if ($lastItemWasBlock) {
+                $lastItemWasBlock = false;
+                $out .= $this->config->get('renderer/block_separator', "\n");
+            }
+
+            if ($child instanceof AbstractBlock) {
+                $out .= $htmlRenderer->renderBlock($child, $inTightList);
+                $lastItemWasBlock = true;
+            } elseif ($child instanceof AbstractInline) {
+                $out .= $htmlRenderer->renderInline($child);
+            }
         }
 
-        if (!($block instanceof Document)) {
-            $out .= "\n";
+        if (!$block instanceof Document) {
+            $out .= $this->config->get('renderer/block_separator', "\n");
         }
 
         return $out;
+    }
+
+    public function setConfiguration(ConfigurationInterface $configuration): void
+    {
+        $this->config = $configuration;
     }
 }

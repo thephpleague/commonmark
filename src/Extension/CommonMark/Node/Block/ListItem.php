@@ -15,10 +15,10 @@
 namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Parser\Cursor;
 
 /**
  * @method children() AbstractBlock[]
+ * @method parent() ListBlock
  */
 class ListItem extends AbstractBlock
 {
@@ -38,37 +38,5 @@ class ListItem extends AbstractBlock
     public function getListData(): ListData
     {
         return $this->listData;
-    }
-
-    public function canContain(AbstractBlock $block): bool
-    {
-        return true;
-    }
-
-    public function isCode(): bool
-    {
-        return false;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        if ($cursor->isBlank()) {
-            if ($this->firstChild === null) {
-                return false;
-            }
-
-            $cursor->advanceToNextNonSpaceOrTab();
-        } elseif ($cursor->getIndent() >= $this->listData->markerOffset + $this->listData->padding) {
-            $cursor->advanceBy($this->listData->markerOffset + $this->listData->padding, true);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function shouldLastLineBeBlank(Cursor $cursor, int $currentLineNumber): bool
-    {
-        return $cursor->isBlank() && $this->startLine < $currentLineNumber;
     }
 }

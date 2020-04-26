@@ -18,6 +18,6 @@ class Text extends AbstractStringContainer
 {
     public function append(string $character): void
     {
-        $this->content .= $character;
+        $this->literal .= $character;
     }
 }

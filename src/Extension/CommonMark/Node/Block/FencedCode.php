@@ -15,17 +15,19 @@
 namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Block\AbstractStringContainerBlock;
-use League\CommonMark\Parser\ContextInterface;
-use League\CommonMark\Parser\Cursor;
-use League\CommonMark\Util\RegexHelper;
+use League\CommonMark\Node\StringContainerInterface;
 
-class FencedCode extends AbstractStringContainerBlock
+class FencedCode extends AbstractBlock implements StringContainerInterface
 {
     /**
      * @var string
      */
     protected $info;
+
+    /**
+     * @var string
+     */
+    protected $literal = '';
 
     /**
      * @var int
@@ -49,8 +51,6 @@ class FencedCode extends AbstractStringContainerBlock
      */
     public function __construct(int $length, string $char, int $offset)
     {
-        parent::__construct();
-
         $this->length = $length;
         $this->char = $char;
         $this->offset = $offset;
@@ -70,6 +70,21 @@ class FencedCode extends AbstractStringContainerBlock
     public function getInfoWords(): array
     {
         return \preg_split('/\s+/', $this->info) ?: [];
+    }
+
+    public function setInfo(string $info): void
+    {
+        $this->info = $info;
+    }
+
+    public function getLiteral(): string
+    {
+        return $this->literal;
+    }
+
+    public function setLiteral(string $literal): void
+    {
+        $this->literal = $literal;
     }
 
     /**
@@ -130,74 +145,5 @@ class FencedCode extends AbstractStringContainerBlock
         $this->offset = $offset;
 
         return $this;
-    }
-
-    public function canContain(AbstractBlock $block): bool
-    {
-        return false;
-    }
-
-    public function isCode(): bool
-    {
-        return true;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        if ($this->length === -1) {
-            if ($cursor->isBlank()) {
-                $this->lastLineBlank = true;
-            }
-
-            return false;
-        }
-
-        // Skip optional spaces of fence offset
-        $cursor->match('/^ {0,' . $this->offset . '}/');
-
-        return true;
-    }
-
-    public function finalize(ContextInterface $context, int $endLineNumber): void
-    {
-        parent::finalize($context, $endLineNumber);
-
-        // first line becomes info string
-        $firstLine = $this->strings->first();
-        if ($firstLine === false) {
-            $firstLine = '';
-        }
-
-        $this->info = RegexHelper::unescape(\trim($firstLine));
-
-        if ($this->strings->count() === 1) {
-            $this->finalStringContents = '';
-        } else {
-            $this->finalStringContents = \implode("\n", $this->strings->slice(1)) . "\n";
-        }
-    }
-
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
-    {
-        /** @var self $container */
-        $container = $context->getContainer();
-
-        // check for closing code fence
-        if ($cursor->getIndent() <= 3 && $cursor->getNextNonSpaceCharacter() === $container->getChar()) {
-            $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
-            if ($match !== null && \strlen($match[0]) >= $container->getLength()) {
-                // don't add closing fence to container; instead, close it:
-                $this->setLength(-1); // -1 means we've passed closer
-
-                return;
-            }
-        }
-
-        $container->addLine($cursor->getRemainder());
-    }
-
-    public function shouldLastLineBeBlank(Cursor $cursor, int $currentLineNumber): bool
-    {
-        return false;
     }
 }

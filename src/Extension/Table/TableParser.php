@@ -15,134 +15,137 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-use League\CommonMark\Environment\EnvironmentAwareInterface;
-use League\CommonMark\Environment\EnvironmentInterface;
-use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Node\Block\Paragraph;
-use League\CommonMark\Parser\Block\BlockParserInterface;
-use League\CommonMark\Parser\Context;
-use League\CommonMark\Parser\ContextInterface;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
+use League\CommonMark\Parser\Block\BlockContinue;
+use League\CommonMark\Parser\Block\BlockContinueParserInterface;
 use League\CommonMark\Parser\Cursor;
+use League\CommonMark\Parser\InlineParserEngineInterface;
+use League\CommonMark\Util\ArrayCollection;
 
-final class TableParser implements BlockParserInterface, EnvironmentAwareInterface
+final class TableParser extends AbstractBlockContinueParser
 {
+    /** @var Table */
+    private $block;
+
+    /** @var ArrayCollection<int, string> */
+    private $bodyLines;
+
+    /** @var array<int, string> */
+    private $columns;
+
+    /** @var array<int, string> */
+    private $headerCells;
+
+    /** @var bool */
+    private $nextIsSeparatorLine = true;
+
     /**
-     * @var EnvironmentInterface
+     * TableParser constructor.
+     *
+     * @param array<int, string> $columns
+     * @param array<int, string> $headerCells
      */
-    private $environment;
-
-    public function parse(ContextInterface $context, Cursor $cursor): bool
+    public function __construct(array $columns, array $headerCells)
     {
-        $container = $context->getContainer();
-        if (!$container instanceof Paragraph) {
-            return false;
-        }
+        $this->block = new Table();
+        $this->bodyLines = new ArrayCollection();
+        $this->columns = $columns;
+        $this->headerCells = $headerCells;
+    }
 
-        $lines = $container->getStrings();
-        if (count($lines) !== 1) {
-            return false;
-        }
-
-        if (\strpos($lines[0], '|') === false) {
-            return false;
-        }
-
-        $oldState = $cursor->saveState();
-        $cursor->advanceToNextNonSpaceOrTab();
-        $columns = $this->parseColumns($cursor);
-
-        if (empty($columns)) {
-            $cursor->restoreState($oldState);
-
-            return false;
-        }
-
-        $head = $this->parseRow(trim((string) array_pop($lines)), $columns, TableCell::TYPE_HEAD);
-        if (null === $head) {
-            $cursor->restoreState($oldState);
-
-            return false;
-        }
-
-        $table = new Table(function (Cursor $cursor, Table $table) use ($columns): bool {
-            // The next line cannot be a new block start
-            // This is a bit inefficient, but it's the only feasible way to check
-            // given the current v1 API.
-            if (self::isANewBlock($this->environment, $cursor->getLine())) {
-                return false;
-            }
-
-            $row = $this->parseRow(\trim($cursor->getLine()), $columns);
-            if (null === $row) {
-                return false;
-            }
-
-            $table->getBody()->appendChild($row);
-
-            return true;
-        });
-
-        $table->getHead()->appendChild($head);
-
-        if (count($lines) >= 1) {
-            $paragraph = new Paragraph();
-            foreach ($lines as $line) {
-                $paragraph->addLine($line);
-            }
-
-            $context->replaceContainerBlock($paragraph);
-            $context->addBlock($table);
-        } else {
-            $context->replaceContainerBlock($table);
-        }
-
+    public function canHaveLazyContinuationLines(): bool
+    {
         return true;
     }
 
     /**
-     * @param string             $line
-     * @param array<int, string> $columns
-     * @param string             $type
-     *
-     * @return TableRow|null
+     * @return Table
      */
-    private function parseRow(string $line, array $columns, string $type = TableCell::TYPE_BODY): ?TableRow
+    public function getBlock(): AbstractBlock
     {
-        $cells = $this->split(new Cursor(\trim($line)));
+        return $this->block;
+    }
 
-        if (empty($cells)) {
-            return null;
+    public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
+    {
+        if (\strpos($cursor->getLine(), '|') === false) {
+            return BlockContinue::none();
         }
 
-        // The header row must match the delimiter row in the number of cells
-        if ($type === TableCell::TYPE_HEAD && \count($cells) !== \count($columns)) {
-            return null;
+        return BlockContinue::at($cursor);
+    }
+
+    public function addLine(string $line): void
+    {
+        if ($this->nextIsSeparatorLine) {
+            $this->nextIsSeparatorLine = false;
+        } else {
+            $this->bodyLines[] = $line;
+        }
+    }
+
+    public function parseInlines(InlineParserEngineInterface $inlineParser): void
+    {
+        $headerColumns = \count($this->headerCells);
+
+        $head = new TableSection(TableSection::TYPE_HEAD);
+        $this->block->appendChild($head);
+
+        $headerRow = new TableRow();
+        $head->appendChild($headerRow);
+        for ($i = 0; $i < $headerColumns; $i++) {
+            $cell = $this->headerCells[$i];
+            $tableCell = self::parseCell($cell, $i, $inlineParser);
+            $tableCell->setType(TableCell::TYPE_HEAD);
+            $headerRow->appendChild($tableCell);
         }
 
-        $i = 0;
-        $row = new TableRow();
-        foreach ($cells as $i => $cell) {
-            if (!array_key_exists($i, $columns)) {
-                return $row;
+        $body = null;
+        foreach ($this->bodyLines as $rowLine) {
+            $cells = self::split($rowLine);
+            $row = new TableRow();
+
+            // Body can not have more columns than head
+            for ($i = 0; $i < $headerColumns; $i++) {
+                $cell = $cells[$i] ?? '';
+                $tableCell = self::parseCell($cell, $i, $inlineParser);
+                $row->appendChild($tableCell);
             }
 
-            $row->appendChild(new TableCell(trim($cell), $type, $columns[$i]));
+            if ($body === null) {
+                // It's valid to have a table without body. In that case, don't add an empty TableBody node.
+                $body = new TableSection();
+                $this->block->appendChild($body);
+            }
+            $body->appendChild($row);
+        }
+    }
+
+    private function parseCell(string $cell, int $column, InlineParserEngineInterface $inlineParser): TableCell
+    {
+        $tableCell = new TableCell();
+
+        if ($column < \count($this->columns)) {
+            $tableCell->setAlign($this->columns[$column]);
         }
 
-        for ($j = count($columns) - 1; $j > $i; --$j) {
-            $row->appendChild(new TableCell('', $type, null));
-        }
+        $inlineParser->parse(\trim($cell), $tableCell);
 
-        return $row;
+        return $tableCell;
     }
 
     /**
-     * @param Cursor $cursor
+     * @param string $line
      *
      * @return array<int, string>
+     *
+     * @internal
      */
-    private function split(Cursor $cursor): array
+    public static function split(string $line): array
     {
+        $cursor = new Cursor(\trim($line));
+
         if ($cursor->getCharacter() === '|') {
             $cursor->advanceBy(1);
         }
@@ -179,105 +182,5 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
         }
 
         return $cells;
-    }
-
-    /**
-     * @param Cursor $cursor
-     *
-     * @return array<int, string>
-     */
-    private function parseColumns(Cursor $cursor): array
-    {
-        $columns = [];
-        $pipes = 0;
-        $valid = false;
-
-        while (!$cursor->isAtEnd()) {
-            switch ($c = $cursor->getCharacter()) {
-                case '|':
-                    $cursor->advanceBy(1);
-                    $pipes++;
-                    if ($pipes > 1) {
-                        // More than one adjacent pipe not allowed
-                        return [];
-                    }
-
-                    // Need at least one pipe, even for a one-column table
-                    $valid = true;
-                    break;
-                case '-':
-                case ':':
-                    if ($pipes === 0 && !empty($columns)) {
-                        // Need a pipe after the first column (first column doesn't need to start with one)
-                        return [];
-                    }
-                    $left = false;
-                    $right = false;
-                    if ($c === ':') {
-                        $left = true;
-                        $cursor->advanceBy(1);
-                    }
-                    if ($cursor->match('/^-+/') === null) {
-                        // Need at least one dash
-                        return [];
-                    }
-                    if ($cursor->getCharacter() === ':') {
-                        $right = true;
-                        $cursor->advanceBy(1);
-                    }
-                    $columns[] = $this->getAlignment($left, $right);
-                    // Next, need another pipe
-                    $pipes = 0;
-                    break;
-                case ' ':
-                case "\t":
-                    // White space is allowed between pipes and columns
-                    $cursor->advanceToNextNonSpaceOrTab();
-                    break;
-                default:
-                    // Any other character is invalid
-                    return [];
-            }
-        }
-
-        if (!$valid) {
-            return [];
-        }
-
-        return $columns;
-    }
-
-    private static function getAlignment(bool $left, bool $right): ?string
-    {
-        if ($left && $right) {
-            return TableCell::ALIGN_CENTER;
-        } elseif ($left) {
-            return TableCell::ALIGN_LEFT;
-        } elseif ($right) {
-            return TableCell::ALIGN_RIGHT;
-        }
-
-        return null;
-    }
-
-    public function setEnvironment(EnvironmentInterface $environment): void
-    {
-        $this->environment = $environment;
-    }
-
-    private static function isANewBlock(EnvironmentInterface $environment, string $line): bool
-    {
-        $context = new Context(new Document(), $environment);
-        $context->setNextLine($line);
-        $cursor = new Cursor($line);
-
-        /** @var BlockParserInterface $parser */
-        foreach ($environment->getBlockParsers() as $parser) {
-            if ($parser->parse($context, $cursor)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

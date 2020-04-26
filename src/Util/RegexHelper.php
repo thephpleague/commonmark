@@ -71,6 +71,11 @@ final class RegexHelper
         return \preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
     }
 
+    public static function isLetter(string $character): bool
+    {
+        return \preg_match('/[\pL]/u', $character) === 1;
+    }
+
     /**
      * Attempt to match a regex in string s at offset offset
      *

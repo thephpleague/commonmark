@@ -33,7 +33,7 @@ final class EmailAutolinkProcessor
 
     private static function processAutolinks(Text $node): void
     {
-        $contents = \preg_split(self::REGEX, $node->getContent(), -1, PREG_SPLIT_DELIM_CAPTURE);
+        $contents = \preg_split(self::REGEX, $node->getLiteral(), -1, PREG_SPLIT_DELIM_CAPTURE);
 
         if ($contents === false || \count($contents) === 1) {
             return;

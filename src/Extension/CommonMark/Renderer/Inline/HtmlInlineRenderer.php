@@ -16,11 +16,10 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
-use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
 
 final class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface
@@ -42,7 +41,7 @@ final class HtmlInlineRenderer implements InlineRendererInterface, Configuration
             throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
         }
 
-        return HtmlFilter::filter($inline->getContent(), $this->config->get('html_input', HtmlFilter::ALLOW));
+        return HtmlFilter::filter($inline->getLiteral(), $this->config->get('html_input', HtmlFilter::ALLOW));
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

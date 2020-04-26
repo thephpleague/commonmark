@@ -16,54 +16,10 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Table;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Block\AbstractStringContainerBlock;
-use League\CommonMark\Node\Block\InlineContainerInterface;
-use League\CommonMark\Parser\ContextInterface;
-use League\CommonMark\Parser\Cursor;
 
-final class Table extends AbstractStringContainerBlock implements InlineContainerInterface
+/**
+ * @method children() AbstractBlock[]
+ */
+final class Table extends AbstractBlock
 {
-    /** @var TableSection */
-    private $head;
-    /** @var TableSection */
-    private $body;
-    /** @var \Closure */
-    private $parser;
-
-    public function __construct(\Closure $parser)
-    {
-        parent::__construct();
-        $this->appendChild($this->head = new TableSection(TableSection::TYPE_HEAD));
-        $this->appendChild($this->body = new TableSection(TableSection::TYPE_BODY));
-        $this->parser = $parser;
-    }
-
-    public function canContain(AbstractBlock $block): bool
-    {
-        return $block instanceof TableSection;
-    }
-
-    public function isCode(): bool
-    {
-        return false;
-    }
-
-    public function getHead(): TableSection
-    {
-        return $this->head;
-    }
-
-    public function getBody(): TableSection
-    {
-        return $this->body;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        return call_user_func($this->parser, $cursor, $this);
-    }
-
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
-    {
-    }
 }

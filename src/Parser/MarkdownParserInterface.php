@@ -13,7 +13,7 @@ namespace League\CommonMark\Parser;
 
 use League\CommonMark\Node\Block\Document;
 
-interface DocParserInterface
+interface MarkdownParserInterface
 {
     /**
      * @param string $input

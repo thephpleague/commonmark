@@ -15,7 +15,6 @@
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
-use League\CommonMark\Node\Block\AbstractBlock;
 use PHPUnit\Framework\TestCase;
 
 class HtmlBlockTest extends TestCase
@@ -33,16 +32,11 @@ class HtmlBlockTest extends TestCase
         $this->assertSame(HtmlBlock::TYPE_4, $htmlBlock->getType());
     }
 
-    public function testCanContain()
+    public function testGetAndSetLiteral()
     {
-        $htmlBlock = new HtmlBlock(HtmlBlock::TYPE_3);
-        $block = $this->createMock(AbstractBlock::class);
-        $this->assertFalse($htmlBlock->canContain($block));
-    }
+        $htmlBlock = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
+        $htmlBlock->setLiteral('<marquee>foo</marquee>');
 
-    public function testIsCode()
-    {
-        $htmlBlock = new HtmlBlock(HtmlBlock::TYPE_3);
-        $this->assertTrue($htmlBlock->isCode());
+        $this->assertSame('<marquee>foo</marquee>', $htmlBlock->getLiteral());
     }
 }

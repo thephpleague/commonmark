@@ -18,8 +18,4 @@ use League\CommonMark\Node\Inline\AbstractInline;
 
 final class UppercaseText extends AbstractInline
 {
-    public function isContainer(): bool
-    {
-        return true;
-    }
 }

@@ -15,8 +15,4 @@ use League\CommonMark\Node\Inline\AbstractInline;
 
 final class Strikethrough extends AbstractInline
 {
-    public function isContainer(): bool
-    {
-        return true;
-    }
 }

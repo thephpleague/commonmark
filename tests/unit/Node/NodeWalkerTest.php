@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Tests\Unit\Node;
 
+use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
@@ -21,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 class NodeWalkerTest extends TestCase
 {
-    public function testWalkEmptyContainerNode()
+    public function testWalkEmptyBlockNode()
     {
         $node = new Document();
         $walker = $node->walker();
@@ -41,7 +42,7 @@ class NodeWalkerTest extends TestCase
         $this->assertNull($event);
     }
 
-    public function testWalkEmptyNonContainerNode()
+    public function testWalkEmptyInlineNode()
     {
         $node = new Text();
         $walker = $node->walker();
@@ -61,7 +62,9 @@ class NodeWalkerTest extends TestCase
     {
         $document = new Document();
         $document->appendChild($paragraph = new Paragraph());
-        $paragraph->appendChild($text = new Text());
+        $paragraph->appendChild($text1 = new Text());
+        $paragraph->appendChild($emphasis = new Emphasis());
+        $emphasis->appendChild($text2 = new Text());
         $walker = $document->walker();
 
         $event = $walker->next();
@@ -73,8 +76,20 @@ class NodeWalkerTest extends TestCase
         $this->assertTrue($event->isEntering());
 
         $event = $walker->next();
-        $this->assertSame($text, $event->getNode());
+        $this->assertSame($text1, $event->getNode());
         $this->assertTrue($event->isEntering());
+
+        $event = $walker->next();
+        $this->assertSame($emphasis, $event->getNode());
+        $this->assertTrue($event->isEntering());
+
+        $event = $walker->next();
+        $this->assertSame($text2, $event->getNode());
+        $this->assertTrue($event->isEntering());
+
+        $event = $walker->next();
+        $this->assertSame($emphasis, $event->getNode());
+        $this->assertFalse($event->isEntering());
 
         $event = $walker->next();
         $this->assertSame($paragraph, $event->getNode());

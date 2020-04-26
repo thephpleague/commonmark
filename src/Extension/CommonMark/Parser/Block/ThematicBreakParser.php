@@ -5,9 +5,6 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -15,30 +12,33 @@
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
-use League\CommonMark\Parser\Block\BlockParserInterface;
-use League\CommonMark\Parser\ContextInterface;
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
+use League\CommonMark\Parser\Block\BlockContinue;
+use League\CommonMark\Parser\Block\BlockContinueParserInterface;
 use League\CommonMark\Parser\Cursor;
-use League\CommonMark\Util\RegexHelper;
 
-final class ThematicBreakParser implements BlockParserInterface
+final class ThematicBreakParser extends AbstractBlockContinueParser
 {
-    public function parse(ContextInterface $context, Cursor $cursor): bool
+    /** @var ThematicBreak */
+    private $block;
+
+    public function __construct()
     {
-        if ($cursor->isIndented()) {
-            return false;
-        }
+        $this->block = new ThematicBreak();
+    }
 
-        $match = RegexHelper::matchAt(RegexHelper::REGEX_THEMATIC_BREAK, $cursor->getLine(), $cursor->getNextNonSpacePosition());
-        if ($match === null) {
-            return false;
-        }
+    /**
+     * @return ThematicBreak
+     */
+    public function getBlock(): AbstractBlock
+    {
+        return $this->block;
+    }
 
-        // Advance to the end of the string, consuming the entire line (of the thematic break)
-        $cursor->advanceToEnd();
-
-        $context->addBlock(new ThematicBreak());
-        $context->setBlocksParsed(true);
-
-        return true;
+    public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
+    {
+        // a horizontal rule can never container > 1 line, so fail to match
+        return BlockContinue::none();
     }
 }

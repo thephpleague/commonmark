@@ -13,7 +13,7 @@ namespace League\CommonMark\Environment;
 
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Event\AbstractEvent;
-use League\CommonMark\Parser\Block\BlockParserInterface;
+use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
@@ -29,9 +29,9 @@ interface EnvironmentInterface
     public function getConfig($key = null, $default = null);
 
     /**
-     * @return iterable<BlockParserInterface>
+     * @return iterable<BlockStartParserInterface>
      */
-    public function getBlockParsers(): iterable;
+    public function getBlockStartParsers(): iterable;
 
     /**
      * @param string $character

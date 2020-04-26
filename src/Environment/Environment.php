@@ -22,7 +22,7 @@ use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
-use League\CommonMark\Parser\Block\BlockParserInterface;
+use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
@@ -47,9 +47,9 @@ final class Environment implements ConfigurableEnvironmentInterface
     private $extensionsInitialized = false;
 
     /**
-     * @var PrioritizedList<BlockParserInterface>
+     * @var PrioritizedList<BlockStartParserInterface>
      */
-    private $blockParsers;
+    private $blockStartParsers;
 
     /**
      * @var PrioritizedList<InlineParserInterface>
@@ -98,7 +98,7 @@ final class Environment implements ConfigurableEnvironmentInterface
     {
         $this->config = new Configuration($config);
 
-        $this->blockParsers = new PrioritizedList();
+        $this->blockStartParsers = new PrioritizedList();
         $this->inlineParsers = new PrioritizedList();
         $this->delimiterProcessors = new DelimiterProcessorCollection();
     }
@@ -122,11 +122,11 @@ final class Environment implements ConfigurableEnvironmentInterface
         return $this->config->get($key, $default);
     }
 
-    public function addBlockParser(BlockParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface
     {
-        $this->assertUninitialized('Failed to add block parser.');
+        $this->assertUninitialized('Failed to add block start parser.');
 
-        $this->blockParsers->add($parser, $priority);
+        $this->blockStartParsers->add($parser, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($parser);
 
         return $this;
@@ -187,13 +187,13 @@ final class Environment implements ConfigurableEnvironmentInterface
         return $this;
     }
 
-    public function getBlockParsers(): iterable
+    public function getBlockStartParsers(): iterable
     {
         if (!$this->extensionsInitialized) {
             $this->initializeExtensions();
         }
 
-        return $this->blockParsers->getIterator();
+        return $this->blockStartParsers->getIterator();
     }
 
     public function getInlineParsersForCharacter(string $character): iterable

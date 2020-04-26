@@ -15,8 +15,8 @@
 namespace League\CommonMark\Extension\SmartPunct;
 
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
 final class QuoteRenderer implements InlineRendererInterface
@@ -34,14 +34,14 @@ final class QuoteRenderer implements InlineRendererInterface
         }
 
         // Handles unpaired quotes which remain after processing delimiters
-        if ($inline->getContent() === Quote::SINGLE_QUOTE) {
+        if ($inline->getLiteral() === Quote::SINGLE_QUOTE) {
             // Render as an apostrophe
             return Quote::SINGLE_QUOTE_CLOSER;
-        } elseif ($inline->getContent() === Quote::DOUBLE_QUOTE) {
+        } elseif ($inline->getLiteral() === Quote::DOUBLE_QUOTE) {
             // Render as an opening quote
             return Quote::DOUBLE_QUOTE_OPENER;
         }
 
-        return $inline->getContent();
+        return $inline->getLiteral();
     }
 }

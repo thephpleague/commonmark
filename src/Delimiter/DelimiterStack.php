@@ -181,8 +181,8 @@ final class DelimiterStack
             $opener->setLength($opener->getLength() - $useDelims);
             $closer->setLength($closer->getLength() - $useDelims);
 
-            $openerNode->setContent(\substr($openerNode->getContent(), 0, -$useDelims));
-            $closerNode->setContent(\substr($closerNode->getContent(), 0, -$useDelims));
+            $openerNode->setLiteral(\substr($openerNode->getLiteral(), 0, -$useDelims));
+            $closerNode->setLiteral(\substr($closerNode->getLiteral(), 0, -$useDelims));
 
             $this->removeDelimitersBetween($opener, $closer);
             // The delimiter processor can re-parent the nodes between opener and closer,

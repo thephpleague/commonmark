@@ -13,7 +13,7 @@ namespace League\CommonMark\Environment;
 
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\Parser\Block\BlockParserInterface;
+use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\Inline\InlineRendererInterface;
@@ -47,14 +47,14 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
     public function addExtension(ExtensionInterface $extension): ConfigurableEnvironmentInterface;
 
     /**
-     * Registers the given block parser with the Environment
+     * Registers the given block start parser with the Environment
      *
-     * @param BlockParserInterface $parser   Block parser instance
-     * @param int                  $priority Priority (a higher number will be executed earlier)
+     * @param BlockStartParserInterface $parser   Block parser instance
+     * @param int                       $priority Priority (a higher number will be executed earlier)
      *
      * @return self
      */
-    public function addBlockParser(BlockParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface;
+    public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface;
 
     /**
      * Registers the given inline parser with the Environment

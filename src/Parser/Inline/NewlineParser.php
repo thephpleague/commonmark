@@ -33,10 +33,10 @@ final class NewlineParser implements InlineParserInterface
         $spaces = 0;
         $lastInline = $inlineContext->getContainer()->lastChild();
         if ($lastInline instanceof Text) {
-            $trimmed = \rtrim($lastInline->getContent(), ' ');
-            $spaces = \strlen($lastInline->getContent()) - \strlen($trimmed);
+            $trimmed = \rtrim($lastInline->getLiteral(), ' ');
+            $spaces = \strlen($lastInline->getLiteral()) - \strlen($trimmed);
             if ($spaces) {
-                $lastInline->setContent($trimmed);
+                $lastInline->setLiteral($trimmed);
             }
         }
 

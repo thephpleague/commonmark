@@ -13,7 +13,7 @@ namespace League\CommonMark\Tests\Unit\Extension\Strikethrough;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
-use League\CommonMark\Parser\DocParser;
+use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +30,7 @@ class IntegrationTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new StrikethroughExtension());
 
-        $parser = new DocParser($environment);
+        $parser = new MarkdownParser($environment);
         $renderer = new HtmlRenderer($environment);
 
         $document = $parser->parse($string);

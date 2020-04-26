@@ -15,39 +15,14 @@
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Parser\Cursor;
 use PHPUnit\Framework\TestCase;
 
 class HeadingTest extends TestCase
 {
     public function testConstructorAndGetLevel()
     {
-        $heading = new Heading(1, 'CommonMark');
+        $heading = new Heading(3);
 
-        $this->assertEquals(1, $heading->getLevel());
-    }
-
-    public function testCanContain()
-    {
-        $heading = new Heading(1, 'CommonMark');
-
-        $block = $this->createMock(AbstractBlock::class);
-        $this->assertFalse($heading->canContain($block));
-    }
-
-    public function testIsCode()
-    {
-        $heading = new Heading(1, 'CommonMark');
-
-        $this->assertFalse($heading->isCode());
-    }
-
-    public function testMatchesNextLine()
-    {
-        $heading = new Heading(1, 'CommonMark');
-
-        $cursor = $this->createMock(Cursor::class);
-        $this->assertFalse($heading->matchesNextLine($cursor));
+        $this->assertEquals(3, $heading->getLevel());
     }
 }

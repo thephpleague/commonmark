@@ -18,8 +18,4 @@ use League\CommonMark\Node\Inline\AbstractInline;
 
 class Emphasis extends AbstractInline
 {
-    public function isContainer(): bool
-    {
-        return true;
-    }
 }

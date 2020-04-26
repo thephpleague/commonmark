@@ -12,9 +12,14 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Node\Block;
+namespace League\CommonMark\Node;
 
-interface InlineContainerInterface extends StringContainerInterface
+/**
+ * Interface for a node which directly contains line(s) of text
+ */
+interface StringContainerInterface
 {
-    public function getStringContent(): string;
+    public function setLiteral(string $literal): void;
+
+    public function getLiteral(): string;
 }

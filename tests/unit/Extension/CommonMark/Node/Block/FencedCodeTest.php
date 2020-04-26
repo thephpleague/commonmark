@@ -15,9 +15,6 @@
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Parser\Context;
 use PHPUnit\Framework\TestCase;
 
 class FencedCodeTest extends TestCase
@@ -55,34 +52,12 @@ class FencedCodeTest extends TestCase
         $this->assertEquals(6, $fencedCode->getOffset());
     }
 
-    public function testCanContain()
+    public function testGetAndSetInfo()
     {
         $fencedCode = new FencedCode(3, '~', 4);
+        $fencedCode->setInfo('ruby startline=3');
 
-        $block = $this->createMock(AbstractBlock::class);
-        $this->assertFalse($fencedCode->canContain($block));
-    }
-
-    public function testIsCode()
-    {
-        $fencedCode = new FencedCode(3, '~', 4);
-
-        $this->assertTrue($fencedCode->isCode());
-    }
-
-    public function testFinalizeAndGetInfo()
-    {
-        $fencedCode = new FencedCode(3, '~', 4);
-        $fencedCode->addLine('ruby startline=3');
-        $fencedCode->addLine('hello world');
-
-        $context = $this->createMock(Context::class);
-        $context->method('getTip')->willReturn(new Document());
-
-        $fencedCode->finalize($context, 7);
-
-        $this->assertEquals('ruby startline=3', $fencedCode->getInfo());
-        $this->assertEquals(['ruby', 'startline=3'], $fencedCode->getInfoWords());
-        $this->assertEquals("hello world\n", $fencedCode->getStringContent());
+        $this->assertSame('ruby startline=3', $fencedCode->getInfo());
+        $this->assertSame(['ruby', 'startline=3'], $fencedCode->getInfoWords());
     }
 }

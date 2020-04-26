@@ -16,19 +16,14 @@ namespace League\CommonMark\Reference;
 
 /**
  * A collection of references
+ *
+ * @phpstan-extends \IteratorAggregate<ReferenceInterface>
  */
-interface ReferenceMapInterface
+interface ReferenceMapInterface extends \IteratorAggregate, \Countable
 {
-    public function addReference(ReferenceInterface $reference): void;
+    public function add(ReferenceInterface $reference): void;
 
     public function contains(string $label): bool;
 
-    public function getReference(string $label): ?ReferenceInterface;
-
-    /**
-     * Lists all registered references.
-     *
-     * @return ReferenceInterface[]
-     */
-    public function listReferences(): iterable;
+    public function get(string $label): ?ReferenceInterface;
 }

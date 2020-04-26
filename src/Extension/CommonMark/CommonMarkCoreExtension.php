@@ -26,15 +26,13 @@ final class CommonMarkCoreExtension implements ExtensionInterface
     public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment
-            ->addBlockParser(new Parser\Block\BlockQuoteParser(),          70)
-            ->addBlockParser(new Parser\Block\ATXHeadingParser(),          60)
-            ->addBlockParser(new Parser\Block\FencedCodeParser(),          50)
-            ->addBlockParser(new Parser\Block\HtmlBlockParser(),           40)
-            ->addBlockParser(new Parser\Block\SetExtHeadingParser(),       30)
-            ->addBlockParser(new Parser\Block\ThematicBreakParser(),       20)
-            ->addBlockParser(new Parser\Block\ListParser(),                10)
-            ->addBlockParser(new Parser\Block\IndentedCodeParser(),      -100)
-            ->addBlockParser(new CoreParser\Block\LazyParagraphParser(), -200)
+            ->addBlockStartParser(new Parser\Block\BlockQuoteStartParser(),     70)
+            ->addBlockStartParser(new Parser\Block\HeadingStartParser(),        60)
+            ->addBlockStartParser(new Parser\Block\FencedCodeStartParser(),     50)
+            ->addBlockStartParser(new Parser\Block\HtmlBlockStartParser(),      40)
+            ->addBlockStartParser(new Parser\Block\ThematicBreakStartParser(),  20)
+            ->addBlockStartParser(new Parser\Block\ListBlockStartParser(),      10)
+            ->addBlockStartParser(new Parser\Block\IndentedCodeStartParser(), -100)
 
             ->addInlineParser(new CoreParser\Inline\NewlineParser(), 200)
             ->addInlineParser(new Parser\Inline\BacktickParser(),    150)
