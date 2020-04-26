@@ -273,6 +273,13 @@ main menu ul li.selected a:hover {
 pre {
     border-width:0 0 0 4px;
     background: #fff;
+    width: fit-content;
+    max-width: 100%;
+}
+
+main article table {
+    width: initial;
+    max-width: 100%;
 }
 
 table {
@@ -331,8 +338,6 @@ header .logo em {
 
     header .header-content {
         box-sizing: border-box;
-        max-width:1192px;
-        margin:0 auto;
         padding:1em;
     }
 
@@ -368,14 +373,9 @@ header .logo em {
     }
 }
 
-@media screen and (min-width: 1200px) {
-    header .header-content {
-        width:1192px;
-    }
-    main {
-        margin-left:auto;
-        margin-right:auto;
-        width:1192px;
+@media screen and (min-width: 850px) {
+    main article {
+        max-width: none;
     }
 }
 
