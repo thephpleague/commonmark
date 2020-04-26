@@ -290,6 +290,7 @@ table th {
 header .logo .name {
     font-size: 2rem;
     line-height: 100%;
+    margin: 0 !important;
 }
 
 @media screen and (min-width: 768px) {
