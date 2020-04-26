@@ -198,7 +198,7 @@ main article div > code {
 
 main article p img {
     box-sizing: border-box;
-    margin:.3em auto;
+    margin:.3em;
     padding:0;
     display: block;
 }

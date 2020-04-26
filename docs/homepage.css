@@ -44,7 +44,7 @@ main div > code {
 .homepage header h1 {
     margin:.3em auto;
     font-family: "Museo 300";
-    font-size:72px;
+    line-height: 250%;
     font-weight: normal;
 }
 
@@ -250,10 +250,6 @@ main div > code {
 }
 
 @media screen and (max-width: 549px) {
-    .homepage header {
-        padding:3em 0;
-    }
-
     .homepage header h1 {
         font-size:48px;
     }
