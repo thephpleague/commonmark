@@ -32,7 +32,7 @@ echo $converter->convertToHtml('# Hello World!');
 
 ## Included Extensions
 
-This project includes [several built-in extensions you can use](/{{ version }}/extensions/) to enable additional features and syntax.
+This project includes [several built-in extensions you can use](/{{ version }}/extensions/overview/) to enable additional features and syntax.
 
 ## Customization
 
