@@ -21,4 +21,6 @@ use League\CommonMark\Node\Node;
  */
 final class SimpleNode extends Node
 {
+    /** @var mixed */
+    public $value;
 }

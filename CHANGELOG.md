@@ -33,6 +33,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `TableCell::setType()`
    - `TableCell::getAlign()`
    - `TableCell::setAlign()`
+ - Added the ability to properly clone `Node` objects
 
 ### Changed
 
