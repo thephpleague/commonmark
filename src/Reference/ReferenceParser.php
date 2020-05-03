@@ -101,6 +101,9 @@ final class ReferenceParser
                 case self::TITLE:
                     $result = $this->parseTitle($cursor);
                     break;
+                default:
+                    // this should never happen
+                    break;
             }
 
             if (!$result) {
@@ -222,6 +225,9 @@ final class ReferenceParser
                 break;
             case '(':
                 $this->titleDelimiter = ')';
+                break;
+            default:
+                // no title delimter found
                 break;
         }
 
