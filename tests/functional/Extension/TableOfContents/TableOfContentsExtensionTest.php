@@ -93,6 +93,20 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
+    public function testWithPositionPlaceholder()
+    {
+        $this->setUpConverter([
+            'table_of_contents' => [
+                'position'    => 'placeholder',
+                'placeholder' => '[TOC]',
+            ],
+        ]);
+
+        foreach ($this->loadTests(__DIR__ . '/data', 'position-placeholder*.md') as [$markdown, $html, $testName]) {
+            $this->assertMarkdownRendersAs($markdown, $html, $testName);
+        }
+    }
+
     public function testWithCustomClass()
     {
         $this->setUpConverter([

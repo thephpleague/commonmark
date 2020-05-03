@@ -39,6 +39,7 @@ $config = [
         'min_heading_level' => 1,
         'max_heading_level' => 6,
         'normalize' => 'relative',
+        'placeholder' => null,
     ],
 ];
 
@@ -71,8 +72,13 @@ This `string` controls where in the document your table of contents will be plac
 
  - **`'top'`** (default) - Insert at the very top of the document, before any content
  - `'before-headings'` - Insert just before the very first heading - useful if you want to have some descriptive text show above the table of content.
+ - `'placeholder'` - Location is manually defined by a user-provided placeholder somewhere in the document (see the `placeholder` option below)
 
 If you'd like to customize this further, you can implement a [custom event listener](/1.5/customization/event-dispatcher/#registering-listeners) to locate the `TableOfContents` node and reposition it somewhere else in the document prior to rendering.
+
+### `placeholder`
+
+When combined with `'position' => 'placeholder'`, this setting tells the extension which placeholder content should be replaced with the Table of Contents.  For example, if you set this option to `[TOC]`, then any lines in your document consisting of that `[TOC]` placeholder will be replaced by the Table of Contents. Note that this option has no default value - you must provide this string yourself.
 
 ### `style`
 
