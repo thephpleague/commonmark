@@ -17,8 +17,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\BlockQuoteRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Tests\Unit\Renderer\FakeEmptyHtmlRenderer;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -38,7 +37,7 @@ class BlockQuoteRendererTest extends TestCase
     {
         $block = new BlockQuote();
         $block->data['attributes'] = ['id' => 'id'];
-        $fakeRenderer = new FakeEmptyHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -52,13 +51,14 @@ class BlockQuoteRendererTest extends TestCase
     {
         $block = new BlockQuote();
         $block->data['attributes'] = ['id' => 'id'];
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('blockquote', $result->getTagName());
-        $this->assertStringContainsString('::blocks::', $result->getContents(true));
+        $this->assertStringContainsString('::children::', $result->getContents(true));
         $this->assertEquals(['id' => 'id'], $result->getAllAttributes());
     }
 
@@ -67,7 +67,7 @@ class BlockQuoteRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

@@ -17,7 +17,8 @@ namespace League\CommonMark\Tests\Unit\Extension\SmartPunct;
 use League\CommonMark\Extension\SmartPunct\Quote;
 use League\CommonMark\Extension\SmartPunct\QuoteRenderer;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -28,13 +29,13 @@ final class QuoteRendererTest extends TestCase
     /** @var QuoteRenderer */
     private $renderer;
 
-    /** @var NodeRendererInterface */
-    private $htmlRenderer;
+    /** @var ChildNodeRendererInterface */
+    private $childRenderer;
 
     protected function setUp(): void
     {
         $this->renderer = new QuoteRenderer();
-        $this->htmlRenderer = $this->createMock(NodeRendererInterface::class);
+        $this->childRenderer = new FakeChildNodeRenderer();
     }
 
     public function testInvalidInlineType()
@@ -43,7 +44,7 @@ final class QuoteRendererTest extends TestCase
 
         $inline = $this->createMock(Text::class);
 
-        $this->renderer->render($inline, $this->htmlRenderer);
+        $this->renderer->render($inline, $this->childRenderer);
     }
 
     /**
@@ -56,7 +57,7 @@ final class QuoteRendererTest extends TestCase
     {
         $inline = new Quote($character);
 
-        $this->assertEquals($expected, $this->renderer->render($inline, $this->htmlRenderer));
+        $this->assertEquals($expected, $this->renderer->render($inline, $this->childRenderer));
     }
 
     public function dataForTestRender()

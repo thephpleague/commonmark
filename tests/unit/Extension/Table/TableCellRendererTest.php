@@ -14,7 +14,7 @@ namespace League\CommonMark\Tests\Unit\Extension\Table;
 use League\CommonMark\Extension\Table\TableCell;
 use League\CommonMark\Extension\Table\TableCellRenderer;
 use League\CommonMark\Extension\Table\TableSection;
-use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
 final class TableCellRendererTest extends TestCase
@@ -24,12 +24,12 @@ final class TableCellRendererTest extends TestCase
         $tableCell = new TableCell(TableCell::TYPE_BODY);
         $tableCell->data['attributes'] = ['class' => 'foo'];
 
-        $elementRenderer = $this->createMock(NodeRendererInterface::class);
-        $elementRenderer->method('renderInlines')->willReturn('contents');
+        $childRenderer = new FakeChildNodeRenderer();
+        $childRenderer->pretendChildrenExist();
 
         $renderer = new TableCellRenderer();
 
-        $this->assertSame('<td class="foo">contents</td>', (string) $renderer->render($tableCell, $elementRenderer));
+        $this->assertSame('<td class="foo">::children::</td>', (string) $renderer->render($tableCell, $childRenderer));
     }
 
     public function testRenderWithTableCellHavingAlignment()
@@ -37,18 +37,18 @@ final class TableCellRendererTest extends TestCase
         $tableCell = new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_CENTER);
         $tableCell->data['attributes'] = ['class' => 'foo'];
 
-        $elementRenderer = $this->createMock(NodeRendererInterface::class);
-        $elementRenderer->method('renderInlines')->willReturn('contents');
+        $childRenderer = new FakeChildNodeRenderer();
+        $childRenderer->pretendChildrenExist();
 
         $renderer = new TableCellRenderer();
 
-        $this->assertSame('<td class="foo" align="center">contents</td>', (string) $renderer->render($tableCell, $elementRenderer));
+        $this->assertSame('<td class="foo" align="center">::children::</td>', (string) $renderer->render($tableCell, $childRenderer));
     }
 
     public function testRenderWithWrongType()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new TableCellRenderer())->render(new TableSection(), $this->createMock(NodeRendererInterface::class));
+        (new TableCellRenderer())->render(new TableSection(), new FakeChildNodeRenderer());
     }
 }

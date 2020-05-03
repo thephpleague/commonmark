@@ -17,12 +17,12 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
 
-final class HtmlInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface
+final class HtmlInlineRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface
@@ -30,18 +30,18 @@ final class HtmlInlineRenderer implements InlineRendererInterface, Configuration
     protected $config;
 
     /**
-     * @param HtmlInline            $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param HtmlInline                 $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return string
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof HtmlInline)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof HtmlInline)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        return HtmlFilter::filter($inline->getLiteral(), $this->config->get('html_input', HtmlFilter::ALLOW));
+        return HtmlFilter::filter($node->getLiteral(), $this->config->get('html_input', HtmlFilter::ALLOW));
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

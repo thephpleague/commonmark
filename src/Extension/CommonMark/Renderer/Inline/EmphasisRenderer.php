@@ -15,27 +15,27 @@
 namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class EmphasisRenderer implements InlineRendererInterface
+final class EmphasisRenderer implements NodeRendererInterface
 {
     /**
-     * @param Emphasis              $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param Emphasis                   $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Emphasis)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof Emphasis)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $inline->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
-        return new HtmlElement('em', $attrs, $htmlRenderer->renderInlines($inline->children()));
+        return new HtmlElement('em', $attrs, $childRenderer->renderNodes($node->children()));
     }
 }

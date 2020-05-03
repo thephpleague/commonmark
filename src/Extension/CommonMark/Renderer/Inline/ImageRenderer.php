@@ -17,46 +17,46 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\RegexHelper;
 
-final class ImageRenderer implements InlineRendererInterface, ConfigurationAwareInterface
+final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface
      */
     protected $config;
 
-    /*
-     * @param Image                 $inline
-     * @param NodeRendererInterface $htmlRenderer
+    /**
+     * @param Image                      $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Image)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof Image)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $inline->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
         $forbidUnsafeLinks = !$this->config->get('allow_unsafe_links');
-        if ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl())) {
+        if ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($node->getUrl())) {
             $attrs['src'] = '';
         } else {
-            $attrs['src'] = $inline->getUrl();
+            $attrs['src'] = $node->getUrl();
         }
 
-        $alt = $htmlRenderer->renderInlines($inline->children());
+        $alt = $childRenderer->renderNodes($node->children());
         $alt = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt);
 
-        if (isset($inline->data['title'])) {
-            $attrs['title'] = $inline->data['title'];
+        if (isset($node->data['title'])) {
+            $attrs['title'] = $node->data['title'];
         }
 
         return new HtmlElement('img', $attrs, '', true);

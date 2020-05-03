@@ -17,7 +17,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\ThematicBreakRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -36,7 +36,7 @@ class ThematicBreakRendererTest extends TestCase
     public function testRender()
     {
         $block = new ThematicBreak();
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -49,7 +49,7 @@ class ThematicBreakRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

@@ -34,7 +34,7 @@ $htmlRenderer = new HtmlRenderer($environment);
 $markdown = '# Hello World!';
 
 $document = $parser->parse($markdown);
-echo $htmlRenderer->renderBlock($document);
+echo $htmlRenderer->renderDocument($document);
 ```
 
 ## Manual Usage
@@ -56,7 +56,7 @@ $htmlRenderer = new HtmlRenderer($environment);
 $markdown = '# Hello World!';
 
 $document = $parser->parse($markdown);
-echo $htmlRenderer->renderBlock($document);
+echo $htmlRenderer->renderDocument($document);
 ```
 
 Alternatively, if you don't want all of the core Markdown syntax, avoid using `CommonMarkCoreExtension`.  You can always add just the individual parsers, renderers, etc. you actually want with the [`Environment`](/2.0/customization/environment/).  (This is actually how the [Inlines Only Extension](/2.0/extensions/inlines-only/) works - it only includes a subset of things that `CommonMarkCoreExtension` does!)

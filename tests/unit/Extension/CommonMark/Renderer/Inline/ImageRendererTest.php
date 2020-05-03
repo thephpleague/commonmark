@@ -18,7 +18,7 @@ use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\ImageRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -39,7 +39,7 @@ class ImageRendererTest extends TestCase
     {
         $inline = new Image('http://example.com/foo.jpg', '::label::', '::title::');
         $inline->data['attributes'] = ['id' => '::id::', 'title' => '::title2::', 'label' => '::label2::', 'alt' => '::alt2::'];
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -47,7 +47,7 @@ class ImageRendererTest extends TestCase
         $this->assertEquals('img', $result->getTagName());
         $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
         $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
-        $this->assertStringContainsString('::inlines::', $result->getAttribute('alt'));
+        $this->assertStringContainsString('::children::', $result->getAttribute('alt'));
         $this->assertStringContainsString('::title::', $result->getAttribute('title'));
         $this->assertStringContainsString('::id::', $result->getAttribute('id'));
     }
@@ -55,7 +55,7 @@ class ImageRendererTest extends TestCase
     public function testRenderWithoutTitle()
     {
         $inline = new Image('http://example.com/foo.jpg', '::label::');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -63,7 +63,7 @@ class ImageRendererTest extends TestCase
         $this->assertEquals('img', $result->getTagName());
         $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
         $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
-        $this->assertStringContainsString('::inlines::', $result->getAttribute('alt'));
+        $this->assertStringContainsString('::children::', $result->getAttribute('alt'));
         $this->assertNull($result->getAttribute('title'));
     }
 
@@ -74,7 +74,7 @@ class ImageRendererTest extends TestCase
         ]));
 
         $inline = new Image('javascript:void(0)');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -89,7 +89,7 @@ class ImageRendererTest extends TestCase
         ]));
 
         $inline = new Image('javascript:void(0)');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -102,7 +102,7 @@ class ImageRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

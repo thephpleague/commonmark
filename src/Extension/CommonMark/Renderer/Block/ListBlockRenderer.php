@@ -15,43 +15,37 @@
 namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class ListBlockRenderer implements BlockRendererInterface
+final class ListBlockRenderer implements NodeRendererInterface
 {
     /**
-     * @param ListBlock             $block
-     * @param NodeRendererInterface $htmlRenderer
-     * @param bool                  $inTightList
+     * @param ListBlock                  $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($block instanceof ListBlock)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
+        if (!($node instanceof ListBlock)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $listData = $block->getListData();
+        $listData = $node->getListData();
 
         $tag = $listData->type === ListBlock::TYPE_BULLET ? 'ul' : 'ol';
 
-        $attrs = $block->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
         if ($listData->start !== null && $listData->start !== 1) {
             $attrs['start'] = (string) $listData->start;
         }
 
-        return new HtmlElement(
-            $tag,
-            $attrs,
-            $htmlRenderer->getOption('inner_separator', "\n") . $htmlRenderer->renderBlocks(
-                $block->children(),
-                $block->isTight()
-            ) . $htmlRenderer->getOption('inner_separator', "\n")
-        );
+        $innerSeparator = $childRenderer->getInnerSeparator();
+
+        return new HtmlElement($tag, $attrs, $innerSeparator . $childRenderer->renderNodes($node->children()) . $innerSeparator);
     }
 }

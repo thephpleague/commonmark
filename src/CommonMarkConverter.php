@@ -20,7 +20,7 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Parser\MarkdownParserInterface;
 use League\CommonMark\Renderer\HtmlRenderer;
-use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Renderer\HtmlRendererInterface;
 
 /**
  * Converts CommonMark-compatible Markdown to HTML.
@@ -40,7 +40,7 @@ class CommonMarkConverter implements MarkdownConverterInterface
     /** @var MarkdownParserInterface */
     protected $markdownParser;
 
-    /** @var NodeRendererInterface */
+    /** @var HtmlRendererInterface */
     protected $htmlRenderer;
 
     /**
@@ -85,7 +85,7 @@ class CommonMarkConverter implements MarkdownConverterInterface
     {
         $documentAST = $this->markdownParser->parse($commonMark);
 
-        return $this->htmlRenderer->renderBlock($documentAST);
+        return $this->htmlRenderer->renderDocument($documentAST);
     }
 
     /**

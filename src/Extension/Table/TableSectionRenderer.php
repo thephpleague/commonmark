@@ -15,27 +15,33 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class TableSectionRenderer implements BlockRendererInterface
+final class TableSectionRenderer implements NodeRendererInterface
 {
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    /**
+     * @param TableSection               $node
+     * @param ChildNodeRendererInterface $childRenderer
+     *
+     * @return HtmlElement|string
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!$block instanceof TableSection) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        if (!$node instanceof TableSection) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        if (!$block->hasChildren()) {
+        if (!$node->hasChildren()) {
             return '';
         }
 
-        $attrs = $block->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
-        $separator = $htmlRenderer->getOption('inner_separator', "\n");
+        $separator = $childRenderer->getInnerSeparator();
 
-        return new HtmlElement($block->type, $attrs, $separator . $htmlRenderer->renderBlocks($block->children()) . $separator);
+        return new HtmlElement($node->type, $attrs, $separator . $childRenderer->renderNodes($node->children()) . $separator);
     }
 }

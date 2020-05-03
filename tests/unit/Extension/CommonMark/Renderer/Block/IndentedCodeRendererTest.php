@@ -18,7 +18,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\IndentedCodeRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -44,7 +44,7 @@ class IndentedCodeRendererTest extends TestCase
 
         $document->appendChild($block);
 
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -64,7 +64,7 @@ class IndentedCodeRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

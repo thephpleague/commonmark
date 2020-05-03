@@ -14,10 +14,11 @@
 
 namespace League\CommonMark\Tests\Unit\Renderer\Inline;
 
+use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Renderer\Inline\NewlineRenderer;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
 class NewlineRendererTest extends TestCase
@@ -35,7 +36,7 @@ class NewlineRendererTest extends TestCase
     public function testRenderHardbreak()
     {
         $inline = new Newline(Newline::HARDBREAK);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -46,8 +47,8 @@ class NewlineRendererTest extends TestCase
     public function testRenderSoftbreak()
     {
         $inline = new Newline(Newline::SOFTBREAK);
-        $fakeRenderer = new FakeHtmlRenderer();
-        $fakeRenderer->setOption('soft_break', '::softbreakChar::');
+        $fakeRenderer = new FakeChildNodeRenderer();
+        $this->renderer->setConfiguration(new Configuration(['renderer' => ['soft_break' => '::softbreakChar::']]));
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -60,7 +61,7 @@ class NewlineRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

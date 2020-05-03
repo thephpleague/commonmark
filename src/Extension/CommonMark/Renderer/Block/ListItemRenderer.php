@@ -16,40 +16,37 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Extension\TaskList\TaskListItemMarker;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Paragraph;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class ListItemRenderer implements BlockRendererInterface
+final class ListItemRenderer implements NodeRendererInterface
 {
     /**
-     * @param ListItem              $block
-     * @param NodeRendererInterface $htmlRenderer
-     * @param bool                  $inTightList
+     * @param ListItem                   $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
-     * @return string
+     * @return HtmlElement
      */
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($block instanceof ListItem)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
+        if (!($node instanceof ListItem)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $contents = $htmlRenderer->renderBlocks($block->children(), $inTightList);
-        if (\substr($contents, 0, 1) === '<' && !$this->startsTaskListItem($block)) {
+        $contents = $childRenderer->renderNodes($node->children());
+        if (\substr($contents, 0, 1) === '<' && !$this->startsTaskListItem($node)) {
             $contents = "\n" . $contents;
         }
         if (\substr($contents, -1, 1) === '>') {
             $contents .= "\n";
         }
 
-        $attrs = $block->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
-        $li = new HtmlElement('li', $attrs, $contents);
-
-        return $li;
+        return new HtmlElement('li', $attrs, $contents);
     }
 
     private function startsTaskListItem(ListItem $block): bool

@@ -20,90 +20,89 @@ Many classes now live in different namespaces, and some have also been renamed. 
 
 _(Note that the base namespace of `League\CommonMark` has been omitted from this table for brevity.)_
 
-| Old Class Namespace/Name (1.x)                                         | New Class Namespace/Name (2.0)                                                           |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `Util\ConfigurationAwareInterface`                                     | `Configuration\ConfigurationAwareInterface`                                              |
-| `Util\ConfigurationInterface`                                          | `Configuration\ConfigurationInterface`                                                   |
-| `Util\Configuration`                                                   | `Configuration\Configuration`                                                            |
-| `ConfigurableEnvironmentInterface`                                     | `Environment\ConfigurableEnvironmentInterface`                                           |
-| `EnvironmentAwareInterface`                                            | `Environment\EnvironmentAwareInterface`                                                  |
-| `Environment`                                                          | `Environment\Environment`                                                                |
-| `EnvironmentInterface`                                                 | `Environment\EnvironmentInterface`                                                       |
-| `Extension\CommonMarkCoreExtension`                                    | `Extension\CommonMark\CommonMarkCoreExtension`                                           |
-| `Delimiter\Processor\EmphasisDelimiterProcessor`                       | `Extension\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor`                    |
-| `Block\Element\BlockQuote`                                             | `Extension\CommonMark\Node\Block\BlockQuote`                                             |
-| `Block\Element\FencedCode`                                             | `Extension\CommonMark\Node\Block\FencedCode`                                             |
-| `Block\Element\Heading`                                                | `Extension\CommonMark\Node\Block\Heading`                                                |
-| `Block\Element\HtmlBlock`                                              | `Extension\CommonMark\Node\Block\HtmlBlock`                                              |
-| `Block\Element\IndentedCode`                                           | `Extension\CommonMark\Node\Block\IndentedCode`                                           |
-| `Block\Element\ListBlock`                                              | `Extension\CommonMark\Node\Block\ListBlock`                                              |
-| `Block\Element\ListData`                                               | `Extension\CommonMark\Node\Block\ListData`                                               |
-| `Block\Element\ListItem`                                               | `Extension\CommonMark\Node\Block\ListItem`                                               |
-| `Block\Element\ThematicBreak`                                          | `Extension\CommonMark\Node\Block\ThematicBreak`                                          |
-| `Inline\Element\AbstractWebResource`                                   | `Extension\CommonMark\Node\Inline\AbstractWebResource`                                   |
-| `Inline\Element\Code`                                                  | `Extension\CommonMark\Node\Inline\Code`                                                  |
-| `Inline\Element\Emphasis`                                              | `Extension\CommonMark\Node\Inline\Emphasis`                                              |
-| `Inline\Element\HtmlInline`                                            | `Extension\CommonMark\Node\Inline\HtmlInline`                                            |
-| `Inline\Element\Image`                                                 | `Extension\CommonMark\Node\Inline\Image`                                                 |
-| `Inline\Element\Link`                                                  | `Extension\CommonMark\Node\Inline\Link`                                                  |
-| `Inline\Element\Strong`                                                | `Extension\CommonMark\Node\Inline\Strong`                                                |
-| `Block\Parser\BlockQuoteParser`                                        | `Extension\CommonMark\Parser\Block\BlockQuoteParser`                                     |
-| `Block\Parser\FencedCodeParser`                                        | `Extension\CommonMark\Parser\Block\FencedCodeParser`                                     |
-| `Block\Parser\ATXHeadingParser` and `Block\Parser\SetExtHeadingParser` | `Extension\CommonMark\Parser\Block\HeadingParser`                                        |
-| `Block\Parser\HtmlBlockParser`                                         | `Extension\CommonMark\Parser\Block\HtmlBlockParser`                                      |
-| `Block\Parser\IndentedCodeParser`                                      | `Extension\CommonMark\Parser\Block\IndentedCodeParser`                                   |
-| `Block\Parser\ListParser`                                              | `Extension\CommonMark\Parser\Block\ListParser`                                           |
-| `Block\Parser\ThematicBreakParser`                                     | `Extension\CommonMark\Parser\Block\ThematicBreakParser`                                  |
-| `Inline\Parser\AutolinkParser`                                         | `Extension\CommonMark\Parser\Inline\AutolinkParser`                                      |
-| `Inline\Parser\BacktickParser`                                         | `Extension\CommonMark\Parser\Inline\BacktickParser`                                      |
-| `Inline\Parser\BangParser`                                             | `Extension\CommonMark\Parser\Inline\BangParser`                                          |
-| `Inline\Parser\CloseBracketParser`                                     | `Extension\CommonMark\Parser\Inline\CloseBracketParser`                                  |
-| `Inline\Parser\EntityParser`                                           | `Extension\CommonMark\Parser\Inline\EntityParser`                                        |
-| `Inline\Parser\EscapableParser`                                        | `Extension\CommonMark\Parser\Inline\EscapableParser`                                     |
-| `Inline\Parser\HtmlInlineParser`                                       | `Extension\CommonMark\Parser\Inline\HtmlInlineParser`                                    |
-| `Inline\Parser\OpenBracketParser`                                      | `Extension\CommonMark\Parser\Inline\OpenBracketParser`                                   |
-| `Block\Renderer\BlockQuoteRenderer`                                    | `Extension\CommonMark\Renderer\Block\BlockQuoteRenderer`                                 |
-| `Block\Renderer\FencedCodeRenderer`                                    | `Extension\CommonMark\Renderer\Block\FencedCodeRenderer`                                 |
-| `Block\Renderer\HeadingRenderer`                                       | `Extension\CommonMark\Renderer\Block\HeadingRenderer`                                    |
-| `Block\Renderer\HtmlBlockRenderer`                                     | `Extension\CommonMark\Renderer\Block\HtmlBlockRenderer`                                  |
-| `Block\Renderer\IndentedCodeRenderer`                                  | `Extension\CommonMark\Renderer\Block\IndentedCodeRenderer`                               |
-| `Block\Renderer\ListBlockRenderer`                                     | `Extension\CommonMark\Renderer\Block\ListBlockRenderer`                                  |
-| `Block\Renderer\ListItemRenderer`                                      | `Extension\CommonMark\Renderer\Block\ListItemRenderer`                                   |
-| `Block\Renderer\ThematicBreakRenderer`                                 | `Extension\CommonMark\Renderer\Block\ThematicBreakRenderer`                              |
-| `Inline\Renderer\CodeRenderer`                                         | `Extension\CommonMark\Renderer\Inline\CodeRenderer`                                      |
-| `Inline\Renderer\EmphasisRenderer`                                     | `Extension\CommonMark\Renderer\Inline\EmphasisRenderer`                                  |
-| `Inline\Renderer\HtmlInlineRenderer`                                   | `Extension\CommonMark\Renderer\Inline\HtmlInlineRenderer`                                |
-| `Inline\Renderer\ImageRenderer`                                        | `Extension\CommonMark\Renderer\Inline\ImageRenderer`                                     |
-| `Inline\Renderer\LinkRenderer`                                         | `Extension\CommonMark\Renderer\Inline\LinkRenderer`                                      |
-| `Inline\Renderer\StrongRenderer`                                       | `Extension\CommonMark\Renderer\Inline\StrongRenderer`                                    |
-| `Block\Element\AbstractBlock`                                          | `Node\Block\AbstractBlock`                                                               |
-| `Block\Element\Document`                                               | `Node\Block\Document`                                                                    |
-| `Block\Element\InlineContainerInterface`                               | `Node\Block\InlineContainerInterface`                                                    |
-| `Block\Element\Paragraph`                                              | `Node\Block\Paragraph`                                                                   |
-| `Block\Element\StringContainerInterface`                               | `Node\StringContainerInterface`                                                          |
-| `Inline\Element\AbstractInline`                                        | `Node\Inline\AbstractInline`                                                             |
-| `Inline\Element\AbstractStringContainer`                               | `Node\Inline\AbstractStringContainer`                                                    |
-| `Inline\AdjacentTextMerger`                                            | `Node\Inline\AdjacentTextMerger`                                                         |
-| `Inline\Element\Newline`                                               | `Node\Inline\Newline`                                                                    |
-| `Inline\Element\Text`                                                  | `Node\Inline\Text`                                                                       |
-| `Block\Parser\BlockParserInterface`                                    | `Parser\Block\BlockContinueParserInterface` and `Parser\Block\BlockStartParserInterface` |
-| `Block\Parser\LazyParagraphParser`                                     | `Parser\Block\ParagraphParser`                                                           |
-| `Cursor`                                                               | `Parser\Cursor`                                                                          |
-| `DocParser`                                                            | `Parser\MarkdownParser`                                                                  |
-| `DocParserInterface`                                                   | `Parser\MarkdownParserInterface`                                                         |
-| `Inline\Parser\InlineParserInterface`                                  | `Parser\Inline\InlineParserInterface`                                                    |
-| `Inline\Parser\NewlineParser`                                          | `Parser\Inline\NewlineParser`                                                            |
-| `InlineParserContext`                                                  | `Parser\InlineParserContext`                                                             |
-| `InlineParserEngine`                                                   | `Parser\InlineParserEngine`                                                              |
-| `Block\Renderer\BlockRendererInterface`                                | `Renderer\Block\BlockRendererInterface`                                                  |
-| `Block\Renderer\DocumentRenderer`                                      | `Renderer\Block\DocumentRenderer`                                                        |
-| `Block\Renderer\ParagraphRenderer`                                     | `Renderer\Block\ParagraphRenderer`                                                       |
-| `ElementRendererInterface`                                             | `Renderer\NodeRendererInterface`                                                         |
-| `HtmlRenderer`                                                         | `Renderer\HtmlRenderer`                                                                  |
-| `Inline\Renderer\InlineRendererInterface`                              | `Renderer\Inline\InlineRendererInterface`                                                |
-| `Inline\Renderer\NewlineRenderer`                                      | `Renderer\Inline\NewlineRenderer`                                                        |
-| `Inline\Renderer\TextRenderer`                                         | `Renderer\Inline\TextRenderer`                                                           |
-| `HtmlElement`                                                          | `Util\HtmlElement`                                                                       |
+| Old Class Namespace/Name (1.x)                                                        | New Class Namespace/Name (2.0)                                                           |
+| ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `Util\ConfigurationAwareInterface`                                                    | `Configuration\ConfigurationAwareInterface`                                              |
+| `Util\ConfigurationInterface`                                                         | `Configuration\ConfigurationInterface`                                                   |
+| `Util\Configuration`                                                                  | `Configuration\Configuration`                                                            |
+| `ConfigurableEnvironmentInterface`                                                    | `Environment\ConfigurableEnvironmentInterface`                                           |
+| `EnvironmentAwareInterface`                                                           | `Environment\EnvironmentAwareInterface`                                                  |
+| `Environment`                                                                         | `Environment\Environment`                                                                |
+| `EnvironmentInterface`                                                                | `Environment\EnvironmentInterface`                                                       |
+| `Extension\CommonMarkCoreExtension`                                                   | `Extension\CommonMark\CommonMarkCoreExtension`                                           |
+| `Delimiter\Processor\EmphasisDelimiterProcessor`                                      | `Extension\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor`                    |
+| `Block\Element\BlockQuote`                                                            | `Extension\CommonMark\Node\Block\BlockQuote`                                             |
+| `Block\Element\FencedCode`                                                            | `Extension\CommonMark\Node\Block\FencedCode`                                             |
+| `Block\Element\Heading`                                                               | `Extension\CommonMark\Node\Block\Heading`                                                |
+| `Block\Element\HtmlBlock`                                                             | `Extension\CommonMark\Node\Block\HtmlBlock`                                              |
+| `Block\Element\IndentedCode`                                                          | `Extension\CommonMark\Node\Block\IndentedCode`                                           |
+| `Block\Element\ListBlock`                                                             | `Extension\CommonMark\Node\Block\ListBlock`                                              |
+| `Block\Element\ListData`                                                              | `Extension\CommonMark\Node\Block\ListData`                                               |
+| `Block\Element\ListItem`                                                              | `Extension\CommonMark\Node\Block\ListItem`                                               |
+| `Block\Element\ThematicBreak`                                                         | `Extension\CommonMark\Node\Block\ThematicBreak`                                          |
+| `Inline\Element\AbstractWebResource`                                                  | `Extension\CommonMark\Node\Inline\AbstractWebResource`                                   |
+| `Inline\Element\Code`                                                                 | `Extension\CommonMark\Node\Inline\Code`                                                  |
+| `Inline\Element\Emphasis`                                                             | `Extension\CommonMark\Node\Inline\Emphasis`                                              |
+| `Inline\Element\HtmlInline`                                                           | `Extension\CommonMark\Node\Inline\HtmlInline`                                            |
+| `Inline\Element\Image`                                                                | `Extension\CommonMark\Node\Inline\Image`                                                 |
+| `Inline\Element\Link`                                                                 | `Extension\CommonMark\Node\Inline\Link`                                                  |
+| `Inline\Element\Strong`                                                               | `Extension\CommonMark\Node\Inline\Strong`                                                |
+| `Block\Parser\BlockQuoteParser`                                                       | `Extension\CommonMark\Parser\Block\BlockQuoteParser`                                     |
+| `Block\Parser\FencedCodeParser`                                                       | `Extension\CommonMark\Parser\Block\FencedCodeParser`                                     |
+| `Block\Parser\ATXHeadingParser` and `Block\Parser\SetExtHeadingParser`                | `Extension\CommonMark\Parser\Block\HeadingParser`                                        |
+| `Block\Parser\HtmlBlockParser`                                                        | `Extension\CommonMark\Parser\Block\HtmlBlockParser`                                      |
+| `Block\Parser\IndentedCodeParser`                                                     | `Extension\CommonMark\Parser\Block\IndentedCodeParser`                                   |
+| `Block\Parser\ListParser`                                                             | `Extension\CommonMark\Parser\Block\ListParser`                                           |
+| `Block\Parser\ThematicBreakParser`                                                    | `Extension\CommonMark\Parser\Block\ThematicBreakParser`                                  |
+| `Inline\Parser\AutolinkParser`                                                        | `Extension\CommonMark\Parser\Inline\AutolinkParser`                                      |
+| `Inline\Parser\BacktickParser`                                                        | `Extension\CommonMark\Parser\Inline\BacktickParser`                                      |
+| `Inline\Parser\BangParser`                                                            | `Extension\CommonMark\Parser\Inline\BangParser`                                          |
+| `Inline\Parser\CloseBracketParser`                                                    | `Extension\CommonMark\Parser\Inline\CloseBracketParser`                                  |
+| `Inline\Parser\EntityParser`                                                          | `Extension\CommonMark\Parser\Inline\EntityParser`                                        |
+| `Inline\Parser\EscapableParser`                                                       | `Extension\CommonMark\Parser\Inline\EscapableParser`                                     |
+| `Inline\Parser\HtmlInlineParser`                                                      | `Extension\CommonMark\Parser\Inline\HtmlInlineParser`                                    |
+| `Inline\Parser\OpenBracketParser`                                                     | `Extension\CommonMark\Parser\Inline\OpenBracketParser`                                   |
+| `Block\Renderer\BlockQuoteRenderer`                                                   | `Extension\CommonMark\Renderer\Block\BlockQuoteRenderer`                                 |
+| `Block\Renderer\FencedCodeRenderer`                                                   | `Extension\CommonMark\Renderer\Block\FencedCodeRenderer`                                 |
+| `Block\Renderer\HeadingRenderer`                                                      | `Extension\CommonMark\Renderer\Block\HeadingRenderer`                                    |
+| `Block\Renderer\HtmlBlockRenderer`                                                    | `Extension\CommonMark\Renderer\Block\HtmlBlockRenderer`                                  |
+| `Block\Renderer\IndentedCodeRenderer`                                                 | `Extension\CommonMark\Renderer\Block\IndentedCodeRenderer`                               |
+| `Block\Renderer\ListBlockRenderer`                                                    | `Extension\CommonMark\Renderer\Block\ListBlockRenderer`                                  |
+| `Block\Renderer\ListItemRenderer`                                                     | `Extension\CommonMark\Renderer\Block\ListItemRenderer`                                   |
+| `Block\Renderer\ThematicBreakRenderer`                                                | `Extension\CommonMark\Renderer\Block\ThematicBreakRenderer`                              |
+| `Inline\Renderer\CodeRenderer`                                                        | `Extension\CommonMark\Renderer\Inline\CodeRenderer`                                      |
+| `Inline\Renderer\EmphasisRenderer`                                                    | `Extension\CommonMark\Renderer\Inline\EmphasisRenderer`                                  |
+| `Inline\Renderer\HtmlInlineRenderer`                                                  | `Extension\CommonMark\Renderer\Inline\HtmlInlineRenderer`                                |
+| `Inline\Renderer\ImageRenderer`                                                       | `Extension\CommonMark\Renderer\Inline\ImageRenderer`                                     |
+| `Inline\Renderer\LinkRenderer`                                                        | `Extension\CommonMark\Renderer\Inline\LinkRenderer`                                      |
+| `Inline\Renderer\StrongRenderer`                                                      | `Extension\CommonMark\Renderer\Inline\StrongRenderer`                                    |
+| `Block\Element\AbstractBlock`                                                         | `Node\Block\AbstractBlock`                                                               |
+| `Block\Element\Document`                                                              | `Node\Block\Document`                                                                    |
+| `Block\Element\InlineContainerInterface`                                              | `Node\Block\InlineContainerInterface`                                                    |
+| `Block\Element\Paragraph`                                                             | `Node\Block\Paragraph`                                                                   |
+| `Block\Element\StringContainerInterface`                                              | `Node\StringContainerInterface`                                                          |
+| `Inline\Element\AbstractInline`                                                       | `Node\Inline\AbstractInline`                                                             |
+| `Inline\Element\AbstractStringContainer`                                              | `Node\Inline\AbstractStringContainer`                                                    |
+| `Inline\AdjacentTextMerger`                                                           | `Node\Inline\AdjacentTextMerger`                                                         |
+| `Inline\Element\Newline`                                                              | `Node\Inline\Newline`                                                                    |
+| `Inline\Element\Text`                                                                 | `Node\Inline\Text`                                                                       |
+| `Block\Parser\BlockParserInterface`                                                   | `Parser\Block\BlockContinueParserInterface` and `Parser\Block\BlockStartParserInterface` |
+| `Block\Parser\LazyParagraphParser`                                                    | `Parser\Block\ParagraphParser`                                                           |
+| `Cursor`                                                                              | `Parser\Cursor`                                                                          |
+| `DocParser`                                                                           | `Parser\MarkdownParser`                                                                  |
+| `DocParserInterface`                                                                  | `Parser\MarkdownParserInterface`                                                         |
+| `Inline\Parser\InlineParserInterface`                                                 | `Parser\Inline\InlineParserInterface`                                                    |
+| `Inline\Parser\NewlineParser`                                                         | `Parser\Inline\NewlineParser`                                                            |
+| `InlineParserContext`                                                                 | `Parser\InlineParserContext`                                                             |
+| `InlineParserEngine`                                                                  | `Parser\InlineParserEngine`                                                              |
+| `Block\Renderer\DocumentRenderer`                                                     | `Renderer\Block\DocumentRenderer`                                                        |
+| `Block\Renderer\ParagraphRenderer`                                                    | `Renderer\Block\ParagraphRenderer`                                                       |
+| `HtmlRenderer`                                                                        | `Renderer\HtmlRenderer`                                                                  |
+| `ElementRendererInterface`                                                            | `Renderer\HtmlRendererInterface`                                                         |
+| `Inline\Renderer\NewlineRenderer`                                                     | `Renderer\Inline\NewlineRenderer`                                                        |
+| `Inline\Renderer\TextRenderer`                                                        | `Renderer\Inline\TextRenderer`                                                           |
+| `Block\Renderer\BlockRendererInterface` and `Inline\Renderer\InlineRendererInterface` | `Renderer\NodeRendererInterface`                                                         |
+| `HtmlElement`                                                                         | `Util\HtmlElement`                                                                       |
 
 ## New Block Parsing Approach
 
@@ -127,6 +126,41 @@ As a result, 2.x has delegated the parsing responsibilities to two different int
 As a result of making this change, the `addBlockParser()` method on `ConfigurableEnvironmentInterface` has changed to `addBlockStartParser()`.
 
 See [the block parsing documentation](/2.0/customization/block-parsing/) for more information on this new approach.
+
+## Rendering Changes
+
+This library no longer differentiates between block renderers and inline renderers - everything now uses "node renderers" which allow us to have a unified approach to rendering!  As a result, the following changes were made, which you may need to change in your custom extensions:
+
+| Old Method/Interface (1.x)                              | New Method/Interface (2.0)                        |
+| ------------------------------------------------------- | ------------------------------------------------- |
+| `BlockRendererInterface`                                | `NodeRendererInterface`                           |
+| `InlineRendererInterface`                               | `NodeRendererInterface`                           |
+| `EnvironmentInterface::getBlockRenderersForClass()`     | `EnvironmentInterface::getRenderersForClass()`    |
+| `EnvironmentInterface::getInlineRenderersForClass()`    | `EnvironmentInterface::getRenderersForClass()`    |
+| `ConfigurableEnvironmentInterface::addBlockRenderer()`  | `ConfigurableEnvironmentInterface::addRenderer()` |
+| `ConfigurableEnvironmentInterface::addInlineRenderer()` | `ConfigurableEnvironmentInterface::addRenderer()` |
+| `ElementRendererInterface::renderBlock()`               | `ChildNodeRendererInterface::renderNodes()`       |
+| `ElementRendererInterface::renderBlocks()`              | `ChildNodeRendererInterface::renderNodes()`       |
+| `ElementRendererInterface::renderInline()`              | `ChildNodeRendererInterface::renderNodes()`       |
+| `ElementRendererInterface::renderInlines()`             | `ChildNodeRendererInterface::renderNodes()`       |
+| `HtmlRenderer::renderBlock($document)`                  | `HtmlRenderer::renderDocument()`                  |
+
+Renderers now implement the unified `NodeRendererInterface` which has a similar (but slightly different) signature from
+the old `BlockRendererInterface` and `InlineRendererInterface` interfaces:
+
+~~~php
+/**
+ * @param Node                       $node
+ * @param ChildNodeRendererInterface $childRenderer
+ *
+ * @return HtmlElement|string|null
+ */
+public function render(Node $node, ChildNodeRendererInterface $childRenderer);
+~~~
+
+The element being rendered is still passed in the first argument, and the object that helps you render children is still
+passed in the second argument.  Note that blocks are no longer told whether they're being rendered in a tight list - if you
+need to know about this, traverse up the `$node` AST yourself and check any `ListBlock` ancestor for tightness.
 
 ## Removed Classes
 

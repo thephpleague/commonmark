@@ -17,12 +17,12 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
 
-final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
+final class HtmlBlockRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface
@@ -30,19 +30,18 @@ final class HtmlBlockRenderer implements BlockRendererInterface, ConfigurationAw
     protected $config;
 
     /*
-     * @param HtmlBlock             $block
-     * @param NodeRendererInterface $htmlRenderer
-     * @param bool                  $inTightList
+     * @param HtmlBlock                  $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return string
      */
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($block instanceof HtmlBlock)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
+        if (!($node instanceof HtmlBlock)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        return HtmlFilter::filter($block->getLiteral(), $this->config->get('html_input', HtmlFilter::ALLOW));
+        return HtmlFilter::filter($node->getLiteral(), $this->config->get('html_input', HtmlFilter::ALLOW));
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

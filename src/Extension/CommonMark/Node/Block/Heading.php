@@ -16,9 +16,6 @@ namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 
-/**
- * @method children() AbstractInline[]
- */
 class Heading extends AbstractBlock
 {
     /**

@@ -15,27 +15,26 @@
 namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class ThematicBreakRenderer implements BlockRendererInterface
+final class ThematicBreakRenderer implements NodeRendererInterface
 {
     /**
-     * @param ThematicBreak         $block
-     * @param NodeRendererInterface $htmlRenderer
-     * @param bool                  $inTightList
+     * @param ThematicBreak              $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($block instanceof ThematicBreak)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
+        if (!($node instanceof ThematicBreak)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $block->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
         return new HtmlElement('hr', $attrs, '', true);
     }

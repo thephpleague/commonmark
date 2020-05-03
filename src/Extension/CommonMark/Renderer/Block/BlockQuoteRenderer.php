@@ -15,37 +15,37 @@
 namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class BlockQuoteRenderer implements BlockRendererInterface
+final class BlockQuoteRenderer implements NodeRendererInterface
 {
     /**
-     * @param BlockQuote            $block
-     * @param NodeRendererInterface $htmlRenderer
-     * @param bool                  $inTightList
+     * @param BlockQuote                 $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($block instanceof BlockQuote)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
+        if (!($node instanceof BlockQuote)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $block->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
-        $filling = $htmlRenderer->renderBlocks($block->children());
+        $filling = $childRenderer->renderNodes($node->children());
+        $innerSeparator = $childRenderer->getInnerSeparator();
         if ($filling === '') {
-            return new HtmlElement('blockquote', $attrs, $htmlRenderer->getOption('inner_separator', "\n"));
+            return new HtmlElement('blockquote', $attrs, $innerSeparator);
         }
 
         return new HtmlElement(
             'blockquote',
             $attrs,
-            $htmlRenderer->getOption('inner_separator', "\n") . $filling . $htmlRenderer->getOption('inner_separator', "\n")
+            $innerSeparator . $filling . $innerSeparator
         );
     }
 }

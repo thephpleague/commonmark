@@ -14,32 +14,49 @@
 
 namespace League\CommonMark\Renderer\Block;
 
-use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class ParagraphRenderer implements BlockRendererInterface
+final class ParagraphRenderer implements NodeRendererInterface
 {
     /**
-     * @param Paragraph             $block
-     * @param NodeRendererInterface $htmlRenderer
-     * @param bool                  $inTightList
+     * @param Paragraph                  $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement|string
      */
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($block instanceof Paragraph)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
+        if (!($node instanceof Paragraph)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        if ($inTightList) {
-            return $htmlRenderer->renderInlines($block->children());
+        if ($this->inTightList($node)) {
+            return $childRenderer->renderNodes($node->children());
         }
 
-        $attrs = $block->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
-        return new HtmlElement('p', $attrs, $htmlRenderer->renderInlines($block->children()));
+        return new HtmlElement('p', $attrs, $childRenderer->renderNodes($node->children()));
+    }
+
+    private function inTightList(Paragraph $node): bool
+    {
+        $parent = $node->parent();
+        if (!$parent instanceof ListItem) {
+            return false;
+        }
+
+        $gramps = $parent->parent();
+        if (!$gramps instanceof ListBlock) {
+            return false;
+        }
+
+        return $gramps->isTight();
     }
 }

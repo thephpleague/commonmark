@@ -15,6 +15,7 @@ use League\CommonMark\Extension\CommonMark\Renderer\Inline\CodeRenderer;
 use League\CommonMark\Extension\Strikethrough\Strikethrough;
 use League\CommonMark\Extension\Strikethrough\StrikethroughRenderer;
 use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -34,13 +35,14 @@ class StrikethroughRendererTest extends TestCase
     {
         $inline = new Strikethrough();
         $inline->data['attributes'] = ['id' => 'some"&amp;id'];
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('del', $result->getTagName());
-        $this->assertStringContainsString('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::children::', $result->getContents(true));
         $this->assertEquals(['id' => 'some"&amp;id'], $result->getAllAttributes());
     }
 
@@ -49,7 +51,7 @@ class StrikethroughRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = new Text('ruh roh');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

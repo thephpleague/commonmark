@@ -18,7 +18,7 @@ use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\HtmlBlockRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -40,7 +40,7 @@ class HtmlBlockRendererTest extends TestCase
         $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
         $block->setLiteral('<button>Test</button>');
 
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -57,7 +57,7 @@ class HtmlBlockRendererTest extends TestCase
         $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
         $block->setLiteral('<button>Test</button>');
 
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -74,7 +74,7 @@ class HtmlBlockRendererTest extends TestCase
         $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
         $block->setLiteral('<button class="test">Test</button>');
 
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -91,7 +91,7 @@ class HtmlBlockRendererTest extends TestCase
         $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
         $block->setLiteral('<button>Test</button>');
 
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -104,7 +104,7 @@ class HtmlBlockRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

@@ -18,7 +18,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\ListItemRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -38,13 +38,14 @@ class ListItemRendererTest extends TestCase
     {
         $block = new ListItem(new ListData());
         $block->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('li', $result->getTagName());
-        $this->assertEquals('<li id="foo">::blocks::</li>', $result->__toString());
+        $this->assertEquals('<li id="foo">::children::</li>', $result->__toString());
     }
 
     public function testRenderWithInvalidType()
@@ -52,7 +53,7 @@ class ListItemRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

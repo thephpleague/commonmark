@@ -16,9 +16,6 @@ namespace League\CommonMark\Node\Inline;
 
 use League\CommonMark\Node\Node;
 
-/**
- * @method children() AbstractInline[]
- */
 abstract class AbstractInline extends Node
 {
     /**

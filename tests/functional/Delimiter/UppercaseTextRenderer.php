@@ -14,32 +14,28 @@
 
 namespace League\CommonMark\Tests\Functional\Delimiter;
 
-use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 
-final class UppercaseTextRenderer implements InlineRendererInterface
+final class UppercaseTextRenderer implements NodeRendererInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof UppercaseText)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof UppercaseText)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $ret = '';
-
-        foreach ($inline->children() as $child) {
+        foreach ($node->children() as $child) {
             if ($child instanceof Text) {
                 $child->setLiteral(\mb_strtoupper($child->getLiteral()));
             }
-
-            $ret .= $htmlRenderer->renderInline($child);
         }
 
-        return $ret;
+        return $childRenderer->renderNodes($node->children());
     }
 }

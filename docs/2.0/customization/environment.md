@@ -65,18 +65,6 @@ Registers the given `BlockParserInterface` with the environment with the given p
 
 See [Block Parsing](/2.0/customization/block-parsing/) for details.
 
-## addBlockRenderer()
-
-~~~php
-<?php
-
-public function addBlockRenderer(string $blockClass, BlockRendererInterface $blockRenderer, int $priority = 0);
-~~~
-
-Registers a `BlockRendererInterface` to handle a specific type of block (`$blockClass`)  with the given priority (a higher number will be executed earlier).
-
-See [Block Rendering](/2.0/customization/block-rendering/) for details.
-
 ## addInlineParser()
 
 ~~~php
@@ -89,19 +77,6 @@ Registers the given `InlineParserInterface` with the environment with the given 
 
 See [Inline Parsing](/2.0/customization/inline-parsing/) for details.
 
-## addInlineRenderer()
-
-~~~php
-<?php
-
-public function addInlineRenderer(string $inlineClass, InlineRendererInterface $renderer, int $priority = 0);
-~~~
-
-Registers an `InlineRendererInterface` to handle a specific type of inline (`$inlineClass`) with the given priority (a higher number will be executed earlier).
-A single renderer can handle multiple inline classes, but you must register it separately for each type. (The same renderer instance can be re-used if desired.)
-
-See [Inline Rendering](/2.0/customization/inline-rendering/) for details.
-
 ## addDelimiterProcessor()
 
 ~~~php
@@ -113,6 +88,18 @@ public function addDelimiterProcessor(DelimiterProcessorInterface $processor);
 Registers the given `DelimiterProcessorInterface` with the environment.
 
 See [Inline Parsing](/2.0/customization/delimiter-processing/) for details.
+
+## addRenderer()
+
+~~~php
+<?php
+
+public function addRenderer(string $blockOrInlineClass, NodeRendererInterface $blockRenderer, int $priority = 0);
+~~~
+
+Registers a `NodeRendererInterface` to handle a specific type of AST node (`$blockOrInlineClass`)  with the given priority (a higher number will be executed earlier).
+
+See [Rendering](/2.0/customization/rendering/) for details.
 
 ## addEventListener()
 

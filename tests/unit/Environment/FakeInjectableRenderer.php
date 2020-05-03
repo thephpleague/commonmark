@@ -13,15 +13,16 @@ namespace League\CommonMark\Tests\Unit\Environment;
 
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 
-final class FakeInjectableInlineRenderer implements InlineRendererInterface, ConfigurationAwareInterface, EnvironmentAwareInterface
+final class FakeInjectableRenderer implements NodeRendererInterface, ConfigurationAwareInterface, EnvironmentAwareInterface
 {
     use FakeInjectableTrait;
 
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
+        return '';
     }
 }

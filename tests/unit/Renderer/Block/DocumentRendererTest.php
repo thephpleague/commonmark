@@ -14,11 +14,11 @@
 
 namespace League\CommonMark\Tests\Unit\Renderer\Block;
 
+use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Renderer\Block\DocumentRenderer;
-use League\CommonMark\Tests\Unit\Renderer\FakeEmptyHtmlRenderer;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
 class DocumentRendererTest extends TestCase
@@ -36,23 +36,24 @@ class DocumentRendererTest extends TestCase
     public function testRenderEmptyDocument()
     {
         $block = new Document();
-        $fakeRenderer = new FakeEmptyHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertIsString($result);
-        $this->assertEmpty($result);
+        $this->assertSame('', $result);
     }
 
     public function testRenderDocument()
     {
         $block = new Document();
-        $fakeRenderer = new FakeHtmlRenderer();
+        $block->appendChild(new ThematicBreak());
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertIsString($result);
-        $this->assertStringContainsString('::blocks::', $result);
+        $this->assertStringContainsString('::children::', $result);
     }
 
     public function testRenderWithInvalidType()
@@ -60,7 +61,7 @@ class DocumentRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

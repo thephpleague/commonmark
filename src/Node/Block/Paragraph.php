@@ -14,9 +14,6 @@
 
 namespace League\CommonMark\Node\Block;
 
-/**
- * @method children() AbstractInline[]
- */
 class Paragraph extends AbstractBlock
 {
 }

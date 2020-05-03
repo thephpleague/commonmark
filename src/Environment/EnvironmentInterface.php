@@ -15,8 +15,7 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
 interface EnvironmentInterface
 {
@@ -46,18 +45,11 @@ interface EnvironmentInterface
     public function getDelimiterProcessors(): DelimiterProcessorCollection;
 
     /**
-     * @param string $blockClass
+     * @param string $nodeClass
      *
-     * @return iterable<BlockRendererInterface>
+     * @return iterable<NodeRendererInterface>
      */
-    public function getBlockRenderersForClass(string $blockClass): iterable;
-
-    /**
-     * @param string $inlineClass
-     *
-     * @return iterable<InlineRendererInterface>
-     */
-    public function getInlineRenderersForClass(string $inlineClass): iterable;
+    public function getRenderersForClass(string $nodeClass): iterable;
 
     /**
      * Regex which matches any character which doesn't indicate an inline element

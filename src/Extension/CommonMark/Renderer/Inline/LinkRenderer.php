@@ -17,13 +17,13 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\RegexHelper;
 
-final class LinkRenderer implements InlineRendererInterface, ConfigurationAwareInterface
+final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface
@@ -31,33 +31,33 @@ final class LinkRenderer implements InlineRendererInterface, ConfigurationAwareI
     protected $config;
 
     /**
-     * @param Link                  $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param Link                       $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Link)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof Link)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $inline->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
         $forbidUnsafeLinks = !$this->config->get('allow_unsafe_links');
-        if (!($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($inline->getUrl()))) {
-            $attrs['href'] = $inline->getUrl();
+        if (!($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($node->getUrl()))) {
+            $attrs['href'] = $node->getUrl();
         }
 
-        if (isset($inline->data['title'])) {
-            $attrs['title'] = $inline->data['title'];
+        if (isset($node->data['title'])) {
+            $attrs['title'] = $node->data['title'];
         }
 
         if (isset($attrs['target']) && $attrs['target'] === '_blank' && !isset($attrs['rel'])) {
             $attrs['rel'] = 'noopener noreferrer';
         }
 
-        return new HtmlElement('a', $attrs, $htmlRenderer->renderInlines($inline->children()));
+        return new HtmlElement('a', $attrs, $childRenderer->renderNodes($node->children()));
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

@@ -13,23 +13,23 @@ namespace League\CommonMark\Extension\DisallowedRawHtml;
 
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 
-final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, ConfigurationAwareInterface
+final class DisallowedRawHtmlRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    /** @var BlockRendererInterface */
-    private $htmlBlockRenderer;
+    /** @var NodeRendererInterface */
+    private $innerRenderer;
 
-    public function __construct(BlockRendererInterface $htmlBlockRenderer)
+    public function __construct(NodeRendererInterface $innerRenderer)
     {
-        $this->htmlBlockRenderer = $htmlBlockRenderer;
+        $this->innerRenderer = $innerRenderer;
     }
 
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        $rendered = $this->htmlBlockRenderer->render($block, $htmlRenderer, $inTightList);
+        $rendered = $this->innerRenderer->render($node, $childRenderer);
 
         if ($rendered === '') {
             return '';
@@ -41,8 +41,8 @@ final class DisallowedRawHtmlBlockRenderer implements BlockRendererInterface, Co
 
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
-        if ($this->htmlBlockRenderer instanceof ConfigurationAwareInterface) {
-            $this->htmlBlockRenderer->setConfiguration($configuration);
+        if ($this->innerRenderer instanceof ConfigurationAwareInterface) {
+            $this->innerRenderer->setConfiguration($configuration);
         }
     }
 }

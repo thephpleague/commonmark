@@ -19,6 +19,6 @@ final class TaskListExtension implements ExtensionInterface
     public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment->addInlineParser(new TaskListItemMarkerParser(), 35);
-        $environment->addInlineRenderer(TaskListItemMarker::class, new TaskListItemMarkerRenderer());
+        $environment->addRenderer(TaskListItemMarker::class, new TaskListItemMarkerRenderer());
     }
 }

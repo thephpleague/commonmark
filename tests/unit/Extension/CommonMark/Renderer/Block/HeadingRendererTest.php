@@ -17,7 +17,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\HeadingRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -41,15 +41,16 @@ class HeadingRendererTest extends TestCase
      */
     public function testRender($level, $expectedTag)
     {
-        $block = new Heading($level, 'test');
+        $block = new Heading($level);
         $block->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals($expectedTag, $result->getTagName());
-        $this->assertStringContainsString('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::children::', $result->getContents(true));
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
@@ -70,7 +71,7 @@ class HeadingRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

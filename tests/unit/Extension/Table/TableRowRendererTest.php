@@ -14,7 +14,7 @@ namespace League\CommonMark\Tests\Unit\Extension\Table;
 use League\CommonMark\Extension\Table\TableRow;
 use League\CommonMark\Extension\Table\TableRowRenderer;
 use League\CommonMark\Extension\Table\TableSection;
-use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
 final class TableRowRendererTest extends TestCase
@@ -24,18 +24,18 @@ final class TableRowRendererTest extends TestCase
         $tableRow = new TableRow();
         $tableRow->data['attributes'] = ['class' => 'foo'];
 
-        $elementRenderer = $this->createMock(NodeRendererInterface::class);
-        $elementRenderer->method('renderBlocks')->willReturn('contents');
+        $childRenderer = new FakeChildNodeRenderer();
+        $childRenderer->pretendChildrenExist();
 
         $renderer = new TableRowRenderer();
 
-        $this->assertSame('<tr class="foo">contents</tr>', (string) $renderer->render($tableRow, $elementRenderer));
+        $this->assertSame('<tr class="foo">::children::</tr>', (string) $renderer->render($tableRow, $childRenderer));
     }
 
     public function testRenderWithWrongType()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new TableRowRenderer())->render(new TableSection(), $this->createMock(NodeRendererInterface::class));
+        (new TableRowRenderer())->render(new TableSection(), new FakeChildNodeRenderer());
     }
 }

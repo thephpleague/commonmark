@@ -74,31 +74,29 @@ This option allows you to provide a `string` containing one or more HTML classes
 
 ## Advanced Rendering
 
-When an external link is detected, the `ExternalLinkProcessor` will set the `external` data option on the `Link` node to either `true` or `false`.  You can therefore create a [custom link renderer](/2.0/customization/inline-rendering/) which checks this value and behaves accordingly:
+When an external link is detected, the `ExternalLinkProcessor` will set the `external` data option on the `Link` node to either `true` or `false`.  You can therefore create a [custom link renderer](/2.0/customization/rendering/) which checks this value and behaves accordingly:
 
 ```php
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
 
-class MyCustomLinkRenderer implements InlineRendererInterface
+class MyCustomLinkRenderer implements NodeRendererInterface
 {
-
     /**
-     * @param Link                     $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param Node                       $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Link)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof Link)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        if ($inline->getData('external')) {
+        if ($node->getData('external')) {
             // This is an external link - render it accordingly
         } else {
             // This is an internal link

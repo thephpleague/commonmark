@@ -17,7 +17,7 @@ namespace League\CommonMark\Tests\Unit\Renderer\Inline;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Renderer\Inline\TextRenderer;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
 class TextRendererTest extends TestCase
@@ -35,7 +35,7 @@ class TextRendererTest extends TestCase
     public function testRender()
     {
         $inline = new Text('foo bar');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -48,7 +48,7 @@ class TextRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

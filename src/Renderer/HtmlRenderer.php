@@ -16,19 +16,15 @@ namespace League\CommonMark\Renderer;
 
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Node;
 
-/**
- * Renders a parsed AST to HTML
- */
-final class HtmlRenderer implements NodeRendererInterface
+final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInterface
 {
     /**
      * @var EnvironmentInterface
      */
-    protected $environment;
+    private $environment;
 
     /**
      * @param EnvironmentInterface $environment
@@ -38,90 +34,60 @@ final class HtmlRenderer implements NodeRendererInterface
         $this->environment = $environment;
     }
 
-    /**
-     * @param string $option
-     * @param mixed  $default
-     *
-     * @return mixed|null
-     */
-    public function getOption(string $option, $default = null)
+    public function renderDocument(Document $node): string
     {
-        return $this->environment->getConfig('renderer/' . $option, $default);
+        return $this->renderNode($node);
+    }
+
+    public function renderNodes(iterable $nodes): string
+    {
+        $out = '';
+        $lastItemWasBlock = false;
+
+        foreach ($nodes as $node) {
+            if ($lastItemWasBlock) {
+                $lastItemWasBlock = false;
+                $out .= $this->getBlockSeparator();
+            }
+
+            $out .= $this->renderNode($node);
+
+            if ($node instanceof AbstractBlock) {
+                $lastItemWasBlock = true;
+            }
+        }
+
+        return $out;
     }
 
     /**
-     * @param AbstractInline $inline
+     * @param Node $node
      *
      * @throws \RuntimeException
      *
      * @return string
      */
-    public function renderInline(AbstractInline $inline): string
+    private function renderNode(Node $node): string
     {
-        $renderers = $this->environment->getInlineRenderersForClass(\get_class($inline));
+        $renderers = $this->environment->getRenderersForClass(\get_class($node));
 
-        /** @var InlineRendererInterface $renderer */
+        /** @var NodeRendererInterface $renderer */
         foreach ($renderers as $renderer) {
-            if (($result = $renderer->render($inline, $this)) !== null) {
+            if (($result = $renderer->render($node, $this)) !== null) {
                 return $result;
             }
         }
 
-        throw new \RuntimeException('Unable to find corresponding renderer for inline type ' . \get_class($inline));
+        throw new \RuntimeException('Unable to find corresponding renderer for node type ' . \get_class($node));
     }
 
-    /**
-     * @param AbstractInline[] $inlines
-     *
-     * @return string
-     */
-    public function renderInlines(iterable $inlines): string
+    public function getBlockSeparator(): string
     {
-        $result = [];
-        foreach ($inlines as $inline) {
-            $result[] = $this->renderInline($inline);
-        }
-
-        return \implode('', $result);
+        return $this->environment->getConfig('renderer/block_separator', "\n");
     }
 
-    /**
-     * @param AbstractBlock $block
-     * @param bool          $inTightList
-     *
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    public function renderBlock(AbstractBlock $block, bool $inTightList = false): string
+    public function getInnerSeparator(): string
     {
-        $renderers = $this->environment->getBlockRenderersForClass(\get_class($block));
-
-        /** @var BlockRendererInterface $renderer */
-        foreach ($renderers as $renderer) {
-            if (($result = $renderer->render($block, $this, $inTightList)) !== null) {
-                return $result;
-            }
-        }
-
-        throw new \RuntimeException('Unable to find corresponding renderer for block type ' . \get_class($block));
-    }
-
-    /**
-     * @param AbstractBlock[] $blocks
-     * @param bool            $inTightList
-     *
-     * @return string
-     */
-    public function renderBlocks(iterable $blocks, bool $inTightList = false): string
-    {
-        $result = [];
-        foreach ($blocks as $block) {
-            $result[] = $this->renderBlock($block, $inTightList);
-        }
-
-        $separator = $this->getOption('block_separator', "\n");
-
-        return \implode($separator, $result);
+        return $this->environment->getConfig('renderer/inner_separator', "\n");
     }
 }

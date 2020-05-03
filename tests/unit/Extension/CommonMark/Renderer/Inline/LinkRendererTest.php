@@ -18,7 +18,7 @@ use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\LinkRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -39,7 +39,7 @@ class LinkRendererTest extends TestCase
     {
         $inline = new Link('http://example.com/foo.html', '::label::', '::title::');
         $inline->data['attributes'] = ['id' => '::id::', 'title' => '::title2::', 'href' => '::href2::'];
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -47,14 +47,14 @@ class LinkRendererTest extends TestCase
         $this->assertEquals('a', $result->getTagName());
         $this->assertStringContainsString('http://example.com/foo.html', $result->getAttribute('href'));
         $this->assertStringContainsString('::title::', $result->getAttribute('title'));
-        $this->assertStringContainsString('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::children::', $result->getContents(true));
         $this->assertStringContainsString('::id::', $result->getAttribute('id'));
     }
 
     public function testRenderWithoutTitle()
     {
         $inline = new Link('http://example.com/foo.html', '::label::');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -62,7 +62,7 @@ class LinkRendererTest extends TestCase
         $this->assertEquals('a', $result->getTagName());
         $this->assertStringContainsString('http://example.com/foo.html', $result->getAttribute('href'));
         $this->assertNull($result->getAttribute('title'));
-        $this->assertStringContainsString('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::children::', $result->getContents(true));
     }
 
     public function testRenderAllowUnsafeLink()
@@ -72,7 +72,7 @@ class LinkRendererTest extends TestCase
         ]));
 
         $inline = new Link('javascript:void(0)');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -87,7 +87,7 @@ class LinkRendererTest extends TestCase
         ]));
 
         $inline = new Link('javascript:void(0)');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -100,7 +100,7 @@ class LinkRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }
@@ -109,7 +109,7 @@ class LinkRendererTest extends TestCase
     {
         $inline = new Link('http://example.com/foo.html', '::label::', '::title::');
         $inline->data['attributes'] = ['target' => '_blank'];
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 

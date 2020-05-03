@@ -20,8 +20,7 @@ use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Tests\Unit\Event\FakeEvent;
 use League\CommonMark\Tests\Unit\Event\FakeEventListener;
 use League\CommonMark\Tests\Unit\Event\FakeEventListenerInvokable;
@@ -159,27 +158,27 @@ class EnvironmentTest extends TestCase
         $environment->addBlockStartParser($parser);
     }
 
-    public function testAddBlockRenderer()
+    public function testAddRenderer()
     {
         $environment = new Environment();
 
-        $renderer = $this->createMock(BlockRendererInterface::class);
-        $environment->addBlockRenderer('MyClass', $renderer);
+        $renderer = $this->createMock(NodeRendererInterface::class);
+        $environment->addRenderer('MyClass', $renderer);
 
-        $this->assertContains($renderer, $environment->getBlockRenderersForClass('MyClass'));
+        $this->assertContains($renderer, $environment->getRenderersForClass('MyClass'));
     }
 
-    public function testAddBlockRendererFailsAfterInitialization()
+    public function testAddRendererFailsAfterInitialization()
     {
         $this->expectException(\RuntimeException::class);
 
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getBlockRenderersForClass('MyClass');
+        $environment->getRenderersForClass('MyClass');
 
-        $renderer = $this->createMock(BlockRendererInterface::class);
-        $environment->addBlockRenderer('MyClass', $renderer);
+        $renderer = $this->createMock(NodeRendererInterface::class);
+        $environment->addRenderer('MyClass', $renderer);
     }
 
     public function testInlineParserCanMatchRegexDelimiter()
@@ -255,69 +254,25 @@ class EnvironmentTest extends TestCase
         $environment->addDelimiterProcessor($processor);
     }
 
-    public function testAddInlineRenderer()
+    public function testGetRendererForUnknownClass()
     {
         $environment = new Environment();
+        $mockRenderer = $this->createMock(NodeRendererInterface::class);
+        $environment->addRenderer(FakeBlock3::class, $mockRenderer);
 
-        $renderer = $this->createMock(InlineRendererInterface::class);
-        $environment->addInlineRenderer('MyClass', $renderer);
-
-        $this->assertContains($renderer, $environment->getInlineRenderersForClass('MyClass'));
+        $this->assertEmpty($environment->getRenderersForClass(FakeBlock1::class));
     }
 
-    public function testAddInlineRendererFailsAfterInitialization()
-    {
-        $this->expectException(\RuntimeException::class);
-
-        $environment = new Environment();
-
-        // This triggers the initialization
-        $environment->getInlineRenderersForClass('MyClass');
-
-        $renderer = $this->createMock(InlineRendererInterface::class);
-        $environment->addInlineRenderer('MyClass', $renderer);
-    }
-
-    public function testGetBlockRendererForUnknownClass()
+    public function testGetRendererForSubClass()
     {
         $environment = new Environment();
-        $mockRenderer = $this->createMock(BlockRendererInterface::class);
-        $environment->addBlockRenderer(FakeBlock3::class, $mockRenderer);
-
-        $this->assertEmpty($environment->getBlockRenderersForClass(FakeBlock1::class));
-    }
-
-    public function testGetBlockRendererForSubClass()
-    {
-        $environment = new Environment();
-        $mockRenderer = $this->createMock(BlockRendererInterface::class);
-        $environment->addBlockRenderer(FakeBlock1::class, $mockRenderer);
+        $mockRenderer = $this->createMock(NodeRendererInterface::class);
+        $environment->addRenderer(FakeBlock1::class, $mockRenderer);
 
         // Ensure the parent renderer is returned
-        $this->assertFirstResult($mockRenderer, $environment->getBlockRenderersForClass(FakeBlock3::class));
+        $this->assertFirstResult($mockRenderer, $environment->getRenderersForClass(FakeBlock3::class));
         // Check again to ensure any cached result is also the same
-        $this->assertFirstResult($mockRenderer, $environment->getBlockRenderersForClass(FakeBlock3::class));
-    }
-
-    public function testGetInlineRendererForNonUnknownClass()
-    {
-        $environment = new Environment();
-        $mockRenderer = $this->createMock(InlineRendererInterface::class);
-        $environment->addInlineRenderer(FakeInline3::class, $mockRenderer);
-
-        $this->assertEmpty($environment->getInlineRenderersForClass(FakeInline1::class));
-    }
-
-    public function testGetInlineRendererForSubClass()
-    {
-        $environment = new Environment();
-        $mockRenderer = $this->createMock(InlineRendererInterface::class);
-        $environment->addInlineRenderer(FakeInline1::class, $mockRenderer);
-
-        // Ensure the parent renderer is returned
-        $this->assertFirstResult($mockRenderer, $environment->getInlineRenderersForClass(FakeInline3::class));
-        // Check again to ensure any cached result is also the same
-        $this->assertFirstResult($mockRenderer, $environment->getInlineRenderersForClass(FakeInline3::class));
+        $this->assertFirstResult($mockRenderer, $environment->getRenderersForClass(FakeBlock3::class));
     }
 
     public function testAddExtensionAndGetter()
@@ -337,7 +292,7 @@ class EnvironmentTest extends TestCase
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getInlineRenderersForClass('MyClass');
+        $environment->getRenderersForClass('MyClass');
 
         $extension = $this->createMock(ExtensionInterface::class);
         $environment->addExtension($extension);
@@ -371,12 +326,12 @@ class EnvironmentTest extends TestCase
         $this->assertTrue($parser->bothWereInjected());
     }
 
-    public function testInjectableBlockRenderersGetInjected()
+    public function testInjectableRenderersGetInjected()
     {
         $environment = new Environment();
 
-        $renderer = new FakeInjectableBlockRenderer();
-        $environment->addBlockRenderer('', $renderer);
+        $renderer = new FakeInjectableRenderer();
+        $environment->addRenderer('', $renderer);
 
         // Trigger initialization
         $environment->getBlockStartParsers();
@@ -395,19 +350,6 @@ class EnvironmentTest extends TestCase
         $environment->getBlockStartParsers();
 
         $this->assertTrue($parser->bothWereInjected());
-    }
-
-    public function testInjectableInlineRenderersGetInjected()
-    {
-        $environment = new Environment();
-
-        $renderer = new FakeInjectableInlineRenderer();
-        $environment->addInlineRenderer('', $renderer);
-
-        // Trigger initialization
-        $environment->getBlockStartParsers();
-
-        $this->assertTrue($renderer->bothWereInjected());
     }
 
     public function testInjectableDelimiterProcessorsGetInjected()
@@ -484,38 +426,19 @@ class EnvironmentTest extends TestCase
         $this->assertSame($parser3, $parsers[2]);
     }
 
-    public function testBlockRendererPrioritization()
+    public function testRendererPrioritization()
     {
         $environment = new Environment();
 
-        $renderer1 = $this->createMock(BlockRendererInterface::class);
-        $renderer2 = $this->createMock(BlockRendererInterface::class);
-        $renderer3 = $this->createMock(BlockRendererInterface::class);
+        $renderer1 = $this->createMock(NodeRendererInterface::class);
+        $renderer2 = $this->createMock(NodeRendererInterface::class);
+        $renderer3 = $this->createMock(NodeRendererInterface::class);
 
-        $environment->addBlockRenderer('foo', $renderer1);
-        $environment->addBlockRenderer('foo', $renderer2, 50);
-        $environment->addBlockRenderer('foo', $renderer3);
+        $environment->addRenderer('foo', $renderer1);
+        $environment->addRenderer('foo', $renderer2, 50);
+        $environment->addRenderer('foo', $renderer3);
 
-        $parsers = iterator_to_array($environment->getBlockRenderersForClass('foo'));
-
-        $this->assertSame($renderer2, $parsers[0]);
-        $this->assertSame($renderer1, $parsers[1]);
-        $this->assertSame($renderer3, $parsers[2]);
-    }
-
-    public function testInlineRendererPrioritization()
-    {
-        $environment = new Environment();
-
-        $renderer1 = $this->createMock(InlineRendererInterface::class);
-        $renderer2 = $this->createMock(InlineRendererInterface::class);
-        $renderer3 = $this->createMock(InlineRendererInterface::class);
-
-        $environment->addInlineRenderer('foo', $renderer1);
-        $environment->addInlineRenderer('foo', $renderer2, 50);
-        $environment->addInlineRenderer('foo', $renderer3);
-
-        $parsers = iterator_to_array($environment->getInlineRenderersForClass('foo'));
+        $parsers = iterator_to_array($environment->getRenderersForClass('foo'));
 
         $this->assertSame($renderer2, $parsers[0]);
         $this->assertSame($renderer1, $parsers[1]);

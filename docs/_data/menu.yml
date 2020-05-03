@@ -32,8 +32,7 @@ version:
             'Inline Parsing': '/2.0/customization/inline-parsing/'
             'Delimiter Processing': '/2.0/customization/delimiter-processing/'
             'Abstract Syntax Tree': '/2.0/customization/abstract-syntax-tree/'
-            'Block Rendering': '/2.0/customization/block-rendering/'
-            'Inline Rendering': '/2.0/customization/inline-rendering/'
+            'Rendering': '/2.0/customization/rendering/'
     '1.4':
         Getting Started:
             'Overview': '/1.4/'

@@ -17,7 +17,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Inline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\StrongRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -37,13 +37,14 @@ class StrongRendererTest extends TestCase
     {
         $inline = new Strong();
         $inline->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('strong', $result->getTagName());
-        $this->assertStringContainsString('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::children::', $result->getContents(true));
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
@@ -52,7 +53,7 @@ class StrongRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

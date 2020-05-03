@@ -15,13 +15,16 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `BlockContinueParserInterface`
    - `BlockStart`
    - `BlockStartParserInterface`
+   - `ChildNodeRendererInterface`
    - `CursorState`
    - `DocumentBlockParser`
+   - `HtmlRendererInterface`
    - `InlineParserEngineInterface`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
  - Added several new methods:
    - `FencedCode::setInfo()`
+   - `HtmlRenderer::renderDocument()`
    - `LinkParserHelper::parsePartialLinkLabel()`
    - `LinkParserHelper::parsePartialLinkTitle()`
    - `RegexHelper::isLetter()`
@@ -39,6 +42,13 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `ConfigurableEnvironmentInterface::addBlockParser()` is now `ConfigurableEnvironmentInterface::addBlockParserFactory()`
    - `ReferenceParser` was re-implemented and works completely different than before
    - The paragraph parser no longer needs to be added manually to the environment
+ - Changed block and inline rendering to use common methods and interfaces
+   - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
+   - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` are now just `addRenderer()`
+   - `EnvironmentInterface::getBlockRenderersForClass()` and `getInlineRenderersForClass()` are now just `getRenderersForClass()`
+ - Combined separate classes/interfaces into one:
+   - `DisallowedRawHtmlRenderer` replaces `DisallowedRawHtmlBlockRenderer` and `DisallowedRawHtmlInlineRenderer`
+   - `NodeRendererInterface` replaces `BlockRendererInterface` and `InlineRendererInterface`
  - Renamed the following methods:
    - `Environment` and `ConfigurableEnvironmentInterface`:
      - `addBlockParser()` is now `addBlockStartParser()`
@@ -88,10 +98,12 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - Removed the `ListBlock::TYPE_UNORDERED` constant
  - Removed now-unused classes:
    - `AbstractStringContainerBlock`
+   - `BlockRendererInterface`
    - `Context`
    - `ContextInterface`
    - `Converter`
    - `ConverterInterface`
+   - `InlineRendererInterface`
    - `UnmatchedBlockCloser`
  - Removed the following methods and members:
    - `AbstractBlock::$open`
@@ -107,6 +119,10 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `AbstractBlock::finalize()`
    - `ConfigurableEnvironmentInterface::addBlockParser()`
    - `Delimiter::setCanClose()`
+   - `HtmlRenderer::renderBlock()`
+   - `HtmlRenderer::renderBlocks()`
+   - `HtmlRenderer::renderInline()`
+   - `HtmlRenderer::renderInlines()`
    - `Node::isContainer()`
  - Removed the second `$contents` argument from the `Heading` constructor
 

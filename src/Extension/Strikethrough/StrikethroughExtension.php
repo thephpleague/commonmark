@@ -19,6 +19,6 @@ final class StrikethroughExtension implements ExtensionInterface
     public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment->addDelimiterProcessor(new StrikethroughDelimiterProcessor());
-        $environment->addInlineRenderer(Strikethrough::class, new StrikethroughRenderer());
+        $environment->addRenderer(Strikethrough::class, new StrikethroughRenderer());
     }
 }

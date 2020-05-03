@@ -15,7 +15,7 @@ use League\CommonMark\Extension\Table\TableCell;
 use League\CommonMark\Extension\Table\TableRow;
 use League\CommonMark\Extension\Table\TableSection;
 use League\CommonMark\Extension\Table\TableSectionRenderer;
-use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
 final class TableSectionRendererTest extends TestCase
@@ -26,29 +26,28 @@ final class TableSectionRendererTest extends TestCase
         $tableSection->data['attributes'] = ['class' => 'foo'];
         $tableSection->appendChild(new TableRow());
 
-        $elementRenderer = $this->createMock(NodeRendererInterface::class);
-        $elementRenderer->method('renderBlocks')->willReturn('contents');
+        $childRenderer = new FakeChildNodeRenderer();
+        $childRenderer->pretendChildrenExist();
 
         $renderer = new TableSectionRenderer();
 
-        $this->assertSame('<tbody class="foo">contents</tbody>', (string) $renderer->render($tableSection, $elementRenderer));
+        $this->assertSame('<tbody class="foo">::children::</tbody>', (string) $renderer->render($tableSection, $childRenderer));
     }
 
     public function testRenderWithEmptyTableSection()
     {
         $tableSection = new TableSection(TableSection::TYPE_BODY);
-        $elementRenderer = $this->createMock(NodeRendererInterface::class);
-        $elementRenderer->expects($this->never())->method($this->anything());
+        $childRenderer = new FakeChildNodeRenderer();
 
         $renderer = new TableSectionRenderer();
 
-        $this->assertSame('', (string) $renderer->render($tableSection, $elementRenderer));
+        $this->assertSame('', (string) $renderer->render($tableSection, $childRenderer));
     }
 
     public function testRenderWithWrongType()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new TableSectionRenderer())->render(new TableCell(), $this->createMock(NodeRendererInterface::class));
+        (new TableSectionRenderer())->render(new TableCell(), new FakeChildNodeRenderer());
     }
 }

@@ -43,7 +43,7 @@ abstract class AbstractBlock extends Node
     protected function setParent(Node $node = null): void
     {
         if ($node && !$node instanceof self) {
-            throw new \InvalidArgumentException('Parent of block must also be block (can not be inline)');
+            throw new \InvalidArgumentException('Parent of block must also be block (cannot be inline)');
         }
 
         parent::setParent($node);

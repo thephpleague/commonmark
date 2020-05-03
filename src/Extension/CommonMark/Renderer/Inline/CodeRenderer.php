@@ -15,28 +15,28 @@
 namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\Xml;
 
-final class CodeRenderer implements InlineRendererInterface
+final class CodeRenderer implements NodeRendererInterface
 {
     /**
-     * @param Code                  $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param Code                       $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Code)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof Code)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $inline->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
-        return new HtmlElement('code', $attrs, Xml::escape($inline->getLiteral()));
+        return new HtmlElement('code', $attrs, Xml::escape($node->getLiteral()));
     }
 }

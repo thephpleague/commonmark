@@ -15,8 +15,7 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 
 /**
  * Interface for an Environment which can be configured with config settings, parsers, processors, and renderers
@@ -76,24 +75,15 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
     public function addDelimiterProcessor(DelimiterProcessorInterface $processor): ConfigurableEnvironmentInterface;
 
     /**
-     * @param string                 $blockClass    The fully-qualified block element class name the renderer below should handle
-     * @param BlockRendererInterface $blockRenderer The renderer responsible for rendering the type of element given above
-     * @param int                    $priority      Priority (a higher number will be executed earlier)
+     * Registers the given node renderer with the Environment
+     *
+     * @param string                $nodeClass The fully-qualified node element class name the renderer below should handle
+     * @param NodeRendererInterface $renderer  The renderer responsible for rendering the type of element given above
+     * @param int                   $priority  Priority (a higher number will be executed earlier)
      *
      * @return self
      */
-    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, int $priority = 0): ConfigurableEnvironmentInterface;
-
-    /**
-     * Registers the given inline renderer with the Environment
-     *
-     * @param string                  $inlineClass The fully-qualified inline element class name the renderer below should handle
-     * @param InlineRendererInterface $renderer    The renderer responsible for rendering the type of element given above
-     * @param int                     $priority    Priority (a higher number will be executed earlier)
-     *
-     * @return self
-     */
-    public function addInlineRenderer(string $inlineClass, InlineRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface;
+    public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface;
 
     /**
      * Registers the given event listener

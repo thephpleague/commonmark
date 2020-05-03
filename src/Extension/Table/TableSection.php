@@ -17,9 +17,6 @@ namespace League\CommonMark\Extension\Table;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 
-/**
- * @method children() AbstractBlock[]
- */
 final class TableSection extends AbstractBlock
 {
     const TYPE_HEAD = 'thead';

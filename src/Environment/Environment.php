@@ -24,8 +24,7 @@ use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
 use League\CommonMark\Util\PrioritizedList;
 
@@ -67,14 +66,9 @@ final class Environment implements ConfigurableEnvironmentInterface
     private $delimiterProcessors;
 
     /**
-     * @var array<string, PrioritizedList<BlockRendererInterface>>
+     * @var array<string, PrioritizedList<NodeRendererInterface>>
      */
-    private $blockRenderersByClass = [];
-
-    /**
-     * @var array<string, PrioritizedList<InlineRendererInterface>>
-     */
-    private $inlineRenderersByClass = [];
+    private $renderersByClass = [];
 
     /**
      * @var array<string, PrioritizedList<callable>>
@@ -159,29 +153,15 @@ final class Environment implements ConfigurableEnvironmentInterface
         return $this;
     }
 
-    public function addBlockRenderer($blockClass, BlockRendererInterface $blockRenderer, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface
     {
-        $this->assertUninitialized('Failed to add block renderer.');
+        $this->assertUninitialized('Failed to add renderer.');
 
-        if (!isset($this->blockRenderersByClass[$blockClass])) {
-            $this->blockRenderersByClass[$blockClass] = new PrioritizedList();
+        if (!isset($this->renderersByClass[$nodeClass])) {
+            $this->renderersByClass[$nodeClass] = new PrioritizedList();
         }
 
-        $this->blockRenderersByClass[$blockClass]->add($blockRenderer, $priority);
-        $this->injectEnvironmentAndConfigurationIfNeeded($blockRenderer);
-
-        return $this;
-    }
-
-    public function addInlineRenderer(string $inlineClass, InlineRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface
-    {
-        $this->assertUninitialized('Failed to add inline renderer.');
-
-        if (!isset($this->inlineRenderersByClass[$inlineClass])) {
-            $this->inlineRenderersByClass[$inlineClass] = new PrioritizedList();
-        }
-
-        $this->inlineRenderersByClass[$inlineClass]->add($renderer, $priority);
+        $this->renderersByClass[$nodeClass]->add($renderer, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($renderer);
 
         return $this;
@@ -218,22 +198,27 @@ final class Environment implements ConfigurableEnvironmentInterface
         return $this->delimiterProcessors;
     }
 
-    public function getBlockRenderersForClass(string $blockClass): iterable
+    public function getRenderersForClass(string $nodeClass): iterable
     {
         if (!$this->extensionsInitialized) {
             $this->initializeExtensions();
         }
 
-        return $this->getRenderersByClass($this->blockRenderersByClass, $blockClass, BlockRendererInterface::class);
-    }
-
-    public function getInlineRenderersForClass(string $inlineClass): iterable
-    {
-        if (!$this->extensionsInitialized) {
-            $this->initializeExtensions();
+        // If renderers are defined for this specific class, return them immediately
+        if (isset($this->renderersByClass[$nodeClass])) {
+            return $this->renderersByClass[$nodeClass];
         }
 
-        return $this->getRenderersByClass($this->inlineRenderersByClass, $inlineClass, InlineRendererInterface::class);
+        while ($parent = \get_parent_class($parent ?? $nodeClass)) {
+            if (!isset($this->renderersByClass[$parent])) {
+                continue;
+            }
+
+            // "Cache" this result to avoid future loops
+            return $this->renderersByClass[$nodeClass] = $this->renderersByClass[$parent];
+        }
+
+        return [];
     }
 
     /**
@@ -384,39 +369,5 @@ final class Environment implements ConfigurableEnvironmentInterface
         if ($this->extensionsInitialized) {
             throw new \RuntimeException($message . ' Extensions have already been initialized.');
         }
-    }
-
-    /**
-     * @param array<string, PrioritizedList> $list
-     * @param string                         $class
-     * @param string                         $type
-     *
-     * @return iterable
-     *
-     * @phpstan-template T
-     *
-     * @phpstan-param array<string, PrioritizedList<T>> $list
-     * @phpstan-param string                            $class
-     * @phpstan-param class-string<T>                   $type
-     *
-     * @phpstan-return iterable<T>
-     */
-    private function getRenderersByClass(array &$list, string $class, string $type): iterable
-    {
-        // If renderers are defined for this specific class, return them immediately
-        if (isset($list[$class])) {
-            return $list[$class];
-        }
-
-        while ($parent = \get_parent_class($parent ?? $class)) {
-            if (!isset($list[$parent])) {
-                continue;
-            }
-
-            // "Cache" this result to avoid future loops
-            return $list[$class] = $list[$parent];
-        }
-
-        return [];
     }
 }

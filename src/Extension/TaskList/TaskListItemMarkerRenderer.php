@@ -11,28 +11,28 @@
 
 namespace League\CommonMark\Extension\TaskList;
 
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class TaskListItemMarkerRenderer implements InlineRendererInterface
+final class TaskListItemMarkerRenderer implements NodeRendererInterface
 {
     /**
-     * @param TaskListItemMarker    $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param TaskListItemMarker         $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
-     * @return HtmlElement|string|null
+     * @return HtmlElement
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof TaskListItemMarker)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof TaskListItemMarker)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
         $checkbox = new HtmlElement('input', [], '', true);
 
-        if ($inline->isChecked()) {
+        if ($node->isChecked()) {
             $checkbox->setAttribute('checked', '');
         }
 

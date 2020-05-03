@@ -15,27 +15,27 @@
 namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class StrongRenderer implements InlineRendererInterface
+final class StrongRenderer implements NodeRendererInterface
 {
     /**
-     * @param Strong                $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param Strong                     $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Strong)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof Strong)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $inline->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
-        return new HtmlElement('strong', $attrs, $htmlRenderer->renderInlines($inline->children()));
+        return new HtmlElement('strong', $attrs, $childRenderer->renderNodes($node->children()));
     }
 }

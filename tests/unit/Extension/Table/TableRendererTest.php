@@ -14,7 +14,7 @@ namespace League\CommonMark\Tests\Unit\Extension\Table;
 use League\CommonMark\Extension\Table\Table;
 use League\CommonMark\Extension\Table\TableRenderer;
 use League\CommonMark\Extension\Table\TableSection;
-use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
 final class TableRendererTest extends TestCase
@@ -24,18 +24,18 @@ final class TableRendererTest extends TestCase
         $tableRow = new Table();
         $tableRow->data['attributes'] = ['class' => 'striped'];
 
-        $elementRenderer = $this->createMock(NodeRendererInterface::class);
-        $elementRenderer->method('renderBlocks')->willReturn('contents');
+        $childRenderer = new FakeChildNodeRenderer();
+        $childRenderer->pretendChildrenExist();
 
         $renderer = new TableRenderer();
 
-        $this->assertSame('<table class="striped">contents</table>', (string) $renderer->render($tableRow, $elementRenderer));
+        $this->assertSame('<table class="striped">::children::</table>', (string) $renderer->render($tableRow, $childRenderer));
     }
 
     public function testRenderWithWrongType()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new TableRenderer())->render(new TableSection(), $this->createMock(NodeRendererInterface::class));
+        (new TableRenderer())->render(new TableSection(), new FakeChildNodeRenderer());
     }
 }

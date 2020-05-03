@@ -14,25 +14,26 @@
 
 namespace League\CommonMark\Renderer\Inline;
 
-use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\Xml;
 
-final class TextRenderer implements InlineRendererInterface
+final class TextRenderer implements NodeRendererInterface
 {
     /**
-     * @param Text                  $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param Text                       $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return string
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Text)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof Text)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        return Xml::escape($inline->getLiteral());
+        return Xml::escape($node->getLiteral());
     }
 }

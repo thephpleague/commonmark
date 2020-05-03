@@ -14,29 +14,40 @@
 
 namespace League\CommonMark\Renderer\Inline;
 
-use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Node\Inline\Newline;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class NewlineRenderer implements InlineRendererInterface
+final class NewlineRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
+    /** @var ConfigurationInterface */
+    protected $config;
+
+    public function setConfiguration(ConfigurationInterface $configuration): void
+    {
+        $this->config = $configuration;
+    }
+
     /**
-     * @param Newline               $inline
-     * @param NodeRendererInterface $htmlRenderer
+     * @param Newline                    $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return HtmlElement|string
      */
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Newline)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        if (!($node instanceof Newline)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        if ($inline->getType() === Newline::HARDBREAK) {
+        if ($node->getType() === Newline::HARDBREAK) {
             return new HtmlElement('br', [], '', true) . "\n";
         }
 
-        return $htmlRenderer->getOption('soft_break', "\n");
+        return $this->config->get('renderer/soft_break', "\n");
     }
 }

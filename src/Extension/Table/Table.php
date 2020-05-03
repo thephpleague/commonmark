@@ -17,9 +17,6 @@ namespace League\CommonMark\Extension\Table;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 
-/**
- * @method children() AbstractBlock[]
- */
 final class Table extends AbstractBlock
 {
 }

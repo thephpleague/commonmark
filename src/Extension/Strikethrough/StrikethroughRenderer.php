@@ -11,19 +11,25 @@
 
 namespace League\CommonMark\Extension\Strikethrough;
 
-use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class StrikethroughRenderer implements InlineRendererInterface
+final class StrikethroughRenderer implements NodeRendererInterface
 {
-    public function render(AbstractInline $inline, NodeRendererInterface $htmlRenderer)
+    /**
+     * @param Strikethrough              $node
+     * @param ChildNodeRendererInterface $childRenderer
+     *
+     * @return HtmlElement
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($inline instanceof Strikethrough)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        if (!($node instanceof Strikethrough)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        return new HtmlElement('del', $inline->getData('attributes', []), $htmlRenderer->renderInlines($inline->children()));
+        return new HtmlElement('del', $node->getData('attributes', []), $childRenderer->renderNodes($node->children()));
     }
 }

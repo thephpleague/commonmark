@@ -39,7 +39,7 @@ $htmlRenderer = new HtmlRenderer($environment);
 $markdown = '# Hello World!';
 
 $document = $parser->parse($markdown);
-echo $htmlRenderer->renderBlock($document);
+echo $htmlRenderer->renderDocument($document);
 
 // <h1>Hello World!</h1>
 ~~~
@@ -68,13 +68,7 @@ Once the [Abstract Syntax Tree](/2.0/customization/abstract-syntax-tree/) is par
 
 ## Customize HTML Output with Custom Renderers
 
-Renders convert the parsed blocks/inlines from the AST representation into HTML.  There are two types of renderers:
-
-- [Block renderers](/2.0/customization/block-rendering/)
-- [Inline renderers](/2.0/customization/inline-rendering/)
-
-When registering these with the environment, you must tell it which block/inline classes it should handle.  This allows you
-to essentially "swap out" built-in renderers with your own.
+[Renderers](/2.0/customization/rendering/) convert the parsed blocks/inlines from the AST representation into HTML. When registering these with the environment, you must tell it which block/inline classes it should handle.  This allows you to essentially "swap out" built-in renderers with your own.
 
 ## Examples
 

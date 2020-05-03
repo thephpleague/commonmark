@@ -18,7 +18,7 @@ use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\HtmlInlineRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -38,7 +38,7 @@ class HtmlInlineRendererTest extends TestCase
     public function testRender()
     {
         $inline = new HtmlInline('<h1>Test</h1>');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -53,7 +53,7 @@ class HtmlInlineRendererTest extends TestCase
         ]));
 
         $inline = new HtmlInline('<h1>Test</h1>');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -68,7 +68,7 @@ class HtmlInlineRendererTest extends TestCase
         ]));
 
         $inline = new HtmlInline('<h1 class="test">Test</h1>');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -83,7 +83,7 @@ class HtmlInlineRendererTest extends TestCase
         ]));
 
         $inline = new HtmlInline('<h1>Test</h1>');
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -96,7 +96,7 @@ class HtmlInlineRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractInline::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

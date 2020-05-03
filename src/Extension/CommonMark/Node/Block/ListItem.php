@@ -16,10 +16,6 @@ namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 
-/**
- * @method children() AbstractBlock[]
- * @method parent() ListBlock
- */
 class ListItem extends AbstractBlock
 {
     /**

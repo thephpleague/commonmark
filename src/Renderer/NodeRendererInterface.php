@@ -5,60 +5,22 @@
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 namespace League\CommonMark\Renderer;
 
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Util\HtmlElement;
 
-/**
- * Renders a parsed AST to a string representation
- */
 interface NodeRendererInterface
 {
     /**
-     * @param string $option
-     * @param mixed  $default
+     * @param Node                       $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
-     * @return mixed|null
+     * @return HtmlElement|string|null
      */
-    public function getOption(string $option, $default = null);
-
-    /**
-     * @param AbstractInline $inline
-     *
-     * @return string
-     */
-    public function renderInline(AbstractInline $inline): string;
-
-    /**
-     * @param AbstractInline[] $inlines
-     *
-     * @return string
-     */
-    public function renderInlines(iterable $inlines): string;
-
-    /**
-     * @param AbstractBlock $block
-     * @param bool          $inTightList
-     *
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    public function renderBlock(AbstractBlock $block, bool $inTightList = false): string;
-
-    /**
-     * @param AbstractBlock[] $blocks
-     * @param bool            $inTightList
-     *
-     * @return string
-     */
-    public function renderBlocks(iterable $blocks, bool $inTightList = false): string;
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer);
 }

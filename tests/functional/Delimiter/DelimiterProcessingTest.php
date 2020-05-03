@@ -39,7 +39,7 @@ final class DelimiterProcessingTest extends TestCase
     {
         $e = Environment::createCommonMarkEnvironment();
         $e->addDelimiterProcessor(new UppercaseDelimiterProcessor());
-        $e->addInlineRenderer(UppercaseText::class, new UppercaseTextRenderer());
+        $e->addRenderer(UppercaseText::class, new UppercaseTextRenderer());
 
         $converter = new CommonMarkConverter([], $e);
 

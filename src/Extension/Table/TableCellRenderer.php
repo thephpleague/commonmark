@@ -15,25 +15,31 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class TableCellRenderer implements BlockRendererInterface
+final class TableCellRenderer implements NodeRendererInterface
 {
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    /**
+     * @param TableCell                  $node
+     * @param ChildNodeRendererInterface $childRenderer
+     *
+     * @return HtmlElement
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!$block instanceof TableCell) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        if (!$node instanceof TableCell) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $block->getData('attributes', []);
+        $attrs = $node->getData('attributes', []);
 
-        if ($block->align !== null) {
-            $attrs['align'] = $block->align;
+        if ($node->align !== null) {
+            $attrs['align'] = $node->align;
         }
 
-        return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->children()));
+        return new HtmlElement($node->type, $attrs, $childRenderer->renderNodes($node->children()));
     }
 }

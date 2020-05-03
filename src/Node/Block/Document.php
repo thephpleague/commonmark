@@ -18,9 +18,6 @@ use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Reference\ReferenceMapInterface;
 
-/**
- * @method children() AbstractBlock[]
- */
 class Document extends AbstractBlock
 {
     /** @var ReferenceMapInterface */

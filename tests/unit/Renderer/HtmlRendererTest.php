@@ -2,59 +2,93 @@
 
 namespace League\CommonMark\Tests\Unit\Renderer;
 
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Renderer\Block\BlockRendererInterface;
 use League\CommonMark\Renderer\HtmlRenderer;
-use League\CommonMark\Renderer\Inline\InlineRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
 use PHPUnit\Framework\TestCase;
 
 class HtmlRendererTest extends TestCase
 {
-    public function testRenderBlock()
+    public function testRenderDocumentCallsDocumentRenderer()
     {
-        $mockRenderer = $this->createMock(BlockRendererInterface::class);
-        $mockRenderer->expects($this->once())->method('render')->willReturn(true);
+        $document = new Document();
 
-        $environment = $this->createMock(EnvironmentInterface::class);
-        $environment->method('getBlockRenderersForClass')->willReturn([$mockRenderer]);
+        $documentRenderer = $this->createMock(NodeRendererInterface::class);
+        $documentRenderer->method('render')->willReturn('::document::');
 
-        $renderer = new HtmlRenderer($environment);
-        $renderer->renderBlock(new Paragraph());
+        $environment = new Environment();
+        $environment->addRenderer(Document::class, $documentRenderer);
+        $htmlRenderer = new HtmlRenderer($environment);
+
+        $this->assertSame('::document::', $htmlRenderer->renderDocument($document));
     }
 
-    public function testRenderBlockWithMissingRenderer()
+    public function testRenderNodesWithBlocks()
+    {
+        $blockRenderer = $this->createMock(NodeRendererInterface::class);
+        $blockRenderer->method('render')->willReturn('::block::');
+
+        $environment = new Environment();
+        $environment->addRenderer(Paragraph::class, $blockRenderer);
+
+        $ast = new Document();
+        $ast->appendChild(new Paragraph());
+        $ast->appendChild(new Paragraph());
+
+        $renderer = new HtmlRenderer($environment);
+        $output = $renderer->renderNodes($ast->children());
+
+        $this->assertSame("::block::\n::block::", $output);
+    }
+
+    public function testRenderNodesWithInlines()
+    {
+        $inlineRenderer = $this->createMock(NodeRendererInterface::class);
+        $inlineRenderer->method('render')->willReturn('::inline::');
+
+        $environment = new Environment();
+        $environment->addRenderer(Text::class, $inlineRenderer);
+
+        $ast = new Paragraph();
+        $ast->appendChild(new Text());
+        $ast->appendChild(new Text());
+
+        $renderer = new HtmlRenderer($environment);
+        $output = $renderer->renderNodes($ast->children());
+
+        $this->assertSame('::inline::::inline::', $output);
+    }
+
+    public function testRenderNodesFallsBackWhenFirstRendererReturnsNull()
+    {
+        $renderer1 = $this->createMock(NodeRendererInterface::class);
+        $renderer1->expects($this->once())->method('render')->willReturn(null);
+
+        $renderer2 = $this->createMock(NodeRendererInterface::class);
+        $renderer2->expects($this->once())->method('render')->willReturn('::result::');
+
+        $environment = new Environment();
+        $environment->addRenderer(Text::class, $renderer1);
+        $environment->addRenderer(Text::class, $renderer2);
+
+        $renderer = new HtmlRenderer($environment);
+        $output = $renderer->renderNodes([new Text()]);
+
+        $this->assertSame('::result::', $output);
+    }
+
+    public function testRenderNodesWithMissingRenderer()
     {
         $this->expectException(\RuntimeException::class);
 
         $environment = $this->createMock(EnvironmentInterface::class);
-        $environment->method('getBlockRenderersForClass')->willReturn([]);
+        $environment->method('getRenderersForClass')->willReturn([]);
 
         $renderer = new HtmlRenderer($environment);
-        $renderer->renderBlock(new Paragraph());
-    }
-
-    public function testRenderInline()
-    {
-        $mockRenderer = $this->createMock(InlineRendererInterface::class);
-        $mockRenderer->expects($this->once())->method('render')->willReturn(true);
-
-        $environment = $this->createMock(EnvironmentInterface::class);
-        $environment->method('getInlineRenderersForClass')->willReturn([$mockRenderer]);
-
-        $renderer = new HtmlRenderer($environment);
-        $renderer->renderInline(new Text());
-    }
-
-    public function testRenderInlineWithMissingRenderer()
-    {
-        $this->expectException(\RuntimeException::class);
-
-        $environment = $this->createMock(EnvironmentInterface::class);
-        $environment->method('getInlineRenderersForClass')->willReturn([]);
-
-        $renderer = new HtmlRenderer($environment);
-        $renderer->renderInline(new Text());
+        $renderer->renderNodes([new Paragraph()]);
     }
 }

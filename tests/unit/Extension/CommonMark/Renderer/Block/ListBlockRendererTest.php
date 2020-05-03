@@ -18,7 +18,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\ListBlockRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Tests\Unit\Renderer\FakeHtmlRenderer;
+use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
@@ -43,14 +43,15 @@ class ListBlockRendererTest extends TestCase
     public function testRenderOrderedList($listStart = null, $expectedAttributeValue = null)
     {
         $list = $this->createOrderedListBlock($listStart);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($list, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('ol', $result->getTagName());
         $this->assertSame($expectedAttributeValue, $result->getAttribute('start'));
-        $this->assertStringContainsString('::blocks::', $result->getContents(true));
+        $this->assertStringContainsString('::children::', $result->getContents(true));
         $this->assertEquals('foo', $result->getAttribute('id'));
     }
 
@@ -68,13 +69,14 @@ class ListBlockRendererTest extends TestCase
     public function testRenderUnorderedList()
     {
         $list = $this->createUnorderedListBlock();
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($list, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('ul', $result->getTagName());
-        $this->assertStringContainsString('::blocks::', $result->getContents(true));
+        $this->assertStringContainsString('::children::', $result->getContents(true));
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
@@ -83,7 +85,7 @@ class ListBlockRendererTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $inline = $this->getMockForAbstractClass(AbstractBlock::class);
-        $fakeRenderer = new FakeHtmlRenderer();
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }

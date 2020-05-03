@@ -14,26 +14,26 @@
 
 namespace League\CommonMark\Renderer\Block;
 
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 
-final class DocumentRenderer implements BlockRendererInterface
+final class DocumentRenderer implements NodeRendererInterface
 {
     /**
-     * @param Document              $block
-     * @param NodeRendererInterface $htmlRenderer
-     * @param bool                  $inTightList
+     * @param Document                   $node
+     * @param ChildNodeRendererInterface $childRenderer
      *
      * @return string
      */
-    public function render(AbstractBlock $block, NodeRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($block instanceof Document)) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
+        if (!($node instanceof Document)) {
+            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $wholeDoc = $htmlRenderer->renderBlocks($block->children());
+        $wholeDoc = $childRenderer->renderNodes($node->children());
 
         return $wholeDoc === '' ? '' : $wholeDoc . "\n";
     }

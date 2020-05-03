@@ -39,11 +39,11 @@ final class SmartPunctExtension implements ExtensionInterface
                 $environment->getConfig('smartpunct/single_quote_closer', Quote::SINGLE_QUOTE_CLOSER)
             ))
 
-            ->addBlockRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)
-            ->addBlockRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
+            ->addRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)
+            ->addRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
 
-            ->addInlineRenderer(Quote::class, new QuoteRenderer(), 100)
-            ->addInlineRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0)
+            ->addRenderer(Quote::class, new QuoteRenderer(), 100)
+            ->addRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0)
         ;
     }
 }
