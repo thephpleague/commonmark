@@ -22,6 +22,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserEngineInterface`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
+   - `TableOfContentsGenerator`
+   - `TableOfContentsGeneratorInterface`
  - Added several new methods:
    - `FencedCode::setInfo()`
    - `HtmlRenderer::renderDocument()`
