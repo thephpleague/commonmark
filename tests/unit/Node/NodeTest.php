@@ -175,4 +175,35 @@ class NodeTest extends TestCase
         $this->assertSame($node1, $node2->next());
         $this->assertSame($node2, $node1->previous());
     }
+
+    public function testClone()
+    {
+        // Build our intial AST
+        $root = new SimpleNode();
+        $root->appendChild($child1 = new SimpleNode());
+        $root->appendChild($child2 = new SimpleNode());
+        $child1->appendChild($grandChild1 = new SimpleNode());
+        $child1->appendChild($grandChild2 = new SimpleNode());
+        $grandChild2->appendChild($greatGrandChild1 = new SimpleNode());
+
+        // Set values on each node to indicate they are originals
+        $walker = $root->walker();
+        while ($event = $walker->next()) {
+            $event->getNode()->value = 'original';
+        }
+
+        // Clone one of the children
+        $cloneOfChild1 = clone $child1;
+        // Set values throughout the cloned node to indicate they are clones
+        $walker = $cloneOfChild1->walker();
+        while ($event = $walker->next()) {
+            $event->getNode()->value = 'cloned';
+        }
+
+        // Now check the original to ensure nothing changed there
+        $walker = $root->walker();
+        while ($event = $walker->next()) {
+            $this->assertSame('original', $event->getNode()->value);
+        }
+    }
 }

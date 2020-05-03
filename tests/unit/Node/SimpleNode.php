@@ -26,6 +26,9 @@ final class SimpleNode extends Node
      */
     private $container;
 
+    /** @var mixed */
+    public $value;
+
     /**
      * @param bool $isContainer
      */

@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added the ability to properly clone `Node` objects
+
 ## [1.4.3] - 2020-05-04
 
 ### Fixed
