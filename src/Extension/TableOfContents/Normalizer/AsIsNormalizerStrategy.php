@@ -13,7 +13,7 @@ namespace League\CommonMark\Extension\TableOfContents\Normalizer;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
-use League\CommonMark\Extension\TableOfContents\TableOfContents;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 
 final class AsIsNormalizerStrategy implements NormalizerStrategyInterface
 {

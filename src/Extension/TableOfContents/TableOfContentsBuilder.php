@@ -17,6 +17,7 @@ use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Node\Block\Document;
 
 final class TableOfContentsBuilder implements ConfigurationAwareInterface

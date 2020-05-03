@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\TableOfContents;
+namespace League\CommonMark\Extension\TableOfContents\Node;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 

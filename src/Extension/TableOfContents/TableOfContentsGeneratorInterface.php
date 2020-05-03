@@ -11,6 +11,7 @@
 
 namespace League\CommonMark\Extension\TableOfContents;
 
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Node\Block\Document;
 
 interface TableOfContentsGeneratorInterface

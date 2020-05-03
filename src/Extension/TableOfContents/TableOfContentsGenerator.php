@@ -20,6 +20,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Extension\TableOfContents\Normalizer\AsIsNormalizerStrategy;
 use League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrategy;
 use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;
