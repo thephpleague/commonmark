@@ -18,12 +18,14 @@ use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsPlaceholder;
 use League\CommonMark\Node\Block\Document;
 
 final class TableOfContentsBuilder implements ConfigurationAwareInterface
 {
     public const POSITION_TOP = 'top';
     public const POSITION_BEFORE_HEADINGS = 'before-headings';
+    public const POSITION_PLACEHOLDER = 'placeholder';
 
     /** @var ConfigurationInterface */
     private $config;
@@ -57,6 +59,8 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
             $document->prependChild($toc);
         } elseif ($position === self::POSITION_BEFORE_HEADINGS) {
             $this->insertBeforeFirstLinkedHeading($document, $toc);
+        } elseif ($position === self::POSITION_PLACEHOLDER) {
+            $this->replacePlaceholders($document, $toc);
         } else {
             throw new InvalidOptionException(\sprintf('Invalid config option "%s" for "table_of_contents/position"', $position));
         }
@@ -71,6 +75,23 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
 
                 return;
             }
+        }
+    }
+
+    private function replacePlaceholders(Document $document, TableOfContents $toc): void
+    {
+        $walker = $document->walker();
+        while ($event = $walker->next()) {
+            // Add the block once we find a placeholder (and we're about to leave it)
+            if (!$event->getNode() instanceof TableOfContentsPlaceholder) {
+                continue;
+            }
+
+            if ($event->isEntering()) {
+                continue;
+            }
+
+            $event->getNode()->replaceWith(clone $toc);
         }
     }
 
