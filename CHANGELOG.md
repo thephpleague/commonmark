@@ -7,6 +7,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Added
 
  - Added the ability to properly clone `Node` objects
+ - Added new classes:
+   - `TableOfContentsGenerator`
+   - `TableOfContentsGeneratorInterface`
 
 ## [1.4.3] - 2020-05-04
 
