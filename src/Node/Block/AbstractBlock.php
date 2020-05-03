@@ -31,12 +31,12 @@ abstract class AbstractBlock extends Node
     public $data = [];
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $startLine;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $endLine;
 
@@ -57,7 +57,7 @@ abstract class AbstractBlock extends Node
         }
     }
 
-    public function getStartLine(): int
+    public function getStartLine(): ?int
     {
         return $this->startLine;
     }
@@ -67,7 +67,7 @@ abstract class AbstractBlock extends Node
         $this->endLine = $endLine;
     }
 
-    public function getEndLine(): int
+    public function getEndLine(): ?int
     {
         return $this->endLine;
     }
