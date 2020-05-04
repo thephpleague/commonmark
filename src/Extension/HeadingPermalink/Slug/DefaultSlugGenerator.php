@@ -24,8 +24,8 @@ final class DefaultSlugGenerator implements SlugGeneratorInterface
         $slug = \mb_strtolower($slug);
         // Try replacing whitespace with a dash
         $slug = \preg_replace('/\s+/u', '-', $slug) ?? $slug;
-        // Try removing non-alphanumeric and non-dash characters
-        $slug = \preg_replace('/[^\p{Lu}\p{Ll}\p{Lt}\p{Nd}\p{Nl}\-]/u', '', $slug) ?? $slug;
+        // Try removing characters other than letters, numbers, and marks.
+        $slug = \preg_replace('/[^\p{L}\p{Nd}\p{Nl}\p{M}-]+/u', '', $slug) ?? $slug;
 
         return $slug;
     }

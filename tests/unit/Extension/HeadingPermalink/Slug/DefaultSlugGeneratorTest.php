@@ -49,5 +49,15 @@ final class DefaultSlugGeneratorTest extends TestCase
         yield ['ŤĘŜŦ', 'ťęŝŧ'];
 
         yield ["\nWho\nput\n\n newlines  \nin here?!\n", 'who-put-newlines-in-here'];
+
+        yield ['අත්හදා බලන මාතෘකාව',    'අත්හදා-බලන-මාතෘකාව'];
+        yield ['අත්හදා බලන මාතෘකාව -',  'අත්හදා-බලන-මාතෘකාව--'];
+        yield ['අත්හදා බලන මාතෘකාව - ', 'අත්හදා-බලන-මාතෘකාව--'];
+        yield ['අත්හදා බලන මාතෘකාව - අ', 'අත්හදා-බලන-මාතෘකාව---අ'];
+
+        yield ['测试标题',     '测试标题'];
+        yield ['测试 # 标题',  '测试--标题'];
+        yield ['测试 x² 标题', '测试-x-标题'];
+        yield ['試験タイトル', '試験タイトル'];
     }
 }
