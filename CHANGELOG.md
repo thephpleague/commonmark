@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.4.3] - 2020-05-04
+
+### Fixed
+
+ - Fixed certain Unicode letters, numbers, and marks not being preserved when generating URL slugs (#467)
+
 ## [1.4.2] - 2020-04-24
 
 ### Fixed
@@ -295,7 +301,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4.2...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4.3...HEAD
+[1.4.3]: https://github.com/thephpleague/commonmark/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/thephpleague/commonmark/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/thephpleague/commonmark/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/thephpleague/commonmark/compare/1.3.4...1.4.0
