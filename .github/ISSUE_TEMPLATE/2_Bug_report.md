@@ -1,6 +1,6 @@
 ---
-name: 🐛 Bug Report
-about: Report errors and problems
+name: 🐛 Bug Report: Other
+about: Report all other errors and problems
 
 ---
 
@@ -10,7 +10,7 @@ about: Report errors and problems
 <!-- A clear and concise description of the problem. -->
 
 **How to reproduce**  
-<!-- Markdown and/or config needed to reproduce the problem. -->
+<!-- Markdown and/or config needed to reproduce the problem. Don't forget to mention any extensions you might have enabled! -->
 
 **Possible Solution**  
 <!--- Optional: only if you have suggestions on a fix/reason for the bug -->
