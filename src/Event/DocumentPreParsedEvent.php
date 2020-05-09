@@ -21,7 +21,11 @@ use League\CommonMark\Node\Block\Document;
  */
 final class DocumentPreParsedEvent extends AbstractEvent
 {
-    /** @var Document */
+    /**
+     * @var Document
+     *
+     * @psalm-readonly
+     */
     private $document;
 
     /** @var MarkdownInputInterface */

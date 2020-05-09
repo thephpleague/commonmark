@@ -17,13 +17,25 @@ use League\CommonMark\Exception\UnexpectedEncodingException;
 
 final class MarkdownInput implements MarkdownInputInterface
 {
-    /** @var iterable<int, string>|null */
+    /**
+     * @var iterable<int, string>|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $lines;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $content;
 
-    /** @var int|null */
+    /**
+     * @var int|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $lineCount;
 
     public function __construct(string $content)

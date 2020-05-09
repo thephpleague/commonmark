@@ -19,10 +19,18 @@ use League\CommonMark\Parser\InlineParserContext;
 
 final class InlineMentionParser implements InlineParserInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $linkPattern;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $handleRegex;
 
     public function __construct(string $linkPattern, string $handleRegex = '/^[A-Za-z0-9_]+(?!\w)/')

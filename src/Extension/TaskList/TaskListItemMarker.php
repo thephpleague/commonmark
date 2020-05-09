@@ -17,8 +17,12 @@ use League\CommonMark\Node\Inline\AbstractInline;
 
 final class TaskListItemMarker extends AbstractInline
 {
-    /** @var bool */
-    protected $checked = false;
+    /**
+     * @var bool
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private $checked = false;
 
     public function __construct(bool $isCompleted)
     {

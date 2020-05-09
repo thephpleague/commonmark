@@ -23,7 +23,11 @@ use League\CommonMark\Util\ArrayCollection;
 
 final class IndentedCodeParser extends AbstractBlockContinueParser
 {
-    /** @var IndentedCode */
+    /**
+     * @var IndentedCode
+     *
+     * @psalm-readonly
+     */
     private $block;
 
     /** @var ArrayCollection<int, string> */

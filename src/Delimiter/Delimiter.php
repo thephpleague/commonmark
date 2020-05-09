@@ -20,34 +20,74 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class Delimiter implements DelimiterInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $char;
 
-    /** @var int */
+    /**
+     * @var int
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $length;
 
-    /** @var int */
+    /**
+     * @var int
+     *
+     * @psalm-readonly
+     */
     private $originalLength;
 
-    /** @var AbstractStringContainer */
+    /**
+     * @var AbstractStringContainer
+     *
+     * @psalm-readonly
+     */
     private $inlineNode;
 
-    /** @var DelimiterInterface|null */
+    /**
+     * @var DelimiterInterface|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $previous;
 
-    /** @var DelimiterInterface|null */
+    /**
+     * @var DelimiterInterface|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $next;
 
-    /** @var bool */
+    /**
+     * @var bool
+     *
+     * @psalm-readonly
+     */
     private $canOpen;
 
-    /** @var bool */
+    /**
+     * @var bool
+     *
+     * @psalm-readonly
+     */
     private $canClose;
 
-    /** @var bool */
+    /**
+     * @var bool
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $active;
 
-    /** @var int|null */
+    /**
+     * @var int|null
+     *
+     * @psalm-readonly
+     */
     private $index;
 
     public function __construct(string $char, int $numDelims, AbstractStringContainer $node, bool $canOpen, bool $canClose, ?int $index = null)

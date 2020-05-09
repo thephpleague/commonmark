@@ -22,13 +22,32 @@ use League\CommonMark\Reference\ReferenceMapInterface;
 
 final class InlineParserContext
 {
-    /** @var AbstractBlock */
+    /**
+     * @var AbstractBlock
+     *
+     * @psalm-readonly
+     */
     private $container;
-    /** @var ReferenceMapInterface */
+
+    /**
+     * @var ReferenceMapInterface
+     *
+     * @psalm-readonly
+     */
     private $referenceMap;
-    /** @var Cursor */
+
+    /**
+     * @var Cursor
+     *
+     * @psalm-readonly
+     */
     private $cursor;
-    /** @var DelimiterStack */
+
+    /**
+     * @var DelimiterStack
+     *
+     * @psalm-readonly
+     */
     private $delimiterStack;
 
     public function __construct(string $contents, AbstractBlock $container, ReferenceMapInterface $referenceMap)

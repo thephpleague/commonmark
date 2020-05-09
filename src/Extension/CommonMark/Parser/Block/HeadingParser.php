@@ -23,7 +23,11 @@ use League\CommonMark\Parser\InlineParserEngineInterface;
 
 final class HeadingParser extends AbstractBlockContinueParser
 {
-    /** @var Heading */
+    /**
+     * @var Heading
+     *
+     * @psalm-readonly
+     */
     private $block;
 
     /** @var string */

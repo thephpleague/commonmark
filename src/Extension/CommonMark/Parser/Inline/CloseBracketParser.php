@@ -33,7 +33,11 @@ use League\CommonMark\Util\RegexHelper;
 
 final class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInterface
 {
-    /** @var EnvironmentInterface */
+    /**
+     * @var EnvironmentInterface
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $environment;
 
     /**

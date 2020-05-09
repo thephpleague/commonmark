@@ -32,37 +32,81 @@ use League\CommonMark\Util\PrioritizedList;
 
 final class Environment implements ConfigurableEnvironmentInterface
 {
-    /** @var ExtensionInterface[] */
+    /**
+     * @var ExtensionInterface[]
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $extensions = [];
 
-    /** @var ExtensionInterface[] */
+    /**
+     * @var ExtensionInterface[]
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $uninitializedExtensions = [];
 
-    /** @var bool */
+    /**
+     * @var bool
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $extensionsInitialized = false;
 
-    /** @var PrioritizedList<BlockStartParserInterface> */
+    /**
+     * @var PrioritizedList<BlockStartParserInterface>
+     *
+     * @psalm-readonly
+     */
     private $blockStartParsers;
 
-    /** @var PrioritizedList<InlineParserInterface> */
+    /**
+     * @var PrioritizedList<InlineParserInterface>
+     *
+     * @psalm-readonly
+     */
     private $inlineParsers;
 
-    /** @var array<string, PrioritizedList<InlineParserInterface>> */
+    /**
+     * @var array<string, PrioritizedList<InlineParserInterface>>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $inlineParsersByCharacter = [];
 
-    /** @var DelimiterProcessorCollection */
+    /**
+     * @var DelimiterProcessorCollection
+     *
+     * @psalm-readonly
+     */
     private $delimiterProcessors;
 
-    /** @var array<string, PrioritizedList<NodeRendererInterface>> */
+    /**
+     * @var array<string, PrioritizedList<NodeRendererInterface>>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $renderersByClass = [];
 
-    /** @var array<string, PrioritizedList<callable>> */
+    /**
+     * @var array<string, PrioritizedList<callable>>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $listeners = [];
 
-    /** @var Configuration */
+    /**
+     * @var Configuration
+     *
+     * @psalm-readonly
+     */
     private $config;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $inlineParserCharacterRegex;
 
     /**

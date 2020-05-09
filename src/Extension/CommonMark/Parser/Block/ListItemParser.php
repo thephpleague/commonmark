@@ -25,7 +25,11 @@ use League\CommonMark\Parser\Cursor;
 
 final class ListItemParser extends AbstractBlockContinueParser
 {
-    /** @var ListItem */
+    /**
+     * @var ListItem
+     *
+     * @psalm-readonly
+     */
     private $block;
 
     /** @var bool */

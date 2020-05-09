@@ -21,7 +21,11 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 
 final class DisallowedRawHtmlRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    /** @var NodeRendererInterface */
+    /**
+     * @var NodeRendererInterface
+     *
+     * @psalm-readonly
+     */
     private $innerRenderer;
 
     public function __construct(NodeRendererInterface $innerRenderer)

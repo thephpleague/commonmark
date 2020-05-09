@@ -27,8 +27,12 @@ use League\CommonMark\Util\RegexHelper;
 
 final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    /** @var ConfigurationInterface */
-    protected $config;
+    /**
+     * @var ConfigurationInterface
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private $config;
 
     /**
      * @param Image $node

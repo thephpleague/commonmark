@@ -31,10 +31,18 @@ use League\CommonMark\Util\RegexHelper;
  */
 final class InlineParserEngine implements InlineParserEngineInterface
 {
-    /** @var EnvironmentInterface */
+    /**
+     * @var EnvironmentInterface
+     *
+     * @psalm-readonly
+     */
     private $environment;
 
-    /** @var ReferenceMapInterface */
+    /**
+     * @var ReferenceMapInterface
+     *
+     * @psalm-readonly
+     */
     private $referenceMap;
 
     public function __construct(EnvironmentInterface $environment, ReferenceMapInterface $referenceMap)

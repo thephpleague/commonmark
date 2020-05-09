@@ -19,10 +19,18 @@ use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 
 final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
 {
-    /** @var TableOfContents */
+    /**
+     * @var TableOfContents
+     *
+     * @psalm-readonly
+     */
     private $toc;
 
-    /** @var array<int, ListItem> */
+    /**
+     * @var array<int, ListItem>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $listItemStack = [];
 
     public function __construct(TableOfContents $toc)

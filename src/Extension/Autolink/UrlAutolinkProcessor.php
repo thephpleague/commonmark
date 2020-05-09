@@ -43,7 +43,11 @@ final class UrlAutolinkProcessor
             (?:\# (?:[\pL\pN\-._\~!$&\'()*+,;=:@/?]|%%[0-9A-Fa-f]{2})* )?   # a fragment (optional)
         )~ixu';
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $finalRegex;
 
     /**

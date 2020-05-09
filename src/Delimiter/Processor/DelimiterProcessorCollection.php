@@ -21,7 +21,11 @@ namespace League\CommonMark\Delimiter\Processor;
 
 final class DelimiterProcessorCollection implements DelimiterProcessorCollectionInterface
 {
-    /** @var array<string,DelimiterProcessorInterface>|DelimiterProcessorInterface[] */
+    /**
+     * @var array<string,DelimiterProcessorInterface>|DelimiterProcessorInterface[]
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $processorsByChar = [];
 
     public function add(DelimiterProcessorInterface $processor): void

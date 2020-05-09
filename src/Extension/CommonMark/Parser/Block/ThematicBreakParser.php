@@ -22,7 +22,11 @@ use League\CommonMark\Parser\Cursor;
 
 final class ThematicBreakParser extends AbstractBlockContinueParser
 {
-    /** @var ThematicBreak */
+    /**
+     * @var ThematicBreak
+     *
+     * @psalm-readonly
+     */
     private $block;
 
     public function __construct()

@@ -21,11 +21,25 @@ use League\CommonMark\Parser\CursorState;
  */
 final class BlockStart
 {
-    /** @var BlockContinueParserInterface[] */
+    /**
+     * @var BlockContinueParserInterface[]
+     *
+     * @psalm-readonly
+     */
     private $blockParsers = [];
-    /** @var CursorState|null */
+
+    /**
+     * @var CursorState|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $cursorState = null;
-    /** @var bool */
+
+    /**
+     * @var bool
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $replaceActiveBlockParser = false;
 
     private function __construct(BlockContinueParserInterface ...$blockParsers)

@@ -24,7 +24,11 @@ use League\CommonMark\Util\RegexHelper;
 
 final class FencedCodeParser extends AbstractBlockContinueParser
 {
-    /** @var FencedCode */
+    /**
+     * @var FencedCode
+     *
+     * @psalm-readonly
+     */
     private $block;
 
     /** @var ArrayCollection<int, string> */

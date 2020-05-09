@@ -21,7 +21,11 @@ namespace League\CommonMark\Reference;
  */
 final class ReferenceMap implements ReferenceMapInterface
 {
-    /** @var array<string, ReferenceInterface> */
+    /**
+     * @var array<string, ReferenceInterface>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $references = [];
 
     public function add(ReferenceInterface $reference): void

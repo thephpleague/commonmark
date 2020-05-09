@@ -29,10 +29,18 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, ConfigurationAwareInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $char;
 
-    /** @var ConfigurationInterface|null */
+    /**
+     * @var ConfigurationInterface|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $config;
 
     /**

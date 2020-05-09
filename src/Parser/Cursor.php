@@ -17,10 +17,18 @@ class Cursor
 {
     public const INDENT_LEVEL = 4;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $line;
 
-    /** @var int */
+    /**
+     * @var int
+     *
+     * @psalm-readonly
+     */
     private $length;
 
     /**
@@ -46,10 +54,18 @@ class Cursor
     /** @var bool */
     private $partiallyConsumedTab = false;
 
-    /** @var bool */
+    /**
+     * @var bool
+     *
+     * @psalm-readonly
+     */
     private $lineContainsTabs;
 
-    /** @var bool */
+    /**
+     * @var bool
+     *
+     * @psalm-readonly
+     */
     private $isMultibyte;
 
     /** @var array<int, string> */

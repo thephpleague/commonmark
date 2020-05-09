@@ -24,7 +24,11 @@ use League\CommonMark\Util\HtmlElement;
 
 final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInterface
 {
-    /** @var EnvironmentInterface */
+    /**
+     * @var EnvironmentInterface
+     *
+     * @psalm-readonly
+     */
     private $environment;
 
     public function __construct(EnvironmentInterface $environment)

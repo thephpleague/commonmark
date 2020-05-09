@@ -31,10 +31,18 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     public const INSERT_BEFORE = 'before';
     public const INSERT_AFTER  = 'after';
 
-    /** @var SlugGeneratorInterface */
+    /**
+     * @var SlugGeneratorInterface
+     *
+     * @psalm-readonly
+     */
     private $slugGenerator;
 
-    /** @var ConfigurationInterface */
+    /**
+     * @var ConfigurationInterface
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $config;
 
     public function __construct(?SlugGeneratorInterface $slugGenerator = null)

@@ -19,7 +19,11 @@ use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 
 final class ExternalLinkProcessor
 {
-    /** @var EnvironmentInterface */
+    /**
+     * @var EnvironmentInterface
+     *
+     * @psalm-readonly
+     */
     private $environment;
 
     public function __construct(EnvironmentInterface $environment)

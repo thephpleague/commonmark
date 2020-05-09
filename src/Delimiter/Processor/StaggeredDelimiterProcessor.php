@@ -29,13 +29,25 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
  */
 final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $delimiterChar;
 
-    /** @var int */
+    /**
+     * @var int
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $minLength = 0;
 
-    /** @var array<int, DelimiterProcessorInterface>|DelimiterProcessorInterface[] */
+    /**
+     * @var array<int, DelimiterProcessorInterface>|DelimiterProcessorInterface[]
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $processors = []; // keyed by minLength in reverse order
 
     public function __construct(string $char, DelimiterProcessorInterface $processor)

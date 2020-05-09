@@ -18,22 +18,46 @@ namespace League\CommonMark\Node;
 
 abstract class Node
 {
-    /** @var int */
+    /**
+     * @var int
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     protected $depth = 0;
 
-    /** @var Node|null */
+    /**
+     * @var Node|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     protected $parent;
 
-    /** @var Node|null */
+    /**
+     * @var Node|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     protected $previous;
 
-    /** @var Node|null */
+    /**
+     * @var Node|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     protected $next;
 
-    /** @var Node|null */
+    /**
+     * @var Node|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     protected $firstChild;
 
-    /** @var Node|null */
+    /**
+     * @var Node|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     protected $lastChild;
 
     public function previous(): ?Node

@@ -22,7 +22,11 @@ final class TableSection extends AbstractBlock
     public const TYPE_HEAD = 'thead';
     public const TYPE_BODY = 'tbody';
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     public $type = self::TYPE_BODY;
 
     public function __construct(string $type = self::TYPE_BODY)

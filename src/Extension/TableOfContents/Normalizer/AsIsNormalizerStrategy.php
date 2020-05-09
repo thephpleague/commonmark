@@ -19,11 +19,25 @@ use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 
 final class AsIsNormalizerStrategy implements NormalizerStrategyInterface
 {
-    /** @var ListBlock */
+    /**
+     * @var ListBlock
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $parentListBlock;
-    /** @var int */
+
+    /**
+     * @var int
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $parentLevel = 1;
-    /** @var ListItem|null */
+
+    /**
+     * @var ListItem|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $lastListItem;
 
     public function __construct(TableOfContents $toc)

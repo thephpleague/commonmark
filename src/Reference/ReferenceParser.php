@@ -34,23 +34,60 @@ final class ReferenceParser
     // End state, no matter what kind of lines we add, they won't be references
     private const PARAGRAPH = 5;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $paragraph = '';
 
-    /** @var array<int, ReferenceInterface> */
+    /**
+     * @var array<int, ReferenceInterface>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $references = [];
 
-    /** @var int */
+    /**
+     * @var int
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $state = self::START_DEFINITION;
-    /** @var string|null */
+
+    /**
+     * @var string|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $label;
-    /** @var string|null */
+
+    /**
+     * @var string|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $destination;
-    /** @var string string */
+
+    /**
+     * @var string string
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $title = '';
-    /** @var string|null */
+
+    /**
+     * @var string|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $titleDelimiter;
-    /** @var bool */
+
+    /**
+     * @var bool
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $referenceValid = false;
 
     public function getParagraphContent(): string

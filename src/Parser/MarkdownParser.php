@@ -33,25 +33,53 @@ use League\CommonMark\Util\RegexHelper;
 
 final class MarkdownParser implements MarkdownParserInterface
 {
-    /** @var EnvironmentInterface */
+    /**
+     * @var EnvironmentInterface
+     *
+     * @psalm-readonly
+     */
     private $environment;
 
-    /** @var int|float */
+    /**
+     * @var int|float
+     *
+     * @psalm-readonly
+     */
     private $maxNestingLevel;
 
-    /** @var ReferenceMap */
+    /**
+     * @var ReferenceMap
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $referenceMap;
 
-    /** @var int */
+    /**
+     * @var int
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $lineNumber = 0;
 
-    /** @var Cursor */
+    /**
+     * @var Cursor
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $cursor;
 
-    /** @var array<int, BlockContinueParserInterface> */
+    /**
+     * @var array<int, BlockContinueParserInterface>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $allBlockParsers = [];
 
-    /** @var array<int, BlockContinueParserInterface> */
+    /**
+     * @var array<int, BlockContinueParserInterface>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $activeBlockParsers = [];
 
     public function __construct(EnvironmentInterface $environment)

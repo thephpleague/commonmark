@@ -22,7 +22,11 @@ class Newline extends AbstractInline
     public const HARDBREAK = 0;
     public const SOFTBREAK = 1;
 
-    /** @var int */
+    /**
+     * @var int
+     *
+     * @psalm-readonly
+     */
     protected $type;
 
     public function __construct(int $breakType = self::HARDBREAK)

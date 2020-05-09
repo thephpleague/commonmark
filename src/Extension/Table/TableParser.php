@@ -25,19 +25,39 @@ use League\CommonMark\Util\ArrayCollection;
 
 final class TableParser extends AbstractBlockContinueParser
 {
-    /** @var Table */
+    /**
+     * @var Table
+     *
+     * @psalm-readonly
+     */
     private $block;
 
-    /** @var ArrayCollection<int, string> */
+    /**
+     * @var ArrayCollection<int, string>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $bodyLines;
 
-    /** @var array<int, string|null> */
+    /**
+     * @var array<int, string|null>
+     *
+     * @psalm-readonly
+     */
     private $columns;
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $headerCells;
 
-    /** @var bool */
+    /**
+     * @var bool
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $nextIsSeparatorLine = true;
 
     /**

@@ -25,10 +25,18 @@ use League\CommonMark\Util\RegexHelper;
 
 final class ListBlockStartParser implements BlockStartParserInterface, ConfigurationAwareInterface
 {
-    /** @var ConfigurationInterface|null */
+    /**
+     * @var ConfigurationInterface|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $config;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $listMarkerRegex;
 
     public function setConfiguration(ConfigurationInterface $configuration): void

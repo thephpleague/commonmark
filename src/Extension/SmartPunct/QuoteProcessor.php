@@ -22,13 +22,25 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class QuoteProcessor implements DelimiterProcessorInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $normalizedCharacter;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $openerCharacter;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $closerCharacter;
 
     private function __construct(string $char, string $opener, string $closer)

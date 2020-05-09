@@ -26,8 +26,12 @@ use League\CommonMark\Util\HtmlFilter;
 
 final class HtmlInlineRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    /** @var ConfigurationInterface */
-    protected $config;
+    /**
+     * @var ConfigurationInterface
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private $config;
 
     /**
      * @param HtmlInline $node

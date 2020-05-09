@@ -18,7 +18,11 @@ use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 
 final class FlatNormalizerStrategy implements NormalizerStrategyInterface
 {
-    /** @var TableOfContents */
+    /**
+     * @var TableOfContents
+     *
+     * @psalm-readonly
+     */
     private $toc;
 
     public function __construct(TableOfContents $toc)

@@ -22,10 +22,18 @@ use League\CommonMark\Reference\ReferenceParser;
 
 final class ParagraphParser extends AbstractBlockContinueParser
 {
-    /** @var Paragraph */
+    /**
+     * @var Paragraph
+     *
+     * @psalm-readonly
+     */
     private $block;
 
-    /** @var ReferenceParser */
+    /**
+     * @var ReferenceParser
+     *
+     * @psalm-readonly
+     */
     private $referenceParser;
 
     public function __construct()

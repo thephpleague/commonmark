@@ -26,8 +26,12 @@ use League\CommonMark\Util\HtmlElement;
 
 final class NewlineRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    /** @var ConfigurationInterface */
-    protected $config;
+    /**
+     * @var ConfigurationInterface
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private $config;
 
     public function setConfiguration(ConfigurationInterface $configuration): void
     {

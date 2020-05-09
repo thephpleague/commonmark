@@ -18,14 +18,26 @@ namespace League\CommonMark\Reference;
 
 final class Reference implements ReferenceInterface
 {
-    /** @var string */
-    protected $label;
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
+    private $label;
 
-    /** @var string */
-    protected $destination;
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
+    private $destination;
 
-    /** @var string */
-    protected $title;
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
+    private $title;
 
     /**
      * @var array<int, array<int, string>>

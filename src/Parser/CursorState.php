@@ -25,7 +25,11 @@ namespace League\CommonMark\Parser;
  */
 final class CursorState
 {
-    /** @var array<int, mixed> */
+    /**
+     * @var array<int, mixed>
+     *
+     * @psalm-readonly
+     */
     private $state;
 
     /**

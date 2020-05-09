@@ -27,7 +27,11 @@ namespace League\CommonMark\Event;
  */
 abstract class AbstractEvent
 {
-    /** @var bool */
+    /**
+     * @var bool
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
     private $propagationStopped = false;
 
     /**
