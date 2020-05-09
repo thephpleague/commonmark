@@ -15,5 +15,6 @@
 /phpcs.xml.dist       export-ignore
 /phpstan.neon.dist    export-ignore
 /phpunit.xml.dist     export-ignore
+/psalm.xml            export-ignore
 /RELEASE_CHECKLIST.md export-ignore
 /tests                export-ignore

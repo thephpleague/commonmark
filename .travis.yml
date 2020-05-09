@@ -29,6 +29,9 @@ jobs:
     - name: phpcs
       php: 7.2
       env: 'PHPCS=true'
+    - name: psalm
+      php: 7.2
+      env: 'PSALM=true'
     - name: rips
       php: 7.2
       env: 'RIPS=true'
@@ -64,6 +67,7 @@ script:
   - if [[ $PHPSTAN ]]; then vendor/bin/phpstan analyse; fi
   - if [[ $PHPCS ]]; then vendor/bin/phpcs; fi
   - if [[ $PHPUNIT ]]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
+  - if [[ $PSALM ]]; then vendor/bin/psalm; fi
   - |
     if [[ $RIPS ]]; then
       docker run --rm -it -e RIPS_BASE_URI -e RIPS_PASSWORD -e RIPS_EMAIL -v `pwd`:/data rips/rips-cli:3 \
