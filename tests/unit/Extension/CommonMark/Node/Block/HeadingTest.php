@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 class HeadingTest extends TestCase
 {
-    public function testConstructorAndGetLevel()
+    public function testConstructorAndGetLevel(): void
     {
         $heading = new Heading(3);
 

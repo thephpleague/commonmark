@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,22 +19,18 @@ use League\CommonMark\Node\StringContainerInterface;
 class HtmlBlock extends AbstractBlock implements StringContainerInterface
 {
     // Any changes to these constants should be reflected in .phpstorm.meta.php
-    const TYPE_1_CODE_CONTAINER = 1;
-    const TYPE_2_COMMENT = 2;
-    const TYPE_3 = 3;
-    const TYPE_4 = 4;
-    const TYPE_5_CDATA = 5;
-    const TYPE_6_BLOCK_ELEMENT = 6;
-    const TYPE_7_MISC_ELEMENT = 7;
+    public const TYPE_1_CODE_CONTAINER = 1;
+    public const TYPE_2_COMMENT        = 2;
+    public const TYPE_3                = 3;
+    public const TYPE_4                = 4;
+    public const TYPE_5_CDATA          = 5;
+    public const TYPE_6_BLOCK_ELEMENT  = 6;
+    public const TYPE_7_MISC_ELEMENT   = 7;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $type;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $literal = '';
 
     public function __construct(int $type)

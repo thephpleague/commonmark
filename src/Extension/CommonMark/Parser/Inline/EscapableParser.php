@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,6 +24,9 @@ use League\CommonMark\Util\RegexHelper;
 
 final class EscapableParser implements InlineParserInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return ['\\'];
@@ -29,7 +34,7 @@ final class EscapableParser implements InlineParserInterface
 
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $cursor = $inlineContext->getCursor();
+        $cursor   = $inlineContext->getCursor();
         $nextChar = $cursor->peek();
 
         if ($nextChar === "\n") {
@@ -37,7 +42,9 @@ final class EscapableParser implements InlineParserInterface
             $inlineContext->getContainer()->appendChild(new Newline(Newline::HARDBREAK));
 
             return true;
-        } elseif ($nextChar !== null && RegexHelper::isEscapable($nextChar)) {
+        }
+
+        if ($nextChar !== null && RegexHelper::isEscapable($nextChar)) {
             $cursor->advanceBy(2);
             $inlineContext->getContainer()->appendChild(new Text($nextChar));
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,8 +19,6 @@ interface ConfigurationInterface
      * Merge an existing array into the current configuration
      *
      * @param array<string, mixed> $config
-     *
-     * @return void
      */
     public function merge(array $config = []): void;
 
@@ -26,8 +26,6 @@ interface ConfigurationInterface
      * Replace the entire array with something else
      *
      * @param array<string, mixed> $config
-     *
-     * @return void
      */
     public function replace(array $config = []): void;
 
@@ -36,8 +34,7 @@ interface ConfigurationInterface
      *
      * The key can be a string or a slash-delimited path to a nested value
      *
-     * @param string|null $key
-     * @param mixed|null  $default
+     * @param mixed|null $default
      *
      * @return mixed|null
      */
@@ -48,10 +45,7 @@ interface ConfigurationInterface
      *
      * The key can be a string or a slash-delimited path to a nested value
      *
-     * @param string     $key
      * @param mixed|null $value
-     *
-     * @return void
      */
     public function set(string $key, $value = null): void;
 }

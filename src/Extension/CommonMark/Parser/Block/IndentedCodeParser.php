@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,14 +26,12 @@ final class IndentedCodeParser extends AbstractBlockContinueParser
     /** @var IndentedCode */
     private $block;
 
-    /**
-     * @var ArrayCollection<int, string>
-     */
+    /** @var ArrayCollection<int, string> */
     protected $strings;
 
     public function __construct()
     {
-        $this->block = new IndentedCode();
+        $this->block   = new IndentedCode();
         $this->strings = new ArrayCollection();
     }
 
@@ -69,14 +69,15 @@ final class IndentedCodeParser extends AbstractBlockContinueParser
     {
         $reversed = \array_reverse($this->strings->toArray(), true);
         foreach ($reversed as $index => $line) {
-            if ($line === '' || $line === "\n" || \preg_match('/^(\n *)$/', $line)) {
-                unset($reversed[$index]);
-            } else {
+            if ($line !== '' && $line !== "\n" && ! \preg_match('/^(\n *)$/', $line)) {
                 break;
             }
+
+            unset($reversed[$index]);
         }
+
         $fixed = \array_reverse($reversed);
-        $tmp = \implode("\n", $fixed);
+        $tmp   = \implode("\n", $fixed);
         if (\substr($tmp, -1) !== "\n") {
             $tmp .= "\n";
         }

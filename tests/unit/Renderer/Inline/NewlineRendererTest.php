@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class NewlineRendererTest extends TestCase
 {
-    /**
-     * @var NewlineRenderer
-     */
+    /** @var NewlineRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -33,9 +33,9 @@ class NewlineRendererTest extends TestCase
         $this->renderer = new NewlineRenderer();
     }
 
-    public function testRenderHardbreak()
+    public function testRenderHardbreak(): void
     {
-        $inline = new Newline(Newline::HARDBREAK);
+        $inline       = new Newline(Newline::HARDBREAK);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -44,9 +44,9 @@ class NewlineRendererTest extends TestCase
         $this->assertStringContainsString('<br />', $result);
     }
 
-    public function testRenderSoftbreak()
+    public function testRenderSoftbreak(): void
     {
-        $inline = new Newline(Newline::SOFTBREAK);
+        $inline       = new Newline(Newline::SOFTBREAK);
         $fakeRenderer = new FakeChildNodeRenderer();
         $this->renderer->setConfiguration(new Configuration(['renderer' => ['soft_break' => '::softbreakChar::']]));
 
@@ -56,11 +56,11 @@ class NewlineRendererTest extends TestCase
         $this->assertStringContainsString('::softbreakChar::', $result);
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline       = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

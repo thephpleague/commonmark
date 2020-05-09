@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlBlockRendererTest extends TestCase
 {
-    /**
-     * @var HtmlBlockRenderer
-     */
+    /** @var HtmlBlockRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -35,7 +35,7 @@ class HtmlBlockRendererTest extends TestCase
         $this->renderer->setConfiguration(new Configuration());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $block = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
         $block->setLiteral('<button>Test</button>');
@@ -48,7 +48,7 @@ class HtmlBlockRendererTest extends TestCase
         $this->assertStringContainsString('<button>Test</button>', $result);
     }
 
-    public function testRenderAllowHtml()
+    public function testRenderAllowHtml(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'html_input' => HtmlFilter::ALLOW,
@@ -65,7 +65,7 @@ class HtmlBlockRendererTest extends TestCase
         $this->assertStringContainsString('<button>Test</button>', $result);
     }
 
-    public function testRenderEscapeHtml()
+    public function testRenderEscapeHtml(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'html_input' => HtmlFilter::ESCAPE,
@@ -82,7 +82,7 @@ class HtmlBlockRendererTest extends TestCase
         $this->assertStringContainsString('&lt;button class="test"&gt;Test&lt;/button&gt;', $result);
     }
 
-    public function testRenderStripHtml()
+    public function testRenderStripHtml(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'html_input' => HtmlFilter::STRIP,
@@ -99,11 +99,11 @@ class HtmlBlockRendererTest extends TestCase
         $this->assertEquals('', $result);
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

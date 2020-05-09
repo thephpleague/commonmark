@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,12 +21,7 @@ namespace League\CommonMark\Util;
  */
 final class Xml
 {
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
-    public static function escape($string)
+    public static function escape(string $string): string
     {
         return \str_replace(['&', '<', '>', '"'], ['&amp;', '&lt;', '&gt;', '&quot;'], $string);
     }

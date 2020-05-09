@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 class DelimiterTest extends TestCase
 {
-    public function testConstructorAndGetters()
+    public function testConstructorAndGetters(): void
     {
         $node = $this->createMock(AbstractStringContainer::class);
 
@@ -40,9 +42,9 @@ class DelimiterTest extends TestCase
         $this->assertSame(7, $delimiter->getIndex());
     }
 
-    public function testSetActive()
+    public function testSetActive(): void
     {
-        $node = $this->createMock(AbstractStringContainer::class);
+        $node      = $this->createMock(AbstractStringContainer::class);
         $delimiter = new Delimiter('*', 2, $node, true, false, null);
 
         $delimiter->setActive(true);
@@ -52,9 +54,9 @@ class DelimiterTest extends TestCase
         $this->assertFalse($delimiter->isActive());
     }
 
-    public function testSetNext()
+    public function testSetNext(): void
     {
-        $node = $this->createMock(AbstractStringContainer::class);
+        $node      = $this->createMock(AbstractStringContainer::class);
         $delimiter = new Delimiter('*', 2, $node, true, false, null);
 
         $delimiter->setNext($delimiter);
@@ -64,9 +66,9 @@ class DelimiterTest extends TestCase
         $this->assertNull($delimiter->getNext());
     }
 
-    public function testSetLength()
+    public function testSetLength(): void
     {
-        $node = $this->createMock(AbstractStringContainer::class);
+        $node      = $this->createMock(AbstractStringContainer::class);
         $delimiter = new Delimiter('*', 2, $node, true, false, null);
 
         $delimiter->setLength(3);
@@ -74,9 +76,9 @@ class DelimiterTest extends TestCase
         $this->assertSame(2, $delimiter->getOriginalLength());
     }
 
-    public function testSetPrevious()
+    public function testSetPrevious(): void
     {
-        $node = $this->createMock(AbstractStringContainer::class);
+        $node      = $this->createMock(AbstractStringContainer::class);
         $delimiter = new Delimiter('*', 2, $node, true, false, null);
 
         $delimiter->setPrevious($delimiter);

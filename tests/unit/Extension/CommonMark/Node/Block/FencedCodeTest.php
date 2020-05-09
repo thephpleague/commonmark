@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 class FencedCodeTest extends TestCase
 {
-    public function testConstructorAndGetters()
+    public function testConstructorAndGetters(): void
     {
         $fencedCode = new FencedCode(3, '~', 4);
 
@@ -28,7 +30,7 @@ class FencedCodeTest extends TestCase
         $this->assertEquals(4, $fencedCode->getOffset());
     }
 
-    public function testSetChar()
+    public function testSetChar(): void
     {
         $fencedCode = new FencedCode(3, '~', 4);
 
@@ -36,7 +38,7 @@ class FencedCodeTest extends TestCase
         $this->assertEquals('`', $fencedCode->getChar());
     }
 
-    public function testSetLength()
+    public function testSetLength(): void
     {
         $fencedCode = new FencedCode(3, '~', 4);
 
@@ -44,7 +46,7 @@ class FencedCodeTest extends TestCase
         $this->assertEquals(4, $fencedCode->getLength());
     }
 
-    public function testSetOffset()
+    public function testSetOffset(): void
     {
         $fencedCode = new FencedCode(3, '~', 4);
 
@@ -52,7 +54,7 @@ class FencedCodeTest extends TestCase
         $this->assertEquals(6, $fencedCode->getOffset());
     }
 
-    public function testGetAndSetInfo()
+    public function testGetAndSetInfo(): void
     {
         $fencedCode = new FencedCode(3, '~', 4);
         $fencedCode->setInfo('ruby startline=3');

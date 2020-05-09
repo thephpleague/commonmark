@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,34 +26,31 @@ use PHPUnit\Framework\TestCase;
 class BacktickParserTest extends TestCase
 {
     /**
-     * @param $string
-     * @param $expectedContents
-     *
      * @dataProvider dataForTestParse
      */
-    public function testParse($string, $expectedContents)
+    public function testParse(string $string, string $expectedContents): void
     {
-        $paragraph = new Paragraph();
+        $paragraph     = new Paragraph();
         $inlineContext = new InlineParserContext($string, $paragraph, $this->createMock(ReferenceMapInterface::class));
 
         // Move to just before the first backtick
-        $firstBacktickPos = mb_strpos($string, '`', null, 'utf-8');
+        $firstBacktickPos = \mb_strpos($string, '`', 0, 'utf-8');
         $inlineContext->getCursor()->advanceBy($firstBacktickPos);
 
         $parser = new BacktickParser();
         $this->assertTrue($parser->parse($inlineContext));
 
-        /** @var Code $codeBlock */
         $codeBlock = $paragraph->firstChild();
+        \assert($codeBlock instanceof Code);
         $this->assertInstanceOf(Code::class, $codeBlock);
 
         $this->assertSame($expectedContents, $codeBlock->getLiteral());
     }
 
     /**
-     * @return array
+     * @return iterable<array<string>>
      */
-    public function dataForTestParse()
+    public function dataForTestParse(): iterable
     {
         return [
             ['This is `just` a test', 'just'],

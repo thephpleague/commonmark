@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -28,48 +30,31 @@ interface BlockContinueParserInterface
 {
     /**
      * Return the current block being parsed by this parser
-     *
-     * @return AbstractBlock
      */
     public function getBlock(): AbstractBlock;
 
     /**
      * Return whether we are parsing a container block
-     *
-     * @return bool
      */
     public function isContainer(): bool;
 
     /**
      * Return whether we are interested in possibly lazily parsing any subsequent lines
-     *
-     * @return bool
      */
     public function canHaveLazyContinuationLines(): bool;
 
     /**
      * Determine whether the current block being parsed can contain the given child block
-     *
-     * @param AbstractBlock $childBlock
-     *
-     * @return bool
      */
     public function canContain(AbstractBlock $childBlock): bool;
 
     /**
      * Attempt to parse the given line
-     *
-     * @param Cursor                       $cursor
-     * @param BlockContinueParserInterface $activeBlockParser
-     *
-     * @return BlockContinue|null
      */
     public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue;
 
     /**
      * Add the given line of text to the current block
-     *
-     * @param string $line
      */
     public function addLine(string $line): void;
 
@@ -80,8 +65,6 @@ interface BlockContinueParserInterface
 
     /**
      * Parse any inlines inside of the current block
-     *
-     * @param InlineParserEngineInterface $inlineParser
      */
     public function parseInlines(InlineParserEngineInterface $inlineParser): void;
 }

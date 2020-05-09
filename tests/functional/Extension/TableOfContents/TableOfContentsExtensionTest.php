@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,7 +21,7 @@ use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
 
 final class TableOfContentsExtensionTest extends AbstractLocalDataTest
 {
-    public function testWithSampleData()
+    public function testWithSampleData(): void
     {
         $this->setUpConverter();
 
@@ -28,7 +30,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithWeirdNestingLeavingItAsIs()
+    public function testWithWeirdNestingLeavingItAsIs(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -41,7 +43,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithWeirdNestingWithRelativeNormalization()
+    public function testWithWeirdNestingWithRelativeNormalization(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -54,7 +56,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithWeirdNestingWithFlattenedNormalization()
+    public function testWithWeirdNestingWithFlattenedNormalization(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -67,7 +69,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithPositionTop()
+    public function testWithPositionTop(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -80,7 +82,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithPositionBeforeHeadings()
+    public function testWithPositionBeforeHeadings(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -93,7 +95,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithPositionPlaceholder()
+    public function testWithPositionPlaceholder(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -107,7 +109,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithCustomClass()
+    public function testWithCustomClass(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -120,7 +122,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithBulletedStyle()
+    public function testWithBulletedStyle(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -133,7 +135,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithOrderedStyle()
+    public function testWithOrderedStyle(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -146,7 +148,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testWithNoHeadings()
+    public function testWithNoHeadings(): void
     {
         $this->setUpConverter();
 
@@ -155,7 +157,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    public function testMinMaxHeadingLevels()
+    public function testMinMaxHeadingLevels(): void
     {
         $this->setUpConverter([
             'table_of_contents' => [
@@ -169,7 +171,10 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
-    protected function setUpConverter(array $config = [])
+    /**
+     * @param array<string, mixed> $config
+     */
+    protected function setUpConverter(array $config = []): void
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new HeadingPermalinkExtension());

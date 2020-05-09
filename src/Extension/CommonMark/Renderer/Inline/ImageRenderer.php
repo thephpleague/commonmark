@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -25,34 +27,31 @@ use League\CommonMark\Util\RegexHelper;
 
 final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
+    /** @var ConfigurationInterface */
     protected $config;
 
     /**
-     * @param Image                      $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param Image $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof Image)) {
+        if (! ($node instanceof Image)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
         $attrs = $node->getData('attributes', []);
 
-        $forbidUnsafeLinks = !$this->config->get('allow_unsafe_links');
+        $forbidUnsafeLinks = ! $this->config->get('allow_unsafe_links');
         if ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($node->getUrl())) {
             $attrs['src'] = '';
         } else {
             $attrs['src'] = $node->getUrl();
         }
 
-        $alt = $childRenderer->renderNodes($node->children());
-        $alt = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
+        $alt          = $childRenderer->renderNodes($node->children());
+        $alt          = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt);
 
         if (isset($node->data['title'])) {

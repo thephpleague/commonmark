@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -30,13 +32,13 @@ final class FencedCodeStartParser implements BlockStartParserInterface
         }
 
         $indent = $cursor->getIndent();
-        $fence = $cursor->match('/^[ \t]*(?:`{3,}(?!.*`)|^~{3,})/');
+        $fence  = $cursor->match('/^[ \t]*(?:`{3,}(?!.*`)|^~{3,})/');
         if ($fence === null) {
             return BlockStart::none();
         }
 
         // fenced code block
-        $fence = \ltrim($fence, " \t");
+        $fence       = \ltrim($fence, " \t");
         $fenceLength = \strlen($fence);
 
         return BlockStart::of(new FencedCodeParser($fenceLength, $fence[0], $indent))->at($cursor);

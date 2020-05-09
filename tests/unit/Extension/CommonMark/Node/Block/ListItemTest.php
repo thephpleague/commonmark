@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,9 +22,9 @@ use PHPUnit\Framework\TestCase;
 
 class ListItemTest extends TestCase
 {
-    public function testConstructorAndGetListData()
+    public function testConstructorAndGetListData(): void
     {
-        $listData = $this->createMock(ListData::class);
+        $listData  = $this->createMock(ListData::class);
         $listBlock = new ListItem($listData);
 
         $this->assertSame($listData, $listBlock->getListData());

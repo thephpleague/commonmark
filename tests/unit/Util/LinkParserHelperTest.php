@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,18 +20,18 @@ use PHPUnit\Framework\TestCase;
 class LinkParserHelperTest extends TestCase
 {
     /**
-     * @param string $input
-     * @param string $expected
-     *
      * @dataProvider dataProviderForTestParseLinkDestination
      */
-    public function testParseLinkDestination(string $input, string $expected)
+    public function testParseLinkDestination(string $input, string $expected): void
     {
         $cursor = new Cursor($input);
         $this->assertSame($expected, LinkParserHelper::parseLinkDestination($cursor));
     }
 
-    public function dataProviderForTestParseLinkDestination()
+    /**
+     * @return iterable<array<string>>
+     */
+    public function dataProviderForTestParseLinkDestination(): iterable
     {
         yield ['www.google.com', 'www.google.com'];
         yield ['<www.google.com>', 'www.google.com'];
@@ -38,18 +40,18 @@ class LinkParserHelperTest extends TestCase
     }
 
     /**
-     * @param string $input
-     * @param int    $expected
-     *
      * @dataProvider dataProviderForTestParseLinkLabel
      */
-    public function testParseLinkLabel(string $input, int $expected)
+    public function testParseLinkLabel(string $input, int $expected): void
     {
         $cursor = new Cursor($input);
         $this->assertSame($expected, LinkParserHelper::parseLinkLabel($cursor));
     }
 
-    public function dataProviderForTestParseLinkLabel()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataProviderForTestParseLinkLabel(): iterable
     {
         yield ['[link](http://example.com)', 6];
         yield ['[\\]: test', 0];

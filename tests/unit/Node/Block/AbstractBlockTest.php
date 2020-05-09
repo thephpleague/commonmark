@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 class AbstractBlockTest extends TestCase
 {
-    public function testSetParent()
+    public function testSetParent(): void
     {
         $block = $this->getMockForAbstractClass(AbstractBlock::class);
 
@@ -32,7 +34,7 @@ class AbstractBlockTest extends TestCase
         $this->assertNull($block->parent());
     }
 
-    public function testSetParentWithInvalidNode()
+    public function testSetParentWithInvalidNode(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -42,7 +44,7 @@ class AbstractBlockTest extends TestCase
         self::getMethod('setParent')->invoke($block, $inline);
     }
 
-    public function testGetStartLine()
+    public function testGetStartLine(): void
     {
         $block = $this->getMockForAbstractClass(AbstractBlock::class);
 
@@ -50,7 +52,7 @@ class AbstractBlockTest extends TestCase
         $this->assertEquals(42, $block->getStartLine());
     }
 
-    public function testGetSetEndLine()
+    public function testGetSetEndLine(): void
     {
         $block = $this->getMockForAbstractClass(AbstractBlock::class);
 
@@ -60,7 +62,7 @@ class AbstractBlockTest extends TestCase
 
     private static function getMethod(string $name): \ReflectionMethod
     {
-        $class = new \ReflectionClass(AbstractBlock::class);
+        $class  = new \ReflectionClass(AbstractBlock::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
 
@@ -69,7 +71,7 @@ class AbstractBlockTest extends TestCase
 
     private static function getProperty(string $name): \ReflectionProperty
     {
-        $class = new \ReflectionClass(AbstractBlock::class);
+        $class    = new \ReflectionClass(AbstractBlock::class);
         $property = $class->getProperty($name);
         $property->setAccessible(true);
 

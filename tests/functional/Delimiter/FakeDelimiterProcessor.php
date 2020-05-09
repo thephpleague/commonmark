@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,51 +22,38 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class FakeDelimiterProcessor implements DelimiterProcessorInterface
 {
+    /** @var string */
     private $delimiterChar;
 
+    /** @var int */
     private $delimiterUse;
 
     public function __construct(string $delimiterChar, int $delimiterUse)
     {
         $this->delimiterChar = $delimiterChar;
-        $this->delimiterUse = $delimiterUse;
+        $this->delimiterUse  = $delimiterUse;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOpeningCharacter(): string
     {
         return $this->delimiterChar;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClosingCharacter(): string
     {
         return $this->delimiterChar;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMinLength(): int
     {
         return 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
     {
         return $this->delimiterUse;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
     }

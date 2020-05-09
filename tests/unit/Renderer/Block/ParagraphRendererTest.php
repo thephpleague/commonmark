@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class ParagraphRendererTest extends TestCase
 {
-    /**
-     * @var ParagraphRenderer
-     */
+    /** @var ParagraphRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -33,11 +33,11 @@ class ParagraphRendererTest extends TestCase
         $this->renderer = new ParagraphRenderer();
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $block = new Paragraph();
+        $block                     = new Paragraph();
         $block->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer              = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -48,11 +48,11 @@ class ParagraphRendererTest extends TestCase
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

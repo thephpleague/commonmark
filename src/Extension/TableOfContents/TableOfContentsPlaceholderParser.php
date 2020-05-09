@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -45,7 +47,7 @@ final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
 
     public static function blockStartParser(): BlockStartParserInterface
     {
-        return new class() implements BlockStartParserInterface, ConfigurationAwareInterface {
+        return new class () implements BlockStartParserInterface, ConfigurationAwareInterface {
             /** @var ConfigurationInterface */
             private $config;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,7 +18,10 @@ use League\CommonMark\Environment\EnvironmentInterface;
 
 trait FakeInjectableTrait
 {
+    /** @var bool */
     protected $configInjected = false;
+
+    /** @var bool */
     protected $environmentInjected = false;
 
     public function setConfiguration(ConfigurationInterface $configuration): void

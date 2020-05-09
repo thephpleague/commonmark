@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 class DelimiterProcessorCollectionTest extends TestCase
 {
-    public function testAddNewProcessor()
+    public function testAddNewProcessor(): void
     {
         $collection = new DelimiterProcessorCollection();
 
@@ -35,7 +37,7 @@ class DelimiterProcessorCollectionTest extends TestCase
         $this->assertSame($processor2, $collection->getDelimiterProcessor('_'));
     }
 
-    public function testAddProcessorForCharacterAlreadyRegistered()
+    public function testAddProcessorForCharacterAlreadyRegistered(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectErrorMessage('Delim processor for character "*" already exists');

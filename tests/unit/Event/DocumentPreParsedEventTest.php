@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 final class DocumentPreParsedEventTest extends TestCase
 {
-    public function testGetDocument()
+    public function testGetDocument(): void
     {
         $document = new Document();
         $markdown = new MarkdownInput('');
@@ -31,12 +33,12 @@ final class DocumentPreParsedEventTest extends TestCase
         $this->assertSame($markdown, $event->getMarkdown());
     }
 
-    public function testEventDispatchedAtCorrectTime()
+    public function testEventDispatchedAtCorrectTime(): void
     {
         $wasCalled = false;
 
         $environment = Environment::createCommonMarkEnvironment();
-        $environment->addEventListener(DocumentPreParsedEvent::class, function (DocumentPreParsedEvent $event) use (&$wasCalled) {
+        $environment->addEventListener(DocumentPreParsedEvent::class, static function (DocumentPreParsedEvent $event) use (&$wasCalled): void {
             $wasCalled = true;
         });
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 final class TaskListExtensionTest extends TestCase
 {
-    public function testTaskLists()
+    public function testTaskLists(): void
     {
         $input = <<<'EOT'
 - [x] foo

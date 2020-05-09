@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 class FencedCodeRendererTest extends TestCase
 {
-    /**
-     * @var FencedCodeRenderer
-     */
+    /** @var FencedCodeRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -34,7 +34,7 @@ class FencedCodeRendererTest extends TestCase
         $this->renderer = new FencedCodeRenderer();
     }
 
-    public function testRenderWithLanguageSpecified()
+    public function testRenderWithLanguageSpecified(): void
     {
         $document = new Document();
 
@@ -59,7 +59,7 @@ class FencedCodeRendererTest extends TestCase
         $this->assertStringContainsString('hello world', $code->getContents(true));
     }
 
-    public function testRenderWithoutLanguageSpecified()
+    public function testRenderWithoutLanguageSpecified(): void
     {
         $document = new Document();
 
@@ -83,11 +83,11 @@ class FencedCodeRendererTest extends TestCase
         $this->assertStringContainsString('hello world', $code->getContents(true));
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

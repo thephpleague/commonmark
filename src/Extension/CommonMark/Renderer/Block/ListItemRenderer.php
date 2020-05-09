@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -25,21 +27,21 @@ use League\CommonMark\Util\HtmlElement;
 final class ListItemRenderer implements NodeRendererInterface
 {
     /**
-     * @param ListItem                   $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param ListItem $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof ListItem)) {
+        if (! ($node instanceof ListItem)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
         $contents = $childRenderer->renderNodes($node->children());
-        if (\substr($contents, 0, 1) === '<' && !$this->startsTaskListItem($node)) {
+        if (\substr($contents, 0, 1) === '<' && ! $this->startsTaskListItem($node)) {
             $contents = "\n" . $contents;
         }
+
         if (\substr($contents, -1, 1) === '>') {
             $contents .= "\n";
         }

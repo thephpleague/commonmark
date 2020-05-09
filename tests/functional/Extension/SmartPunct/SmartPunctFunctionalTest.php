@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SmartPunctFunctionalTest extends TestCase
 {
-    /**
-     * @var CommonMarkConverter
-     */
+    /** @var CommonMarkConverter */
     protected $converter;
 
     protected function setUp(): void
@@ -44,11 +44,11 @@ class SmartPunctFunctionalTest extends TestCase
      *
      * @dataProvider dataProvider
      */
-    public function testExample($markdown, $html, $section, $number)
+    public function testExample(string $markdown, string $html, string $section, int $number): void
     {
         $actualResult = $this->converter->convertToHtml($markdown);
 
-        $failureMessage = sprintf('Unexpected result ("%s" section, example #%d)', $section, $number);
+        $failureMessage  = \sprintf('Unexpected result ("%s" section, example #%d)', $section, $number);
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;
         $failureMessage .= "\n=== expected ===============\n" . $html;
         $failureMessage .= "\n=== got ====================\n" . $actualResult;
@@ -57,24 +57,24 @@ class SmartPunctFunctionalTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
-    public function dataProvider()
+    public function dataProvider(): array
     {
         $filename = __DIR__ . '/../../../../vendor/commonmark/commonmark.js/test/smart_punct.txt';
-        if (($data = file_get_contents($filename)) === false) {
-            $this->fail(sprintf('Failed to load spec from %s', $filename));
+        if (($data = \file_get_contents($filename)) === false) {
+            $this->fail(\sprintf('Failed to load spec from %s', $filename));
         }
 
         $matches = [];
         // Normalize newlines for platform independence
-        $data = preg_replace('/\r\n?/', "\n", $data);
-        $data = preg_replace('/<!-- END TESTS -->.*$/', '', $data);
-        preg_match_all('/^`{32} example\n([\s\S]*?)^\.\n([\s\S]*?)^`{32}$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
+        $data = \preg_replace('/\r\n?/', "\n", $data);
+        $data = \preg_replace('/<!-- END TESTS -->.*$/', '', $data);
+        \preg_match_all('/^`{32} example\n([\s\S]*?)^\.\n([\s\S]*?)^`{32}$|^#{1,6} *(.*)$/m', $data, $matches, PREG_SET_ORDER);
 
-        $examples = [];
+        $examples       = [];
         $currentSection = '';
-        $exampleNumber = 0;
+        $exampleNumber  = 0;
 
         foreach ($matches as $match) {
             if (isset($match[3])) {
@@ -83,7 +83,7 @@ class SmartPunctFunctionalTest extends TestCase
                 $exampleNumber++;
 
                 $markdown = $match[1];
-                $markdown = str_replace('→', "\t", $markdown);
+                $markdown = \str_replace('→', "\t", $markdown);
 
                 $examples[] = [
                     'markdown' => $markdown,

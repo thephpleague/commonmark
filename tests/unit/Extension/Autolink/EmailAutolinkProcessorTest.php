@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,12 +21,9 @@ use PHPUnit\Framework\TestCase;
 final class EmailAutolinkProcessorTest extends TestCase
 {
     /**
-     * @param string $input
-     * @param string $expected
-     *
      * @dataProvider dataProviderForEmailAutolinks
      */
-    public function testEmailAutolinks($input, $expected)
+    public function testEmailAutolinks(string $input, string $expected): void
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new AutolinkExtension());
@@ -34,7 +33,10 @@ final class EmailAutolinkProcessorTest extends TestCase
         $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
     }
 
-    public function dataProviderForEmailAutolinks()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataProviderForEmailAutolinks(): iterable
     {
         yield ['You can try emailing foo@example.com but that inbox doesn\'t actually exist.', '<p>You can try emailing <a href="mailto:foo@example.com">foo@example.com</a> but that inbox doesn\'t actually exist.</p>'];
         yield ['> This processor can even handle email addresses like foo@example.com inside of blockquotes!', "<blockquote>\n<p>This processor can even handle email addresses like <a href=\"mailto:foo@example.com\">foo@example.com</a> inside of blockquotes!</p>\n</blockquote>"];

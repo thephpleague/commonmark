@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -27,16 +29,25 @@ final class Configuration implements ConfigurationInterface
         $this->config = $config;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function merge(array $config = []): void
     {
         $this->config = \array_replace_recursive($this->config, $config);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function replace(array $config = []): void
     {
         $this->config = $config;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function get(?string $key = null, $default = null)
     {
         if ($key === null) {
@@ -48,13 +59,16 @@ final class Configuration implements ConfigurationInterface
             return $this->getConfigByPath($key, $default);
         }
 
-        if (!isset($this->config[$key])) {
+        if (! isset($this->config[$key])) {
             return $default;
         }
 
         return $this->config[$key];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function set(string $key, $value = null): void
     {
         // accept a/b/c as ['a']['b']['c']
@@ -66,17 +80,16 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param string      $keyPath
-     * @param string|null $default
+     * @param mixed|null $default
      *
      * @return mixed|null
      */
     private function getConfigByPath(string $keyPath, $default = null)
     {
         $keyArr = \explode('/', $keyPath);
-        $data = $this->config;
+        $data   = $this->config;
         foreach ($keyArr as $k) {
-            if (!\is_array($data) || !isset($data[$k])) {
+            if (! \is_array($data) || ! isset($data[$k])) {
                 return $default;
             }
 
@@ -87,19 +100,18 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param string      $keyPath
-     * @param string|null $value
+     * @param mixed|null $value
      */
     private function setByPath(string $keyPath, $value = null): void
     {
-        $keyArr = \explode('/', $keyPath);
+        $keyArr  = \explode('/', $keyPath);
         $pointer = &$this->config;
         while (($k = \array_shift($keyArr)) !== null) {
-            if (!\is_array($pointer)) {
+            if (! \is_array($pointer)) {
                 $pointer = [];
             }
 
-            if (!isset($pointer[$k])) {
+            if (! isset($pointer[$k])) {
                 $pointer[$k] = null;
             }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,14 +26,13 @@ use League\CommonMark\Util\Xml;
 final class IndentedCodeRenderer implements NodeRendererInterface
 {
     /**
-     * @param IndentedCode               $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param IndentedCode $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof IndentedCode)) {
+        if (! ($node instanceof IndentedCode)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 

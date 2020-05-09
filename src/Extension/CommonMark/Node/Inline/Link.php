@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,11 +24,11 @@ class Link extends AbstractWebResource
     {
         parent::__construct($url);
 
-        if (!empty($label)) {
+        if (! empty($label)) {
             $this->appendChild(new Text($label));
         }
 
-        if (!empty($title)) {
+        if (! empty($title)) {
             $this->data['title'] = $title;
         }
     }

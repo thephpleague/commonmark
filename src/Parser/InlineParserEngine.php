@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -37,16 +39,16 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
     public function __construct(EnvironmentInterface $environment, ReferenceMapInterface $referenceMap)
     {
-        $this->environment = $environment;
+        $this->environment  = $environment;
         $this->referenceMap = $referenceMap;
     }
 
     public function parse(string $contents, AbstractBlock $block): void
     {
         $inlineParserContext = new InlineParserContext($contents, $block, $this->referenceMap);
-        $cursor = $inlineParserContext->getCursor();
+        $cursor              = $inlineParserContext->getCursor();
         while (($character = $cursor->getCharacter()) !== null) {
-            if (!$this->parseCharacter($character, $inlineParserContext)) {
+            if (! $this->parseCharacter($character, $inlineParserContext)) {
                 $this->addPlainText($character, $block, $inlineParserContext);
             }
         }
@@ -59,9 +61,6 @@ final class InlineParserEngine implements InlineParserEngineInterface
     }
 
     /**
-     * @param string              $character
-     * @param InlineParserContext $inlineParserContext
-     *
      * @return bool Whether we successfully parsed a character at that position
      */
     private function parseCharacter(string $character, InlineParserContext $inlineParserContext): bool
@@ -81,7 +80,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
     private function parseDelimiters(DelimiterProcessorInterface $delimiterProcessor, InlineParserContext $inlineContext): bool
     {
-        $cursor = $inlineContext->getCursor();
+        $cursor    = $inlineContext->getCursor();
         $character = $cursor->getCharacter();
         $numDelims = 0;
 
@@ -133,7 +132,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
         }
 
         $lastInline = $container->lastChild();
-        if ($lastInline instanceof Text && !isset($lastInline->data['delim'])) {
+        if ($lastInline instanceof Text && ! isset($lastInline->data['delim'])) {
             $lastInline->append($text);
         } else {
             $container->appendChild(new Text($text));
@@ -141,28 +140,23 @@ final class InlineParserEngine implements InlineParserEngineInterface
     }
 
     /**
-     * @param string                      $charBefore
-     * @param string                      $charAfter
-     * @param string                      $character
-     * @param DelimiterProcessorInterface $delimiterProcessor
-     *
      * @return bool[]
      */
-    private static function determineCanOpenOrClose(string $charBefore, string $charAfter, string $character, DelimiterProcessorInterface $delimiterProcessor)
+    private static function determineCanOpenOrClose(string $charBefore, string $charAfter, string $character, DelimiterProcessorInterface $delimiterProcessor): array
     {
-        $afterIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
-        $afterIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
-        $beforeIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
+        $afterIsWhitespace   = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
+        $afterIsPunctuation  = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
+        $beforeIsWhitespace  = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
         $beforeIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
 
-        $leftFlanking = !$afterIsWhitespace && (!$afterIsPunctuation || $beforeIsWhitespace || $beforeIsPunctuation);
-        $rightFlanking = !$beforeIsWhitespace && (!$beforeIsPunctuation || $afterIsWhitespace || $afterIsPunctuation);
+        $leftFlanking  = ! $afterIsWhitespace && (! $afterIsPunctuation || $beforeIsWhitespace || $beforeIsPunctuation);
+        $rightFlanking = ! $beforeIsWhitespace && (! $beforeIsPunctuation || $afterIsWhitespace || $afterIsPunctuation);
 
         if ($character === '_') {
-            $canOpen = $leftFlanking && (!$rightFlanking || $beforeIsPunctuation);
-            $canClose = $rightFlanking && (!$leftFlanking || $afterIsPunctuation);
+            $canOpen  = $leftFlanking && (! $rightFlanking || $beforeIsPunctuation);
+            $canClose = $rightFlanking && (! $leftFlanking || $afterIsPunctuation);
         } else {
-            $canOpen = $leftFlanking && $character === $delimiterProcessor->getOpeningCharacter();
+            $canOpen  = $leftFlanking && $character === $delimiterProcessor->getOpeningCharacter();
             $canClose = $rightFlanking && $character === $delimiterProcessor->getClosingCharacter();
         }
 

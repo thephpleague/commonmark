@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -26,9 +28,9 @@ final class HtmlFilter
      * @param string $html   HTML input to be filtered
      * @param string $filter One of the HtmlFilter constants
      *
-     * @throws \InvalidArgumentException when an invalid $filter is given
-     *
      * @return string Filtered HTML
+     *
+     * @throws \InvalidArgumentException when an invalid $filter is given
      */
     public static function filter(string $html, string $filter): string
     {
@@ -40,7 +42,7 @@ final class HtmlFilter
             case self::ALLOW:
                 return $html;
             default:
-                throw new \InvalidArgumentException(sprintf('Invalid filter provided: "%s"', $filter));
+                throw new \InvalidArgumentException(\sprintf('Invalid filter provided: "%s"', $filter));
         }
     }
 }

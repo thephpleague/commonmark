@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,17 +22,17 @@ use PHPUnit\Framework\TestCase;
 class XmlTest extends TestCase
 {
     /**
-     * @param string $input
-     * @param string $expectedOutput
-     *
      * @dataProvider dataProviderForTestEscape
      */
-    public function testEscape($input, $expectedOutput)
+    public function testEscape(string $input, string $expectedOutput): void
     {
         $this->assertEquals($expectedOutput, Xml::escape($input));
     }
 
-    public function dataProviderForTestEscape()
+    /**
+     * @return iterable<string[]>
+     */
+    public function dataProviderForTestEscape(): iterable
     {
         yield ['foo', 'foo'];
         yield ['&copy;', '&amp;copy;'];

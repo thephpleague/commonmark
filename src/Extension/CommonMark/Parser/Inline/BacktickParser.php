@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,6 +23,9 @@ use League\CommonMark\Parser\InlineParserContext;
 
 final class BacktickParser implements InlineParserInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return ['`'];
@@ -33,27 +38,29 @@ final class BacktickParser implements InlineParserInterface
         $ticks = $cursor->match('/^`+/');
 
         $currentPosition = $cursor->getPosition();
-        $previousState = $cursor->saveState();
+        $previousState   = $cursor->saveState();
 
         while ($matchingTicks = $cursor->match('/`+/m')) {
-            if ($matchingTicks === $ticks) {
-                $code = $cursor->getSubstring($currentPosition, $cursor->getPosition() - $currentPosition - \strlen($ticks));
-
-                $c = \preg_replace('/\n/m', ' ', $code);
-
-                if (
-                    !empty($c) &&
-                    $c[0] === ' ' &&
-                    \substr($c, -1, 1) === ' ' &&
-                    \preg_match('/[^ ]/', $c)
-                ) {
-                    $c = \substr($c, 1, -1);
-                }
-
-                $inlineContext->getContainer()->appendChild(new Code($c));
-
-                return true;
+            if ($matchingTicks !== $ticks) {
+                continue;
             }
+
+            $code = $cursor->getSubstring($currentPosition, $cursor->getPosition() - $currentPosition - \strlen($ticks));
+
+            $c = \preg_replace('/\n/m', ' ', $code);
+
+            if (
+                ! empty($c) &&
+                $c[0] === ' ' &&
+                \substr($c, -1, 1) === ' ' &&
+                \preg_match('/[^ ]/', $c)
+            ) {
+                $c = \substr($c, 1, -1);
+            }
+
+            $inlineContext->getContainer()->appendChild(new Code($c));
+
+            return true;
         }
 
         // If we got here, we didn't match a closing backtick sequence

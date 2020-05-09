@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -45,6 +47,9 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
         return $this->processorsByChar[$char] ?? null;
     }
 
+    /**
+     * @return string[]
+     */
     public function getDelimiterCharacters(): array
     {
         return \array_keys($this->processorsByChar);

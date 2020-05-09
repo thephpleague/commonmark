@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -28,7 +30,7 @@ use PHPUnit\Framework\TestCase;
 
 class EnvironmentTest extends TestCase
 {
-    public function testAddGetExtensions()
+    public function testAddGetExtensions(): void
     {
         $environment = new Environment();
         $this->assertCount(0, $environment->getExtensions());
@@ -60,16 +62,16 @@ class EnvironmentTest extends TestCase
         $environment->getBlockStartParsers();
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
-        $config = ['foo' => 'bar'];
+        $config      = ['foo' => 'bar'];
         $environment = new Environment($config);
         $this->assertEquals('bar', $environment->getConfig('foo'));
     }
 
-    public function testGetConfig()
+    public function testGetConfig(): void
     {
-        $config = [
+        $config      = [
             'foo' => 'bar',
             'a'   => [
                 'b' => 'c',
@@ -99,7 +101,7 @@ class EnvironmentTest extends TestCase
         $this->assertEquals(42, $environment->getConfig('answer', 42));
     }
 
-    public function testSetConfig()
+    public function testSetConfig(): void
     {
         $environment = new Environment(['foo' => 'bar']);
         $environment->setConfig(['test' => '123']);
@@ -107,7 +109,7 @@ class EnvironmentTest extends TestCase
         $this->assertEquals('123', $environment->getConfig('test'));
     }
 
-    public function testSetConfigAfterInit()
+    public function testSetConfigAfterInit(): void
     {
         $this->expectException('RuntimeException');
 
@@ -117,7 +119,7 @@ class EnvironmentTest extends TestCase
         $environment->setConfig(['foo' => 'bar']);
     }
 
-    public function testMergeConfig()
+    public function testMergeConfig(): void
     {
         $environment = new Environment(['foo' => 'bar', 'test' => '123']);
         $environment->mergeConfig(['test' => '456']);
@@ -125,7 +127,7 @@ class EnvironmentTest extends TestCase
         $this->assertEquals('456', $environment->getConfig('test'));
     }
 
-    public function testMergeConfigAfterInit()
+    public function testMergeConfigAfterInit(): void
     {
         $this->expectException('RuntimeException');
 
@@ -135,7 +137,7 @@ class EnvironmentTest extends TestCase
         $environment->mergeConfig(['foo' => 'bar']);
     }
 
-    public function testAddBlockStartParserAndGetter()
+    public function testAddBlockStartParserAndGetter(): void
     {
         $environment = new Environment();
 
@@ -145,7 +147,7 @@ class EnvironmentTest extends TestCase
         $this->assertContains($parser, $environment->getBlockStartParsers());
     }
 
-    public function testAddBlockStartParserFailsAfterInitialization()
+    public function testAddBlockStartParserFailsAfterInitialization(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -158,7 +160,7 @@ class EnvironmentTest extends TestCase
         $environment->addBlockStartParser($parser);
     }
 
-    public function testAddRenderer()
+    public function testAddRenderer(): void
     {
         $environment = new Environment();
 
@@ -168,7 +170,7 @@ class EnvironmentTest extends TestCase
         $this->assertContains($renderer, $environment->getRenderersForClass('MyClass'));
     }
 
-    public function testAddRendererFailsAfterInitialization()
+    public function testAddRendererFailsAfterInitialization(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -181,7 +183,7 @@ class EnvironmentTest extends TestCase
         $environment->addRenderer('MyClass', $renderer);
     }
 
-    public function testInlineParserCanMatchRegexDelimiter()
+    public function testInlineParserCanMatchRegexDelimiter(): void
     {
         $environment = new Environment();
 
@@ -193,10 +195,10 @@ class EnvironmentTest extends TestCase
         $environment->addInlineParser($parser);
         $environment->getInlineParsersForCharacter('/');
 
-        $this->assertEquals(1, preg_match($environment->getInlineParserCharacterRegex(), 'foo/bar'));
+        $this->assertEquals(1, \preg_match($environment->getInlineParserCharacterRegex(), 'foo/bar'));
     }
 
-    public function testAddInlineParserFailsAfterInitialization()
+    public function testAddInlineParserFailsAfterInitialization(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -209,7 +211,7 @@ class EnvironmentTest extends TestCase
         $environment->addInlineParser($parser);
     }
 
-    public function testGetInlineParsersForCharacter()
+    public function testGetInlineParsersForCharacter(): void
     {
         $environment = new Environment();
 
@@ -223,14 +225,14 @@ class EnvironmentTest extends TestCase
         $this->assertContains($parser, $environment->getInlineParsersForCharacter('a'));
     }
 
-    public function testGetInlineParsersForNonExistantCharacter()
+    public function testGetInlineParsersForNonExistantCharacter(): void
     {
         $environment = new Environment();
 
         $this->assertEmpty($environment->getInlineParsersForCharacter('a'));
     }
 
-    public function testAddDelimiterProcessor()
+    public function testAddDelimiterProcessor(): void
     {
         $environment = new Environment();
 
@@ -241,7 +243,7 @@ class EnvironmentTest extends TestCase
         $this->assertSame($processor, $environment->getDelimiterProcessors()->getDelimiterProcessor('*'));
     }
 
-    public function testAddDelimiterProcessorFailsAfterInitialization()
+    public function testAddDelimiterProcessorFailsAfterInitialization(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -254,18 +256,18 @@ class EnvironmentTest extends TestCase
         $environment->addDelimiterProcessor($processor);
     }
 
-    public function testGetRendererForUnknownClass()
+    public function testGetRendererForUnknownClass(): void
     {
-        $environment = new Environment();
+        $environment  = new Environment();
         $mockRenderer = $this->createMock(NodeRendererInterface::class);
         $environment->addRenderer(FakeBlock3::class, $mockRenderer);
 
         $this->assertEmpty($environment->getRenderersForClass(FakeBlock1::class));
     }
 
-    public function testGetRendererForSubClass()
+    public function testGetRendererForSubClass(): void
     {
-        $environment = new Environment();
+        $environment  = new Environment();
         $mockRenderer = $this->createMock(NodeRendererInterface::class);
         $environment->addRenderer(FakeBlock1::class, $mockRenderer);
 
@@ -275,7 +277,7 @@ class EnvironmentTest extends TestCase
         $this->assertFirstResult($mockRenderer, $environment->getRenderersForClass(FakeBlock3::class));
     }
 
-    public function testAddExtensionAndGetter()
+    public function testAddExtensionAndGetter(): void
     {
         $environment = new Environment();
 
@@ -285,7 +287,7 @@ class EnvironmentTest extends TestCase
         $this->assertContains($extension, $environment->getExtensions());
     }
 
-    public function testAddExtensionFailsAfterInitialization()
+    public function testAddExtensionFailsAfterInitialization(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -298,7 +300,7 @@ class EnvironmentTest extends TestCase
         $environment->addExtension($extension);
     }
 
-    public function testGetInlineParserCharacterRegexForEmptyEnvironment()
+    public function testGetInlineParserCharacterRegexForEmptyEnvironment(): void
     {
         $environment = new Environment();
 
@@ -307,13 +309,13 @@ class EnvironmentTest extends TestCase
 
         $regex = $environment->getInlineParserCharacterRegex();
 
-        $test = '*This* should match **everything** including chars like `[`.';
+        $test    = '*This* should match **everything** including chars like `[`.';
         $matches = [];
-        preg_match($regex, $test, $matches);
+        \preg_match($regex, $test, $matches);
         $this->assertSame($test, $matches[0]);
     }
 
-    public function testInjectableBlockStartParsersGetInjected()
+    public function testInjectableBlockStartParsersGetInjected(): void
     {
         $environment = new Environment();
 
@@ -326,7 +328,7 @@ class EnvironmentTest extends TestCase
         $this->assertTrue($parser->bothWereInjected());
     }
 
-    public function testInjectableRenderersGetInjected()
+    public function testInjectableRenderersGetInjected(): void
     {
         $environment = new Environment();
 
@@ -339,7 +341,7 @@ class EnvironmentTest extends TestCase
         $this->assertTrue($renderer->bothWereInjected());
     }
 
-    public function testInjectableInlineParsersGetInjected()
+    public function testInjectableInlineParsersGetInjected(): void
     {
         $environment = new Environment();
 
@@ -352,7 +354,7 @@ class EnvironmentTest extends TestCase
         $this->assertTrue($parser->bothWereInjected());
     }
 
-    public function testInjectableDelimiterProcessorsGetInjected()
+    public function testInjectableDelimiterProcessorsGetInjected(): void
     {
         $environment = new Environment();
 
@@ -365,12 +367,14 @@ class EnvironmentTest extends TestCase
         $this->assertTrue($processor->bothWereInjected());
     }
 
-    public function testInjectableEventListenersGetInjected()
+    public function testInjectableEventListenersGetInjected(): void
     {
         $environment = new Environment();
 
-        $listener1 = new FakeEventListener(function () { });
-        $listener2 = new FakeEventListenerInvokable(function () { });
+        // phpcs:ignore Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+        $listener1 = new FakeEventListener(static function (): void { });
+        // phpcs:ignore Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+        $listener2 = new FakeEventListenerInvokable(static function (): void { });
 
         $environment->addEventListener('', [$listener1, 'doStuff']);
         $environment->addEventListener('', $listener2);
@@ -385,7 +389,7 @@ class EnvironmentTest extends TestCase
         $this->assertNotNull($listener2->getConfiguration());
     }
 
-    public function testBlockParserPrioritization()
+    public function testBlockParserPrioritization(): void
     {
         $environment = new Environment();
 
@@ -397,14 +401,14 @@ class EnvironmentTest extends TestCase
         $environment->addBlockStartParser($parser2, 50);
         $environment->addBlockStartParser($parser3);
 
-        $parsers = iterator_to_array($environment->getBlockStartParsers());
+        $parsers = \iterator_to_array($environment->getBlockStartParsers());
 
         $this->assertSame($parser2, $parsers[0]);
         $this->assertSame($parser1, $parsers[1]);
         $this->assertSame($parser3, $parsers[2]);
     }
 
-    public function testInlineParserPrioritization()
+    public function testInlineParserPrioritization(): void
     {
         $environment = new Environment();
 
@@ -419,14 +423,14 @@ class EnvironmentTest extends TestCase
         $environment->addInlineParser($parser2, 50);
         $environment->addInlineParser($parser3);
 
-        $parsers = iterator_to_array($environment->getInlineParsersForCharacter('a'));
+        $parsers = \iterator_to_array($environment->getInlineParsersForCharacter('a'));
 
         $this->assertSame($parser2, $parsers[0]);
         $this->assertSame($parser1, $parsers[1]);
         $this->assertSame($parser3, $parsers[2]);
     }
 
-    public function testRendererPrioritization()
+    public function testRendererPrioritization(): void
     {
         $environment = new Environment();
 
@@ -438,37 +442,37 @@ class EnvironmentTest extends TestCase
         $environment->addRenderer('foo', $renderer2, 50);
         $environment->addRenderer('foo', $renderer3);
 
-        $parsers = iterator_to_array($environment->getRenderersForClass('foo'));
+        $parsers = \iterator_to_array($environment->getRenderersForClass('foo'));
 
         $this->assertSame($renderer2, $parsers[0]);
         $this->assertSame($renderer1, $parsers[1]);
         $this->assertSame($renderer3, $parsers[2]);
     }
 
-    public function testEventDispatching()
+    public function testEventDispatching(): void
     {
         $environment = new Environment();
-        $event = new FakeEvent();
+        $event       = new FakeEvent();
 
         $actualOrder = [];
 
-        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder): void {
             $this->assertSame($event, $e);
             $actualOrder[] = 'a';
         });
 
-        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder): void {
             $this->assertSame($event, $e);
             $actualOrder[] = 'b';
             $e->stopPropagation();
         });
 
-        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder): void {
             $this->assertSame($event, $e);
             $actualOrder[] = 'c';
         }, 10);
 
-        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e): void {
             $this->fail('Propogation should have been stopped before here');
         });
 
@@ -480,20 +484,24 @@ class EnvironmentTest extends TestCase
         $this->assertEquals('b', $actualOrder[2]);
     }
 
-    public function testAddEventListenerFailsAfterInitialization()
+    public function testAddEventListenerFailsAfterInitialization(): void
     {
         $this->expectException(\RuntimeException::class);
 
         $environment = new Environment();
-        $event = $this->createMock(AbstractEvent::class);
+        $event       = $this->createMock(AbstractEvent::class);
 
         $environment->dispatch($event);
 
-        $environment->addEventListener(AbstractEvent::class, function (AbstractEvent $e) {
+        $environment->addEventListener(AbstractEvent::class, static function (AbstractEvent $e): void {
         });
     }
 
-    private function assertFirstResult($expected, iterable $actual)
+    /**
+     * @param mixed           $expected
+     * @param iterable<mixed> $actual
+     */
+    private function assertFirstResult($expected, iterable $actual): void
     {
         foreach ($actual as $a) {
             $this->assertSame($expected, $a);

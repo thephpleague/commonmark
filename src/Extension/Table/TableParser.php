@@ -31,7 +31,7 @@ final class TableParser extends AbstractBlockContinueParser
     /** @var ArrayCollection<int, string> */
     private $bodyLines;
 
-    /** @var array<int, string> */
+    /** @var array<int, string|null> */
     private $columns;
 
     /** @var array<int, string> */
@@ -41,16 +41,14 @@ final class TableParser extends AbstractBlockContinueParser
     private $nextIsSeparatorLine = true;
 
     /**
-     * TableParser constructor.
-     *
-     * @param array<int, string> $columns
-     * @param array<int, string> $headerCells
+     * @param array<int, string|null> $columns
+     * @param array<int, string>      $headerCells
      */
     public function __construct(array $columns, array $headerCells)
     {
-        $this->block = new Table();
-        $this->bodyLines = new ArrayCollection();
-        $this->columns = $columns;
+        $this->block       = new Table();
+        $this->bodyLines   = new ArrayCollection();
+        $this->columns     = $columns;
         $this->headerCells = $headerCells;
     }
 
@@ -95,7 +93,7 @@ final class TableParser extends AbstractBlockContinueParser
         $headerRow = new TableRow();
         $head->appendChild($headerRow);
         for ($i = 0; $i < $headerColumns; $i++) {
-            $cell = $this->headerCells[$i];
+            $cell      = $this->headerCells[$i];
             $tableCell = self::parseCell($cell, $i, $inlineParser);
             $tableCell->setType(TableCell::TYPE_HEAD);
             $headerRow->appendChild($tableCell);
@@ -104,11 +102,11 @@ final class TableParser extends AbstractBlockContinueParser
         $body = null;
         foreach ($this->bodyLines as $rowLine) {
             $cells = self::split($rowLine);
-            $row = new TableRow();
+            $row   = new TableRow();
 
             // Body can not have more columns than head
             for ($i = 0; $i < $headerColumns; $i++) {
-                $cell = $cells[$i] ?? '';
+                $cell      = $cells[$i] ?? '';
                 $tableCell = self::parseCell($cell, $i, $inlineParser);
                 $row->appendChild($tableCell);
             }
@@ -118,6 +116,7 @@ final class TableParser extends AbstractBlockContinueParser
                 $body = new TableSection();
                 $this->block->appendChild($body);
             }
+
             $body->appendChild($row);
         }
     }
@@ -136,11 +135,9 @@ final class TableParser extends AbstractBlockContinueParser
     }
 
     /**
-     * @param string $line
+     * @internal
      *
      * @return array<int, string>
-     *
-     * @internal
      */
     public static function split(string $line): array
     {
@@ -151,9 +148,9 @@ final class TableParser extends AbstractBlockContinueParser
         }
 
         $cells = [];
-        $sb = '';
+        $sb    = '';
 
-        while (!$cursor->isAtEnd()) {
+        while (! $cursor->isAtEnd()) {
             switch ($c = $cursor->getCharacter()) {
                 case '\\':
                     if ($cursor->peek() === '|') {
@@ -166,14 +163,16 @@ final class TableParser extends AbstractBlockContinueParser
                         // Preserve backslash before other characters or at end of line.
                         $sb .= '\\';
                     }
+
                     break;
                 case '|':
                     $cells[] = $sb;
-                    $sb = '';
+                    $sb      = '';
                     break;
                 default:
                     $sb .= $c;
             }
+
             $cursor->advanceBy(1);
         }
 

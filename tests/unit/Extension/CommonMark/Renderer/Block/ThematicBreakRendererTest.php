@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class ThematicBreakRendererTest extends TestCase
 {
-    /**
-     * @var ThematicBreakRenderer
-     */
+    /** @var ThematicBreakRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -33,9 +33,9 @@ class ThematicBreakRendererTest extends TestCase
         $this->renderer = new ThematicBreakRenderer();
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $block = new ThematicBreak();
+        $block        = new ThematicBreak();
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -44,11 +44,11 @@ class ThematicBreakRendererTest extends TestCase
         $this->assertEquals('hr', $result->getTagName());
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

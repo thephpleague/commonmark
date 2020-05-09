@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,20 +26,17 @@ use League\CommonMark\Util\HtmlFilter;
 
 final class HtmlBlockRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
+    /** @var ConfigurationInterface */
     protected $config;
 
-    /*
-     * @param HtmlBlock                  $node
-     * @param ChildNodeRendererInterface $childRenderer
+    /**
+     * @param HtmlBlock $node
      *
-     * @return string
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof HtmlBlock)) {
+        if (! ($node instanceof HtmlBlock)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 

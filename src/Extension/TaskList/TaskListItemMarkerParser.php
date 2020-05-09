@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,6 +20,9 @@ use League\CommonMark\Parser\InlineParserContext;
 
 final class TaskListItemMarkerParser implements InlineParserInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return ['['];
@@ -28,11 +33,11 @@ final class TaskListItemMarkerParser implements InlineParserInterface
         $container = $inlineContext->getContainer();
 
         // Checkbox must come at the beginning of the first paragraph of the list item
-        if ($container->hasChildren() || !($container instanceof Paragraph && $container->parent() && $container->parent() instanceof ListItem)) {
+        if ($container->hasChildren() || ! ($container instanceof Paragraph && $container->parent() && $container->parent() instanceof ListItem)) {
             return false;
         }
 
-        $cursor = $inlineContext->getCursor();
+        $cursor   = $inlineContext->getCursor();
         $oldState = $cursor->saveState();
 
         $m = $cursor->match('/\[[ xX]\]/');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -35,8 +37,6 @@ final class Html5EntityDecoder
 
     /**
      * @param mixed $number
-     *
-     * @return string
      */
     private static function fromDecimal($number): string
     {

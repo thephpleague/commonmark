@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,9 +24,7 @@ use League\CommonMark\Node\Inline\AdjacentTextMerger;
 
 final class DelimiterStack
 {
-    /**
-     * @var DelimiterInterface|null
-     */
+    /** @var DelimiterInterface|null */
     private $top;
 
     public function push(DelimiterInterface $newDelimiter): void
@@ -38,7 +38,7 @@ final class DelimiterStack
         $this->top = $newDelimiter;
     }
 
-    private function findEarliest(DelimiterInterface $stackBottom = null): ?DelimiterInterface
+    private function findEarliest(?DelimiterInterface $stackBottom = null): ?DelimiterInterface
     {
         $delimiter = $this->top;
         while ($delimiter !== null && $delimiter->getPrevious() !== $stackBottom) {
@@ -78,7 +78,7 @@ final class DelimiterStack
         }
     }
 
-    public function removeAll(DelimiterInterface $stackBottom = null): void
+    public function removeAll(?DelimiterInterface $stackBottom = null): void
     {
         while ($this->top && $this->top !== $stackBottom) {
             $this->removeDelimiter($this->top);
@@ -99,20 +99,19 @@ final class DelimiterStack
 
     /**
      * @param string|string[] $characters
-     *
-     * @return DelimiterInterface|null
      */
     public function searchByCharacter($characters): ?DelimiterInterface
     {
-        if (!\is_array($characters)) {
+        if (! \is_array($characters)) {
             $characters = [$characters];
         }
 
         $opener = $this->top;
         while ($opener !== null) {
-            if (\in_array($opener->getChar(), $characters)) {
+            if (\in_array($opener->getChar(), $characters, true)) {
                 break;
             }
+
             $opener = $opener->getPrevious();
         }
 
@@ -131,31 +130,32 @@ final class DelimiterStack
             $delimiterChar = $closer->getChar();
 
             $delimiterProcessor = $processors->getDelimiterProcessor($delimiterChar);
-            if (!$closer->canClose() || $delimiterProcessor === null) {
+            if (! $closer->canClose() || $delimiterProcessor === null) {
                 $closer = $closer->getNext();
                 continue;
             }
 
             $openingDelimiterChar = $delimiterProcessor->getOpeningCharacter();
 
-            $useDelims = 0;
-            $openerFound = false;
+            $useDelims            = 0;
+            $openerFound          = false;
             $potentialOpenerFound = false;
-            $opener = $closer->getPrevious();
+            $opener               = $closer->getPrevious();
             while ($opener !== null && $opener !== $stackBottom && $opener !== ($openersBottom[$delimiterChar] ?? null)) {
                 if ($opener->canOpen() && $opener->getChar() === $openingDelimiterChar) {
                     $potentialOpenerFound = true;
-                    $useDelims = $delimiterProcessor->getDelimiterUse($opener, $closer);
+                    $useDelims            = $delimiterProcessor->getDelimiterUse($opener, $closer);
                     if ($useDelims > 0) {
                         $openerFound = true;
                         break;
                     }
                 }
+
                 $opener = $opener->getPrevious();
             }
 
-            if (!$openerFound) {
-                if (!$potentialOpenerFound) {
+            if (! $openerFound) {
+                if (! $potentialOpenerFound) {
                     // Only do this when we didn't even have a potential
                     // opener (one that matches the character and can open).
                     // If an opener was rejected because of the number of
@@ -164,12 +164,13 @@ final class DelimiterStack
                     // we want to consider it next time because the number
                     // of delimiters can change as we continue processing.
                     $openersBottom[$delimiterChar] = $closer->getPrevious();
-                    if (!$closer->canOpen()) {
+                    if (! $closer->canOpen()) {
                         // We can remove a closer that can't be an opener,
                         // once we've seen there's no matching opener.
                         $this->removeDelimiter($closer);
                     }
                 }
+
                 $closer = $closer->getNext();
                 continue;
             }
@@ -195,6 +196,7 @@ final class DelimiterStack
                 $this->removeDelimiterAndNode($opener);
             }
 
+            // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
             if ($closer->getLength() === 0) {
                 $next = $closer->getNext();
                 $this->removeDelimiterAndNode($closer);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,24 +18,16 @@ namespace League\CommonMark\Util;
 
 class HtmlElement
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $tagName;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $attributes = [];
 
-    /**
-     * @var HtmlElement|HtmlElement[]|string
-     */
+    /** @var HtmlElement|HtmlElement[]|string */
     protected $contents;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $selfClosing = false;
 
     /**
@@ -44,8 +38,8 @@ class HtmlElement
      */
     public function __construct(string $tagName, array $attributes = [], $contents = '', bool $selfClosing = false)
     {
-        $this->tagName = $tagName;
-        $this->attributes = $attributes;
+        $this->tagName     = $tagName;
+        $this->attributes  = $attributes;
         $this->selfClosing = $selfClosing;
 
         $this->setContents($contents ?? '');
@@ -66,7 +60,7 @@ class HtmlElement
 
     public function getAttribute(string $key): ?string
     {
-        if (!isset($this->attributes[$key])) {
+        if (! isset($this->attributes[$key])) {
             return null;
         }
 
@@ -81,13 +75,11 @@ class HtmlElement
     }
 
     /**
-     * @param bool $asString
-     *
      * @return HtmlElement|HtmlElement[]|string
      */
     public function getContents(bool $asString = true)
     {
-        if (!$asString) {
+        if (! $asString) {
             return $this->contents;
         }
 

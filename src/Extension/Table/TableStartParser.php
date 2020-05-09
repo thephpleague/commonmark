@@ -47,17 +47,15 @@ final class TableStartParser implements BlockStartParserInterface
     }
 
     /**
-     * @param Cursor $cursor
-     *
-     * @return array<int, string>
+     * @return array<int, string|null>
      */
     private static function parseSeparator(Cursor $cursor): array
     {
         $columns = [];
-        $pipes = 0;
-        $valid = false;
+        $pipes   = 0;
+        $valid   = false;
 
-        while (!$cursor->isAtEnd()) {
+        while (! $cursor->isAtEnd()) {
             switch ($c = $cursor->getCharacter()) {
                 case '|':
                     $cursor->advanceBy(1);
@@ -72,24 +70,28 @@ final class TableStartParser implements BlockStartParserInterface
                     break;
                 case '-':
                 case ':':
-                    if ($pipes === 0 && !empty($columns)) {
+                    if ($pipes === 0 && ! empty($columns)) {
                         // Need a pipe after the first column (first column doesn't need to start with one)
                         return [];
                     }
-                    $left = false;
+
+                    $left  = false;
                     $right = false;
                     if ($c === ':') {
                         $left = true;
                         $cursor->advanceBy(1);
                     }
+
                     if ($cursor->match('/^-+/') === null) {
                         // Need at least one dash
                         return [];
                     }
+
                     if ($cursor->getCharacter() === ':') {
                         $right = true;
                         $cursor->advanceBy(1);
                     }
+
                     $columns[] = self::getAlignment($left, $right);
                     // Next, need another pipe
                     $pipes = 0;
@@ -105,7 +107,7 @@ final class TableStartParser implements BlockStartParserInterface
             }
         }
 
-        if (!$valid) {
+        if (! $valid) {
             return [];
         }
 
@@ -116,9 +118,13 @@ final class TableStartParser implements BlockStartParserInterface
     {
         if ($left && $right) {
             return TableCell::ALIGN_CENTER;
-        } elseif ($left) {
+        }
+
+        if ($left) {
             return TableCell::ALIGN_LEFT;
-        } elseif ($right) {
+        }
+
+        if ($right) {
             return TableCell::ALIGN_RIGHT;
         }
 

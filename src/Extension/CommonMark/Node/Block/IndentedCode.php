@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,9 +18,7 @@ use League\CommonMark\Node\StringContainerInterface;
 
 class IndentedCode extends AbstractBlock implements StringContainerInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $literal = '';
 
     public function getLiteral(): string

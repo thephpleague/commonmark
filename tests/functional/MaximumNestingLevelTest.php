@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 class MaximumNestingLevelTest extends TestCase
 {
-    public function testThatWeCanHitTheLimit()
+    public function testThatWeCanHitTheLimit(): void
     {
         $converter = new CommonMarkConverter(['max_nesting_level' => 2]);
 
@@ -34,7 +36,7 @@ class MaximumNestingLevelTest extends TestCase
         $this->assertEquals($expected, $converter->convertToHtml($markdown));
     }
 
-    public function testThatWeCannotExceedTheLimit()
+    public function testThatWeCannotExceedTheLimit(): void
     {
         $converter = new CommonMarkConverter(['max_nesting_level' => 2]);
 

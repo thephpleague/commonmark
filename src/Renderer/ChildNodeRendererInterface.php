@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,8 +22,6 @@ interface ChildNodeRendererInterface
 {
     /**
      * @param Node[] $nodes
-     *
-     * @return string
      */
     public function renderNodes(iterable $nodes): string;
 

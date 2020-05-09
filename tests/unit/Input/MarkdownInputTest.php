@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,34 +19,34 @@ use PHPUnit\Framework\TestCase;
 
 final class MarkdownInputTest extends TestCase
 {
-    public function testConstructorAndGetter()
+    public function testConstructorAndGetter(): void
     {
         $markdown = new MarkdownInput('# Hello World!');
 
         $this->assertSame('# Hello World!', $markdown->getContent());
     }
 
-    public function testInvalidContent()
+    public function testInvalidContent(): void
     {
         $this->expectException(UnexpectedEncodingException::class);
 
-        $markdown = new MarkdownInput(chr(250));
+        $markdown = new MarkdownInput(\chr(250));
     }
 
-    public function testGetLines()
+    public function testGetLines(): void
     {
         $markdown = new MarkdownInput("# Hello World!\n\nThis is just a test.\n");
 
         $lines = $markdown->getLines();
 
-        $this->assertSame(iterator_to_array($lines), [
+        $this->assertSame(\iterator_to_array($lines), [
             0 => '# Hello World!',
             1 => '',
             2 => 'This is just a test.',
         ]);
     }
 
-    public function testGetLineCount()
+    public function testGetLineCount(): void
     {
         $markdown = new MarkdownInput("# Hello World!\n\nThis is just a test.\n");
 

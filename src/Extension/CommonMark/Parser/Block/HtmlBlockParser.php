@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ final class HtmlBlockParser extends AbstractBlockContinueParser
     /** @var HtmlBlock */
     private $block;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $content = '';
 
     /** @var bool */
@@ -67,9 +67,9 @@ final class HtmlBlockParser extends AbstractBlockContinueParser
         $this->content .= $line;
 
         // Check for end condition
+        // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
         if ($this->block->getType() >= HtmlBlock::TYPE_1_CODE_CONTAINER && $this->block->getType() <= HtmlBlock::TYPE_5_CDATA) {
-            $cursor = new Cursor($line);
-            if ($cursor->match(RegexHelper::getHtmlBlockCloseRegex($this->block->getType())) !== null) {
+            if (\preg_match(RegexHelper::getHtmlBlockCloseRegex($this->block->getType()), $line) === 1) {
                 $this->finished = true;
             }
         }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -31,11 +33,12 @@ use League\CommonMark\Util\RegexHelper;
 
 final class CloseBracketParser implements InlineParserInterface, EnvironmentAwareInterface
 {
-    /**
-     * @var EnvironmentInterface
-     */
+    /** @var EnvironmentInterface */
     private $environment;
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return [']'];
@@ -49,7 +52,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
             return false;
         }
 
-        if (!$opener->isActive()) {
+        if (! $opener->isActive()) {
             // no matched opener; remove from emphasis stack
             $inlineContext->getDelimiterStack()->removeDelimiter($opener);
 
@@ -58,13 +61,13 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         $cursor = $inlineContext->getCursor();
 
-        $startPos = $cursor->getPosition();
+        $startPos      = $cursor->getPosition();
         $previousState = $cursor->saveState();
 
         $cursor->advanceBy(1);
 
         // Check to see if we have a link/image
-        if (!($link = $this->tryParseLink($cursor, $inlineContext->getReferenceMap(), $opener, $startPos))) {
+        if (! ($link = $this->tryParseLink($cursor, $inlineContext->getReferenceMap(), $opener, $startPos))) {
             // No match
             $inlineContext->getDelimiterStack()->removeDelimiter($opener); // Remove this opener from stack
             $cursor->restoreState($previousState);
@@ -82,7 +85,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         // Process delimiters such as emphasis inside link/image
         $delimiterStack = $inlineContext->getDelimiterStack();
-        $stackBottom = $opener->getPrevious();
+        $stackBottom    = $opener->getPrevious();
         $delimiterStack->processDelimiters($stackBottom, $this->environment->getDelimiterProcessors());
         $delimiterStack->removeAll($stackBottom);
 
@@ -91,7 +94,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         // processEmphasis will remove this and later delimiters.
         // Now, for a link, we also remove earlier link openers (no links in links)
-        if (!$isImage) {
+        if (! $isImage) {
             $inlineContext->getDelimiterStack()->removeEarlierMatches('[');
         }
 
@@ -104,11 +107,6 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     }
 
     /**
-     * @param Cursor                $cursor
-     * @param ReferenceMapInterface $referenceMap
-     * @param DelimiterInterface    $opener
-     * @param int                   $startPos
-     *
      * @return array<string, string>|false
      */
     private function tryParseLink(Cursor $cursor, ReferenceMapInterface $referenceMap, DelimiterInterface $opener, int $startPos)
@@ -127,8 +125,6 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     }
 
     /**
-     * @param Cursor $cursor
-     *
      * @return array<string, string>|false
      */
     private function tryParseInlineLinkAndTitle(Cursor $cursor)
@@ -174,14 +170,14 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
             return null;
         }
 
-        $savePos = $cursor->saveState();
+        $savePos     = $cursor->saveState();
         $beforeLabel = $cursor->getPosition();
-        $n = LinkParserHelper::parseLinkLabel($cursor);
+        $n           = LinkParserHelper::parseLinkLabel($cursor);
         if ($n === 0 || $n === 2) {
-            $start = $opener->getIndex();
+            $start  = $opener->getIndex();
             $length = $startPos - $opener->getIndex();
         } else {
-            $start = $beforeLabel + 1;
+            $start  = $beforeLabel + 1;
             $length = $n - 2;
         }
 

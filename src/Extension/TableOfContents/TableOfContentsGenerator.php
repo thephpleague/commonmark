@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -31,12 +33,12 @@ use League\CommonMark\Node\StringContainerHelper;
 
 final class TableOfContentsGenerator implements TableOfContentsGeneratorInterface
 {
-    public const STYLE_BULLET = ListBlock::TYPE_BULLET;
+    public const STYLE_BULLET  = ListBlock::TYPE_BULLET;
     public const STYLE_ORDERED = ListBlock::TYPE_ORDERED;
 
     public const NORMALIZE_DISABLED = 'as-is';
     public const NORMALIZE_RELATIVE = 'relative';
-    public const NORMALIZE_FLAT = 'flat';
+    public const NORMALIZE_FLAT     = 'flat';
 
     /** @var string */
     private $style;
@@ -49,10 +51,10 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
 
     public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel)
     {
-        $this->style = $style;
+        $this->style                 = $style;
         $this->normalizationStrategy = $normalizationStrategy;
-        $this->minHeadingLevel = $minHeadingLevel;
-        $this->maxHeadingLevel = $maxHeadingLevel;
+        $this->minHeadingLevel       = $minHeadingLevel;
+        $this->maxHeadingLevel       = $maxHeadingLevel;
     }
 
     public function generate(Document $document): ?TableOfContents
@@ -66,7 +68,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         foreach ($this->getHeadingLinks($document) as $headingLink) {
             $heading = $headingLink->parent();
             // Make sure this is actually tied to a heading
-            if (!$heading instanceof Heading) {
+            if (! $heading instanceof Heading) {
                 continue;
             }
 
@@ -83,7 +85,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             $toc->setEndLine($heading->getEndLine());
 
             // Create the new link
-            $link = new Link('#' . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [HtmlBlock::class, HtmlInline::class]));
+            $link      = new Link('#' . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [HtmlBlock::class, HtmlInline::class]));
             $paragraph = new Paragraph();
             $paragraph->setStartLine($heading->getStartLine());
             $paragraph->setEndLine($heading->getEndLine());
@@ -99,7 +101,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         }
 
         // Don't add the TOC if no headings were present
-        if (!$toc->hasChildren() || $firstHeading === null) {
+        if (! $toc->hasChildren() || $firstHeading === null) {
             return null;
         }
 
@@ -122,11 +124,9 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
     }
 
     /**
-     * @param Document $document
-     *
      * @return iterable<HeadingPermalink>
      */
-    private function getHeadingLinks(Document $document)
+    private function getHeadingLinks(Document $document): iterable
     {
         $walker = $document->walker();
         while ($event = $walker->next()) {

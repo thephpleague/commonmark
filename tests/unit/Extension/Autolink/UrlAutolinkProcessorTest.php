@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,22 +21,22 @@ use PHPUnit\Framework\TestCase;
 final class UrlAutolinkProcessorTest extends TestCase
 {
     /**
-     * @param string $input
-     * @param string $expected
-     *
      * @dataProvider dataProviderForAutolinkTests
      */
-    public function testUrlAutolinks($input, $expected)
+    public function testUrlAutolinks(string $input, string $expected): void
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new AutolinkExtension());
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, trim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
     }
 
-    public function dataProviderForAutolinkTests()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataProviderForAutolinkTests(): iterable
     {
         // Basic examples
         yield ['You can search on http://google.com for stuff.', '<p>You can search on <a href="http://google.com">http://google.com</a> for stuff.</p>'];

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlElementTest extends TestCase
 {
-    public function testConstructorOneArgument()
+    public function testConstructorOneArgument(): void
     {
         $p = new HtmlElement('p');
         $this->assertEquals('p', $p->getTagName());
@@ -27,7 +29,7 @@ class HtmlElementTest extends TestCase
         $this->assertEmpty($p->getContents());
     }
 
-    public function testConstructorTwoArguments()
+    public function testConstructorTwoArguments(): void
     {
         $img = new HtmlElement('img', ['src' => 'foo.jpg']);
         $this->assertEquals('img', $img->getTagName());
@@ -36,7 +38,7 @@ class HtmlElementTest extends TestCase
         $this->assertEmpty($img->getContents());
     }
 
-    public function testConstructorThreeArguments()
+    public function testConstructorThreeArguments(): void
     {
         $li = new HtmlElement('li', ['class' => 'odd'], 'Foo');
         $this->assertEquals('li', $li->getTagName());
@@ -45,21 +47,21 @@ class HtmlElementTest extends TestCase
         $this->assertEquals('Foo', $li->getContents());
     }
 
-    public function testNonSelfClosingElement()
+    public function testNonSelfClosingElement(): void
     {
         $p = new HtmlElement('p', [], '', false);
 
         $this->assertEquals('<p></p>', (string) $p);
     }
 
-    public function testSelfClosingElement()
+    public function testSelfClosingElement(): void
     {
         $hr = new HtmlElement('hr', [], '', true);
 
         $this->assertEquals('<hr />', (string) $hr);
     }
 
-    public function testGetSetExistingAttribute()
+    public function testGetSetExistingAttribute(): void
     {
         $p = new HtmlElement('p', ['class' => 'foo']);
         $this->assertCount(1, $p->getAllAttributes());
@@ -70,7 +72,7 @@ class HtmlElementTest extends TestCase
         $this->assertEquals('bar', $p->getAttribute('class'));
     }
 
-    public function testGetSetNonExistingAttribute()
+    public function testGetSetNonExistingAttribute(): void
     {
         $p = new HtmlElement('p', ['class' => 'foo']);
         $this->assertCount(1, $p->getAllAttributes());
@@ -82,10 +84,10 @@ class HtmlElementTest extends TestCase
         $this->assertEquals('foo', $p->getAttribute('class'));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $img = new HtmlElement('img', [], '', true);
-        $p = new HtmlElement('p');
+        $p   = new HtmlElement('p');
         $div = new HtmlElement('div');
         $div->setContents([$p, $img]);
 
@@ -95,20 +97,20 @@ class HtmlElementTest extends TestCase
         $this->assertEquals('<div><p></p><img /></div>', $div->__toString());
     }
 
-    public function testToStringWithUnescapedAttribute()
+    public function testToStringWithUnescapedAttribute(): void
     {
         $element = new HtmlElement('p', ['id' => 'foo', 'class' => 'test" onclick="javascript:doBadThings();'], 'click me');
 
         $this->assertEquals('<p id="foo" class="test&quot; onclick=&quot;javascript:doBadThings();">click me</p>', $element->__toString());
     }
 
-    public function testNullContentConstructor()
+    public function testNullContentConstructor(): void
     {
         $img = new HtmlElement('img', [], null);
         $this->assertTrue($img->getContents(false) === '');
     }
 
-    public function testNullContentSetter()
+    public function testNullContentSetter(): void
     {
         $img = new HtmlElement('img');
         $img->setContents(null);
@@ -118,7 +120,7 @@ class HtmlElementTest extends TestCase
     /**
      * See https://github.com/thephpleague/commonmark/issues/376
      */
-    public function testRegressionWith0NotBeingRendered()
+    public function testRegressionWith0NotBeingRendered(): void
     {
         $element = new HtmlElement('em');
         $element->setContents('0');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 class NodeTest extends TestCase
 {
-    public function testInsertBeforeElementWhichDoesNotHaveAPreviousOne()
+    public function testInsertBeforeElementWhichDoesNotHaveAPreviousOne(): void
     {
         $root = new SimpleNode();
         $root->appendChild($targetNode = new SimpleNode());
@@ -31,7 +33,7 @@ class NodeTest extends TestCase
         $this->assertSame($newNode, $targetNode->previous());
     }
 
-    public function testInsertBeforeElementWhichAlreadyHasPrevious()
+    public function testInsertBeforeElementWhichAlreadyHasPrevious(): void
     {
         $root = new SimpleNode();
         $root->appendChild($firstNode = new SimpleNode());
@@ -45,7 +47,7 @@ class NodeTest extends TestCase
         $this->assertSame($newNode, $targetNode->previous());
     }
 
-    public function testPrependChildToChildlessParent()
+    public function testPrependChildToChildlessParent(): void
     {
         $root = new SimpleNode();
 
@@ -56,7 +58,7 @@ class NodeTest extends TestCase
         $this->assertNull($newNode->previous());
     }
 
-    public function testPrependChildToParentWhichAlreadyHasChildren()
+    public function testPrependChildToParentWhichAlreadyHasChildren(): void
     {
         $root = new SimpleNode();
         $root->prependChild($existingChild = new SimpleNode());
@@ -74,7 +76,7 @@ class NodeTest extends TestCase
         $this->assertSame($newNode, $existingChild->previous());
     }
 
-    public function testDetachChildren()
+    public function testDetachChildren(): void
     {
         $root = new SimpleNode();
         $root->appendChild($child1 = new SimpleNode());
@@ -93,7 +95,7 @@ class NodeTest extends TestCase
         $this->assertSame($child1, $child2->previous());
     }
 
-    public function testReplaceChildren()
+    public function testReplaceChildren(): void
     {
         $root = new SimpleNode();
         $root->appendChild($oldChild = new SimpleNode());
@@ -113,7 +115,7 @@ class NodeTest extends TestCase
         $this->assertNull($oldChild->parent());
     }
 
-    public function testInsertAfterWithParent()
+    public function testInsertAfterWithParent(): void
     {
         $root = new SimpleNode();
         $root->appendChild($child1 = new SimpleNode());
@@ -132,7 +134,7 @@ class NodeTest extends TestCase
         $this->assertSame($root, $child2->parent());
     }
 
-    public function testInsertAfterWithoutParent()
+    public function testInsertAfterWithoutParent(): void
     {
         $node1 = new SimpleNode();
         $node2 = new SimpleNode();
@@ -143,7 +145,7 @@ class NodeTest extends TestCase
         $this->assertSame($node1, $node2->previous());
     }
 
-    public function testInsertBeforeWithParent()
+    public function testInsertBeforeWithParent(): void
     {
         $root = new SimpleNode();
         $root->appendChild($child1 = new SimpleNode());
@@ -165,7 +167,7 @@ class NodeTest extends TestCase
         $this->assertSame($root, $child4->parent());
     }
 
-    public function testInsertBeforeWithoutParent()
+    public function testInsertBeforeWithoutParent(): void
     {
         $node1 = new SimpleNode();
         $node2 = new SimpleNode();
@@ -176,7 +178,7 @@ class NodeTest extends TestCase
         $this->assertSame($node2, $node1->previous());
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         // Build our intial AST
         $root = new SimpleNode();

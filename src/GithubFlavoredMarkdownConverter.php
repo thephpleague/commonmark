@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,10 +24,9 @@ class GithubFlavoredMarkdownConverter extends CommonMarkConverter
     /**
      * Create a new commonmark converter instance.
      *
-     * @param array<string, mixed>      $config
-     * @param EnvironmentInterface|null $environment
+     * @param array<string, mixed> $config
      */
-    public function __construct(array $config = [], EnvironmentInterface $environment = null)
+    public function __construct(array $config = [], ?EnvironmentInterface $environment = null)
     {
         if ($environment === null) {
             $environment = Environment::createGFMEnvironment();

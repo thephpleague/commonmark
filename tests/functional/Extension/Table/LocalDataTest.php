@@ -27,7 +27,10 @@ use PHPUnit\Framework\TestCase;
  */
 class LocalDataTest extends TestCase
 {
+    /** @var Environment */
     private $environment;
+
+    /** @var MarkdownParser */
     private $parser;
 
     protected function setUp(): void
@@ -48,15 +51,15 @@ class LocalDataTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
-    public function dataProvider()
+    public function dataProvider(): array
     {
         $ret = [];
-        foreach (glob(__DIR__ . '/data/*.md') as $markdownFile) {
-            $testName = basename($markdownFile, '.md');
-            $markdown = file_get_contents($markdownFile);
-            $html = file_get_contents(__DIR__ . '/data/' . $testName . '.html');
+        foreach (\glob(__DIR__ . '/data/*.md') as $markdownFile) {
+            $testName = \basename($markdownFile, '.md');
+            $markdown = \file_get_contents($markdownFile);
+            $html     = \file_get_contents(__DIR__ . '/data/' . $testName . '.html');
 
             $ret[] = [$markdown, $html, $testName];
         }
@@ -64,12 +67,12 @@ class LocalDataTest extends TestCase
         return $ret;
     }
 
-    protected function assertCommonMark(HtmlRendererInterface $renderer, $markdown, $html, $testName): void
+    protected function assertCommonMark(HtmlRendererInterface $renderer, string $markdown, string $html, string $testName): void
     {
-        $documentAST = $this->parser->parse($markdown);
+        $documentAST  = $this->parser->parse($markdown);
         $actualResult = $renderer->renderDocument($documentAST);
 
-        $failureMessage = sprintf('Unexpected result for "%s" test', $testName);
+        $failureMessage  = \sprintf('Unexpected result for "%s" test', $testName);
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;
         $failureMessage .= "\n=== expected ===============\n" . $html;
         $failureMessage .= "\n=== got ====================\n" . $actualResult;

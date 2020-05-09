@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,6 +25,7 @@ use League\CommonMark\Renderer as CoreRenderer;
 
 final class CommonMarkCoreExtension implements ExtensionInterface
 {
+    // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma,Squiz.WhiteSpace.SemicolonSpacing.Incorrect
     public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment

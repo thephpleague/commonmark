@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -36,7 +38,7 @@ final class HtmlBlockStartParser implements BlockStartParserInterface
                 $line
             );
 
-            if ($match !== null && ($blockType < 7 || !($parserState->getLastMatchedBlockParser()->getBlock() instanceof Paragraph))) {
+            if ($match !== null && ($blockType < 7 || ! ($parserState->getLastMatchedBlockParser()->getBlock() instanceof Paragraph))) {
                 return BlockStart::of(new HtmlBlockParser($blockType))->at($cursor);
             }
         }

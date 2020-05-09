@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,13 +18,13 @@ use PHPUnit\Framework\TestCase;
 
 class PrioritizedListTest extends TestCase
 {
-    public function testAddSamePriorities()
+    public function testAddSamePriorities(): void
     {
         $list = new PrioritizedList();
         $list->add('foo', 0);
         $list->add('bar', 0);
 
-        $items = iterator_to_array($list->getIterator());
+        $items = \iterator_to_array($list->getIterator());
 
         $this->assertCount(2, $items);
 
@@ -30,14 +32,14 @@ class PrioritizedListTest extends TestCase
         $this->assertEquals('bar', $items[1]);
     }
 
-    public function testAddDifferentPriorities()
+    public function testAddDifferentPriorities(): void
     {
         $list = new PrioritizedList();
         $list->add('foo', 0);
         $list->add('bar', 100);
         $list->add('baz', -20);
 
-        $items = iterator_to_array($list->getIterator());
+        $items = \iterator_to_array($list->getIterator());
 
         $this->assertCount(3, $items);
 

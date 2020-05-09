@@ -33,7 +33,8 @@
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^8.5",
         "scrutinizer/ocular": "^1.5",
-        "symfony/finder": "^4.2"
+        "symfony/finder": "^4.2",
+        "unleashedtech/php-coding-standard": "^2.1"
     },
     "conflict": {
         "scrutinizer/ocular": "1.7.*"

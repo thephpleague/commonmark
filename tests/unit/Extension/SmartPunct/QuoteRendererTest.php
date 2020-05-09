@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -34,11 +36,11 @@ final class QuoteRendererTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->renderer = new QuoteRenderer();
+        $this->renderer      = new QuoteRenderer();
         $this->childRenderer = new FakeChildNodeRenderer();
     }
 
-    public function testInvalidInlineType()
+    public function testInvalidInlineType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -48,19 +50,19 @@ final class QuoteRendererTest extends TestCase
     }
 
     /**
-     * @param string $character
-     * @param string $expected
-     *
      * @dataProvider dataForTestRender
      */
-    public function testRender(string $character, string $expected)
+    public function testRender(string $character, string $expected): void
     {
         $inline = new Quote($character);
 
         $this->assertEquals($expected, $this->renderer->render($inline, $this->childRenderer));
     }
 
-    public function dataForTestRender()
+    /**
+     * @return iterable<array<string>>
+     */
+    public function dataForTestRender(): iterable
     {
         // Single-quotes should render as an apostrophe
         yield ["'", '’'];

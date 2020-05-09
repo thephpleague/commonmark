@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 final class TableSectionTest extends TestCase
 {
-    public function testIsHeadAndIsBody()
+    public function testIsHeadAndIsBody(): void
     {
         $head = new TableSection(TableSection::TYPE_HEAD);
         $this->assertTrue($head->isHead());

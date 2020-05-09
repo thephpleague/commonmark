@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,15 +24,12 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 final class ChildRenderer implements NodeRendererInterface
 {
     /**
-     * @param Node                       $node
-     * @param ChildNodeRendererInterface $childRenderer
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
         $out = $childRenderer->renderNodes($node->children());
-        if (!$node instanceof Document) {
+        if (! $node instanceof Document) {
             $out .= $childRenderer->getBlockSeparator();
         }
 

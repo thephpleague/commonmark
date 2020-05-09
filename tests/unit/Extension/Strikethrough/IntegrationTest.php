@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,17 +22,14 @@ use PHPUnit\Framework\TestCase;
 class IntegrationTest extends TestCase
 {
     /**
-     * @param string $string
-     * @param string $expected
-     *
      * @dataProvider dataForIntegrationTest
      */
-    public function testStrikethrough($string, $expected)
+    public function testStrikethrough(string $string, string $expected): void
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new StrikethroughExtension());
 
-        $parser = new MarkdownParser($environment);
+        $parser   = new MarkdownParser($environment);
         $renderer = new HtmlRenderer($environment);
 
         $document = $parser->parse($string);
@@ -41,9 +40,9 @@ class IntegrationTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
-    public function dataForIntegrationTest()
+    public function dataForIntegrationTest(): array
     {
         return [
             ['This is a test without any strikethroughs', "<p>This is a test without any strikethroughs</p>\n"],

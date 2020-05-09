@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -30,13 +32,13 @@ final class UrlEncoder
 
         /** @var string[] $chars */
         $chars = \preg_split('//u', $uri, -1, \PREG_SPLIT_NO_EMPTY);
-        $l = \count($chars);
+        $l     = \count($chars);
         for ($i = 0; $i < $l; $i++) {
             $code = $chars[$i];
             if ($code === '%' && $i + 2 < $l) {
                 if (\preg_match('/^[0-9a-f]{2}$/i', $chars[$i + 1] . $chars[$i + 2]) === 1) {
                     $result .= '%' . $chars[$i + 1] . $chars[$i + 2];
-                    $i += 2;
+                    $i      += 2;
                     continue;
                 }
             }

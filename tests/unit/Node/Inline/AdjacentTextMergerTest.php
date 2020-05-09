@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 class AdjacentTextMergerTest extends TestCase
 {
-    public function testMergeTextNodesBetweenExclusive()
+    public function testMergeTextNodesBetweenExclusive(): void
     {
         $paragraph = new Paragraph();
 
@@ -48,7 +50,7 @@ class AdjacentTextMergerTest extends TestCase
         $this->assertTrue($children[2] instanceof Newline);
     }
 
-    public function testMergeChildNodes()
+    public function testMergeChildNodes(): void
     {
         $paragraph = new Paragraph();
 

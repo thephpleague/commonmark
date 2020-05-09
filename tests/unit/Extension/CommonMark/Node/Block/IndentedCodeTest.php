@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 class IndentedCodeTest extends TestCase
 {
-    public function testGetAndSetLiteral()
+    public function testGetAndSetLiteral(): void
     {
         $indentedCode = new IndentedCode();
         $indentedCode->setLiteral('foo');

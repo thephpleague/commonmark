@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,7 +19,7 @@ use League\CommonMark\Node\Inline\Text;
 
 final class EmailAutolinkProcessor
 {
-    const REGEX = '/([A-Za-z0-9.\-_+]+@[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_.]+)/';
+    private const REGEX = '/([A-Za-z0-9.\-_+]+@[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_.]+)/';
 
     public function __invoke(DocumentParsedEvent $e): void
     {
@@ -25,7 +27,7 @@ final class EmailAutolinkProcessor
 
         while ($event = $walker->next()) {
             $node = $event->getNode();
-            if ($node instanceof Text && !($node->parent() instanceof Link)) {
+            if ($node instanceof Text && ! ($node->parent() instanceof Link)) {
                 self::processAutolinks($node);
             }
         }
@@ -54,12 +56,12 @@ final class EmailAutolinkProcessor
             // Does the URL end with punctuation that should be stripped?
             if (\substr($content, -1) === '.') {
                 // Add the punctuation later
-                $content = \substr($content, 0, -1);
+                $content   = \substr($content, 0, -1);
                 $leftovers = '.';
             }
 
             // The last character cannot be - or _
-            if (\in_array(\substr($content, -1), ['-', '_'])) {
+            if (\in_array(\substr($content, -1), ['-', '_'], true)) {
                 $node->insertBefore(new Text($content . $leftovers));
                 $leftovers = '';
                 continue;

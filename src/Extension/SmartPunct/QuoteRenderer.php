@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,22 +23,23 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 final class QuoteRenderer implements NodeRendererInterface
 {
     /**
-     * @param Quote                      $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param Quote $node
      *
-     * @return string
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!$node instanceof Quote) {
-            throw new \InvalidArgumentException(sprintf('Expected an instance of "%s", got "%s" instead', Quote::class, \get_class($node)));
+        if (! $node instanceof Quote) {
+            throw new \InvalidArgumentException(\sprintf('Expected an instance of "%s", got "%s" instead', Quote::class, \get_class($node)));
         }
 
         // Handles unpaired quotes which remain after processing delimiters
         if ($node->getLiteral() === Quote::SINGLE_QUOTE) {
             // Render as an apostrophe
             return Quote::SINGLE_QUOTE_CLOSER;
-        } elseif ($node->getLiteral() === Quote::DOUBLE_QUOTE) {
+        }
+
+        if ($node->getLiteral() === Quote::DOUBLE_QUOTE) {
             // Render as an opening quote
             return Quote::DOUBLE_QUOTE_OPENER;
         }

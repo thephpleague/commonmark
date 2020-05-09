@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,14 +21,13 @@ use League\CommonMark\Util\HtmlElement;
 final class StrikethroughRenderer implements NodeRendererInterface
 {
     /**
-     * @param Strikethrough              $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param Strikethrough $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof Strikethrough)) {
+        if (! ($node instanceof Strikethrough)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 

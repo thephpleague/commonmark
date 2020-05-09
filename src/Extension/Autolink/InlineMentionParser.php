@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,16 +25,15 @@ final class InlineMentionParser implements InlineParserInterface
     /** @var string */
     private $handleRegex;
 
-    /**
-     * @param string $linkPattern
-     * @param string $handleRegex
-     */
-    public function __construct($linkPattern, $handleRegex = '/^[A-Za-z0-9_]+(?!\w)/')
+    public function __construct(string $linkPattern, string $handleRegex = '/^[A-Za-z0-9_]+(?!\w)/')
     {
         $this->linkPattern = $linkPattern;
         $this->handleRegex = $handleRegex;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return ['@'];

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 class IndentedCodeRendererTest extends TestCase
 {
-    /**
-     * @var IndentedCodeRenderer
-     */
+    /** @var IndentedCodeRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -34,11 +34,11 @@ class IndentedCodeRendererTest extends TestCase
         $this->renderer = new IndentedCodeRenderer();
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $document = new Document();
 
-        $block = new IndentedCode();
+        $block                     = new IndentedCode();
         $block->data['attributes'] = ['id' => 'foo'];
         $block->setLiteral('echo "hello world!";');
 
@@ -59,11 +59,11 @@ class IndentedCodeRendererTest extends TestCase
         $this->assertStringContainsString('hello world', $code->getContents(true));
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

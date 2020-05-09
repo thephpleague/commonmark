@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,24 +23,24 @@ use PHPUnit\Framework\TestCase;
 
 final class ListBlockStartParserTest extends TestCase
 {
-    public function testOrderedListStartingAtOne()
+    public function testOrderedListStartingAtOne(): void
     {
         $cursor = new Cursor('1. Foo');
 
         $parser = new ListBlockStartParser();
-        $start = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
+        $start  = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
 
         $this->assertNotNull($start);
 
         $parsers = $start->getBlockParsers();
         $this->assertCount(2, $parsers);
 
-        /** @var ListBlock $block */
         $block = $parsers[0]->getBlock();
+        \assert($block instanceof ListBlock);
         $this->assertInstanceOf(ListBlock::class, $block);
 
-        /** @var ListItem $item */
         $item = $parsers[1]->getBlock();
+        \assert($item instanceof ListItem);
         $this->assertInstanceOf(ListItem::class, $item);
 
         $this->assertSame(ListBlock::TYPE_ORDERED, $block->getListData()->type);
@@ -47,24 +49,24 @@ final class ListBlockStartParserTest extends TestCase
         $this->assertSame(ListBlock::TYPE_ORDERED, $item->getListData()->type);
     }
 
-    public function testOrderedListStartingAtTwo()
+    public function testOrderedListStartingAtTwo(): void
     {
         $cursor = new Cursor('2. Foo');
 
         $parser = new ListBlockStartParser();
-        $start = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
+        $start  = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
 
         $this->assertNotNull($start);
 
         $parsers = $start->getBlockParsers();
         $this->assertCount(2, $parsers);
 
-        /** @var ListBlock $block */
         $block = $parsers[0]->getBlock();
+        \assert($block instanceof ListBlock);
         $this->assertInstanceOf(ListBlock::class, $block);
 
-        /** @var ListItem $item */
         $item = $parsers[1]->getBlock();
+        \assert($item instanceof ListItem);
         $this->assertInstanceOf(ListItem::class, $item);
 
         $this->assertSame(ListBlock::TYPE_ORDERED, $block->getListData()->type);
@@ -73,24 +75,24 @@ final class ListBlockStartParserTest extends TestCase
         $this->assertSame(ListBlock::TYPE_ORDERED, $item->getListData()->type);
     }
 
-    public function testUnorderedListWithDashMarker()
+    public function testUnorderedListWithDashMarker(): void
     {
         $cursor = new Cursor('- Foo');
 
         $parser = new ListBlockStartParser();
-        $start = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
+        $start  = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
 
         $this->assertNotNull($start);
 
         $parsers = $start->getBlockParsers();
         $this->assertCount(2, $parsers);
 
-        /** @var ListBlock $block */
         $block = $parsers[0]->getBlock();
+        \assert($block instanceof ListBlock);
         $this->assertInstanceOf(ListBlock::class, $block);
 
-        /** @var ListItem $item */
         $item = $parsers[1]->getBlock();
+        \assert($item instanceof ListItem);
         $this->assertInstanceOf(ListItem::class, $item);
 
         $this->assertSame(ListBlock::TYPE_BULLET, $block->getListData()->type);
@@ -99,24 +101,24 @@ final class ListBlockStartParserTest extends TestCase
         $this->assertSame(ListBlock::TYPE_BULLET, $item->getListData()->type);
     }
 
-    public function testUnorderedListWithAsteriskMarker()
+    public function testUnorderedListWithAsteriskMarker(): void
     {
         $cursor = new Cursor('* Foo');
 
         $parser = new ListBlockStartParser();
-        $start = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
+        $start  = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
 
         $this->assertNotNull($start);
 
         $parsers = $start->getBlockParsers();
         $this->assertCount(2, $parsers);
 
-        /** @var ListBlock $block */
         $block = $parsers[0]->getBlock();
+        \assert($block instanceof ListBlock);
         $this->assertInstanceOf(ListBlock::class, $block);
 
-        /** @var ListItem $item */
         $item = $parsers[1]->getBlock();
+        \assert($item instanceof ListItem);
         $this->assertInstanceOf(ListItem::class, $item);
 
         $this->assertSame(ListBlock::TYPE_BULLET, $block->getListData()->type);
@@ -125,24 +127,24 @@ final class ListBlockStartParserTest extends TestCase
         $this->assertSame(ListBlock::TYPE_BULLET, $item->getListData()->type);
     }
 
-    public function testUnorderedListWithPlusMarker()
+    public function testUnorderedListWithPlusMarker(): void
     {
         $cursor = new Cursor('+ Foo');
 
         $parser = new ListBlockStartParser();
-        $start = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
+        $start  = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
 
         $this->assertNotNull($start);
 
         $parsers = $start->getBlockParsers();
         $this->assertCount(2, $parsers);
 
-        /** @var ListBlock $block */
         $block = $parsers[0]->getBlock();
+        \assert($block instanceof ListBlock);
         $this->assertInstanceOf(ListBlock::class, $block);
 
-        /** @var ListItem $item */
         $item = $parsers[1]->getBlock();
+        \assert($item instanceof ListItem);
         $this->assertInstanceOf(ListItem::class, $item);
 
         $this->assertSame(ListBlock::TYPE_BULLET, $block->getListData()->type);
@@ -151,7 +153,7 @@ final class ListBlockStartParserTest extends TestCase
         $this->assertSame(ListBlock::TYPE_BULLET, $item->getListData()->type);
     }
 
-    public function testUnorderedListWithCustomMarker()
+    public function testUnorderedListWithCustomMarker(): void
     {
         $cursor = new Cursor('^ Foo');
 
@@ -164,12 +166,12 @@ final class ListBlockStartParserTest extends TestCase
         $parsers = $start->getBlockParsers();
         $this->assertCount(2, $parsers);
 
-        /** @var ListBlock $block */
         $block = $parsers[0]->getBlock();
+        \assert($block instanceof ListBlock);
         $this->assertInstanceOf(ListBlock::class, $block);
 
-        /** @var ListItem $item */
         $item = $parsers[1]->getBlock();
+        \assert($item instanceof ListItem);
         $this->assertInstanceOf(ListItem::class, $item);
 
         $this->assertSame(ListBlock::TYPE_BULLET, $block->getListData()->type);
@@ -178,7 +180,7 @@ final class ListBlockStartParserTest extends TestCase
         $this->assertSame(ListBlock::TYPE_BULLET, $item->getListData()->type);
     }
 
-    public function testUnorderedListWithDisabledMarker()
+    public function testUnorderedListWithDisabledMarker(): void
     {
         $cursor = new Cursor('+ Foo');
 
@@ -189,7 +191,7 @@ final class ListBlockStartParserTest extends TestCase
         $this->assertNull($start);
     }
 
-    public function testInvalidListMarkerConfiguration()
+    public function testInvalidListMarkerConfiguration(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Invalid configuration option "unordered_list_markers": value must be an array of strings');

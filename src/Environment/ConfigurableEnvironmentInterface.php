@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,24 +26,16 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
 {
     /**
      * @param array<string, mixed> $config
-     *
-     * @return void
      */
     public function mergeConfig(array $config = []): void;
 
     /**
      * @param array<string, mixed> $config
-     *
-     * @return void
      */
     public function setConfig(array $config = []): void;
 
     /**
      * Registers the given extension with the Environment
-     *
-     * @param ExtensionInterface $extension
-     *
-     * @return ConfigurableEnvironmentInterface
      */
     public function addExtension(ExtensionInterface $extension): ConfigurableEnvironmentInterface;
 
@@ -69,8 +63,6 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
      * Registers the given delimiter processor with the Environment
      *
      * @param DelimiterProcessorInterface $processor Delimiter processors instance
-     *
-     * @return ConfigurableEnvironmentInterface
      */
     public function addDelimiterProcessor(DelimiterProcessorInterface $processor): ConfigurableEnvironmentInterface;
 

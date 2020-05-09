@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,9 +24,7 @@ use PHPUnit\Framework\TestCase;
 
 class TextRendererTest extends TestCase
 {
-    /**
-     * @var TextRenderer
-     */
+    /** @var TextRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -32,9 +32,9 @@ class TextRendererTest extends TestCase
         $this->renderer = new TextRenderer();
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $inline = new Text('foo bar');
+        $inline       = new Text('foo bar');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -43,11 +43,11 @@ class TextRendererTest extends TestCase
         $this->assertStringContainsString('foo bar', $result);
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline       = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

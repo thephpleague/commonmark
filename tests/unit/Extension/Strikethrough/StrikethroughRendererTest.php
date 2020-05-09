@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,9 +23,7 @@ use PHPUnit\Framework\TestCase;
 
 class StrikethroughRendererTest extends TestCase
 {
-    /**
-     * @var CodeRenderer
-     */
+    /** @var CodeRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -31,11 +31,11 @@ class StrikethroughRendererTest extends TestCase
         $this->renderer = new StrikethroughRenderer();
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $inline = new Strikethrough();
+        $inline                     = new Strikethrough();
         $inline->data['attributes'] = ['id' => 'some"&amp;id'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer               = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -46,11 +46,11 @@ class StrikethroughRendererTest extends TestCase
         $this->assertEquals(['id' => 'some"&amp;id'], $result->getAllAttributes());
     }
 
-    public function testRenderWithInvalidNodeType()
+    public function testRenderWithInvalidNodeType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = new Text('ruh roh');
+        $inline       = new Text('ruh roh');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,9 +23,12 @@ use League\CommonMark\Util\UrlEncoder;
 
 final class AutolinkParser implements InlineParserInterface
 {
-    const EMAIL_REGEX = '/^<([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>/';
-    const OTHER_LINK_REGEX = '/^<[A-Za-z][A-Za-z0-9.+-]{1,31}:[^<>\x00-\x20]*>/i';
+    private const EMAIL_REGEX      = '/^<([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>/';
+    private const OTHER_LINK_REGEX = '/^<[A-Za-z][A-Za-z0-9.+-]{1,31}:[^<>\x00-\x20]*>/i';
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return ['<'];
@@ -37,7 +42,9 @@ final class AutolinkParser implements InlineParserInterface
             $inlineContext->getContainer()->appendChild(new Link('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
 
             return true;
-        } elseif ($m = $cursor->match(self::OTHER_LINK_REGEX)) {
+        }
+
+        if ($m = $cursor->match(self::OTHER_LINK_REGEX)) {
             $dest = \substr($m, 1, -1);
             $inlineContext->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($dest), $dest));
 

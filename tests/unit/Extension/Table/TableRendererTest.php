@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,9 +21,9 @@ use PHPUnit\Framework\TestCase;
 
 final class TableRendererTest extends TestCase
 {
-    public function testRenderWithTable()
+    public function testRenderWithTable(): void
     {
-        $tableRow = new Table();
+        $tableRow                     = new Table();
         $tableRow->data['attributes'] = ['class' => 'striped'];
 
         $childRenderer = new FakeChildNodeRenderer();
@@ -32,7 +34,7 @@ final class TableRendererTest extends TestCase
         $this->assertSame('<table class="striped">::children::</table>', (string) $renderer->render($tableRow, $childRenderer));
     }
 
-    public function testRenderWithWrongType()
+    public function testRenderWithWrongType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class DocumentRendererTest extends TestCase
 {
-    /**
-     * @var DocumentRenderer
-     */
+    /** @var DocumentRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -33,9 +33,9 @@ class DocumentRendererTest extends TestCase
         $this->renderer = new DocumentRenderer();
     }
 
-    public function testRenderEmptyDocument()
+    public function testRenderEmptyDocument(): void
     {
-        $block = new Document();
+        $block        = new Document();
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -44,7 +44,7 @@ class DocumentRendererTest extends TestCase
         $this->assertSame('', $result);
     }
 
-    public function testRenderDocument()
+    public function testRenderDocument(): void
     {
         $block = new Document();
         $block->appendChild(new ThematicBreak());
@@ -56,11 +56,11 @@ class DocumentRendererTest extends TestCase
         $this->assertStringContainsString('::children::', $result);
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

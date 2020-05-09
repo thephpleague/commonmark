@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,46 +22,46 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlInputTest extends TestCase
 {
-    public function testDefaultConfig()
+    public function testDefaultConfig(): void
     {
-        $input = file_get_contents(__DIR__ . '/data/html_input/input.md');
-        $expectedOutput = trim(file_get_contents(__DIR__ . '/data/html_input/unsafe_output.html'));
+        $input          = \file_get_contents(__DIR__ . '/data/html_input/input.md');
+        $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/html_input/unsafe_output.html'));
 
-        $converter = new CommonMarkConverter();
-        $actualOutput = trim($converter->convertToHtml($input));
+        $converter    = new CommonMarkConverter();
+        $actualOutput = \trim($converter->convertToHtml($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
 
-    public function testAllowHtmlInputConfig()
+    public function testAllowHtmlInputConfig(): void
     {
-        $input = file_get_contents(__DIR__ . '/data/html_input/input.md');
-        $expectedOutput = trim(file_get_contents(__DIR__ . '/data/html_input/unsafe_output.html'));
+        $input          = \file_get_contents(__DIR__ . '/data/html_input/input.md');
+        $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/html_input/unsafe_output.html'));
 
-        $converter = new CommonMarkConverter(['html_input' => HtmlFilter::ALLOW]);
-        $actualOutput = trim($converter->convertToHtml($input));
+        $converter    = new CommonMarkConverter(['html_input' => HtmlFilter::ALLOW]);
+        $actualOutput = \trim($converter->convertToHtml($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
 
-    public function testEscapeHtmlInputConfig()
+    public function testEscapeHtmlInputConfig(): void
     {
-        $input = file_get_contents(__DIR__ . '/data/html_input/input.md');
-        $expectedOutput = trim(file_get_contents(__DIR__ . '/data/html_input/escaped_output.html'));
+        $input          = \file_get_contents(__DIR__ . '/data/html_input/input.md');
+        $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/html_input/escaped_output.html'));
 
-        $converter = new CommonMarkConverter(['html_input' => HtmlFilter::ESCAPE]);
-        $actualOutput = trim($converter->convertToHtml($input));
+        $converter    = new CommonMarkConverter(['html_input' => HtmlFilter::ESCAPE]);
+        $actualOutput = \trim($converter->convertToHtml($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
 
-    public function testStripHtmlInputConfig()
+    public function testStripHtmlInputConfig(): void
     {
-        $input = file_get_contents(__DIR__ . '/data/html_input/input.md');
-        $expectedOutput = trim(file_get_contents(__DIR__ . '/data/html_input/safe_output.html'));
+        $input          = \file_get_contents(__DIR__ . '/data/html_input/input.md');
+        $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/html_input/safe_output.html'));
 
-        $converter = new CommonMarkConverter(['html_input' => HtmlFilter::STRIP]);
-        $actualOutput = trim($converter->convertToHtml($input));
+        $converter    = new CommonMarkConverter(['html_input' => HtmlFilter::STRIP]);
+        $actualOutput = \trim($converter->convertToHtml($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }

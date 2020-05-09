@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -33,14 +35,13 @@ final class NewlineRenderer implements NodeRendererInterface, ConfigurationAware
     }
 
     /**
-     * @param Newline                    $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param Newline $node
      *
-     * @return HtmlElement|string
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof Newline)) {
+        if (! ($node instanceof Newline)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 

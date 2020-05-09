@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class SmartPunctExtensionTest extends TestCase
 {
-    /**
-     * @var Environment
-     */
+    /** @var Environment */
     protected $environment;
 
     protected function setUp(): void
@@ -35,14 +35,14 @@ final class SmartPunctExtensionTest extends TestCase
         $this->environment->addExtension(new SmartPunctExtension());
     }
 
-    public function testDefaultConfiguration()
+    public function testDefaultConfiguration(): void
     {
-        $converter = new CommonMarkConverter([], $this->environment);
+        $converter    = new CommonMarkConverter([], $this->environment);
         $actualResult = $converter->convertToHtml('"double" \'single\'');
         $this->assertEquals("<p>“double” ‘single’</p>\n", $actualResult);
     }
 
-    public function testCustomConfiguration()
+    public function testCustomConfiguration(): void
     {
         $converter = new CommonMarkConverter([
             'smartpunct' => [

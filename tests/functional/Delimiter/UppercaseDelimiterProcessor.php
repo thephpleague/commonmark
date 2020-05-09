@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,50 +22,36 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class UppercaseDelimiterProcessor implements DelimiterProcessorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getOpeningCharacter(): string
     {
         return '{';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClosingCharacter(): string
     {
         return '}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMinLength(): int
     {
         return 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
     {
         return 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         $upperCase = new UppercaseText();
-        $tmp = $opener->next();
+        $tmp       = $opener->next();
         while ($tmp !== null && $tmp !== $closer) {
             $next = $tmp->next();
             $upperCase->appendChild($tmp);
             $tmp = $next;
         }
+
         $opener->insertAfter($upperCase);
     }
 }

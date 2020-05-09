@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,7 +20,7 @@ use League\CommonMark\Node\Inline\Text;
 final class UrlAutolinkProcessor
 {
     // RegEx adapted from https://github.com/symfony/symfony/blob/4.2/src/Symfony/Component/Validator/Constraints/UrlValidator.php
-    const REGEX = '~
+    private const REGEX = '~
         (?<=^|[ \\t\\n\\x0b\\x0c\\x0d*_\\~\\(])  # Can only come at the beginning of a line, after whitespace, or certain delimiting characters
         (
             # Must start with a supported scheme + auth, or "www"
@@ -58,7 +60,7 @@ final class UrlAutolinkProcessor
 
         while ($event = $walker->next()) {
             $node = $event->getNode();
-            if ($node instanceof Text && !($node->parent() instanceof Link)) {
+            if ($node instanceof Text && ! ($node->parent() instanceof Link)) {
                 self::processAutolinks($node, $this->finalRegex);
             }
         }
@@ -91,19 +93,19 @@ final class UrlAutolinkProcessor
             // Does the URL end with punctuation that should be stripped?
             if (\preg_match('/(.+)([?!.,:*_~]+)$/', $content, $matches)) {
                 // Add the punctuation later
-                $content = $matches[1];
+                $content   = $matches[1];
                 $leftovers = $matches[2];
             }
 
             // Does the URL end with something that looks like an entity reference?
             if (\preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $content, $matches)) {
-                $content = $matches[1];
+                $content   = $matches[1];
                 $leftovers = $matches[2] . $leftovers;
             }
 
             // Does the URL need its closing paren chopped off?
             if (\substr($content, -1) === ')' && self::hasMoreCloserParensThanOpeners($content)) {
-                $content = \substr($content, 0, -1);
+                $content   = \substr($content, 0, -1);
                 $leftovers = ')' . $leftovers;
             }
 
@@ -125,11 +127,6 @@ final class UrlAutolinkProcessor
         $node->insertBefore(new Link($url, $url));
     }
 
-    /**
-     * @param string $content
-     *
-     * @return bool
-     */
     private static function hasMoreCloserParensThanOpeners(string $content): bool
     {
         // Scan the entire autolink for the total number of parentheses.

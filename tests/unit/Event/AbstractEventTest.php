@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the league/commonmark package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
@@ -15,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 final class AbstractEventTest extends TestCase
 {
-    public function testStopPropagation()
+    public function testStopPropagation(): void
     {
         $event = new FakeEvent();
 

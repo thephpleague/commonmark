@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -52,29 +54,22 @@ final class MarkdownParser implements MarkdownParserInterface
     /** @var array<int, BlockContinueParserInterface> */
     private $activeBlockParsers = [];
 
-    /**
-     * @param EnvironmentInterface $environment
-     */
     public function __construct(EnvironmentInterface $environment)
     {
-        $this->environment = $environment;
+        $this->environment     = $environment;
         $this->maxNestingLevel = $environment->getConfig('max_nesting_level', \INF);
     }
 
     private function initialize(): void
     {
-        $this->referenceMap = new ReferenceMap();
-        $this->lineNumber = 0;
-        $this->allBlockParsers = [];
+        $this->referenceMap       = new ReferenceMap();
+        $this->lineNumber         = 0;
+        $this->allBlockParsers    = [];
         $this->activeBlockParsers = [];
     }
 
     /**
-     * @param string $input
-     *
      * @throws \RuntimeException
-     *
-     * @return Document
      */
     public function parse(string $input): Document
     {
@@ -103,16 +98,14 @@ final class MarkdownParser implements MarkdownParserInterface
     /**
      * Analyze a line of text and update the document appropriately. We parse markdown text by calling this on each
      * line of input, then finalizing the document.
-     *
-     * @param string $line
      */
     private function incorporateLine(string $line): void
     {
         $this->cursor = new Cursor($line);
 
         $matches = 1;
-        /** @var BlockContinueParserInterface $blockParser */
         foreach ($this->getActiveBlockParsers(1) as $blockParser) {
+            \assert($blockParser instanceof BlockContinueParserInterface);
             $blockContinue = $blockParser->tryContinue(clone $this->cursor, $this->getActiveBlockParser());
             if ($blockContinue === null) {
                 break;
@@ -131,10 +124,10 @@ final class MarkdownParser implements MarkdownParserInterface
             $matches++;
         }
 
-        $unmatchedBlockParsers = $this->getActiveBlockParsers($matches);
+        $unmatchedBlockParsers  = $this->getActiveBlockParsers($matches);
         $lastMatchedBlockParser = $this->getActiveBlockParsers()[$matches - 1];
-        $blockParser = $lastMatchedBlockParser;
-        $allClosed = empty($unmatchedBlockParsers);
+        $blockParser            = $lastMatchedBlockParser;
+        $allClosed              = empty($unmatchedBlockParsers);
 
         // Unless last matched container is a code block, try new container starts
         $tryBlockStarts = $blockParser->getBlock() instanceof Paragraph || $blockParser->isContainer();
@@ -143,7 +136,9 @@ final class MarkdownParser implements MarkdownParserInterface
             if ($this->cursor->isBlank()) {
                 $this->cursor->advanceToEnd();
                 break;
-            } elseif (!$this->cursor->isIndented() && RegexHelper::isLetter($this->cursor->getNextNonSpaceCharacter())) {
+            }
+
+            if (! $this->cursor->isIndented() && RegexHelper::isLetter($this->cursor->getNextNonSpaceCharacter())) {
                 $this->cursor->advanceToNextNonSpaceOrTab();
                 break;
             }
@@ -162,7 +157,7 @@ final class MarkdownParser implements MarkdownParserInterface
                 $this->cursor->restoreState($state);
             }
 
-            if (!$allClosed) {
+            if (! $allClosed) {
                 $this->finalizeBlocks($unmatchedBlockParsers, $this->lineNumber - 1);
                 $allClosed = true;
             }
@@ -172,7 +167,7 @@ final class MarkdownParser implements MarkdownParserInterface
             }
 
             foreach ($blockStart->getBlockParsers() as $newBlockParser) {
-                $blockParser = $this->addChild($newBlockParser);
+                $blockParser    = $this->addChild($newBlockParser);
                 $tryBlockStarts = $newBlockParser->isContainer();
             }
         }
@@ -180,17 +175,17 @@ final class MarkdownParser implements MarkdownParserInterface
         // What remains ath the offset is a text line. Add the text to the appropriate block.
 
         // First check for a lazy paragraph continuation:
-        if (!$allClosed && !$this->cursor->isBlank() && $this->getActiveBlockParser()->canHaveLazyContinuationLines()) {
+        if (! $allClosed && ! $this->cursor->isBlank() && $this->getActiveBlockParser()->canHaveLazyContinuationLines()) {
             $this->getActiveBlockParser()->addLine($this->cursor->getRemainder());
         } else {
             // finalize any blocks not matched
-            if (!$allClosed) {
+            if (! $allClosed) {
                 $this->finalizeBlocks($unmatchedBlockParsers, $this->lineNumber);
             }
 
-            if (!$blockParser->isContainer()) {
+            if (! $blockParser->isContainer()) {
                 $this->getActiveBlockParser()->addLine($this->cursor->getRemainder());
-            } elseif (!$this->cursor->isBlank()) {
+            } elseif (! $this->cursor->isBlank()) {
                 $this->addChild(new ParagraphParser());
                 $this->getActiveBlockParser()->addLine($this->cursor->getRemainder());
             }
@@ -201,8 +196,8 @@ final class MarkdownParser implements MarkdownParserInterface
     {
         $matchedBlockParser = new MarkdownParserState($this->getActiveBlockParser(), $lastMatchedBlockParser);
 
-        /** @var BlockStartParserInterface $blockStartParser */
         foreach ($this->environment->getBlockStartParsers() as $blockStartParser) {
+            \assert($blockStartParser instanceof BlockStartParserInterface);
             if (($result = $blockStartParser->tryStart(clone $this->cursor, $matchedBlockParser)) !== null) {
                 return $result;
             }
@@ -213,7 +208,6 @@ final class MarkdownParser implements MarkdownParserInterface
 
     /**
      * @param array<int, BlockContinueParserInterface> $blockParsers
-     * @param int                                      $endLineNumber
      */
     private function finalizeBlocks(array $blockParsers, int $endLineNumber): void
     {
@@ -248,8 +242,8 @@ final class MarkdownParser implements MarkdownParserInterface
     {
         $p = new InlineParserEngine($this->environment, $this->referenceMap);
 
-        /** @var BlockContinueParserInterface $blockParser */
         foreach ($this->allBlockParsers as $blockParser) {
+            \assert($blockParser instanceof BlockContinueParserInterface);
             $blockParser->parseInlines($p);
         }
     }
@@ -262,7 +256,7 @@ final class MarkdownParser implements MarkdownParserInterface
     {
         $blockParser->getBlock()->setStartLine($this->lineNumber);
 
-        while (!$this->getActiveBlockParser()->canContain($blockParser->getBlock())) {
+        while (! $this->getActiveBlockParser()->canContain($blockParser->getBlock())) {
             $this->finalizeAndClose($this->getActiveBlockParser(), $this->lineNumber - 1);
         }
 
@@ -275,7 +269,7 @@ final class MarkdownParser implements MarkdownParserInterface
     private function activateBlockParser(BlockContinueParserInterface $blockParser): void
     {
         $this->activeBlockParsers[] = $blockParser;
-        $this->allBlockParsers[] = $blockParser;
+        $this->allBlockParsers[]    = $blockParser;
     }
 
     private function deactivateBlockParser(): BlockContinueParserInterface
@@ -302,15 +296,13 @@ final class MarkdownParser implements MarkdownParserInterface
     private function updateReferenceMap(iterable $references): void
     {
         foreach ($references as $reference) {
-            if (!$this->referenceMap->contains($reference->getLabel())) {
+            if (! $this->referenceMap->contains($reference->getLabel())) {
                 $this->referenceMap->add($reference);
             }
         }
     }
 
     /**
-     * @param int|null $offset
-     *
      * @return array<int, BlockContinueParserInterface>
      */
     private function getActiveBlockParsers(?int $offset = 0): array

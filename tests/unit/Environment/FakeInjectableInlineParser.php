@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,6 +22,9 @@ final class FakeInjectableInlineParser implements InlineParserInterface, Configu
 {
     use FakeInjectableTrait;
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return [];

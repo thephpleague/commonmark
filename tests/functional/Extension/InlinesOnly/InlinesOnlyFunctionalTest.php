@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,9 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InlinesOnlyFunctionalTest extends TestCase
 {
-    /**
-     * @var CommonMarkConverter
-     */
+    /** @var CommonMarkConverter */
     protected $converter;
 
     protected function setUp(): void
@@ -39,11 +39,11 @@ class InlinesOnlyFunctionalTest extends TestCase
      *
      * @dataProvider dataProvider
      */
-    public function testExample($markdown, $html)
+    public function testExample(string $markdown, string $html): void
     {
         $actualResult = $this->converter->convertToHtml($markdown);
 
-        $failureMessage = 'Unexpected result';
+        $failureMessage  = 'Unexpected result';
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;
         $failureMessage .= "\n=== expected ===============\n" . $html;
         $failureMessage .= "\n=== got ====================\n" . $actualResult;
@@ -52,12 +52,12 @@ class InlinesOnlyFunctionalTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
-    public function dataProvider()
+    public function dataProvider(): array
     {
-        $markdown = file_get_contents(__DIR__ . '/inlines.md');
-        $html = file_get_contents(__DIR__ . '/inlines.html');
+        $markdown = \file_get_contents(__DIR__ . '/inlines.md');
+        $html     = \file_get_contents(__DIR__ . '/inlines.html');
 
         return [
             [$markdown, $html],

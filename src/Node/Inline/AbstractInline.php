@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -26,13 +28,12 @@ abstract class AbstractInline extends Node
     public $data = [];
 
     /**
-     * @param string $key
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */
     public function getData(string $key, $default = null)
     {
-        return isset($this->data[$key]) ? $this->data[$key] : $default;
+        return $this->data[$key] ?? $default;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -26,8 +28,8 @@ use League\CommonMark\Node\StringContainerHelper;
  */
 final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 {
-    const INSERT_BEFORE = 'before';
-    const INSERT_AFTER = 'after';
+    public const INSERT_BEFORE = 'before';
+    public const INSERT_AFTER  = 'after';
 
     /** @var SlugGeneratorInterface */
     private $slugGenerator;
@@ -35,7 +37,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     /** @var ConfigurationInterface */
     private $config;
 
-    public function __construct(SlugGeneratorInterface $slugGenerator = null)
+    public function __construct(?SlugGeneratorInterface $slugGenerator = null)
     {
         $this->slugGenerator = $slugGenerator ?? new DefaultSlugGenerator();
     }

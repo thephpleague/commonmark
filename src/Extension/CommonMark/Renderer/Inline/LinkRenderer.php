@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -25,27 +27,24 @@ use League\CommonMark\Util\RegexHelper;
 
 final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
+    /** @var ConfigurationInterface */
     protected $config;
 
     /**
-     * @param Link                       $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param Link $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof Link)) {
+        if (! ($node instanceof Link)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
         $attrs = $node->getData('attributes', []);
 
-        $forbidUnsafeLinks = !$this->config->get('allow_unsafe_links');
-        if (!($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($node->getUrl()))) {
+        $forbidUnsafeLinks = ! $this->config->get('allow_unsafe_links');
+        if (! ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($node->getUrl()))) {
             $attrs['href'] = $node->getUrl();
         }
 
@@ -53,7 +52,7 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
             $attrs['title'] = $node->data['title'];
         }
 
-        if (isset($attrs['target']) && $attrs['target'] === '_blank' && !isset($attrs['rel'])) {
+        if (isset($attrs['target']) && $attrs['target'] === '_blank' && ! isset($attrs['rel'])) {
             $attrs['rel'] = 'noopener noreferrer';
         }
 

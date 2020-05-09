@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,9 +22,6 @@ interface InlineParserEngineInterface
 {
     /**
      * Parse the given contents as inlines and insert them into the given block
-     *
-     * @param string        $contents
-     * @param AbstractBlock $block
      */
     public function parse(string $contents, AbstractBlock $block): void;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -46,10 +48,9 @@ class CommonMarkConverter implements MarkdownConverterInterface
     /**
      * Create a new commonmark converter instance.
      *
-     * @param array<string, mixed>      $config
-     * @param EnvironmentInterface|null $environment
+     * @param array<string, mixed> $config
      */
-    public function __construct(array $config = [], EnvironmentInterface $environment = null)
+    public function __construct(array $config = [], ?EnvironmentInterface $environment = null)
     {
         if ($environment === null) {
             $environment = Environment::createCommonMarkEnvironment();
@@ -62,7 +63,7 @@ class CommonMarkConverter implements MarkdownConverterInterface
         $this->environment = $environment;
 
         $this->markdownParser = new MarkdownParser($environment);
-        $this->htmlRenderer = new HtmlRenderer($environment);
+        $this->htmlRenderer   = new HtmlRenderer($environment);
     }
 
     public function getEnvironment(): EnvironmentInterface
@@ -73,13 +74,11 @@ class CommonMarkConverter implements MarkdownConverterInterface
     /**
      * Converts CommonMark to HTML.
      *
-     * @param string $commonMark
+     * @param string $commonMark The Markdown to convert
+     *
+     * @return string Rendered HTML
      *
      * @throws \RuntimeException
-     *
-     * @return string
-     *
-     * @api
      */
     public function convertToHtml(string $commonMark): string
     {
@@ -93,11 +92,7 @@ class CommonMarkConverter implements MarkdownConverterInterface
      *
      * @see Converter::convertToHtml
      *
-     * @param string $commonMark
-     *
      * @throws \RuntimeException
-     *
-     * @return string
      */
     public function __invoke(string $commonMark): string
     {

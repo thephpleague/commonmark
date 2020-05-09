@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,43 +18,43 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayCollectionTest extends TestCase
 {
-    public function testConstructorAndToArray()
+    public function testConstructorAndToArray(): void
     {
         $collection = new ArrayCollection();
         $this->assertEquals([], $collection->toArray());
 
-        $array = [];
+        $array      = [];
         $collection = new ArrayCollection($array);
         $this->assertEquals($array, $collection->toArray());
 
-        $array = ['foo' => 'bar'];
+        $array      = ['foo' => 'bar'];
         $collection = new ArrayCollection($array);
         $this->assertEquals($array, $collection->toArray());
     }
 
-    public function testFirst()
+    public function testFirst(): void
     {
         $collection = new ArrayCollection(['foo', 'bar']);
         $this->assertEquals('foo', $collection->first());
     }
 
-    public function testLast()
+    public function testLast(): void
     {
         $collection = new ArrayCollection(['foo', 'bar']);
         $this->assertEquals('bar', $collection->last());
     }
 
-    public function testGetIterator()
+    public function testGetIterator(): void
     {
-        $array = ['foo' => 'bar'];
+        $array      = ['foo' => 'bar'];
         $collection = new ArrayCollection($array);
-        $iterator = $collection->getIterator();
+        $iterator   = $collection->getIterator();
 
         $this->assertTrue($iterator instanceof \ArrayIterator);
         $this->assertEquals($array, $iterator->getArrayCopy());
     }
 
-    public function testOffsetExists()
+    public function testOffsetExists(): void
     {
         $collection = new ArrayCollection(['foo' => 1, 'bar', null]);
 
@@ -67,7 +69,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertFalse($collection->offsetExists(2));
     }
 
-    public function testOffsetGet()
+    public function testOffsetGet(): void
     {
         $collection = new ArrayCollection(['foo' => 1, 'bar']);
 
@@ -78,7 +80,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertNull($collection->offsetGet('bar'));
     }
 
-    public function testOffsetSet()
+    public function testOffsetSet(): void
     {
         $collection = new ArrayCollection();
 
@@ -97,7 +99,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals(['foo', 'foo' => 2], $collection->toArray());
     }
 
-    public function testOffsetUnset()
+    public function testOffsetUnset(): void
     {
         $collection = new ArrayCollection(['foo' => 1, 'bar', 'baz']);
 
@@ -114,7 +116,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals([], $collection->toArray());
     }
 
-    public function testOffsetUnsetWithNulls()
+    public function testOffsetUnsetWithNulls(): void
     {
         $collection = new ArrayCollection(['foo' => null]);
 
@@ -125,7 +127,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals([], $collection->toArray());
     }
 
-    public function testSlice()
+    public function testSlice(): void
     {
         $collection = new ArrayCollection(['foo' => 1, 0 => 'bar', 1 => 'baz', 2 => 2]);
 
@@ -164,7 +166,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals([], $collection->slice(99, 99));
     }
 
-    public function testToArray()
+    public function testToArray(): void
     {
         $collection = new ArrayCollection();
         $this->assertEquals([], $collection->toArray());

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,14 +23,14 @@ final class ExternalLinkProcessorTest extends TestCase
 {
     private const INPUT = 'My favorite sites are <https://www.colinodell.com> and <https://commonmark.thephpleague.com>';
 
-    public function testDefaultConfiguration()
+    public function testDefaultConfiguration(): void
     {
         $expected = '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>' . "\n";
 
         $this->assertEquals($expected, $this->parse(self::INPUT));
     }
 
-    public function testCustomConfiguration()
+    public function testCustomConfiguration(): void
     {
         $expected = '<p>My favorite sites are <a rel="noopener noreferrer" target="_blank" class="external-link" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>' . "\n";
 
@@ -43,7 +45,7 @@ final class ExternalLinkProcessorTest extends TestCase
         $this->assertEquals($expected, $this->parse(self::INPUT, $config));
     }
 
-    public function testWithBadUrls()
+    public function testWithBadUrls(): void
     {
         $input = 'Report [xss](javascript:alert(0);) vulnerabilities by emailing <colinodell@gmail.com>';
 
@@ -52,7 +54,10 @@ final class ExternalLinkProcessorTest extends TestCase
         $this->assertEquals($expected, $this->parse($input));
     }
 
-    private function parse(string $markdown, array $config = [])
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function parse(string $markdown, array $config = []): string
     {
         $e = Environment::createCommonMarkEnvironment();
         $e->addExtension(new ExternalLinkExtension());
@@ -63,18 +68,19 @@ final class ExternalLinkProcessorTest extends TestCase
     }
 
     /**
-     * @param string $host
-     * @param mixed  $compareTo
-     * @param bool   $expected
+     * @param mixed $compareTo
      *
      * @dataProvider dataProviderForTestHostMatches
      */
-    public function testHostMatches(string $host, $compareTo, bool $expected)
+    public function testHostMatches(string $host, $compareTo, bool $expected): void
     {
         $this->assertEquals($expected, ExternalLinkProcessor::hostMatches($host, $compareTo));
     }
 
-    public function dataProviderForTestHostMatches()
+    /**
+     * @return iterable<array<string|bool>>
+     */
+    public function dataProviderForTestHostMatches(): iterable
     {
         // String-to-string comparison must match exactly
         yield ['colinodell.com', 'commonmark.thephpleague.com', false];

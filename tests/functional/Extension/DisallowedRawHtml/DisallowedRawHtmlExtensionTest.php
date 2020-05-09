@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 class DisallowedRawHtmlExtensionTest extends TestCase
 {
-    public function testDisallowedRawHtmlExtensionWithSpecExample()
+    public function testDisallowedRawHtmlExtensionWithSpecExample(): void
     {
         $input = <<<'MD'
 <strong> <title> <style> <em>
@@ -43,7 +45,7 @@ HTML;
         $this->assertSame($expected, $converter->convertToHtml($input));
     }
 
-    public function testIndividualHtmlTagsAsBlocks()
+    public function testIndividualHtmlTagsAsBlocks(): void
     {
         $input = <<<'MD'
 <title>My Cool Website</title>

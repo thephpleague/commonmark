@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 class ListBlockRendererTest extends TestCase
 {
-    /**
-     * @var ListBlockRenderer
-     */
+    /** @var ListBlockRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -35,14 +35,13 @@ class ListBlockRendererTest extends TestCase
     }
 
     /**
-     * @param int|null $listStart
-     * @param mixed    $expectedAttributeValue
+     * @param mixed $expectedAttributeValue
      *
      * @dataProvider dataForTestOrderedListStartingNumber
      */
-    public function testRenderOrderedList($listStart = null, $expectedAttributeValue = null)
+    public function testRenderOrderedList(?int $listStart = null, $expectedAttributeValue = null): void
     {
-        $list = $this->createOrderedListBlock($listStart);
+        $list         = $this->createOrderedListBlock($listStart);
         $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
@@ -55,7 +54,10 @@ class ListBlockRendererTest extends TestCase
         $this->assertEquals('foo', $result->getAttribute('id'));
     }
 
-    public function dataForTestOrderedListStartingNumber()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForTestOrderedListStartingNumber(): iterable
     {
         return [
             [null, null],
@@ -66,9 +68,9 @@ class ListBlockRendererTest extends TestCase
         ];
     }
 
-    public function testRenderUnorderedList()
+    public function testRenderUnorderedList(): void
     {
-        $list = $this->createUnorderedListBlock();
+        $list         = $this->createUnorderedListBlock();
         $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
@@ -80,42 +82,34 @@ class ListBlockRendererTest extends TestCase
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }
 
-    /**
-     * @param int $start
-     *
-     * @return ListBlock
-     */
-    private function createOrderedListBlock($start)
+    private function createOrderedListBlock(?int $start): ListBlock
     {
-        $data = new ListData();
-        $data->type = ListBlock::TYPE_ORDERED;
+        $data        = new ListData();
+        $data->type  = ListBlock::TYPE_ORDERED;
         $data->start = $start;
 
-        $block = new ListBlock($data);
+        $block                     = new ListBlock($data);
         $block->data['attributes'] = ['id' => 'foo'];
 
         return $block;
     }
 
-    /**
-     * @return ListBlock
-     */
-    protected function createUnorderedListBlock()
+    protected function createUnorderedListBlock(): ListBlock
     {
-        $data = new ListData();
+        $data       = new ListData();
         $data->type = ListBlock::TYPE_BULLET;
 
-        $block = new ListBlock($data);
+        $block                     = new ListBlock($data);
         $block->data['attributes'] = ['id' => 'foo'];
 
         return $block;

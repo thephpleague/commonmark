@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,7 +23,7 @@ use League\CommonMark\Parser\InlineParserContext;
 final class PunctuationParser implements InlineParserInterface
 {
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getCharacters(): array
     {
@@ -31,7 +33,7 @@ final class PunctuationParser implements InlineParserInterface
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-        $ch = $cursor->getCharacter();
+        $ch     = $cursor->getCharacter();
 
         // Ellipses
         if ($ch === '.' && $matched = $cursor->match('/^\\.( ?\\.)\\1/')) {
@@ -41,25 +43,26 @@ final class PunctuationParser implements InlineParserInterface
         }
 
         // Em/En-dashes
-        elseif ($ch === '-' && $matched = $cursor->match('/^(?<!-)(-{2,})/')) {
-            $count = strlen($matched);
-            $en_dash = '–';
-            $en_count = 0;
-            $em_dash = '—';
-            $em_count = 0;
+        if ($ch === '-' && $matched = $cursor->match('/^(?<!-)(-{2,})/')) {
+            $count   = \strlen($matched);
+            $enDash  = '–';
+            $enCount = 0;
+            $emDash  = '—';
+            $emCount = 0;
             if ($count % 3 === 0) { // If divisible by 3, use all em dashes
-                $em_count = $count / 3;
+                $emCount = $count / 3;
             } elseif ($count % 2 === 0) { // If divisible by 2, use all en dashes
-                $en_count = $count / 2;
+                $enCount = $count / 2;
             } elseif ($count % 3 === 2) { // If 2 extra dashes, use en dash for last 2; em dashes for rest
-                $em_count = ($count - 2) / 3;
-                $en_count = 1;
+                $emCount = ($count - 2) / 3;
+                $enCount = 1;
             } else { // Use en dashes for last 4 hyphens; em dashes for rest
-                $em_count = ($count - 4) / 3;
-                $en_count = 2;
+                $emCount = ($count - 4) / 3;
+                $enCount = 2;
             }
+
             $inlineContext->getContainer()->appendChild(new Text(
-                str_repeat($em_dash, $em_count) . str_repeat($en_dash, $en_count)
+                \str_repeat($emDash, $emCount) . \str_repeat($enDash, $enCount)
             ));
 
             return true;

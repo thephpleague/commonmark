@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,15 +25,13 @@ namespace League\CommonMark\Parser;
  */
 final class CursorState
 {
-    /**
-     * @var array<int, mixed>
-     */
+    /** @var array<int, mixed> */
     private $state;
 
     /**
-     * @param array<int, mixed> $state
-     *
      * @internal
+     *
+     * @param array<int, mixed> $state
      */
     public function __construct(array $state)
     {

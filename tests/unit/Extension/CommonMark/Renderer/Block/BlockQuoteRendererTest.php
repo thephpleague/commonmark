@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class BlockQuoteRendererTest extends TestCase
 {
-    /**
-     * @var BlockQuoteRenderer
-     */
+    /** @var BlockQuoteRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -33,11 +33,11 @@ class BlockQuoteRendererTest extends TestCase
         $this->renderer = new BlockQuoteRenderer();
     }
 
-    public function testRenderEmptyBlockQuote()
+    public function testRenderEmptyBlockQuote(): void
     {
-        $block = new BlockQuote();
+        $block                     = new BlockQuote();
         $block->data['attributes'] = ['id' => 'id'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer              = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -47,11 +47,11 @@ class BlockQuoteRendererTest extends TestCase
         $this->assertEquals(['id' => 'id'], $result->getAllAttributes());
     }
 
-    public function testRenderBlockQuote()
+    public function testRenderBlockQuote(): void
     {
-        $block = new BlockQuote();
+        $block                     = new BlockQuote();
         $block->data['attributes'] = ['id' => 'id'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer              = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -62,11 +62,11 @@ class BlockQuoteRendererTest extends TestCase
         $this->assertEquals(['id' => 'id'], $result->getAllAttributes());
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

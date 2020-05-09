@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,12 +20,12 @@ use PHPUnit\Framework\TestCase;
 
 class MarkdownParserTest extends TestCase
 {
-    public function testParsingWithInvalidUTF8()
+    public function testParsingWithInvalidUTF8(): void
     {
         $this->expectException(UnexpectedEncodingException::class);
 
         $environment = Environment::createCommonMarkEnvironment();
-        $docParser = new MarkdownParser($environment);
+        $docParser   = new MarkdownParser($environment);
 
         $docParser->parse("\x09\xca\xca");
     }

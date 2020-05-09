@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class CodeRendererTest extends TestCase
 {
-    /**
-     * @var CodeRenderer
-     */
+    /** @var CodeRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -33,11 +33,11 @@ class CodeRendererTest extends TestCase
         $this->renderer = new CodeRenderer();
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $inline = new Code('echo "hello world";');
+        $inline                     = new Code('echo "hello world";');
         $inline->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer               = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -47,11 +47,11 @@ class CodeRendererTest extends TestCase
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline       = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -30,9 +32,6 @@ class Document extends AbstractBlock
         $this->referenceMap = $referenceMap ?? new ReferenceMap();
     }
 
-    /**
-     * @return ReferenceMapInterface
-     */
     public function getReferenceMap(): ReferenceMapInterface
     {
         return $this->referenceMap;

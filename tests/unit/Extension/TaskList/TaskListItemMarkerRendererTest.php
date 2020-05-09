@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,9 +22,9 @@ use PHPUnit\Framework\TestCase;
 
 class TaskListItemMarkerRendererTest extends TestCase
 {
-    public function testWithCheckedItem()
+    public function testWithCheckedItem(): void
     {
-        $renderer = new TaskListItemMarkerRenderer();
+        $renderer     = new TaskListItemMarkerRenderer();
         $htmlRenderer = $this->getMockForAbstractClass(ChildNodeRendererInterface::class);
 
         $item = new TaskListItemMarker(true);
@@ -35,9 +37,9 @@ class TaskListItemMarkerRendererTest extends TestCase
         $this->assertNotNull($result->getAttribute('checked'));
     }
 
-    public function testWithUncheckedItem()
+    public function testWithUncheckedItem(): void
     {
-        $renderer = new TaskListItemMarkerRenderer();
+        $renderer     = new TaskListItemMarkerRenderer();
         $htmlRenderer = $this->getMockForAbstractClass(ChildNodeRendererInterface::class);
 
         $item = new TaskListItemMarker(false);
@@ -50,11 +52,11 @@ class TaskListItemMarkerRendererTest extends TestCase
         $this->assertNull($result->getAttribute('checked'));
     }
 
-    public function testWithInvalidInlineElement()
+    public function testWithInvalidInlineElement(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $renderer = new TaskListItemMarkerRenderer();
+        $renderer     = new TaskListItemMarkerRenderer();
         $htmlRenderer = $this->getMockForAbstractClass(ChildNodeRendererInterface::class);
 
         $item = $this->getMockForAbstractClass(AbstractInline::class);

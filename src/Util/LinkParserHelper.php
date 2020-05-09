@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,9 +23,7 @@ final class LinkParserHelper
     /**
      * Attempt to parse link destination
      *
-     * @param Cursor $cursor
-     *
-     * @return null|string The string, or null if no match
+     * @return string|null The string, or null if no match
      */
     public static function parseLinkDestination(Cursor $cursor): ?string
     {
@@ -72,9 +72,7 @@ final class LinkParserHelper
     /**
      * Attempt to parse link title (sans quotes)
      *
-     * @param Cursor $cursor
-     *
-     * @return null|string The string, or null if no match
+     * @return string|null The string, or null if no match
      */
     public static function parseLinkTitle(Cursor $cursor): ?string
     {
@@ -89,7 +87,7 @@ final class LinkParserHelper
     public static function parsePartialLinkTitle(Cursor $cursor, string $endDelimiter): ?string
     {
         $endDelimiter = \preg_quote($endDelimiter, '/');
-        $regex = \sprintf('/(%s|[^%s\x00])*(?:%s)?/', RegexHelper::PARTIAL_ESCAPED_CHAR, $endDelimiter, $endDelimiter);
+        $regex        = \sprintf('/(%s|[^%s\x00])*(?:%s)?/', RegexHelper::PARTIAL_ESCAPED_CHAR, $endDelimiter, $endDelimiter);
         if (($partialTitle = $cursor->match($regex)) === null) {
             return null;
         }
@@ -100,7 +98,7 @@ final class LinkParserHelper
     private static function manuallyParseLinkDestination(Cursor $cursor): ?string
     {
         $oldPosition = $cursor->getPosition();
-        $oldState = $cursor->saveState();
+        $oldState    = $cursor->saveState();
 
         $openParens = 0;
         while (($c = $cursor->getCharacter()) !== null) {

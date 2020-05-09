@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,25 +20,19 @@ use League\CommonMark\Node\Block\AbstractBlock;
 
 final class NodeWalker
 {
-    /**
-     * @var Node
-     */
+    /** @var Node */
     private $root;
 
-    /**
-     * @var Node|null
-     */
+    /** @var Node|null */
     private $current;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $entering;
 
     public function __construct(Node $root)
     {
-        $this->root = $root;
-        $this->current = $this->root;
+        $this->root     = $root;
+        $this->current  = $this->root;
         $this->entering = true;
     }
 
@@ -44,31 +40,29 @@ final class NodeWalker
      * Returns an event which contains node and entering flag
      * (entering is true when we enter a Node from a parent or sibling,
      * and false when we reenter it from child)
-     *
-     * @return NodeWalkerEvent|null
      */
     public function next(): ?NodeWalkerEvent
     {
-        $current = $this->current;
+        $current  = $this->current;
         $entering = $this->entering;
-        if (null === $current) {
+        if ($current === null) {
             return null;
         }
 
         if ($entering && ($current instanceof AbstractBlock || $current->hasChildren())) {
             if ($current->firstChild()) {
-                $this->current = $current->firstChild();
+                $this->current  = $current->firstChild();
                 $this->entering = true;
             } else {
                 $this->entering = false;
             }
         } elseif ($current === $this->root) {
             $this->current = null;
-        } elseif (null === $current->next()) {
-            $this->current = $current->parent();
+        } elseif ($current->next() === null) {
+            $this->current  = $current->parent();
             $this->entering = false;
         } else {
-            $this->current = $current->next();
+            $this->current  = $current->next();
             $this->entering = true;
         }
 
@@ -77,15 +71,10 @@ final class NodeWalker
 
     /**
      * Resets the iterator to resume at the specified node
-     *
-     * @param Node $node
-     * @param bool $entering
-     *
-     * @return void
      */
     public function resumeAt(Node $node, bool $entering = true): void
     {
-        $this->current = $node;
+        $this->current  = $node;
         $this->entering = $entering;
     }
 }

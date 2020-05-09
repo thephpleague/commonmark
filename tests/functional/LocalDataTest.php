@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,9 +23,7 @@ use League\CommonMark\CommonMarkConverter;
  */
 class LocalDataTest extends AbstractLocalDataTest
 {
-    /**
-     * @var CommonMarkConverter
-     */
+    /** @var CommonMarkConverter */
     protected $converter;
 
     protected function setUp(): void
@@ -38,15 +38,15 @@ class LocalDataTest extends AbstractLocalDataTest
      *
      * @dataProvider dataProvider
      */
-    public function testExample($markdown, $html, $testName)
+    public function testExample(string $markdown, string $html, string $testName): void
     {
         $this->assertMarkdownRendersAs($markdown, $html, $testName);
     }
 
     /**
-     * @return iterable
+     * @return iterable<array<string>>
      */
-    public function dataProvider()
+    public function dataProvider(): iterable
     {
         yield from $this->loadTests(__DIR__ . '/data');
     }

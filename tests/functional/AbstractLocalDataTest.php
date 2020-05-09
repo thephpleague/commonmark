@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -34,11 +36,11 @@ abstract class AbstractLocalDataTest extends TestCase
      *
      * @dataProvider dataProvider
      */
-    protected function assertMarkdownRendersAs(string $markdown, string $html, string $testName)
+    protected function assertMarkdownRendersAs(string $markdown, string $html, string $testName): void
     {
         $actualResult = $this->converter->convertToHtml($markdown);
 
-        $failureMessage = sprintf('Unexpected result for "%s" test', $testName);
+        $failureMessage  = \sprintf('Unexpected result for "%s" test', $testName);
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;
         $failureMessage .= "\n=== expected ===============\n" . $html;
         $failureMessage .= "\n=== got ====================\n" . $actualResult;
@@ -47,10 +49,7 @@ abstract class AbstractLocalDataTest extends TestCase
     }
 
     /**
-     * @param string $dir
-     * @param string $pattern
-     *
-     * @return iterable
+     * @return iterable<array<string>>
      */
     protected function loadTests(string $dir, string $pattern = '*.md'): iterable
     {
@@ -60,11 +59,11 @@ abstract class AbstractLocalDataTest extends TestCase
             ->depth('== 0')
             ->name($pattern);
 
-        /** @var SplFileInfo $markdownFile */
         foreach ($finder as $markdownFile) {
+            \assert($markdownFile instanceof SplFileInfo);
             $testName = $markdownFile->getBasename('.md');
             $markdown = $markdownFile->getContents();
-            $html = file_get_contents($dir . '/' . $testName . '.html');
+            $html     = \file_get_contents($dir . '/' . $testName . '.html');
 
             yield [$markdown, $html, $testName];
         }

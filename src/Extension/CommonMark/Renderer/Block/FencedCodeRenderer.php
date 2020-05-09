@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,14 +26,13 @@ use League\CommonMark\Util\Xml;
 final class FencedCodeRenderer implements NodeRendererInterface
 {
     /**
-     * @param FencedCode                 $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param FencedCode $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof FencedCode)) {
+        if (! ($node instanceof FencedCode)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
@@ -39,7 +40,7 @@ final class FencedCodeRenderer implements NodeRendererInterface
 
         $infoWords = $node->getInfoWords();
         if (\count($infoWords) !== 0 && \strlen($infoWords[0]) !== 0) {
-            $attrs['class'] = isset($attrs['class']) ? $attrs['class'] . ' ' : '';
+            $attrs['class']  = isset($attrs['class']) ? $attrs['class'] . ' ' : '';
             $attrs['class'] .= 'language-' . $infoWords[0];
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,20 +21,20 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlBlockTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $htmlBlock = new HtmlBlock(HtmlBlock::TYPE_3);
         $this->assertSame(HtmlBlock::TYPE_3, $htmlBlock->getType());
     }
 
-    public function testGetSetType()
+    public function testGetSetType(): void
     {
         $htmlBlock = new HtmlBlock(HtmlBlock::TYPE_3);
         $htmlBlock->setType(HtmlBlock::TYPE_4);
         $this->assertSame(HtmlBlock::TYPE_4, $htmlBlock->getType());
     }
 
-    public function testGetAndSetLiteral()
+    public function testGetAndSetLiteral(): void
     {
         $htmlBlock = new HtmlBlock(HtmlBlock::TYPE_6_BLOCK_ELEMENT);
         $htmlBlock->setLiteral('<marquee>foo</marquee>');

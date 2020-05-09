@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,12 +24,15 @@ class UrlEncoderTest extends TestCase
     /**
      * @dataProvider unescapeAndEncodeTestProvider
      */
-    public function testUnescapeAndEncode($input, $expected)
+    public function testUnescapeAndEncode(string $input, string $expected): void
     {
         $this->assertEquals($expected, UrlEncoder::unescapeAndEncode($input));
     }
 
-    public function unescapeAndEncodeTestProvider()
+    /**
+     * @return iterable<array<string>>
+     */
+    public function unescapeAndEncodeTestProvider(): iterable
     {
         return [
             ['(foo)', '(foo)'],

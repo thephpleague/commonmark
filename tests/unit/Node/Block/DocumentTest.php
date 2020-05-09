@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,14 +25,14 @@ use PHPUnit\Framework\TestCase;
 
 class DocumentTest extends TestCase
 {
-    public function testDefaultConstructorAndGetReferenceMap()
+    public function testDefaultConstructorAndGetReferenceMap(): void
     {
         $document = new Document();
 
         $this->assertInstanceOf(ReferenceMap::class, $document->getReferenceMap());
     }
 
-    public function testReferenceMapPassedIntoConstructor()
+    public function testReferenceMapPassedIntoConstructor(): void
     {
         $map = $this->createMock(ReferenceMapInterface::class);
 
@@ -39,7 +41,7 @@ class DocumentTest extends TestCase
         $this->assertSame($map, $document->getReferenceMap());
     }
 
-    public function testCanContain()
+    public function testCanContain(): void
     {
         $document = new Document();
 
@@ -47,14 +49,14 @@ class DocumentTest extends TestCase
         $this->assertTrue($document->canContain($block));
     }
 
-    public function testIsCode()
+    public function testIsCode(): void
     {
         $document = new Document();
 
         $this->assertFalse($document->isCode());
     }
 
-    public function testMatchesNextLine()
+    public function testMatchesNextLine(): void
     {
         $document = new Document();
 

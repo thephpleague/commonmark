@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,9 @@ use League\CommonMark\Node\Block\Document;
 
 final class TableOfContentsBuilder implements ConfigurationAwareInterface
 {
-    public const POSITION_TOP = 'top';
+    public const POSITION_TOP             = 'top';
     public const POSITION_BEFORE_HEADINGS = 'before-headings';
-    public const POSITION_PLACEHOLDER = 'placeholder';
+    public const POSITION_PLACEHOLDER     = 'placeholder';
 
     /** @var ConfigurationInterface */
     private $config;
@@ -49,7 +51,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
 
         // Add custom CSS class(es), if defined
         $class = $this->config->get('table_of_contents/html_class', 'table-of-contents');
-        if (!empty($class)) {
+        if (! empty($class)) {
             $toc->data['attributes']['class'] = $class;
         }
 
@@ -83,7 +85,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         $walker = $document->walker();
         while ($event = $walker->next()) {
             // Add the block once we find a placeholder (and we're about to leave it)
-            if (!$event->getNode() instanceof TableOfContentsPlaceholder) {
+            if (! $event->getNode() instanceof TableOfContentsPlaceholder) {
                 continue;
             }
 

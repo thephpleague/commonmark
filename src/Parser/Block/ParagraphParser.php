@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -28,7 +30,7 @@ final class ParagraphParser extends AbstractBlockContinueParser
 
     public function __construct()
     {
-        $this->block = new Paragraph();
+        $this->block           = new Paragraph();
         $this->referenceParser = new ReferenceParser();
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -41,7 +43,7 @@ final class AsIsNormalizerStrategy implements NormalizerStrategyInterface
             $newListBlock = new ListBlock($this->parentListBlock->getListData());
             $this->lastListItem->appendChild($newListBlock);
             $this->parentListBlock = $newListBlock;
-            $this->lastListItem = null;
+            $this->lastListItem    = null;
 
             $this->parentLevel++;
         }

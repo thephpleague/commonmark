@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,6 +24,7 @@ final class TableOfContentsExtension implements ExtensionInterface
     {
         $environment->addEventListener(DocumentParsedEvent::class, [new TableOfContentsBuilder(), 'onDocumentParsed'], -150);
 
+        // phpcs:ignore SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
         if ($environment->getConfig('table_of_contents/position') === TableOfContentsBuilder::POSITION_PLACEHOLDER) {
             $environment->addBlockStartParser(TableOfContentsPlaceholderParser::blockStartParser(), 200);
             // If a placeholder cannot be replaced with a TOC element this renderer will ensure the parser won't error out

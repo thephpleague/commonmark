@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 final class InlineMentionParserTest extends TestCase
 {
-    public function testTwitterMentionParser()
+    public function testTwitterMentionParser(): void
     {
         $input = <<<'EOT'
 You can follow the author of this library on Twitter - he's @colinodell!
@@ -43,7 +45,7 @@ EOT;
         $this->assertEquals($expected, $converter->convertToHtml($input));
     }
 
-    public function testGithubMentionParser()
+    public function testGithubMentionParser(): void
     {
         $input = <<<'EOT'
 You can follow the author of this library on Github - he's @colinodell!

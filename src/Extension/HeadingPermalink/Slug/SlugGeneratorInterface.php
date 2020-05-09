@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -15,10 +17,6 @@ interface SlugGeneratorInterface
 {
     /**
      * Create a URL-friendly slug based on the given input string
-     *
-     * @param string $input
-     *
-     * @return string
      */
     public function createSlug(string $input): string;
 }

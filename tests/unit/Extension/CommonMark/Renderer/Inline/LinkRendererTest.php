@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 class LinkRendererTest extends TestCase
 {
-    /**
-     * @var LinkRenderer
-     */
+    /** @var LinkRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -35,11 +35,11 @@ class LinkRendererTest extends TestCase
         $this->renderer->setConfiguration(new Configuration());
     }
 
-    public function testRenderWithTitle()
+    public function testRenderWithTitle(): void
     {
-        $inline = new Link('http://example.com/foo.html', '::label::', '::title::');
+        $inline                     = new Link('http://example.com/foo.html', '::label::', '::title::');
         $inline->data['attributes'] = ['id' => '::id::', 'title' => '::title2::', 'href' => '::href2::'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer               = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -51,9 +51,9 @@ class LinkRendererTest extends TestCase
         $this->assertStringContainsString('::id::', $result->getAttribute('id'));
     }
 
-    public function testRenderWithoutTitle()
+    public function testRenderWithoutTitle(): void
     {
-        $inline = new Link('http://example.com/foo.html', '::label::');
+        $inline       = new Link('http://example.com/foo.html', '::label::');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -65,13 +65,13 @@ class LinkRendererTest extends TestCase
         $this->assertStringContainsString('::children::', $result->getContents(true));
     }
 
-    public function testRenderAllowUnsafeLink()
+    public function testRenderAllowUnsafeLink(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'allow_unsafe_links' => true,
         ]));
 
-        $inline = new Link('javascript:void(0)');
+        $inline       = new Link('javascript:void(0)');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -80,13 +80,13 @@ class LinkRendererTest extends TestCase
         $this->assertStringContainsString('javascript:void(0)', $result->getAttribute('href'));
     }
 
-    public function testRenderDisallowUnsafeLink()
+    public function testRenderDisallowUnsafeLink(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'allow_unsafe_links' => false,
         ]));
 
-        $inline = new Link('javascript:void(0)');
+        $inline       = new Link('javascript:void(0)');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -95,21 +95,21 @@ class LinkRendererTest extends TestCase
         $this->assertEquals('', $result->getAttribute('href'));
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline       = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
     }
 
-    public function testRenderWithExternalTarget()
+    public function testRenderWithExternalTarget(): void
     {
-        $inline = new Link('http://example.com/foo.html', '::label::', '::title::');
+        $inline                     = new Link('http://example.com/foo.html', '::label::', '::title::');
         $inline->data['attributes'] = ['target' => '_blank'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer               = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 

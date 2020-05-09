@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlInlineRendererTest extends TestCase
 {
-    /**
-     * @var HtmlInlineRenderer
-     */
+    /** @var HtmlInlineRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -35,9 +35,9 @@ class HtmlInlineRendererTest extends TestCase
         $this->renderer->setConfiguration(new Configuration());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $inline = new HtmlInline('<h1>Test</h1>');
+        $inline       = new HtmlInline('<h1>Test</h1>');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -46,13 +46,13 @@ class HtmlInlineRendererTest extends TestCase
         $this->assertStringContainsString('<h1>Test</h1>', $result);
     }
 
-    public function testRenderAllowHtml()
+    public function testRenderAllowHtml(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'html_input' => HtmlFilter::ALLOW,
         ]));
 
-        $inline = new HtmlInline('<h1>Test</h1>');
+        $inline       = new HtmlInline('<h1>Test</h1>');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -61,13 +61,13 @@ class HtmlInlineRendererTest extends TestCase
         $this->assertStringContainsString('<h1>Test</h1>', $result);
     }
 
-    public function testRenderEscapeHtml()
+    public function testRenderEscapeHtml(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'html_input' => HtmlFilter::ESCAPE,
         ]));
 
-        $inline = new HtmlInline('<h1 class="test">Test</h1>');
+        $inline       = new HtmlInline('<h1 class="test">Test</h1>');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -76,13 +76,13 @@ class HtmlInlineRendererTest extends TestCase
         $this->assertStringContainsString('&lt;h1 class="test"&gt;Test&lt;/h1&gt;', $result);
     }
 
-    public function testRenderStripHtml()
+    public function testRenderStripHtml(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'html_input' => HtmlFilter::STRIP,
         ]));
 
-        $inline = new HtmlInline('<h1>Test</h1>');
+        $inline       = new HtmlInline('<h1>Test</h1>');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -91,11 +91,11 @@ class HtmlInlineRendererTest extends TestCase
         $this->assertEquals('', $result);
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline       = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

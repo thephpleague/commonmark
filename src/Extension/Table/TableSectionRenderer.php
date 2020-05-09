@@ -23,18 +23,17 @@ use League\CommonMark\Util\HtmlElement;
 final class TableSectionRenderer implements NodeRendererInterface
 {
     /**
-     * @param TableSection               $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param TableSection $node
      *
-     * @return HtmlElement|string
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!$node instanceof TableSection) {
+        if (! $node instanceof TableSection) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        if (!$node->hasChildren()) {
+        if (! $node->hasChildren()) {
             return '';
         }
 

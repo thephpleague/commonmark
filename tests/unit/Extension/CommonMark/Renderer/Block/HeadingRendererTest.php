@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class HeadingRendererTest extends TestCase
 {
-    /**
-     * @var HeadingRenderer
-     */
+    /** @var HeadingRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -34,16 +34,13 @@ class HeadingRendererTest extends TestCase
     }
 
     /**
-     * @param int    $level
-     * @param string $expectedTag
-     *
      * @dataProvider dataForTestRender
      */
-    public function testRender($level, $expectedTag)
+    public function testRender(int $level, string $expectedTag): void
     {
-        $block = new Heading($level);
+        $block                     = new Heading($level);
         $block->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer              = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -54,7 +51,10 @@ class HeadingRendererTest extends TestCase
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
-    public function dataForTestRender()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForTestRender(): iterable
     {
         return [
             [1, 'h1'],
@@ -66,11 +66,11 @@ class HeadingRendererTest extends TestCase
         ];
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -49,7 +51,7 @@ class HeadingStartParser implements BlockStartParserInterface
     private static function getAtxHeader(Cursor $cursor): ?HeadingParser
     {
         $match = RegexHelper::matchAll('/^#{1,6}(?:[ \t]+|$)/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
-        if (!$match) {
+        if (! $match) {
             return null;
         }
 
@@ -57,11 +59,11 @@ class HeadingStartParser implements BlockStartParserInterface
         $cursor->advanceBy(\strlen($match[0]));
 
         $level = \strlen(\trim($match[0]));
-        $str = $cursor->getRemainder();
-        /** @var string $str */
-        $str = \preg_replace('/^[ \t]*#+[ \t]*$/', '', $str);
-        /** @var string $str */
+        $str   = $cursor->getRemainder();
+        $str   = \preg_replace('/^[ \t]*#+[ \t]*$/', '', $str);
+        \assert(\is_string($str));
         $str = \preg_replace('/[ \t]+#+[ \t]*$/', '', $str);
+        \assert(\is_string($str));
 
         return new HeadingParser($level, $str);
     }

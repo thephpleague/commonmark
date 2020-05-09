@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,12 +22,12 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 interface EnvironmentInterface
 {
     /**
-     * @param string|null $key
-     * @param mixed       $default
+     * @param string|null $key     Configuration option key
+     * @param mixed       $default Default value to return if config option is not set
      *
      * @return mixed
      */
-    public function getConfig($key = null, $default = null);
+    public function getConfig(?string $key = null, $default = null);
 
     /**
      * @return iterable<BlockStartParserInterface>
@@ -33,20 +35,13 @@ interface EnvironmentInterface
     public function getBlockStartParsers(): iterable;
 
     /**
-     * @param string $character
-     *
      * @return iterable<InlineParserInterface>
      */
     public function getInlineParsersForCharacter(string $character): iterable;
 
-    /**
-     * @return DelimiterProcessorCollection
-     */
     public function getDelimiterProcessors(): DelimiterProcessorCollection;
 
     /**
-     * @param string $nodeClass
-     *
      * @return iterable<NodeRendererInterface>
      */
     public function getRenderersForClass(string $nodeClass): iterable;
@@ -55,17 +50,11 @@ interface EnvironmentInterface
      * Regex which matches any character which doesn't indicate an inline element
      *
      * This allows us to parse multiple non-special characters at once
-     *
-     * @return string
      */
     public function getInlineParserCharacterRegex(): string;
 
     /**
      * Dispatches the given event to listeners
-     *
-     * @param AbstractEvent $event
-     *
-     * @return void
      */
     public function dispatch(AbstractEvent $event): void;
 }

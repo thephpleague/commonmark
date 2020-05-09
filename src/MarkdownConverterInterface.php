@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,13 +21,11 @@ interface MarkdownConverterInterface
     /**
      * Converts Markdown to HTML.
      *
-     * @param string $markdown
+     * @param string $markdown Markdown input
+     *
+     * @return string HTML output
      *
      * @throws \RuntimeException
-     *
-     * @return string HTML
-     *
-     * @api
      */
     public function convertToHtml(string $markdown): string;
 }

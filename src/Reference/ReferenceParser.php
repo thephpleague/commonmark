@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -76,10 +78,11 @@ final class ReferenceParser
         if ($this->paragraph !== '') {
             $this->paragraph .= "\n";
         }
+
         $this->paragraph .= $line;
 
         $cursor = new Cursor($line);
-        while (!$cursor->isAtEnd()) {
+        while (! $cursor->isAtEnd()) {
             $result = false;
             switch ($this->state) {
                 case self::PARAGRAPH:
@@ -106,7 +109,7 @@ final class ReferenceParser
                     break;
             }
 
-            if (!$result) {
+            if (! $result) {
                 $this->state = self::PARAGRAPH;
 
                 return;
@@ -197,7 +200,7 @@ final class ReferenceParser
             // Destination was at end of line, so this is a valid reference for sure (and maybe a title).
             // If not at end of line, wait for title to be valid first.
             $this->referenceValid = true;
-            $this->paragraph = '';
+            $this->paragraph      = '';
         } elseif ($advanced === 0) {
             // spec: The title must be separated from the link destination by whitespace
             return false;
@@ -259,14 +262,14 @@ final class ReferenceParser
         // Did we find the end delimiter?
         $endDelimiterFound = false;
         if (\substr($title, -1) === $this->titleDelimiter) {
+            $endDelimiterFound = true;
             // Chop it off
             $title = \substr($title, 0, -1);
-            $endDelimiterFound = true;
         }
 
         $this->title .= $title;
 
-        if (!$endDelimiterFound && $cursor->isAtEnd()) {
+        if (! $endDelimiterFound && $cursor->isAtEnd()) {
             // Title still going, continue on next line
             $this->title .= "\n";
 
@@ -275,7 +278,7 @@ final class ReferenceParser
 
         // We either hit the end delimiter or some extra whitespace
         $cursor->advanceToNextNonSpaceOrTab();
-        if (!$cursor->isAtEnd()) {
+        if (! $cursor->isAtEnd()) {
             // spec: No further non-whitespace characters may occur on the line.
             return false;
         }
@@ -292,16 +295,16 @@ final class ReferenceParser
 
     private function finishReference(): void
     {
-        if (!$this->referenceValid) {
+        if (! $this->referenceValid) {
             return;
         }
 
         $this->references[] = new Reference($this->label, $this->destination, $this->title);
 
-        $this->label = null;
+        $this->label          = null;
         $this->referenceValid = false;
-        $this->destination = null;
-        $this->title = '';
+        $this->destination    = null;
+        $this->title          = '';
         $this->titleDelimiter = null;
     }
 }

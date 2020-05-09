@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 class ReferenceMapTest extends TestCase
 {
-    public function testAddNewReference()
+    public function testAddNewReference(): void
     {
         $map = new ReferenceMap();
 
@@ -31,7 +33,7 @@ class ReferenceMapTest extends TestCase
         $this->assertSame($reference, $map->get('foo'));
     }
 
-    public function testUnicodeCaseFolding()
+    public function testUnicodeCaseFolding(): void
     {
         $map = new ReferenceMap();
 
@@ -44,7 +46,7 @@ class ReferenceMapTest extends TestCase
         $this->assertTrue($map->contains('ss'));
     }
 
-    public function testOverwriteReference()
+    public function testOverwriteReference(): void
     {
         $map = new ReferenceMap();
 
@@ -59,28 +61,28 @@ class ReferenceMapTest extends TestCase
         $this->assertCount(1, $map);
     }
 
-    public function testGetReferenceWhenNotExists()
+    public function testGetReferenceWhenNotExists(): void
     {
         $map = new ReferenceMap();
 
         $this->assertNull($map->get('foo'));
     }
 
-    public function testGetIterator()
+    public function testGetIterator(): void
     {
         $map = new ReferenceMap();
 
         $map->add($ref1 = new Reference('foo', 'aaa', 'aaa'));
         $map->add($ref2 = new Reference('bar', 'bbb', 'bbb'));
 
-        $references = iterator_to_array($map->getIterator());
+        $references = \iterator_to_array($map->getIterator());
 
         $this->assertCount(2, $references);
         $this->assertContains($ref1, $references);
         $this->assertContains($ref2, $references);
     }
 
-    public function testCount()
+    public function testCount(): void
     {
         $map = new ReferenceMap();
 

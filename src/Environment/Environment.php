@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -30,59 +32,37 @@ use League\CommonMark\Util\PrioritizedList;
 
 final class Environment implements ConfigurableEnvironmentInterface
 {
-    /**
-     * @var ExtensionInterface[]
-     */
+    /** @var ExtensionInterface[] */
     private $extensions = [];
 
-    /**
-     * @var ExtensionInterface[]
-     */
+    /** @var ExtensionInterface[] */
     private $uninitializedExtensions = [];
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $extensionsInitialized = false;
 
-    /**
-     * @var PrioritizedList<BlockStartParserInterface>
-     */
+    /** @var PrioritizedList<BlockStartParserInterface> */
     private $blockStartParsers;
 
-    /**
-     * @var PrioritizedList<InlineParserInterface>
-     */
+    /** @var PrioritizedList<InlineParserInterface> */
     private $inlineParsers;
 
-    /**
-     * @var array<string, PrioritizedList<InlineParserInterface>>
-     */
+    /** @var array<string, PrioritizedList<InlineParserInterface>> */
     private $inlineParsersByCharacter = [];
 
-    /**
-     * @var DelimiterProcessorCollection
-     */
+    /** @var DelimiterProcessorCollection */
     private $delimiterProcessors;
 
-    /**
-     * @var array<string, PrioritizedList<NodeRendererInterface>>
-     */
+    /** @var array<string, PrioritizedList<NodeRendererInterface>> */
     private $renderersByClass = [];
 
-    /**
-     * @var array<string, PrioritizedList<callable>>
-     */
+    /** @var array<string, PrioritizedList<callable>> */
     private $listeners = [];
 
-    /**
-     * @var Configuration
-     */
+    /** @var Configuration */
     private $config;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $inlineParserCharacterRegex;
 
     /**
@@ -92,11 +72,14 @@ final class Environment implements ConfigurableEnvironmentInterface
     {
         $this->config = new Configuration($config);
 
-        $this->blockStartParsers = new PrioritizedList();
-        $this->inlineParsers = new PrioritizedList();
+        $this->blockStartParsers   = new PrioritizedList();
+        $this->inlineParsers       = new PrioritizedList();
         $this->delimiterProcessors = new DelimiterProcessorCollection();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function mergeConfig(array $config = []): void
     {
         $this->assertUninitialized('Failed to modify configuration.');
@@ -104,6 +87,9 @@ final class Environment implements ConfigurableEnvironmentInterface
         $this->config->merge($config);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setConfig(array $config = []): void
     {
         $this->assertUninitialized('Failed to modify configuration.');
@@ -111,6 +97,9 @@ final class Environment implements ConfigurableEnvironmentInterface
         $this->config->replace($config);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getConfig($key = null, $default = null)
     {
         return $this->config->get($key, $default);
@@ -134,7 +123,7 @@ final class Environment implements ConfigurableEnvironmentInterface
         $this->injectEnvironmentAndConfigurationIfNeeded($parser);
 
         foreach ($parser->getCharacters() as $character) {
-            if (!isset($this->inlineParsersByCharacter[$character])) {
+            if (! isset($this->inlineParsersByCharacter[$character])) {
                 $this->inlineParsersByCharacter[$character] = new PrioritizedList();
             }
 
@@ -157,7 +146,7 @@ final class Environment implements ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add renderer.');
 
-        if (!isset($this->renderersByClass[$nodeClass])) {
+        if (! isset($this->renderersByClass[$nodeClass])) {
             $this->renderersByClass[$nodeClass] = new PrioritizedList();
         }
 
@@ -167,22 +156,28 @@ final class Environment implements ConfigurableEnvironmentInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getBlockStartParsers(): iterable
     {
-        if (!$this->extensionsInitialized) {
+        if (! $this->extensionsInitialized) {
             $this->initializeExtensions();
         }
 
         return $this->blockStartParsers->getIterator();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getInlineParsersForCharacter(string $character): iterable
     {
-        if (!$this->extensionsInitialized) {
+        if (! $this->extensionsInitialized) {
             $this->initializeExtensions();
         }
 
-        if (!isset($this->inlineParsersByCharacter[$character])) {
+        if (! isset($this->inlineParsersByCharacter[$character])) {
             return [];
         }
 
@@ -191,16 +186,19 @@ final class Environment implements ConfigurableEnvironmentInterface
 
     public function getDelimiterProcessors(): DelimiterProcessorCollection
     {
-        if (!$this->extensionsInitialized) {
+        if (! $this->extensionsInitialized) {
             $this->initializeExtensions();
         }
 
         return $this->delimiterProcessors;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getRenderersForClass(string $nodeClass): iterable
     {
-        if (!$this->extensionsInitialized) {
+        if (! $this->extensionsInitialized) {
             $this->initializeExtensions();
         }
 
@@ -210,7 +208,7 @@ final class Environment implements ConfigurableEnvironmentInterface
         }
 
         while ($parent = \get_parent_class($parent ?? $nodeClass)) {
-            if (!isset($this->renderersByClass[$parent])) {
+            if (! isset($this->renderersByClass[$parent])) {
                 continue;
             }
 
@@ -234,15 +232,13 @@ final class Environment implements ConfigurableEnvironmentInterface
     /**
      * Add a single extension
      *
-     * @param ExtensionInterface $extension
-     *
      * @return $this
      */
     public function addExtension(ExtensionInterface $extension): ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add extension.');
 
-        $this->extensions[] = $extension;
+        $this->extensions[]              = $extension;
         $this->uninitializedExtensions[] = $extension;
 
         return $this;
@@ -251,7 +247,7 @@ final class Environment implements ConfigurableEnvironmentInterface
     private function initializeExtensions(): void
     {
         // Ask all extensions to register their components
-        while (!empty($this->uninitializedExtensions)) {
+        while (! empty($this->uninitializedExtensions)) {
             foreach ($this->uninitializedExtensions as $i => $extension) {
                 $extension->register($this);
                 unset($this->uninitializedExtensions[$i]);
@@ -311,7 +307,7 @@ final class Environment implements ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add event listener.');
 
-        if (!isset($this->listeners[$eventClass])) {
+        if (! isset($this->listeners[$eventClass])) {
             $this->listeners[$eventClass] = new PrioritizedList();
         }
 
@@ -328,7 +324,7 @@ final class Environment implements ConfigurableEnvironmentInterface
 
     public function dispatch(AbstractEvent $event): void
     {
-        if (!$this->extensionsInitialized) {
+        if (! $this->extensionsInitialized) {
             $this->initializeExtensions();
         }
 
@@ -360,8 +356,6 @@ final class Environment implements ConfigurableEnvironmentInterface
     }
 
     /**
-     * @param string $message
-     *
      * @throws \RuntimeException
      */
     private function assertUninitialized(string $message): void

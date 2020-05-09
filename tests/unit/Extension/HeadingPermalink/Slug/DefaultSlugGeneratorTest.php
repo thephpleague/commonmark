@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,13 +21,16 @@ final class DefaultSlugGeneratorTest extends TestCase
     /**
      * @dataProvider dataProviderForTestCreateSlug
      */
-    public function testCreateSlug($input, $expectedOutput)
+    public function testCreateSlug(string $input, string $expectedOutput): void
     {
         $generator = new DefaultSlugGenerator();
         $this->assertEquals($expectedOutput, $generator->createSlug($input));
     }
 
-    public function dataProviderForTestCreateSlug()
+    /**
+     * @return iterable<array<string>>
+     */
+    public function dataProviderForTestCreateSlug(): iterable
     {
         yield ['', ''];
         yield ['hello world', 'hello-world'];
@@ -50,13 +55,13 @@ final class DefaultSlugGeneratorTest extends TestCase
 
         yield ["\nWho\nput\n\n newlines  \nin here?!\n", 'who-put-newlines-in-here'];
 
-        yield ['අත්හදා බලන මාතෘකාව',    'අත්හදා-බලන-මාතෘකාව'];
-        yield ['අත්හදා බලන මාතෘකාව -',  'අත්හදා-බලන-මාතෘකාව--'];
+        yield ['අත්හදා බලන මාතෘකාව', 'අත්හදා-බලන-මාතෘකාව'];
+        yield ['අත්හදා බලන මාතෘකාව -', 'අත්හදා-බලන-මාතෘකාව--'];
         yield ['අත්හදා බලන මාතෘකාව - ', 'අත්හදා-බලන-මාතෘකාව--'];
         yield ['අත්හදා බලන මාතෘකාව - අ', 'අත්හදා-බලන-මාතෘකාව---අ'];
 
-        yield ['测试标题',     '测试标题'];
-        yield ['测试 # 标题',  '测试--标题'];
+        yield ['测试标题', '测试标题'];
+        yield ['测试 # 标题', '测试--标题'];
         yield ['测试 x² 标题', '测试-x-标题'];
         yield ['試験タイトル', '試験タイトル'];
     }

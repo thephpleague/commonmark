@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,9 @@ use PHPUnit\Framework\TestCase;
 
 class CommonMarkConverterTest extends TestCase
 {
-    public function testEmptyConstructor()
+    public function testEmptyConstructor(): void
     {
-        $converter = new CommonMarkConverter();
+        $converter           = new CommonMarkConverter();
         $expectedEnvironment = Environment::createCommonMarkEnvironment();
 
         $environment = $converter->getEnvironment();
@@ -35,9 +37,9 @@ class CommonMarkConverterTest extends TestCase
         $this->assertEquals($expectedEnvironment->getConfig(), $environment->getConfig());
     }
 
-    public function testConfigOnlyConstructor()
+    public function testConfigOnlyConstructor(): void
     {
-        $config = ['foo' => 'bar'];
+        $config    = ['foo' => 'bar'];
         $converter = new CommonMarkConverter($config);
 
         $environment = $converter->getEnvironment();
@@ -47,9 +49,9 @@ class CommonMarkConverterTest extends TestCase
         $this->assertArrayHasKey('foo', $environment->getConfig());
     }
 
-    public function testEnvironmentAndConfigConstructor()
+    public function testEnvironmentAndConfigConstructor(): void
     {
-        $config = ['foo' => 'bar'];
+        $config          = ['foo' => 'bar'];
         $mockEnvironment = $this->createMock(ConfigurableEnvironmentInterface::class);
         $mockEnvironment->expects($this->once())
             ->method('mergeConfig')
@@ -62,7 +64,7 @@ class CommonMarkConverterTest extends TestCase
         $this->assertSame($mockEnvironment, $environment);
     }
 
-    public function testConvertingInvalidUTF8()
+    public function testConvertingInvalidUTF8(): void
     {
         $this->expectException(UnexpectedEncodingException::class);
 
@@ -70,7 +72,7 @@ class CommonMarkConverterTest extends TestCase
         $converter->convertToHtml("\x09\xca\xca");
     }
 
-    public function testInvokeReturnsSameOutputAsConvertToHtml()
+    public function testInvokeReturnsSameOutputAsConvertToHtml(): void
     {
         $inputMarkdown = '**Strong**';
 

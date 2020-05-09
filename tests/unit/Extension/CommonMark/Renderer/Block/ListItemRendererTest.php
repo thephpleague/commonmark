@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 class ListItemRendererTest extends TestCase
 {
-    /**
-     * @var ListItemRenderer
-     */
+    /** @var ListItemRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -34,11 +34,11 @@ class ListItemRendererTest extends TestCase
         $this->renderer = new ListItemRenderer();
     }
 
-    public function testRenderUnorderedList()
+    public function testRenderUnorderedList(): void
     {
-        $block = new ListItem(new ListData());
+        $block                     = new ListItem(new ListData());
         $block->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer              = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);
@@ -48,11 +48,11 @@ class ListItemRendererTest extends TestCase
         $this->assertEquals('<li id="foo">::children::</li>', $result->__toString());
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

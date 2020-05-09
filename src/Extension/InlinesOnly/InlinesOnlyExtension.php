@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,6 +21,7 @@ use League\CommonMark\Extension\ExtensionInterface;
 
 final class InlinesOnlyExtension implements ExtensionInterface
 {
+    // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma,Squiz.WhiteSpace.SemicolonSpacing.Incorrect
     public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $childRenderer = new ChildRenderer();
@@ -50,6 +53,7 @@ final class InlinesOnlyExtension implements ExtensionInterface
         if ($environment->getConfig('use_asterisk', true)) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));
         }
+
         if ($environment->getConfig('use_underscore', true)) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('_'));
         }

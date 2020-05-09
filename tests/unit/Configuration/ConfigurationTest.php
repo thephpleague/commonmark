@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 class ConfigurationTest extends TestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $data = [
             'foo' => 'bar',
@@ -55,7 +57,7 @@ class ConfigurationTest extends TestCase
         $this->assertEquals(42, $config->get('answer', 42));
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $data = [
             'foo' => 'bar',
@@ -105,7 +107,7 @@ class ConfigurationTest extends TestCase
         $this->assertSame(42, $config->get('x/y/z'));
     }
 
-    public function testReplace()
+    public function testReplace(): void
     {
         $config = new Configuration(['foo' => 'bar']);
         $config->replace(['test' => '123']);
@@ -114,7 +116,7 @@ class ConfigurationTest extends TestCase
         $this->assertEquals('123', $config->get('test'));
     }
 
-    public function testMerge()
+    public function testMerge(): void
     {
         $config = new Configuration(['foo' => 'bar', 'test' => '123']);
         $config->merge(['test' => '456']);

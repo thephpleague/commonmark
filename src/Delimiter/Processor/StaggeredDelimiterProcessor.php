@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -59,10 +61,6 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
 
     /**
      * Adds the given processor to this staggered delimiter processor
-     *
-     * @param DelimiterProcessorInterface $processor
-     *
-     * @return void
      */
     public function add(DelimiterProcessorInterface $processor): void
     {
@@ -98,8 +96,8 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
         }
 
         // Just use the first one in our list
-        /** @var DelimiterProcessorInterface $first */
         $first = \reset($this->processors);
+        \assert($first instanceof DelimiterProcessorInterface);
 
         return $first;
     }

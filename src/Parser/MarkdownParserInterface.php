@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,11 +18,7 @@ use League\CommonMark\Node\Block\Document;
 interface MarkdownParserInterface
 {
     /**
-     * @param string $input
-     *
      * @throws \RuntimeException
-     *
-     * @return Document
      */
     public function parse(string $input): Document;
 }

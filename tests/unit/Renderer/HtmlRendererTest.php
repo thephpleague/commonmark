@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\CommonMark\Tests\Unit\Renderer;
 
 use League\CommonMark\Environment\Environment;
@@ -13,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlRendererTest extends TestCase
 {
-    public function testRenderDocumentCallsDocumentRenderer()
+    public function testRenderDocumentCallsDocumentRenderer(): void
     {
         $document = new Document();
 
@@ -27,7 +29,7 @@ class HtmlRendererTest extends TestCase
         $this->assertSame('::document::', $htmlRenderer->renderDocument($document));
     }
 
-    public function testRenderNodesWithBlocks()
+    public function testRenderNodesWithBlocks(): void
     {
         $blockRenderer = $this->createMock(NodeRendererInterface::class);
         $blockRenderer->method('render')->willReturn('::block::');
@@ -40,12 +42,12 @@ class HtmlRendererTest extends TestCase
         $ast->appendChild(new Paragraph());
 
         $renderer = new HtmlRenderer($environment);
-        $output = $renderer->renderNodes($ast->children());
+        $output   = $renderer->renderNodes($ast->children());
 
         $this->assertSame("::block::\n::block::", $output);
     }
 
-    public function testRenderNodesWithInlines()
+    public function testRenderNodesWithInlines(): void
     {
         $inlineRenderer = $this->createMock(NodeRendererInterface::class);
         $inlineRenderer->method('render')->willReturn('::inline::');
@@ -58,12 +60,12 @@ class HtmlRendererTest extends TestCase
         $ast->appendChild(new Text());
 
         $renderer = new HtmlRenderer($environment);
-        $output = $renderer->renderNodes($ast->children());
+        $output   = $renderer->renderNodes($ast->children());
 
         $this->assertSame('::inline::::inline::', $output);
     }
 
-    public function testRenderNodesFallsBackWhenFirstRendererReturnsNull()
+    public function testRenderNodesFallsBackWhenFirstRendererReturnsNull(): void
     {
         $renderer1 = $this->createMock(NodeRendererInterface::class);
         $renderer1->expects($this->once())->method('render')->willReturn(null);
@@ -76,12 +78,12 @@ class HtmlRendererTest extends TestCase
         $environment->addRenderer(Text::class, $renderer2);
 
         $renderer = new HtmlRenderer($environment);
-        $output = $renderer->renderNodes([new Text()]);
+        $output   = $renderer->renderNodes([new Text()]);
 
         $this->assertSame('::result::', $output);
     }
 
-    public function testRenderNodesWithMissingRenderer()
+    public function testRenderNodesWithMissingRenderer(): void
     {
         $this->expectException(\RuntimeException::class);
 

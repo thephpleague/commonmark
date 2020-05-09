@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,19 +20,16 @@ use League\CommonMark\Node\StringContainerInterface;
 
 class AbstractStringContainer extends AbstractInline implements StringContainerInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $literal = '';
 
     /**
-     * @param string               $contents
      * @param array<string, mixed> $data
      */
     public function __construct(string $contents = '', array $data = [])
     {
         $this->literal = $contents;
-        $this->data = $data;
+        $this->data    = $data;
     }
 
     public function getLiteral(): string

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,14 +25,13 @@ use League\CommonMark\Util\HtmlElement;
 final class ListBlockRenderer implements NodeRendererInterface
 {
     /**
-     * @param ListBlock                  $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param ListBlock $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof ListBlock)) {
+        if (! ($node instanceof ListBlock)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 

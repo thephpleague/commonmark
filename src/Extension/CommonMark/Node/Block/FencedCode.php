@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,47 +21,29 @@ use League\CommonMark\Node\StringContainerInterface;
 
 class FencedCode extends AbstractBlock implements StringContainerInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string|null */
     protected $info;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $literal = '';
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $length;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $char;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $offset;
 
-    /**
-     * @param int    $length
-     * @param string $char
-     * @param int    $offset
-     */
     public function __construct(int $length, string $char, int $offset)
     {
         $this->length = $length;
-        $this->char = $char;
+        $this->char   = $char;
         $this->offset = $offset;
     }
 
-    /**
-     * @return string
-     */
-    public function getInfo(): string
+    public function getInfo(): ?string
     {
         return $this->info;
     }
@@ -69,7 +53,7 @@ class FencedCode extends AbstractBlock implements StringContainerInterface
      */
     public function getInfoWords(): array
     {
-        return \preg_split('/\s+/', $this->info) ?: [];
+        return \preg_split('/\s+/', $this->info ?? '') ?: [];
     }
 
     public function setInfo(string $info): void
@@ -87,17 +71,12 @@ class FencedCode extends AbstractBlock implements StringContainerInterface
         $this->literal = $literal;
     }
 
-    /**
-     * @return string
-     */
     public function getChar(): string
     {
         return $this->char;
     }
 
     /**
-     * @param string $char
-     *
      * @return $this
      */
     public function setChar(string $char): self
@@ -107,17 +86,12 @@ class FencedCode extends AbstractBlock implements StringContainerInterface
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getLength(): int
     {
         return $this->length;
     }
 
     /**
-     * @param int $length
-     *
      * @return $this
      */
     public function setLength(int $length): self
@@ -127,17 +101,12 @@ class FencedCode extends AbstractBlock implements StringContainerInterface
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getOffset(): int
     {
         return $this->offset;
     }
 
     /**
-     * @param int $offset
-     *
      * @return $this
      */
     public function setOffset(int $offset): self

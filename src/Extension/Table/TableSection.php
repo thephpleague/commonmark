@@ -19,8 +19,8 @@ use League\CommonMark\Node\Block\AbstractBlock;
 
 final class TableSection extends AbstractBlock
 {
-    const TYPE_HEAD = 'thead';
-    const TYPE_BODY = 'tbody';
+    public const TYPE_HEAD = 'thead';
+    public const TYPE_BODY = 'tbody';
 
     /** @var string */
     public $type = self::TYPE_BODY;
@@ -32,11 +32,11 @@ final class TableSection extends AbstractBlock
 
     public function isHead(): bool
     {
-        return self::TYPE_HEAD === $this->type;
+        return $this->type === self::TYPE_HEAD;
     }
 
     public function isBody(): bool
     {
-        return self::TYPE_BODY === $this->type;
+        return $this->type === self::TYPE_BODY;
     }
 }

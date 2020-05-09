@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -28,7 +30,7 @@ final class BlockContinue
     private function __construct(?CursorState $cursorState = null, bool $finalize = false)
     {
         $this->cursorState = $cursorState;
-        $this->finalize = $finalize;
+        $this->finalize    = $finalize;
     }
 
     public function getCursorState(): ?CursorState
@@ -53,10 +55,6 @@ final class BlockContinue
 
     /**
      * Signal that we're continuing at the given position
-     *
-     * @param Cursor $cursor
-     *
-     * @return self
      */
     public static function at(Cursor $cursor): self
     {
@@ -65,8 +63,6 @@ final class BlockContinue
 
     /**
      * Signal that we want to finalize and close the block
-     *
-     * @return self
      */
     public static function finished(): self
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,10 +22,6 @@ interface HtmlRendererInterface
 {
     /**
      * Render the given Document node (and all of its children) to HTML
-     *
-     * @param Document $node
-     *
-     * @return string
      */
     public function renderDocument(Document $node): string;
 }

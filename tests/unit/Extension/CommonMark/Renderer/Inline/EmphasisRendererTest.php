@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class EmphasisRendererTest extends TestCase
 {
-    /**
-     * @var EmphasisRenderer
-     */
+    /** @var EmphasisRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -33,11 +33,11 @@ class EmphasisRendererTest extends TestCase
         $this->renderer = new EmphasisRenderer();
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $inline = new Emphasis();
+        $inline                     = new Emphasis();
         $inline->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer               = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -48,11 +48,11 @@ class EmphasisRendererTest extends TestCase
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline       = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

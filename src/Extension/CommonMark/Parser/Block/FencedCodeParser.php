@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -25,14 +27,12 @@ final class FencedCodeParser extends AbstractBlockContinueParser
     /** @var FencedCode */
     private $block;
 
-    /**
-     * @var ArrayCollection<int, string>
-     */
+    /** @var ArrayCollection<int, string> */
     protected $strings;
 
     public function __construct(int $fenceLength, string $fenceChar, int $fenceOffset)
     {
-        $this->block = new FencedCode($fenceLength, $fenceChar, $fenceOffset);
+        $this->block   = new FencedCode($fenceLength, $fenceChar, $fenceOffset);
         $this->strings = new ArrayCollection();
     }
 
@@ -47,7 +47,7 @@ final class FencedCodeParser extends AbstractBlockContinueParser
     public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
     {
         // Check for closing code fence
-        if (!$cursor->isIndented() && $cursor->getNextNonSpaceCharacter() === $this->block->getChar()) {
+        if (! $cursor->isIndented() && $cursor->getNextNonSpaceCharacter() === $this->block->getChar()) {
             $match = RegexHelper::matchAll('/^(?:`{3,}|~{3,})(?= *$)/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
             if ($match !== null && \strlen($match[0]) >= $this->block->getLength()) {
                 // closing fence - we're at end of line, so we can finalize now

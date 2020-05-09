@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -31,9 +33,9 @@ final class InlineParserContext
 
     public function __construct(string $contents, AbstractBlock $container, ReferenceMapInterface $referenceMap)
     {
-        $this->referenceMap = $referenceMap;
-        $this->container = $container;
-        $this->cursor = new Cursor(\trim($contents));
+        $this->referenceMap   = $referenceMap;
+        $this->container      = $container;
+        $this->cursor         = new Cursor(\trim($contents));
         $this->delimiterStack = new DelimiterStack();
     }
 

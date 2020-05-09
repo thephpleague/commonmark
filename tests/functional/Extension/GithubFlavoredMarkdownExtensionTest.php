@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -26,7 +28,7 @@ class GithubFlavoredMarkdownExtensionTest extends AbstractSpecTest
         return __DIR__ . '/../../../vendor/github/gfm/test/spec.txt';
     }
 
-    public function dataProvider()
+    public function dataProvider(): \Generator
     {
         foreach ($this->loadSpecExamples() as $title => $data) {
             // In the GFM spec, standard CommonMark tests are tagged 'example'

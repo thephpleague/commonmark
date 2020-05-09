@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -48,24 +50,16 @@ final class Delimiter implements DelimiterInterface
     /** @var int|null */
     private $index;
 
-    /**
-     * @param string                  $char
-     * @param int                     $numDelims
-     * @param AbstractStringContainer $node
-     * @param bool                    $canOpen
-     * @param bool                    $canClose
-     * @param int|null                $index
-     */
     public function __construct(string $char, int $numDelims, AbstractStringContainer $node, bool $canOpen, bool $canClose, ?int $index = null)
     {
-        $this->char = $char;
-        $this->length = $numDelims;
+        $this->char           = $char;
+        $this->length         = $numDelims;
         $this->originalLength = $numDelims;
-        $this->inlineNode = $node;
-        $this->canOpen = $canOpen;
-        $this->canClose = $canClose;
-        $this->active = true;
-        $this->index = $index;
+        $this->inlineNode     = $node;
+        $this->canOpen        = $canOpen;
+        $this->canClose       = $canClose;
+        $this->active         = true;
+        $this->index          = $index;
     }
 
     public function canClose(): bool

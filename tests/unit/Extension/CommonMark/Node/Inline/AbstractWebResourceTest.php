@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,14 +24,14 @@ class AbstractWebResourceTest extends TestCase
     /**
      * Tests the URL constructor parameter and getUrl() method
      */
-    public function testConstructorAndGetUrl()
+    public function testConstructorAndGetUrl(): void
     {
         $url = 'https://www.example.com/foo';
 
-        /** @var AbstractWebResource $element */
         $element = $this->getMockBuilder(AbstractWebResource::class)
             ->setConstructorArgs([$url])
             ->getMockForAbstractClass();
+        \assert($element instanceof AbstractWebResource);
 
         $this->assertEquals($url, $element->getUrl());
     }
@@ -37,15 +39,15 @@ class AbstractWebResourceTest extends TestCase
     /**
      * Tests the setUrl() method
      */
-    public function testSetUrl()
+    public function testSetUrl(): void
     {
         $url1 = 'https://www.example.com/foo';
         $url2 = 'https://www.example.com/bar';
 
-        /** @var AbstractWebResource $element */
         $element = $this->getMockBuilder(AbstractWebResource::class)
             ->setConstructorArgs([$url1])
             ->getMockForAbstractClass();
+        \assert($element instanceof AbstractWebResource);
 
         $element->setUrl($url2);
 

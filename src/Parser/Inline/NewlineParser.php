@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,6 +22,9 @@ use League\CommonMark\Parser\InlineParserContext;
 
 final class NewlineParser implements InlineParserInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return ["\n"];
@@ -30,11 +35,11 @@ final class NewlineParser implements InlineParserInterface
         $inlineContext->getCursor()->advanceBy(1);
 
         // Check previous inline for trailing spaces
-        $spaces = 0;
+        $spaces     = 0;
         $lastInline = $inlineContext->getContainer()->lastChild();
         if ($lastInline instanceof Text) {
             $trimmed = \rtrim($lastInline->getLiteral(), ' ');
-            $spaces = \strlen($lastInline->getLiteral()) - \strlen($trimmed);
+            $spaces  = \strlen($lastInline->getLiteral()) - \strlen($trimmed);
             if ($spaces) {
                 $lastInline->setLiteral($trimmed);
             }

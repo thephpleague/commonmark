@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,17 +20,13 @@ use League\CommonMark\Node\Block\AbstractBlock;
 
 class ListBlock extends AbstractBlock
 {
-    const TYPE_BULLET = 'bullet';
-    const TYPE_ORDERED = 'ordered';
+    public const TYPE_BULLET  = 'bullet';
+    public const TYPE_ORDERED = 'ordered';
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $tight = false;
 
-    /**
-     * @var ListData
-     */
+    /** @var ListData */
     protected $listData;
 
     public function __construct(ListData $listData)
@@ -36,9 +34,6 @@ class ListBlock extends AbstractBlock
         $this->listData = $listData;
     }
 
-    /**
-     * @return ListData
-     */
     public function getListData(): ListData
     {
         return $this->listData;

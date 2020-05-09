@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -52,8 +54,6 @@ final class BlockStart
     /**
      * Signal that we want to parse at the given cursor position
      *
-     * @param Cursor $cursor
-     *
      * @return $this
      */
     public function at(Cursor $cursor): self
@@ -87,10 +87,6 @@ final class BlockStart
 
     /**
      * Signal that we'd like to register the given parser(s) so they can parse the current block
-     *
-     * @param BlockContinueParserInterface ...$blockParsers
-     *
-     * @return self
      */
     public static function of(BlockContinueParserInterface ...$blockParsers): self
     {

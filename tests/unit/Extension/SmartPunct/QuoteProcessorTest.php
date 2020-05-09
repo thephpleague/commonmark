@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,7 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class QuoteProcessorTest extends TestCase
 {
-    public function testSingleQuoteProcessor()
+    public function testSingleQuoteProcessor(): void
     {
         $mockDelimiter = $this->createMock(DelimiterInterface::class);
 
@@ -44,7 +46,7 @@ final class QuoteProcessorTest extends TestCase
         $this->assertEquals('’', $closer->previous()->getLiteral());
     }
 
-    public function testDoubleQuoteProcessor()
+    public function testDoubleQuoteProcessor(): void
     {
         $mockDelimiter = $this->createMock(DelimiterInterface::class);
 

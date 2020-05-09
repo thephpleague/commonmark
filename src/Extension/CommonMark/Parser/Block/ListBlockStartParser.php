@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -49,7 +51,7 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
 
         // prepend the list block if needed
         $matched = $parserState->getLastMatchedBlockParser();
-        if (!($matched instanceof ListBlockParser) || !$listData->equals($matched->getBlock()->getListData())) {
+        if (! ($matched instanceof ListBlockParser) || ! $listData->equals($matched->getBlock()->getListData())) {
             $listBlockParser = new ListBlockParser($listData);
             // We start out with assuming a list is tight. If we find a blank line, we set it to loose later.
             $listBlockParser->getBlock()->setTight(true);
@@ -69,32 +71,32 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
         $rest = $tmpCursor->getRemainder();
 
         if (\preg_match($this->listMarkerRegex ?? $this->generateListMarkerRegex(), $rest) === 1) {
-            $data = new ListData();
+            $data               = new ListData();
             $data->markerOffset = $indent;
-            $data->type = ListBlock::TYPE_BULLET;
-            $data->delimiter = null;
-            $data->bulletChar = $rest[0];
-            $markerLength = 1;
-        } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (!$inParagraph || $matches[1] === '1')) {
-            $data = new ListData();
+            $data->type         = ListBlock::TYPE_BULLET;
+            $data->delimiter    = null;
+            $data->bulletChar   = $rest[0];
+            $markerLength       = 1;
+        } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (! $inParagraph || $matches[1] === '1')) {
+            $data               = new ListData();
             $data->markerOffset = $indent;
-            $data->type = ListBlock::TYPE_ORDERED;
-            $data->start = (int) $matches[1];
-            $data->delimiter = $matches[2];
-            $data->bulletChar = null;
-            $markerLength = \strlen($matches[0]);
+            $data->type         = ListBlock::TYPE_ORDERED;
+            $data->start        = (int) $matches[1];
+            $data->delimiter    = $matches[2];
+            $data->bulletChar   = null;
+            $markerLength       = \strlen($matches[0]);
         } else {
             return null;
         }
 
         // Make sure we have spaces after
         $nextChar = $tmpCursor->peek($markerLength);
-        if (!($nextChar === null || $nextChar === "\t" || $nextChar === ' ')) {
+        if (! ($nextChar === null || $nextChar === "\t" || $nextChar === ' ')) {
             return null;
         }
 
         // If it interrupts paragraph, make sure first line isn't blank
-        if ($inParagraph && !RegexHelper::matchAt(RegexHelper::REGEX_NON_SPACE, $rest, $markerLength)) {
+        if ($inParagraph && ! RegexHelper::matchAt(RegexHelper::REGEX_NON_SPACE, $rest, $markerLength)) {
             return null;
         }
 
@@ -105,24 +107,18 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
         return $data;
     }
 
-    /**
-     * @param Cursor $cursor
-     * @param int    $markerLength
-     *
-     * @return int
-     */
     private static function calculateListMarkerPadding(Cursor $cursor, int $markerLength): int
     {
-        $start = $cursor->saveState();
+        $start          = $cursor->saveState();
         $spacesStartCol = $cursor->getColumn();
 
         while ($cursor->getColumn() - $spacesStartCol < 5) {
-            if (!$cursor->advanceBySpaceOrTab()) {
+            if (! $cursor->advanceBySpaceOrTab()) {
                 break;
             }
         }
 
-        $blankItem = $cursor->peek() === null;
+        $blankItem         = $cursor->peek() === null;
         $spacesAfterMarker = $cursor->getColumn() - $spacesStartCol;
 
         if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $blankItem) {
@@ -144,7 +140,7 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
 
         $markers = $this->config->get('unordered_list_markers', ['*', '+', '-']);
 
-        if (!\is_array($markers)) {
+        if (! \is_array($markers)) {
             throw new \RuntimeException('Invalid configuration option "unordered_list_markers": value must be an array of strings');
         }
 

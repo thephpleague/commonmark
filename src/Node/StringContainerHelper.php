@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -27,7 +29,7 @@ final class StringContainerHelper
 
         $walker = $node->walker();
         while ($event = $walker->next()) {
-            if ($event->isEntering() && ($child = $event->getNode()) instanceof StringContainerInterface && !self::isOneOf($child, $excludeTypes)) {
+            if ($event->isEntering() && ($child = $event->getNode()) instanceof StringContainerInterface && ! self::isOneOf($child, $excludeTypes)) {
                 $text .= $child->getLiteral();
             }
         }
@@ -36,10 +38,7 @@ final class StringContainerHelper
     }
 
     /**
-     * @param object   $object
      * @param string[] $classesOrInterfacesToCheck
-     *
-     * @return bool
      */
     private static function isOneOf(object $object, array $classesOrInterfacesToCheck): bool
     {

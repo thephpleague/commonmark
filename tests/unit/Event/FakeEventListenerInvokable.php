@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the league/commonmark package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
@@ -15,7 +17,7 @@ use League\CommonMark\Event\AbstractEvent;
 
 final class FakeEventListenerInvokable extends FakeEventListener
 {
-    public function __invoke(AbstractEvent $event)
+    public function __invoke(AbstractEvent $event): void
     {
         $this->doStuff($event);
     }

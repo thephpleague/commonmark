@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -27,16 +29,19 @@ final class DisallowedRawHtmlRenderer implements NodeRendererInterface, Configur
         $this->innerRenderer = $innerRenderer;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        $rendered = $this->innerRenderer->render($node, $childRenderer);
+        $rendered = (string) $this->innerRenderer->render($node, $childRenderer);
 
         if ($rendered === '') {
             return '';
         }
 
         // Match these types of tags: <title> </title> <title x="sdf"> <title/> <title />
-        return preg_replace('/<(\/?(?:title|textarea|style|xmp|iframe|noembed|noframes|script|plaintext)[ \/>])/i', '&lt;$1', $rendered);
+        return \preg_replace('/<(\/?(?:title|textarea|style|xmp|iframe|noembed|noframes|script|plaintext)[ \/>])/i', '&lt;$1', $rendered);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

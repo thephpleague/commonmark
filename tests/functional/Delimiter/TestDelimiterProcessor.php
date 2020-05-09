@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,50 +23,38 @@ use League\CommonMark\Node\Inline\Text;
 
 final class TestDelimiterProcessor implements DelimiterProcessorInterface
 {
+    /** @var string */
     private $char;
+
+    /** @var int */
     private $length;
 
     public function __construct(string $char, int $length)
     {
-        $this->char = $char;
+        $this->char   = $char;
         $this->length = $length;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOpeningCharacter(): string
     {
         return $this->char;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClosingCharacter(): string
     {
         return $this->char;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMinLength(): int
     {
         return $this->length;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
     {
         return $this->length;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         $opener->insertAfter(new Text('(' . $this->length . ')'));

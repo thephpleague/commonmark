@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,6 +20,7 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 
 final class FakeChildNodeRenderer implements ChildNodeRendererInterface
 {
+    /** @var bool */
     private $alwaysOutputChildren = false;
 
     public function pretendChildrenExist(): void
@@ -25,6 +28,9 @@ final class FakeChildNodeRenderer implements ChildNodeRendererInterface
         $this->alwaysOutputChildren = true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function renderNodes(iterable $nodes): string
     {
         if ($this->alwaysOutputChildren) {

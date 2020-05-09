@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,14 +21,14 @@ namespace League\CommonMark\Reference;
  */
 final class ReferenceMap implements ReferenceMapInterface
 {
-    /**
-     * @var array<string, ReferenceInterface>
-     */
+    /** @var array<string, ReferenceInterface> */
     private $references = [];
 
     public function add(ReferenceInterface $reference): void
     {
+        // Normalize the key
         $key = Reference::normalizeReference($reference->getLabel());
+        // Store the reference
         $this->references[$key] = $reference;
     }
 
@@ -41,7 +43,7 @@ final class ReferenceMap implements ReferenceMapInterface
     {
         $label = Reference::normalizeReference($label);
 
-        if (!isset($this->references[$label])) {
+        if (! isset($this->references[$label])) {
             return null;
         }
 

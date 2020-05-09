@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -30,26 +32,22 @@ abstract class AbstractBlock extends Node
      */
     public $data = [];
 
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     protected $startLine;
 
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     protected $endLine;
 
-    protected function setParent(Node $node = null): void
+    protected function setParent(?Node $node = null): void
     {
-        if ($node && !$node instanceof self) {
+        if ($node && ! $node instanceof self) {
             throw new \InvalidArgumentException('Parent of block must also be block (cannot be inline)');
         }
 
         parent::setParent($node);
     }
 
-    public function setStartLine(int $startLine): void
+    public function setStartLine(?int $startLine): void
     {
         $this->startLine = $startLine;
         if (empty($this->endLine)) {
@@ -62,7 +60,7 @@ abstract class AbstractBlock extends Node
         return $this->startLine;
     }
 
-    public function setEndLine(int $endLine): void
+    public function setEndLine(?int $endLine): void
     {
         $this->endLine = $endLine;
     }
@@ -73,8 +71,7 @@ abstract class AbstractBlock extends Node
     }
 
     /**
-     * @param string $key
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */

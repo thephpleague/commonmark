@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,14 +26,13 @@ use League\CommonMark\Util\Xml;
 final class CodeRenderer implements NodeRendererInterface
 {
     /**
-     * @param Code                       $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param Code $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof Code)) {
+        if (! ($node instanceof Code)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 

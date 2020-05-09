@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -26,7 +28,7 @@ final class MarkdownInput implements MarkdownInputInterface
 
     public function __construct(string $content)
     {
-        if (!\mb_check_encoding($content, 'UTF-8')) {
+        if (! \mb_check_encoding($content, 'UTF-8')) {
             throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
         }
 
@@ -39,9 +41,9 @@ final class MarkdownInput implements MarkdownInputInterface
     }
 
     /**
-     * @return \Traversable<int, string>
+     * {@inheritdoc}
      */
-    public function getLines(): \Traversable
+    public function getLines(): iterable
     {
         $this->splitLinesIfNeeded();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,9 +22,9 @@ use PHPUnit\Framework\TestCase;
 
 final class TableSectionRendererTest extends TestCase
 {
-    public function testRenderWithTableSection()
+    public function testRenderWithTableSection(): void
     {
-        $tableSection = new TableSection(TableSection::TYPE_BODY);
+        $tableSection                     = new TableSection(TableSection::TYPE_BODY);
         $tableSection->data['attributes'] = ['class' => 'foo'];
         $tableSection->appendChild(new TableRow());
 
@@ -34,9 +36,9 @@ final class TableSectionRendererTest extends TestCase
         $this->assertSame('<tbody class="foo">::children::</tbody>', (string) $renderer->render($tableSection, $childRenderer));
     }
 
-    public function testRenderWithEmptyTableSection()
+    public function testRenderWithEmptyTableSection(): void
     {
-        $tableSection = new TableSection(TableSection::TYPE_BODY);
+        $tableSection  = new TableSection(TableSection::TYPE_BODY);
         $childRenderer = new FakeChildNodeRenderer();
 
         $renderer = new TableSectionRenderer();
@@ -44,7 +46,7 @@ final class TableSectionRendererTest extends TestCase
         $this->assertSame('', (string) $renderer->render($tableSection, $childRenderer));
     }
 
-    public function testRenderWithWrongType()
+    public function testRenderWithWrongType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

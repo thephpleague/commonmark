@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the league/commonmark package.
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
@@ -19,8 +21,13 @@ use League\CommonMark\Event\AbstractEvent;
 
 class FakeEventListener implements ConfigurationAwareInterface, EnvironmentAwareInterface
 {
+    /** @var callable */
     private $callback;
+
+    /** @var ConfigurationInterface */
     private $configuration;
+
+    /** @var EnvironmentInterface */
     private $environment;
 
     public function __construct(callable $callback)
@@ -28,34 +35,31 @@ class FakeEventListener implements ConfigurationAwareInterface, EnvironmentAware
         $this->callback = $callback;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setEnvironment(EnvironmentInterface $environment): void
     {
         $this->environment = $environment;
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): ConfigurationInterface
     {
         return $this->configuration;
     }
 
-    public function getEnvironment()
+    public function getEnvironment(): EnvironmentInterface
     {
         return $this->environment;
     }
 
+    /**
+     * @return mixed
+     */
     public function doStuff(AbstractEvent $event)
     {
-        return call_user_func($this->callback, $event);
+        return \call_user_func($this->callback, $event);
     }
 }

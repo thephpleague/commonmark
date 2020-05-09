@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -27,6 +29,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
      * @var array<int|string, mixed>
+     *
      * @phpstan-var array<TKey, TValue>
      */
     private $elements;
@@ -70,7 +73,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @phpstan-return \ArrayIterator<TKey, TValue>
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->elements);
     }
@@ -121,8 +124,6 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @param int|string|null $offset The offset to assign the value to.
      * @param mixed           $value  The value to set.
      *
-     * @return void
-     *
      * @phpstan-param TKey|null $offset
      * @phpstan-param TValue    $value
      */
@@ -140,13 +141,11 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @param int|string $offset The offset to unset.
      *
-     * @return void
-     *
      * @phpstan-param TKey $offset
      */
     public function offsetUnset($offset): void
     {
-        if (!\array_key_exists($offset, $this->elements)) {
+        if (! \array_key_exists($offset, $this->elements)) {
             return;
         }
 
@@ -155,9 +154,6 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
     /**
      * Returns a subset of the array
-     *
-     * @param int      $offset
-     * @param int|null $length
      *
      * @return array<int|string, mixed>
      *

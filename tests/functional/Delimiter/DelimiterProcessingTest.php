@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 final class DelimiterProcessingTest extends TestCase
 {
-    public function testDelimiterProcessorWithInvalidDelimiterUse()
+    public function testDelimiterProcessorWithInvalidDelimiterUse(): void
     {
         $e = Environment::createCommonMarkEnvironment();
         $e->addDelimiterProcessor(new FakeDelimiterProcessor(':', 0));
@@ -35,7 +37,7 @@ final class DelimiterProcessingTest extends TestCase
     /**
      * @dataProvider asymmetricDelimiterDataProvider
      */
-    public function testAsymmetricDelimiterProcessing(string $input, string $expected)
+    public function testAsymmetricDelimiterProcessing(string $input, string $expected): void
     {
         $e = Environment::createCommonMarkEnvironment();
         $e->addDelimiterProcessor(new UppercaseDelimiterProcessor());
@@ -46,7 +48,10 @@ final class DelimiterProcessingTest extends TestCase
         $this->assertEquals($expected, $converter->convertToHtml($input));
     }
 
-    public function asymmetricDelimiterDataProvider()
+    /**
+     * @return iterable<array<string>>
+     */
+    public function asymmetricDelimiterDataProvider(): iterable
     {
         yield ['{foo} bar', "<p>FOO bar</p>\n"];
         yield ['f{oo ba}r', "<p>fOO BAr</p>\n"];
@@ -61,7 +66,7 @@ final class DelimiterProcessingTest extends TestCase
         yield ['{} {foo}', "<p> FOO</p>\n"];
     }
 
-    public function testMultipleDelimitersWithDifferentLengths()
+    public function testMultipleDelimitersWithDifferentLengths(): void
     {
         $e = Environment::createCommonMarkEnvironment();
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
@@ -73,7 +78,7 @@ final class DelimiterProcessingTest extends TestCase
         $this->assertEquals("<p>(1)(2)both(/2)(/1)</p>\n", $c->convertToHtml('@@@both@@@'));
     }
 
-    public function testMultipleDelimitersWithSameLength()
+    public function testMultipleDelimitersWithSameLength(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

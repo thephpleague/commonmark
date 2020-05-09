@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,6 +23,9 @@ use League\CommonMark\Util\RegexHelper;
 
 final class HtmlInlineParser implements InlineParserInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getCharacters(): array
     {
         return ['<'];

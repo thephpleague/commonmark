@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -21,6 +23,9 @@ final class FakeInjectableRenderer implements NodeRendererInterface, Configurati
 {
     use FakeInjectableTrait;
 
+    /**
+     * {@inheritdoc}
+     */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
         return '';

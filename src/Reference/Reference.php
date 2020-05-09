@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,19 +18,13 @@ namespace League\CommonMark\Reference;
 
 final class Reference implements ReferenceInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $label;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $destination;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $title;
 
     /**
@@ -43,9 +39,9 @@ final class Reference implements ReferenceInterface
 
     public function __construct(string $label, string $destination, string $title)
     {
-        $this->label = self::normalizeReference($label);
+        $this->label       = self::normalizeReference($label);
         $this->destination = $destination;
-        $this->title = $title;
+        $this->title       = $title;
     }
 
     public function getLabel(): string
@@ -67,10 +63,6 @@ final class Reference implements ReferenceInterface
      * Normalize reference label
      *
      * This enables case-insensitive label matching
-     *
-     * @param string $string
-     *
-     * @return string
      */
     public static function normalizeReference(string $string): string
     {
@@ -78,7 +70,7 @@ final class Reference implements ReferenceInterface
         // leading/trailing whitespace
         $string = \preg_replace('/\s+/', ' ', \trim($string));
 
-        if (!\defined('MB_CASE_FOLD')) {
+        if (! \defined('MB_CASE_FOLD')) {
             // We're not on a version of PHP (7.3+) which has this feature
             $string = \str_replace(self::$caseFold[0], self::$caseFold[1], $string);
 

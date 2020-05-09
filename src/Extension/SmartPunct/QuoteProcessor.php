@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -32,8 +34,8 @@ final class QuoteProcessor implements DelimiterProcessorInterface
     private function __construct(string $char, string $opener, string $closer)
     {
         $this->normalizedCharacter = $char;
-        $this->openerCharacter = $opener;
-        $this->closerCharacter = $closer;
+        $this->openerCharacter     = $opener;
+        $this->closerCharacter     = $closer;
     }
 
     public function getOpeningCharacter(): string
@@ -65,9 +67,6 @@ final class QuoteProcessor implements DelimiterProcessorInterface
     /**
      * Create a double-quote processor
      *
-     * @param string $opener
-     * @param string $closer
-     *
      * @return QuoteProcessor
      */
     public static function createDoubleQuoteProcessor(string $opener = Quote::DOUBLE_QUOTE_OPENER, string $closer = Quote::DOUBLE_QUOTE_CLOSER): self
@@ -77,9 +76,6 @@ final class QuoteProcessor implements DelimiterProcessorInterface
 
     /**
      * Create a single-quote processor
-     *
-     * @param string $opener
-     * @param string $closer
      *
      * @return QuoteProcessor
      */

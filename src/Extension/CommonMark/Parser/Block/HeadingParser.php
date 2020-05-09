@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -29,7 +31,7 @@ final class HeadingParser extends AbstractBlockContinueParser
 
     public function __construct(int $level, string $content)
     {
-        $this->block = new Heading($level);
+        $this->block   = new Heading($level);
         $this->content = $content;
     }
 

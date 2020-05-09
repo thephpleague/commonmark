@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -22,9 +24,9 @@ use PHPUnit\Framework\TestCase;
 
 class NodeWalkerTest extends TestCase
 {
-    public function testWalkEmptyBlockNode()
+    public function testWalkEmptyBlockNode(): void
     {
-        $node = new Document();
+        $node   = new Document();
         $walker = $node->walker();
 
         $event = $walker->next();
@@ -42,9 +44,9 @@ class NodeWalkerTest extends TestCase
         $this->assertNull($event);
     }
 
-    public function testWalkEmptyInlineNode()
+    public function testWalkEmptyInlineNode(): void
     {
-        $node = new Text();
+        $node   = new Text();
         $walker = $node->walker();
 
         $event = $walker->next();
@@ -58,7 +60,7 @@ class NodeWalkerTest extends TestCase
         $this->assertNull($event);
     }
 
-    public function testWalkNestedNodes()
+    public function testWalkNestedNodes(): void
     {
         $document = new Document();
         $document->appendChild($paragraph = new Paragraph());
@@ -106,7 +108,7 @@ class NodeWalkerTest extends TestCase
         $this->assertNull($event);
     }
 
-    public function testResumeAt()
+    public function testResumeAt(): void
     {
         $document = new Document();
         $document->appendChild($paragraph = new Paragraph());

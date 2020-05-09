@@ -26,6 +26,9 @@ jobs:
     - name: phpstan
       php: 7.2
       env: 'PHPSTAN=true'
+    - name: phpcs
+      php: 7.2
+      env: 'PHPCS=true'
     - name: rips
       php: 7.2
       env: 'RIPS=true'
@@ -59,6 +62,7 @@ install:
 
 script:
   - if [[ $PHPSTAN ]]; then vendor/bin/phpstan analyse; fi
+  - if [[ $PHPCS ]]; then vendor/bin/phpcs; fi
   - if [[ $PHPUNIT ]]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
   - |
     if [[ $RIPS ]]; then

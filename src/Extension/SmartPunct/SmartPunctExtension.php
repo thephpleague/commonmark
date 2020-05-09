@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -43,7 +45,6 @@ final class SmartPunctExtension implements ExtensionInterface
             ->addRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
 
             ->addRenderer(Quote::class, new QuoteRenderer(), 100)
-            ->addRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0)
-        ;
+            ->addRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0);
     }
 }

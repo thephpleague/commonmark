@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -20,10 +22,5 @@ interface InlineParserInterface
      */
     public function getCharacters(): array;
 
-    /**
-     * @param InlineParserContext $inlineContext
-     *
-     * @return bool
-     */
     public function parse(InlineParserContext $inlineContext): bool;
 }

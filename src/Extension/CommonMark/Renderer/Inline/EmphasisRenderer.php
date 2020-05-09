@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -23,14 +25,13 @@ use League\CommonMark\Util\HtmlElement;
 final class EmphasisRenderer implements NodeRendererInterface
 {
     /**
-     * @param Emphasis                   $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param Emphasis $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof Emphasis)) {
+        if (! ($node instanceof Emphasis)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 

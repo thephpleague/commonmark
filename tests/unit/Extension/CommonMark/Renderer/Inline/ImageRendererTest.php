@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -24,9 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 class ImageRendererTest extends TestCase
 {
-    /**
-     * @var ImageRenderer
-     */
+    /** @var ImageRenderer */
     protected $renderer;
 
     protected function setUp(): void
@@ -35,11 +35,11 @@ class ImageRendererTest extends TestCase
         $this->renderer->setConfiguration(new Configuration());
     }
 
-    public function testRenderWithTitle()
+    public function testRenderWithTitle(): void
     {
-        $inline = new Image('http://example.com/foo.jpg', '::label::', '::title::');
+        $inline                     = new Image('http://example.com/foo.jpg', '::label::', '::title::');
         $inline->data['attributes'] = ['id' => '::id::', 'title' => '::title2::', 'label' => '::label2::', 'alt' => '::alt2::'];
-        $fakeRenderer = new FakeChildNodeRenderer();
+        $fakeRenderer               = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -52,9 +52,9 @@ class ImageRendererTest extends TestCase
         $this->assertStringContainsString('::id::', $result->getAttribute('id'));
     }
 
-    public function testRenderWithoutTitle()
+    public function testRenderWithoutTitle(): void
     {
-        $inline = new Image('http://example.com/foo.jpg', '::label::');
+        $inline       = new Image('http://example.com/foo.jpg', '::label::');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -67,13 +67,13 @@ class ImageRendererTest extends TestCase
         $this->assertNull($result->getAttribute('title'));
     }
 
-    public function testRenderAllowUnsafeLink()
+    public function testRenderAllowUnsafeLink(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'allow_unsafe_links' => true,
         ]));
 
-        $inline = new Image('javascript:void(0)');
+        $inline       = new Image('javascript:void(0)');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -82,13 +82,13 @@ class ImageRendererTest extends TestCase
         $this->assertStringContainsString('javascript:void(0)', $result->getAttribute('src'));
     }
 
-    public function testRenderDisallowUnsafeLink()
+    public function testRenderDisallowUnsafeLink(): void
     {
         $this->renderer->setConfiguration(new Configuration([
             'allow_unsafe_links' => false,
         ]));
 
-        $inline = new Image('javascript:void(0)');
+        $inline       = new Image('javascript:void(0)');
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
@@ -97,11 +97,11 @@ class ImageRendererTest extends TestCase
         $this->assertEquals('', $result->getAttribute('src'));
     }
 
-    public function testRenderWithInvalidType()
+    public function testRenderWithInvalidType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $inline = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline       = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

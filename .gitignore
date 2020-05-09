@@ -1,4 +1,5 @@
 /.idea/
+/.phpcs-cache
 /build/
 /docs/_site/
 /docs/Gemfile.lock

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -25,11 +27,11 @@ final class QuoteParser implements InlineParserInterface
     public const SINGLE_QUOTES = [Quote::SINGLE_QUOTE, Quote::SINGLE_QUOTE_OPENER, Quote::SINGLE_QUOTE_CLOSER];
 
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getCharacters(): array
     {
-        return array_merge(self::DOUBLE_QUOTES, self::SINGLE_QUOTES);
+        return \array_merge(self::DOUBLE_QUOTES, self::SINGLE_QUOTES);
     }
 
     /**
@@ -37,7 +39,7 @@ final class QuoteParser implements InlineParserInterface
      */
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $cursor = $inlineContext->getCursor();
+        $cursor              = $inlineContext->getCursor();
         $normalizedCharacter = $this->getNormalizedQuoteCharacter($cursor->getCharacter());
 
         $charBefore = $cursor->peek(-1);
@@ -53,8 +55,8 @@ final class QuoteParser implements InlineParserInterface
         }
 
         [$leftFlanking, $rightFlanking] = $this->determineFlanking($charBefore, $charAfter);
-        $canOpen = $leftFlanking && !$rightFlanking;
-        $canClose = $rightFlanking;
+        $canOpen                        = $leftFlanking && ! $rightFlanking;
+        $canClose                       = $rightFlanking;
 
         $node = new Quote($normalizedCharacter, ['delim' => true]);
         $inlineContext->getContainer()->appendChild($node);
@@ -67,9 +69,11 @@ final class QuoteParser implements InlineParserInterface
 
     private function getNormalizedQuoteCharacter(string $character): string
     {
-        if (in_array($character, self::DOUBLE_QUOTES)) {
+        if (\in_array($character, self::DOUBLE_QUOTES, true)) {
             return Quote::DOUBLE_QUOTE;
-        } elseif (in_array($character, self::SINGLE_QUOTES)) {
+        }
+
+        if (\in_array($character, self::SINGLE_QUOTES, true)) {
             return Quote::SINGLE_QUOTE;
         }
 
@@ -77,27 +81,24 @@ final class QuoteParser implements InlineParserInterface
     }
 
     /**
-     * @param string $charBefore
-     * @param string $charAfter
-     *
      * @return bool[]
      */
-    private function determineFlanking(string $charBefore, string $charAfter)
+    private function determineFlanking(string $charBefore, string $charAfter): array
     {
-        $afterIsWhitespace = preg_match('/\pZ|\s/u', $charAfter);
-        $afterIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
-        $beforeIsWhitespace = preg_match('/\pZ|\s/u', $charBefore);
-        $beforeIsPunctuation = preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
+        $afterIsWhitespace   = \preg_match('/\pZ|\s/u', $charAfter);
+        $afterIsPunctuation  = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
+        $beforeIsWhitespace  = \preg_match('/\pZ|\s/u', $charBefore);
+        $beforeIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
 
-        $leftFlanking = !$afterIsWhitespace &&
-            !($afterIsPunctuation &&
-                !$beforeIsWhitespace &&
-                !$beforeIsPunctuation);
+        $leftFlanking = ! $afterIsWhitespace &&
+            ! ($afterIsPunctuation &&
+                ! $beforeIsWhitespace &&
+                ! $beforeIsPunctuation);
 
-        $rightFlanking = !$beforeIsWhitespace &&
-            !($beforeIsPunctuation &&
-                !$afterIsWhitespace &&
-                !$afterIsPunctuation);
+        $rightFlanking = ! $beforeIsWhitespace &&
+            ! ($beforeIsPunctuation &&
+                ! $afterIsWhitespace &&
+                ! $afterIsPunctuation);
 
         return [$leftFlanking, $rightFlanking];
     }

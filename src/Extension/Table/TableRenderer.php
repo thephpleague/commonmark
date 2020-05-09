@@ -23,14 +23,13 @@ use League\CommonMark\Util\HtmlElement;
 final class TableRenderer implements NodeRendererInterface
 {
     /**
-     * @param Table                      $node
-     * @param ChildNodeRendererInterface $childRenderer
+     * @param Table $node
      *
-     * @return HtmlElement
+     * {@inheritdoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!$node instanceof Table) {
+        if (! $node instanceof Table) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 

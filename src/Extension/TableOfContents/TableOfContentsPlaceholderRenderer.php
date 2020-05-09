@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,6 +19,9 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 
 final class TableOfContentsPlaceholderRenderer implements NodeRendererInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
         return '<!-- table of contents -->';

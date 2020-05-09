@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,17 +20,13 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
+use League\CommonMark\Util\HtmlElement;
 
 final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInterface
 {
-    /**
-     * @var EnvironmentInterface
-     */
+    /** @var EnvironmentInterface */
     private $environment;
 
-    /**
-     * @param EnvironmentInterface $environment
-     */
     public function __construct(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
@@ -36,43 +34,46 @@ final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInte
 
     public function renderDocument(Document $node): string
     {
-        return $this->renderNode($node);
+        return (string) $this->renderNode($node);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function renderNodes(iterable $nodes): string
     {
-        $out = '';
+        $output = '';
+
+        // Track whether the previous item was a block, as we'll need to insert newlines after them
         $lastItemWasBlock = false;
 
         foreach ($nodes as $node) {
             if ($lastItemWasBlock) {
                 $lastItemWasBlock = false;
-                $out .= $this->getBlockSeparator();
+                $output          .= $this->getBlockSeparator();
             }
 
-            $out .= $this->renderNode($node);
+            $output .= $this->renderNode($node);
 
             if ($node instanceof AbstractBlock) {
                 $lastItemWasBlock = true;
             }
         }
 
-        return $out;
+        return $output;
     }
 
     /**
-     * @param Node $node
+     * @return HtmlElement|string
      *
      * @throws \RuntimeException
-     *
-     * @return string
      */
-    private function renderNode(Node $node): string
+    private function renderNode(Node $node)
     {
         $renderers = $this->environment->getRenderersForClass(\get_class($node));
 
-        /** @var NodeRendererInterface $renderer */
         foreach ($renderers as $renderer) {
+            \assert($renderer instanceof NodeRendererInterface);
             if (($result = $renderer->render($node, $this)) !== null) {
                 return $result;
             }

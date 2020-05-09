@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -44,7 +46,7 @@ final class AdjacentTextMerger
     private static function mergeTextNodesInclusive(Node $fromNode, Node $toNode): void
     {
         $first = null;
-        $last = null;
+        $last  = null;
 
         $node = $fromNode;
         while ($node !== null) {
@@ -52,15 +54,18 @@ final class AdjacentTextMerger
                 if ($first === null) {
                     $first = $node;
                 }
+
                 $last = $node;
             } else {
                 self::mergeIfNeeded($first, $last);
                 $first = null;
-                $last = null;
+                $last  = null;
             }
+
             if ($node === $toNode) {
                 break;
             }
+
             $node = $node->next();
         }
 
@@ -79,9 +84,9 @@ final class AdjacentTextMerger
         $node = $first->next();
         $stop = $last->next();
         while ($node !== $stop && $node instanceof Text) {
-            $s .= $node->getLiteral();
+            $s     .= $node->getLiteral();
             $unlink = $node;
-            $node = $node->next();
+            $node   = $node->next();
             $unlink->detach();
         }
 

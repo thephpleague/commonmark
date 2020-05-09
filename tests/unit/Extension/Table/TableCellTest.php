@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,18 +18,18 @@ use PHPUnit\Framework\TestCase;
 
 final class TableCellTest extends TestCase
 {
-    public function testDefaultType()
+    public function testDefaultType(): void
     {
         $this->assertSame(TableCell::TYPE_BODY, (new TableCell())->getType());
     }
 
-    public function testTypeConstructorArgument()
+    public function testTypeConstructorArgument(): void
     {
         $this->assertSame(TableCell::TYPE_HEAD, (new TableCell(TableCell::TYPE_HEAD))->getType());
         $this->assertSame(TableCell::TYPE_BODY, (new TableCell(TableCell::TYPE_BODY))->getType());
     }
 
-    public function testSetType()
+    public function testSetType(): void
     {
         $cell = new TableCell(TableCell::TYPE_HEAD);
         $cell->setType(TableCell::TYPE_BODY);
@@ -35,12 +37,12 @@ final class TableCellTest extends TestCase
         $this->assertSame(TableCell::TYPE_BODY, $cell->getType());
     }
 
-    public function testDefaultAlign()
+    public function testDefaultAlign(): void
     {
         $this->assertNull((new TableCell())->getAlign());
     }
 
-    public function testAlignConstructorArgument()
+    public function testAlignConstructorArgument(): void
     {
         $this->assertNull((new TableCell(TableCell::TYPE_BODY, null))->getAlign());
         $this->assertSame(TableCell::ALIGN_LEFT, (new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_LEFT))->getAlign());
@@ -48,7 +50,7 @@ final class TableCellTest extends TestCase
         $this->assertSame(TableCell::ALIGN_RIGHT, (new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_RIGHT))->getAlign());
     }
 
-    public function testSetAlign()
+    public function testSetAlign(): void
     {
         $cell = new TableCell();
         $cell->setAlign(TableCell::ALIGN_CENTER);

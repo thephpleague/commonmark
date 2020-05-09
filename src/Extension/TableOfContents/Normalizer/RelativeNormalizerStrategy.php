@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -35,13 +37,13 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
 
         // Pop the stack if we're too deep
         while ($previousLevel !== null && $level < $previousLevel) {
-            array_pop($this->listItemStack);
+            \array_pop($this->listItemStack);
             \end($this->listItemStack);
             $previousLevel = \key($this->listItemStack);
         }
 
-        /** @var ListItem|false $lastListItem */
         $lastListItem = \current($this->listItemStack);
+        \assert($lastListItem instanceof ListItem || $lastListItem === false);
 
         // Need to go one level deeper? Add that level
         if ($lastListItem !== false && $level > $previousLevel) {

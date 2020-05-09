@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,20 +18,16 @@ use PHPUnit\Framework\TestCase;
 
 class CursorTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $cursor = new Cursor('foo');
         $this->assertEquals('foo', $cursor->getLine());
     }
 
     /**
-     * @param $string
-     * @param $expectedPosition
-     * @param $expectedCharacter
-     *
      * @dataProvider dataForTestingNextNonSpaceMethods
      */
-    public function testGetNextNonSpacePosition($string, $expectedPosition, $expectedCharacter)
+    public function testGetNextNonSpacePosition(string $string, int $expectedPosition, ?string $expectedCharacter): void
     {
         $cursor = new Cursor($string);
 
@@ -37,20 +35,19 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $expectedPosition
-     * @param $expectedCharacter
-     *
      * @dataProvider dataForTestingNextNonSpaceMethods
      */
-    public function testGetNextNonSpaceCharacter($string, $expectedPosition, $expectedCharacter)
+    public function testGetNextNonSpaceCharacter(string $string, int $expectedPosition, ?string $expectedCharacter): void
     {
         $cursor = new Cursor($string);
 
         $this->assertEquals($expectedCharacter, $cursor->getNextNonSpaceCharacter());
     }
 
-    public function dataForTestingNextNonSpaceMethods()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForTestingNextNonSpaceMethods(): iterable
     {
         return [
             ['', 0, null],
@@ -65,13 +62,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $position
-     * @param $expectedValue
-     *
      * @dataProvider dataForGetIndentTest
      */
-    public function testGetIndent($string, $position, $expectedValue)
+    public function testGetIndent(string $string, int $position, int $expectedValue): void
     {
         $cursor = new Cursor($string);
         $cursor->advanceBy($position);
@@ -79,7 +72,10 @@ class CursorTest extends TestCase
         $this->assertEquals($expectedValue, $cursor->getIndent());
     }
 
-    public function dataForGetIndentTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForGetIndentTest(): iterable
     {
         return [
             ['', 0, 0],
@@ -105,20 +101,19 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $index
-     * @param $expectedValue
-     *
      * @dataProvider dataForGetCharacterTest
      */
-    public function testGetCharacter($string, $index, $expectedValue)
+    public function testGetCharacter(string $string, ?int $index, string $expectedValue): void
     {
         $cursor = new Cursor($string);
 
         $this->assertEquals($expectedValue, $cursor->getCharacter($index));
     }
 
-    public function dataForGetCharacterTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForGetCharacterTest(): iterable
     {
         return [
             ['', null, ''],
@@ -137,13 +132,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $position
-     * @param $expectedValue
-     *
      * @dataProvider dataForPeekTest
      */
-    public function testPeek($string, $position, $expectedValue)
+    public function testPeek(string $string, int $position, string $expectedValue): void
     {
         $cursor = new Cursor($string);
         $cursor->advanceBy($position);
@@ -151,7 +142,10 @@ class CursorTest extends TestCase
         $this->assertEquals($expectedValue, $cursor->peek());
     }
 
-    public function dataForPeekTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForPeekTest(): iterable
     {
         return [
             ['', 0, ''],
@@ -164,19 +158,19 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $expectedValue
-     *
      * @dataProvider dataForIsLineBlankTest
      */
-    public function testIsLineBlank($string, $expectedValue)
+    public function testIsLineBlank(string $string, bool $expectedValue): void
     {
         $cursor = new Cursor($string);
 
         $this->assertEquals($expectedValue, $cursor->isBlank());
     }
 
-    public function dataForIsLineBlankTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForIsLineBlankTest(): iterable
     {
         return [
             ['', true],
@@ -189,13 +183,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $numberOfAdvances
-     * @param $expectedPosition
-     *
      * @dataProvider dataForAdvanceTest
      */
-    public function testAdvance($string, $numberOfAdvances, $expectedPosition)
+    public function testAdvance(string $string, int $numberOfAdvances, int $expectedPosition): void
     {
         $cursor = new Cursor($string);
         while ($numberOfAdvances--) {
@@ -205,7 +195,10 @@ class CursorTest extends TestCase
         $this->assertEquals($expectedPosition, $cursor->getPosition());
     }
 
-    public function dataForAdvanceTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForAdvanceTest(): iterable
     {
         return [
             ['', 0, 0],
@@ -226,13 +219,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $advance
-     * @param $expectedPosition
-     *
      * @dataProvider dataForAdvanceTestBy
      */
-    public function testAdvanceBy($string, $advance, $expectedPosition)
+    public function testAdvanceBy(string $string, int $advance, int $expectedPosition): void
     {
         $cursor = new Cursor($string);
         $cursor->advanceBy($advance);
@@ -240,7 +229,10 @@ class CursorTest extends TestCase
         $this->assertEquals($expectedPosition, $cursor->getPosition());
     }
 
-    public function dataForAdvanceTestBy()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForAdvanceTestBy(): iterable
     {
         return [
             ['', 0, 0],
@@ -261,7 +253,7 @@ class CursorTest extends TestCase
         ];
     }
 
-    public function testAdvanceByZero()
+    public function testAdvanceByZero(): void
     {
         $cursor = new Cursor('foo bar');
         $cursor->advance();
@@ -270,7 +262,7 @@ class CursorTest extends TestCase
         $this->assertEquals(1, $cursor->getPosition());
     }
 
-    public function testAdvanceByColumnOffset()
+    public function testAdvanceByColumnOffset(): void
     {
         $cursor = new Cursor("1. \t\tthere");
         $cursor->advanceBy(3);
@@ -287,13 +279,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $subject
-     * @param $startPos
-     * @param $expectedResult
-     *
      * @dataProvider dataForAdvanceToNextNonSpaceTest
      */
-    public function testAdvanceToNextNonSpace($subject, $startPos, $expectedResult)
+    public function testAdvanceToNextNonSpace(string $subject, int $startPos, int $expectedResult): void
     {
         $cursor = new Cursor($subject);
         $cursor->advanceBy($startPos);
@@ -301,7 +289,10 @@ class CursorTest extends TestCase
         $this->assertEquals($expectedResult, $cursor->advanceToNextNonSpaceOrTab());
     }
 
-    public function dataForAdvanceToNextNonSpaceTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForAdvanceToNextNonSpaceTest(): iterable
     {
         return [
             ['', 0, 0],
@@ -326,13 +317,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $subject
-     * @param $startPos
-     * @param $expectedResult
-     *
      * @dataProvider dataForAdvanceToNextNonSpaceOrNewlineTest
      */
-    public function testAdvanceToNextNonSpaceOrNewline($subject, $startPos, $expectedResult)
+    public function testAdvanceToNextNonSpaceOrNewline(string $subject, int $startPos, int $expectedResult): void
     {
         $cursor = new Cursor($subject);
         $cursor->advanceBy($startPos);
@@ -340,7 +327,10 @@ class CursorTest extends TestCase
         $this->assertEquals($expectedResult, $cursor->advanceToNextNonSpaceOrNewline());
     }
 
-    public function dataForAdvanceToNextNonSpaceOrNewlineTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForAdvanceToNextNonSpaceOrNewlineTest(): iterable
     {
         return [
             ['', 0, 0],
@@ -365,13 +355,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $position
-     * @param $expectedResult
-     *
      * @dataProvider dataForGetRemainderTest
      */
-    public function testGetRemainder($string, $position, $expectedResult)
+    public function testGetRemainder(string $string, int $position, string $expectedResult): void
     {
         $cursor = new Cursor($string);
         $cursor->advanceBy($position);
@@ -379,7 +365,10 @@ class CursorTest extends TestCase
         $this->assertEquals($expectedResult, $cursor->getRemainder());
     }
 
-    public function dataForGetRemainderTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForGetRemainderTest(): iterable
     {
         return [
             [' ', 0, ' '],
@@ -392,13 +381,11 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param $string
-     * @param $advanceBy
-     * @param $expectedValue
+     * @param int|false|null $advanceBy
      *
      * @dataProvider dataForIsAtEndTest
      */
-    public function testIsAtEnd($string, $advanceBy, $expectedValue)
+    public function testIsAtEnd(string $string, $advanceBy, bool $expectedValue): void
     {
         $cursor = new Cursor($string);
         if ($advanceBy === null) {
@@ -410,7 +397,10 @@ class CursorTest extends TestCase
         $this->assertEquals($expectedValue, $cursor->isAtEnd());
     }
 
-    public function dataForIsAtEndTest()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForIsAtEndTest(): iterable
     {
         return [
             ['', false, true],
@@ -424,15 +414,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param string $string
-     * @param string $regex
-     * @param int    $initialPosition
-     * @param int    $expectedPosition
-     * @param string $expectedResult
-     *
      * @dataProvider dataForTestMatch
      */
-    public function testMatch($string, $regex, $initialPosition, $expectedPosition, $expectedResult)
+    public function testMatch(string $string, string $regex, int $initialPosition, int $expectedPosition, string $expectedResult): void
     {
         $cursor = new Cursor($string);
         $cursor->advanceBy($initialPosition);
@@ -444,9 +428,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return iterable<array<mixed>>
      */
-    public function dataForTestMatch()
+    public function dataForTestMatch(): iterable
     {
         return [
             ['this is a test', '/[aeiou]s/', 0, 4, 'is'],
@@ -460,21 +444,19 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param string   $string
-     * @param int      $start
-     * @param int|null $length
-     * @param string   $expectedResult
-     *
      * @dataProvider dataForTestGetSubstring
      */
-    public function testGetSubstring($string, $start, $length, $expectedResult)
+    public function testGetSubstring(string $string, int $start, ?int $length, string $expectedResult): void
     {
         $cursor = new Cursor($string);
 
         $this->assertSame($expectedResult, $cursor->getSubstring($start, $length));
     }
 
-    public function dataForTestGetSubstring()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function dataForTestGetSubstring(): iterable
     {
         yield ['Hello', 0, 2, 'He'];
         yield ['Hello', 1, 3, 'ell'];

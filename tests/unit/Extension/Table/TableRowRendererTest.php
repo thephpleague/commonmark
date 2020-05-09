@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,9 +21,9 @@ use PHPUnit\Framework\TestCase;
 
 final class TableRowRendererTest extends TestCase
 {
-    public function testRenderWithTableRow()
+    public function testRenderWithTableRow(): void
     {
-        $tableRow = new TableRow();
+        $tableRow                     = new TableRow();
         $tableRow->data['attributes'] = ['class' => 'foo'];
 
         $childRenderer = new FakeChildNodeRenderer();
@@ -32,7 +34,7 @@ final class TableRowRendererTest extends TestCase
         $this->assertSame('<tr class="foo">::children::</tr>', (string) $renderer->render($tableRow, $childRenderer));
     }
 
-    public function testRenderWithWrongType()
+    public function testRenderWithWrongType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
