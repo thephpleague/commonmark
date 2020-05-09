@@ -29,7 +29,7 @@ final class UrlEncoder
         $result = '';
 
         /** @var string[] $chars */
-        $chars = \mb_str_split($uri);
+        $chars = \preg_split('//u', $uri, -1, \PREG_SPLIT_NO_EMPTY);
         $l = \count($chars);
         for ($i = 0; $i < $l; $i++) {
             $code = $chars[$i];
