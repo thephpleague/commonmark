@@ -247,7 +247,7 @@ class Cursor
             $asArray = [$nextFewChars];
         } elseif ($this->isMultibyte) {
             /** @var string[] $asArray */
-            $asArray = \preg_split('//u', $nextFewChars, -1, \PREG_SPLIT_NO_EMPTY);
+            $asArray = \mb_str_split($nextFewChars);
         } else {
             $asArray = \str_split($nextFewChars);
         }
