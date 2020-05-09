@@ -30,6 +30,8 @@ final class ParagraphRenderer implements NodeRendererInterface
      * @param Paragraph $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

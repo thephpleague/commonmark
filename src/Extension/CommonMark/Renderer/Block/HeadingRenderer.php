@@ -28,6 +28,8 @@ final class HeadingRenderer implements NodeRendererInterface
      * @param Heading $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

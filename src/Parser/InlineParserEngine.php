@@ -84,6 +84,10 @@ final class InlineParserEngine implements InlineParserEngineInterface
         $character = $cursor->getCharacter();
         $numDelims = 0;
 
+        if ($character === null) {
+            throw new \RuntimeException('Cannot parse delimiters without a valid character');
+        }
+
         $charBefore = $cursor->peek(-1);
         if ($charBefore === null) {
             $charBefore = "\n";

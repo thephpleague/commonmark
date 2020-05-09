@@ -47,6 +47,7 @@ final class MarkdownInput implements MarkdownInputInterface
     {
         $this->splitLinesIfNeeded();
 
+        /** @psalm-suppress PossiblyNullIterator */
         foreach ($this->lines as $lineNumber => $line) {
             yield $lineNumber => $line;
         }

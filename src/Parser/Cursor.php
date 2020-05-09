@@ -75,6 +75,7 @@ class Cursor
             return $this->nextNonSpaceCache;
         }
 
+        $c    = null;
         $i    = $this->currentPosition;
         $cols = $this->column;
 
@@ -188,18 +189,19 @@ class Cursor
         $this->nextNonSpaceCache = null;
 
         // Optimization to avoid tab handling logic if we have no tabs
-        if (
-            ! $this->lineContainsTabs || \strpos(
-                $nextFewChars = $this->isMultibyte ?
-                \mb_substr($this->line, $this->currentPosition, $characters, 'UTF-8') :
-                \substr($this->line, $this->currentPosition, $characters),
-                "\t"
-            ) === false
-        ) {
-            $length                     = \min($characters, $this->length - $this->currentPosition);
-            $this->partiallyConsumedTab = false;
-            $this->currentPosition     += $length;
-            $this->column              += $length;
+        if (! $this->lineContainsTabs) {
+            $this->advanceWithoutTabCharacters($characters);
+
+            return;
+        }
+
+        $nextFewChars = $this->isMultibyte ?
+            \mb_substr($this->line, $this->currentPosition, $characters, 'UTF-8') :
+            \substr($this->line, $this->currentPosition, $characters);
+
+        // Optimization to avoid tab handling logic if we have no tabs
+        if (\strpos($nextFewChars, "\t") === false) {
+            $this->advanceWithoutTabCharacters($characters);
 
             return;
         }
@@ -239,6 +241,16 @@ class Cursor
                 break;
             }
         }
+    }
+
+    private function advanceWithoutTabCharacters(int $characters): void
+    {
+        $length                     = \min($characters, $this->length - $this->currentPosition);
+        $this->partiallyConsumedTab = false;
+        $this->currentPosition     += $length;
+        $this->column              += $length;
+
+        return;
     }
 
     /**

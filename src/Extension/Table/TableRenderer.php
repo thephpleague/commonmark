@@ -26,6 +26,8 @@ final class TableRenderer implements NodeRendererInterface
      * @param Table $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

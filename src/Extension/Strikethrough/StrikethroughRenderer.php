@@ -24,6 +24,8 @@ final class StrikethroughRenderer implements NodeRendererInterface
      * @param Strikethrough $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

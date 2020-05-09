@@ -28,6 +28,8 @@ final class ListBlockRenderer implements NodeRendererInterface
      * @param ListBlock $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

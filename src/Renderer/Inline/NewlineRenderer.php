@@ -38,6 +38,8 @@ final class NewlineRenderer implements NodeRendererInterface, ConfigurationAware
      * @param Newline $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

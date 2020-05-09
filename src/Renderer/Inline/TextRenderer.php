@@ -28,6 +28,8 @@ final class TextRenderer implements NodeRendererInterface
      * @param Text $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

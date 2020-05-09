@@ -34,6 +34,8 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
      * @param Image $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

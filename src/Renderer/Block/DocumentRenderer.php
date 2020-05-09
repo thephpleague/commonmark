@@ -29,6 +29,8 @@ final class DocumentRenderer implements NodeRendererInterface
      * @return string
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {

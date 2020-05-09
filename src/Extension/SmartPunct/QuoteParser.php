@@ -39,8 +39,14 @@ final class QuoteParser implements InlineParserInterface
      */
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $cursor              = $inlineContext->getCursor();
-        $normalizedCharacter = $this->getNormalizedQuoteCharacter($cursor->getCharacter());
+        $cursor    = $inlineContext->getCursor();
+        $character = $cursor->getCharacter();
+
+        if ($character === null) {
+            return false;
+        }
+
+        $normalizedCharacter = $this->getNormalizedQuoteCharacter($character);
 
         $charBefore = $cursor->peek(-1);
         if ($charBefore === null) {

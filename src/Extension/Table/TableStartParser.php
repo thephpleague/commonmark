@@ -48,6 +48,8 @@ final class TableStartParser implements BlockStartParserInterface
 
     /**
      * @return array<int, string|null>
+     *
+     * @psalm-return list<string|null>
      */
     private static function parseSeparator(Cursor $cursor): array
     {

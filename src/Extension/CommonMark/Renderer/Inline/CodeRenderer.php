@@ -29,6 +29,8 @@ final class CodeRenderer implements NodeRendererInterface
      * @param Code $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

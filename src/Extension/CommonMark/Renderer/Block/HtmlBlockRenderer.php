@@ -33,6 +33,8 @@ final class HtmlBlockRenderer implements NodeRendererInterface, ConfigurationAwa
      * @param HtmlBlock $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

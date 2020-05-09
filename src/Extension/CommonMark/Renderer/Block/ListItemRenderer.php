@@ -30,6 +30,8 @@ final class ListItemRenderer implements NodeRendererInterface
      * @param ListItem $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

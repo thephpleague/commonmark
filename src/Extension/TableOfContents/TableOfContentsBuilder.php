@@ -37,8 +37,8 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         $document = $event->getDocument();
 
         $generator = new TableOfContentsGenerator(
-            $this->config->get('table_of_contents/style', TableOfContentsGenerator::STYLE_BULLET),
-            $this->config->get('table_of_contents/normalize', TableOfContentsGenerator::NORMALIZE_RELATIVE),
+            (string) $this->config->get('table_of_contents/style', TableOfContentsGenerator::STYLE_BULLET),
+            (string) $this->config->get('table_of_contents/normalize', TableOfContentsGenerator::NORMALIZE_RELATIVE),
             (int) $this->config->get('table_of_contents/min_heading_level', 1),
             (int) $this->config->get('table_of_contents/max_heading_level', 6)
         );

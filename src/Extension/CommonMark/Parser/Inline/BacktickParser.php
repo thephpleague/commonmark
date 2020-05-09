@@ -34,8 +34,10 @@ final class BacktickParser implements InlineParserInterface
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-
-        $ticks = $cursor->match('/^`+/');
+        $ticks  = $cursor->match('/^`+/');
+        if ($ticks === null) {
+            return false; // This should never happen
+        }
 
         $currentPosition = $cursor->getPosition();
         $previousState   = $cursor->saveState();

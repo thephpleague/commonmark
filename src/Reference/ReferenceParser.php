@@ -299,6 +299,7 @@ final class ReferenceParser
             return;
         }
 
+        /** @psalm-suppress PossiblyNullArgument -- these can't possibly be null if we're in this state */
         $this->references[] = new Reference($this->label, $this->destination, $this->title);
 
         $this->label          = null;

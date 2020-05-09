@@ -28,6 +28,8 @@ final class BlockQuoteRenderer implements NodeRendererInterface
      * @param BlockQuote $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

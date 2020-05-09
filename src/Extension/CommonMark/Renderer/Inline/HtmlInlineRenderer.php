@@ -33,6 +33,8 @@ final class HtmlInlineRenderer implements NodeRendererInterface, ConfigurationAw
      * @param HtmlInline $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

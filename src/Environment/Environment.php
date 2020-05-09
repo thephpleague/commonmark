@@ -207,6 +207,7 @@ final class Environment implements ConfigurableEnvironmentInterface
             return $this->renderersByClass[$nodeClass];
         }
 
+        /** @psalm-suppress TypeDoesNotContainType -- Bug: https://github.com/vimeo/psalm/issues/3332 */
         while ($parent = \get_parent_class($parent ?? $nodeClass)) {
             if (! isset($this->renderersByClass[$parent])) {
                 continue;

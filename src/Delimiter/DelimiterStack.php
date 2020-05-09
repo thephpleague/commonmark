@@ -51,6 +51,7 @@ final class DelimiterStack
     public function removeDelimiter(DelimiterInterface $delimiter): void
     {
         if ($delimiter->getPrevious() !== null) {
+            /** @psalm-suppress PossiblyNullReference */
             $delimiter->getPrevious()->setNext($delimiter->getNext());
         }
 
@@ -58,6 +59,7 @@ final class DelimiterStack
             // top of stack
             $this->top = $delimiter->getPrevious();
         } else {
+            /** @psalm-suppress PossiblyNullReference */
             $delimiter->getNext()->setPrevious($delimiter->getPrevious());
         }
     }

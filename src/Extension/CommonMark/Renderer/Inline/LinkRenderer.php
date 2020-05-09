@@ -34,6 +34,8 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
      * @param Link $node
      *
      * {@inheritdoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

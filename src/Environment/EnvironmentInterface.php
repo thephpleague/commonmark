@@ -43,6 +43,8 @@ interface EnvironmentInterface
 
     /**
      * @return iterable<NodeRendererInterface>
+     *
+     * @psalm-param class-string $nodeClass
      */
     public function getRenderersForClass(string $nodeClass): iterable;
 

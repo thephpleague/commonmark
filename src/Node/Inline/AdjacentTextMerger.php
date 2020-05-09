@@ -30,6 +30,7 @@ final class AdjacentTextMerger
             return;
         }
 
+        /** @psalm-suppress PossiblyNullArgument */
         self::mergeTextNodesInclusive($node->firstChild(), $node->lastChild());
     }
 
@@ -40,6 +41,7 @@ final class AdjacentTextMerger
             return;
         }
 
+        /** @psalm-suppress PossiblyNullArgument */
         self::mergeTextNodesInclusive($fromNode->next(), $toNode->previous());
     }
 

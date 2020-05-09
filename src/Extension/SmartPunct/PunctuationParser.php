@@ -50,14 +50,14 @@ final class PunctuationParser implements InlineParserInterface
             $emDash  = '—';
             $emCount = 0;
             if ($count % 3 === 0) { // If divisible by 3, use all em dashes
-                $emCount = $count / 3;
+                $emCount = (int) ($count / 3);
             } elseif ($count % 2 === 0) { // If divisible by 2, use all en dashes
-                $enCount = $count / 2;
+                $enCount = (int) ($count / 2);
             } elseif ($count % 3 === 2) { // If 2 extra dashes, use en dash for last 2; em dashes for rest
-                $emCount = ($count - 2) / 3;
+                $emCount = (int) (($count - 2) / 3);
                 $enCount = 1;
             } else { // Use en dashes for last 4 hyphens; em dashes for rest
-                $emCount = ($count - 4) / 3;
+                $emCount = (int) (($count - 4) / 3);
                 $enCount = 2;
             }
 
