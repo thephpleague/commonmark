@@ -302,7 +302,12 @@ final class MarkdownParser implements MarkdownParserInterface
 
     private function deactivateBlockParser(): BlockContinueParserInterface
     {
-        return \array_pop($this->activeBlockParsers);
+        $popped = \array_pop($this->activeBlockParsers);
+        if ($popped === null) {
+            throw new \RuntimeException('The last block parser should not be deactivated');
+        }
+
+        return $popped;
     }
 
     private function prepareActiveBlockParserForReplacement(): void

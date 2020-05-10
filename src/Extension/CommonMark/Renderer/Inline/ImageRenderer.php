@@ -58,7 +58,7 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
 
         $alt          = $childRenderer->renderNodes($node->children());
         $alt          = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
-        $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt);
+        $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt ?? '');
 
         if (isset($node->data['title'])) {
             $attrs['title'] = $node->data['title'];

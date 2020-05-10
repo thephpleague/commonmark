@@ -49,7 +49,7 @@ final class BacktickParser implements InlineParserInterface
 
             $code = $cursor->getSubstring($currentPosition, $cursor->getPosition() - $currentPosition - \strlen($ticks));
 
-            $c = \preg_replace('/\n/m', ' ', $code);
+            $c = \preg_replace('/\n/m', ' ', $code) ?? '';
 
             if (
                 ! empty($c) &&

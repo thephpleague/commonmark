@@ -84,6 +84,7 @@ final class Reference implements ReferenceInterface
         // Collapse internal whitespace to single space and remove
         // leading/trailing whitespace
         $string = \preg_replace('/\s+/', ' ', \trim($string));
+        \assert($string !== null);
 
         if (! \defined('MB_CASE_FOLD')) {
             // We're not on a version of PHP (7.3+) which has this feature
