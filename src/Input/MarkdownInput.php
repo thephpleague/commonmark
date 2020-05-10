@@ -69,6 +69,8 @@ final class MarkdownInput implements MarkdownInputInterface
     {
         $this->splitLinesIfNeeded();
 
+        \assert($this->lineCount !== null);
+
         return $this->lineCount;
     }
 

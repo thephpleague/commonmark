@@ -121,7 +121,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
             return $result;
         }
 
-        if ($link = $this->tryParseReference($cursor, $referenceMap, $opener, $startPos)) {
+        if ($link = $this->tryParseReference($cursor, $referenceMap, $opener->getIndex(), $startPos)) {
             return ['url' => $link->getDestination(), 'title' => $link->getTitle()];
         }
 
@@ -171,9 +171,9 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         return ['url' => $dest, 'title' => $title];
     }
 
-    private function tryParseReference(Cursor $cursor, ReferenceMapInterface $referenceMap, DelimiterInterface $opener, int $startPos): ?ReferenceInterface
+    private function tryParseReference(Cursor $cursor, ReferenceMapInterface $referenceMap, ?int $openerIndex, int $startPos): ?ReferenceInterface
     {
-        if ($opener->getIndex() === null) {
+        if ($openerIndex === null) {
             return null;
         }
 
@@ -181,8 +181,8 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         $beforeLabel = $cursor->getPosition();
         $n           = LinkParserHelper::parseLinkLabel($cursor);
         if ($n === 0 || $n === 2) {
-            $start  = $opener->getIndex();
-            $length = $startPos - $opener->getIndex();
+            $start  = $openerIndex;
+            $length = $startPos - $openerIndex;
         } else {
             $start  = $beforeLabel + 1;
             $length = $n - 2;

@@ -52,8 +52,6 @@ final class HtmlBlockRenderer implements NodeRendererInterface, ConfigurationAwa
             throw InvalidOptionException::forConfigOption('html_input', $htmlInput);
         }
 
-        \assert(\is_string($htmlInput));
-
         return HtmlFilter::filter($node->getLiteral(), $htmlInput);
     }
 

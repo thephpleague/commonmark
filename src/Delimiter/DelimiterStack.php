@@ -181,6 +181,8 @@ final class DelimiterStack
                 continue;
             }
 
+            \assert($opener !== null);
+
             $openerNode = $opener->getInlineNode();
             $closerNode = $closer->getInlineNode();
 

@@ -125,7 +125,7 @@ final class LinkParserHelper
             return null;
         }
 
-        if ($cursor->getPosition() === $oldPosition && $c !== ')') {
+        if ($cursor->getPosition() === $oldPosition && (! isset($c) || $c !== ')')) {
             return null;
         }
 

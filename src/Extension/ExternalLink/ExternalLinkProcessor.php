@@ -39,12 +39,14 @@ final class ExternalLinkProcessor
 
         $walker = $e->getDocument()->walker();
         while ($event = $walker->next()) {
-            if (! $event->isEntering() || ! ($event->getNode() instanceof Link)) {
+            if (! $event->isEntering()) {
                 continue;
             }
 
             $link = $event->getNode();
-            \assert($link instanceof Link);
+            if (! ($link instanceof Link)) {
+                continue;
+            }
 
             $host = \parse_url($link->getUrl(), PHP_URL_HOST);
             if (empty($host)) {
