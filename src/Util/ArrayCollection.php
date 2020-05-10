@@ -24,7 +24,7 @@ namespace League\CommonMark\Util;
  * @phpstan-implements \IteratorAggregate<int, T>
  * @phpstan-implements \ArrayAccess<int, T>
  */
-class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
+final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
      * @var array<int, mixed>
