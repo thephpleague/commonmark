@@ -16,8 +16,14 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Util;
 
+/**
+ * @psalm-immutable
+ */
 final class Html5EntityDecoder
 {
+    /**
+     * @psalm-pure
+     */
     public static function decode(string $entity): string
     {
         if (\substr($entity, -1) !== ';') {
@@ -37,6 +43,8 @@ final class Html5EntityDecoder
 
     /**
      * @param mixed $number
+     *
+     * @psalm-pure
      */
     private static function fromDecimal($number): string
     {
@@ -56,6 +64,9 @@ final class Html5EntityDecoder
         return $converted;
     }
 
+    /**
+     * @psalm-pure
+     */
     private static function fromHex(string $hexChars): string
     {
         return self::fromDecimal(\hexdec($hexChars));

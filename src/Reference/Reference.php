@@ -16,6 +16,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Reference;
 
+/**
+ * @psalm-immutable
+ */
 final class Reference implements ReferenceInterface
 {
     /**
@@ -73,6 +76,8 @@ final class Reference implements ReferenceInterface
      * Normalize reference label
      *
      * This enables case-insensitive label matching
+     *
+     * @psalm-pure
      */
     public static function normalizeReference(string $string): string
     {

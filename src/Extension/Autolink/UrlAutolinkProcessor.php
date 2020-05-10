@@ -131,6 +131,9 @@ final class UrlAutolinkProcessor
         $node->insertBefore(new Link($url, $url));
     }
 
+    /**
+     * @psalm-pure
+     */
     private static function hasMoreCloserParensThanOpeners(string $content): bool
     {
         // Scan the entire autolink for the total number of parentheses.

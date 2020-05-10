@@ -18,6 +18,9 @@ namespace League\CommonMark\Util;
 
 use League\CommonMark\Parser\Cursor;
 
+/**
+ * @psalm-immutable
+ */
 final class LinkParserHelper
 {
     /**

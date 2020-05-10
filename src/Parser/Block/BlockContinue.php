@@ -18,6 +18,8 @@ use League\CommonMark\Parser\CursorState;
 
 /**
  * Result object for continuing parsing of a block; see static methods for constructors.
+ *
+ * @psalm-immutable
  */
 final class BlockContinue
 {

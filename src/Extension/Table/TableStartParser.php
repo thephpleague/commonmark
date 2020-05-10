@@ -116,6 +116,9 @@ final class TableStartParser implements BlockStartParserInterface
         return $columns;
     }
 
+    /**
+     * @psalm-pure
+     */
     private static function getAlignment(bool $left, bool $right): ?string
     {
         if ($left && $right) {

@@ -22,6 +22,8 @@ use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
  * Provides regular expressions and utilities for parsing Markdown
  *
  * @phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+ *
+ * @psalm-immutable
  */
 final class RegexHelper
 {
@@ -70,11 +72,17 @@ final class RegexHelper
     public const REGEX_THEMATIC_BREAK          = '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})[ \t]*$/';
     public const REGEX_LINK_DESTINATION_BRACES = '/^(?:<(?:[^<>\\n\\\\\\x00]|\\\\.)*>)/';
 
+    /**
+     * @psalm-pure
+     */
     public static function isEscapable(string $character): bool
     {
         return \preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function isLetter(?string $character): bool
     {
         if ($character === null) {
@@ -88,6 +96,8 @@ final class RegexHelper
      * Attempt to match a regex in string s at offset offset
      *
      * @return int|null Index of match, or null
+     *
+     * @psalm-pure
      */
     public static function matchAt(string $regex, string $string, int $offset = 0): ?int
     {
@@ -107,6 +117,8 @@ final class RegexHelper
      * Functional wrapper around preg_match_all
      *
      * @return array<string>|null
+     *
+     * @psalm-pure
      */
     public static function matchAll(string $pattern, string $subject, int $offset = 0): ?array
     {
@@ -132,6 +144,8 @@ final class RegexHelper
 
     /**
      * Replace backslash escapes with literal characters
+     *
+     * @psalm-pure
      */
     public static function unescape(string $string): string
     {
@@ -149,6 +163,8 @@ final class RegexHelper
      * @internal
      *
      * @param int $type HTML block type
+     *
+     * @psalm-pure
      */
     public static function getHtmlBlockOpenRegex(int $type): string
     {
@@ -176,6 +192,8 @@ final class RegexHelper
      * @internal
      *
      * @param int $type HTML block type
+     *
+     * @psalm-pure
      */
     public static function getHtmlBlockCloseRegex(int $type): string
     {
@@ -195,6 +213,9 @@ final class RegexHelper
         }
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function isLinkPotentiallyUnsafe(string $url): bool
     {
         return \preg_match(self::REGEX_UNSAFE_PROTOCOL, $url) !== 0 && \preg_match(self::REGEX_SAFE_DATA_PROTOCOL, $url) === 0;

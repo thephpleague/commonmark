@@ -39,6 +39,8 @@ final class StringContainerHelper
 
     /**
      * @param string[] $classesOrInterfacesToCheck
+     *
+     * @psalm-pure
      */
     private static function isOneOf(object $object, array $classesOrInterfacesToCheck): bool
     {

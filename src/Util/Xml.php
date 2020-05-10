@@ -18,9 +18,14 @@ namespace League\CommonMark\Util;
 
 /**
  * Utility class for handling/generating XML and HTML
+ *
+ * @psalm-immutable
  */
 final class Xml
 {
+    /**
+     * @psalm-pure
+     */
     public static function escape(string $string): string
     {
         return \str_replace(['&', '<', '>', '"'], ['&amp;', '&lt;', '&gt;', '&quot;'], $string);

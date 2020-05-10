@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Util;
 
+/**
+ * @psalm-immutable
+ */
 final class HtmlFilter
 {
     // Return the entire string as-is
@@ -31,6 +34,8 @@ final class HtmlFilter
      * @return string Filtered HTML
      *
      * @throws \InvalidArgumentException when an invalid $filter is given
+     *
+     * @psalm-pure
      */
     public static function filter(string $html, string $filter): string
     {

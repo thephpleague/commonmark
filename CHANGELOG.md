@@ -42,6 +42,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `TableCell::setAlign()`
  - Added the ability to properly clone `Node` objects
  - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
+ - Added purity markers throughout the codebase (verified with Psalm)
 
 ### Changed
 

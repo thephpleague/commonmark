@@ -22,6 +22,8 @@ namespace League\CommonMark\Parser;
  * future release without warning!
  *
  * @internal
+ *
+ * @psalm-immutable
  */
 final class CursorState
 {
