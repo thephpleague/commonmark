@@ -1,6 +1,9 @@
 ---
-name: 📃 Bug Report (Incorrect HTML)
+name: "\U0001F4C3 Bug Report (Incorrect HTML)"
 about: I'm not getting the HTML I expect
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
@@ -13,4 +16,3 @@ about: I'm not getting the HTML I expect
 
 **How to reproduce**  
 <!-- Provide the Markdown input, your configuration, and/or installed extensions to help us reproduce the problem. -->
-

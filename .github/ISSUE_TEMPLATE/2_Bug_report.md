@@ -1,6 +1,9 @@
 ---
-name: 🐛 Bug Report (Other)
+name: "\U0001F41B Bug Report (Other)"
 about: Report all other errors and problems
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
