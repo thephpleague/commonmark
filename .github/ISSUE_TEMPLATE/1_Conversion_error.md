@@ -1,5 +1,5 @@
 ---
-name: 📃 Bug Report: Incorrect HTML
+name: 📃 Bug Report (Incorrect HTML)
 about: I'm not getting the HTML I expect
 
 ---
