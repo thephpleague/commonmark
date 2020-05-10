@@ -40,11 +40,9 @@ final class Reference implements ReferenceInterface
     private $title;
 
     /**
-     * @var array<int, array<int, string>>
-     *
      * Source: https://github.com/symfony/polyfill-mbstring/blob/master/Mbstring.php
      */
-    private static $caseFold = [
+    private const CASE_FOLD = [
         ['µ', 'ſ', "\xCD\x85", 'ς', "\xCF\x90", "\xCF\x91", "\xCF\x95", "\xCF\x96", "\xCF\xB0", "\xCF\xB1", "\xCF\xB5", "\xE1\xBA\x9B", "\xE1\xBE\xBE", "\xC3\x9F", "\xE1\xBA\x9E"],
         ['μ', 's', 'ι',        'σ', 'β',        'θ',        'φ',        'π',        'κ',        'ρ',        'ε',        "\xE1\xB9\xA1", 'ι',            'ss',       'ss'],
     ];
@@ -84,7 +82,7 @@ final class Reference implements ReferenceInterface
 
         if (! \defined('MB_CASE_FOLD')) {
             // We're not on a version of PHP (7.3+) which has this feature
-            $string = \str_replace(self::$caseFold[0], self::$caseFold[1], $string);
+            $string = \str_replace(self::CASE_FOLD[0], self::CASE_FOLD[1], $string);
 
             return \mb_strtoupper($string, 'UTF-8');
         }
