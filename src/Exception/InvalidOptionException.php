@@ -13,6 +13,35 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Exception;
 
-final class InvalidOptionException extends \RuntimeException
+final class InvalidOptionException extends \UnexpectedValueException
 {
+    /**
+     * @param string $option     Name/path of the option
+     * @param mixed  $valueGiven The invalid option that was provided
+     */
+    public static function forConfigOption(string $option, $valueGiven): self
+    {
+        return new self(\sprintf('Invalid config option for "%s": %s', $option, self::getDebugValue($valueGiven)));
+    }
+
+    /**
+     * @param string $option     Description of the option
+     * @param mixed  $valueGiven The invalid option that was provided
+     */
+    public static function forParameter(string $option, $valueGiven): self
+    {
+        return new self(\sprintf('Invalid %s: %s', $option, self::getDebugValue($valueGiven)));
+    }
+
+    /**
+     * @param mixed $value
+     */
+    private static function getDebugValue($value): string
+    {
+        if (\is_object($value)) {
+            return \get_class($value);
+        }
+
+        return \print_r($value, true);
+    }
 }

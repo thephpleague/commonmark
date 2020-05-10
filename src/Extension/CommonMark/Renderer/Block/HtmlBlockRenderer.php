@@ -18,6 +18,7 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
@@ -46,7 +47,14 @@ final class HtmlBlockRenderer implements NodeRendererInterface, ConfigurationAwa
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        return HtmlFilter::filter($node->getLiteral(), $this->config->get('html_input', HtmlFilter::ALLOW));
+        $htmlInput = $this->config->get('html_input', HtmlFilter::ALLOW);
+        if (! \is_string($htmlInput)) {
+            throw InvalidOptionException::forConfigOption('html_input', $htmlInput);
+        }
+
+        \assert(\is_string($htmlInput));
+
+        return HtmlFilter::filter($node->getLiteral(), $htmlInput);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

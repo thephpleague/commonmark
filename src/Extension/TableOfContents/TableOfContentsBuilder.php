@@ -68,7 +68,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         } elseif ($position === self::POSITION_PLACEHOLDER) {
             $this->replacePlaceholders($document, $toc);
         } else {
-            throw new InvalidOptionException(\sprintf('Invalid config option "%s" for "table_of_contents/position"', $position));
+            throw InvalidOptionException::forConfigOption('table_of_contents/position', $position);
         }
     }
 

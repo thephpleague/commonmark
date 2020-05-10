@@ -30,6 +30,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Added several new methods:
    - `FencedCode::setInfo()`
    - `HtmlRenderer::renderDocument()`
+   - `InvalidOptionException::forConfigOption()`
+   - `InvalidOptionException::forParameter()`
    - `LinkParserHelper::parsePartialLinkLabel()`
    - `LinkParserHelper::parsePartialLinkTitle()`
    - `RegexHelper::isLetter()`
@@ -83,6 +85,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `StringContainerInterface` can now be used for inlines, not just blocks
  - `Cursor::saveState()` and `Cursor::restoreState()` now use `CursorState` objects instead of arrays
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
+ - `InvalidOptionException` now extends from `UnexpectedValueException`
 
 ### Removed
 

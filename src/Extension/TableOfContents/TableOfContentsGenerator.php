@@ -136,7 +136,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         } elseif ($this->style === self::STYLE_ORDERED) {
             $listData->type = ListBlock::TYPE_ORDERED;
         } else {
-            throw new InvalidOptionException(\sprintf('Invalid table of contents list style "%s"', $this->style));
+            throw InvalidOptionException::forParameter('table of contents list style', $this->style);
         }
 
         return new TableOfContents($listData);
@@ -165,7 +165,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             case self::NORMALIZE_FLAT:
                 return new FlatNormalizerStrategy($toc);
             default:
-                throw new InvalidOptionException(\sprintf('Invalid table of contents normalization strategy "%s"', $this->normalizationStrategy));
+                throw InvalidOptionException::forParameter('table of contents normalization strategy', $this->normalizationStrategy);
         }
     }
 }
