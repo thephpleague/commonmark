@@ -31,7 +31,7 @@ final class FencedCodeParser extends AbstractBlockContinueParser
      */
     private $block;
 
-    /** @var ArrayCollection<int, string> */
+    /** @var ArrayCollection<string> */
     protected $strings;
 
     public function __construct(int $fenceLength, string $fenceChar, int $fenceOffset)

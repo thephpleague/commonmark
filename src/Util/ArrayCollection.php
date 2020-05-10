@@ -20,17 +20,16 @@ namespace League\CommonMark\Util;
  *
  * @internal
  *
- * @phpstan-template TKey
- * @phpstan-template TValue
- * @phpstan-implements \IteratorAggregate<TKey, TValue>
- * @phpstan-implements \ArrayAccess<TKey, TValue>
+ * @phpstan-template T
+ * @phpstan-implements \IteratorAggregate<int, T>
+ * @phpstan-implements \ArrayAccess<int, T>
  */
 class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
-     * @var array<int|string, mixed>
+     * @var array<int, mixed>
      *
-     * @phpstan-var array<TKey, TValue>
+     * @phpstan-var array<int, T>
      */
     private $elements;
 
@@ -39,7 +38,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @param array<int|string, mixed> $elements
      *
-     * @phpstan-param array<TKey, TValue> $elements
+     * @phpstan-param array<int, T> $elements
      */
     public function __construct(array $elements = [])
     {
@@ -49,7 +48,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @return mixed|false
      *
-     * @phpstan-return TValue|false
+     * @phpstan-return T|false
      */
     public function first()
     {
@@ -59,7 +58,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @return mixed|false
      *
-     * @phpstan-return TValue|false
+     * @phpstan-return T|false
      */
     public function last()
     {
@@ -69,9 +68,9 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Retrieve an external iterator
      *
-     * @return \ArrayIterator<int|string, mixed>
+     * @return \ArrayIterator<int, mixed>
      *
-     * @phpstan-return \ArrayIterator<TKey, TValue>
+     * @phpstan-return \ArrayIterator<int, T>
      */
     public function getIterator(): \ArrayIterator
     {
@@ -91,11 +90,9 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Whether an offset exists
      *
-     * @param int|string $offset An offset to check for.
+     * {@inheritDoc}
      *
-     * @return bool true on success or false on failure.
-     *
-     * @phpstan-param TKey $offset
+     * @phpstan-param int $offset
      */
     public function offsetExists($offset): bool
     {
@@ -105,13 +102,10 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Offset to retrieve
      *
-     * @param int|string $offset
+     * {@inheritDoc}
      *
-     * @return mixed|null
-     *
-     * @phpstan-param TKey $offset
-     *
-     * @phpstan-return TValue|null
+     * @phpstan-param int $offset
+     * @phpstan-return T|null
      */
     public function offsetGet($offset)
     {
@@ -121,11 +115,10 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Offset to set
      *
-     * @param int|string|null $offset The offset to assign the value to.
-     * @param mixed           $value  The value to set.
+     * {@inheritDoc}
      *
-     * @phpstan-param TKey|null $offset
-     * @phpstan-param TValue    $value
+     * @phpstan-param int|null $offset
+     * @phpstan-param T        $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -139,9 +132,9 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Offset to unset
      *
-     * @param int|string $offset The offset to unset.
+     * {@inheritDoc}
      *
-     * @phpstan-param TKey $offset
+     * @phpstan-param int $offset
      */
     public function offsetUnset($offset): void
     {
@@ -155,9 +148,9 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Returns a subset of the array
      *
-     * @return array<int|string, mixed>
+     * @return array<int, mixed>
      *
-     * @phpstan-return array<TKey, TValue>
+     * @phpstan-return array<int, T>
      */
     public function slice(int $offset, ?int $length = null): array
     {
@@ -165,9 +158,9 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     }
 
     /**
-     * @return array<int|string, mixed>
+     * @return array<int, mixed>
      *
-     * @phpstan-return array<TKey, TValue>
+     * @phpstan-return array<int, T>
      */
     public function toArray(): array
     {

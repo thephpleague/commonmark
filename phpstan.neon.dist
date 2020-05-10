@@ -2,6 +2,3 @@ parameters:
   level: 7
   paths:
     - src
-  ignoreErrors:
-    - path: src/Util/ArrayCollection.php
-      message: '#does not accept key int#'

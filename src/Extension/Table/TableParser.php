@@ -33,7 +33,7 @@ final class TableParser extends AbstractBlockContinueParser
     private $block;
 
     /**
-     * @var ArrayCollection<int, string>
+     * @var ArrayCollection<string>
      *
      * @psalm-readonly-allow-private-mutation
      */

@@ -30,7 +30,7 @@ final class IndentedCodeParser extends AbstractBlockContinueParser
      */
     private $block;
 
-    /** @var ArrayCollection<int, string> */
+    /** @var ArrayCollection<string> */
     protected $strings;
 
     public function __construct()

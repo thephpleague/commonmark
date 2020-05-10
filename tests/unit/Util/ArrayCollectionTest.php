@@ -27,7 +27,7 @@ class ArrayCollectionTest extends TestCase
         $collection = new ArrayCollection($array);
         $this->assertEquals($array, $collection->toArray());
 
-        $array      = ['foo' => 'bar'];
+        $array      = ['foo', 'bar'];
         $collection = new ArrayCollection($array);
         $this->assertEquals($array, $collection->toArray());
     }
@@ -46,7 +46,7 @@ class ArrayCollectionTest extends TestCase
 
     public function testGetIterator(): void
     {
-        $array      = ['foo' => 'bar'];
+        $array      = ['foo', 'bar'];
         $collection = new ArrayCollection($array);
         $iterator   = $collection->getIterator();
 
@@ -56,28 +56,29 @@ class ArrayCollectionTest extends TestCase
 
     public function testOffsetExists(): void
     {
-        $collection = new ArrayCollection(['foo' => 1, 'bar', null]);
+        $collection = new ArrayCollection(['foo', 2 => 'bar', 3, null]);
 
-        $this->assertTrue($collection->offsetExists('foo'));
         $this->assertTrue($collection->offsetExists(0));
-        $this->assertTrue($collection->offsetExists(1));
-        $this->assertTrue(isset($collection['foo']));
+        $this->assertTrue($collection->offsetExists(2));
+        $this->assertTrue($collection->offsetExists(3));
+        $this->assertTrue($collection->offsetExists(4));
         $this->assertTrue(isset($collection[0]));
-        $this->assertTrue(isset($collection[1]));
+        $this->assertTrue(isset($collection[2]));
+        $this->assertTrue(isset($collection[3]));
+        $this->assertTrue(isset($collection[4]));
 
-        $this->assertFalse($collection->offsetExists('FOO'));
-        $this->assertFalse($collection->offsetExists(2));
+        $this->assertFalse($collection->offsetExists(1));
+        $this->assertFalse(isset($collection[1]));
     }
 
     public function testOffsetGet(): void
     {
-        $collection = new ArrayCollection(['foo' => 1, 'bar']);
+        $collection = new ArrayCollection(['foo', 2 => 'bar']);
 
-        $this->assertEquals(1, $collection['foo']);
-        $this->assertEquals(1, $collection->offsetGet('foo'));
-        $this->assertEquals('bar', $collection[0]);
-        $this->assertEquals('bar', $collection->offsetGet(0));
-        $this->assertNull($collection->offsetGet('bar'));
+        $this->assertEquals('foo', $collection[0]);
+        $this->assertEquals('foo', $collection->offsetGet(0));
+        $this->assertEquals('bar', $collection[2]);
+        $this->assertEquals('bar', $collection->offsetGet(2));
     }
 
     public function testOffsetSet(): void
@@ -92,73 +93,73 @@ class ArrayCollectionTest extends TestCase
 
         $collection = new ArrayCollection(['foo']);
 
-        $collection['foo'] = 1;
-        $this->assertEquals(['foo', 'foo' => 1], $collection->toArray());
+        $collection[42] = true;
+        $this->assertEquals(['foo', 42 => true], $collection->toArray());
 
-        $collection['foo'] = 2;
-        $this->assertEquals(['foo', 'foo' => 2], $collection->toArray());
+        $collection[42] = false;
+        $this->assertEquals(['foo', 42 => false], $collection->toArray());
     }
 
     public function testOffsetUnset(): void
     {
-        $collection = new ArrayCollection(['foo' => 1, 'bar', 'baz']);
-
-        unset($collection['foo']);
-        $this->assertEquals(['bar', 'baz'], $collection->toArray());
-
-        unset($collection['foo']);
-        $this->assertEquals(['bar', 'baz'], $collection->toArray());
+        $collection = new ArrayCollection(['foo', 'bar', 'baz']);
 
         unset($collection[0]);
-        $this->assertEquals([1 => 'baz'], $collection->toArray());
+        $this->assertEquals([1 => 'bar', 2 => 'baz'], $collection->toArray());
+
+        unset($collection[9999]);
+        $this->assertEquals([1 => 'bar', 2 => 'baz'], $collection->toArray());
 
         unset($collection[1]);
+        $this->assertEquals([2 => 'baz'], $collection->toArray());
+
+        unset($collection[2]);
         $this->assertEquals([], $collection->toArray());
     }
 
     public function testOffsetUnsetWithNulls(): void
     {
-        $collection = new ArrayCollection(['foo' => null]);
+        $collection = new ArrayCollection([2 => null]);
 
-        unset($collection['nonExistantKey']);
-        $this->assertEquals(['foo' => null], $collection->toArray());
+        unset($collection[99999]);
+        $this->assertEquals([2 => null], $collection->toArray());
 
-        unset($collection['foo']);
+        unset($collection[2]);
         $this->assertEquals([], $collection->toArray());
     }
 
     public function testSlice(): void
     {
-        $collection = new ArrayCollection(['foo' => 1, 0 => 'bar', 1 => 'baz', 2 => 2]);
+        $collection = new ArrayCollection(['foo', 'bar', 'baz', 42 => 'ftw']);
 
-        $this->assertEquals(['foo' => 1, 0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(0));
-        $this->assertEquals(['foo' => 1, 0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(0, null));
-        $this->assertEquals(['foo' => 1, 0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(0, 99));
-        $this->assertEquals(['foo' => 1, 0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(0, 4));
-        $this->assertEquals(['foo' => 1, 0 => 'bar', 1 => 'baz'], $collection->slice(0, 3));
-        $this->assertEquals(['foo' => 1, 0 => 'bar'], $collection->slice(0, 2));
-        $this->assertEquals(['foo' => 1], $collection->slice(0, 1));
+        $this->assertEquals(['foo', 'bar', 'baz', 42 => 'ftw'], $collection->slice(0));
+        $this->assertEquals(['foo', 'bar', 'baz', 42 => 'ftw'], $collection->slice(0, null));
+        $this->assertEquals(['foo', 'bar', 'baz', 42 => 'ftw'], $collection->slice(0, 99));
+        $this->assertEquals(['foo', 'bar', 'baz', 42 => 'ftw'], $collection->slice(0, 4));
+        $this->assertEquals(['foo', 'bar', 'baz'], $collection->slice(0, 3));
+        $this->assertEquals(['foo', 'bar'], $collection->slice(0, 2));
+        $this->assertEquals(['foo'], $collection->slice(0, 1));
         $this->assertEquals([], $collection->slice(0, 0));
 
-        $this->assertEquals([0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(1));
-        $this->assertEquals([0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(1, null));
-        $this->assertEquals([0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(1, 99));
-        $this->assertEquals([0 => 'bar', 1 => 'baz', 2 => 2], $collection->slice(1, 3));
-        $this->assertEquals([0 => 'bar', 1 => 'baz'], $collection->slice(1, 2));
-        $this->assertEquals([0 => 'bar'], $collection->slice(1, 1));
+        $this->assertEquals([1 => 'bar', 2 => 'baz', 42 => 'ftw'], $collection->slice(1));
+        $this->assertEquals([1 => 'bar', 2 => 'baz', 42 => 'ftw'], $collection->slice(1, null));
+        $this->assertEquals([1 => 'bar', 2 => 'baz', 42 => 'ftw'], $collection->slice(1, 99));
+        $this->assertEquals([1 => 'bar', 2 => 'baz', 42 => 'ftw'], $collection->slice(1, 3));
+        $this->assertEquals([1 => 'bar', 2 => 'baz'], $collection->slice(1, 2));
+        $this->assertEquals([1 => 'bar'], $collection->slice(1, 1));
         $this->assertEquals([], $collection->slice(1, 0));
 
-        $this->assertEquals([1 => 'baz', 2 => 2], $collection->slice(2));
-        $this->assertEquals([1 => 'baz', 2 => 2], $collection->slice(2, null));
-        $this->assertEquals([1 => 'baz', 2 => 2], $collection->slice(2, 99));
-        $this->assertEquals([1 => 'baz', 2 => 2], $collection->slice(2, 2));
-        $this->assertEquals([1 => 'baz'], $collection->slice(2, 1));
+        $this->assertEquals([2 => 'baz', 42 => 'ftw'], $collection->slice(2));
+        $this->assertEquals([2 => 'baz', 42 => 'ftw'], $collection->slice(2, null));
+        $this->assertEquals([2 => 'baz', 42 => 'ftw'], $collection->slice(2, 99));
+        $this->assertEquals([2 => 'baz', 42 => 'ftw'], $collection->slice(2, 2));
+        $this->assertEquals([2 => 'baz'], $collection->slice(2, 1));
         $this->assertEquals([], $collection->slice(2, 0));
 
-        $this->assertEquals([2 => 2], $collection->slice(3));
-        $this->assertEquals([2 => 2], $collection->slice(3, null));
-        $this->assertEquals([2 => 2], $collection->slice(3, 99));
-        $this->assertEquals([2 => 2], $collection->slice(3, 1));
+        $this->assertEquals([42 => 'ftw'], $collection->slice(3));
+        $this->assertEquals([42 => 'ftw'], $collection->slice(3, null));
+        $this->assertEquals([42 => 'ftw'], $collection->slice(3, 99));
+        $this->assertEquals([42 => 'ftw'], $collection->slice(3, 1));
         $this->assertEquals([], $collection->slice(3, 0));
 
         $this->assertEquals([], $collection->slice(4));
