@@ -79,7 +79,9 @@
         "phpstan": "phpstan analyse",
         "phpunit": "phpunit --no-coverage",
         "test": [
+            "@phpcs",
             "@phpstan",
+            "@psalm",
             "@phpunit"
         ]
     },
