@@ -197,6 +197,16 @@ The following methods have been renamed:
 | `ReferenceMap` / `ReferenceMapInterface`           | `getReference()`   | `get()`                 |
 | `ReferenceMap` / `ReferenceMapInterface`           | `listReferences()` | `getIterator()`         |
 
+## Visibility Changes
+
+The following properties have had their visibility changed:
+
+| Property               | Was (1.x) | Is Now (2.0) | Notes                                     |
+| ---------------------- | --------- | ------------ | ----------------------------------------- |
+| `TableCell::$align`    | `public`  | `private`    | Use `getAlign()` and `setAlign()` instead |
+| `TableCell::$type`     | `public`  | `private`    | Use `getType()` and `setType()` instead   |
+| `TableSection::$type`  | `public`  | `private`    | Use `getType()` instead                   |
+
 ## New approach to the `ReferenceParser`
 
 The `ReferenceParser` class in 1.x worked on complete paragraphs of text.  This has been changed in 2.x to work in a more-gradual fashion, where parsing is done on-the-fly as new lines are added.

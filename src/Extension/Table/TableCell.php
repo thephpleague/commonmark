@@ -31,14 +31,14 @@ final class TableCell extends AbstractBlock
      *
      * @psalm-readonly-allow-private-mutation
      */
-    public $type = self::TYPE_BODY;
+    private $type = self::TYPE_BODY;
 
     /**
      * @var string|null
      *
      * @psalm-readonly-allow-private-mutation
      */
-    public $align;
+    private $align;
 
     public function __construct(string $type = self::TYPE_BODY, ?string $align = null)
     {

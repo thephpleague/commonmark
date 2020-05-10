@@ -27,11 +27,16 @@ final class TableSection extends AbstractBlock
      *
      * @psalm-readonly
      */
-    public $type = self::TYPE_BODY;
+    private $type;
 
     public function __construct(string $type = self::TYPE_BODY)
     {
         $this->type = $type;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     public function isHead(): bool

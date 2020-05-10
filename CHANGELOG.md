@@ -73,6 +73,10 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `EnvironmentInterface::HTML_INPUT_ALLOW` is now `HtmlFilter::ALLOW`
    - `EnvironmentInterface::HTML_INPUT_ESCAPE` is now `HtmlFilter::ESCAPE`
    - `EnvironmentInterface::HTML_INPUT_STRIP` is now `HtmlFilter::STRIP`
+ - Changed the visibility of the following properties:
+   - `TableCell::$align` is now `private`
+   - `TableCell::$type` is now `private`
+   - `TableSection::$type` is now `private`
  - Added missing return types to virtually every class and interface method
  - Several methods which previously returned `$this` now return `void`
    - `Delimiter::setPrevious()`

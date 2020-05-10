@@ -37,10 +37,10 @@ final class TableCellRenderer implements NodeRendererInterface
 
         $attrs = $node->getData('attributes', []);
 
-        if ($node->align !== null) {
-            $attrs['align'] = $node->align;
+        if ($node->getAlign() !== null) {
+            $attrs['align'] = $node->getAlign();
         }
 
-        return new HtmlElement($node->type, $attrs, $childRenderer->renderNodes($node->children()));
+        return new HtmlElement($node->getType(), $attrs, $childRenderer->renderNodes($node->children()));
     }
 }

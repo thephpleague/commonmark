@@ -43,6 +43,6 @@ final class TableSectionRenderer implements NodeRendererInterface
 
         $separator = $childRenderer->getInnerSeparator();
 
-        return new HtmlElement($node->type, $attrs, $separator . $childRenderer->renderNodes($node->children()) . $separator);
+        return new HtmlElement($node->getType(), $attrs, $separator . $childRenderer->renderNodes($node->children()) . $separator);
     }
 }
