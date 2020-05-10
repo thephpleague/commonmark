@@ -1,0 +1,14 @@
+name: 'Jekyll'
+description: 'A GitHub Action to build and publish Jekyll sites to GitHub Pages'
+inputs:
+    jekyll_src:
+        description: 'The Jekyll website source directory'
+        required: false
+runs:
+    using: 'docker'
+    image: 'Dockerfile'
+    args:
+        - ${{ inputs.jekyll_src }}
+branding:
+    icon: 'book'
+    color: 'blue'

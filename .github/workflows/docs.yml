@@ -1,0 +1,30 @@
+name: Docs
+
+on:
+    schedule:
+        - cron: '0 0 * * *'
+    push:
+        branch:
+            - master
+
+jobs:
+    github-pages:
+        name: Build
+        runs-on: ubuntu-16.04
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: actions/cache@v1
+              with:
+                  path: docs/vendor/bundle
+                  key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-gems-
+
+            - uses: ./.github/workflows/build-jekyll-site-action
+              with:
+                  jekyll_src: docs
+              env:
+                  JEKYLL_GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT }}
+                  JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}

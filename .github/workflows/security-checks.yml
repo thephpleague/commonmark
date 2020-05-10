@@ -1,0 +1,29 @@
+name: Security
+
+on:
+    push:
+        branch:
+            - master
+
+jobs:
+    rips:
+        name: RIPS
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: shivammathur/setup-php@v1
+              with:
+                  php-version: 7.2
+                  extensions: mbstring
+                  coverage: none
+
+            - uses: rips/github-action-scan@v1
+              env:
+                  RIPS_BASE_URI: "https://api-3.ripstech.com"
+                  RIPS_EMAIL: ${{ secrets.RIPS_EMAIL }}
+                  RIPS_PASSWORD: ${{ secrets.RIPS_PASSWORD }}
+              with:
+                  application-id: 698
+                  additional-parameters: -t high:0 -t critical:0 -t 5
