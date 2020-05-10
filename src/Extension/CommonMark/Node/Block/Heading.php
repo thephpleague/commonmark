@@ -32,4 +32,9 @@ class Heading extends AbstractBlock
     {
         return $this->level;
     }
+
+    public function setLevel(int $level): void
+    {
+        $this->level = $level;
+    }
 }

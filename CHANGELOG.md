@@ -29,6 +29,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `TableOfContentsPlaceholderRenderer`
  - Added several new methods:
    - `FencedCode::setInfo()`
+   - `Heading::setLevel()`
    - `HtmlRenderer::renderDocument()`
    - `InvalidOptionException::forConfigOption()`
    - `InvalidOptionException::forParameter()`
