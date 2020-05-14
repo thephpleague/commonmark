@@ -16,6 +16,7 @@ use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
 

@@ -19,6 +19,7 @@ use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Extension\TableOfContents\Normalizer\AsIsNormalizerStrategy;
 use League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrategy;
 use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;

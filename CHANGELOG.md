@@ -11,6 +11,14 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `TableOfContentsGenerator`
    - `TableOfContentsGeneratorInterface`
 
+### Changed
+
+ - "Moved" the `TableOfContents` class into a new `Node` sub-namespace (with backward-compatibility)
+
+### Deprecated
+
+ - Deprecated `League\CommonMark\Extension\TableOfContents\TableOfContents` (use the one in the new `Node` sub-namespace instead)
+
 ## [1.4.3] - 2020-05-04
 
 ### Fixed
