@@ -13,6 +13,7 @@ namespace League\CommonMark\Extension\HeadingPermalink;
 
 use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
 use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
 use League\CommonMark\Inline\Element\Code;
@@ -47,6 +48,8 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
     public function __invoke(DocumentParsedEvent $e): void
     {
+        $this->useSlugGeneratorFromConfigurationIfProvided();
+
         $walker = $e->getDocument()->walker();
 
         while ($event = $walker->next()) {
@@ -55,6 +58,20 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
                 $this->addHeadingLink($node);
             }
         }
+    }
+
+    private function useSlugGeneratorFromConfigurationIfProvided(): void
+    {
+        $generator = $this->config->get('heading_permalink/slug_generator');
+        if ($generator === null) {
+            return;
+        }
+
+        if (!($generator instanceof SlugGeneratorInterface)) {
+            throw new InvalidOptionException('The heading_permalink/slug_generator option must be an instance of ' . SlugGeneratorInterface::class);
+        }
+
+        $this->slugGenerator = $generator;
     }
 
     private function addHeadingLink(Heading $heading): void

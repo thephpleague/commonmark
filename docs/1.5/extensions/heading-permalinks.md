@@ -20,6 +20,7 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
+use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -37,6 +38,7 @@ $config = [
         'inner_contents' => HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS,
         'insert' => 'before',
         'title' => 'Permalink',
+        'slug_generator' => new DefaultSlugGenerator(),
     ],
 ];
 
@@ -70,6 +72,56 @@ This controls whether the anchor is added to the beginning of the `<h1>`, `<h2>`
 ### `title`
 
 This option sets the `title` attribute on the `<a>` tag.  This defaults to `'Permalink'`.
+
+### `slug_generator`
+
+"Slugs" are the strings used within the `href`, `name`, and `id` attributes to identify a particular permalink.
+By default, this extension will generate slugs based on the contents of the heading, just like Github-Flavored Markdown does.
+
+You can change the string that is used as the "slug" by setting the `slug_generator` option to any class that implements `SlugGeneratorInterface`.
+
+For example, if you'd like each slug to be an MD5 hash, you could create a class like this:
+
+```php
+<?php
+
+use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
+
+final class HashSlugGenerator implements SlugGeneratorInterface
+{
+    public function createSlug(string $input): string
+    {
+        return md5($input);
+    }
+}
+```
+
+And then configure it like this:
+
+```php
+$config = [
+    'heading_permalink' => [
+        // ... other options here ...
+        'slug_generator' => new HashSlugGenerator(),
+    ],
+];
+```
+
+Or you could use [PHP's anonymous class feature](https://www.php.net/manual/en/language.oop5.anonymous.php) to define the generator's behavior without creating a new class file:
+
+```php
+$config = [
+    'heading_permalink' => [
+        // ... other options here ...
+        'slug_generator' => new class implements SlugGeneratorInterface {
+            public function createSlug(string $input): string
+            {
+                return md5($input);
+            }
+        },
+    ],
+];
+```
 
 ## Example
 
