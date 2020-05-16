@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
  - Added the ability to properly clone `Node` objects
+ - Added options to customize the value of `rel` attributes set via the `ExternalLink` extension (#476)
  - Added new classes:
    - `TableOfContentsGenerator`
    - `TableOfContentsGeneratorInterface`
@@ -18,6 +19,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 
  - "Moved" the `TableOfContents` class into a new `Node` sub-namespace (with backward-compatibility)
+ - External links detected by the `ExternalLink` extension will now include `nofollow` in the renderer `rel` attribute (#476)
 
 ### Deprecated
 

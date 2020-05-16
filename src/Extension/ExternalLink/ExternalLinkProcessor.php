@@ -17,6 +17,11 @@ use League\CommonMark\Inline\Element\Link;
 
 final class ExternalLinkProcessor
 {
+    public const APPLY_NONE = '';
+    public const APPLY_ALL = 'all';
+    public const APPLY_EXTERNAL = 'external';
+    public const APPLY_INTERNAL = 'internal';
+
     /** @var EnvironmentInterface */
     private $environment;
 
@@ -50,6 +55,7 @@ final class ExternalLinkProcessor
 
                 if (self::hostMatches($host, $internalHosts)) {
                     $link->data['external'] = false;
+                    $this->applyRelAttribute($link, false);
                     continue;
                 }
 
@@ -63,7 +69,7 @@ final class ExternalLinkProcessor
     {
         $link->data['external'] = true;
         $link->data['attributes'] = $link->getData('attributes', []);
-        $link->data['attributes']['rel'] = 'noopener noreferrer';
+        $this->applyRelAttribute($link, true);
 
         if ($openInNewWindow) {
             $link->data['attributes']['target'] = '_blank';
@@ -72,6 +78,27 @@ final class ExternalLinkProcessor
         if (!empty($classes)) {
             $link->data['attributes']['class'] = trim(($link->data['attributes']['class'] ?? '') . ' ' . $classes);
         }
+    }
+
+    private function applyRelAttribute(Link $link, bool $isExternal): void
+    {
+        $rel = [];
+
+        foreach (['nofollow', 'noopener', 'noreferrer'] as $type) {
+            $option = $this->environment->getConfig('external_link/' . $type, self::APPLY_EXTERNAL);
+            switch (true) {
+                case $option === self::APPLY_ALL:
+                case $isExternal && $option === self::APPLY_EXTERNAL:
+                case !$isExternal && $option === self::APPLY_INTERNAL:
+                    $rel[] = $type;
+            }
+        }
+
+        if ($rel === []) {
+            return;
+        }
+
+        $link->data['attributes']['rel'] = \implode(' ', $rel);
     }
 
     /**
