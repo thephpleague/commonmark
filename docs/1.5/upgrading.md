@@ -9,4 +9,6 @@ redirect_from: /upgrading/
 
 ## Changes
 
+The `ExternalLink` extension will now apply a `nofollow` option to the `<a rel="...">` tag by default.  If you don't want this behavior, set the `external_link/nofollow` option to an empty string (`''`).
+
 ## Deprecations
