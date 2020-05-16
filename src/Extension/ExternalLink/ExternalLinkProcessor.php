@@ -85,8 +85,8 @@ final class ExternalLinkProcessor
         $rel = [];
 
         $options = [
-            'nofollow' => $this->environment->getConfig('external_link/nofollow', self::APPLY_NONE),
-            'noopener' => $this->environment->getConfig('external_link/noopener', self::APPLY_EXTERNAL),
+            'nofollow'   => $this->environment->getConfig('external_link/nofollow', self::APPLY_NONE),
+            'noopener'   => $this->environment->getConfig('external_link/noopener', self::APPLY_EXTERNAL),
             'noreferrer' => $this->environment->getConfig('external_link/noreferrer', self::APPLY_EXTERNAL),
         ];
 
