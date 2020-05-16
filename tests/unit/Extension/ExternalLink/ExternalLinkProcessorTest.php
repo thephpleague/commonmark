@@ -23,14 +23,14 @@ final class ExternalLinkProcessorTest extends TestCase
 
     public function testDefaultConfiguration()
     {
-        $expected = '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>';
+        $expected = '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>';
 
         $this->assertEquals($expected, $this->parse(self::INPUT));
     }
 
     public function testCustomConfiguration()
     {
-        $expected = '<p>My favorite sites are <a rel="nofollow noopener noreferrer" target="_blank" class="external-link" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>';
+        $expected = '<p>My favorite sites are <a rel="noopener noreferrer" target="_blank" class="external-link" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>';
 
         $config = [
             'external_link' => [

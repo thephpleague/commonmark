@@ -34,8 +34,8 @@ $config = [
         'internal_hosts' => 'www.example.com', // TODO: Don't forget to set this!
         'open_in_new_window' => true,
         'html_class' => 'external-link',
-        'nofollow' => 'external',
-        'noopener' => 'all',
+        'nofollow' => '',
+        'noopener' => 'external',
         'noreferrer' => 'external',
     ],
 ];

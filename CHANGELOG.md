@@ -19,7 +19,6 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 
  - "Moved" the `TableOfContents` class into a new `Node` sub-namespace (with backward-compatibility)
- - External links detected by the `ExternalLink` extension will now include `nofollow` in the renderer `rel` attribute (#476)
 
 ### Deprecated
 

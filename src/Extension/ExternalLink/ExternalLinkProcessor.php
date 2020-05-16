@@ -84,8 +84,13 @@ final class ExternalLinkProcessor
     {
         $rel = [];
 
-        foreach (['nofollow', 'noopener', 'noreferrer'] as $type) {
-            $option = $this->environment->getConfig('external_link/' . $type, self::APPLY_EXTERNAL);
+        $options = [
+            'nofollow' => $this->environment->getConfig('external_link/nofollow', self::APPLY_NONE),
+            'noopener' => $this->environment->getConfig('external_link/noopener', self::APPLY_EXTERNAL),
+            'noreferrer' => $this->environment->getConfig('external_link/noreferrer', self::APPLY_EXTERNAL),
+        ];
+
+        foreach ($options as $type => $option) {
             switch (true) {
                 case $option === self::APPLY_ALL:
                 case $isExternal && $option === self::APPLY_EXTERNAL:
