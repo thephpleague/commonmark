@@ -1,0 +1,79 @@
+---
+layout: default
+title: Table Extension
+description: The TableExtension adds the ability to create tables in CommonMark documents
+redirect_from: /extensions/tables/
+---
+
+# Table Extension
+
+_(Note: this extension is included by default within [the GFM extension](/1.5/extensions/github-flavored-markdown/))_
+
+The `TableExtension` adds the ability to create tables in CommonMark documents.
+
+## Usage
+
+Configure your `Environment` as usual and simply add the `TableExtension` provided by this package:
+
+```php
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\Table\TableExtension;
+
+// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
+$environment = Environment::createCommonMarkEnvironment();
+
+// Add this extension
+$environment->addExtension(new TableExtension());
+
+// Instantiate the converter engine and start converting some Markdown!
+$converter = new CommonMarkConverter($config, $environment);
+echo $converter->convertToHtml('Some Markdown with a table in it');
+```
+
+## Syntax
+
+This package is fully compatible with [GFM-style tables](https://github.github.com/gfm/#tables-extension-):
+
+
+### Simple
+
+Code:
+```markdown
+th | th(center) | th(right)
+---|:----------:|----------:
+td | td         | td
+```
+
+Result:
+```html
+<table>
+<thead>
+<tr>
+<th style="text-align: left">th</th>
+<th style="text-align: center">th(center)</th>
+<th style="text-align: right">th(right)/th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">td</td>
+<td style="text-align: center">td</td>
+<td style="text-align: right">td</td>
+</tr>
+</tbody>
+</table>
+```
+
+### Advanced
+
+```markdown
+| header 1 | header 2 | header 2 |
+| :------- | :------: | -------: |
+| cell 1.1 | cell 1.2 | cell 1.3 |
+| cell 2.1 | cell 2.2 | cell 2.3 |
+```
+
+## Credits
+
+The Table functionality was originally built by [Martin Hasoň](https://github.com/hason) and [Webuni s.r.o.](https://www.webuni.cz) before it was merged into the core parser.

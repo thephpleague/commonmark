@@ -22,11 +22,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserEngineInterface`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
-   - `TableOfContentsGenerator`
-   - `TableOfContentsGeneratorInterface`
-   - `TableOfContentsPlaceholder`
-   - `TableOfContentsPlaceholderParser`
-   - `TableOfContentsPlaceholderRenderer`
  - Added several new methods:
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
@@ -41,8 +36,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `TableCell::setType()`
    - `TableCell::getAlign()`
    - `TableCell::setAlign()`
- - Added the ability to properly clone `Node` objects
- - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
  - Added purity markers throughout the codebase (verified with Psalm)
 
 ### Changed
@@ -144,4 +137,4 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RegexHelper::REGEX_WHITESPACE`
  - Removed the second `$contents` argument from the `Heading` constructor
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4...master
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5...master

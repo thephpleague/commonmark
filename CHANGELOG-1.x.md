@@ -2,6 +2,28 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## Unreleased (1.5.x)
+
+### Added
+
+ - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
+ - Added the ability to properly clone `Node` objects
+ - Added new classes:
+   - `TableOfContentsGenerator`
+   - `TableOfContentsGeneratorInterface`
+   - `TableOfContentsPlaceholder`
+   - `TableOfContentsPlaceholderParser`
+   - `TableOfContentsPlaceholderRenderer`
+
+### Changed
+
+ - "Moved" the `TableOfContents` class into a new `Node` sub-namespace (with backward-compatibility)
+
+### Deprecated
+
+ - Deprecated `League\CommonMark\Extension\TableOfContents\TableOfContents` (use the one in the new `Node` sub-namespace instead)
+ - Deprecated the `STYLE_` and `NORMALIZE_` constants in `TableOfContentsBuilder` (use the ones in `TableOfContentsGenerator` instead)
+
 ## [1.4.3] - 2020-05-04
 
 ### Fixed
