@@ -17,7 +17,7 @@ use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
-use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Util\Configuration;
 use PHPUnit\Framework\TestCase;
