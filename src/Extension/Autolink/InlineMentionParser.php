@@ -11,10 +11,16 @@
 
 namespace League\CommonMark\Extension\Autolink;
 
+use League\CommonMark\Extension\Mention\MentionParser;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 
+@trigger_error(sprintf('%s is deprecated; use %s instead', InlineMentionParser::class, MentionParser::class), E_USER_DEPRECATED);
+
+/**
+ * @deprecated Use MentionParser instead
+ */
 final class InlineMentionParser implements InlineParserInterface
 {
     /** @var string */

@@ -10,3 +10,5 @@ redirect_from: /upgrading/
 ## Changes
 
 ## Deprecations
+
+The `InlineMentionParser` has been deprecated. Use `MentionParser` instead.
