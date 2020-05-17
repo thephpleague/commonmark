@@ -222,7 +222,7 @@ class Cursor
             return;
         }
 
-        if ($nextFewChars === '' || $nextFewChars === false) {
+        if ($nextFewChars === '') {
             $this->previousPosition = $this->currentPosition;
 
             return;

@@ -53,7 +53,6 @@ final class BacktickParser implements InlineParserInterface
 
             if (
                 $c !== '' &&
-                $c !== null &&
                 $c[0] === ' ' &&
                 \substr($c, -1, 1) === ' ' &&
                 \preg_match('/[^ ]/', $c)
