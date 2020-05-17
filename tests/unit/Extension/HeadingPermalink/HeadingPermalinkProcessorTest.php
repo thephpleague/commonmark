@@ -19,6 +19,7 @@ use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
 use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Util\Configuration;
 use PHPUnit\Framework\TestCase;
 
@@ -45,7 +46,7 @@ final class HeadingPermalinkProcessorTest extends TestCase
     public function testConstructorWithCustomSlugGenerator()
     {
         $processor = new HeadingPermalinkProcessor(new class() implements SlugGeneratorInterface {
-            public function createSlug(string $input): string
+            public function generateSlug(Node $node): string
             {
                 return 'custom-slug';
             }
@@ -68,14 +69,14 @@ final class HeadingPermalinkProcessorTest extends TestCase
     public function testCustomSlugGeneratorOptionOverridesConstructor()
     {
         $processor = new HeadingPermalinkProcessor(new class() implements SlugGeneratorInterface {
-            public function createSlug(string $input): string
+            public function generateSlug(Node $node): string
             {
                 return 'slug-via-constructor';
             }
         });
 
         $overridingSlugGenerator = new class() implements SlugGeneratorInterface {
-            public function createSlug(string $input): string
+            public function generateSlug(Node $node): string
             {
                 return 'slug-via-config';
             }
