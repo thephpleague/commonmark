@@ -76,6 +76,7 @@ These extensions are not part of GFM, but can be useful in many cases:
 | `ExternalLinkExtension` | Tags external links with additional markup | [Documentation](/1.5/extensions/external-links/) |
 | `HeadingPermalinkExtension` | Makes heading elements linkable | [Documentation](/1.5/extensions/heading-permalinks/) |
 | `InlinesOnlyExtension` | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | [Documentation](/1.5/extensions/inlines-only/) |
+| `MentionParser` | Easy parsing of `@mention` and `#123`-style references | [Documentation](/1.5/extensions/mention/) |
 | `TableOfContentsExtension` | Automatically inserts links to the headings at the top of your document | [Documentation](/1.5/extensions/table-of-contents/) |
 | `SmartPunctExtension` | Intelligently converts ASCII quotes, dashes, and ellipses to their fancy Unicode equivalents | [Documentation](/1.5/extensions/smart-punctuation/) |
 

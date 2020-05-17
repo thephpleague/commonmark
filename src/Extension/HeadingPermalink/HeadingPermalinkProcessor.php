@@ -16,12 +16,10 @@ namespace League\CommonMark\Extension\HeadingPermalink;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
-use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
-use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
-use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
-use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
-use League\CommonMark\Node\StringContainerHelper;
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator;
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
 
 /**
  * Searches the Document for Heading elements and adds HeadingPermalinks to each one
@@ -34,7 +32,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     /**
      * @var SlugGeneratorInterface
      *
-     * @psalm-readonly
+     * @psalm-readonly-allow-private-mutation
      */
     private $slugGenerator;
 
@@ -57,6 +55,8 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
     public function __invoke(DocumentParsedEvent $e): void
     {
+        $this->useSlugGeneratorFromConfigurationIfProvided();
+
         $walker = $e->getDocument()->walker();
 
         while ($event = $walker->next()) {
@@ -67,10 +67,23 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
     }
 
+    private function useSlugGeneratorFromConfigurationIfProvided(): void
+    {
+        $generator = $this->config->get('heading_permalink/slug_generator');
+        if ($generator === null) {
+            return;
+        }
+
+        if (! ($generator instanceof SlugGeneratorInterface)) {
+            throw new InvalidOptionException('The heading_permalink/slug_generator option must be an instance of ' . SlugGeneratorInterface::class);
+        }
+
+        $this->slugGenerator = $generator;
+    }
+
     private function addHeadingLink(Heading $heading): void
     {
-        $text = StringContainerHelper::getChildText($heading, [HtmlBlock::class, HtmlInline::class]);
-        $slug = $this->slugGenerator->createSlug($text);
+        $slug = $this->slugGenerator->generateSlug($heading);
 
         $headingLinkAnchor = new HeadingPermalink($slug);
 

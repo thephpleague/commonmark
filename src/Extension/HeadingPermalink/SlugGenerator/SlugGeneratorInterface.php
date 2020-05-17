@@ -11,12 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\HeadingPermalink\Slug;
+namespace League\CommonMark\Extension\HeadingPermalink\SlugGenerator;
 
+use League\CommonMark\Node\Node;
+
+/**
+ * Creates URL-friendly strings based on the inner contents of a node and its descendants
+ */
 interface SlugGeneratorInterface
 {
-    /**
-     * Create a URL-friendly slug based on the given input string
-     */
-    public function createSlug(string $input): string;
+    public function generateSlug(Node $node): string;
 }

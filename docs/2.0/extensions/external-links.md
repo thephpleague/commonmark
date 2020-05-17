@@ -8,7 +8,8 @@ description: The ExternalLinksExtension detects external links and adjusts their
 
 This extension can detect links to external sites and adjust the markup accordingly:
 
- - Adds a `rel="noopener noreferrer"` attribute
+ - Make the links open in new tabs/windows
+ - Adds a `rel` attribute to the resulting `<a>` tag with values like `"nofollow noopener noreferrer"`
  - Optionally adds any custom HTML classes
 
 ## Usage
@@ -29,9 +30,12 @@ $environment->addExtension(new ExternalLinkExtension());
 // Set your configuration
 $config = [
     'external_link' => [
-        'internal_hosts' => 'www.example.com', // Don't forget to set this!
+        'internal_hosts' => 'www.example.com', // TODO: Don't forget to set this!
         'open_in_new_window' => true,
         'html_class' => 'external-link',
+        'nofollow' => '',
+        'noopener' => 'external',
+        'noreferrer' => 'external',
     ],
 ];
 
@@ -71,6 +75,15 @@ This option (which defaults to `false`) determines whether any external links sh
 ### `html_class`
 
 This option allows you to provide a `string` containing one or more HTML classes that should be added to the external link `<a>` tags:  No classes are added by default.
+
+### `nofollow`, `noopener`, and `noreferrer`
+
+These options allow you to configure whether a `rel` attribute should be applied to links.  Each of these options can be set to one of the following `string` values:
+
+ - `'external'` - **Apply to external links only (default)**
+ - `'internal'` - Apply to internal links only
+ - `'all'` - Apply to all links (both internal and external)
+ - `''` (empty string) - Don't apply to any links
 
 ## Advanced Rendering
 

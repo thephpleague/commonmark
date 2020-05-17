@@ -25,14 +25,14 @@ final class ExternalLinkProcessorTest extends TestCase
 
     public function testDefaultConfiguration(): void
     {
-        $expected = '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>' . "\n";
+        $expected = '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>';
 
         $this->assertEquals($expected, $this->parse(self::INPUT));
     }
 
     public function testCustomConfiguration(): void
     {
-        $expected = '<p>My favorite sites are <a rel="noopener noreferrer" target="_blank" class="external-link" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>' . "\n";
+        $expected = '<p>My favorite sites are <a rel="noopener noreferrer" target="_blank" class="external-link" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>';
 
         $config = [
             'external_link' => [
@@ -49,7 +49,7 @@ final class ExternalLinkProcessorTest extends TestCase
     {
         $input = 'Report [xss](javascript:alert(0);) vulnerabilities by emailing <colinodell@gmail.com>';
 
-        $expected = '<p>Report <a href="javascript:alert(0);">xss</a> vulnerabilities by emailing <a href="mailto:colinodell@gmail.com">colinodell@gmail.com</a></p>' . "\n";
+        $expected = '<p>Report <a href="javascript:alert(0);">xss</a> vulnerabilities by emailing <a href="mailto:colinodell@gmail.com">colinodell@gmail.com</a></p>';
 
         $this->assertEquals($expected, $this->parse($input));
     }
@@ -64,7 +64,7 @@ final class ExternalLinkProcessorTest extends TestCase
 
         $c = new CommonMarkConverter($config, $e);
 
-        return $c->convertToHtml($markdown);
+        return \rtrim($c->convertToHtml($markdown));
     }
 
     /**
@@ -96,5 +96,94 @@ final class ExternalLinkProcessorTest extends TestCase
 
         // You can even mix-and-match multiple strings with multiple regexes
         yield ['www.colinodell.com', ['/colinodell\.com/', 'aol.com'], true];
+    }
+
+    /**
+     * @dataProvider dataProviderForTestRelOptions
+     */
+    public function testRelOptions(string $nofollow, string $noopener, string $noreferrer, string $expectedOutput): void
+    {
+        $config = [
+            'external_link' => [
+                'nofollow'       => $nofollow,
+                'noopener'       => $noopener,
+                'noreferrer'     => $noreferrer,
+                'internal_hosts' => ['commonmark.thephpleague.com'],
+            ],
+        ];
+
+        $this->assertEquals($expectedOutput, $this->parse(self::INPUT, $config));
+    }
+
+    /**
+     * @return iterable<string[]>
+     */
+    public function dataProviderForTestRelOptions(): iterable
+    {
+        // phpcs:disable SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace.SpaceAfterComma
+        yield ['',         '',         '',         '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         '',         'all',      '<p>My favorite sites are <a rel="noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         '',         'external', '<p>My favorite sites are <a rel="noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         '',         'internal', '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'all',      '',         '<p>My favorite sites are <a rel="noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'all',      'all',      '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'all',      'external', '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'all',      'internal', '<p>My favorite sites are <a rel="noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'external', '',         '<p>My favorite sites are <a rel="noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'external', 'all',      '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'external', 'external', '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'external', 'internal', '<p>My favorite sites are <a rel="noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'internal', '',         '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'internal', 'all',      '<p>My favorite sites are <a rel="noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'internal', 'external', '<p>My favorite sites are <a rel="noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['',         'internal', 'internal', '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      '',         '',         '<p>My favorite sites are <a rel="nofollow" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      '',         'all',      '<p>My favorite sites are <a rel="nofollow noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      '',         'external', '<p>My favorite sites are <a rel="nofollow noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      '',         'internal', '<p>My favorite sites are <a rel="nofollow" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'all',      '',         '<p>My favorite sites are <a rel="nofollow noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'all',      'all',      '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'all',      'external', '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'all',      'internal', '<p>My favorite sites are <a rel="nofollow noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'external', '',         '<p>My favorite sites are <a rel="nofollow noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'external', 'all',      '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'external', 'external', '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'external', 'internal', '<p>My favorite sites are <a rel="nofollow noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'internal', '',         '<p>My favorite sites are <a rel="nofollow" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'internal', 'all',      '<p>My favorite sites are <a rel="nofollow noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'internal', 'external', '<p>My favorite sites are <a rel="nofollow noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['all',      'internal', 'internal', '<p>My favorite sites are <a rel="nofollow" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', '',         '',         '<p>My favorite sites are <a rel="nofollow" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', '',         'all',      '<p>My favorite sites are <a rel="nofollow noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', '',         'external', '<p>My favorite sites are <a rel="nofollow noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', '',         'internal', '<p>My favorite sites are <a rel="nofollow" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'all',      '',         '<p>My favorite sites are <a rel="nofollow noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'all',      'all',      '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'all',      'external', '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'all',      'internal', '<p>My favorite sites are <a rel="nofollow noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'external', '',         '<p>My favorite sites are <a rel="nofollow noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'external', 'all',      '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'external', 'external', '<p>My favorite sites are <a rel="nofollow noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'external', 'internal', '<p>My favorite sites are <a rel="nofollow noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'internal', '',         '<p>My favorite sites are <a rel="nofollow" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'internal', 'all',      '<p>My favorite sites are <a rel="nofollow noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'internal', 'external', '<p>My favorite sites are <a rel="nofollow noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['external', 'internal', 'internal', '<p>My favorite sites are <a rel="nofollow" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', '',         '',         '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', '',         'all',      '<p>My favorite sites are <a rel="noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', '',         'external', '<p>My favorite sites are <a rel="noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', '',         'internal', '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'all',      '',         '<p>My favorite sites are <a rel="noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'all',      'all',      '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'all',      'external', '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'all',      'internal', '<p>My favorite sites are <a rel="noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'external', '',         '<p>My favorite sites are <a rel="noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'external', 'all',      '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'external', 'external', '<p>My favorite sites are <a rel="noopener noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'external', 'internal', '<p>My favorite sites are <a rel="noopener" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'internal', '',         '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'internal', 'all',      '<p>My favorite sites are <a rel="noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'internal', 'external', '<p>My favorite sites are <a rel="noreferrer" href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
+        yield ['internal', 'internal', 'internal', '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a rel="nofollow noopener noreferrer" href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];
     }
 }
