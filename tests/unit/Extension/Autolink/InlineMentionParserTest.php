@@ -16,6 +16,9 @@ use League\CommonMark\Environment;
 use League\CommonMark\Extension\Autolink\InlineMentionParser;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @deprecated
+ */
 final class InlineMentionParserTest extends TestCase
 {
     public function testTwitterMentionParser()

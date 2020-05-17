@@ -6,6 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
+ - Added a new `MentionParser` to replace `InlineMentionParser` with more flexibility and customization
  - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
  - Added the ability to properly clone `Node` objects
  - Added options to customize the value of `rel` attributes set via the `ExternalLink` extension (#476)
@@ -22,6 +23,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Deprecated
 
+ - Deprecated `League\CommonMark\Extension\Autolink\InlineMentionParser` (use `League\CommonMark\Extension\Mention\MentionParser` instead)
  - Deprecated `League\CommonMark\Extension\TableOfContents\TableOfContents` (use the one in the new `Node` sub-namespace instead)
  - Deprecated the `STYLE_` and `NORMALIZE_` constants in `TableOfContentsBuilder` (use the ones in `TableOfContentsGenerator` instead)
 
