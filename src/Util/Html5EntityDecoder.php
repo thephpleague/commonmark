@@ -49,6 +49,7 @@ final class Html5EntityDecoder
     private static function fromDecimal($number): string
     {
         // Only convert code points within planes 0-2, excluding NULL
+        // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
         if (empty($number) || $number > 0x2FFFF) {
             return self::fromHex('fffd');
         }

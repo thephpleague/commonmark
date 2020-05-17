@@ -30,10 +30,10 @@ abstract class AbstractSpecTest extends TestCase
     }
 
     /**
+     * @dataProvider dataProvider
+     *
      * @param string $markdown Markdown to parse
      * @param string $html     Expected result
-     *
-     * @dataProvider dataProvider
      */
     public function testSpecExample(string $markdown, string $html): void
     {

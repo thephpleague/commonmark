@@ -155,7 +155,7 @@ final class MarkdownParser implements MarkdownParserInterface
         $unmatchedBlockParsers  = $this->getActiveBlockParsers($matches);
         $lastMatchedBlockParser = $this->getActiveBlockParsers()[$matches - 1];
         $blockParser            = $lastMatchedBlockParser;
-        $allClosed              = empty($unmatchedBlockParsers);
+        $allClosed              = \count($unmatchedBlockParsers) === 0;
 
         // Unless last matched container is a code block, try new container starts
         $tryBlockStarts = $blockParser->getBlock() instanceof Paragraph || $blockParser->isContainer();

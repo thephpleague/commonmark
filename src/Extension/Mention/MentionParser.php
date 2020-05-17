@@ -76,7 +76,7 @@ final class MentionParser implements InlineParserInterface
 
         // Parse the handle
         $handle = $cursor->match($this->mentionRegex);
-        if (empty($handle)) {
+        if ($handle === null) {
             // Regex failed to match; this isn't a valid mention
             $cursor->restoreState($previousState);
 

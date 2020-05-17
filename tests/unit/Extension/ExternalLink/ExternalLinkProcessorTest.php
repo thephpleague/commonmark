@@ -68,9 +68,9 @@ final class ExternalLinkProcessorTest extends TestCase
     }
 
     /**
-     * @param mixed $compareTo
-     *
      * @dataProvider dataProviderForTestHostMatches
+     *
+     * @param mixed $compareTo
      */
     public function testHostMatches(string $host, $compareTo, bool $expected): void
     {

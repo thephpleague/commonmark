@@ -52,7 +52,8 @@ final class BacktickParser implements InlineParserInterface
             $c = \preg_replace('/\n/m', ' ', $code) ?? '';
 
             if (
-                ! empty($c) &&
+                $c !== '' &&
+                $c !== null &&
                 $c[0] === ' ' &&
                 \substr($c, -1, 1) === ' ' &&
                 \preg_match('/[^ ]/', $c)

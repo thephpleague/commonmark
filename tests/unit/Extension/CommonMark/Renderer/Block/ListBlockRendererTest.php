@@ -35,9 +35,9 @@ class ListBlockRendererTest extends TestCase
     }
 
     /**
-     * @param mixed $expectedAttributeValue
-     *
      * @dataProvider dataForTestOrderedListStartingNumber
+     *
+     * @param mixed $expectedAttributeValue
      */
     public function testRenderOrderedList(?int $listStart = null, $expectedAttributeValue = null): void
     {

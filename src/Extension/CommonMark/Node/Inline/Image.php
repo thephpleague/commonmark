@@ -24,11 +24,11 @@ class Image extends AbstractWebResource
     {
         parent::__construct($url);
 
-        if (! empty($label)) {
+        if ($label !== null && $label !== '') {
             $this->appendChild(new Text($label));
         }
 
-        if (! empty($title)) {
+        if ($title !== null && $title !== '') {
             $this->data['title'] = $title;
         }
     }

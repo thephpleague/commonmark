@@ -54,7 +54,7 @@ final class ExternalLinkProcessor
             }
 
             $host = \parse_url($link->getUrl(), PHP_URL_HOST);
-            if (empty($host)) {
+            if (! \is_string($host)) {
                 // Something is terribly wrong with this URL
                 continue;
             }
@@ -80,7 +80,7 @@ final class ExternalLinkProcessor
             $link->data['attributes']['target'] = '_blank';
         }
 
-        if (! empty($classes)) {
+        if ($classes !== '') {
             $link->data['attributes']['class'] = \trim(($link->data['attributes']['class'] ?? '') . ' ' . $classes);
         }
     }

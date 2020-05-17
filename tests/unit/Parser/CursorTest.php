@@ -381,9 +381,9 @@ class CursorTest extends TestCase
     }
 
     /**
-     * @param int|false|null $advanceBy
-     *
      * @dataProvider dataForIsAtEndTest
+     *
+     * @param int|false|null $advanceBy
      */
     public function testIsAtEnd(string $string, $advanceBy, bool $expectedValue): void
     {

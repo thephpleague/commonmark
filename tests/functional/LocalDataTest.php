@@ -32,11 +32,11 @@ class LocalDataTest extends AbstractLocalDataTest
     }
 
     /**
+     * @dataProvider dataProvider
+     *
      * @param string $markdown Markdown to parse
      * @param string $html     Expected result
      * @param string $testName Name of the test
-     *
-     * @dataProvider dataProvider
      */
     public function testExample(string $markdown, string $html, string $testName): void
     {

@@ -34,10 +34,10 @@ class InlinesOnlyFunctionalTest extends TestCase
     }
 
     /**
+     * @dataProvider dataProvider
+     *
      * @param string $markdown Markdown to parse
      * @param string $html     Expected result
-     *
-     * @dataProvider dataProvider
      */
     public function testExample(string $markdown, string $html): void
     {

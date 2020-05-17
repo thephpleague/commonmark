@@ -128,7 +128,7 @@ final class RegexHelper
         \preg_match_all($pattern, $subject, $matches, \PREG_PATTERN_ORDER);
 
         $fullMatches = \reset($matches);
-        if (empty($fullMatches)) {
+        if ($fullMatches === false || \count($fullMatches) === 0) {
             return null;
         }
 

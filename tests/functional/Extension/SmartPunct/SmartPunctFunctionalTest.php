@@ -37,12 +37,12 @@ class SmartPunctFunctionalTest extends TestCase
     }
 
     /**
+     * @dataProvider dataProvider
+     *
      * @param string $markdown Markdown to parse
      * @param string $html     Expected result
      * @param string $section  Section of the spec
      * @param int    $number   Example number
-     *
-     * @dataProvider dataProvider
      */
     public function testExample(string $markdown, string $html, string $section, int $number): void
     {

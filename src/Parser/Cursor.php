@@ -222,7 +222,13 @@ class Cursor
             return;
         }
 
-        if ($characters === 1 && ! empty($nextFewChars)) {
+        if ($nextFewChars === '' || $nextFewChars === false) {
+            $this->previousPosition = $this->currentPosition;
+
+            return;
+        }
+
+        if ($characters === 1) {
             $asArray = [$nextFewChars];
         } elseif ($this->isMultibyte) {
             /** @var string[] $asArray */
@@ -311,7 +317,7 @@ class Cursor
         $remainder = $this->getRemainder();
 
         // Optimization: Avoid the regex if we know there are no spaces or newlines
-        if (empty($remainder) || ($remainder[0] !== ' ' && $remainder[0] !== "\n")) {
+        if ($remainder === '' || ($remainder[0] !== ' ' && $remainder[0] !== "\n")) {
             $this->previousPosition = $this->currentPosition;
 
             return 0;

@@ -30,7 +30,7 @@ final class TableStartParser implements BlockStartParserInterface
         }
 
         $columns = self::parseSeparator($cursor);
-        if (empty($columns)) {
+        if (\count($columns) === 0) {
             return BlockStart::none();
         }
 
@@ -72,7 +72,7 @@ final class TableStartParser implements BlockStartParserInterface
                     break;
                 case '-':
                 case ':':
-                    if ($pipes === 0 && ! empty($columns)) {
+                    if ($pipes === 0 && \count($columns) > 0) {
                         // Need a pipe after the first column (first column doesn't need to start with one)
                         return [];
                     }

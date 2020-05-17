@@ -34,7 +34,7 @@
         "phpunit/phpunit": "^8.5",
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^4.2",
-        "unleashedtech/php-coding-standard": "^2.1",
+        "unleashedtech/php-coding-standard": "^2.2",
         "vimeo/psalm": "^3.11"
     },
     "conflict": {

@@ -50,7 +50,7 @@ abstract class AbstractBlock extends Node
     public function setStartLine(?int $startLine): void
     {
         $this->startLine = $startLine;
-        if (empty($this->endLine)) {
+        if ($this->endLine === null) {
             $this->endLine = $startLine;
         }
     }

@@ -292,7 +292,7 @@ final class Environment implements ConfigurableEnvironmentInterface
     private function initializeExtensions(): void
     {
         // Ask all extensions to register their components
-        while (! empty($this->uninitializedExtensions)) {
+        while (\count($this->uninitializedExtensions) > 0) {
             foreach ($this->uninitializedExtensions as $i => $extension) {
                 $extension->register($this);
                 unset($this->uninitializedExtensions[$i]);
@@ -391,7 +391,7 @@ final class Environment implements ConfigurableEnvironmentInterface
             $this->delimiterProcessors->getDelimiterCharacters()
         ));
 
-        if (empty($chars)) {
+        if (\count($chars) === 0) {
             // If no special inline characters exist then parse the whole line
             $this->inlineParserCharacterRegex = '/^.+$/u';
         } else {
