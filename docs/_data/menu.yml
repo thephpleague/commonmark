@@ -3,7 +3,7 @@ version:
         Getting Started:
             'Overview': '/2.0/'
             'Installation': '/2.0/installation/'
-            'Upgrading from 1.4': '/2.0/upgrading/'
+            'Upgrading from 1.5': '/2.0/upgrading/'
             'Changelog': '/2.0/changelog/'
         Usage:
             'Basic Usage': '/2.0/basic-usage/'
