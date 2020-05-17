@@ -11,8 +11,14 @@
 
 namespace League\CommonMark\Extension\HeadingPermalink\Slug;
 
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator as NewSlugGenerator;
+
+@trigger_error(sprintf('%s is deprecated; use %s instead', DefaultSlugGenerator::class, NewSlugGenerator::class), E_USER_DEPRECATED);
+
 /**
  * Creates URL-friendly strings
+ *
+ * @deprecated Use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator instead
  */
 final class DefaultSlugGenerator implements SlugGeneratorInterface
 {

@@ -13,8 +13,10 @@ namespace League\CommonMark\Extension\HeadingPermalink;
 
 use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
-use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
+use League\CommonMark\Exception\InvalidOptionException;
+use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface as DeprecatedSlugGeneratorInterface;
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator;
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
@@ -29,14 +31,21 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     const INSERT_BEFORE = 'before';
     const INSERT_AFTER = 'after';
 
-    /** @var SlugGeneratorInterface */
+    /** @var SlugGeneratorInterface|DeprecatedSlugGeneratorInterface */
     private $slugGenerator;
 
     /** @var ConfigurationInterface */
     private $config;
 
-    public function __construct(SlugGeneratorInterface $slugGenerator = null)
+    /**
+     * @param SlugGeneratorInterface|DeprecatedSlugGeneratorInterface|null $slugGenerator
+     */
+    public function __construct($slugGenerator = null)
     {
+        if ($slugGenerator instanceof DeprecatedSlugGeneratorInterface) {
+            @trigger_error(sprintf('Passing a %s into the %s constructor is deprecated; use a %s instead', DeprecatedSlugGeneratorInterface::class, self::class, SlugGeneratorInterface::class), E_USER_DEPRECATED);
+        }
+
         $this->slugGenerator = $slugGenerator ?? new DefaultSlugGenerator();
     }
 
@@ -47,6 +56,8 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
     public function __invoke(DocumentParsedEvent $e): void
     {
+        $this->useSlugGeneratorFromConfigurationIfProvided();
+
         $walker = $e->getDocument()->walker();
 
         while ($event = $walker->next()) {
@@ -57,10 +68,28 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
     }
 
+    private function useSlugGeneratorFromConfigurationIfProvided(): void
+    {
+        $generator = $this->config->get('heading_permalink/slug_generator');
+        if ($generator === null) {
+            return;
+        }
+
+        if (!($generator instanceof DeprecatedSlugGeneratorInterface || $generator instanceof SlugGeneratorInterface)) {
+            throw new InvalidOptionException('The heading_permalink/slug_generator option must be an instance of ' . SlugGeneratorInterface::class);
+        }
+
+        $this->slugGenerator = $generator;
+    }
+
     private function addHeadingLink(Heading $heading): void
     {
-        $text = $this->getChildText($heading);
-        $slug = $this->slugGenerator->createSlug($text);
+        if ($this->slugGenerator instanceof DeprecatedSlugGeneratorInterface) {
+            $text = $this->getChildText($heading);
+            $slug = $this->slugGenerator->createSlug($text);
+        } else {
+            $slug = $this->slugGenerator->generateSlug($heading);
+        }
 
         $headingLinkAnchor = new HeadingPermalink($slug);
 
@@ -78,6 +107,9 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
     }
 
+    /**
+     * @deprecated Not needed in 2.0
+     */
     private function getChildText(Node $node): string
     {
         $text = '';
