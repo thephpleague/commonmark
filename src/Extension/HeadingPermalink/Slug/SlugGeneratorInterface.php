@@ -11,6 +11,13 @@
 
 namespace League\CommonMark\Extension\HeadingPermalink\Slug;
 
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface as NewSlugGeneratorInterface;
+
+@trigger_error(sprintf('%s is deprecated; use %s instead', SlugGeneratorInterface::class, NewSlugGeneratorInterface::class), E_USER_DEPRECATED);
+
+/**
+ * @deprecated Use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface instead
+ */
 interface SlugGeneratorInterface
 {
     /**

@@ -20,7 +20,7 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
-use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -85,13 +85,16 @@ For example, if you'd like each slug to be an MD5 hash, you could create a class
 ```php
 <?php
 
-use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface;
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
+use League\CommonMark\Node\Node;
 
 final class HashSlugGenerator implements SlugGeneratorInterface
 {
-    public function createSlug(string $input): string
+    public function generateSlug(Node $node): string
     {
-        return md5($input);
+        $text = '...'; // TODO: Iterate the node's children yourself, looking for relevant inner text content
+
+        return md5($text);
     }
 }
 ```
@@ -114,9 +117,9 @@ $config = [
     'heading_permalink' => [
         // ... other options here ...
         'slug_generator' => new class implements SlugGeneratorInterface {
-            public function createSlug(string $input): string
+            public function generateSlug(Node $node): string
             {
-                return md5($input);
+                // TODO: Implement your code here
             }
         },
     ],

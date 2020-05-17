@@ -9,26 +9,68 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit\Extension\HeadingPermalink\Slug;
+namespace League\CommonMark\Tests\Unit\Extension\HeadingPermalink\SlugGenerator;
 
-use League\CommonMark\Extension\HeadingPermalink\Slug\DefaultSlugGenerator;
+use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator;
+use League\CommonMark\Inline\Element\HtmlInline;
+use League\CommonMark\Inline\Element\Strong;
+use League\CommonMark\Inline\Element\Text;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @deprecated
- */
 final class DefaultSlugGeneratorTest extends TestCase
 {
-    /**
-     * @dataProvider dataProviderForTestCreateSlug
-     */
-    public function testCreateSlug($input, $expectedOutput)
+    public function testGenerateSlug(): void
     {
-        $generator = new DefaultSlugGenerator();
-        $this->assertEquals($expectedOutput, $generator->createSlug($input));
+        $document = new Document();
+        $document->appendChild($paragraph = new Paragraph());
+        $paragraph->appendChild($strong = new Strong());
+        $strong->appendChild(new Text('Hello'));
+        $paragraph->appendChild(new Text(' World!'));
+
+        $slugGenerator = new DefaultSlugGenerator();
+
+        $this->assertSame('hello-world', $slugGenerator->generateSlug($document));
+        $this->assertSame('hello-world', $slugGenerator->generateSlug($paragraph));
     }
 
-    public function dataProviderForTestCreateSlug()
+    public function testGenerateSlugWithNoInnerTextContents(): void
+    {
+        $paragraph = new Paragraph();
+
+        $slugGenerator = new DefaultSlugGenerator();
+
+        $this->assertSame('', $slugGenerator->generateSlug($paragraph));
+    }
+
+    public function testGenerateSlugWithHtmlInContents(): void
+    {
+        $document = new Document();
+        $document->appendChild($paragraph = new Paragraph());
+        $paragraph->appendChild(new Text('I'));
+        $paragraph->appendChild(new Text(' '));
+        $paragraph->appendChild($html = new HtmlInline());
+        $html->setContent('<strong>love</strong>');
+        $paragraph->appendChild(new Text(' '));
+        $paragraph->appendChild(new Text('CommonMark!'));
+
+        $slugGenerator = new DefaultSlugGenerator();
+
+        $this->assertSame('i-commonmark', $slugGenerator->generateSlug($document));
+        $this->assertSame('i-commonmark', $slugGenerator->generateSlug($paragraph));
+        $this->assertSame('', $slugGenerator->generateSlug($html));
+    }
+
+    /**
+     * @dataProvider dataProviderForTestSlugifyText
+     */
+    public function testSlugifyText(string $input, string $expectedOutput): void
+    {
+        $this->assertEquals($expectedOutput, DefaultSlugGenerator::slugifyText($input));
+    }
+
+    public function dataProviderForTestSlugifyText(): iterable
     {
         yield ['', ''];
         yield ['hello world', 'hello-world'];
