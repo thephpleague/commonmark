@@ -11,8 +11,9 @@
 
 namespace League\CommonMark\Extension\Mention;
 
-use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Extension\Mention\LinkGenerator\CallbackLinkGenerator;
+use League\CommonMark\Extension\Mention\LinkGenerator\MentionLinkGeneratorInterface;
+use League\CommonMark\Extension\Mention\LinkGenerator\StringTemplateLinkGenerator;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 
@@ -24,14 +25,14 @@ final class MentionParser implements InlineParserInterface
     /** @var string */
     private $mentionRegex;
 
-    /** @var callable(string, string): string|null */
-    private $urlGenerator;
+    /** @var MentionLinkGeneratorInterface */
+    private $linkGenerator;
 
-    public function __construct(string $symbol, string $mentionRegex, callable $urlGenerator)
+    public function __construct(string $symbol, string $mentionRegex, MentionLinkGeneratorInterface $linkGenerator)
     {
         $this->symbol = $symbol;
         $this->mentionRegex = $mentionRegex;
-        $this->urlGenerator = $urlGenerator;
+        $this->linkGenerator = $linkGenerator;
     }
 
     public function getCharacters(): array
@@ -65,35 +66,27 @@ final class MentionParser implements InlineParserInterface
             return false;
         }
 
-        $url = \call_user_func($this->urlGenerator, $handle, $this->symbol);
-        if ($url === null) {
+        $link = $this->linkGenerator->generateLink($this->symbol, $handle);
+
+        if ($link === null) {
             $cursor->restoreState($previousState);
 
             return false;
         }
 
-        if ($url instanceof AbstractInline) {
-            $inlineContext->getContainer()->appendChild($url);
-
-            return true;
-        }
-
-        if (!\is_string($url)) {
-            throw new \RuntimeException('Invalid URL - URL generator must return a string, AbstractInline, or null');
-        }
-
-        $inlineContext->getContainer()->appendChild(new Link($url, $this->symbol . $handle));
+        $inlineContext->getContainer()->appendChild($link);
 
         return true;
     }
 
     public static function createWithStringTemplate(string $symbol, string $mentionRegex, string $urlTemplate): MentionParser
     {
-        $urlGenerator = function (string $mention) use ($urlTemplate): string {
-            return \sprintf($urlTemplate, $mention);
-        };
+        return new self($symbol, $mentionRegex, new StringTemplateLinkGenerator($urlTemplate));
+    }
 
-        return new self($symbol, $mentionRegex, $urlGenerator);
+    public static function createWithCallback(string $symbol, string $mentionRegex, callable $callback): MentionParser
+    {
+        return new self($symbol, $mentionRegex, new CallbackLinkGenerator($callback));
     }
 
     public static function createTwitterHandleParser(): MentionParser

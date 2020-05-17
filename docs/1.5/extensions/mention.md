@@ -63,11 +63,29 @@ echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 
 Note that the URL template (third argument) must be a string, and that the `%s` placeholder will be replaced by whatever the user enters after the symbol (in this case, `@`).  You can use any symbol, regex pattern, or URL template you want!
 
-## Advanced Custom Parsers
+## Custom Callback-Based Parsers
 
-Need more power than simply adding the mention inside a URL template?  The main constructor of `MentionParser` allows you to pass in any `callable` to generate a URL from the given mention.
+Need more power than simply adding the mention inside a URL template?  The `MentionParser::createWithCallback()` static constructor gives you more control over the resulting links by supplying any valid [PHP callable](https://www.php.net/manual/en/language.types.callable.php) to generate the resulting URL:
 
-For example, if you wanted to check whether a user exists in your database, you could create a class like this which integrates with your framework:
+```php
+$callback = function (string $handle, string &$label, string $symbol): ?string {
+    // ...
+};
+```
+
+This callable will receive three string parameters:
+
+  - A `string` containing the parsed "handle" (everything after the symbol that matched you regex)
+  - A `string` containing the proposed label text (the symbol and handle concatenated together)
+  - A `string` containing the symbol
+
+The callable must return either:
+  - A `string` containing the URL to use; or,
+  - `null` if no `Link` should be generated
+
+Note that the `$label` is passed by-reference - this allows you to also customize the label if desired.
+
+Here's an example of how you might use a callback-based parser.  Imagine you want to parse `@username` into custom user profile links for your application, but only if the user exists.  You could create a class like this which integrates with your framework:
 
 ```php
 use League\CommonMark\Inline\Element\Link;
@@ -83,25 +101,25 @@ class UserUrlGenerator
         $this->router = $router;
     }
 
-    public function getProfileUrl(string $username, string $symbol): ?string
+    public function getProfileUrl(string $handle, string &$label, string $symbol): ?string
     {
-        $user = $this->userRepository->findUser($username);
+        $user = $this->userRepository->findUser($handle);
+
+        // Don't generate a link if the user does not exist
         if ($user === null) {
             return null;
         }
 
-        $profileUrl = $this->router->generate('user_profile', ['id' => $user->getId()]);
+        // Change the label (possible because it is passed by reference)
+        $label = $user->getFullName();
 
-        // You could simply return the URL like this:
-        return $profileUrl;
-
-        // Or your could even return your own customized `Link` node:
-        return new Link($profileUrl, $symbol.$username, "View $username's profile");
+        // Use the path to their profile as the URL
+        return $this->router->generate('user_profile', ['id' => $user->getId()]);
     }
 }
 ```
 
-And then use this class to generate profile URLs from Markdown mentions:
+You can then hook this class up to a `MentionParser` to generate profile URLs from Markdown mentions:
 
 ```php
 <?php
@@ -116,21 +134,12 @@ $environment = Environment::createCommonMarkEnvironment();
 $userUrlGenerator = $container->get(UserUrlGenerator::class);
 
 // Add your mention parser
-$environment->addInlineParser(new MentionParser('@', '/^[a-z0-9]+/i', [$userUrlGenerator, 'getProfileUrl']));
+$environment->addInlineParser(MentionParser::createWithCallback('@', '/^[a-z0-9]+/i', [$userUrlGenerator, 'getProfileUrl']));
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new CommonMarkConverter($config, $environment);
 echo $converter->convertToHtml('You should ask @colinodell about that');
+
+// Output:
+// <p>You should ask <a href="/user/123/profile">Colin O'Dell</a> about that</p>
 ```
-
-A few notes:
-
- - The third argument to `new MentionParser()` can be any valid [PHP callable](https://www.php.net/manual/en/language.types.callable.php)
- - That callable will receive two parameters:
-   - A `string` containing the mention that matches your regex
-   - A `string` containing the symbol
- - That callable must return one of the following:
-   - A `string` containing the URL
-   - An `AbstractInline` node that should be used as the link (great if you need to store custom attributes for future rendering); this could be a `Link` or something custom that extends `Link`
-   - `null` if no mention link should be generated
-
