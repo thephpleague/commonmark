@@ -13,15 +13,16 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\HeadingPermalink;
 
-use League\CommonMark\Block\Element\Document;
-use League\CommonMark\Block\Element\Heading;
+use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
+use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
-use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Util\Configuration;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Node\Node;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingPermalinkProcessorTest extends TestCase
@@ -32,7 +33,7 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $processor->setConfiguration(new Configuration());
 
         $document = new Document();
-        $document->appendChild($heading = new Heading(1, 'Test Heading'));
+        $document->appendChild($heading = new Heading(1));
         $heading->appendChild(new Text('Test Heading'));
 
         $event = new DocumentParsedEvent($document);
@@ -47,7 +48,7 @@ final class HeadingPermalinkProcessorTest extends TestCase
     public function testConstructorWithCustomSlugGenerator(): void
     {
         $processor = new HeadingPermalinkProcessor(new class () implements SlugGeneratorInterface {
-            public function createSlug(string $input): string
+            public function generateSlug(Node $node): string
             {
                 return 'custom-slug';
             }
@@ -55,7 +56,7 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $processor->setConfiguration(new Configuration());
 
         $document = new Document();
-        $document->appendChild($heading = new Heading(1, 'Test Heading'));
+        $document->appendChild($heading = new Heading(1));
         $heading->appendChild(new Text('Test Heading'));
 
         $event = new DocumentParsedEvent($document);
@@ -70,14 +71,14 @@ final class HeadingPermalinkProcessorTest extends TestCase
     public function testCustomSlugGeneratorOptionOverridesConstructor(): void
     {
         $processor = new HeadingPermalinkProcessor(new class () implements SlugGeneratorInterface {
-            public function createSlug(string $input): string
+            public function generateSlug(Node $node): string
             {
                 return 'slug-via-constructor';
             }
         });
 
         $overridingSlugGenerator = new class () implements SlugGeneratorInterface {
-            public function createSlug(string $input): string
+            public function generateSlug(Node $node): string
             {
                 return 'slug-via-config';
             }
@@ -90,7 +91,7 @@ final class HeadingPermalinkProcessorTest extends TestCase
         ]));
 
         $document = new Document();
-        $document->appendChild($heading = new Heading(1, 'Test Heading'));
+        $document->appendChild($heading = new Heading(1));
         $heading->appendChild(new Text('Test Heading'));
 
         $event = new DocumentParsedEvent($document);
