@@ -81,7 +81,7 @@ See the [Extensions documentation](https://commonmark.thephpleague.com/customiza
 ### Integrations
 
 - [CakePHP 3](https://github.com/gourmet/common-mark)
-- [Drupal 7 & 8](https://www.drupal.org/project/markdown)
+- [Drupal](https://www.drupal.org/project/markdown)
 - [Laravel 4 & 5](https://github.com/GrahamCampbell/Laravel-Markdown)
 - [Sculpin](https://github.com/bcremer/sculpin-commonmark-bundle)
 - [Symfony 2 & 3](https://github.com/webuni/commonmark-bundle)
