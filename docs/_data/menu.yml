@@ -17,6 +17,7 @@ version:
             'Autolinks': '/1.5/extensions/autolinks/'
             'Disallowed Raw HTML': '/1.5/extensions/disallowed-raw-html/'
             'External Links': '/1.5/extensions/external-links/'
+            'Footnotes': '/1.5/extensions/footnotes/'
             'Heading Permalinks': '/1.5/extensions/heading-permalinks/'
             'Inlines Only': '/1.5/extensions/inlines-only/'
             'Mentions': '/1.5/extensions/mention/'
