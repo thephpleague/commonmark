@@ -14,32 +14,43 @@
 
 namespace League\CommonMark\Reference;
 
+use League\CommonMark\Normalizer\TextNormalizer;
+
 /**
  * A collection of references, indexed by label
  */
 final class ReferenceMap implements ReferenceMapInterface
 {
+    /** @var TextNormalizer */
+    private $normalizer;
+
     /**
      * @var ReferenceInterface[]
      */
-    protected $references = [];
+    private $references = [];
+
+    public function __construct()
+    {
+        $this->normalizer = new TextNormalizer();
+    }
 
     public function addReference(ReferenceInterface $reference): void
     {
-        $key = Reference::normalizeReference($reference->getLabel());
+        $key = $this->normalizer->normalize($reference->getLabel());
+
         $this->references[$key] = $reference;
     }
 
     public function contains(string $label): bool
     {
-        $label = Reference::normalizeReference($label);
+        $label = $this->normalizer->normalize($label);
 
         return isset($this->references[$label]);
     }
 
     public function getReference(string $label): ?ReferenceInterface
     {
-        $label = Reference::normalizeReference($label);
+        $label = $this->normalizer->normalize($label);
 
         if (!isset($this->references[$label])) {
             return null;

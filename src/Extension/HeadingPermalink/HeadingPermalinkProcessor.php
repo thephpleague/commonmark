@@ -15,11 +15,11 @@ use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface as DeprecatedSlugGeneratorInterface;
-use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator;
-use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
+use League\CommonMark\Normalizer\SlugNormalizer;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
 
@@ -31,22 +31,22 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     const INSERT_BEFORE = 'before';
     const INSERT_AFTER = 'after';
 
-    /** @var SlugGeneratorInterface|DeprecatedSlugGeneratorInterface */
-    private $slugGenerator;
+    /** @var TextNormalizerInterface|DeprecatedSlugGeneratorInterface */
+    private $slugNormalizer;
 
     /** @var ConfigurationInterface */
     private $config;
 
     /**
-     * @param SlugGeneratorInterface|DeprecatedSlugGeneratorInterface|null $slugGenerator
+     * @param TextNormalizerInterface|DeprecatedSlugGeneratorInterface|null $slugNormalizer
      */
-    public function __construct($slugGenerator = null)
+    public function __construct($slugNormalizer = null)
     {
-        if ($slugGenerator instanceof DeprecatedSlugGeneratorInterface) {
-            @trigger_error(sprintf('Passing a %s into the %s constructor is deprecated; use a %s instead', DeprecatedSlugGeneratorInterface::class, self::class, SlugGeneratorInterface::class), E_USER_DEPRECATED);
+        if ($slugNormalizer instanceof DeprecatedSlugGeneratorInterface) {
+            @trigger_error(sprintf('Passing a %s into the %s constructor is deprecated; use a %s instead', DeprecatedSlugGeneratorInterface::class, self::class, TextNormalizerInterface::class), E_USER_DEPRECATED);
         }
 
-        $this->slugGenerator = $slugGenerator ?? new DefaultSlugGenerator();
+        $this->slugNormalizer = $slugNormalizer ?? new SlugNormalizer();
     }
 
     public function setConfiguration(ConfigurationInterface $configuration)
@@ -56,7 +56,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
     public function __invoke(DocumentParsedEvent $e): void
     {
-        $this->useSlugGeneratorFromConfigurationIfProvided();
+        $this->useNormalizerFromConfigurationIfProvided();
 
         $walker = $e->getDocument()->walker();
 
@@ -68,27 +68,27 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
     }
 
-    private function useSlugGeneratorFromConfigurationIfProvided(): void
+    private function useNormalizerFromConfigurationIfProvided(): void
     {
-        $generator = $this->config->get('heading_permalink/slug_generator');
+        $generator = $this->config->get('heading_permalink/slug_normalizer');
         if ($generator === null) {
             return;
         }
 
-        if (!($generator instanceof DeprecatedSlugGeneratorInterface || $generator instanceof SlugGeneratorInterface)) {
-            throw new InvalidOptionException('The heading_permalink/slug_generator option must be an instance of ' . SlugGeneratorInterface::class);
+        if (!($generator instanceof DeprecatedSlugGeneratorInterface || $generator instanceof TextNormalizerInterface)) {
+            throw new InvalidOptionException('The heading_permalink/slug_normalizer option must be an instance of ' . TextNormalizerInterface::class);
         }
 
-        $this->slugGenerator = $generator;
+        $this->slugNormalizer = $generator;
     }
 
     private function addHeadingLink(Heading $heading): void
     {
-        if ($this->slugGenerator instanceof DeprecatedSlugGeneratorInterface) {
-            $text = $this->getChildText($heading);
-            $slug = $this->slugGenerator->createSlug($text);
+        $text = $this->getChildText($heading);
+        if ($this->slugNormalizer instanceof DeprecatedSlugGeneratorInterface) {
+            $slug = $this->slugNormalizer->createSlug($text);
         } else {
-            $slug = $this->slugGenerator->generateSlug($heading);
+            $slug = $this->slugNormalizer->normalize($text, $heading);
         }
 
         $headingLinkAnchor = new HeadingPermalink($slug);

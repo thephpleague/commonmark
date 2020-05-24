@@ -17,10 +17,20 @@ namespace League\CommonMark\Extension\Footnote\Parser;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
+use League\CommonMark\Normalizer\SlugNormalizer;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Reference\Reference;
 
 final class AnonymousFootnoteRefParser implements InlineParserInterface
 {
+    /** @var TextNormalizerInterface */
+    private $slugNormalizer;
+
+    public function __construct()
+    {
+        $this->slugNormalizer = new SlugNormalizer();
+    }
+
     public function getCharacters(): array
     {
         return ['^'];
@@ -53,9 +63,8 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface
 
     private function createReference(string $label): Reference
     {
-        $refLabel = Reference::normalizeReference($label);
-        $refLabel = \mb_strtolower(\str_replace(' ', '-', $refLabel));
-        $refLabel = \substr($refLabel, 0, 20);
+        $refLabel = $this->slugNormalizer->normalize($label);
+        $refLabel = \mb_substr($refLabel, 0, 20);
 
         return new Reference($refLabel, '#fn:' . $refLabel, $label);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -9,23 +11,20 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\HeadingPermalink\Slug;
-
-use League\CommonMark\Normalizer\SlugNormalizer;
-
-@trigger_error(sprintf('%s is deprecated; use %s instead', DefaultSlugGenerator::class, SlugNormalizer::class), E_USER_DEPRECATED);
+namespace League\CommonMark\Normalizer;
 
 /**
- * Creates URL-friendly strings
- *
- * @deprecated Use League\CommonMark\Normalizer\SlugNormalizer instead
+ * Creates URL-friendly strings based on the given string input
  */
-final class DefaultSlugGenerator implements SlugGeneratorInterface
+final class SlugNormalizer implements TextNormalizerInterface
 {
-    public function createSlug(string $input): string
+    /**
+     * {@inheritdoc}
+     */
+    public function normalize(string $text, $context = null): string
     {
         // Trim whitespace
-        $slug = \trim($input);
+        $slug = \trim($text);
         // Convert to lowercase
         $slug = \mb_strtolower($slug);
         // Try replacing whitespace with a dash

@@ -11,8 +11,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
  - Added the ability to properly clone `Node` objects
  - Added options to customize the value of `rel` attributes set via the `ExternalLink` extension (#476)
- - Added a new `heading_permalink/slug_generator` configuration option to allow custom slug generation (#460)
- - Added the ability to generate heading permalink slugs based on the given node instead of just its inner text contents (#481)
+ - Added a new `heading_permalink/slug_normalizer` configuration option to allow custom slug generation (#460)
+ - Added `SlugNormalizer` and `TextNormalizer` classes to make normalization reusable by extensions (#485)
  - Added new classes:
    - `TableOfContentsGenerator`
    - `TableOfContentsGeneratorInterface`
@@ -23,11 +23,16 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 
  - "Moved" the `TableOfContents` class into a new `Node` sub-namespace (with backward-compatibility)
+ - Reference labels are now generated and stored in lower-case instead of upper-case
+
+### Fixed
+
+ - Fixed reference label case folding polyfill not being consistent between different PHP versions
 
 ### Deprecated
 
  - Deprecated `League\CommonMark\Extension\Autolink\InlineMentionParser` (use `League\CommonMark\Extension\Mention\MentionParser` instead)
- - Deprecated everything under `League\CommonMark\Extension\HeadingPermalink\Slug` (use the newer ones in `League\CommonMark\Extension\HeadingPermalink\SlugGenerator` instead)
+ - Deprecated everything under `League\CommonMark\Extension\HeadingPermalink\Slug` (use the classes under `League\CommonMark\Normalizer` instead)
  - Deprecated `League\CommonMark\Extension\TableOfContents\TableOfContents` (use the one in the new `Node` sub-namespace instead)
  - Deprecated the `STYLE_` and `NORMALIZE_` constants in `TableOfContentsBuilder` (use the ones in `TableOfContentsGenerator` instead)
 
