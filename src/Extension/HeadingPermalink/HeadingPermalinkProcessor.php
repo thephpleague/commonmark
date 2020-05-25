@@ -16,6 +16,7 @@ namespace League\CommonMark\Extension\HeadingPermalink;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\StringContainerHelper;
 use League\CommonMark\Normalizer\SlugNormalizer;
@@ -72,6 +73,10 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         $normalizer = $this->config->get('heading_permalink/slug_normalizer');
         if ($normalizer === null) {
             return;
+        }
+
+        if (! $normalizer instanceof TextNormalizerInterface) {
+            throw new InvalidOptionException('The heading_permalink/slug_normalizer option must be an instance of ' . TextNormalizerInterface::class);
         }
 
         $this->slugNormalizer = $normalizer;
