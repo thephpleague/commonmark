@@ -11,6 +11,16 @@ _(Note: this extension is included by default within [the GFM extension](/1.5/ex
 
 This extension adds support for GFM-style strikethrough syntax.  It allows users to use `~~` in order to indicate text that should be rendered within `<del>` tags.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/1.5/installation/) section for more details.
+
 ## Usage
 
 This extension can be added to any new `Environment`:

@@ -13,6 +13,16 @@ The `AutolinkExtension` adds [GFM-style autolinking][link-gfm-spec-autolinking].
 
 It also provides a parser to autolink `@mentions` to Twitter, Github, or any custom service you wish, though this is disabled by default.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/1.4/installation/) section for more details.
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `AutolinkExtension` provided by this package:
