@@ -12,6 +12,16 @@ This extension can detect links to external sites and adjust the markup accordin
  - Adds a `rel` attribute to the resulting `<a>` tag with values like `"nofollow noopener noreferrer"`
  - Optionally adds any custom HTML classes
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/2.0/installation/) section for more details.
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `ExternalLinkExtension` provided by this package:

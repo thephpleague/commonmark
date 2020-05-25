@@ -9,6 +9,16 @@ description: The MentionParser makes it easy to parse shortened references like 
 Although not a full extension, the `MentionParser` makes it easy to parse shortened mentions and references like `@colinodell` to a Twitter URL or `#123` to a GitHub issue URL.  You can create your own custom syntax by choosing the starting symbol, a regular expression to match against, and any custom URL generator you wish.  Pre-built mention parsers are also available for use.
 
 
+## Installation
+
+This is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/2.0/installation/) section for more details.
+
 ## Usage
 
 An instance of `MentionParser` can be added to any environment like so:

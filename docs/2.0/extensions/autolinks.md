@@ -10,6 +10,16 @@ _(Note: this extension is included by default within [the GFM extension](/2.0/ex
 
 The `AutolinkExtension` adds [GFM-style autolinking][link-gfm-spec-autolinking].  It automatically links URLs and email addresses even when the CommonMark `<...>` autolink syntax is not used.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/2.0/installation/) section for more details.
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `AutolinkExtension` provided by this package:

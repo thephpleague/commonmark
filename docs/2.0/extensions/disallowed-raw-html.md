@@ -26,6 +26,16 @@ This is required by the [GFM spec](https://github.github.com/gfm/#disallowed-raw
 
 All other HTML tags are left untouched by this extension.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/2.0/installation/) section for more details.
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `DisallowedRawHTMLExtension` provided by this package:

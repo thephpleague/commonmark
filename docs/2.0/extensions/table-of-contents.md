@@ -10,6 +10,16 @@ The `TableOfContentsExtension` automatically inserts a table of contents into yo
 
 The [Heading Permalink](/2.0/extensions/heading-permalinks/) extension must also be included for this to work.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/2.0/installation/) section for more details.
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `TableOfContentsExtension` and `HeadingPermalinkExtension` provided by this package:

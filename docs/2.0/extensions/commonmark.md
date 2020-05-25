@@ -8,6 +8,16 @@ description: The CommonMarkCoreExtension class includes all core Markdown syntax
 
 The `CommonMarkCoreExtension` class contains all of the core Markdown syntax - things like parsing headers, code blocks, links, image, etc.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/2.0/installation/) section for more details.
+
 ## Included by Default
 
 This extension is automatically installed for you (behind-the-scenes) whenever you instantiate the parser using the `CommonMarkConverter` class:

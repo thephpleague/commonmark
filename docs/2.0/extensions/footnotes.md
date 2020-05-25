@@ -8,6 +8,16 @@ description: The FootnoteExtension adds the ability to create footnotes in Markd
 
 The `FootnoteExtension` adds the ability to create footnotes in Markdown documents.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/2.0/installation/) section for more details.
+
 ## Footnote Syntax
 
 Sample Markdown input:
