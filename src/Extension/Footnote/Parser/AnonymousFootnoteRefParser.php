@@ -21,6 +21,9 @@ use League\CommonMark\Reference\Reference;
 
 final class AnonymousFootnoteRefParser implements InlineParserInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function getCharacters(): array
     {
         return ['^'];

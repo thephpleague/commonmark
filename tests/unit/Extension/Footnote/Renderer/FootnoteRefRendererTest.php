@@ -28,7 +28,7 @@ final class FootnoteRefRendererTest extends TestCase
         $renderer->setConfiguration(new Configuration());
 
         $fakeReference = new Reference('label', 'dest', 'title');
-        $footnoteRef = new FootnoteRef($fakeReference);
+        $footnoteRef   = new FootnoteRef($fakeReference);
 
         $output = (string) $renderer->render($footnoteRef, new FakeChildNodeRenderer());
 

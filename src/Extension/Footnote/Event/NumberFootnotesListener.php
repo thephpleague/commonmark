@@ -49,7 +49,7 @@ final class NumberFootnotesListener
                  * to the same footnote. But with a different ID
                  */
                 $counter             = $usedCounters[$label];
-                $label               = $label . '__' . ++$usedLabels[$label];
+                $label              .= '__' . ++$usedLabels[$label];
                 $canIncrementCounter = false;
             }
 

@@ -21,6 +21,9 @@ use League\CommonMark\Reference\Reference;
 
 final class FootnoteRefParser implements InlineParserInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function getCharacters(): array
     {
         return ['['];
