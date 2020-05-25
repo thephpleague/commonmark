@@ -9,21 +9,24 @@ redirect_from: /upgrading/
 
 ## Changes
 
+`Reference` labels are no longer auto-normalized within the `Reference` constructor. Normalization only occurs within the `ReferenceMap`.
+
 ## Deprecations
 
+`Reference::normalizeReference()` has been deprecated. Use `TextNormalizer::normalize()` instead.
 
 The `InlineMentionParser` has been deprecated. Use `MentionParser` instead.
 
 ### Heading Permalink Slug Generators
 
-The following two classes under `League\CommonMark\Extension\HeadingPermalink` have been deprecated in favor of newer versions:
+The following two classes have been deprecated in favor of more-generic text normalizers:
 
-| `Old Class`                   | `New Class`                            |
-| ----------------------------- | -------------------------------------- |
-| `Slug\DefaultSlugGenerator`   | `SlugGenerator\DefaultSlugGenerator`   |
-| `Slug\SlugGeneratorInterface` | `SlugGenerator\SlugGeneratorInterface` |
+| `Old Class`                                              | `New Class`                          |
+| -------------------------------------------------------- | ------------------------------------ |
+| `Extension\HeadingPermalink\Slug\DefaultSlugGenerator`   | `Normalizer\SlugNormalizer`          |
+| `Extension\HeadingPermalink\Slug\SlugGeneratorInterface` | `Normalizer\TextNormalizerInterface` |
 
-The method signature within these have also changed from:
+The method signatures of these classes are slightly different:
 
 ```php
 public function createSlug(string $input): string;
@@ -32,5 +35,5 @@ public function createSlug(string $input): string;
 To:
 
 ```php
-public function generateSlug(Node $node): string;
+public function normalize(string $input, $context = null): string;
 ```

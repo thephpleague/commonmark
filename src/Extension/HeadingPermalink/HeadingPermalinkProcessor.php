@@ -16,10 +16,10 @@ namespace League\CommonMark\Extension\HeadingPermalink;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
-use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator;
-use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
+use League\CommonMark\Node\StringContainerHelper;
+use League\CommonMark\Normalizer\SlugNormalizer;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
 
 /**
  * Searches the Document for Heading elements and adds HeadingPermalinks to each one
@@ -30,11 +30,11 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     public const INSERT_AFTER  = 'after';
 
     /**
-     * @var SlugGeneratorInterface
+     * @var TextNormalizerInterface
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $slugGenerator;
+    private $slugNormalizer;
 
     /**
      * @var ConfigurationInterface
@@ -43,9 +43,9 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
      */
     private $config;
 
-    public function __construct(?SlugGeneratorInterface $slugGenerator = null)
+    public function __construct(?TextNormalizerInterface $slugNormalizer = null)
     {
-        $this->slugGenerator = $slugGenerator ?? new DefaultSlugGenerator();
+        $this->slugNormalizer = $slugNormalizer ?? new SlugNormalizer();
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void
@@ -55,7 +55,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
     public function __invoke(DocumentParsedEvent $e): void
     {
-        $this->useSlugGeneratorFromConfigurationIfProvided();
+        $this->useNormalizerFromConfigurationIfProvided();
 
         $walker = $e->getDocument()->walker();
 
@@ -67,23 +67,20 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
     }
 
-    private function useSlugGeneratorFromConfigurationIfProvided(): void
+    private function useNormalizerFromConfigurationIfProvided(): void
     {
-        $generator = $this->config->get('heading_permalink/slug_generator');
-        if ($generator === null) {
+        $normalizer = $this->config->get('heading_permalink/slug_normalizer');
+        if ($normalizer === null) {
             return;
         }
 
-        if (! ($generator instanceof SlugGeneratorInterface)) {
-            throw new InvalidOptionException('The heading_permalink/slug_generator option must be an instance of ' . SlugGeneratorInterface::class);
-        }
-
-        $this->slugGenerator = $generator;
+        $this->slugNormalizer = $normalizer;
     }
 
     private function addHeadingLink(Heading $heading): void
     {
-        $slug = $this->slugGenerator->generateSlug($heading);
+        $text = StringContainerHelper::getChildText($heading);
+        $slug = $this->slugNormalizer->normalize($text, $heading);
 
         $headingLinkAnchor = new HeadingPermalink($slug);
 

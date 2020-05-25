@@ -42,17 +42,9 @@ final class Reference implements ReferenceInterface
      */
     private $title;
 
-    /**
-     * Source: https://github.com/symfony/polyfill-mbstring/blob/master/Mbstring.php
-     */
-    private const CASE_FOLD = [
-        ['µ', 'ſ', "\xCD\x85", 'ς', "\xCF\x90", "\xCF\x91", "\xCF\x95", "\xCF\x96", "\xCF\xB0", "\xCF\xB1", "\xCF\xB5", "\xE1\xBA\x9B", "\xE1\xBE\xBE", "\xC3\x9F", "\xE1\xBA\x9E"],
-        ['μ', 's', 'ι',        'σ', 'β',        'θ',        'φ',        'π',        'κ',        'ρ',        'ε',        "\xE1\xB9\xA1", 'ι',            'ss',       'ss'],
-    ];
-
     public function __construct(string $label, string $destination, string $title)
     {
-        $this->label       = self::normalizeReference($label);
+        $this->label       = $label;
         $this->destination = $destination;
         $this->title       = $title;
     }
@@ -70,29 +62,5 @@ final class Reference implements ReferenceInterface
     public function getTitle(): string
     {
         return $this->title;
-    }
-
-    /**
-     * Normalize reference label
-     *
-     * This enables case-insensitive label matching
-     *
-     * @psalm-pure
-     */
-    public static function normalizeReference(string $string): string
-    {
-        // Collapse internal whitespace to single space and remove
-        // leading/trailing whitespace
-        $string = \preg_replace('/\s+/', ' ', \trim($string));
-        \assert($string !== null);
-
-        if (! \defined('MB_CASE_FOLD')) {
-            // We're not on a version of PHP (7.3+) which has this feature
-            $string = \str_replace(self::CASE_FOLD[0], self::CASE_FOLD[1], $string);
-
-            return \mb_strtoupper($string, 'UTF-8');
-        }
-
-        return \mb_convert_case($string, \MB_CASE_FOLD, 'UTF-8');
     }
 }

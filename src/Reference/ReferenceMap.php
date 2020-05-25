@@ -16,11 +16,20 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Reference;
 
+use League\CommonMark\Normalizer\TextNormalizer;
+
 /**
  * A collection of references, indexed by label
  */
 final class ReferenceMap implements ReferenceMapInterface
 {
+    /**
+     * @var TextNormalizer
+     *
+     * @psalm-readonly
+     */
+    private $normalizer;
+
     /**
      * @var array<string, ReferenceInterface>
      *
@@ -28,24 +37,29 @@ final class ReferenceMap implements ReferenceMapInterface
      */
     private $references = [];
 
+    public function __construct()
+    {
+        $this->normalizer = new TextNormalizer();
+    }
+
     public function add(ReferenceInterface $reference): void
     {
         // Normalize the key
-        $key = Reference::normalizeReference($reference->getLabel());
+        $key = $this->normalizer->normalize($reference->getLabel());
         // Store the reference
         $this->references[$key] = $reference;
     }
 
     public function contains(string $label): bool
     {
-        $label = Reference::normalizeReference($label);
+        $label = $this->normalizer->normalize($label);
 
         return isset($this->references[$label]);
     }
 
     public function get(string $label): ?ReferenceInterface
     {
-        $label = Reference::normalizeReference($label);
+        $label = $this->normalizer->normalize($label);
 
         if (! isset($this->references[$label])) {
             return null;

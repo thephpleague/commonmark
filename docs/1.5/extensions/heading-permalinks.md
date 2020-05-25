@@ -20,7 +20,7 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
-use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\DefaultSlugGenerator;
+use League\CommonMark\Normalizer\SlugNormalizer;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -38,7 +38,7 @@ $config = [
         'inner_contents' => HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS,
         'insert' => 'before',
         'title' => 'Permalink',
-        'slug_generator' => new DefaultSlugGenerator(),
+        'slug_normalizer' => new SlugNormalizer(),
     ],
 ];
 
@@ -73,27 +73,24 @@ This controls whether the anchor is added to the beginning of the `<h1>`, `<h2>`
 
 This option sets the `title` attribute on the `<a>` tag.  This defaults to `'Permalink'`.
 
-### `slug_generator`
+### `slug_normalizer`
 
 "Slugs" are the strings used within the `href`, `name`, and `id` attributes to identify a particular permalink.
 By default, this extension will generate slugs based on the contents of the heading, just like Github-Flavored Markdown does.
 
-You can change the string that is used as the "slug" by setting the `slug_generator` option to any class that implements `SlugGeneratorInterface`.
+You can change the string that is used as the "slug" by setting the `slug_normalizer` option to any class that implements `TextNormalizerInterface`.
 
 For example, if you'd like each slug to be an MD5 hash, you could create a class like this:
 
 ```php
 <?php
 
-use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
-use League\CommonMark\Node\Node;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
 
-final class HashSlugGenerator implements SlugGeneratorInterface
+final class MD5Normalizer implements TextNormalizerInterface
 {
-    public function generateSlug(Node $node): string
+    public function normalize(string $text, $context = null): string
     {
-        $text = '...'; // TODO: Iterate the node's children yourself, looking for relevant inner text content
-
         return md5($text);
     }
 }
@@ -105,7 +102,7 @@ And then configure it like this:
 $config = [
     'heading_permalink' => [
         // ... other options here ...
-        'slug_generator' => new HashSlugGenerator(),
+        'slug_normalizer' => new MD5Normalizer(),
     ],
 ];
 ```
@@ -116,8 +113,8 @@ Or you could use [PHP's anonymous class feature](https://www.php.net/manual/en/l
 $config = [
     'heading_permalink' => [
         // ... other options here ...
-        'slug_generator' => new class implements SlugGeneratorInterface {
-            public function generateSlug(Node $node): string
+        'slug_normalizer' => new class implements TextNormalizerInterface {
+            public function normalize(string $text, $context = null): string
             {
                 // TODO: Implement your code here
             }

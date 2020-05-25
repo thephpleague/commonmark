@@ -19,15 +19,14 @@ use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
-use League\CommonMark\Extension\HeadingPermalink\SlugGenerator\SlugGeneratorInterface;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Node\Node;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingPermalinkProcessorTest extends TestCase
 {
-    public function testNoConstructorArgsUsesADefaultSlugGenerator(): void
+    public function testNoConstructorArgsUsesADefaultSlugNormalizer(): void
     {
         $processor = new HeadingPermalinkProcessor();
         $processor->setConfiguration(new Configuration());
@@ -45,10 +44,13 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $this->assertSame('test-heading', $headingLink->getSlug());
     }
 
-    public function testConstructorWithCustomSlugGenerator(): void
+    public function testConstructorWithCustomSlugNormalizer(): void
     {
-        $processor = new HeadingPermalinkProcessor(new class () implements SlugGeneratorInterface {
-            public function generateSlug(Node $node): string
+        $processor = new HeadingPermalinkProcessor(new class () implements TextNormalizerInterface {
+            /**
+             * {@inheritDoc}
+             */
+            public function normalize(string $text, $context = null): string
             {
                 return 'custom-slug';
             }
@@ -68,17 +70,23 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $this->assertSame('custom-slug', $headingLink->getSlug());
     }
 
-    public function testCustomSlugGeneratorOptionOverridesConstructor(): void
+    public function testCustomSlugNormalizerOptionOverridesConstructor(): void
     {
-        $processor = new HeadingPermalinkProcessor(new class () implements SlugGeneratorInterface {
-            public function generateSlug(Node $node): string
+        $processor = new HeadingPermalinkProcessor(new class () implements TextNormalizerInterface {
+            /**
+             * {@inheritDoc}
+             */
+            public function normalize(string $text, $context = null): string
             {
                 return 'slug-via-constructor';
             }
         });
 
-        $overridingSlugGenerator = new class () implements SlugGeneratorInterface {
-            public function generateSlug(Node $node): string
+        $overridingSlugNormalizer = new class () implements TextNormalizerInterface {
+            /**
+             * {@inheritDoc}
+             */
+            public function normalize(string $text, $context = null): string
             {
                 return 'slug-via-config';
             }
@@ -86,7 +94,7 @@ final class HeadingPermalinkProcessorTest extends TestCase
 
         $processor->setConfiguration(new Configuration([
             'heading_permalink' => [
-                'slug_generator' => $overridingSlugGenerator,
+                'slug_normalizer' => $overridingSlugNormalizer,
             ],
         ]));
 
@@ -103,14 +111,14 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $this->assertSame('slug-via-config', $headingLink->getSlug());
     }
 
-    public function testInvalidSlugGeneratorOption(): void
+    public function testInvalidSlugNormalizerOption(): void
     {
         $this->expectException(InvalidOptionException::class);
 
         $processor = new HeadingPermalinkProcessor();
         $processor->setConfiguration(new Configuration([
             'heading_permalink' => [
-                'slug_generator' => static function (string $text) {
+                'slug_normalizer' => static function (string $text): string {
                     return \md5($text);
                 },
             ],
