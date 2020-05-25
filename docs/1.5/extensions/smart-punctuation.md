@@ -2,6 +2,7 @@
 layout: default
 title: Smart Punctuation Extension
 description: The SmartPunctExtension intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents
+redirect_from: /extensions/smart-punctuation/
 ---
 
 # Smart Punctuation Extension
@@ -19,6 +20,16 @@ Will result in this HTML:
 ```html
 <p>“CommonMark is the PHP League’s Markdown parser,” she said.  “It’s super-configurable… you can even use additional extensions to expand its capabilities – just like this one!”</p>
 ```
+
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/1.5/installation/) section for more details.
 
 ## Usage
 

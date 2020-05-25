@@ -9,6 +9,16 @@ redirect_from: /extensions/inlines-only/
 
 This extension configures the parser to only render inline elements - no paragraph tags, headers, code blocks, etc.  This makes it perfect for commenting systems where you only want users having bold, italics, links, etc.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/1.4/installation/) section for more details.
+
 ## Usage
 
 Although you normally add extra extensions along with [the default CommonMark Core extension](/1.4/extensions/commonmark/), we're not going to do that here, because this is essentially a slimmed-down version of the core extension:

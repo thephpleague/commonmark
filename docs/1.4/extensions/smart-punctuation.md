@@ -20,6 +20,16 @@ Will result in this HTML:
 <p>“CommonMark is the PHP League’s Markdown parser,” she said.  “It’s super-configurable… you can even use additional extensions to expand its capabilities – just like this one!”</p>
 ```
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/1.4/installation/) section for more details.
+
 ## Usage
 
 Extensions can be added to any new `Environment`:

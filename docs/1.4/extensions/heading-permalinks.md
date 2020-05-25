@@ -11,6 +11,16 @@ This extension makes all of your heading elements (`<h1>`, `<h2>`, etc) linkable
 
 **Tip:** You can combine this with the [Table of Contents extension](/1.4/extensions/table-of-contents/) to automatically generate a list of links to the headings in your documents.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+~~~bash
+composer require league/commonmark
+~~~
+
+See the [installation](/1.4/installation/) section for more details.
+
 ## Usage
 
 This extension can be added to any new `Environment`:
