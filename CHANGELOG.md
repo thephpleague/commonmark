@@ -6,6 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
+ - Added new `AttributesExtension` based  on <https://github.com/webuni/commonmark-attributes-extension> (#474)
  - Added new `FootnoteExtension` based on <https://github.com/rezozero/commonmark-ext-footnotes> (#474)
  - Added a new `MentionParser` to replace `InlineMentionParser` with more flexibility and customization
  - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
