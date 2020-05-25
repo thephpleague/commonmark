@@ -9,6 +9,8 @@ redirect_from: /upgrading/
 
 ## Changes
 
+`Reference` labels are no longer auto-normalized within the `Reference` constructor. Normalization only occurs within the `ReferenceMap`.
+
 ## Deprecations
 
 `Reference::normalizeReference()` has been deprecated. Use `TextNormalizer::normalize()` instead.

@@ -24,6 +24,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - "Moved" the `TableOfContents` class into a new `Node` sub-namespace (with backward-compatibility)
  - Reference labels are now generated and stored in lower-case instead of upper-case
+ - Reference labels are no longer normalized inside the `Reference`, only the `ReferenceMap`
 
 ### Fixed
 

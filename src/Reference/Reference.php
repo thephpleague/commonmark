@@ -35,7 +35,7 @@ final class Reference implements ReferenceInterface
 
     public function __construct(string $label, string $destination, string $title)
     {
-        $this->label = (new TextNormalizer())->normalize($label);
+        $this->label = $label;
         $this->destination = $destination;
         $this->title = $title;
     }
