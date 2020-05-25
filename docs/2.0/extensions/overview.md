@@ -71,6 +71,7 @@ These extensions are not part of GFM, but can be useful in many cases:
 | Extension | Purpose | Documentation |
 | --------- | ------- | ------------- |
 | `ExternalLinkExtension` | Tags external links with additional markup | [Documentation](/2.0/extensions/external-links/) |
+| `FootnoteExtension` | Add footnote references throughout the document and show a listing of them at the bottom | [Documentation](/2.0/extensions/footnotes/) |
 | `HeadingPermalinkExtension` | Makes heading elements linkable | [Documentation](/2.0/extensions/heading-permalinks/) |
 | `InlinesOnlyExtension` | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | [Documentation](/2.0/extensions/inlines-only/) |
 | `MentionParser` | Easy parsing of `@mention` and `#123`-style references | [Documentation](/2.0/extensions/mention/) |
