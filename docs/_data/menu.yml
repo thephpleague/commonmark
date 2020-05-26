@@ -14,6 +14,7 @@ version:
             'Overview': '/1.5/extensions/overview/'
             'CommonMark': '/1.5/extensions/commonmark/'
             'Github-Flavored Markdown': '/1.5/extensions/github-flavored-markdown/'
+            'Attributes': '/1.5/extensions/attributes/'
             'Autolinks': '/1.5/extensions/autolinks/'
             'Disallowed Raw HTML': '/1.5/extensions/disallowed-raw-html/'
             'External Links': '/1.5/extensions/external-links/'
