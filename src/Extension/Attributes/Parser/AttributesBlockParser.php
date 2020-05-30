@@ -18,15 +18,14 @@ use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 use League\CommonMark\Extension\Attributes\Node\Attributes;
+use League\CommonMark\Extension\Attributes\Util\AttributesHelper;
 
 final class AttributesBlockParser implements BlockParserInterface
 {
-    use AttributesParserTrait;
-
     public function parse(ContextInterface $context, Cursor $cursor): bool
     {
         $state = $cursor->saveState();
-        $attributes = $this->parseAttributes($cursor);
+        $attributes = AttributesHelper::parseAttributes($cursor);
         if ($attributes === []) {
             return false;
         }

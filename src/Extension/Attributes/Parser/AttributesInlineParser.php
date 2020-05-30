@@ -15,13 +15,12 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Attributes\Parser;
 
 use League\CommonMark\Extension\Attributes\Node\AttributesInline;
+use League\CommonMark\Extension\Attributes\Util\AttributesHelper;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 
 final class AttributesInlineParser implements InlineParserInterface
 {
-    use AttributesParserTrait;
-
     /**
      * {@inheritdoc}
      */
@@ -42,7 +41,7 @@ final class AttributesInlineParser implements InlineParserInterface
             $char = (string) $cursor->getCharacter($cursor->getPosition() - 1);
         }
 
-        $attributes = $this->parseAttributes($cursor);
+        $attributes = AttributesHelper::parseAttributes($cursor);
         if ($attributes === []) {
             return false;
         }

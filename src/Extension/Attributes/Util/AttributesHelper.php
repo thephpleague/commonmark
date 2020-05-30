@@ -12,19 +12,24 @@
 
 declare(strict_types=1);
 
-namespace League\CommonMark\Extension\Attributes\Parser;
+namespace League\CommonMark\Extension\Attributes\Util;
 
+use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Cursor;
+use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Util\RegexHelper;
 
-trait AttributesParserTrait
+/**
+ * @internal
+ */
+final class AttributesHelper
 {
     /**
      * @param Cursor $cursor
      *
      * @return array<string, mixed>
      */
-    private function parseAttributes(Cursor $cursor): array
+    public static function parseAttributes(Cursor $cursor): array
     {
         $state = $cursor->saveState();
         $cursor->advanceToNextNonSpaceOrNewline();
@@ -84,6 +89,40 @@ trait AttributesParserTrait
 
         if (isset($attributes['class'])) {
             $attributes['class'] = \implode(' ', (array) $attributes['class']);
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param AbstractBlock|AbstractInline|array<string, mixed> $attributes1
+     * @param AbstractBlock|AbstractInline|array<string, mixed> $attributes2
+     *
+     * @return array<string, mixed>
+     */
+    public static function mergeAttributes($attributes1, $attributes2): array
+    {
+        $attributes = [];
+        foreach ([$attributes1, $attributes2] as $arg) {
+            if ($arg instanceof AbstractBlock || $arg instanceof AbstractInline) {
+                $arg = $arg->data['attributes'] ?? [];
+            }
+
+            /** @var array<string, mixed> $arg */
+            $arg = (array) $arg;
+            if (isset($arg['class'])) {
+                foreach (\array_filter(\explode(' ', \trim($arg['class']))) as $class) {
+                    $attributes['class'][] = $class;
+                }
+
+                unset($arg['class']);
+            }
+
+            $attributes = \array_merge($attributes, $arg);
+        }
+
+        if (isset($attributes['class'])) {
+            $attributes['class'] = \implode(' ', $attributes['class']);
         }
 
         return $attributes;

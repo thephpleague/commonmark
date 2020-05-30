@@ -1,0 +1,171 @@
+<?php
+
+/*
+ * This file is part of the league/commonmark package.
+ *
+ * (c) Colin O'Dell <colinodell@gmail.com>
+ * (c) 2015 Martin Hasoň <martin.hason@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace League\CommonMark\Tests\Unit\Extension\Attributes\Util;
+
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Cursor;
+use League\CommonMark\Extension\Attributes\Util\AttributesHelper;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Tests\Unit\Environment\FakeBlock1;
+use League\CommonMark\Tests\Unit\Environment\FakeInline1;
+use PHPUnit\Framework\TestCase;
+
+final class AttributesHelperTest extends TestCase
+{
+    /**
+     * @param Cursor                $input
+     * @param array<string, mixed>> $expectedResult
+     *
+     * @dataProvider dataForTestParseAttributes
+     */
+    public function testParseAttributes(Cursor $input, array $expectedResult): void
+    {
+        $this->assertSame($expectedResult, AttributesHelper::parseAttributes($input));
+    }
+
+    /**
+     * @return iterable<Cursor|array<string, mixed>>
+     */
+    public function dataForTestParseAttributes(): iterable
+    {
+        yield [new Cursor(''), []];
+        yield [new Cursor('{}'), []];
+        yield [new Cursor('{ }'), []];
+
+        // Examples with colons
+        yield [new Cursor('{:title="My Title"}'), ['title' => 'My Title']];
+        yield [new Cursor('{: title="My Title"}'), ['title' => 'My Title']];
+        yield [new Cursor('{:title="My Title" }'), ['title' => 'My Title']];
+        yield [new Cursor('{: title="My Title" }'), ['title' => 'My Title']];
+        yield [new Cursor('{:   title="My Title"  }'), ['title' => 'My Title']];
+        yield [new Cursor('{: #custom-id }'), ['id' => 'custom-id']];
+        yield [new Cursor('{: #custom-id #another-id }'), ['id' => 'another-id']];
+        yield [new Cursor('{: .class1 .class2 }'), ['class' => 'class1 class2']];
+        yield [new Cursor('{: #custom-id .class1 .class2 title="My Title" }'), ['id' => 'custom-id', 'class' => 'class1 class2', 'title' => 'My Title']];
+
+        // Examples without colons
+        yield [new Cursor('{title="My Title"}'), ['title' => 'My Title']];
+        yield [new Cursor('{ title="My Title"}'), ['title' => 'My Title']];
+        yield [new Cursor('{title="My Title" }'), ['title' => 'My Title']];
+        yield [new Cursor('{ title="My Title" }'), ['title' => 'My Title']];
+        yield [new Cursor('{   title="My Title"  }'), ['title' => 'My Title']];
+        yield [new Cursor('{ #custom-id }'), ['id' => 'custom-id']];
+        yield [new Cursor('{ #custom-id #another-id }'), ['id' => 'another-id']];
+        yield [new Cursor('{ .class1 .class2 }'), ['class' => 'class1 class2']];
+        yield [new Cursor('{ #custom-id .class1 .class2 title="My Title" }'), ['id' => 'custom-id', 'class' => 'class1 class2', 'title' => 'My Title']];
+
+        // Stuff at the beginning
+        yield [new Cursor(' {: #custom-id }'), ['id' => 'custom-id']];
+        yield [new Cursor('  {: #custom-id }'), ['id' => 'custom-id']];
+        yield [new Cursor('   {: #custom-id }'), ['id' => 'custom-id']];
+        // Note that this method doesn't enforce indentation rules - that should be checked elsewhere
+        yield [new Cursor('    {: #custom-id }'), ['id' => 'custom-id']];
+        yield [new Cursor('      {: #custom-id }'), ['id' => 'custom-id']];
+
+        // Stuff on the end
+        yield [new Cursor('{: #custom-id } '), ['id' => 'custom-id']];
+        // Note that this method doesn't abort if non-attribute things are found at the end - that should be checked elsewhere
+        yield [new Cursor('{: #custom-id } foo'), ['id' => 'custom-id']];
+
+        // Missing curly brace on end
+        yield [new Cursor('{: #custom-id'), []];
+
+        // Two sets of attributes in one string - we stop after the first one
+        yield [new Cursor('{: #id1 } {: #id2 }'), ['id' => 'id1']];
+
+        // Curly braces inside of values
+        yield [new Cursor('{: data-json="{1,2,3}" }'), ['data-json' => '{1,2,3}']];
+    }
+
+    /**
+     * @param AbstractBlock|AbstractInline|array<string, mixed> $a1
+     * @param AbstractBlock|AbstractInline|array<string, mixed> $a2
+     * @param array<string, mixed>                              $expected
+     *
+     * @dataProvider dataForTestMergeAttributes
+     */
+    public function testMergeAttributes($a1, $a2, array $expected): void
+    {
+        $this->assertEquals($expected, AttributesHelper::mergeAttributes($a1, $a2));
+    }
+
+    /**
+     * @return iterable<AbstractBlock|AbstractInline|array<string, mixed>>
+     */
+    public function dataForTestMergeAttributes(): iterable
+    {
+        yield [
+            [],
+            [],
+            [],
+        ];
+
+        // The second set of attributes overrides the first one (for matching keys)
+        yield [
+            ['a' => '1', 'b' => 1],
+            ['a' => '2', 'c' => 2],
+            ['a' => '2', 'b' => 1, 'c' => 2],
+        ];
+
+        // Special handling for the class attribute
+        yield [
+            ['id' => 'foo', 'class' => 'foo'],
+            ['id' => 'bar', 'class' => 'bar'],
+            ['id' => 'bar', 'class' => 'foo bar'],
+        ];
+
+        $block = new FakeBlock1();
+        $block->data['attributes'] = ['id' => 'block', 'class' => 'block'];
+
+        yield [
+            $block,
+            ['id' => 'foo', 'class' => 'foo'],
+            ['id' => 'foo', 'class' => 'block foo'],
+        ];
+
+        yield [
+            ['id' => 'foo', 'class' => 'foo'],
+            $block,
+            ['id' => 'block', 'class' => 'foo block'],
+        ];
+
+        $inline = new FakeInline1();
+        $inline->data['attributes'] = ['id' => 'inline', 'class' => 'inline'];
+
+        yield [
+            $inline,
+            ['id' => 'foo', 'class' => 'foo'],
+            ['id' => 'foo', 'class' => 'inline foo'],
+        ];
+
+        yield [
+            ['id' => 'foo', 'class' => 'foo'],
+            $inline,
+            ['id' => 'inline', 'class' => 'foo inline'],
+        ];
+
+        yield [
+            $block,
+            $inline,
+            ['id' => 'inline', 'class' => 'block inline'],
+        ];
+
+        yield [
+            $inline,
+            $block,
+            ['id' => 'block', 'class' => 'inline block'],
+        ];
+    }
+}
