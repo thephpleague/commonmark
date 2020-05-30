@@ -6,6 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
+ - Added new `AttributesExtension` based  on <https://github.com/webuni/commonmark-attributes-extension> (#474)
  - Added new `FootnoteExtension` based on <https://github.com/rezozero/commonmark-ext-footnotes> (#474)
  - Added a new `MentionParser` to replace `InlineMentionParser` with more flexibility and customization
  - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
@@ -33,7 +34,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Deprecated
 
  - Deprecated `League\CommonMark\Extension\Autolink\InlineMentionParser` (use `League\CommonMark\Extension\Mention\MentionParser` instead)
- - Deprecated everything under `League\CommonMark\Extension\HeadingPermalink\Slug` (use the newer ones in `League\CommonMark\Extension\HeadingPermalink\SlugGenerator` instead)
+ - Deprecated everything under `League\CommonMark\Extension\HeadingPermalink\Slug` (use the classes under `League\CommonMark\Normalizer` instead)
  - Deprecated `League\CommonMark\Extension\TableOfContents\TableOfContents` (use the one in the new `Node` sub-namespace instead)
  - Deprecated the `STYLE_` and `NORMALIZE_` constants in `TableOfContentsBuilder` (use the ones in `TableOfContentsGenerator` instead)
 
