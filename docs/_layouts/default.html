@@ -69,7 +69,7 @@
             <h2>{% if upgrading == true %}Notes{% else %}v{{ version }}{% endif %} &#9662;</h2>
             <ul>
             {% for v in site.data.menu.version %}
-                <li {% if version == v[0] and upgrading == false %}class="selected"{% endif %}><a href="/{{ v[0] }}/">v{{ v[0] }}</a></li>
+                <li {% if version == v[0] and upgrading == false %}class="selected"{% endif %}><a href="{{ v[0] | get_version_link : page.url }}">v{{ v[0] }}</a></li>
             {% endfor %}
                 <li {% if upgrading == true %}class="selected"{% endif %}><a href="/releases/">Notes</a></li>
             </ul>
