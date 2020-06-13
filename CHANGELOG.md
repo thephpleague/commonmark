@@ -8,6 +8,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
 ### Added
 
+ - Added new `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
  - Added new `HtmlFilter` and `StringContainerHelper` utility classes
  - Added new `AbstractBlockContinueParser` class to simplify the creation of custom block parsers
  - Added several new classes and interfaces:

@@ -35,8 +35,12 @@
         "phpunit/phpunit": "^8.5",
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^4.2",
+        "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0",
         "unleashedtech/php-coding-standard": "^2.2",
         "vimeo/psalm": "^3.11"
+    },
+    "suggest": {
+        "symfony/yaml": "v2.3+ required if using the Front Matter extension"
     },
     "conflict": {
         "scrutinizer/ocular": "1.7.*"
