@@ -32,7 +32,7 @@ final class FootnoteExtensionTest extends TestCase
 
         $converter = new CommonMarkConverter(['footnote' => $config], $environment);
 
-        $html = \trim($converter->convertToHtml($string));
+        $html = \trim((string) $converter->convertToHtml($string));
 
         $this->assertSame($expected, $html);
     }
@@ -81,7 +81,7 @@ final class FootnoteExtensionTest extends TestCase
 
         $converter = new CommonMarkConverter($config, $environment);
 
-        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
 
     public function dataProviderForTestFootnotesWithCustomOptions(): \Generator
@@ -106,6 +106,6 @@ final class FootnoteExtensionTest extends TestCase
         $input    = "Here[^note1]\n\n[^note1]: There";
         $expected = '<p>Here<sup id="fnref:note1"><a class="footnote-ref" href="#fn:note1" role="doc-noteref">1</a></sup></p>' . "\n" . '<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:note1" role="doc-endnote"><p>There&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:note1" role="doc-backlink" /></p></li></ol></div>';
 
-        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
 }

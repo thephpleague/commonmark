@@ -30,7 +30,7 @@ final class EmailAutolinkProcessorTest extends TestCase
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
 
     /**

@@ -41,7 +41,7 @@ abstract class AbstractSpecTest extends TestCase
         $markdown = \str_replace('→', "\t", $markdown);
         $html     = \str_replace('→', "\t", $html);
 
-        $actualResult = $this->converter->convertToHtml($markdown);
+        $actualResult = (string) $this->converter->convertToHtml($markdown);
 
         $failureMessage  = 'Unexpected result:';
         $failureMessage .= "\n=== markdown ===============\n" . $this->showSpaces($markdown);

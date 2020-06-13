@@ -10,6 +10,10 @@ description: Guide to upgrading to newer versions of this library
 
 The minimum supported PHP version was increased from 7.1 to 7.2.
 
+## `CommonMarkConverter` Return Type
+
+In 1.x, calling `convertToHtml()` would return a `string`. In 2.x this changed to return a `RenderedContentInterface`.  To get the resulting HTML, either cast it to a `string` or call `->getContent()`.  (This new interface extends from `Stringable` so you can type hint against that instead, if needed.)
+
 ## Method Return Types
 
 Return types have been added to virtually all class and interface methods.  If you implement or extend anything from this library, ensure you also have the proper return types added.

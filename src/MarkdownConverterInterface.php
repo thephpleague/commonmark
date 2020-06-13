@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark;
 
+use League\CommonMark\Output\RenderedContentInterface;
+
 /**
  * Interface for a service which converts Markdown to HTML.
  */
@@ -21,11 +23,7 @@ interface MarkdownConverterInterface
     /**
      * Converts Markdown to HTML.
      *
-     * @param string $markdown Markdown input
-     *
-     * @return string HTML output
-     *
      * @throws \RuntimeException
      */
-    public function convertToHtml(string $markdown): string;
+    public function convertToHtml(string $markdown): RenderedContentInterface;
 }

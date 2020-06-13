@@ -34,7 +34,7 @@ class IntegrationTest extends TestCase
 
         $document = $parser->parse($string);
 
-        $html = $renderer->renderDocument($document);
+        $html = (string) $renderer->renderDocument($document);
 
         $this->assertSame($expected, $html);
     }

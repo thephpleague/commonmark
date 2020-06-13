@@ -26,6 +26,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
    - `ReferenceableInterface`
+   - `RenderedContent`
+   - `RenderedContentInterface`
  - Added several new methods:
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
@@ -44,6 +46,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
 ### Changed
 
+ - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
  - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
  - Implemented a new approach to block parsing. This was a massive change, so here are the highlights:
    - Functionality previously found in block parsers and node elements has moved to block parser factories and block parsers, respectively ([more details](https://commonmark.thephpleague.com/2.0/upgrading/#new-block-parsing-approach))

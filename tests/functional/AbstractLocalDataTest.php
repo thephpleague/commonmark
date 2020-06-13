@@ -38,7 +38,7 @@ abstract class AbstractLocalDataTest extends TestCase
      */
     protected function assertMarkdownRendersAs(string $markdown, string $html, string $testName): void
     {
-        $actualResult = $this->converter->convertToHtml($markdown);
+        $actualResult = (string) $this->converter->convertToHtml($markdown);
 
         $failureMessage  = \sprintf('Unexpected result for "%s" test', $testName);
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;

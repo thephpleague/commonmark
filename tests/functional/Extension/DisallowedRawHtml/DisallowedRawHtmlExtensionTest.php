@@ -42,7 +42,7 @@ HTML;
         $environment->addExtension(new DisallowedRawHtmlExtension());
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertSame($expected, $converter->convertToHtml($input));
+        $this->assertSame($expected, (string) $converter->convertToHtml($input));
     }
 
     public function testIndividualHtmlTagsAsBlocks(): void
@@ -88,6 +88,6 @@ HTML;
         $environment->addExtension(new DisallowedRawHtmlExtension());
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertSame($expected, $converter->convertToHtml($input));
+        $this->assertSame($expected, (string) $converter->convertToHtml($input));
     }
 }
