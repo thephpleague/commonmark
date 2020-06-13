@@ -29,13 +29,6 @@ use League\CommonMark\Renderer\HtmlRendererInterface;
  */
 class CommonMarkConverter implements MarkdownConverterInterface
 {
-    /**
-     * The currently-installed version.
-     *
-     * This might be a typical `x.y.z` version, or `x.y-dev`.
-     */
-    public const VERSION = '2.0-dev';
-
     /** @var EnvironmentInterface */
     protected $environment;
 
