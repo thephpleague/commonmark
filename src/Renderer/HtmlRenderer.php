@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Renderer;
 
 use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Event\DocumentRenderedEvent;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
@@ -40,7 +41,12 @@ final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInte
 
     public function renderDocument(Document $node): RenderedContentInterface
     {
-        return new RenderedContent($node, (string) $this->renderNode($node));
+        $output = new RenderedContent($node, (string) $this->renderNode($node));
+
+        $event = new DocumentRenderedEvent($output);
+        $this->environment->dispatch($event);
+
+        return $event->getOutput();
     }
 
     /**
