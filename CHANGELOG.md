@@ -108,6 +108,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
      - `replaceWith()`
      - `removeGaps()`
    - Removed the `ListBlock::TYPE_UNORDERED` constant
+   - Removed the `CommonMarkConverter::VERSION` constant
  - Removed now-unused classes:
    - `AbstractStringContainerBlock`
    - `BlockRendererInterface`

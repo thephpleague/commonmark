@@ -221,6 +221,10 @@ Use the `Html5EntityDecoder` utility class instead.
 
 This command was buggy to test and was relatively unpopular, so it has been removed. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.
 
+## `CommonMarkConverter::VERSION` constant
+
+This previously-deprecated constant was removed in 2.0 Use `\Composer\InstalledVersions` provided by composer-runtime-api instead.
+
 ## `ArrayCollection` methods
 
 Several methods were removed from this class - here are the methods along with possible alternatives you can switch to:
