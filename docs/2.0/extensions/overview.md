@@ -22,6 +22,7 @@ to enhance your experience out-of-the-box depending on your specific use-cases.
 | [Disallowed Raw HTML] | Disables certain kinds of HTML tags that could affect page rendering | `1.3.0`  | <i class="fab fa-github"></i> |
 | [External Links] | Tags external links with additional markup | `1.3.0` | |
 | [Footnotes] | Add footnote references throughout the document and show a listing of them at the bottom | `1.5.0` | |
+| [Front Matter] | Parses YAML front matter from your Markdown input |  `2.0.0` | |
 | **[GitHub Flavored Markdown]** | Enables full support for GFM. Automatically includes the extensions noted in the `GFM` column (though you can certainly add them individually if you wish): | `1.3.0` | |
 | [Heading Permalinks] | Makes heading elements linkable | `1.4.0` | |
 | [Inlines Only] | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | `1.3.0` | |
@@ -85,6 +86,7 @@ See the [Custom Extensions](/2.0/customization/extensions/) page for details on 
 [Disallowed Raw HTML]: /2.0/extensions/disallowed-raw-html/
 [External Links]: /2.0/extensions/external-links/
 [Footnotes]: /2.0/extensions/footnotes/
+[Front Matter]: /2.0/extensions/front-matter/
 [GitHub Flavored Markdown]: /2.0/extensions/github-flavored-markdown/
 [Heading Permalinks]: /2.0/extensions/heading-permalinks/
 [Inlines Only]: /2.0/extensions/inlines-only/

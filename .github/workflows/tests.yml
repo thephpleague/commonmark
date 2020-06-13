@@ -24,7 +24,7 @@ jobs:
             - run: vendor/bin/phpcs -q --report=checkstyle | cs2pr
 
     phpunit:
-        name: PHPUnit on ${{ matrix.php }}
+        name: PHPUnit on ${{ matrix.php }} ${{ matrix.composer-flags }}
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -35,6 +35,9 @@ jobs:
                     - php: '8.0'
                       coverage: false
                       composer-flags: '--ignore-platform-req=php'
+                    - php: '7.2'
+                      coverage: false
+                      composer-flags: '--prefer-lowest'
 
         steps:
             - uses: actions/checkout@v2

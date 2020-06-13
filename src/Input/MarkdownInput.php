@@ -15,7 +15,7 @@ namespace League\CommonMark\Input;
 
 use League\CommonMark\Exception\UnexpectedEncodingException;
 
-final class MarkdownInput implements MarkdownInputInterface
+class MarkdownInput implements MarkdownInputInterface
 {
     /**
      * @var iterable<int, string>|null

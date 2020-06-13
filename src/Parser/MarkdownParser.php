@@ -108,9 +108,9 @@ final class MarkdownParser implements MarkdownParserInterface
 
         $preParsedEvent = new DocumentPreParsedEvent($documentParser->getBlock(), new MarkdownInput($input));
         $this->environment->dispatch($preParsedEvent);
-        $markdown = $preParsedEvent->getMarkdown();
+        $markdownInput = $preParsedEvent->getMarkdown();
 
-        foreach ($markdown->getLines() as $line) {
+        foreach ($markdownInput->getLines() as $line) {
             ++$this->lineNumber;
             $this->incorporateLine($line);
         }
