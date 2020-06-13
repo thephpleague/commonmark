@@ -78,6 +78,6 @@ class CommonMarkConverterTest extends TestCase
 
         $converter = new CommonMarkConverter();
 
-        $this->assertSame($converter->convertToHtml($inputMarkdown), $converter($inputMarkdown));
+        $this->assertEquals($converter->convertToHtml($inputMarkdown), $converter($inputMarkdown));
     }
 }

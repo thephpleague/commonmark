@@ -26,7 +26,7 @@ class HtmlRendererTest extends TestCase
         $environment->addRenderer(Document::class, $documentRenderer);
         $htmlRenderer = new HtmlRenderer($environment);
 
-        $this->assertSame('::document::', $htmlRenderer->renderDocument($document));
+        $this->assertSame('::document::', (string) $htmlRenderer->renderDocument($document));
     }
 
     public function testRenderNodesWithBlocks(): void
@@ -44,7 +44,7 @@ class HtmlRendererTest extends TestCase
         $renderer = new HtmlRenderer($environment);
         $output   = $renderer->renderNodes($ast->children());
 
-        $this->assertSame("::block::\n::block::", $output);
+        $this->assertSame("::block::\n::block::", (string) $output);
     }
 
     public function testRenderNodesWithInlines(): void
@@ -62,7 +62,7 @@ class HtmlRendererTest extends TestCase
         $renderer = new HtmlRenderer($environment);
         $output   = $renderer->renderNodes($ast->children());
 
-        $this->assertSame('::inline::::inline::', $output);
+        $this->assertSame('::inline::::inline::', (string) $output);
     }
 
     public function testRenderNodesFallsBackWhenFirstRendererReturnsNull(): void
@@ -80,7 +80,7 @@ class HtmlRendererTest extends TestCase
         $renderer = new HtmlRenderer($environment);
         $output   = $renderer->renderNodes([new Text()]);
 
-        $this->assertSame('::result::', $output);
+        $this->assertSame('::result::', (string) $output);
     }
 
     public function testRenderNodesWithMissingRenderer(): void

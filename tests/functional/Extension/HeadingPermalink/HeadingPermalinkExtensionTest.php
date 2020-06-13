@@ -31,7 +31,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
 
     public function dataProviderForTestHeadingPermalinksWithDefaultOptions(): \Generator
@@ -62,7 +62,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
         $converter = new CommonMarkConverter($config, $environment);
 
-        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
 
     public function dataProviderForTestHeadingPermalinksWithCustomOptions(): \Generator
@@ -88,7 +88,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $input    = '# Hello World!';
         $expected = \sprintf('<h1><a id="hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS);
 
-        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
 
     public function testHeadingPermalinksWithInvalidInsertConfigurationValue(): void

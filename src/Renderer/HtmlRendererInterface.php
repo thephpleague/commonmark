@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Renderer;
 
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Output\RenderedContentInterface;
 
 /**
  * Renders a parsed Document AST to HTML
@@ -21,7 +22,7 @@ use League\CommonMark\Node\Block\Document;
 interface HtmlRendererInterface
 {
     /**
-     * Render the given Document node (and all of its children) to HTML
+     * Render the given Document node (and all of its children)
      */
-    public function renderDocument(Document $node): string;
+    public function renderDocument(Document $node): RenderedContentInterface;
 }

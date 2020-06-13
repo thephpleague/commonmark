@@ -34,7 +34,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, \rtrim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
     public function testMentionParserWithoutSpaceInFront(): void
@@ -49,7 +49,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, \rtrim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
     public function testMentionParserWithNonMatchingSymbol(): void
@@ -64,7 +64,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, \rtrim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
     public function testMentionParserWithNonMatchingRegex(): void
@@ -79,7 +79,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, \rtrim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
     public function testMentionParserWithNullUrl(): void
@@ -97,7 +97,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, \rtrim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
     public function testMentionParserUsingCallback(): void
@@ -122,7 +122,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, \rtrim($converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
     public function testTwitterMentionParser(): void

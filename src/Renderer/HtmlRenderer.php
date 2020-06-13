@@ -20,6 +20,8 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
+use League\CommonMark\Output\RenderedContent;
+use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Util\HtmlElement;
 
 final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInterface
@@ -36,9 +38,9 @@ final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInte
         $this->environment = $environment;
     }
 
-    public function renderDocument(Document $node): string
+    public function renderDocument(Document $node): RenderedContentInterface
     {
-        return (string) $this->renderNode($node);
+        return new RenderedContent($node, (string) $this->renderNode($node));
     }
 
     /**

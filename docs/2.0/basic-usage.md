@@ -41,3 +41,7 @@ echo $converter->convertToHtml('# Hello World!');
 ## Supported Character Encodings
 
 Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown uses a different encoding please convert it to UTF-8 before running it through this library.
+
+## Return Value
+
+The `convertToHtml()` method actually returns an instance of `League\CommonMark\Output\RenderedContentInterface`.  You can cast this (implicitly, as shown above, or explicitly) to a `string` or call `getContent()` to get the final HTML output.

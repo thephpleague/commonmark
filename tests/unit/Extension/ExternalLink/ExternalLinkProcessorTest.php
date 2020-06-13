@@ -64,7 +64,7 @@ final class ExternalLinkProcessorTest extends TestCase
 
         $c = new CommonMarkConverter($config, $e);
 
-        return \rtrim($c->convertToHtml($markdown));
+        return \rtrim((string) $c->convertToHtml($markdown));
     }
 
     /**
