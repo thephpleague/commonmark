@@ -20,7 +20,7 @@
         "source": "https://github.com/thephpleague/commonmark"
     },
     "require": {
-        "php": "^7.1",
+        "php": "^7.1 || ^8.0",
         "ext-mbstring": "*"
     },
     "require-dev": {
