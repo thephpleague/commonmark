@@ -26,7 +26,7 @@ final class MarkdownInputWithFrontMatterTest extends TestCase
 
         $lines = $input->getLines();
         \assert($lines instanceof \Traversable);
-        $this->assertSame(['this', 'is', 'a', 'test'], \iterator_to_array($lines));
+        $this->assertSame([4 => 'this', 5 => 'is', 6 => 'a', 7 => 'test'], \iterator_to_array($lines));
 
         $this->assertSame(['foo' => 'bar'], $input->getFrontMatter());
     }

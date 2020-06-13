@@ -40,9 +40,22 @@ final class MarkdownInputTest extends TestCase
         $lines = $markdown->getLines();
 
         $this->assertSame(\iterator_to_array($lines), [
-            0 => '# Hello World!',
-            1 => '',
-            2 => 'This is just a test.',
+            1 => '# Hello World!',
+            2 => '',
+            3 => 'This is just a test.',
+        ]);
+    }
+
+    public function testLineOffset(): void
+    {
+        $markdown = new MarkdownInput("# Hello World!\n\nThis is just a test.\n", 3);
+
+        $lines = $markdown->getLines();
+
+        $this->assertSame(\iterator_to_array($lines), [
+            4 => '# Hello World!',
+            5 => '',
+            6 => 'This is just a test.',
         ]);
     }
 

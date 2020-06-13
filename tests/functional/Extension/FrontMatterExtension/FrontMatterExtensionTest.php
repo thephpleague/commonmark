@@ -65,6 +65,9 @@ EOT;
 
         $this->assertSame($expectedHtml, (string) $result->getContent());
         $this->assertSame($expectedHtml, (string) $result);
+
+        $this->assertSame(1, $result->getDocument()->getStartLine());
+        $this->assertSame(9, $result->getDocument()->firstChild()->getStartLine());
     }
 
     public function testWithNoFrontMatter(): void
@@ -81,6 +84,9 @@ EOT;
 
         $this->assertSame($expectedHtml, (string) $result->getContent());
         $this->assertSame($expectedHtml, (string) $result);
+
+        $this->assertSame(1, $result->getDocument()->getStartLine());
+        $this->assertSame(1, $result->getDocument()->firstChild()->getStartLine());
     }
 
     public function testWithInvalidYaml(): void
