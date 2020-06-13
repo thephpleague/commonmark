@@ -1,0 +1,78 @@
+name: Tests
+
+on:
+    push: ~
+    pull_request: ~
+
+jobs:
+    phpunit:
+        name: PHPUnit on ${{ matrix.php }}
+        runs-on: ubuntu-latest
+        continue-on-error: ${{ !matrix.stable }}
+        strategy:
+            matrix:
+                php: ['7.1', '7.2', '7.3', '7.4']
+                stable: [true]
+                coverage: [true]
+                composer-flags: ['']
+                include:
+                    - php: '8.0'
+                      stable: false
+                      coverage: false
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: shivammathur/setup-php@v1
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: mbstring
+                  coverage: pcov
+
+            - name: Get composer cache directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-composer-
+            - run: composer update --no-progress ${{ matrix.composer-flags }}
+
+            - run: vendor/bin/phpunit --no-coverage
+              if: ${{ !matrix.coverage }}
+
+            - run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+              if: ${{ matrix.coverage }}
+
+            - run: php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+              if: ${{ matrix.coverage }}
+
+    phpstan:
+        name: PHPStan
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: shivammathur/setup-php@v1
+              with:
+                  php-version: 7.1
+                  extensions: mbstring
+                  coverage: none
+
+            - name: Get composer cache directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-php-7.1-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-composer-
+            - run: composer update --no-progress
+
+            - run: vendor/bin/phpstan analyse
