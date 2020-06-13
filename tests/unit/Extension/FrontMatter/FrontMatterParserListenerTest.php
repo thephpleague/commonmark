@@ -28,8 +28,9 @@ final class FrontMatterParserListenerTest extends TestCase
      * @param string $input               The raw Markdown document input
      * @param mixed  $expectedFrontMatter What the front matter should contain
      * @param string $expectedContent     What the Markdown (less the front matter) should be
+     * @param int    $expectedOffset      The 0-based starting line of the resulting Markdown (less the front matter)
      */
-    public function testExamples(string $input, $expectedFrontMatter, string $expectedContent): void
+    public function testExamples(string $input, $expectedFrontMatter, string $expectedContent, int $expectedOffset): void
     {
         $document = new Document();
         $markdown = new MarkdownInput($input);
@@ -56,24 +57,28 @@ final class FrontMatterParserListenerTest extends TestCase
                 'published' => true,
             ],
             "Yay\n---",
+            4,
         ];
 
         yield [
             "---\nJust a string\n---\nYay\n---",
             'Just a string',
             "Yay\n---",
+            3,
         ];
 
         yield [
             "Hello World!\n---",
             null,
             "Hello World!\n---",
+            0,
         ];
 
         yield [
             "---\nThis is a heading\n-----------------",
             null,
             "---\nThis is a heading\n-----------------",
+            0,
         ];
 
         yield [
@@ -82,6 +87,7 @@ final class FrontMatterParserListenerTest extends TestCase
                 'front_matter_only' => true,
             ],
             '',
+            3,
         ];
 
         yield [
@@ -90,18 +96,21 @@ final class FrontMatterParserListenerTest extends TestCase
                 'front_matter_only' => true,
             ],
             '',
+            7,
         ];
 
         yield [
             "\n---\ninvalid_because: front matter must be first\n---",
             null,
             "\n---\ninvalid_because: front matter must be first\n---",
+            0,
         ];
 
         yield [
             "---\nMissing the closer",
             null,
             "---\nMissing the closer",
+            0,
         ];
 
         yield [
@@ -110,24 +119,28 @@ final class FrontMatterParserListenerTest extends TestCase
                 'delimiter' => '---inside',
             ],
             'test',
+            3,
         ];
 
         yield [
             "---\ninvalid: closer\n--- can't have text here\n",
             null,
             "---\ninvalid: closer\n--- can't have text here\n",
+            0,
         ];
 
         yield [
             "---\n---\nInvalid front matter",
             null,
             "---\n---\nInvalid front matter",
+            0,
         ];
 
         yield [
             "---\n\n---\nEmpty front matter",
             null,
             'Empty front matter',
+            3,
         ];
     }
 }

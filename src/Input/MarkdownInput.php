@@ -38,13 +38,21 @@ final class MarkdownInput implements MarkdownInputInterface
      */
     private $lineCount;
 
-    public function __construct(string $content)
+    /**
+     * @var int
+     *
+     * @psalm-readonly
+     */
+    private $lineOffset = 0;
+
+    public function __construct(string $content, int $lineOffset = 0)
     {
         if (! \mb_check_encoding($content, 'UTF-8')) {
             throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
         }
 
-        $this->content = $content;
+        $this->content    = $content;
+        $this->lineOffset = $lineOffset;
     }
 
     public function getContent(): string
@@ -60,8 +68,8 @@ final class MarkdownInput implements MarkdownInputInterface
         $this->splitLinesIfNeeded();
 
         /** @psalm-suppress PossiblyNullIterator */
-        foreach ($this->lines as $lineNumber => $line) {
-            yield $lineNumber => $line;
+        foreach ($this->lines as $i => $line) {
+            yield $this->lineOffset + $i + 1 => $line;
         }
     }
 
@@ -72,6 +80,11 @@ final class MarkdownInput implements MarkdownInputInterface
         \assert($this->lineCount !== null);
 
         return $this->lineCount;
+    }
+
+    public function getLineOffset(): int
+    {
+        return $this->lineOffset;
     }
 
     private function splitLinesIfNeeded(): void

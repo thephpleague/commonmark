@@ -56,8 +56,12 @@ final class FrontMatterParserListener
         $event->getDocument()->data['front_matter'] = $data;
 
         // Advance through any remaining newlines which separated the front matter from the Markdown text
-        $cursor->match('/^\n+/');
+        $trailingNewlines = $cursor->match('/^\n+/');
 
-        $event->replaceMarkdown(new MarkdownInput($cursor->getRemainder()));
+        // Calculate how many lines the Markdown is offset from the front matter by counting the number of newlines
+        // Don't forget to add 1 because we stripped one out when trimming the trailing delims
+        $lineOffset = \preg_match_all('/\n/', $frontMatter . $trailingNewlines) + 1;
+
+        $event->replaceMarkdown(new MarkdownInput($cursor->getRemainder(), $lineOffset));
     }
 }

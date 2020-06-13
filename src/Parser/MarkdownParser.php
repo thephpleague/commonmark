@@ -110,8 +110,8 @@ final class MarkdownParser implements MarkdownParserInterface
         $this->environment->dispatch($preParsedEvent);
         $markdown = $preParsedEvent->getMarkdown();
 
-        foreach ($markdown->getLines() as $line) {
-            ++$this->lineNumber;
+        foreach ($markdown->getLines() as $lineNumber => $line) {
+            $this->lineNumber = $lineNumber;
             $this->incorporateLine($line);
         }
 
