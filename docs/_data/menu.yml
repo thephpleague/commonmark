@@ -21,7 +21,7 @@ version:
             'Footnotes': '/1.5/extensions/footnotes/'
             'Heading Permalinks': '/1.5/extensions/heading-permalinks/'
             'Inlines Only': '/1.5/extensions/inlines-only/'
-            'Mentions': '/1.5/extensions/mention/'
+            'Mentions': '/1.5/extensions/mentions/'
             'Smart Punctuation': '/1.5/extensions/smart-punctuation/'
             'Strikethrough': '/1.5/extensions/strikethrough/'
             'Table of Contents': '/1.5/extensions/table-of-contents/'

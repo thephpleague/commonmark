@@ -57,16 +57,16 @@ final class MentionParser implements InlineParserInterface
         // Advance past the symbol to keep parsing simpler
         $cursor->advance();
 
-        // Parse the handle
-        $handle = $cursor->match($this->mentionRegex);
-        if (empty($handle)) {
+        // Parse the mention match value
+        $match = $cursor->match($this->mentionRegex);
+        if (empty($match)) {
             // Regex failed to match; this isn't a valid mention
             $cursor->restoreState($previousState);
 
             return false;
         }
 
-        $mention = $this->mentionGenerator->generateMention(new Mention($this->symbol, $handle));
+        $mention = $this->mentionGenerator->generateMention(new Mention($this->symbol, $match));
 
         if ($mention === null) {
             $cursor->restoreState($previousState);

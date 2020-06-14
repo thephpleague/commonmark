@@ -26,6 +26,6 @@ final class StringTemplateLinkGenerator implements MentionGeneratorInterface
 
     public function generateMention(Mention $mention): ?AbstractInline
     {
-        return $mention->setUrl(\sprintf($this->urlTemplate, $mention->getHandle()));
+        return $mention->setUrl(\sprintf($this->urlTemplate, $mention->getMatch()));
     }
 }

@@ -31,18 +31,31 @@ $environment->addExtension(new MentionExtension());
 
 // Set your configuration.
 $config = [
-    // All mentions must reside in the "mentions" config key.
-    // This is just an example of what MentionExtension::registerTwitterHandle
-    // registers. If no mentions are provided in configuration the extension does nothing.
     'mentions' => [
-        // A unique key.
-        'twitter_handler' => [
-            // Required - The starting symbol for the inline parser to find.
+        // GitHub handler mention configuration.
+        // Sample Input:  `@colinodell`
+        // Sample Output: `<a href="https://www.github.com/colinodell">@colinodell</a>`
+        'github_handle' => [
             'symbol'    => '@',
-            // Required - The regular expression the inline parser must match.
+            'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+            'generator' => 'https://github.com/%s',
+        ],
+        // GitHub issue mention configuration.
+        // Sample Input:  `#473`
+        // Sample Output: `<a href="https://github.com/thephpleague/commonmark/issues/473">#473</a>`
+        'github_issue' => [
+            'symbol'    => '#',
+            'regex'     => '/^\d+/',
+            'generator' => "https://github.com/thephpleague/commonmark/issues/%d",
+        ],
+        // Twitter handler mention configuration.
+        // Sample Input:  `@colinodell`
+        // Sample Output: `<a href="https://www.twitter.com/colinodell">@colinodell</a>`
+        // Note: when registering more than one mention parser with the same symbol, the last one registered will
+        // always take precedence.
+        'twitter_handle' => [
+            'symbol'    => '@',
             'regex'     => '/^[A-Za-z0-9_]{1,15}(?!\w)/',
-            // Required - The string template or callable that will be used to generate the mention URL.
-            // You can learn more about callable generators below.
             'generator' => 'https://twitter.com/%s',
         ],
     ],
@@ -51,42 +64,11 @@ $config = [
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new CommonMarkConverter($config, $environment);
 echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
+// Output:
+// <p>Follow me on Twitter: <a href="https://www.github.com/colinodell">@colinodell</a></p>
 ```
 
 Note that the URL template (third argument) must be a string, and that the `%s` placeholder will be replaced by whatever the user enters after the symbol (in this case, `@`).  You can use any symbol, regex pattern, or URL template you want!
-
-## Pre-configured mention parsers
-
-This library includes a few static methods on the `MentionExtension` class which can be invoked to register common
-mentions with the environment configuration:
-
-```php
-use League\CommonMark\Environment;
-use League\CommonMark\Extension\Mention\MentionExtension;
-
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go.
-$environment = Environment::createCommonMarkEnvironment();
-
-// Add the Mention extension.
-$environment->addExtension(new MentionExtension());
-
-// This registers Twitter handler mention configuration.
-// Sample Input:  `@colinodell`
-// Sample Output: `<a href="https://www.twitter.com/colinodell">@colinodell</a>`
-MentionExtension::registerTwitterHandle($environment);
-
-// This registers GitHub handler mention configuration.
-// Sample Input:  `@colinodell`
-// Sample Output: `<a href="https://www.github.com/colinodell">@colinodell</a>`
-// Note: registering both the Twitter and GitHub handler mentions in the same environment will result in a \RuntimeException
-// being thrown: Only one type of mention symbol (i.e. @ or #) can be registered per the environment configuration.
-MentionExtension::registerGitHubHandle($environment);
-
-// This registers GitHub issue mention configuration.
-// Sample Input:  `#473`
-// Sample Output: `<a href="https://github.com/thephpleague/commonmark/issues/473">#473</a>`
-MentionExtension::registerGitHubIssue($environment, 'thephpleague/commonmark');
-```
 
 ## Custom Callback-Based Parsers
 
@@ -116,9 +98,7 @@ Here's an example of how you might use a callback-based parser.  Imagine you wan
 links for your application, but only if the user exists.  You could create a class like this which integrates with your framework:
 
 ```php
-use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;use League\CommonMark\Extension\Mention\Mention;use League\CommonMark\Inline\Element\AbstractInline;use League\CommonMark\Inline\Element\Emphasis;use League\CommonMark\Inline\Element\Text;
-
-class UserUrlGenerator implements MentionGeneratorInterface
+class UserUrlGenerator
 {
     private $currentUser;
     private $userRepository;
@@ -131,17 +111,26 @@ class UserUrlGenerator implements MentionGeneratorInterface
         $this->router = $router;
     }
 
-    public function generateMention(Mention $mention): ?AbstractInline
+    public function createUserMention($mention)
     {
+        // Immediately return if not passed the supported Mention object.
+        // By checking this here, it avoids using hard type-hinted parameters
+        // and namespaces which can cause a PHP fatal. It allows for external
+        // custom implementations to weather potential internal API changes
+        // that may occur over time/newer versions.
+        if (!($mention instanceof \League\CommonMark\Extension\Mention\Mention)) {
+          return null;
+        }
+
         // Determine mention visibility.
         if (!$this->currentUser->hasPermission('access profiles')) {
-            $emphasis = new Emphasis();
-            $emphasis->appendChild(new Text('[members only]'));
+            $emphasis = new \League\CommonMark\Inline\Element\Emphasis();
+            $emphasis->appendChild(new \League\CommonMark\Inline\Element\Text('[members only]'));
             return $emphasis;
         }
 
         // Locate the user that is mentioned.
-        $user = $this->userRepository->findUser($mention->getHandle());
+        $user = $this->userRepository->findUser($mention->getMatch());
 
         // The mention isn't valid if the user does not exist.
         if (!$user) {
@@ -183,7 +172,7 @@ $config = [
         'user_url_generator' => [
             'symbol'    => '@',
             'regex'     => '/^[a-z0-9]+/i',
-            'generator' => [$userUrlGenerator, 'generateMention'],
+            'generator' => [$userUrlGenerator, 'createUserMention'],
         ],
     ],
 ];
