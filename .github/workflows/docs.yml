@@ -15,13 +15,6 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - uses: actions/cache@v1
-              with:
-                  path: docs/vendor/bundle
-                  key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-gems-
-
             - uses: ./.github/workflows/build-jekyll-site-action
               with:
                   jekyll_src: docs

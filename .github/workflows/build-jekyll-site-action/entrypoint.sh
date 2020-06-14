@@ -23,7 +23,7 @@ cd $JEKYLL_SRC
 
 echo "::debug ::Starting bundle install"
 bundle config path vendor/bundle
-bundle install
+bundle install --jobs 4 --retry 3
 echo "::debug ::Completed bundle install"
 
 JEKYLL_ENV=production bundle exec jekyll build -d build
