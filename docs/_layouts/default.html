@@ -7,7 +7,7 @@
 {% capture version_type %}{{ version|get_version_type }}{% endcapture %}
 {% capture version_home %}/{{ version }}/{% endcapture %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -139,7 +139,7 @@
         {{ content }}
     </article>
 
-    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)" style="">
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
         <div class="support-banner">
             <p class="support-banner-left">
                 <strong>Love PHP Commonmark?</strong>
@@ -154,16 +154,16 @@
 
             <div class="support-banner-right">
                 <a href="https://www.colinodell.com/sponsor" class="support-button support-button-sponsor">
-                    <i class="fas fa-heart fa-fw"></i> Sponsor
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
                 </a>
 
                 <a href="https://www.paypal.me/colinpodell/10.00" class="support-button support-button-donate">
-                    <i class="fas fa-donate fa-fw"></i> Donate
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
                 </a>
             </div>
 
             <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
-                <i class="fas fa-times"></i>
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
     </aside>
