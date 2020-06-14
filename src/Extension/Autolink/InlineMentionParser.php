@@ -11,12 +11,11 @@
 
 namespace League\CommonMark\Extension\Autolink;
 
+use League\CommonMark\Extension\Mention\MentionExtension;
 use League\CommonMark\Extension\Mention\MentionParser;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
-
-@trigger_error(sprintf('%s is deprecated; use %s instead', InlineMentionParser::class, MentionParser::class), E_USER_DEPRECATED);
 
 /**
  * @deprecated Use MentionParser instead
@@ -35,6 +34,7 @@ final class InlineMentionParser implements InlineParserInterface
      */
     public function __construct($linkPattern, $handleRegex = '/^[A-Za-z0-9_]+(?!\w)/')
     {
+        @trigger_error(sprintf('%s is deprecated; use %s instead', InlineMentionParser::class, MentionParser::class), E_USER_DEPRECATED);
         $this->linkPattern = $linkPattern;
         $this->handleRegex = $handleRegex;
     }
@@ -82,6 +82,8 @@ final class InlineMentionParser implements InlineParserInterface
      */
     public static function createTwitterHandleParser()
     {
+        @trigger_error(sprintf('%s is deprecated; use %s instead', InlineMentionParser::class . '::createTwitterHandleParser', MentionExtension::class . '::registerTwitterHandle'), E_USER_DEPRECATED);
+
         return new self('https://twitter.com/%s', '/^[A-Za-z0-9_]{1,15}(?!\w)/');
     }
 
@@ -90,6 +92,8 @@ final class InlineMentionParser implements InlineParserInterface
      */
     public static function createGithubHandleParser()
     {
+        @trigger_error(sprintf('%s is deprecated; use %s instead', InlineMentionParser::class . '::createGithubHandleParser', MentionExtension::class . '::registerGitHubHandle'), E_USER_DEPRECATED);
+
         // RegEx adapted from https://github.com/shinnn/github-username-regex/blob/master/index.js
         return new self('https://www.github.com/%s', '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/');
     }

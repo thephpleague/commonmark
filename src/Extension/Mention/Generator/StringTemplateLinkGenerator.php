@@ -9,11 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\Mention\LinkGenerator;
+namespace League\CommonMark\Extension\Mention\Generator;
 
-use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Extension\Mention\Mention;
+use League\CommonMark\Inline\Element\AbstractInline;
 
-final class StringTemplateLinkGenerator implements MentionLinkGeneratorInterface
+final class StringTemplateLinkGenerator implements MentionGeneratorInterface
 {
     /** @var string */
     private $urlTemplate;
@@ -23,10 +24,8 @@ final class StringTemplateLinkGenerator implements MentionLinkGeneratorInterface
         $this->urlTemplate = $urlTemplate;
     }
 
-    public function generateLink(string $symbol, string $handle): ?Link
+    public function generateMention(Mention $mention): ?AbstractInline
     {
-        $url = \sprintf($this->urlTemplate, $handle);
-
-        return new Link($url, $symbol . $handle);
+        return $mention->setUrl(\sprintf($this->urlTemplate, $mention->getHandle()));
     }
 }
