@@ -17,7 +17,7 @@ use League\CommonMark\Inline\Element\AbstractInline;
 final class CallbackGenerator implements MentionGeneratorInterface
 {
     /**
-     * A callback function which returns the URL to use, or null if no link should be generated
+     * A callback function which sets the URL on the passed mention and returns the mention, return a new AbstractInline based object or null if the mention is not a match
      *
      * @var callable(Mention): ?AbstractInline
      */
@@ -30,19 +30,19 @@ final class CallbackGenerator implements MentionGeneratorInterface
 
     public function generateMention(Mention $mention): ?AbstractInline
     {
-        $value = \call_user_func_array($this->callback, [$mention]);
-        if ($value === null && !$mention->hasUrl()) {
+        $result = \call_user_func_array($this->callback, [$mention]);
+        if ($result === null) {
             return null;
         }
 
-        if ($value instanceof AbstractInline && $value !== $mention) {
-            return $value;
+        if ($result instanceof AbstractInline && !($result instanceof Mention)) {
+            return $result;
         }
 
-        if ($mention->hasUrl()) {
+        if ($result instanceof Mention && $result->hasUrl()) {
             return $mention;
         }
 
-        throw new \RuntimeException('CallbackGenerator callable must set the URL on the mention, return a new AbstractInline object or null if the mention cannot be generated');
+        throw new \RuntimeException('CallbackGenerator callable must set the URL on the passed mention and return the mention, return a new AbstractInline based object or null if the mention is not a match');
     }
 }

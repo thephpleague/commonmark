@@ -13,8 +13,10 @@ namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
+use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
+use League\CommonMark\Inline\Element\AbstractInline;
 use PHPUnit\Framework\TestCase;
 
 class MentionExtensionTest extends TestCase
@@ -85,7 +87,40 @@ EOT;
                     'symbol'    => '@',
                     'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
                     'generator' => function (Mention $mention) {
-                        $mention->setUrl(\sprintf('https://github.com/%s', $mention->getMatch()));
+                        return $mention->setUrl(\sprintf('https://github.com/%s', $mention->getMatch()));
+                    },
+                ],
+            ],
+        ]);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $this->assertEquals($expected, $converter->convertToHtml($input));
+    }
+
+    public function testConfigObjectImplementingMentionGeneratorInterface(): void
+    {
+        $input = <<<'EOT'
+You can follow the author of this library on Github - he's @colinodell!
+EOT;
+
+        $expected = <<<'EOT'
+<p>You can follow the author of this library on Github - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
+
+EOT;
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new MentionExtension());
+        $environment->setConfig([
+            'mentions' => [
+                'github_handle' => [
+                    'symbol'    => '@',
+                    'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+                    'generator' => new class() implements MentionGeneratorInterface {
+                        public function generateMention(Mention $mention): ?AbstractInline
+                        {
+                            return $mention->setUrl(\sprintf('https://github.com/%s', $mention->getMatch()));
+                        }
                     },
                 ],
             ],

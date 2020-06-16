@@ -35,6 +35,7 @@ class Mention extends Link
      */
     public function __construct(string $symbol, string $match, string $label = null)
     {
+        parent::__construct('');
         $this->symbol = $symbol;
         $this->match = $match;
 
@@ -75,7 +76,7 @@ class Mention extends Link
      */
     public function hasUrl(): bool
     {
-        return isset($this->url);
+        return !empty($this->url);
     }
 
     /**

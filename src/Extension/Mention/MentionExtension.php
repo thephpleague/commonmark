@@ -13,6 +13,7 @@ namespace League\CommonMark\Extension\Mention;
 
 use League\CommonMark\ConfigurableEnvironmentInterface;
 use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 
 final class MentionExtension implements ExtensionInterface
 {
@@ -25,12 +26,14 @@ final class MentionExtension implements ExtensionInterface
                     throw new \RuntimeException("Missing \"$key\" from MentionParser configuration");
                 }
             }
-            if (is_string($mention['generator'])) {
+            if ($mention['generator'] instanceof MentionGeneratorInterface) {
+                $environment->addInlineParser(new MentionParser($mention['symbol'], $mention['regex'], $mention['generator']));
+            } elseif (is_string($mention['generator'])) {
                 $environment->addInlineParser(MentionParser::createWithStringTemplate($mention['symbol'], $mention['regex'], $mention['generator']));
             } elseif (is_callable($mention['generator'])) {
                 $environment->addInlineParser(MentionParser::createWithCallback($mention['symbol'], $mention['regex'], $mention['generator']));
             } else {
-                throw new \RuntimeException('The "generator" provided for the MentionParser configuration must be a string template or a callable');
+                throw new \RuntimeException(sprintf('The "generator" provided for the MentionParser configuration must be a string template, callable, or an object that implements %s.', MentionGeneratorInterface::class));
             }
         }
     }

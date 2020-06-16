@@ -22,11 +22,11 @@ final class CallbackGeneratorTest extends TestCase
     public function testWithStringReturn(): void
     {
         $generator = new CallbackGenerator(function (Mention $mention) {
-            // Stuff the three params into the URL just to prove we received them all properly
-            $mention->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getMatch(), $mention->getLabel(), $mention->getSymbol()));
-
-            // Change the label
-            $mention->setLabel('New Label');
+            return $mention
+                // Stuff the three params into the URL just to prove we received them all properly
+                ->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getMatch(), $mention->getLabel(), $mention->getSymbol()))
+                // Change the label
+                ->setLabel('New Label');
         });
 
         $mention = $generator->generateMention(new Mention('@', 'colinodell'));
@@ -66,6 +66,20 @@ final class CallbackGeneratorTest extends TestCase
         $label = $mention->firstChild();
         assert($label instanceof Text);
         $this->assertSame('[members only]', $label->getContent());
+    }
+
+    public function testWithNoUrlMentionReturn(): void
+    {
+        $this->expectException(\RuntimeException::class);
+
+        $generator = new CallbackGenerator(function (Mention $mention) {
+            // This ensures that if the URL is not set, but the mention is
+            // returned (which is inherited from AbstractInline, then an
+            // exception is properly thrown.
+            return $mention;
+        });
+
+        $generator->generateMention(new Mention('@', 'colinodell'));
     }
 
     public function testWithInvalidReturn(): void

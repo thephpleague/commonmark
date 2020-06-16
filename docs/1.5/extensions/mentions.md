@@ -74,31 +74,82 @@ Note that the URL template (third argument) must be a string, and that the `%s` 
 
 Need more power than simply adding the mention inside a string based URL template? The `MentionExtension` automatically
 detects if the provided generator is a valid [PHP callable](https://www.php.net/manual/en/language.types.callable.php)
-to generate the resulting URL. While this can be a method on a dedicated class (complete with typehints), it can also
+or an object that implements `\League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface` to generate the
+resulting URL. While this can be a method on a dedicated class (complete with typehints), it can also
 be a simple closure that doesn't require any typehints at all:
 
 ```php
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
+use League\CommonMark\Extension\Mention\MentionExtension;
+use League\CommonMark\Inline\Element\AbstractInline;
 
-$callback = function ($mention) {
-    // Checking the type inside the callback gives integrators more freedom should they need to support newer
-    // objects or features down the road.
-    if ($mention instanceof Mention) {
-        $mention->setUrl('...');
-    }
-};
+// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go.
+$environment = Environment::createCommonMarkEnvironment();
+
+// Add the Mention extension.
+$environment->addExtension(new MentionExtension());
+
+// Set your configuration.
+$config = [
+    'mentions' => [
+        'github_issue' => [
+            'symbol'    => '#',
+            'regex'     => '/^\d+/',
+            // Anonymous closure without typehints allows for more flexibility.
+            // By type checking the passed object inside the callback during runtime,
+            // it avoids using hard type-hinted parameters and namespaces which can cause
+            // a PHP fatal. This allows for external custom implementations to weather
+            // potential internal API changes that may occur over time/newer versions.
+            // This kind of implementation should be used by integrators within other
+            // systems (i.e. CMS modules/plugins) which many sites could depend on.
+            'generator' => function ($mention) {
+                // Immediately return if not passed the supported Mention object.
+                if (!($mention instanceof \League\CommonMark\Extension\Mention\Mention)) {
+                  return null;
+                }
+                return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getMatch()));
+            },
+        ],
+        'twitter_handle' => [
+            'symbol'    => '@',
+            'regex'     => '/^[A-Za-z0-9_]{1,15}(?!\w)/',
+            // Anonymous classes (or dedicated services/objects) require implementing a
+            // namespaced interface. While still flexible, you are potentially locked to
+            // using a specific version/API and risk things "breaking" when upgrading to
+            // future versions until you can fix them. This kind of implementation should
+            // be used by end-users (applications) where there are no dependencies that
+            // would be affected.
+            'generator' => new class implements MentionGeneratorInterface {
+                public function generateMention(Mention $mention): ?AbstractInline
+                {
+                    return $mention->setUrl(\sprintf('https://twitter.com/%s', $mention->getMatch()));
+                }
+            },
+        ],
+    ],
+];
+
+// Instantiate the converter engine and start converting some Markdown!
+$converter = new CommonMarkConverter($config, $environment);
+echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
+// Output:
+// <p>Follow me on Twitter: <a href="https://www.github.com/colinodell">@colinodell</a></p>
 ```
 
 This callable will receive a single `Mention` parameter and must either:
-  - Set the URL on the passed `Mention` object.
+  - Return the same passed `Mention` object along with setting the URL; or,
   - Return a new object that extends `\League\CommonMark\Inline\Element\AbstractInline`; or,
   - Return `null` (and not set a URL on the `Mention` object) if the mention isn't a match and should be skipped; not parsed.
 
-Here's an example of how you might use a callback-based parser.  Imagine you want to parse `@username` into custom user profile
-links for your application, but only if the user exists.  You could create a class like this which integrates with your framework:
+Here's a faux-real-world example of how you might use such a callback-based parser for your application. Imagine you
+want to parse `@username` into custom user profile links for your application, but only if the user exists. You could
+create a class like the following which integrates with the framework your application is built on:
 
 ```php
-class UserUrlGenerator
+class UserMentionGenerator
 {
     private $currentUser;
     private $userRepository;
@@ -111,7 +162,7 @@ class UserUrlGenerator
         $this->router = $router;
     }
 
-    public function createUserMention($mention)
+    public function generateMention($mention)
     {
         // Immediately return if not passed the supported Mention object.
         // By checking this here, it avoids using hard type-hinted parameters
@@ -122,7 +173,7 @@ class UserUrlGenerator
           return null;
         }
 
-        // Determine mention visibility.
+        // Determine mention visibility (i.e. member privacy).
         if (!$this->currentUser->hasPermission('access profiles')) {
             $emphasis = new \League\CommonMark\Inline\Element\Emphasis();
             $emphasis->appendChild(new \League\CommonMark\Inline\Element\Text('[members only]'));
@@ -137,13 +188,13 @@ class UserUrlGenerator
             return null;
         }
 
-        // Change the label.
-        $mention->setLabel($user->getFullName());
-
-        // Use the path to their profile as the URL, typecasting to a string in case the service returns
-        // a __toString object; otherwise you will need to figure out a way to extract the string URL
-        // from the service.
-        $mention->setUrl((string) $this->router->generate('user_profile', ['id' => $user->getId()]));
+        return $mention
+            // Change the label.
+            ->setLabel($user->getFullName())
+            // Use the path to their profile as the URL, typecasting to a string in case the service returns
+            // a __toString object; otherwise you will need to figure out a way to extract the string URL
+            // from the service.
+            ->setUrl((string) $this->router->generate('user_profile', ['id' => $user->getId()]));
     }
 }
 ```
@@ -157,8 +208,8 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Mention\MentionExtension;
 
-// Grab your UserUrlGenerator somehow, perhaps from a DI container or instantiate it if needed
-$userUrlGenerator = $container->get(UserUrlGenerator::class);
+// Grab your UserMentionGenerator somehow, perhaps from a DI container or instantiate it if needed
+$userMentionGenerator = $container->get(UserMentionGenerator::class);
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -172,7 +223,11 @@ $config = [
         'user_url_generator' => [
             'symbol'    => '@',
             'regex'     => '/^[a-z0-9]+/i',
-            'generator' => [$userUrlGenerator, 'createUserMention'],
+            'generator' => [$userMentionGenerator, 'generateMention'],
+            // Alternatively, you could also just pass the object itself if you decided
+            // implementing \League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface on
+            // it was worth locking your code to a specific version/API.
+            // 'generator' => $userMentionGenerator,
         ],
     ],
 ];
