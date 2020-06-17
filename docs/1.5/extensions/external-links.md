@@ -51,7 +51,7 @@ This extension supports three configuration options under the `external_link` co
 
 ### `internal_hosts`
 
-This option defines a whitelist of hosts which are considered non-external and should not receive the external link treatment.
+This option defines a list of hosts which are considered non-external and should not receive the external link treatment.
 
 This can be a single host name, like `'example.com'`, which must match **exactly**.
 
