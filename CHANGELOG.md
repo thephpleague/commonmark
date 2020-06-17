@@ -140,4 +140,4 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RegexHelper::REGEX_WHITESPACE`
  - Removed the second `$contents` argument from the `Heading` constructor
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5...latest
