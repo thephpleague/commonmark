@@ -2,7 +2,7 @@ name: Security
 
 on:
     push:
-        branches: [master]
+        branches: [latest]
 
 jobs:
     rips:

@@ -88,16 +88,16 @@ echo $converter->convertToHtml('Hello GFM!');
 | Extension | Purpose | Documentation |
 | --------- | ------- | ------------- |
 | **`GithubFlavoredMarkdownExtension`** | Enables full support for GFM.  Includes the following sub-extensions by default: | |
-| `AutolinkExtension` | Enables automatic linking of URLs within text without needing to wrap them with Markdown syntax | [Documentation](https://github.com/thephpleague/commonmark/blob/master/src/Extension/Autolink/README.md) |
+| `AutolinkExtension` | Enables automatic linking of URLs within text without needing to wrap them with Markdown syntax | [Documentation](https://github.com/thephpleague/commonmark/blob/1.3/src/Extension/Autolink/README.md) |
 | `DisallowedRawHtmlExtension` | Disables certain kinds of HTML tags that could affect page rendering | |
-| `StrikethroughExtension` | Allows using tilde characters (`~~`) for ~strikethrough~ formatting | [Documentation](https://github.com/thephpleague/commonmark/blob/master/src/Extension/Strikethrough/README.md) |
-| `TableExtension` | Enables you to create HTML tables | [Documentation](https://github.com/thephpleague/commonmark/blob/master/src/Extension/Table/README.md) |
-| `TaskListExtension` | Allows the creation of task lists | [Documentation](https://github.com/thephpleague/commonmark/blob/master/src/Extension/TaskList/README.md) |
+| `StrikethroughExtension` | Allows using tilde characters (`~~`) for ~strikethrough~ formatting | [Documentation](https://github.com/thephpleague/commonmark/blob/1.3/src/Extension/Strikethrough/README.md) |
+| `TableExtension` | Enables you to create HTML tables | [Documentation](https://github.com/thephpleague/commonmark/blob/1.3/src/Extension/Table/README.md) |
+| `TaskListExtension` | Allows the creation of task lists | [Documentation](https://github.com/thephpleague/commonmark/blob/1.3/src/Extension/TaskList/README.md) |
 
 ### Other Useful Extensions
 
 | Extension | Purpose | Documentation |
 | --------- | ------- | ------------- |
-| `ExternalLinkExtension` | Tags external links with additional markup | [Documentation](https://github.com/thephpleague/commonmark/blob/master/src/Extension/ExternalLink/README.md) |
-| `InlinesOnlyExtension` | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | [Documentation](https://github.com/thephpleague/commonmark/blob/master/src/Extension/InlinesOnly/README.md) |
-| `SmartPunctExtension` | Intelligently converts ASCII quotes, dashes, and ellipses to their fancy Unicode equivalents | [Documentation](https://github.com/thephpleague/commonmark/blob/master/src/Extension/SmartPunct/README.md) |
+| `ExternalLinkExtension` | Tags external links with additional markup | [Documentation](https://github.com/thephpleague/commonmark/blob/1.3/src/Extension/ExternalLink/README.md) |
+| `InlinesOnlyExtension` | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | [Documentation](https://github.com/thephpleague/commonmark/blob/1.3/src/Extension/InlinesOnly/README.md) |
+| `SmartPunctExtension` | Intelligently converts ASCII quotes, dashes, and ellipses to their fancy Unicode equivalents | [Documentation](https://github.com/thephpleague/commonmark/blob/1.3/src/Extension/SmartPunct/README.md) |

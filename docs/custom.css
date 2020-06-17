@@ -9,9 +9,6 @@ body {
 blockquote {
     border-left: 4px solid #ccc;
     font-style:italic;
-}
-
-blockquote {
     box-sizing: border-box;
     padding:0 10px;
 }
@@ -37,7 +34,7 @@ header .header-content:after {
 header .title {
     float: left;
     text-align:left;
-    font-family: "Museo 100";
+    font-family: "Museo 100", sans-serif;
     font-weight: bold;
     margin:0;
     padding:0;
@@ -61,7 +58,7 @@ header .search {
 }
 
 #doc-search {
-    font-family: "Museo Sans 500";
+    font-family: "Museo Sans 500", sans-serif;
     font-weight: normal;
     font-size: 16px;
     border:1px solid #e8e8e8;
@@ -74,12 +71,12 @@ header .search {
 header .versions {
     float:left;
     display:none;
-    font-family: "Museo Sans 500";
+    font-family: "Museo Sans 500", sans-serif;
     font-weight: normal;
 }
 
 header .versions h2 {
-    font-family: "Museo Sans 500";
+    font-family: "Museo Sans 500", sans-serif;
     font-weight: normal;
     font-size: 16px;
     background:#1672ce;

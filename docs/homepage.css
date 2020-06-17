@@ -1,9 +1,6 @@
 blockquote {
     border-left: 4px solid #ccc;
     font-style:italic;
-}
-
-blockquote {
     box-sizing: border-box;
     padding:0 10px;
 }
@@ -38,19 +35,19 @@ main div > code {
     background-size: cover;
     max-width: none;
     color:#fff;
-    font-family: "Museo 300";
+    font-family: "Museo 300", sans-serif;
 }
 
 .homepage header h1 {
     margin:.3em auto;
-    font-family: "Museo 300";
+    font-family: "Museo 300", sans-serif;
     line-height: 250%;
     font-weight: normal;
 }
 
 .homepage header h2 {
     margin:0 auto;
-    font-family: "Museo 300";
+    font-family: "Museo 300", sans-serif;
     color:#ff4043;
     font-size:36px;
     line-height:1.33;
@@ -129,7 +126,7 @@ main div > code {
 
 .homepage main {
     color: #2b3d50;
-    font-family: "Museo 300";
+    font-family: "Museo 300", sans-serif;
     line-height: 160%;
     font-weight: normal;
     background:#19242f;
@@ -170,7 +167,12 @@ main div > code {
     background: #F2F7FC;
     border-bottom:1px solid #CFE4F9;
     color:#666;
-    font:normal 18px/1.5 "Museo 300";
+    line-height: 1.5;
+    font-weight: normal;
+    font-variant: normal;
+    font-style: normal;
+    font-size: 18px;
+    font-family: "Museo 300", sans-serif;
 }
 
 .features h1 {
@@ -197,7 +199,12 @@ main div > code {
 
 .highlights .description {
     color:#666;
-    font:normal 18px/1.5 "Museo 300";
+    line-height: 1.5;
+    font-weight: normal;
+    font-variant: normal;
+    font-style: normal;
+    font-size: 18px;
+    font-family: "Museo 300", sans-serif;
     text-align: left;
 }
 
@@ -221,7 +228,12 @@ main div > code {
 
 .highlights li p {
     margin:0;
-    font:normal 18px/1.4 "Museo 300";
+    line-height: 1.4;
+    font-weight: normal;
+    font-variant: normal;
+    font-style: normal;
+    font-size: 18px;
+    font-family: "Museo 300", sans-serif;
     color:#ff4043;
 }
 

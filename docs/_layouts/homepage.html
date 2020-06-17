@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="homepage">
+<html class="homepage" lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,8 +49,8 @@
     <a href="https://twitter.com/{{ site.data.project.author.twitter_account }}"><img src="https://img.shields.io/badge/author-@{{ site.data.project.author.twitter_account }}-blue.svg?style=flat-square" alt="Author"></a>
     <a href="https://github.com/thephpleague/{{ site.data.project.repository }}/releases"><img src="https://img.shields.io/packagist/v/league/{{ site.data.project.repository }}.svg?style=flat-square" alt="Latest Version"></a>
     <a href="https://packagist.org/packages/league/{{ site.data.project.repository }}"><img src="https://img.shields.io/packagist/dt/league/{{ site.data.project.repository }}.svg?style=flat-square" alt="Total Downloads"></a>
-    <a href="https://github.com/thephpleague/{{ site.data.project.repository }}/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-BSD--3-orange.svg?style=flat-square" alt="Software License"></a>
-    <a href="https://github.com/thephpleague/commonmark/actions?query=workflow%3ATests+branch%3Amaster"><img src="https://img.shields.io/github/workflow/status/thephpleague/{{ site.data.project.repository }}/Tests/master.svg?style=flat-square" alt="Build Status"></a>
+    <a href="https://github.com/thephpleague/{{ site.data.project.repository }}/blob/latest/LICENSE"><img src="https://img.shields.io/badge/license-BSD--3-orange.svg?style=flat-square" alt="Software License"></a>
+    <a href="https://github.com/thephpleague/commonmark/actions?query=workflow%3ATests+branch%3Alatest"><img src="https://img.shields.io/github/workflow/status/thephpleague/{{ site.data.project.repository }}/Tests/latest.svg?style=flat-square" alt="Build Status"></a>
     <a href="https://scrutinizer-ci.com/g/thephpleague/{{ site.data.project.repository }}/code-structure"><img src="https://img.shields.io/scrutinizer/coverage/g/thephpleague/{{ site.data.project.repository }}.svg?style=flat-square" alt="Coverage Status"></a>
     <a href="https://scrutinizer-ci.com/g/thephpleague/{{ site.data.project.repository }}"><img src="https://img.shields.io/scrutinizer/g/thephpleague/{{ site.data.project.repository }}.svg?style=flat-square" alt="Quality Score"></a>
   </div>
@@ -85,7 +85,7 @@
     </div>
   </div>
 
-    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)" style="">
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
         <div class="support-banner">
             <p class="support-banner-left">
                 <strong>Love PHP Commonmark?</strong>
@@ -100,16 +100,16 @@
 
             <div class="support-banner-right">
                 <a href="https://github.com/sponsors/colinodell" class="support-button support-button-sponsor">
-                    <i class="fas fa-heart fa-fw"></i> Sponsor
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
                 </a>
 
                 <a href="https://www.paypal.me/colinpodell/10.00" class="support-button support-button-donate">
-                    <i class="fas fa-donate fa-fw"></i> Donate
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
                 </a>
             </div>
 
             <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
-                <i class="fas fa-times"></i>
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
     </aside>
