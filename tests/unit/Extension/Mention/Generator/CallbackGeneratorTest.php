@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Functional\Extension\Mention\Generator;
+namespace League\CommonMark\Tests\Unit\Extension\Mention\Generator;
 
 use League\CommonMark\Extension\Mention\Generator\CallbackGenerator;
 use League\CommonMark\Extension\Mention\Mention;
@@ -77,6 +77,18 @@ final class CallbackGeneratorTest extends TestCase
             // returned (which is inherited from AbstractInline, then an
             // exception is properly thrown.
             return $mention;
+        });
+
+        $generator->generateMention(new Mention('@', 'colinodell'));
+    }
+
+    public function testWithNewMentionButNoUrlReturn(): void
+    {
+        $this->expectException(\RuntimeException::class);
+
+        $generator = new CallbackGenerator(function (Mention $mention) {
+            // Test what happens when returning a new mention without a URL
+            return new Mention('@', 'foo');
         });
 
         $generator->generateMention(new Mention('@', 'colinodell'));

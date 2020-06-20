@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Functional\Extension\Mention\Generator;
+namespace League\CommonMark\Tests\Unit\Extension\Mention\Generator;
 
 use League\CommonMark\Extension\Mention\Generator\StringTemplateLinkGenerator;
 use League\CommonMark\Extension\Mention\Mention;
@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 final class StringTemplateLinkGeneratorTest extends TestCase
 {
-    public function testIt()
+    public function testIt(): void
     {
         $generator = new StringTemplateLinkGenerator('https://www.twitter.com/%s');
 
