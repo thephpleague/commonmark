@@ -13,9 +13,12 @@ namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
-use League\CommonMark\Extension\Mention\LinkGenerator\MentionLinkGeneratorInterface;
-use League\CommonMark\Extension\Mention\LinkGenerator\StringTemplateLinkGenerator;
+use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
+use League\CommonMark\Extension\Mention\Generator\StringTemplateLinkGenerator;
+use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionParser;
+use League\CommonMark\Inline\Element\Emphasis;
+use League\CommonMark\Inline\Element\Text;
 use PHPUnit\Framework\TestCase;
 
 final class MentionParserTest extends TestCase
@@ -40,7 +43,7 @@ final class MentionParserTest extends TestCase
         $input = 'See#123 for more information.';
         $expected = '<p>See#123 for more information.</p>';
 
-        $mentionParser = new MentionParser('#', '/^\d+/', $this->createMock(MentionLinkGeneratorInterface::class));
+        $mentionParser = new MentionParser('#', '/^\d+/', $this->createMock(MentionGeneratorInterface::class));
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -55,7 +58,7 @@ final class MentionParserTest extends TestCase
         $input = 'See #123 for more information.';
         $expected = '<p>See #123 for more information.</p>';
 
-        $mentionParser = new MentionParser('@', '/^\d+/', $this->createMock(MentionLinkGeneratorInterface::class));
+        $mentionParser = new MentionParser('@', '/^\d+/', $this->createMock(MentionGeneratorInterface::class));
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -70,7 +73,7 @@ final class MentionParserTest extends TestCase
         $input = 'See #123 for more information.';
         $expected = '<p>See #123 for more information.</p>';
 
-        $mentionParser = new MentionParser('#', '/^[a-z]+/', $this->createMock(MentionLinkGeneratorInterface::class));
+        $mentionParser = new MentionParser('#', '/^[a-z]+/', $this->createMock(MentionGeneratorInterface::class));
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -85,8 +88,8 @@ final class MentionParserTest extends TestCase
         $input = 'See #123 for more information.';
         $expected = '<p>See #123 for more information.</p>';
 
-        $returnsNull = $this->createMock(MentionLinkGeneratorInterface::class);
-        $returnsNull->method('generateLink')->willReturn(null);
+        $returnsNull = $this->createMock(MentionGeneratorInterface::class);
+        $returnsNull->method('generateMention')->willReturn(null);
 
         $mentionParser = new MentionParser('#', '/^\d+/', $returnsNull);
 
@@ -100,14 +103,12 @@ final class MentionParserTest extends TestCase
 
     public function testMentionParserUsingCallback(): void
     {
-        $callable = function ($handle, &$label, $symbol) {
-            // Stuff the three params into the URL just to prove we received them all properly
-            $url = \sprintf('https://www.example.com/%s/%s/%s', $handle, $label, $symbol);
-
-            // Change the label (by reference)
-            $label = 'Replaced Label';
-
-            return $url;
+        $callable = function (Mention $mention) {
+            return $mention
+                // Stuff the three params into the URL just to prove we received them all properly
+                ->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getIdentifier(), $mention->getLabel(), $mention->getSymbol()))
+                // Change the label
+                ->setLabel('Replaced Label');
         };
 
         $input = 'This should parse #123.';
@@ -123,66 +124,26 @@ final class MentionParserTest extends TestCase
         $this->assertEquals($expected, \rtrim($converter->convertToHtml($input)));
     }
 
-    public function testTwitterMentionParser(): void
+    public function testMentionParserUsingCallbackReturnsAbstractInline(): void
     {
-        $input = <<<'EOT'
-You can follow the author of this library on Twitter - he's @colinodell!
+        $callable = function (Mention $mention) {
+            // Pretend callback does some access logic to determine visibility.
+            $emphasis = new Emphasis();
+            $emphasis->appendChild(new Text('[members only]'));
 
-Usernames like @commonmarkisthebestmarkdownspec are too long.
+            return $emphasis;
+        };
 
-Security issues should be emailed to colinodell@gmail.com
-EOT;
+        $input = 'This should parse #123.';
+        $expected = '<p>This should parse <em>[members only]</em>.</p>';
 
-        $expected = <<<'EOT'
-<p>You can follow the author of this library on Twitter - he's <a href="https://twitter.com/colinodell">@colinodell</a>!</p>
-<p>Usernames like @commonmarkisthebestmarkdownspec are too long.</p>
-<p>Security issues should be emailed to colinodell@gmail.com</p>
-
-EOT;
+        $mentionParser = MentionParser::createWithCallback('#', '/^\d+/', $callable);
 
         $environment = Environment::createCommonMarkEnvironment();
-        $environment->addInlineParser(MentionParser::createTwitterHandleParser());
+        $environment->addInlineParser($mentionParser);
 
         $converter = new CommonMarkConverter([], $environment);
 
-        $this->assertEquals($expected, $converter->convertToHtml($input));
-    }
-
-    public function testGithubMentionParser(): void
-    {
-        $input = <<<'EOT'
-You can follow the author of this library on Github - he's @colinodell!
-EOT;
-
-        $expected = <<<'EOT'
-<p>You can follow the author of this library on Github - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
-
-EOT;
-
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addInlineParser(MentionParser::createGitHubHandleParser());
-
-        $converter = new CommonMarkConverter([], $environment);
-
-        $this->assertEquals($expected, $converter->convertToHtml($input));
-    }
-
-    public function testGithubIssueParser(): void
-    {
-        $input = <<<'EOT'
-This feature was implemented thanks to #473 by Mark Carver.
-EOT;
-
-        $expected = <<<'EOT'
-<p>This feature was implemented thanks to <a href="https://github.com/thephpleague/commonmark/issues/473">#473</a> by Mark Carver.</p>
-
-EOT;
-
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addInlineParser(MentionParser::createGitHubIssueParser('thephpleague/commonmark'));
-
-        $converter = new CommonMarkConverter([], $environment);
-
-        $this->assertEquals($expected, $converter->convertToHtml($input));
+        $this->assertEquals($expected, \rtrim($converter->convertToHtml($input)));
     }
 }
