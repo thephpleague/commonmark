@@ -180,6 +180,7 @@ main div > code {
 
 .project-logos {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }
@@ -191,8 +192,8 @@ main div > code {
 }
 
 .project-logos img {
-    height: 75px;
-    max-width: 200px;
+    height: 70px;
+    max-width: 180px;
 }
 
 .sponsors a {
