@@ -115,6 +115,25 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
     }
 
+    public function testHeadingPermalinksWithEmptySymbol()
+    {
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $config = [
+            'heading_permalink' => [
+                'symbol' => '',
+            ],
+        ];
+
+        $converter = new CommonMarkConverter($config, $environment);
+
+        $input = '# Hello World!';
+        $expected = '<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink"></a>Hello World!</h1>';
+
+        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+    }
+
     public function testHeadingPermalinksWithInvalidInsertConfigurationValue()
     {
         $this->expectException(\RuntimeException::class);
