@@ -77,4 +77,24 @@ final class MentionTest extends TestCase
 
         $this->assertSame($child, $child2);
     }
+
+    public function testLabelFunctionsWhenLabelDetached(): void
+    {
+        $mention = new Mention('@', 'colinodell');
+
+        $this->assertSame('@colinodell', $mention->getLabel());
+
+        $mention->detachChildren();
+        $this->assertCount(0, $mention->children());
+        $this->assertNull($mention->getLabel());
+
+        $mention->setLabel('Colin O\'Dell');
+
+        $this->assertSame('Colin O\'Dell', $mention->getLabel());
+
+        $this->assertCount(1, $mention->children());
+        $this->assertInstanceOf(Text::class, $child = $mention->firstChild());
+        \assert($child instanceof Text);
+        $this->assertSame('Colin O\'Dell', $child->getContent());
+    }
 }

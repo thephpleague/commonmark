@@ -25,9 +25,6 @@ class Mention extends Link
     /** @var string */
     private $identifier;
 
-    /** @var Text */
-    private $label;
-
     /**
      * @param string $symbol
      * @param string $identifier
@@ -35,24 +32,22 @@ class Mention extends Link
      */
     public function __construct(string $symbol, string $identifier, string $label = null)
     {
-        parent::__construct('');
         $this->symbol = $symbol;
         $this->identifier = $identifier;
 
-        if (empty($label)) {
-            $label = "$symbol$identifier";
-        }
-
-        $this->label = new Text($label);
-        $this->appendChild($this->label);
+        parent::__construct('', $label ?? \sprintf('%s%s', $symbol, $identifier));
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
-        return $this->label->getContent();
+        if (($labelNode = $this->findLabelNode()) === null) {
+            return null;
+        }
+
+        return $labelNode->getContent();
     }
 
     /**
@@ -86,8 +81,24 @@ class Mention extends Link
      */
     public function setLabel(string $label): self
     {
-        $this->label->setContent($label);
+        if (($labelNode = $this->findLabelNode()) === null) {
+            $labelNode = new Text();
+            $this->prependChild($labelNode);
+        }
+
+        $labelNode->setContent($label);
 
         return $this;
+    }
+
+    private function findLabelNode(): ?Text
+    {
+        foreach ($this->children() as $child) {
+            if ($child instanceof Text) {
+                return $child;
+            }
+        }
+
+        return null;
     }
 }
