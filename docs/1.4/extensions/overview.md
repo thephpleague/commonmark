@@ -18,19 +18,19 @@ many other common use-cases. Most of these extensions started out as 3rd-party c
 since been officially adopted by this library in an effort to ensure future compatibility and to provide an easy way
 to enhance your experience out-of-the-box depending on your specific use-cases.
 
-| GFM | Extension | Purpose | Version Introduced |
-| --- | --------- | ------- | ------------------ |
-|  ✓  | [Autolinks] | Enables automatic linking of URLs within text without needing to wrap them with Markdown syntax | `1.3.0` |
-|  ✓  | [Disallowed Raw HTML] | Disables certain kinds of HTML tags that could affect page rendering | `1.3.0` |
-|     | [External Links] | Tags external links with additional markup | `1.3.0` |
-|     | **[GitHub Flavored Markdown]** | Enables full support for GFM. Automatically includes the extensions checked in the `GFM` column (though you can certainly add them individually if you wish): | `1.3.0` |
-|     | [Heading Permalinks] | Makes heading elements linkable | `1.4.0` |
-|     | [Inlines Only] | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | `1.3.0` |
-|  ✓  | [Strikethrough] | Allows using tilde characters (`~~`) for ~strikethrough~ formatting | `1.3.0` |
-|  ✓  | [Tables] | Enables you to create HTML tables | `1.3.0` |
-|     | [Table of Contents] | Automatically inserts links to the headings at the top of your document | `1.4.0` |
-|  ✓  | [Task Lists] | Allows the creation of task lists | `1.3.0` |
-|     | [Smart Punctuation] | Intelligently converts ASCII quotes, dashes, and ellipses to their fancy Unicode equivalents | `1.3.0` |
+| Extension | Purpose | Version Introduced | GFM |
+| --------- | ------- | ------------------ | --- |
+| [Autolinks] | Enables automatic linking of URLs within text without needing to wrap them with Markdown syntax | `1.3.0`  | <i class="fab fa-github"></i> |
+| [Disallowed Raw HTML] | Disables certain kinds of HTML tags that could affect page rendering | `1.3.0`  | <i class="fab fa-github"></i> |
+| [External Links] | Tags external links with additional markup | `1.3.0` | |
+| **[GitHub Flavored Markdown]** | Enables full support for GFM. Automatically includes the extensions noted in the `GFM` column (though you can certainly add them individually if you wish): | `1.3.0` | |
+| [Heading Permalinks] | Makes heading elements linkable | `1.4.0` | |
+| [Inlines Only] | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | `1.3.0` | |
+| [Strikethrough] | Allows using tilde characters (`~~`) for ~strikethrough~ formatting | `1.3.0`  | <i class="fab fa-github"></i> |
+| [Tables] | Enables you to create HTML tables | `1.3.0`  | <i class="fab fa-github"></i> |
+| [Table of Contents] | Automatically inserts links to the headings at the top of your document | `1.4.0` | |
+| [Task Lists] | Allows the creation of task lists | `1.3.0`  | <i class="fab fa-github"></i> |
+| [Smart Punctuation] | Intelligently converts ASCII quotes, dashes, and ellipses to their fancy Unicode equivalents | `1.3.0` | |
 
 ## Usage
 
