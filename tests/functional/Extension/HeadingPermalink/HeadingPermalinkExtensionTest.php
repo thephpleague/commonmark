@@ -76,6 +76,26 @@ final class HeadingPermalinkExtensionTest extends TestCase
         yield ["Test\n----", '<h2>Test<a id="custom-prefix-test" href="#test" name="test" class="custom-class" aria-hidden="true" title="Link">🦄</a></h2>'];
     }
 
+    public function testHeadingPermalinksWithDeprecatedInnerContents()
+    {
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $config = [
+            'heading_permalink' => [
+                'inner_contents' => HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS,
+                'symbol'         => '#',
+            ],
+        ];
+
+        $converter = new CommonMarkConverter($config, $environment);
+
+        $input = '# Hello World!';
+        $expected = sprintf('<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS);
+
+        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+    }
+
     public function testHeadingPermalinksWithEmptyIdPrefix()
     {
         $environment = Environment::createCommonMarkEnvironment();
