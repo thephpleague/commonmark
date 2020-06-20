@@ -120,14 +120,14 @@ $config = [
             'generator' => new class implements MentionGeneratorInterface {
                  public function generateMention(Mention $mention): ?AbstractInline
                  {
-                     return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getMatch()));
+                     return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getIdentifier()));
                  }
              },
         ],
         'github_issue' => [
             'symbol'    => '#',
             'regex'     => '/^\d+/',
-            // Anonymous closures (with optional typehints) are also supported.
+            // Any type of callable, including anonymous closures, (with optional typehints) are also supported.
             // This allows for better compatibility between different major versions of CommonMark.
             // However, you sacrifice the ability to type-check which means automated development tools
             // may not notice if your code is no longer compatible with new versions - you'll need to
@@ -139,7 +139,7 @@ $config = [
                     return null;
                 }
 
-                return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getMatch()));
+                return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getIdentifier()));
             },
         ],
 
@@ -186,7 +186,7 @@ class UserMentionGenerator implements MentionGeneratorInterface
         }
 
         // Locate the user that is mentioned.
-        $user = $this->userRepository->findUser($mention->getMatch());
+        $user = $this->userRepository->findUser($mention->getIdentifier());
 
         // The mention isn't valid if the user does not exist.
         if (!$user) {

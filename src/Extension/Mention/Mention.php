@@ -23,24 +23,24 @@ class Mention extends Link
     private $symbol;
 
     /** @var string */
-    private $match;
+    private $identifier;
 
     /** @var Text */
     private $label;
 
     /**
      * @param string $symbol
-     * @param string $match
+     * @param string $identifier
      * @param string $label
      */
-    public function __construct(string $symbol, string $match, string $label = null)
+    public function __construct(string $symbol, string $identifier, string $label = null)
     {
         parent::__construct('');
         $this->symbol = $symbol;
-        $this->match = $match;
+        $this->identifier = $identifier;
 
         if (empty($label)) {
-            $label = "$symbol$match";
+            $label = "$symbol$identifier";
         }
 
         $this->label = new Text($label);
@@ -58,9 +58,9 @@ class Mention extends Link
     /**
      * @return string
      */
-    public function getMatch(): string
+    public function getIdentifier(): string
     {
-        return $this->match;
+        return $this->identifier;
     }
 
     /**

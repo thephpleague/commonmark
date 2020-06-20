@@ -106,7 +106,7 @@ final class MentionParserTest extends TestCase
         $callable = function (Mention $mention) {
             return $mention
                 // Stuff the three params into the URL just to prove we received them all properly
-                ->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getMatch(), $mention->getLabel(), $mention->getSymbol()))
+                ->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getIdentifier(), $mention->getLabel(), $mention->getSymbol()))
                 // Change the label
                 ->setLabel('Replaced Label');
         };

@@ -58,15 +58,15 @@ final class MentionParser implements InlineParserInterface
         $cursor->advance();
 
         // Parse the mention match value
-        $match = $cursor->match($this->mentionRegex);
-        if (empty($match)) {
+        $identifier = $cursor->match($this->mentionRegex);
+        if ($identifier === null) {
             // Regex failed to match; this isn't a valid mention
             $cursor->restoreState($previousState);
 
             return false;
         }
 
-        $mention = $this->mentionGenerator->generateMention(new Mention($this->symbol, $match));
+        $mention = $this->mentionGenerator->generateMention(new Mention($this->symbol, $identifier));
 
         if ($mention === null) {
             $cursor->restoreState($previousState);

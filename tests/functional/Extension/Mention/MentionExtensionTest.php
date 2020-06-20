@@ -87,7 +87,7 @@ EOT;
                     'symbol'    => '@',
                     'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
                     'generator' => function (Mention $mention) {
-                        return $mention->setUrl(\sprintf('https://github.com/%s', $mention->getMatch()));
+                        return $mention->setUrl(\sprintf('https://github.com/%s', $mention->getIdentifier()));
                     },
                 ],
             ],
@@ -119,7 +119,7 @@ EOT;
                     'generator' => new class() implements MentionGeneratorInterface {
                         public function generateMention(Mention $mention): ?AbstractInline
                         {
-                            return $mention->setUrl(\sprintf('https://github.com/%s', $mention->getMatch()));
+                            return $mention->setUrl(\sprintf('https://github.com/%s', $mention->getIdentifier()));
                         }
                     },
                 ],
