@@ -11,11 +11,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\Mention\LinkGenerator;
+namespace League\CommonMark\Extension\Mention\Generator;
 
-use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Extension\Mention\Mention;
+use League\CommonMark\Node\Inline\AbstractInline;
 
-interface MentionLinkGeneratorInterface
+interface MentionGeneratorInterface
 {
-    public function generateLink(string $symbol, string $handle): ?Link;
+    public function generateMention(Mention $mention): ?AbstractInline;
 }

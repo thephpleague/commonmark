@@ -43,7 +43,7 @@ echo $converter->convertToHtml('I successfully installed the https://github.com/
 
 ## `@mention`-style Autolinking
 
-As of v1.5, [mention autolinking is now handled by a Mention Parser outside of this extension](/1.5/extensions/mention/).
+As of v1.5, [mention autolinking is now handled by a separate Mention extension](/1.5/extensions/mentions/).
 
 [link-league-commonmark]: https://github.com/thephpleague/commonmark
 [link-gfm-spec-autolinking]: https://github.github.com/gfm/#autolinks-extension-

@@ -118,3 +118,25 @@ class MyCustomLinkRenderer implements InlineRendererInterface
     }
 }
 ```
+
+## Adding Icons
+
+You can also use CSS to automagically add an external link icon by targeting the `html_class` given in the configuration:
+
+```css
+// Font Awesome example:
+a[target="_blank"]::after,
+a.external::after {
+   content: "\f08e";
+   font: normal normal normal 14px/1 FontAwesome;
+}
+
+// Glyphicon example:
+a[target="_blank"]::after,
+a.external::after {
+  @extend .glyphicon;
+  content: "\e164";
+  margin-left: .5em;
+  margin-right: .25em;
+}
+```

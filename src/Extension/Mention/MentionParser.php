@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Mention;
 
-use League\CommonMark\Extension\Mention\LinkGenerator\CallbackLinkGenerator;
-use League\CommonMark\Extension\Mention\LinkGenerator\MentionLinkGeneratorInterface;
-use League\CommonMark\Extension\Mention\LinkGenerator\StringTemplateLinkGenerator;
+use League\CommonMark\Extension\Mention\Generator\CallbackGenerator;
+use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
+use League\CommonMark\Extension\Mention\Generator\StringTemplateLinkGenerator;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\InlineParserContext;
 
@@ -36,17 +36,17 @@ final class MentionParser implements InlineParserInterface
     private $mentionRegex;
 
     /**
-     * @var MentionLinkGeneratorInterface
+     * @var MentionGeneratorInterface
      *
      * @psalm-readonly
      */
-    private $linkGenerator;
+    private $mentionGenerator;
 
-    public function __construct(string $symbol, string $mentionRegex, MentionLinkGeneratorInterface $linkGenerator)
+    public function __construct(string $symbol, string $mentionRegex, MentionGeneratorInterface $mentionGenerator)
     {
-        $this->symbol        = $symbol;
-        $this->mentionRegex  = $mentionRegex;
-        $this->linkGenerator = $linkGenerator;
+        $this->symbol           = $symbol;
+        $this->mentionRegex     = $mentionRegex;
+        $this->mentionGenerator = $mentionGenerator;
     }
 
     /**
@@ -74,24 +74,24 @@ final class MentionParser implements InlineParserInterface
         // Advance past the symbol to keep parsing simpler
         $cursor->advance();
 
-        // Parse the handle
-        $handle = $cursor->match($this->mentionRegex);
-        if ($handle === null) {
+        // Parse the identifier
+        $identifier = $cursor->match($this->mentionRegex);
+        if ($identifier === null) {
             // Regex failed to match; this isn't a valid mention
             $cursor->restoreState($previousState);
 
             return false;
         }
 
-        $link = $this->linkGenerator->generateLink($this->symbol, $handle);
+        $mention = $this->mentionGenerator->generateMention(new Mention($this->symbol, $identifier));
 
-        if ($link === null) {
+        if ($mention === null) {
             $cursor->restoreState($previousState);
 
             return false;
         }
 
-        $inlineContext->getContainer()->appendChild($link);
+        $inlineContext->getContainer()->appendChild($mention);
 
         return true;
     }
@@ -103,22 +103,6 @@ final class MentionParser implements InlineParserInterface
 
     public static function createWithCallback(string $symbol, string $mentionRegex, callable $callback): MentionParser
     {
-        return new self($symbol, $mentionRegex, new CallbackLinkGenerator($callback));
-    }
-
-    public static function createTwitterHandleParser(): MentionParser
-    {
-        return self::createWithStringTemplate('@', '/^[A-Za-z0-9_]{1,15}(?!\w)/', 'https://twitter.com/%s');
-    }
-
-    public static function createGitHubHandleParser(): MentionParser
-    {
-        // RegEx adapted from https://github.com/shinnn/github-username-regex/blob/master/index.js
-        return self::createWithStringTemplate('@', '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/', 'https://github.com/%s');
-    }
-
-    public static function createGitHubIssueParser(string $project): MentionParser
-    {
-        return self::createWithStringTemplate('#', '/^\d+/', \sprintf('https://github.com/%s/issues/%%d', $project));
+        return new self($symbol, $mentionRegex, new CallbackGenerator($callback));
     }
 }

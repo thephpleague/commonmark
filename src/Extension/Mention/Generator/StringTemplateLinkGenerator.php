@@ -11,11 +11,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\Mention\LinkGenerator;
+namespace League\CommonMark\Extension\Mention\Generator;
 
-use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Extension\Mention\Mention;
+use League\CommonMark\Node\Inline\AbstractInline;
 
-final class StringTemplateLinkGenerator implements MentionLinkGeneratorInterface
+final class StringTemplateLinkGenerator implements MentionGeneratorInterface
 {
     /** @var string */
     private $urlTemplate;
@@ -25,10 +26,10 @@ final class StringTemplateLinkGenerator implements MentionLinkGeneratorInterface
         $this->urlTemplate = $urlTemplate;
     }
 
-    public function generateLink(string $symbol, string $handle): ?Link
+    public function generateMention(Mention $mention): ?AbstractInline
     {
-        $url = \sprintf($this->urlTemplate, $handle);
+        $mention->setUrl(\sprintf($this->urlTemplate, $mention->getIdentifier()));
 
-        return new Link($url, $symbol . $handle);
+        return $mention;
     }
 }

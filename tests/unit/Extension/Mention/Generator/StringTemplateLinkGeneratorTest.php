@@ -11,9 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit\Extension\Mention\LinkGenerator;
+namespace League\CommonMark\Tests\Unit\Extension\Mention\Generator;
 
-use League\CommonMark\Extension\Mention\LinkGenerator\StringTemplateLinkGenerator;
+use League\CommonMark\Extension\Mention\Generator\StringTemplateLinkGenerator;
+use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Node\Inline\Text;
 use PHPUnit\Framework\TestCase;
 
@@ -23,11 +24,12 @@ final class StringTemplateLinkGeneratorTest extends TestCase
     {
         $generator = new StringTemplateLinkGenerator('https://www.twitter.com/%s');
 
-        $link = $generator->generateLink('@', 'colinodell');
+        $mention = $generator->generateMention(new Mention('@', 'colinodell'));
+        \assert($mention instanceof Mention);
 
-        $this->assertSame('https://www.twitter.com/colinodell', $link->getUrl());
+        $this->assertSame('https://www.twitter.com/colinodell', $mention->getUrl());
 
-        $label = $link->firstChild();
+        $label = $mention->firstChild();
         \assert($label instanceof Text);
         $this->assertSame('@colinodell', $label->getLiteral());
     }

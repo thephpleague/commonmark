@@ -91,17 +91,15 @@ See the [Extensions documentation](https://commonmark.thephpleague.com/customiza
 
 ### Included Extensions
 
-See [our extension documentation](https://commonmark.thephpleague.com/customization/extensions/#included-extensions) for a full list of extensions bundled with this library.
+See [our extension documentation](https://commonmark.thephpleague.com/extensions/overview) for a full list of extensions bundled with this library.
 
 ### Community Extensions
 
 Custom parsers/renderers can be bundled into extensions which extend CommonMark.  Here are some that you may find interesting:
 
- - [CommonMark Attributes Extension](https://github.com/webuni/commonmark-attributes-extension) - Adds a syntax to define attributes on the various HTML elements.
  - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark.
  - [Sup Sub extensions](https://github.com/OWS/commonmark-sup-sub-extensions) - Adds support of superscript and subscript (`<sup>` and `<sub>` HTML tags)
  - [YouTube iframe extension](https://github.com/zoonru/commonmark-ext-youtube-iframe) - Replaces youtube link with iframe.
- - [Footnotes extension](https://github.com/rezozero/commonmark-ext-footnotes) - Adds support for referencing footnotes inline and rendering them at the bottom of your content
 
 Others can be found on [Packagist under the `commonmark-extension` package type](https://packagist.org/packages/league/commonmark?type=commonmark-extension).
 
@@ -188,7 +186,7 @@ This project is primarily maintained by [Colin O'Dell][@colinodell].  Members of
 
 ## 🗺️  Who Uses It?
 
-This project is used by [Laravel Framework](https://laravel.com/), [Cachet](https://cachethq.io/), [Firefly III](https://firefly-iii.org/), [Neos](https://www.neos.io/), [Daux.io](https://daux.io/), and [more](https://packagist.org/packages/league/commonmark/dependents)!
+This project is used by [Drupal](https://www.drupal.org/project/markdown), [Laravel Framework](https://laravel.com/), [Cachet](https://cachethq.io/), [Firefly III](https://firefly-iii.org/), [Neos](https://www.neos.io/), [Daux.io](https://daux.io/), and [more](https://packagist.org/packages/league/commonmark/dependents)!
 
 ---
 
