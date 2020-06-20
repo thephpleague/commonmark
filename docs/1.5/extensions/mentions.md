@@ -8,13 +8,13 @@ redirect_from: /extensions/mentions/
 # Mention Extension
 
 The `MentionExtension` makes it easy to parse shortened mentions and references like `@colinodell` to a Twitter URL
-or `#123` to a GitHub issue URL. The extension itself, does not do much other than register defined mention
-configurations from the environment.
+or `#123` to a GitHub issue URL.  You can create your own custom syntax by defining which symbol you want to use and
+how to generate the corresponding URL.
 
 ## Usage
 
-You can create your own custom syntax by supplying the environment configuration with an array of mentions that
-contain the starting symbol, a regular expression to match against, and any custom string template or callable to
+You can create your own custom syntax by supplying the configuration with an array of options that
+define the starting symbol, a regular expression to match against, and any custom URL template or callable to
 generate the URL.
 
 ```php
@@ -68,15 +68,27 @@ echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 // <p>Follow me on Twitter: <a href="https://www.github.com/colinodell">@colinodell</a></p>
 ```
 
-Note that the URL template (third argument) must be a string, and that the `%s` placeholder will be replaced by whatever the user enters after the symbol (in this case, `@`).  You can use any symbol, regex pattern, or URL template you want!
+## String-Based URL Templates
+
+URL templates are perfect for situations where the identifier is inserted directly into a URL:
+
+```
+"@colinodell" => https://www.twitter.com/colinodell
+ ^      ^                                    ^
+ |       \________ Identifier ______________/
+Symbol
+```
+
+Examples of using string-based URL templates can be seen in the usage example above - you simply provide a `string` to the `generator` option.
+
+Note that the URL template must be a string, and that the `%s` placeholder will be replaced by whatever the user enters after the symbol (in this case, `@`).  You can use any symbol, regex pattern, or URL template you want!
 
 ## Custom Callback-Based Parsers
 
 Need more power than simply adding the mention inside a string based URL template? The `MentionExtension` automatically
-detects if the provided generator is a valid [PHP callable](https://www.php.net/manual/en/language.types.callable.php)
-or an object that implements `\League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface` to generate the
-resulting URL. While this can be a method on a dedicated class (complete with typehints), it can also
-be a simple closure that doesn't require any typehints at all:
+detects if the provided generator is an object that implements `\League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface`
+or a valid [PHP callable](https://www.php.net/manual/en/language.types.callable.php) that can generate a
+resulting URL.
 
 ```php
 use League\CommonMark\CommonMarkConverter;
@@ -95,40 +107,42 @@ $environment->addExtension(new MentionExtension());
 // Set your configuration.
 $config = [
     'mentions' => [
+        'github_handle' => [
+            'symbol'    => '@',
+            'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+            // The recommended approach is to provide a class that implements MentionGeneratorInterface.
+            'generator' => new GithubUserMentionGenerator(), // TODO: Implement such a class yourself
+        ],
         'github_issue' => [
             'symbol'    => '#',
             'regex'     => '/^\d+/',
-            // Anonymous closure without typehints allows for more flexibility.
-            // By type checking the passed object inside the callback during runtime,
-            // it avoids using hard type-hinted parameters and namespaces which can cause
-            // a PHP fatal. This allows for external custom implementations to weather
-            // potential internal API changes that may occur over time/newer versions.
-            // This kind of implementation should be used by integrators within other
-            // systems (i.e. CMS modules/plugins) which many sites could depend on.
+            // Alternatively, if your logic is simple, you can implement an inline anonymous class like this example.
+            'generator' => new class implements MentionGeneratorInterface {
+                 public function generateMention(Mention $mention): ?AbstractInline
+                 {
+                     return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getMatch()));
+                 }
+             },
+        ],
+        'github_issue' => [
+            'symbol'    => '#',
+            'regex'     => '/^\d+/',
+            // Anonymous closures (with optional typehints) are also supported.
+            // This allows for better compatibility between different major versions of CommonMark.
+            // However, you sacrifice the ability to type-check which means automated development tools
+            // may not notice if your code is no longer compatible with new versions - you'll need to
+            // manually verify this yourself.
             'generator' => function ($mention) {
                 // Immediately return if not passed the supported Mention object.
-                if (!($mention instanceof \League\CommonMark\Extension\Mention\Mention)) {
-                  return null;
+                // This is an example of the types of manual checks you'll need to perform if not using type hints
+                if (!($mention instanceof Mention)) {
+                    return null;
                 }
+
                 return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getMatch()));
             },
         ],
-        'twitter_handle' => [
-            'symbol'    => '@',
-            'regex'     => '/^[A-Za-z0-9_]{1,15}(?!\w)/',
-            // Anonymous classes (or dedicated services/objects) require implementing a
-            // namespaced interface. While still flexible, you are potentially locked to
-            // using a specific version/API and risk things "breaking" when upgrading to
-            // future versions until you can fix them. This kind of implementation should
-            // be used by end-users (applications) where there are no dependencies that
-            // would be affected.
-            'generator' => new class implements MentionGeneratorInterface {
-                public function generateMention(Mention $mention): ?AbstractInline
-                {
-                    return $mention->setUrl(\sprintf('https://twitter.com/%s', $mention->getMatch()));
-                }
-            },
-        ],
+
     ],
 ];
 
@@ -139,17 +153,17 @@ echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 // <p>Follow me on Twitter: <a href="https://www.github.com/colinodell">@colinodell</a></p>
 ```
 
-This callable will receive a single `Mention` parameter and must either:
+When implementing `MentionGeneratorInterface` or a simple callable, you'll receive a single `Mention` parameter and must either:
   - Return the same passed `Mention` object along with setting the URL; or,
   - Return a new object that extends `\League\CommonMark\Inline\Element\AbstractInline`; or,
   - Return `null` (and not set a URL on the `Mention` object) if the mention isn't a match and should be skipped; not parsed.
 
-Here's a faux-real-world example of how you might use such a callback-based parser for your application. Imagine you
+Here's a faux-real-world example of how you might use such a generator for your application. Imagine you
 want to parse `@username` into custom user profile links for your application, but only if the user exists. You could
 create a class like the following which integrates with the framework your application is built on:
 
 ```php
-class UserMentionGenerator
+class UserMentionGenerator implements MentionGeneratorInterface
 {
     private $currentUser;
     private $userRepository;
@@ -162,17 +176,8 @@ class UserMentionGenerator
         $this->router = $router;
     }
 
-    public function generateMention($mention)
+    public function generateMention(Mention $mention): ?AbstractInline
     {
-        // Immediately return if not passed the supported Mention object.
-        // By checking this here, it avoids using hard type-hinted parameters
-        // and namespaces which can cause a PHP fatal. It allows for external
-        // custom implementations to weather potential internal API changes
-        // that may occur over time/newer versions.
-        if (!($mention instanceof \League\CommonMark\Extension\Mention\Mention)) {
-          return null;
-        }
-
         // Determine mention visibility (i.e. member privacy).
         if (!$this->currentUser->hasPermission('access profiles')) {
             $emphasis = new \League\CommonMark\Inline\Element\Emphasis();
@@ -223,11 +228,7 @@ $config = [
         'user_url_generator' => [
             'symbol'    => '@',
             'regex'     => '/^[a-z0-9]+/i',
-            'generator' => [$userMentionGenerator, 'generateMention'],
-            // Alternatively, you could also just pass the object itself if you decided
-            // implementing \League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface on
-            // it was worth locking your code to a specific version/API.
-            // 'generator' => $userMentionGenerator,
+            'generator' => $userMentionGenerator,
         ],
     ],
 ];
