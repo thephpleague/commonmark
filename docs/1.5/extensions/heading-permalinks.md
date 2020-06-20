@@ -35,9 +35,9 @@ $config = [
     'heading_permalink' => [
         'html_class' => 'heading-permalink',
         'id_prefix' => 'user-content',
-        'inner_contents' => HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS,
         'insert' => 'before',
         'title' => 'Permalink',
+        'symbol' => HeadingPermalinkRenderer::DEFAULT_SYMBOL,
         'slug_normalizer' => new SlugNormalizer(),
     ],
 ];
@@ -59,15 +59,40 @@ The value of this nested configuration option should be a `string` that you want
 
 This should be a `string` you want prepended to HTML IDs.  This prevents generating HTML ID attributes which might conflict with others in your stylesheet.  A dash separator (`-`) will be added between the prefix and the ID.  You can instead set this to an empty string (`''`) if you don't want a prefix.
 
-### `inner_contents`
+### `inner_contents` _(deprecated since `1.5.0`)_
 
-This controls the HTML you want to appear inside of the generated `<a>` tag.  Usually this would be something you'd style as some kind of link icon.
+This controls the HTML you want to appear inside of the generated `<a>` tag.  Usually this would be something you'd style as some kind of link icon, but you can replace this with any custom HTML you wish.
 
-By default, we provide an embedded [Octicon link SVG](https://octicons.github.com/icon/link/), but you can replace this with any custom HTML you wish.
+From versions `1.4.0` to `1.4.3`, the default value for this config option was an embedded [Octicon link SVG](https://iconify.design/icon-sets/octicon/link.html).
+
+In order to deprecate this config option, its default value had to be removed in version `1.5.0`. While this is
+technically a breaking change, it can be easily restored by setting this config option to the same constant as before
+(note: this constant has also been deprecated):
+
+```php
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
+
+$config = [
+    'heading_permalink' => [
+        'inner_contents' => HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS,
+    ],
+];
+```
+
+Whenever this config option is provided a value, a deprecation warning will be triggered and the `symbol` config
+option below will be ignored completely.
 
 ### `insert`
 
 This controls whether the anchor is added to the beginning of the `<h1>`, `<h2>` etc. tag or to the end.  Can be set to either `'before'` or `'after'`.
+
+### `symbol`
+
+This option sets the symbol used to display the permalink on the document. This defaults to `\League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer::DEFAULT_SYMBOL = '¶'`.
+
+If you want to use a custom icon, then set this to an empty string `''` and check out the [Adding Icons](#adding-icons) sections below.
+
+> Note: the symbol should only be is a single character value; additional characters will be stripped (does not affect multibyte characters).
 
 ### `title`
 
@@ -131,8 +156,8 @@ If you wanted to style your headings exactly like this documentation page does, 
 $config = [
     'heading_permalink' => [
         'html_class' => 'heading-permalink',
-        'inner_contents' => '¶',
         'insert' => 'after',
+        'symbol' => '¶',
         'title' => "Permalink",
     ],
 ];
@@ -182,7 +207,7 @@ h6:hover .heading-permalink
 }
 ```
 
-You could also float the icon just a little bit left of the heading:
+You could also float the symbol just a little bit left of the heading:
 
 ```css
 .heading-permalink {
@@ -194,3 +219,43 @@ You could also float the icon just a little bit left of the heading:
 ```
 
 These are only ideas - feel free to customize this however you'd like!
+
+## Adding Icons
+
+You can also use CSS to add a custom icon instead of providing a `symbol`:
+
+```php
+$config = [
+    'heading_permalink' => [
+        'html_class' => 'heading-permalink',
+        'symbol' => '',
+    ],
+];
+```
+
+Then targeting the `html_class` given in the configuration in your CSS (example in SCSS):
+
+```scss
+// Font Awesome (https://fontawesome.com/icons/link).
+.heading-permalink::after {
+   @extend .fa;       // Extend from font-awesome base styles.
+   content: "\f0c1";  // fa-link icon unicode.
+}
+
+// Bootstrap 3 Glyphicon (https://getbootstrap.com/docs/3.3/components/).
+.heading-permalink::after {
+  @extend .glyphicon; // Extend from Glyphicon base styles.
+  content: "\e144";   // glyphicon-link icon unicode.
+}
+
+// Custom SVG/Bootstrap Icons.
+.heading-permalink::after {
+  display: inline-block;
+  content: "";
+  // Tip: use an SVG URL encoder (https://yoksel.github.io/url-encoder).
+  // https://icons.getbootstrap.com/icons/box-arrow-up-right/
+  background-image: url("data:image/svg+xml,%3Csvg class='bi bi-box-arrow-up-right' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M1.5 13A1.5 1.5 0 003 14.5h8a1.5 1.5 0 001.5-1.5V9a.5.5 0 00-1 0v4a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V5a.5.5 0 01.5-.5h4a.5.5 0 000-1H3A1.5 1.5 0 001.5 5v8zm7-11a.5.5 0 01.5-.5h5a.5.5 0 01.5.5v5a.5.5 0 01-1 0V2.5H9a.5.5 0 01-.5-.5z'/%3E%3Cpath fill-rule='evenodd' d='M14.354 1.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1em 1em;
+}
+```

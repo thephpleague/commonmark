@@ -61,7 +61,7 @@ This should be a `string` you want prepended to HTML IDs.  This prevents generat
 
 This controls the HTML you want to appear inside of the generated `<a>` tag.  Usually this would be something you'd style as some kind of link icon.
 
-By default, we provide an embedded [Octicon link SVG](https://octicons.github.com/icon/link/), but you can replace this with any custom HTML you wish.
+By default, we provide an embedded [Octicon link SVG](https://iconify.design/icon-sets/octicon/link.html), but you can replace this with any custom HTML you wish.
 
 ### `insert`
 
@@ -142,3 +142,43 @@ You could also float the icon just a little bit left of the heading:
 ```
 
 These are only ideas - feel free to customize this however you'd like!
+
+## Adding Icons
+
+You can also use CSS to add a custom icon instead of providing `inner_contents`:
+
+```php
+$config = [
+    'heading_permalink' => [
+        'html_class' => 'heading-permalink',
+        'inner_contents' => '',
+    ],
+];
+```
+
+Then targeting the `html_class` given in the configuration in your CSS (example in SCSS):
+
+```scss
+// Font Awesome (https://fontawesome.com/icons/link).
+.heading-permalink::after {
+   @extend .fa;       // Extend from font-awesome base styles.
+   content: "\f0c1";  // fa-link icon unicode.
+}
+
+// Bootstrap 3 Glyphicon (https://getbootstrap.com/docs/3.3/components/).
+.heading-permalink::after {
+  @extend .glyphicon; // Extend from Glyphicon base styles.
+  content: "\e144";   // glyphicon-link icon unicode.
+}
+
+// Custom SVG/Bootstrap Icons.
+.heading-permalink::after {
+  display: inline-block;
+  content: "";
+  // Tip: use an SVG URL encoder (https://yoksel.github.io/url-encoder).
+  // https://icons.getbootstrap.com/icons/box-arrow-up-right/
+  background-image: url("data:image/svg+xml,%3Csvg class='bi bi-box-arrow-up-right' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M1.5 13A1.5 1.5 0 003 14.5h8a1.5 1.5 0 001.5-1.5V9a.5.5 0 00-1 0v4a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V5a.5.5 0 01.5-.5h4a.5.5 0 000-1H3A1.5 1.5 0 001.5 5v8zm7-11a.5.5 0 01.5-.5h5a.5.5 0 01.5.5v5a.5.5 0 01-1 0V2.5H9a.5.5 0 01-.5-.5z'/%3E%3Cpath fill-rule='evenodd' d='M14.354 1.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1em 1em;
+}
+```
