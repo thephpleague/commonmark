@@ -163,6 +163,46 @@ main div > code {
     clear:both;
 }
 
+.projects,
+.sponsors {
+    color: #fff;
+}
+
+.projects h2,
+.sponsors h2 {
+    font-size:50px;
+    line-height:100%;
+    font-weight:normal;
+    font-family:"Museo Sans 300", sans-serif;
+    text-transform:uppercase;
+    margin: 0 0 1em 0;
+}
+
+.project-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-logos a {
+    display: block;
+    object-fit: contain;
+    margin: 0 16px;
+}
+
+.project-logos img {
+    height: 75px;
+    max-width: 200px;
+}
+
+.sponsors a {
+    color: #3399ff;
+}
+.sponsors ul {
+    list-style: none;
+    font-size: 1.1em;
+}
+
 .features {
     background: #F2F7FC;
     border-bottom:1px solid #CFE4F9;
