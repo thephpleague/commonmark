@@ -6,6 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
+ - Added a new `heading_permalink/symbol` configuration option to replace the now deprecated `heading_permalink/inner_contents` configuration option (#505)
  - Added new `AttributesExtension` based  on <https://github.com/webuni/commonmark-attributes-extension> (#474)
  - Added new `FootnoteExtension` based on <https://github.com/rezozero/commonmark-ext-footnotes> (#474)
  - Added new `MentionExtension` to replace `InlineMentionParser` with more flexibility and customization
@@ -33,6 +34,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Deprecated
 
+ - Deprecated the `heading_permalink/inner_contents` configuration option in the `HeadingPermalink` extension (use the new `heading_permalink/symbol` configuration option instead) (#505)
+ - Deprecated the `\League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS` constant (#505)
  - Deprecated the `CommonMarkConverter::VERSION` constant (#496)
  - Deprecated `League\CommonMark\Extension\Autolink\InlineMentionParser` (use `League\CommonMark\Extension\Mention\MentionParser` instead)
  - Deprecated everything under `League\CommonMark\Extension\HeadingPermalink\Slug` (use the classes under `League\CommonMark\Normalizer` instead)

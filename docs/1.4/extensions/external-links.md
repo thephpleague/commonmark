@@ -111,22 +111,30 @@ class MyCustomLinkRenderer implements InlineRendererInterface
 
 ## Adding Icons
 
-You can also use CSS to automagically add an external link icon by targeting the `html_class` given in the configuration:
+You can also use CSS to add a custom icon by targeting the `html_class` given in the configuration:
+
+```php
+$config = [
+    'external_link' => [
+        'html_class' => 'external',
+    ],
+];
+```
 
 ```css
-// Font Awesome example:
+/**
+ * Custom SVG Icon.
+ */
 a[target="_blank"]::after,
 a.external::after {
-   content: "\f08e";
-   font: normal normal normal 14px/1 FontAwesome;
-}
-
-// Glyphicon example:
-a[target="_blank"]::after,
-a.external::after {
-  @extend .glyphicon;
-  content: "\e164";
-  margin-left: .5em;
-  margin-right: .25em;
+  display: inline-block;
+  content: "";
+  /**
+   * Octicon Link External (https://iconify.design/icon-sets/octicon/link-external.html)
+   * [Pro Tip] Use an SVG URL encoder (https://yoksel.github.io/url-encoder).
+   */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' style='-ms-transform:rotate(360deg);-webkit-transform:rotate(360deg)' viewBox='0 0 12 16' transform='rotate(360)'%3E%3Cpath fill-rule='evenodd' d='M11 10h1v3c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h3v1H1v10h10v-3zM6 2l2.25 2.25L5 7.5 6.5 9l3.25-3.25L12 8V2H6z' fill='%23626262'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1em;
 }
 ```
