@@ -109,6 +109,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
      - `removeGaps()`
    - Removed the `ListBlock::TYPE_UNORDERED` constant
    - Removed the `CommonMarkConverter::VERSION` constant
+   - Removed the `HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS` constant
+   - Removed the `heading_permalink/inner_contents` configuration option
  - Removed now-unused classes:
    - `AbstractStringContainerBlock`
    - `BlockRendererInterface`

@@ -225,6 +225,14 @@ This command was buggy to test and was relatively unpopular, so it has been remo
 
 This previously-deprecated constant was removed in 2.0 Use `\Composer\InstalledVersions` provided by composer-runtime-api instead.
 
+## `HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS` constant
+
+This previously-deprecated constant was removed in 2.0. Use `HeadingPermalinkRenderer::DEFAULT_SYMBOL` instead.
+
+## `heading_permalink/inner_contents` configuration option
+
+This previously-deprecated configuration option was removed in 2.0. Use `heading_permalink/symbol` instead.
+
 ## `ArrayCollection` methods
 
 Several methods were removed from this class - here are the methods along with possible alternatives you can switch to:
