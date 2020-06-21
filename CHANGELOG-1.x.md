@@ -2,17 +2,18 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## Unreleased (1.5.x)
+## [1.5.0] - 2020-06-21
 
 ### Added
 
- - Added new `AttributesExtension` based  on <https://github.com/webuni/commonmark-attributes-extension> (#474)
+ - Added new `AttributesExtension` based on <https://github.com/webuni/commonmark-attributes-extension> (#474)
  - Added new `FootnoteExtension` based on <https://github.com/rezozero/commonmark-ext-footnotes> (#474)
  - Added new `MentionExtension` to replace `InlineMentionParser` with more flexibility and customization
  - Added the ability to render `TableOfContents` nodes anywhere in a document (given by a placeholder)
  - Added the ability to properly clone `Node` objects
  - Added options to customize the value of `rel` attributes set via the `ExternalLink` extension (#476)
  - Added a new `heading_permalink/slug_normalizer` configuration option to allow custom slug generation (#460)
+ - Added a new `heading_permalink/symbol` configuration option to replace the now deprecated `heading_permalink/inner_contents` configuration option (#505)
  - Added `SlugNormalizer` and `TextNormalizer` classes to make normalization reusable by extensions (#485)
  - Added new classes:
    - `TableOfContentsGenerator`
@@ -38,6 +39,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Deprecated everything under `League\CommonMark\Extension\HeadingPermalink\Slug` (use the classes under `League\CommonMark\Normalizer` instead)
  - Deprecated `League\CommonMark\Extension\TableOfContents\TableOfContents` (use the one in the new `Node` sub-namespace instead)
  - Deprecated the `STYLE_` and `NORMALIZE_` constants in `TableOfContentsBuilder` (use the ones in `TableOfContentsGenerator` instead)
+ - Deprecated the `\League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS` constant (#505)
+ - Deprecated the `heading_permalink/inner_contents` configuration option in the `HeadingPermalink` extension (use the new `heading_permalink/symbol` configuration option instead) (#505)
 
 ## [1.4.3] - 2020-05-04
 
@@ -336,7 +339,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.4.3...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/thephpleague/commonmark/compare/1.4.3...1.5.0
 [1.4.3]: https://github.com/thephpleague/commonmark/compare/1.4.1...1.4.3
 [1.4.2]: https://github.com/thephpleague/commonmark/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/thephpleague/commonmark/compare/1.4.0...1.4.1
