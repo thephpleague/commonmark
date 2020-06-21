@@ -2,7 +2,6 @@
 layout: default
 title: Inlines Only Extension
 description: The InlinesOnlyExtension only enables parsing of inline elements
-redirect_from: /extensions/inlines-only/
 ---
 
 # Inlines Only Extension

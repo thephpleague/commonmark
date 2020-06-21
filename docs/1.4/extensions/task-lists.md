@@ -2,7 +2,6 @@
 layout: default
 title: Task List Extension
 description: The TaskListExtension adds support for GFM-style task lists
-redirect_from: /extensions/task-lists/
 ---
 
 # Task List Extension
