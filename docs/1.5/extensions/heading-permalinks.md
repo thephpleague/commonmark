@@ -61,26 +61,15 @@ This should be a `string` you want prepended to HTML IDs.  This prevents generat
 
 ### `inner_contents` _(deprecated since `1.5.0`)_
 
-This controls the HTML you want to appear inside of the generated `<a>` tag.  Usually this would be something you'd style as some kind of link icon, but you can replace this with any custom HTML you wish.
+This controls the HTML you want to appear inside of the generated `<a>` tag. Usually this would be something you would
+style as some kind of link icon, but you can replace this with any custom HTML you wish.
 
-From versions `1.4.0` to `1.4.3`, the default value for this config option was an embedded [Octicon link SVG](https://iconify.design/icon-sets/octicon/link.html).
+This option was deprecated in 1.5.0 and will be removed in 2.0.0. Use the `symbol` option instead.
 
-In order to deprecate this config option, its default value had to be removed in version `1.5.0`. While this is
-technically a breaking change, it can be easily restored by setting this config option to the same constant as before
-(note: this constant has also been deprecated):
+This option has no default value and if one is provided, a deprecation warning will be triggered and the `symbol`
+config option below will be ignored completely.
 
-```php
-use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
-
-$config = [
-    'heading_permalink' => [
-        'inner_contents' => HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS,
-    ],
-];
-```
-
-Whenever this config option is provided a value, a deprecation warning will be triggered and the `symbol` config
-option below will be ignored completely.
+See the [Upgrade Guide](/1.5/upgrading/) for more information.
 
 ### `insert`
 
@@ -233,29 +222,21 @@ $config = [
 ];
 ```
 
-Then targeting the `html_class` given in the configuration in your CSS (example in SCSS):
+Then targeting the `html_class` given in the configuration in your CSS:
 
-```scss
-// Font Awesome (https://fontawesome.com/icons/link).
-.heading-permalink::after {
-   @extend .fa;       // Extend from font-awesome base styles.
-   content: "\f0c1";  // fa-link icon unicode.
-}
-
-// Bootstrap 3 Glyphicon (https://getbootstrap.com/docs/3.3/components/).
-.heading-permalink::after {
-  @extend .glyphicon; // Extend from Glyphicon base styles.
-  content: "\e144";   // glyphicon-link icon unicode.
-}
-
-// Custom SVG/Bootstrap Icons.
+```css
+/**
+ * Custom SVG Icon.
+ */
 .heading-permalink::after {
   display: inline-block;
   content: "";
-  // Tip: use an SVG URL encoder (https://yoksel.github.io/url-encoder).
-  // https://icons.getbootstrap.com/icons/box-arrow-up-right/
-  background-image: url("data:image/svg+xml,%3Csvg class='bi bi-box-arrow-up-right' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M1.5 13A1.5 1.5 0 003 14.5h8a1.5 1.5 0 001.5-1.5V9a.5.5 0 00-1 0v4a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V5a.5.5 0 01.5-.5h4a.5.5 0 000-1H3A1.5 1.5 0 001.5 5v8zm7-11a.5.5 0 01.5-.5h5a.5.5 0 01.5.5v5a.5.5 0 01-1 0V2.5H9a.5.5 0 01-.5-.5z'/%3E%3Cpath fill-rule='evenodd' d='M14.354 1.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z'/%3E%3C/svg%3E");
+  /**
+   * Octicon Link (https://iconify.design/icon-sets/octicon/link.html)
+   * [Pro Tip] Use an SVG URL encoder (https://yoksel.github.io/url-encoder).
+   */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' style='-ms-transform:rotate(360deg);-webkit-transform:rotate(360deg)' viewBox='0 0 16 16' transform='rotate(360)'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z' fill='%23626262'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-size: 1em 1em;
+  background-size: 1em;
 }
 ```
