@@ -67,11 +67,6 @@ final class HeadingPermalinkRenderer implements InlineRendererInterface, Configu
 
         $symbol = $this->config->get('heading_permalink/symbol', self::DEFAULT_SYMBOL);
 
-        // Encode HTML entities.
-        if ($symbol) {
-            $symbol = \htmlspecialchars($symbol);
-        }
-
-        return new HtmlElement('a', $attrs, $symbol, false);
+        return new HtmlElement('a', $attrs, \htmlspecialchars($symbol), false);
     }
 }
