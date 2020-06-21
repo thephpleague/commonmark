@@ -58,7 +58,8 @@ final class HeadingPermalinkExtensionTest extends TestCase
             'heading_permalink' => [
                 'html_class'     => 'custom-class',
                 'id_prefix'      => 'custom-prefix',
-                'symbol'         => '🦄⚠️', // Only the first symbol will be used.
+                // Ensure multiple characters are allowed (including multibyte) and special HTML characters are escaped.
+                'symbol'         => '¶ 🦄️ <3 You',
                 'insert'         => 'after',
                 'title'          => 'Link',
             ],
@@ -71,9 +72,9 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
     public function dataProviderForTestHeadingPermalinksWithCustomOptions()
     {
-        yield ['# Hello World!', '<h1>Hello World!<a id="custom-prefix-hello-world" href="#hello-world" name="hello-world" class="custom-class" aria-hidden="true" title="Link">🦄</a></h1>'];
-        yield ['# Hello *World*', '<h1>Hello <em>World</em><a id="custom-prefix-hello-world" href="#hello-world" name="hello-world" class="custom-class" aria-hidden="true" title="Link">🦄</a></h1>'];
-        yield ["Test\n----", '<h2>Test<a id="custom-prefix-test" href="#test" name="test" class="custom-class" aria-hidden="true" title="Link">🦄</a></h2>'];
+        yield ['# Hello World!', '<h1>Hello World!<a id="custom-prefix-hello-world" href="#hello-world" name="hello-world" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
+        yield ['# Hello *World*', '<h1>Hello <em>World</em><a id="custom-prefix-hello-world" href="#hello-world" name="hello-world" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
+        yield ["Test\n----", '<h2>Test<a id="custom-prefix-test" href="#test" name="test" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h2>'];
     }
 
     public function testHeadingPermalinksWithDeprecatedInnerContents()

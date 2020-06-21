@@ -81,7 +81,7 @@ This option sets the symbol used to display the permalink on the document. This 
 
 If you want to use a custom icon, then set this to an empty string `''` and check out the [Adding Icons](#adding-icons) sections below.
 
-> Note: the symbol should only be is a single character value; additional characters will be stripped (does not affect multibyte characters).
+> Note: Special HTML characters (`" & < >`) provided here will be escaped for security reasons.
 
 ### `title`
 
