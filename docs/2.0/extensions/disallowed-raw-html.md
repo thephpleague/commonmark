@@ -1,14 +1,14 @@
 ---
 layout: default
 title: Disallowed Raw HTML Extension
-description: The DisallowedRawHTMLExtension automatically converts URLs in plain text to clickable links
+description: The DisallowedRawHTMLExtension automatically escapes certain HTML tags when rendering raw HTML
 ---
 
 # Disallowed Raw HTML Extension
 
 _(Note: this extension is included by default within [the GFM extension](/2.0/extensions/github-flavored-markdown/))_
 
-The `DisallowedRawHTMLExtension` automatically filters certain HTML tags when rendering output, such as:
+The `DisallowedRawHTMLExtension` automatically escapes certain HTML tags when rendering raw HTML, such as:
 
  - `<title>`
  - `<textarea>`

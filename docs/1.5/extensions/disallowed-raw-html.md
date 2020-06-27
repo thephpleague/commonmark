@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Disallowed Raw HTML Extension
-description: The DisallowedRawHTMLExtension automatically converts URLs in plain text to clickable links
+description: The DisallowedRawHTMLExtension automatically escapes certain HTML tags when rendering raw HTML
 redirect_from: /extensions/disallowed-raw-html/
 ---
 
