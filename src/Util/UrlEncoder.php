@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Util;
 
+use League\CommonMark\Exception\UnexpectedEncodingException;
+
 /**
  * @psalm-immutable
  */
@@ -35,9 +37,13 @@ final class UrlEncoder
 
         $result = '';
 
-        /** @var string[] $chars */
         $chars = \preg_split('//u', $uri, -1, \PREG_SPLIT_NO_EMPTY);
-        $l     = \count($chars);
+
+        if (! \is_array($chars) || ! \mb_check_encoding($uri, 'UTF-8')) {
+            throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
+        }
+
+        $l = \count($chars);
         for ($i = 0; $i < $l; $i++) {
             $code = $chars[$i];
             if ($code === '%' && $i + 2 < $l) {
