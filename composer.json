@@ -27,6 +27,7 @@
         "ext-json": "*",
         "cebe/markdown": "~1.0",
         "commonmark/commonmark.js": "0.29.1",
+        "composer/package-versions-deprecated": "^1.8",
         "erusev/parsedown": "~1.0",
         "github/gfm": "0.29.0",
         "michelf/php-markdown": "~1.4",
