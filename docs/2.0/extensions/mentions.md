@@ -64,7 +64,7 @@ $config = [
 $converter = new CommonMarkConverter($config, $environment);
 echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 // Output:
-// <p>Follow me on Twitter: <a href="https://www.github.com/colinodell">@colinodell</a></p>
+// <p>Follow me on Twitter: <a href="https://twitter.com/colinodell">@colinodell</a></p>
 ```
 
 ## String-Based URL Templates
