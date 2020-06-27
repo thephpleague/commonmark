@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark;
 
+use League\CommonMark\Exception\UnexpectedEncodingException;
+
 class Cursor
 {
     public const INDENT_LEVEL = 4;
@@ -80,6 +82,10 @@ class Cursor
      */
     public function __construct(string $line)
     {
+        if (!\mb_check_encoding($line, 'UTF-8')) {
+            throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
+        }
+
         $this->line = $line;
         $this->length = \mb_strlen($line, 'UTF-8') ?: 0;
         $this->isMultibyte = $this->length !== \strlen($line);

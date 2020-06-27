@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed UTF-8 encoding not being checked in the `UrlEncoder` utility (#509) or the `Cursor`
+
 ## [1.5.0] - 2020-06-21
 
 ### Added

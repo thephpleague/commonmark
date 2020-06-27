@@ -14,6 +14,7 @@
 
 namespace League\CommonMark\Tests\Unit\Util;
 
+use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Util\UrlEncoder;
 use PHPUnit\Framework\TestCase;
 
@@ -98,5 +99,12 @@ class UrlEncoderTest extends TestCase
             ['data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='],
             ['data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==', 'data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='],
         ];
+    }
+
+    public function testInvalidUnicodeProducesAnException(): void
+    {
+        $this->expectException(UnexpectedEncodingException::class);
+
+        UrlEncoder::unescapeAndEncode(\hex2bin('A5A5A5'));
     }
 }

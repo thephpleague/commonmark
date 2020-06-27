@@ -12,6 +12,7 @@
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Cursor;
+use League\CommonMark\Exception\UnexpectedEncodingException;
 use PHPUnit\Framework\TestCase;
 
 class CursorTest extends TestCase
@@ -20,6 +21,13 @@ class CursorTest extends TestCase
     {
         $cursor = new Cursor('foo');
         $this->assertEquals('foo', $cursor->getLine());
+    }
+
+    public function testConstructorWithInvalidUTF8(): void
+    {
+        $this->expectException(UnexpectedEncodingException::class);
+
+        new Cursor(\hex2bin('A5A5A5'));
     }
 
     /**
