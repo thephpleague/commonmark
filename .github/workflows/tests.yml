@@ -17,18 +17,7 @@ jobs:
                   php-version: 7.2
                   extensions: curl, mbstring
                   coverage: none
-                  tools: composer:v1
-
-            - name: Get composer cache directory
-              id: composer-cache
-              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            - name: Cache dependencies
-              uses: actions/cache@v1
-              with:
-                  path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
-                  restore-keys: ${{ runner.os }}-php-7.2-composer-
+                  tools: composer:v2
 
             - run: composer update --no-progress
 
@@ -45,7 +34,7 @@ jobs:
                 include:
                     - php: '8.0'
                       coverage: false
-                      composer-flags: '--ignore-platform-reqs'
+                      composer-flags: '--ignore-platform-req=php'
 
         steps:
             - uses: actions/checkout@v2
@@ -55,18 +44,7 @@ jobs:
                   php-version: ${{ matrix.php }}
                   extensions: curl, mbstring
                   coverage: pcov
-                  tools: composer:v1
-
-            - name: Get composer cache directory
-              id: composer-cache
-              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            - name: Cache dependencies
-              uses: actions/cache@v1
-              with:
-                  path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
-                  restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-composer-
+                  tools: composer:v2
 
             - run: composer update --no-progress ${{ matrix.composer-flags }}
 
@@ -91,18 +69,7 @@ jobs:
                   php-version: 7.2
                   extensions: curl, mbstring
                   coverage: none
-                  tools: composer:v1
-
-            - name: Get composer cache directory
-              id: composer-cache
-              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            - name: Cache dependencies
-              uses: actions/cache@v1
-              with:
-                  path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-php-7.2-composer-${{ hashFiles('**/composer.json') }}
-                  restore-keys: ${{ runner.os }}-php-7.2-composer-
+                  tools: composer:v2
 
             - run: composer update --no-progress
 
@@ -120,18 +87,7 @@ jobs:
                   php-version: 7.2
                   extensions: curl, mbstring
                   coverage: none
-                  tools: composer:v1
-
-            - name: Get composer cache directory
-              id: composer-cache
-              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            - name: Cache dependencies
-              uses: actions/cache@v1
-              with:
-                  path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-php-7.2-composer-${{ hashFiles('**/composer.json') }}
-                  restore-keys: ${{ runner.os }}-php-7.2-composer-
+                  tools: composer:v2
 
             - run: composer update --no-progress
 
