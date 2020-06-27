@@ -51,7 +51,24 @@ $environment = Environment::createCommonMarkEnvironment();
 // Add this extension
 $environment->addExtension(new DisallowedRawHTMLExtension());
 
+// Customize the extension's configuration if needed
+// Default values are shown below - you can omit this configuration if you're happy with those defaults
+// and don't want to customize them
+$config = [
+    'disallowed_raw_html' => [
+        'disallowed_tags' => ['title', 'textarea', 'style', 'xmp', 'iframe', 'noembed', 'noframes', 'script', 'plaintext'],
+    ],
+];
+
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter([], $environment);
+$converter = new CommonMarkConverter($config, $environment);
 echo $converter->convertToHtml('I cannot change the page <title>anymore</title>');
 ```
+
+## Configuration
+
+This extension can be configured by providing a `disallowed_raw_html` array with the following nested configuration options.  The defaults are shown in the code example above.
+
+### `disallowed_tags`
+
+An `array` containing a list of tags that should be escaped.

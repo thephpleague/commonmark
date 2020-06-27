@@ -21,12 +21,31 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 
 final class DisallowedRawHtmlRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
+    private const DEFAULT_DISALLOWED_TAGS = [
+        'title',
+        'textarea',
+        'style',
+        'xmp',
+        'iframe',
+        'noembed',
+        'noframes',
+        'script',
+        'plaintext',
+    ];
+
     /**
      * @var NodeRendererInterface
      *
      * @psalm-readonly
      */
     private $innerRenderer;
+
+    /**
+     * @var ConfigurationInterface
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private $config;
 
     public function __construct(NodeRendererInterface $innerRenderer)
     {
@@ -44,12 +63,21 @@ final class DisallowedRawHtmlRenderer implements NodeRendererInterface, Configur
             return '';
         }
 
+        $tags = (array) $this->config->get('disallowed_raw_html/disallowed_tags', self::DEFAULT_DISALLOWED_TAGS);
+        if (\count($tags) === 0) {
+            return $rendered;
+        }
+
+        $regex = \sprintf('/<(\/?(?:%s)[ \/>])/i', \implode('|', \array_map('preg_quote', $tags)));
+
         // Match these types of tags: <title> </title> <title x="sdf"> <title/> <title />
-        return \preg_replace('/<(\/?(?:title|textarea|style|xmp|iframe|noembed|noframes|script|plaintext)[ \/>])/i', '&lt;$1', $rendered);
+        return \preg_replace($regex, '&lt;$1', $rendered);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
+        $this->config = $configuration;
+
         if ($this->innerRenderer instanceof ConfigurationAwareInterface) {
             $this->innerRenderer->setConfiguration($configuration);
         }
