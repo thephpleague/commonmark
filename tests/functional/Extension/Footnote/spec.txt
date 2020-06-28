@@ -22,15 +22,17 @@ Here is a footnote reference,[^1] and another. [^2]
 <li class="footnote" id="fn:2" role="doc-endnote"><p>Here is yet another footnote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">&#8617;</a></p></li></ol></div>
 ````````````````````````````````
 
-A [footnote] is denoted by a `[^`, followed by a [footnote identifier], then `]:`, plus text.
+A [footnote] is denoted by a `[^`, followed by a [footnote identifier], then `]:`, plus optional text.
 
 ```````````````````````````````` example
-Foo[^foo]
+Foo[^foo] bar[^bar]
 
-[^foo]: This footnote has text
+[^foo]: This footnote has text, but the next one doesn't (and it's equally valid)
+[^bar]:
 .
-<p>Foo<sup id="fnref:foo"><a class="footnote-ref" href="#fn:foo" role="doc-noteref">1</a></sup></p>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:foo" role="doc-endnote"><p>This footnote has text&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:foo" role="doc-backlink">&#8617;</a></p></li></ol></div>
+<p>Foo<sup id="fnref:foo"><a class="footnote-ref" href="#fn:foo" role="doc-noteref">1</a></sup> bar<sup id="fnref:bar"><a class="footnote-ref" href="#fn:bar" role="doc-noteref">2</a></sup></p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:foo" role="doc-endnote"><p>This footnote has text, but the next one doesn't (and it's equally valid)&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:foo" role="doc-backlink">&#8617;</a></p></li>
+<li class="footnote" id="fn:bar" role="doc-endnote">&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:bar" role="doc-backlink">&#8617;</a></li></ol></div>
 ````````````````````````````````
 
 A [footnote] may be referenced multiple times within the document:

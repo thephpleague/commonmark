@@ -90,6 +90,10 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Several changes made to the Footnote extension:
    - Footnote identifiers can no longer contain spaces
 
+### Fixed
+
+ - Fixed parsing of footnotes without content
+
 ### Removed
 
  - Removed support for PHP 7.1

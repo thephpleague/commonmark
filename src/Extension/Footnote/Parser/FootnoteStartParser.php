@@ -30,7 +30,7 @@ final class FootnoteStartParser implements BlockStartParserInterface
         }
 
         $match = RegexHelper::matchAll(
-            '/^\[\^([^\n^\]]+)\]\:\s/',
+            '/^\[\^([^\s^\]]+)\]\:(?:\s|$)/',
             $cursor->getLine(),
             $cursor->getNextNonSpacePosition()
         );
@@ -42,9 +42,9 @@ final class FootnoteStartParser implements BlockStartParserInterface
         $cursor->advanceToNextNonSpaceOrTab();
         $cursor->advanceBy(\strlen($match[0]));
         $str = $cursor->getRemainder();
-        \preg_replace('/^\[\^([^\n^\]]+)\]\:\s/', '', $str);
+        \preg_replace('/^\[\^([^\s^\]]+)\]\:(?:\s|$)/', '', $str);
 
-        if (\preg_match('/^\[\^([^\n^\]]+)\]\:\s/', $match[0], $matches) !== 1) {
+        if (\preg_match('/^\[\^([^\s^\]]+)\]\:(?:\s|$)/', $match[0], $matches) !== 1) {
             return BlockStart::none();
         }
 
