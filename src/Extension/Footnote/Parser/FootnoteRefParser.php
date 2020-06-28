@@ -40,9 +40,9 @@ final class FootnoteRefParser implements InlineParserInterface
 
         $state = $cursor->saveState();
 
-        $m = $cursor->match('#\[\^([^\]]+)\]#');
+        $m = $cursor->match('#\[\^([^\s\]]+)\]#');
         if ($m !== null) {
-            if (\preg_match('#\[\^([^\]]+)\]#', $m, $matches) > 0) {
+            if (\preg_match('#\[\^([^\s\]]+)\]#', $m, $matches) > 0) {
                 $container->appendChild(new FootnoteRef($this->createReference($matches[1])));
 
                 return true;

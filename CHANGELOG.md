@@ -87,6 +87,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `Cursor::saveState()` and `Cursor::restoreState()` now use `CursorState` objects instead of arrays
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
  - `InvalidOptionException` now extends from `UnexpectedValueException`
+ - Several changes made to the Footnote extension:
+   - Footnote identifiers can no longer contain spaces
 
 ### Removed
 

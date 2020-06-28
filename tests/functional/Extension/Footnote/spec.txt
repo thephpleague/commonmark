@@ -44,7 +44,18 @@ My favorite foods are pizza[^1], ice cream[^1], and smoothies.
 <div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Though delicious, these are not healthy.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">&#8617;</a>&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1__2" role="doc-backlink">&#8617;</a></p></li></ol></div>
 ````````````````````````````````
 
-A [footnote identifier](@) is used only to correlate the footnote reference with the note itself; in the output, footnotes will be numbered sequentially.
+A [footnote identifier](@) may not contain spaces, tabs, or newlines.
+
+```````````````````````````````` example
+Invalid[^spaces are not allowed]
+
+[^spaces are not allowed]: Sorry, this won't work
+.
+<p>Invalid[^spaces are not allowed]</p>
+<p>[^spaces are not allowed]: Sorry, this won't work</p>
+````````````````````````````````
+
+These identifiers are used only to correlate the footnote reference with the note itself; in the output, footnotes will be numbered sequentially.
 
 ```````````````````````````````` example
 This reference uses a string identifier[^foo]
