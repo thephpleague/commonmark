@@ -1,0 +1,98 @@
+# Footnotes Spec
+
+This spec is partially based on:
+
+ - <https://pandoc.org/MANUAL.html#footnotes>
+ - <https://github.com/rezozero/commonmark-ext-footnotes>
+
+-----
+
+A [footnote][@] is a numbered reference that appears at the bottom of the document which contains additional information
+or context around text elsewhere in the document. These are typically paired with one or more [footnote references](@) which "references"
+the [footnote] later in the document:
+
+```````````````````````````````` example
+Here is a footnote reference,[^1] and another. [^2]
+
+[^1]: Here is the footnote
+[^2]: Here is yet another footnote
+.
+<p>Here is a footnote reference,<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup> and another. <sup id="fnref:2"><a class="footnote-ref" href="#fn:2" role="doc-noteref">2</a></sup></p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Here is the footnote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">&#8617;</a></p></li>
+<li class="footnote" id="fn:2" role="doc-endnote"><p>Here is yet another footnote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
+
+A [footnote] is denoted by a `[^`, followed by a [footnote identifier], then `]:`, plus text.
+
+```````````````````````````````` example
+Foo[^foo]
+
+[^foo]: This footnote has text
+.
+<p>Foo<sup id="fnref:foo"><a class="footnote-ref" href="#fn:foo" role="doc-noteref">1</a></sup></p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:foo" role="doc-endnote"><p>This footnote has text&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:foo" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
+
+A [footnote] may be referenced multiple times within the document:
+
+```````````````````````````````` example
+My favorite foods are pizza[^1], ice cream[^1], and smoothies.
+
+[^1]: Though delicious, these are not healthy.
+.
+<p>My favorite foods are pizza<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup>, ice cream<sup id="fnref:1__2"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup>, and smoothies.</p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Though delicious, these are not healthy.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">&#8617;</a>&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1__2" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
+
+A [footnote identifier](@) is used only to correlate the footnote reference with the note itself; in the output, footnotes will be numbered sequentially.
+
+```````````````````````````````` example
+This reference uses a string identifier[^foo]
+
+[^foo]: This will be rendered as a number in the output; you won't see "foo"
+.
+<p>This reference uses a string identifier<sup id="fnref:foo"><a class="footnote-ref" href="#fn:foo" role="doc-noteref">1</a></sup></p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:foo" role="doc-endnote"><p>This will be rendered as a number in the output; you won't see &quot;foo&quot;&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:foo" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
+
+The footnotes themselves need not be placed at the end of the document. They may appear anywhere except inside other block elements (lists, block quotes, tables, etc.).
+
+```````````````````````````````` example
+Donec sed odio dui[^ref].
+
+Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit sit amet non magna.
+Nullam quis risus eget urna mollis[^ref2] ornare vel eu leo. Donec id elit non mi
+porta gravida at eget metus. Duis mollis, est non commodo luctus, nisi erat porttitor
+ligula, eget lacinia odio sem nec elit.
+
+[^ref2]: Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl
+consectetur et. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum.
+
+> Cras mattis consectetur purus sit amet fermentum[^ref3].
+>
+> [^ref3]: This footnote is not allowed because it's in a blockquote
+
+[^ref]: Risus Euismod Pharetra
+.
+<p>Donec sed odio dui<sup id="fnref:ref"><a class="footnote-ref" href="#fn:ref" role="doc-noteref">1</a></sup>.</p>
+<p>Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit sit amet non magna.
+Nullam quis risus eget urna mollis<sup id="fnref:ref2"><a class="footnote-ref" href="#fn:ref2" role="doc-noteref">2</a></sup> ornare vel eu leo. Donec id elit non mi
+porta gravida at eget metus. Duis mollis, est non commodo luctus, nisi erat porttitor
+ligula, eget lacinia odio sem nec elit.</p>
+<blockquote>
+<p>Cras mattis consectetur purus sit amet fermentum<sup id="fnref:ref3"><a class="footnote-ref" href="#fn:ref3" role="doc-noteref">3</a></sup>.</p>
+</blockquote>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:ref" role="doc-endnote"><p>Risus Euismod Pharetra&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref" role="doc-backlink">&#8617;</a></p></li>
+<li class="footnote" id="fn:ref2" role="doc-endnote"><p>Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl
+consectetur et. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref2" role="doc-backlink">&#8617;</a></p></li>
+<li class="footnote" id="fn:ref3" role="doc-endnote"><p>This footnote is not allowed because it's in a blockquote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref3" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
+
+[Inline footnotes](@), also known as "anonymous footnotes", are also allowed. Though, unlike regular notes, they cannot contain multiple paragraphs. The syntax is slightly different - the caret goes before the opening brace as follows:
+
+```````````````````````````````` example
+Here is an inline note.^[Inline notes are easier to write, since you don't have to pick an identifier and move down to type the note.]
+.
+<p>Here is an inline note.<sup id="fnref:inline-notes-are-eas"><a class="footnote-ref" href="#fn:inline-notes-are-eas" role="doc-noteref">1</a></sup></p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:inline-notes-are-eas" role="doc-endnote"><p>Inline notes are easier to write, since you don't have to pick an identifier and move down to type the note.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:inline-notes-are-eas" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
