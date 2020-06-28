@@ -1,3 +1,3 @@
-Hello[^ref] World![^ref2]
+Hello[^ref] World! [^ref2]
 
 [^ref2]: Hi!

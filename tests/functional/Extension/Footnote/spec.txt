@@ -90,6 +90,36 @@ Invalid[^spaces are not allowed]
 <p>[^spaces are not allowed]: Sorry, this won't work</p>
 ````````````````````````````````
 
+A [footnote identifier] can come immediately after a word, or have a space between the word and identifier, but cannot come immediately after an exclamation mark (`!`):
+
+```````````````````````````````` example
+ - No spaces[^1]
+ - One space [^2]
+ - Exclamation mark with space! [^3]
+ - Exclamation mark with no space![^4]
+ - Another exclamation mark![^5](not allowed)
+
+[^1]: Allowed
+[^2]: Allowed
+[^3]: Allowed
+[^4]: Not allowed
+[^5]: Not allowed
+.
+<ul>
+<li>No spaces<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup>
+</li>
+<li>One space <sup id="fnref:2"><a class="footnote-ref" href="#fn:2" role="doc-noteref">2</a></sup>
+</li>
+<li>Exclamation mark with space! <sup id="fnref:3"><a class="footnote-ref" href="#fn:3" role="doc-noteref">3</a></sup>
+</li>
+<li>Exclamation mark with no space![^4]</li>
+<li>Another exclamation mark![^5](not allowed)</li>
+</ul>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">&#8617;</a></p></li>
+<li class="footnote" id="fn:2" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">&#8617;</a></p></li>
+<li class="footnote" id="fn:3" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:3" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
+
 These identifiers are used only to correlate the footnote reference with the note itself; in the output, footnotes will be numbered sequentially.
 
 ```````````````````````````````` example
