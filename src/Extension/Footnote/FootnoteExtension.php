@@ -18,6 +18,7 @@ use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\Footnote\Event\AnonymousFootnotesListener;
+use League\CommonMark\Extension\Footnote\Event\FixOrphanedFootnotesAndRefsListener;
 use League\CommonMark\Extension\Footnote\Event\GatherFootnotesListener;
 use League\CommonMark\Extension\Footnote\Event\NumberFootnotesListener;
 use League\CommonMark\Extension\Footnote\Node\Footnote;
@@ -45,8 +46,9 @@ final class FootnoteExtension implements ExtensionInterface
         $environment->addRenderer(FootnoteRef::class, new FootnoteRefRenderer());
         $environment->addRenderer(FootnoteBackref::class, new FootnoteBackrefRenderer());
 
-        $environment->addEventListener(DocumentParsedEvent::class, [new AnonymousFootnotesListener(), 'onDocumentParsed']);
-        $environment->addEventListener(DocumentParsedEvent::class, [new NumberFootnotesListener(), 'onDocumentParsed']);
-        $environment->addEventListener(DocumentParsedEvent::class, [new GatherFootnotesListener(), 'onDocumentParsed']);
+        $environment->addEventListener(DocumentParsedEvent::class, [new AnonymousFootnotesListener(), 'onDocumentParsed'], 40);
+        $environment->addEventListener(DocumentParsedEvent::class, [new FixOrphanedFootnotesAndRefsListener(), 'onDocumentParsed'], 30);
+        $environment->addEventListener(DocumentParsedEvent::class, [new NumberFootnotesListener(), 'onDocumentParsed'], 20);
+        $environment->addEventListener(DocumentParsedEvent::class, [new GatherFootnotesListener(), 'onDocumentParsed'], 10);
     }
 }

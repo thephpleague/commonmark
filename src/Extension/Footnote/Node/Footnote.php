@@ -16,8 +16,9 @@ namespace League\CommonMark\Extension\Footnote\Node;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Reference\ReferenceInterface;
+use League\CommonMark\Reference\ReferenceableInterface;
 
-final class Footnote extends AbstractBlock
+final class Footnote extends AbstractBlock implements ReferenceableInterface
 {
     /**
      * @var ReferenceInterface

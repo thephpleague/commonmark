@@ -23,6 +23,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserEngineInterface`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
+   - `ReferenceableInterface`
  - Added several new methods:
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
@@ -87,14 +88,17 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `Cursor::saveState()` and `Cursor::restoreState()` now use `CursorState` objects instead of arrays
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
  - `InvalidOptionException` now extends from `UnexpectedValueException`
+ - Anything with a `getReference(): ReferenceInterface` method now implements `ReferencableInterface`
  - Several changes made to the Footnote extension:
    - Footnote identifiers can no longer contain spaces
    - Anonymous footnotes can now span subsequent lines
    - Footnotes can now contain multiple lines of content, including sub-blocks, by indenting them
+   - Footnote event listeners now have numbered priorities (but still execute in the same order)
 
 ### Fixed
 
  - Fixed parsing of footnotes without content
+ - Fixed rendering of orphaned footnotes and footnote refs
 
 ### Removed
 

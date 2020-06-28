@@ -16,8 +16,9 @@ namespace League\CommonMark\Extension\Footnote\Node;
 
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Reference\ReferenceInterface;
+use League\CommonMark\Reference\ReferenceableInterface;
 
-final class FootnoteRef extends AbstractInline
+final class FootnoteRef extends AbstractInline implements ReferenceableInterface
 {
     /** @var ReferenceInterface */
     private $reference;
