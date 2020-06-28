@@ -164,6 +164,26 @@ consectetur et. Maecenas faucibus mollis interdum. Maecenas faucibus mollis inte
 <li class="footnote" id="fn:ref3" role="doc-endnote"><p>This footnote is not allowed because it's in a blockquote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref3" role="doc-backlink">&#8617;</a></p></li></ol></div>
 ````````````````````````````````
 
+Footnotes should be separated from other blocks with blank lines:
+
+```````````````````````````````` example
+This[^1] is[^2] a[^3] paragraph[^4].
+[^1]: This footnote will not be parsed since it's not separated from the paragraph above - it's considered a lazy continuation line
+
+[^2]: This one is separated from above
+[^3]: This one isn't, but it's clearly another footnote which is fine
+
+[^4]: But this one will be parsed, even though it
+spans multiple lines because it's a lazy paragraph continuation.
+.
+<p>This[^1] is<sup id="fnref:2"><a class="footnote-ref" href="#fn:2" role="doc-noteref">1</a></sup> a<sup id="fnref:3"><a class="footnote-ref" href="#fn:3" role="doc-noteref">2</a></sup> paragraph<sup id="fnref:4"><a class="footnote-ref" href="#fn:4" role="doc-noteref">3</a></sup>.
+[^1]: This footnote will not be parsed since it's not separated from the paragraph above - it's considered a lazy continuation line</p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:2" role="doc-endnote"><p>This one is separated from above&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">&#8617;</a></p></li>
+<li class="footnote" id="fn:3" role="doc-endnote"><p>This one isn't, but it's clearly another footnote which is fine&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:3" role="doc-backlink">&#8617;</a></p></li>
+<li class="footnote" id="fn:4" role="doc-endnote"><p>But this one will be parsed, even though it
+spans multiple lines because it's a lazy paragraph continuation.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:4" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
+
 [Inline footnotes](@), also known as "anonymous footnotes", are also allowed. Though, unlike regular notes, they cannot contain multiple paragraphs. The syntax is slightly different - the caret goes before the opening brace as follows:
 
 ```````````````````````````````` example

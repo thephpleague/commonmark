@@ -94,6 +94,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - Anonymous footnotes can now span subsequent lines
    - Footnotes can now contain multiple lines of content, including sub-blocks, by indenting them
    - Footnote event listeners now have numbered priorities (but still execute in the same order)
+   - Footnotes must now be separated from previous content by a blank line
 
 ### Fixed
 

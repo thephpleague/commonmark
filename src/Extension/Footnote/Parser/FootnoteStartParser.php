@@ -25,7 +25,7 @@ final class FootnoteStartParser implements BlockStartParserInterface
 {
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
-        if ($cursor->isIndented()) {
+        if ($cursor->isIndented() || $parserState->getLastMatchedBlockParser()->canHaveLazyContinuationLines()) {
             return BlockStart::none();
         }
 
