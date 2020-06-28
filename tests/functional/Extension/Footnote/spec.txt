@@ -104,8 +104,12 @@ consectetur et. Maecenas faucibus mollis interdum. Maecenas faucibus mollis inte
 [Inline footnotes](@), also known as "anonymous footnotes", are also allowed. Though, unlike regular notes, they cannot contain multiple paragraphs. The syntax is slightly different - the caret goes before the opening brace as follows:
 
 ```````````````````````````````` example
-Here is an inline note.^[Inline notes are easier to write, since you don't have to pick an identifier and move down to type the note.]
+Here is an inline note.^[Inline notes are easier to write, since
+you don't have to pick an identifier and move down to type the
+note.]
 .
 <p>Here is an inline note.<sup id="fnref:inline-notes-are-eas"><a class="footnote-ref" href="#fn:inline-notes-are-eas" role="doc-noteref">1</a></sup></p>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:inline-notes-are-eas" role="doc-endnote"><p>Inline notes are easier to write, since you don't have to pick an identifier and move down to type the note.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:inline-notes-are-eas" role="doc-backlink">&#8617;</a></p></li></ol></div>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:inline-notes-are-eas" role="doc-endnote"><p>Inline notes are easier to write, since
+you don't have to pick an identifier and move down to type the
+note.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:inline-notes-are-eas" role="doc-backlink">&#8617;</a></p></li></ol></div>
 ````````````````````````````````

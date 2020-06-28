@@ -89,6 +89,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `InvalidOptionException` now extends from `UnexpectedValueException`
  - Several changes made to the Footnote extension:
    - Footnote identifiers can no longer contain spaces
+   - Anonymous footnotes can now span subsequent lines
 
 ### Fixed
 

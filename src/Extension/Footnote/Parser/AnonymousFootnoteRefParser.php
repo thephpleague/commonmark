@@ -54,7 +54,7 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface
 
         $state = $cursor->saveState();
 
-        $m = $cursor->match('/\^\[[^\n^\]]+\]/');
+        $m = $cursor->match('#\^\[[^\]]+\]#');
         if ($m !== null) {
             if (\preg_match('#\^\[([^\]]+)\]#', $m, $matches) > 0) {
                 $reference = $this->createReference($matches[1]);
