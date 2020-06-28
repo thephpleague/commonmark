@@ -35,6 +35,39 @@ Foo[^foo] bar[^bar]
 <li class="footnote" id="fn:bar" role="doc-endnote">&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:bar" role="doc-backlink">&#8617;</a></li></ol></div>
 ````````````````````````````````
 
+
+A [footnote] may span multiple lines per the rules shown in the next example:
+
+```````````````````````````````` example
+Here's an example of a long footnote[^longnote].
+
+[^longnote]: This footnote has multiple blocks.
+
+    Subsequent paragraphs are indented to show that they
+belong to the previous footnote.
+
+        // This has additional indentation and would be treated as code
+
+    The whole paragraph can be indented, or just the first
+    line.  In this way, multi-paragraph footnotes work like
+    multi-paragraph list items.
+
+This paragraph won't be part of the note, because it
+isn't indented.
+.
+<p>Here's an example of a long footnote<sup id="fnref:longnote"><a class="footnote-ref" href="#fn:longnote" role="doc-noteref">1</a></sup>.</p>
+<p>This paragraph won't be part of the note, because it
+isn't indented.</p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:longnote" role="doc-endnote"><p>This footnote has multiple blocks.</p>
+<p>Subsequent paragraphs are indented to show that they
+belong to the previous footnote.</p>
+<pre><code>// This has additional indentation and would be treated as code
+</code></pre>
+<p>The whole paragraph can be indented, or just the first
+line.  In this way, multi-paragraph footnotes work like
+multi-paragraph list items.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:longnote" role="doc-backlink">&#8617;</a></p></li></ol></div>
+````````````````````````````````
+
 A [footnote] may be referenced multiple times within the document:
 
 ```````````````````````````````` example

@@ -31,6 +31,13 @@ final class FootnoteParser extends AbstractBlockContinueParser
      */
     private $block;
 
+    /**
+     * @var int|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private $indentation;
+
     public function __construct(ReferenceInterface $reference)
     {
         $this->block = new Footnote($reference);
@@ -43,6 +50,17 @@ final class FootnoteParser extends AbstractBlockContinueParser
 
     public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
     {
+        if ($cursor->isBlank()) {
+            return BlockContinue::at($cursor);
+        }
+
+        if ($cursor->isIndented()) {
+            $this->indentation = $this->indentation ?? $cursor->getIndent();
+            $cursor->advanceBy($this->indentation);
+
+            return BlockContinue::at($cursor);
+        }
+
         return BlockContinue::none();
     }
 

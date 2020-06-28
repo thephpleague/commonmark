@@ -90,6 +90,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Several changes made to the Footnote extension:
    - Footnote identifiers can no longer contain spaces
    - Anonymous footnotes can now span subsequent lines
+   - Footnotes can now contain multiple lines of content, including sub-blocks, by indenting them
 
 ### Fixed
 
