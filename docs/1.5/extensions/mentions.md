@@ -248,3 +248,11 @@ echo $converter->convertToHtml('You should ask @colinodell about that');
 // Output (if current user doesn't have has access to view profiles):
 // <p>You should ask <em>[members only]</em> about that</p>
 ```
+
+## Rendering
+
+Whenever a mention is found, a `Mention` object is added to the [document's AST](/1.5/customization/abstract-syntax-tree/).
+This object extends from `Link`, so it'll be rendered as a normal `<a>` tag by default.
+
+If you need more control over the output you can implement a [custom renderer](/1.5/customization/inline-rendering/) for the `Mention` type
+and convert it to whatever HTML you wish!
