@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed parent class lookups for non-existent classes on PHP 8 (#517)
+
 ## [1.5.1] - 2020-06-27
 
 ### Fixed
