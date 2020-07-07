@@ -46,6 +46,8 @@ jobs:
                   coverage: pcov
                   tools: composer:v2
 
+            - run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
             - run: composer update --no-progress ${{ matrix.composer-flags }}
 
             - run: vendor/bin/phpunit --no-coverage
@@ -73,7 +75,7 @@ jobs:
 
             - run: composer update --no-progress
 
-            - run: vendor/bin/phpstan analyse
+            - run: vendor/bin/phpstan analyse --no-progress
 
     psalm:
         name: Psalm
