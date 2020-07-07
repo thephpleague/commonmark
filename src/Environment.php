@@ -410,7 +410,7 @@ final class Environment implements ConfigurableEnvironmentInterface
             return $list[$class];
         }
 
-        while ($parent = \get_parent_class($parent ?? $class)) {
+        while (\class_exists($parent = $parent ?? $class) && $parent = \get_parent_class($parent)) {
             if (!isset($list[$parent])) {
                 continue;
             }
