@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Fixed
 
  - Fixed `textarea` elements not being treated as a type 1 HTML block (like `script`, `style`, or `pre`)
+ - Fixed autolink processor not handling other unmatched trailing parentheses
 
 ## [1.5.4] - 2020-08-17
 

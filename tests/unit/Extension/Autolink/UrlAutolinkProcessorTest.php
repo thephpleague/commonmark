@@ -60,7 +60,9 @@ final class UrlAutolinkProcessorTest extends TestCase
 
         // Tests involving parentheses
         yield ['www.google.com/search?q=Markup+(business)', '<p><a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a></p>'];
+        yield ['www.google.com/search?q=Markup+(business)))', '<p><a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a>))</p>'];
         yield ['(www.google.com/search?q=Markup+(business))', '<p>(<a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a>)</p>'];
+        yield ['(www.google.com/search?q=Markup+(business)', '<p>(<a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a></p>'];
         yield ['www.google.com/search?q=(business))+ok', '<p><a href="http://www.google.com/search?q=(business))+ok">www.google.com/search?q=(business))+ok</a></p>'];
         yield ['(https://www.example.com/test).', '<p>(<a href="https://www.example.com/test">https://www.example.com/test</a>).</p>'];
 
