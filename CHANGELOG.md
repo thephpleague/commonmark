@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Significantly improved performance of the inline parser regex
+
 ### Fixed
 
  - Fixed parent class lookups for non-existent classes on PHP 8 (#517)
