@@ -43,7 +43,7 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, Configurat
         $attrs['href']  = \mb_strtolower($node->getReference()->getDestination());
         $attrs['role']  = 'doc-backlink';
 
-        return '&nbsp;' . new HtmlElement('a', $attrs, '&#8617;', true);
+        return '&nbsp;' . new HtmlElement('a', $attrs, $this->config->get('footnote/backref_text', '&#8617;'), true);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void
