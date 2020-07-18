@@ -64,4 +64,18 @@ final class FootnoteBackrefRendererTest extends TestCase
 
         $this->assertStringContainsString('class="my-custom-class"', $output);
     }
+
+    public function testTextConfiguration(): void
+    {
+        $renderer = new FootnoteBackrefRenderer();
+        $renderer->setConfiguration(new Configuration(['footnote' => ['backref_text' => 'Go back.']]));
+
+        $fakeReference   = new Reference('label', 'dest', 'title');
+        $footnoteBackref = new FootnoteBackref($fakeReference);
+
+        $output = $renderer->render($footnoteBackref, new FakeChildNodeRenderer());
+
+        $this->assertStringContainsString('Go back.', $output);
+        $this->assertStringNotContainsString('&#8617;', $output);
+    }
 }
