@@ -127,4 +127,34 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $converter = new CommonMarkConverter($config, $environment);
         $converter->convertToHtml('# This will fail');
     }
+
+    public function testWithCustomLevels(): void
+    {
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $config = [
+            'heading_permalink' => [
+                'min_heading_level' => 2,
+                'max_heading_level' => 3,
+            ],
+        ];
+
+        $converter = new CommonMarkConverter($config, $environment);
+
+        $input    = <<<EOT
+# 1
+## 2
+### 3
+#### 4
+EOT;
+        $expected = <<<EOT
+<h1>1</h1>
+<h2><a id="user-content-2" href="#2" name="2" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>2</h2>
+<h3><a id="user-content-3" href="#3" name="3" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>3</h3>
+<h4>4</h4>
+EOT;
+
+        $this->assertEquals($expected, \trim($converter->convertToHtml($input)));
+    }
 }
