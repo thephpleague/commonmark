@@ -117,9 +117,9 @@ Any classes or methods marked `@internal` are not intended for use outside of th
 
 ## 🛠️ Maintenance & Support
 
-When a new **minor** version (`1.x`) is released, the previous one will continue to receive security and bug fixes for *at least* 3 months.
+When a new **minor** version (e.g. `1.4` -> `1.5`) is released, the previous one (`1.4`) will continue to receive security and critical bug fixes for *at least* 3 months.
 
-When a new **major** version is released (`1.0`, `2.0`, etc), the previous one (`0.19.x`) will receive bug fixes for *at least* 3 months and security updates for 6 months after that new release comes out.
+When a new **major** version is released (e.g. `1.5` -> `2.0`), the previous one (`1.5`) will receive critical bug fixes for *at least* 3 months and security updates for 6 months after that new release comes out.
 
 (This policy may change in the future and exceptions may be made on a case-by-case basis.)
 
