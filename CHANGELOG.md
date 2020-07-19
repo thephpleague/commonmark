@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.5.2] - 2020-07-19
+
 ### Changed
 
  - Significantly improved performance of the inline parser regex
@@ -355,7 +357,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.1...1.5
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.2...1.5
+[1.5.2]: https://github.com/thephpleague/commonmark/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/thephpleague/commonmark/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/thephpleague/commonmark/compare/1.4.3...1.5.0
 [1.4.3]: https://github.com/thephpleague/commonmark/compare/1.4.2...1.4.3
