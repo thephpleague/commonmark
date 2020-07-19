@@ -43,7 +43,7 @@ Result:
     <ol>
         <li class="footnote" id="fn:note1">
             <p>
-                Elit Malesuada Ridiculus <a class="footnote-backref" rev="footnote" href="#fnref:note1">&#8617;</a>
+                Elit Malesuada Ridiculus <a class="footnote-backref" rev="footnote" href="#fnref:note1">↩</a>
             </p>
         </li>
     </ol>
@@ -72,7 +72,7 @@ $config = [
     // If you're happy with the defaults, feel free to remove them from this array
     'footnote' => [
         'backref_class'      => 'footnote-backref',
-        'backref_symbol'     => '&#8617;',
+        'backref_symbol'     => '↩',
         'container_add_hr'   => true,
         'container_class'    => 'footnotes',
         'ref_class'          => 'footnote-ref',
@@ -97,7 +97,7 @@ This `string` option defines which HTML class should be assigned to rendered foo
 
 ### `backref_symbol`
 
-This `string` option sets the symbol used as the contents of the footnote backreference link. It defaults to `\League\CommonMark\Extension\Footnote\Renderer\FootnoteBackrefRenderer::DEFAULT_SYMBOL = '&#8617;'`.
+This `string` option sets the symbol used as the contents of the footnote backreference link. It defaults to `\League\CommonMark\Extension\Footnote\Renderer\FootnoteBackrefRenderer::DEFAULT_SYMBOL = '↩'`.
 
 If you want to use a custom icon, set this to an empty string `''` and use CSS to override the elements' contents. See the [Heading Permalink Extension docs](/1.5/extensions/heading-permalinks#adding-icons) for an example of how to do this.
 
