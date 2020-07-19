@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed regression of multi-byte inline parser characters not being matched
+
 ## [1.5.2] - 2020-07-19
 
 ### Changed

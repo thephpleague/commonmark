@@ -362,6 +362,46 @@ class EnvironmentTest extends TestCase
         $this->assertSame($test, $matches[0]);
     }
 
+    public function testGetInlineParserCharacterRegexForAsciiCharacters(): void
+    {
+        $environment = new Environment();
+
+        $parser1 = $this->createMock(InlineParserInterface::class);
+        $parser1->method('getCharacters')->willReturn(['*']);
+        $environment->addInlineParser($parser1);
+
+        $parser2 = $this->createMock(InlineParserInterface::class);
+        $parser2->method('getCharacters')->willReturn(['[']);
+        $environment->addInlineParser($parser2);
+
+        // This triggers the initialization which builds the regex
+        $environment->getInlineParsersForCharacter('');
+
+        $regex = $environment->getInlineParserCharacterRegex();
+
+        $this->assertSame('/^[^\*\[]+/', $regex);
+    }
+
+    public function testGetInlineParserCharacterRegexForMultibyteCharacters(): void
+    {
+        $environment = new Environment();
+
+        $parser1 = $this->createMock(InlineParserInterface::class);
+        $parser1->method('getCharacters')->willReturn(['*']);
+        $environment->addInlineParser($parser1);
+
+        $parser2 = $this->createMock(InlineParserInterface::class);
+        $parser2->method('getCharacters')->willReturn(['★']);
+        $environment->addInlineParser($parser2);
+
+        // This triggers the initialization which builds the regex
+        $environment->getInlineParsersForCharacter('');
+
+        $regex = $environment->getInlineParserCharacterRegex();
+
+        $this->assertSame('/^[^\*★]+/u', $regex);
+    }
+
     public function testInjectableBlockParsersGetInjected()
     {
         $environment = new Environment();

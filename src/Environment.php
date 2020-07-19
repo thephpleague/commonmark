@@ -375,7 +375,7 @@ final class Environment implements ConfigurableEnvironmentInterface
             $this->inlineParserCharacterRegex = '/^[^' . \preg_quote(\implode('', $chars), '/') . ']+/';
 
             // Only add the u modifier (which slows down performance) if we have a multi-byte UTF-8 character in our regex
-            if (\strlen($this->inlineParserCharacterRegex) < \mb_strlen($this->inlineParserCharacterRegex)) {
+            if (\strlen($this->inlineParserCharacterRegex) > \mb_strlen($this->inlineParserCharacterRegex)) {
                 $this->inlineParserCharacterRegex .= 'u';
             }
         }
