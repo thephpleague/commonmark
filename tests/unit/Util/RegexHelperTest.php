@@ -25,246 +25,246 @@ class RegexHelperTest extends TestCase
     public function testEscapable(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_ESCAPABLE . '$/';
-        $this->assertRegExp($regex, '&');
-        $this->assertRegExp($regex, '/');
-        $this->assertRegExp($regex, '\\');
-        $this->assertRegExp($regex, '(');
-        $this->assertRegExp($regex, ')');
+        $this->assertRegexMatches($regex, '&');
+        $this->assertRegexMatches($regex, '/');
+        $this->assertRegexMatches($regex, '\\');
+        $this->assertRegexMatches($regex, '(');
+        $this->assertRegexMatches($regex, ')');
     }
 
     public function testEscapedChar(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_ESCAPED_CHAR . '$/';
-        $this->assertRegExp($regex, '\\&');
-        $this->assertRegExp($regex, '\\/');
-        $this->assertRegExp($regex, '\\\\');
-        $this->assertRegExp($regex, '\)');
-        $this->assertRegExp($regex, '\(');
+        $this->assertRegexMatches($regex, '\\&');
+        $this->assertRegexMatches($regex, '\\/');
+        $this->assertRegexMatches($regex, '\\\\');
+        $this->assertRegexMatches($regex, '\)');
+        $this->assertRegexMatches($regex, '\(');
     }
 
     public function testInDoubleQuotes(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_IN_DOUBLE_QUOTES . '$/';
-        $this->assertRegExp($regex, '"\\&"');
-        $this->assertRegExp($regex, '"\\/"');
-        $this->assertRegExp($regex, '"\\\\"');
+        $this->assertRegexMatches($regex, '"\\&"');
+        $this->assertRegexMatches($regex, '"\\/"');
+        $this->assertRegexMatches($regex, '"\\\\"');
     }
 
     public function testInSingleQuotes(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_IN_SINGLE_QUOTES . '$/';
-        $this->assertRegExp($regex, '\'\\&\'');
-        $this->assertRegExp($regex, '\'\\/\'');
-        $this->assertRegExp($regex, '\'\\\\\'');
+        $this->assertRegexMatches($regex, '\'\\&\'');
+        $this->assertRegexMatches($regex, '\'\\/\'');
+        $this->assertRegexMatches($regex, '\'\\\\\'');
     }
 
     public function testInParens(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_IN_PARENS . '$/';
-        $this->assertRegExp($regex, '(\\&)');
-        $this->assertRegExp($regex, '(\\/)');
-        $this->assertRegExp($regex, '(\\\\)');
+        $this->assertRegexMatches($regex, '(\\&)');
+        $this->assertRegexMatches($regex, '(\\/)');
+        $this->assertRegexMatches($regex, '(\\\\)');
     }
 
     public function testRegChar(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_REG_CHAR . '$/';
-        $this->assertRegExp($regex, 'a');
-        $this->assertRegExp($regex, 'A');
-        $this->assertRegExp($regex, '!');
-        $this->assertNotRegExp($regex, ' ');
+        $this->assertRegexMatches($regex, 'a');
+        $this->assertRegexMatches($regex, 'A');
+        $this->assertRegexMatches($regex, '!');
+        $this->assertRegexDoesNotMatch($regex, ' ');
     }
 
     public function testInParensNoSp(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_IN_PARENS_NOSP . '$/';
-        $this->assertRegExp($regex, '(a)');
-        $this->assertRegExp($regex, '(A)');
-        $this->assertRegExp($regex, '(!)');
-        $this->assertNotRegExp($regex, '(a )');
+        $this->assertRegexMatches($regex, '(a)');
+        $this->assertRegexMatches($regex, '(A)');
+        $this->assertRegexMatches($regex, '(!)');
+        $this->assertRegexDoesNotMatch($regex, '(a )');
     }
 
     public function testTagname(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_TAGNAME . '$/';
-        $this->assertRegExp($regex, 'a');
-        $this->assertRegExp($regex, 'img');
-        $this->assertRegExp($regex, 'h1');
-        $this->assertNotRegExp($regex, '11');
+        $this->assertRegexMatches($regex, 'a');
+        $this->assertRegexMatches($regex, 'img');
+        $this->assertRegexMatches($regex, 'h1');
+        $this->assertRegexDoesNotMatch($regex, '11');
     }
 
     public function testBlockTagName(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_BLOCKTAGNAME . '$/';
-        $this->assertRegExp($regex, 'p');
-        $this->assertRegExp($regex, 'div');
-        $this->assertRegExp($regex, 'h1');
-        $this->assertNotRegExp($regex, 'a');
-        $this->assertNotRegExp($regex, 'h7');
+        $this->assertRegexMatches($regex, 'p');
+        $this->assertRegexMatches($regex, 'div');
+        $this->assertRegexMatches($regex, 'h1');
+        $this->assertRegexDoesNotMatch($regex, 'a');
+        $this->assertRegexDoesNotMatch($regex, 'h7');
     }
 
     public function testAttributeName(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_ATTRIBUTENAME . '$/';
-        $this->assertRegExp($regex, 'href');
-        $this->assertRegExp($regex, 'class');
-        $this->assertRegExp($regex, 'data-src');
-        $this->assertNotRegExp($regex, '-key');
+        $this->assertRegexMatches($regex, 'href');
+        $this->assertRegexMatches($regex, 'class');
+        $this->assertRegexMatches($regex, 'data-src');
+        $this->assertRegexDoesNotMatch($regex, '-key');
     }
 
     public function testUnquotedValue(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_UNQUOTEDVALUE . '$/';
-        $this->assertRegExp($regex, 'foo');
-        $this->assertRegExp($regex, 'bar');
-        $this->assertNotRegExp($regex, '"baz"');
+        $this->assertRegexMatches($regex, 'foo');
+        $this->assertRegexMatches($regex, 'bar');
+        $this->assertRegexDoesNotMatch($regex, '"baz"');
     }
 
     public function testSingleQuotedValue(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_SINGLEQUOTEDVALUE . '$/';
-        $this->assertRegExp($regex, '\'foo\'');
-        $this->assertRegExp($regex, '\'bar\'');
-        $this->assertNotRegExp($regex, '"baz"');
+        $this->assertRegexMatches($regex, '\'foo\'');
+        $this->assertRegexMatches($regex, '\'bar\'');
+        $this->assertRegexDoesNotMatch($regex, '"baz"');
     }
 
     public function testDoubleQuotedValue(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_DOUBLEQUOTEDVALUE . '$/';
-        $this->assertRegExp($regex, '"foo"');
-        $this->assertRegExp($regex, '"bar"');
-        $this->assertNotRegExp($regex, '\'baz\'');
+        $this->assertRegexMatches($regex, '"foo"');
+        $this->assertRegexMatches($regex, '"bar"');
+        $this->assertRegexDoesNotMatch($regex, '\'baz\'');
     }
 
     public function testAttributeValue(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_ATTRIBUTEVALUE . '$/';
-        $this->assertRegExp($regex, 'foo');
-        $this->assertRegExp($regex, '\'bar\'');
-        $this->assertRegExp($regex, '"baz"');
+        $this->assertRegexMatches($regex, 'foo');
+        $this->assertRegexMatches($regex, '\'bar\'');
+        $this->assertRegexMatches($regex, '"baz"');
     }
 
     public function testAttributeValueSpec(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_ATTRIBUTEVALUESPEC . '$/';
-        $this->assertRegExp($regex, '=foo');
-        $this->assertRegExp($regex, '= foo');
-        $this->assertRegExp($regex, ' =foo');
-        $this->assertRegExp($regex, ' = foo');
-        $this->assertRegExp($regex, '=\'bar\'');
-        $this->assertRegExp($regex, '= \'bar\'');
-        $this->assertRegExp($regex, ' =\'bar\'');
-        $this->assertRegExp($regex, ' = \'bar\'');
-        $this->assertRegExp($regex, '="baz"');
-        $this->assertRegExp($regex, '= "baz"');
-        $this->assertRegExp($regex, ' ="baz"');
-        $this->assertRegExp($regex, ' = "baz"');
+        $this->assertRegexMatches($regex, '=foo');
+        $this->assertRegexMatches($regex, '= foo');
+        $this->assertRegexMatches($regex, ' =foo');
+        $this->assertRegexMatches($regex, ' = foo');
+        $this->assertRegexMatches($regex, '=\'bar\'');
+        $this->assertRegexMatches($regex, '= \'bar\'');
+        $this->assertRegexMatches($regex, ' =\'bar\'');
+        $this->assertRegexMatches($regex, ' = \'bar\'');
+        $this->assertRegexMatches($regex, '="baz"');
+        $this->assertRegexMatches($regex, '= "baz"');
+        $this->assertRegexMatches($regex, ' ="baz"');
+        $this->assertRegexMatches($regex, ' = "baz"');
     }
 
     public function testAttribute(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_ATTRIBUTE . '$/';
-        $this->assertRegExp($regex, ' disabled');
-        $this->assertRegExp($regex, ' disabled="disabled"');
-        $this->assertRegExp($regex, ' href="http://www.google.com"');
-        $this->assertNotRegExp($regex, 'disabled', 'There must be at least one space at the start');
+        $this->assertRegexMatches($regex, ' disabled');
+        $this->assertRegexMatches($regex, ' disabled="disabled"');
+        $this->assertRegexMatches($regex, ' href="http://www.google.com"');
+        $this->assertRegexDoesNotMatch($regex, 'disabled', 'There must be at least one space at the start');
     }
 
     public function testOpenTag(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_OPENTAG . '$/';
-        $this->assertRegExp($regex, '<hr>');
-        $this->assertRegExp($regex, '<a href="http://www.google.com">');
-        $this->assertRegExp($regex, '<img src="http://www.google.com/logo.png" />');
-        $this->assertNotRegExp($regex, '</p>');
+        $this->assertRegexMatches($regex, '<hr>');
+        $this->assertRegexMatches($regex, '<a href="http://www.google.com">');
+        $this->assertRegexMatches($regex, '<img src="http://www.google.com/logo.png" />');
+        $this->assertRegexDoesNotMatch($regex, '</p>');
     }
 
     public function testCloseTag(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_CLOSETAG . '$/';
-        $this->assertRegExp($regex, '</p>');
-        $this->assertRegExp($regex, '</a>');
-        $this->assertNotRegExp($regex, '<hr>');
-        $this->assertNotRegExp($regex, '<img src="http://www.google.com/logo.png" />');
+        $this->assertRegexMatches($regex, '</p>');
+        $this->assertRegexMatches($regex, '</a>');
+        $this->assertRegexDoesNotMatch($regex, '<hr>');
+        $this->assertRegexDoesNotMatch($regex, '<img src="http://www.google.com/logo.png" />');
     }
 
     public function testOpenBlockTag(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_OPENBLOCKTAG . '$/';
-        $this->assertRegExp($regex, '<body>');
-        $this->assertRegExp($regex, '<hr>');
-        $this->assertRegExp($regex, '<hr />');
-        $this->assertRegExp($regex, '<p id="foo" class="bar">');
-        $this->assertNotRegExp($regex, '<a href="http://www.google.com">', 'This is not a block element');
-        $this->assertNotRegExp($regex, '</p>', 'This is not an opening tag');
+        $this->assertRegexMatches($regex, '<body>');
+        $this->assertRegexMatches($regex, '<hr>');
+        $this->assertRegexMatches($regex, '<hr />');
+        $this->assertRegexMatches($regex, '<p id="foo" class="bar">');
+        $this->assertRegexDoesNotMatch($regex, '<a href="http://www.google.com">', 'This is not a block element');
+        $this->assertRegexDoesNotMatch($regex, '</p>', 'This is not an opening tag');
     }
 
     public function testCloseBlockTag(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_CLOSEBLOCKTAG . '$/';
-        $this->assertRegExp($regex, '</body>');
-        $this->assertRegExp($regex, '</p>');
-        $this->assertNotRegExp($regex, '</a>', 'This is not a block element');
-        $this->assertNotRegExp($regex, '<br>', 'This is not a closing tag');
+        $this->assertRegexMatches($regex, '</body>');
+        $this->assertRegexMatches($regex, '</p>');
+        $this->assertRegexDoesNotMatch($regex, '</a>', 'This is not a block element');
+        $this->assertRegexDoesNotMatch($regex, '<br>', 'This is not a closing tag');
     }
 
     public function testHtmlComment(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_HTMLCOMMENT . '$/';
-        $this->assertRegExp($regex, '<!---->');
-        $this->assertRegExp($regex, '<!-- -->');
-        $this->assertRegExp($regex, '<!-- HELLO WORLD -->');
-        $this->assertNotRegExp($regex, '<!->');
-        $this->assertNotRegExp($regex, '<!-->');
-        $this->assertNotRegExp($regex, '<!--->');
-        $this->assertNotRegExp($regex, '<!- ->');
+        $this->assertRegexMatches($regex, '<!---->');
+        $this->assertRegexMatches($regex, '<!-- -->');
+        $this->assertRegexMatches($regex, '<!-- HELLO WORLD -->');
+        $this->assertRegexDoesNotMatch($regex, '<!->');
+        $this->assertRegexDoesNotMatch($regex, '<!-->');
+        $this->assertRegexDoesNotMatch($regex, '<!--->');
+        $this->assertRegexDoesNotMatch($regex, '<!- ->');
     }
 
     public function testProcessingInstruction(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_PROCESSINGINSTRUCTION . '$/';
-        $this->assertRegExp($regex, '<?PITarget PIContent?>');
-        $this->assertRegExp($regex, '<?xml-stylesheet type="text/xsl" href="style.xsl"?>');
+        $this->assertRegexMatches($regex, '<?PITarget PIContent?>');
+        $this->assertRegexMatches($regex, '<?xml-stylesheet type="text/xsl" href="style.xsl"?>');
     }
 
     public function testDeclaration(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_DECLARATION . '$/';
-        $this->assertRegExp($regex, '<!DOCTYPE html>');
-        $this->assertRegExp($regex, '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">');
-        $this->assertRegExp($regex, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+        $this->assertRegexMatches($regex, '<!DOCTYPE html>');
+        $this->assertRegexMatches($regex, '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">');
+        $this->assertRegexMatches($regex, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
     }
 
     public function testCDATA(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_CDATA . '$/';
-        $this->assertRegExp($regex, '<![CDATA[<sender>John Smith</sender>]]>');
-        $this->assertRegExp($regex, '<![CDATA[]]]]><![CDATA[>]]>');
+        $this->assertRegexMatches($regex, '<![CDATA[<sender>John Smith</sender>]]>');
+        $this->assertRegexMatches($regex, '<![CDATA[]]]]><![CDATA[>]]>');
     }
 
     public function testHtmlTag(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_HTMLTAG . '$/';
-        $this->assertRegExp($regex, '<body id="main">');
-        $this->assertRegExp($regex, '</p>');
-        $this->assertRegExp($regex, '<!-- HELLO WORLD -->');
-        $this->assertRegExp($regex, '<?xml-stylesheet type="text/xsl" href="style.xsl"?>');
-        $this->assertRegExp($regex, '<!DOCTYPE html>');
-        $this->assertRegExp($regex, '<![CDATA[<sender>John Smith</sender>]]>');
+        $this->assertRegexMatches($regex, '<body id="main">');
+        $this->assertRegexMatches($regex, '</p>');
+        $this->assertRegexMatches($regex, '<!-- HELLO WORLD -->');
+        $this->assertRegexMatches($regex, '<?xml-stylesheet type="text/xsl" href="style.xsl"?>');
+        $this->assertRegexMatches($regex, '<!DOCTYPE html>');
+        $this->assertRegexMatches($regex, '<![CDATA[<sender>John Smith</sender>]]>');
     }
 
     public function testHtmlBlockOpen(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_HTMLBLOCKOPEN . '$/';
-        $this->assertRegExp($regex, '<h1>');
-        $this->assertRegExp($regex, '</p>');
+        $this->assertRegexMatches($regex, '<h1>');
+        $this->assertRegexMatches($regex, '</p>');
     }
 
     public function testLinkTitle(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_HTMLBLOCKOPEN . '$/';
-        $this->assertRegExp($regex, '<h1>');
-        $this->assertRegExp($regex, '</p>');
+        $this->assertRegexMatches($regex, '<h1>');
+        $this->assertRegexMatches($regex, '</p>');
     }
 
     public function testUnescape(): void
@@ -373,5 +373,23 @@ class RegexHelperTest extends TestCase
         yield [HtmlBlock::TYPE_6_BLOCK_ELEMENT];
         yield [HtmlBlock::TYPE_7_MISC_ELEMENT];
         yield [8];
+    }
+
+    private function assertRegexMatches(string $pattern, string $string, string $message = ''): void
+    {
+        if (\method_exists($this, 'assertMatchesRegularExpression')) {
+            $this->assertMatchesRegularExpression($pattern, $string, $message);
+        } else {
+            $this->assertRegExp($pattern, $string, $message);
+        }
+    }
+
+    private function assertRegexDoesNotMatch(string $pattern, string $string, string $message = ''): void
+    {
+        if (\method_exists($this, 'assertDoesNotMatchRegularExpression')) {
+            $this->assertDoesNotMatchRegularExpression($pattern, $string, $message);
+        } else {
+            $this->assertNotRegExp($pattern, $string, $message);
+        }
     }
 }

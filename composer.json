@@ -32,12 +32,14 @@
         "github/gfm": "0.29.0",
         "michelf/php-markdown": "~1.4",
         "phpstan/phpstan": "^0.12",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^8.5 || ^9.2",
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^4.2",
         "unleashedtech/php-coding-standard": "^2.2.1",
         "vimeo/psalm": "^3.11"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "conflict": {
         "scrutinizer/ocular": "1.7.*"
     },

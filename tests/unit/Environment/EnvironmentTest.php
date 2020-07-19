@@ -111,7 +111,7 @@ class EnvironmentTest extends TestCase
 
     public function testSetConfigAfterInit(): void
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(\RuntimeException::class);
 
         $environment = new Environment();
         // This triggers the initialization
@@ -129,7 +129,7 @@ class EnvironmentTest extends TestCase
 
     public function testMergeConfigAfterInit(): void
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(\RuntimeException::class);
 
         $environment = new Environment();
         // This triggers the initialization
