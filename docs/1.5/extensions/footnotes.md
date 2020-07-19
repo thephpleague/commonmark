@@ -72,6 +72,7 @@ $config = [
     // If you're happy with the defaults, feel free to remove them from this array
     'footnote' => [
         'backref_class'      => 'footnote-backref',
+        'backref_symbol'     => '&#8617;',
         'container_add_hr'   => true,
         'container_class'    => 'footnotes',
         'ref_class'          => 'footnote-ref',
@@ -93,6 +94,14 @@ This extension can be configured by providing a `footnote` array with several ne
 ### `backref_class`
 
 This `string` option defines which HTML class should be assigned to rendered footnote backreference elements.
+
+### `backref_symbol`
+
+This `string` option sets the symbol used as the contents of the footnote backreference link. It defaults to `\League\CommonMark\Extension\Footnote\Renderer\FootnoteBackrefRenderer::DEFAULT_SYMBOL = '&#8617;'`.
+
+If you want to use a custom icon, set this to an empty string `''` and use CSS to override the elements' contents. See the [Heading Permalink Extension docs](/1.5/extensions/heading-permalinks#adding-icons) for an example of how to do this.
+
+> Note: Special HTML characters (`" & < >`) provided here will be escaped for security reasons.
 
 ### `container_add_hr`
 
