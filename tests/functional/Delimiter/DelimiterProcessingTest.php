@@ -73,11 +73,9 @@ final class DelimiterProcessingTest extends TestCase
         $this->assertEquals("<p>(1)(2)both(/2)(/1)</p>\n", $c->convertToHtml('@@@both@@@'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testMultipleDelimitersWithSameLength()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $e = Environment::createCommonMarkEnvironment();
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));

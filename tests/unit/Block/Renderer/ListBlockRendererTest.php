@@ -29,7 +29,7 @@ class ListBlockRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new ListBlockRenderer();
     }
@@ -50,7 +50,7 @@ class ListBlockRendererTest extends TestCase
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('ol', $result->getTagName());
         $this->assertSame($expectedAttributeValue, $result->getAttribute('start'));
-        $this->assertContains('::blocks::', $result->getContents(true));
+        $this->assertStringContainsString('::blocks::', $result->getContents(true));
         $this->assertEquals('foo', $result->getAttribute('id'));
     }
 
@@ -74,15 +74,14 @@ class ListBlockRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('ul', $result->getTagName());
-        $this->assertContains('::blocks::', $result->getContents(true));
+        $this->assertStringContainsString('::blocks::', $result->getContents(true));
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

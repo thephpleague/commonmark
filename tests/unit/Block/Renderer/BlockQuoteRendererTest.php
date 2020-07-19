@@ -29,7 +29,7 @@ class BlockQuoteRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new BlockQuoteRenderer();
     }
@@ -58,15 +58,14 @@ class BlockQuoteRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('blockquote', $result->getTagName());
-        $this->assertContains('::blocks::', $result->getContents(true));
+        $this->assertStringContainsString('::blocks::', $result->getContents(true));
         $this->assertEquals(['id' => 'id'], $result->getAllAttributes());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

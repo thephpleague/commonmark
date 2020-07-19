@@ -25,7 +25,7 @@ class StrikethroughRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new StrikethroughRenderer();
     }
@@ -40,15 +40,14 @@ class StrikethroughRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('del', $result->getTagName());
-        $this->assertContains('::inlines::', $result->getContents(true));
+        $this->assertStringContainsString('::inlines::', $result->getContents(true));
         $this->assertEquals(['id' => 'some"&amp;id'], $result->getAllAttributes());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidNodeType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = new Text('ruh roh');
         $fakeRenderer = new FakeHtmlRenderer();
 

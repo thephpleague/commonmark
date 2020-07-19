@@ -26,7 +26,7 @@ class InlinesOnlyFunctionalTest extends TestCase
      */
     protected $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $environment = new Environment();
         $environment->addExtension(new InlinesOnlyExtension());

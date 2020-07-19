@@ -29,7 +29,7 @@ class HtmlInlineRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new HtmlInlineRenderer();
         $this->renderer->setConfiguration(new Configuration());
@@ -42,8 +42,8 @@ class HtmlInlineRendererTest extends TestCase
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('<h1>Test</h1>', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('<h1>Test</h1>', $result);
     }
 
     public function testRenderAllowHtml()
@@ -57,8 +57,8 @@ class HtmlInlineRendererTest extends TestCase
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('<h1>Test</h1>', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('<h1>Test</h1>', $result);
     }
 
     public function testRenderEscapeHtml()
@@ -72,8 +72,8 @@ class HtmlInlineRendererTest extends TestCase
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('&lt;h1 class="test"&gt;Test&lt;/h1&gt;', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('&lt;h1 class="test"&gt;Test&lt;/h1&gt;', $result);
     }
 
     public function testRenderStripHtml()
@@ -87,15 +87,14 @@ class HtmlInlineRendererTest extends TestCase
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
+        $this->assertIsString($result);
         $this->assertEquals('', $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(InlineElement\AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

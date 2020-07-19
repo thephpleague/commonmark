@@ -28,7 +28,7 @@ class CodeRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new CodeRenderer();
     }
@@ -43,15 +43,14 @@ class CodeRendererTest extends TestCase
 
         $this->assertTrue($result instanceof HtmlElement);
         $this->assertEquals('code', $result->getTagName());
-        $this->assertContains('echo &quot;hello world&quot;;', $result->getContents(true));
+        $this->assertStringContainsString('echo &quot;hello world&quot;;', $result->getContents(true));
         $this->assertEquals(['id' => 'foo'], $result->getAllAttributes());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(InlineElement\AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

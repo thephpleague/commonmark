@@ -44,7 +44,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('emstrong.html')));
-        $this->assertContains($expectedContents, trim($cmd->getOutput()));
+        $this->assertStringContainsString($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -59,7 +59,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('em.html')));
-        $this->assertContains($expectedContents, trim($cmd->getOutput()));
+        $this->assertStringContainsString($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -74,7 +74,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('strong.html')));
-        $this->assertContains($expectedContents, trim($cmd->getOutput()));
+        $this->assertStringContainsString($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -90,7 +90,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('disabled.html')));
-        $this->assertContains($expectedContents, trim($cmd->getOutput()));
+        $this->assertStringContainsString($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -105,7 +105,7 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('asterisks.html')));
-        $this->assertContains($expectedContents, trim($cmd->getOutput()));
+        $this->assertStringContainsString($expectedContents, trim($cmd->getOutput()));
     }
 
     /**
@@ -120,6 +120,6 @@ class EmphasisTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('underscores.html')));
-        $this->assertContains($expectedContents, trim($cmd->getOutput()));
+        $this->assertStringContainsString($expectedContents, trim($cmd->getOutput()));
     }
 }

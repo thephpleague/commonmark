@@ -33,11 +33,10 @@ class AbstractBlockTest extends TestCase
         $this->assertNull($block->parent());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testSetParentWithInvalidNode()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $block = $this->getMockForAbstractClass(AbstractBlock::class);
 
         $inline = $this->getMockForAbstractClass(AbstractInline::class);

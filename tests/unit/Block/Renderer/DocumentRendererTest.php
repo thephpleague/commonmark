@@ -28,7 +28,7 @@ class DocumentRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new DocumentRenderer();
     }
@@ -40,7 +40,7 @@ class DocumentRendererTest extends TestCase
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
+        $this->assertIsString($result);
         $this->assertEmpty($result);
     }
 
@@ -51,15 +51,14 @@ class DocumentRendererTest extends TestCase
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('::blocks::', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('::blocks::', $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

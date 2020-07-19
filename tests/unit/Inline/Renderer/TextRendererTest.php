@@ -27,7 +27,7 @@ class TextRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new TextRenderer();
     }
@@ -39,15 +39,14 @@ class TextRendererTest extends TestCase
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
-        $this->assertInternalType('string', $result);
-        $this->assertContains('foo bar', $result);
+        $this->assertIsString($result);
+        $this->assertStringContainsString('foo bar', $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(InlineElement\AbstractInline::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

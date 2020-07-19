@@ -31,17 +31,16 @@ final class QuoteRendererTest extends TestCase
     /** @var ElementRendererInterface */
     private $htmlRenderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new QuoteRenderer();
         $this->htmlRenderer = $this->createMock(ElementRendererInterface::class);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidInlineType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->createMock(Text::class);
 
         $this->renderer->render($inline, $this->htmlRenderer);

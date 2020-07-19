@@ -28,7 +28,7 @@ class ThematicBreakRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new ThematicBreakRenderer();
     }
@@ -44,11 +44,10 @@ class ThematicBreakRendererTest extends TestCase
         $this->assertEquals('hr', $result->getTagName());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

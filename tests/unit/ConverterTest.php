@@ -16,7 +16,6 @@ namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Converter;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 class ConverterTest extends TestCase
 {
@@ -25,7 +24,7 @@ class ConverterTest extends TestCase
         $inputMarkdown = '**Strong**';
         $expectedHtml = '<strong>Strong</strong>';
 
-        /** @var Converter|PHPUnit_Framework_MockObject_MockObject $converter */
+        /** @var Converter|\PHPUnit\Framework\MockObject\MockObject $converter */
         $converter = $this->getMockBuilder(Converter::class)
             ->disableOriginalConstructor()
             ->setMethods(['convertToHtml'])

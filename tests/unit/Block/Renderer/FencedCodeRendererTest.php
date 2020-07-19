@@ -31,7 +31,7 @@ class FencedCodeRendererTest extends TestCase
      */
     protected $renderer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->renderer = new FencedCodeRenderer();
     }
@@ -59,8 +59,8 @@ class FencedCodeRendererTest extends TestCase
         $code = $result->getContents(false);
         $this->assertTrue($code instanceof HtmlElement);
         $this->assertEquals('code', $code->getTagName());
-        $this->assertContains('bar language-php', $code->getAttribute('class'));
-        $this->assertContains('hello world', $code->getContents(true));
+        $this->assertStringContainsString('bar language-php', $code->getAttribute('class'));
+        $this->assertStringContainsString('hello world', $code->getContents(true));
     }
 
     public function testRenderWithoutLanguageSpecified()
@@ -87,14 +87,13 @@ class FencedCodeRendererTest extends TestCase
         $this->assertTrue($code instanceof HtmlElement);
         $this->assertEquals('code', $code->getTagName());
         $this->assertEquals('bar', $code->getAttribute('class'));
-        $this->assertContains('hello world', $code->getContents(true));
+        $this->assertStringContainsString('hello world', $code->getContents(true));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenderWithInvalidType()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $inline = $this->getMockForAbstractClass(BlockElement\AbstractBlock::class);
         $fakeRenderer = new FakeHtmlRenderer();
 

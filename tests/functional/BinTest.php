@@ -35,7 +35,7 @@ class BinTest extends AbstractBinTest
         $this->assertEquals(1, $cmd->getExitCode());
 
         if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-            $this->assertContains('Usage:', $cmd->getError());
+            $this->assertStringContainsString('Usage:', $cmd->getError());
         }
     }
 
@@ -49,7 +49,7 @@ class BinTest extends AbstractBinTest
         $cmd->execute();
 
         $this->assertEquals(0, $cmd->getExitCode());
-        $this->assertContains('Usage:', $cmd->getOutput());
+        $this->assertStringContainsString('Usage:', $cmd->getOutput());
     }
 
     /**
@@ -62,7 +62,7 @@ class BinTest extends AbstractBinTest
         $cmd->execute();
 
         $this->assertEquals(0, $cmd->getExitCode());
-        $this->assertContains('Usage:', $cmd->getOutput());
+        $this->assertStringContainsString('Usage:', $cmd->getOutput());
     }
 
     /**
@@ -77,7 +77,7 @@ class BinTest extends AbstractBinTest
         $this->assertEquals(1, $cmd->getExitCode());
 
         if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-            $this->assertContains('Unknown option', $cmd->getError());
+            $this->assertStringContainsString('Unknown option', $cmd->getError());
         }
     }
 
@@ -92,7 +92,7 @@ class BinTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('atx_heading.html')));
-        $this->assertContains($expectedContents, $cmd->getOutput());
+        $this->assertStringContainsString($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -109,7 +109,7 @@ class BinTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('atx_heading.html')));
-        $this->assertContains($expectedContents, $cmd->getOutput());
+        $this->assertStringContainsString($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -123,7 +123,7 @@ class BinTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('safe/unsafe_output.html')));
-        $this->assertContains($expectedContents, $cmd->getOutput());
+        $this->assertStringContainsString($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -138,7 +138,7 @@ class BinTest extends AbstractBinTest
 
         $this->assertEquals(0, $cmd->getExitCode());
         $expectedContents = trim(file_get_contents($this->getPathToData('safe/safe_output.html')));
-        $this->assertContains($expectedContents, $cmd->getOutput());
+        $this->assertStringContainsString($expectedContents, $cmd->getOutput());
     }
 
     /**
@@ -152,7 +152,7 @@ class BinTest extends AbstractBinTest
             $cmd->execute();
 
             $this->assertEquals(0, $cmd->getExitCode());
-            $this->assertContains(CommonMarkConverter::VERSION, trim($cmd->getOutput()));
+            $this->assertStringContainsString(CommonMarkConverter::VERSION, trim($cmd->getOutput()));
         }
     }
 

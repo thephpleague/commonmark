@@ -19,19 +19,22 @@ use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment;
-use League\CommonMark\EnvironmentAwareInterface;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Tests\Unit\Environment\FakeBlock1;
 use League\CommonMark\Tests\Unit\Environment\FakeBlock3;
+use League\CommonMark\Tests\Unit\Environment\FakeBlockParser;
+use League\CommonMark\Tests\Unit\Environment\FakeBlockRenderer;
+use League\CommonMark\Tests\Unit\Environment\FakeDelimiterProcessor;
 use League\CommonMark\Tests\Unit\Environment\FakeInline1;
 use League\CommonMark\Tests\Unit\Environment\FakeInline3;
+use League\CommonMark\Tests\Unit\Environment\FakeInlineParser;
+use League\CommonMark\Tests\Unit\Environment\FakeInlineRenderer;
 use League\CommonMark\Tests\Unit\Event\FakeEvent;
 use League\CommonMark\Tests\Unit\Event\FakeEventListener;
 use League\CommonMark\Tests\Unit\Event\FakeEventListenerInvokable;
-use League\CommonMark\Util\ConfigurationAwareInterface;
 use PHPUnit\Framework\TestCase;
 
 class EnvironmentTest extends TestCase
@@ -117,7 +120,7 @@ class EnvironmentTest extends TestCase
 
     public function testSetConfigAfterInit()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(\RuntimeException::class);
 
         $environment = new Environment();
         // This triggers the initialization
@@ -135,7 +138,7 @@ class EnvironmentTest extends TestCase
 
     public function testMergeConfigAfterInit()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(\RuntimeException::class);
 
         $environment = new Environment();
         // This triggers the initialization
@@ -153,11 +156,9 @@ class EnvironmentTest extends TestCase
         $this->assertContains($parser, $environment->getBlockParsers());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testAddBlockParserFailsAfterInitialization()
     {
+        $this->expectException(\RuntimeException::class);
         $environment = new Environment();
 
         // This triggers the initialization
@@ -177,11 +178,9 @@ class EnvironmentTest extends TestCase
         $this->assertContains($renderer, $environment->getBlockRenderersForClass('MyClass'));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testAddBlockRendererFailsAfterInitialization()
     {
+        $this->expectException(\RuntimeException::class);
         $environment = new Environment();
 
         // This triggers the initialization
@@ -206,11 +205,9 @@ class EnvironmentTest extends TestCase
         $this->assertEquals(1, preg_match($environment->getInlineParserCharacterRegex(), 'foo/bar'));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testAddInlineParserFailsAfterInitialization()
     {
+        $this->expectException(\RuntimeException::class);
         $environment = new Environment();
 
         // This triggers the initialization
@@ -252,11 +249,9 @@ class EnvironmentTest extends TestCase
         $this->assertSame($processor, $environment->getDelimiterProcessors()->getDelimiterProcessor('*'));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testAddDelimiterProcessorFailsAfterInitialization()
     {
+        $this->expectException(\RuntimeException::class);
         $environment = new Environment();
 
         // This triggers the initialization
@@ -276,11 +271,9 @@ class EnvironmentTest extends TestCase
         $this->assertContains($renderer, $environment->getInlineRenderersForClass('MyClass'));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testAddInlineRendererFailsAfterInitialization()
     {
+        $this->expectException(\RuntimeException::class);
         $environment = new Environment();
 
         // This triggers the initialization
@@ -342,11 +335,9 @@ class EnvironmentTest extends TestCase
         $this->assertContains($extension, $environment->getExtensions());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testAddExtensionFailsAfterInitialization()
     {
+        $this->expectException(\RuntimeException::class);
         $environment = new Environment();
 
         // This triggers the initialization
@@ -375,70 +366,70 @@ class EnvironmentTest extends TestCase
     {
         $environment = new Environment();
 
-        $parser = $this->getMockBuilder([BlockParserInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
-        $parser->expects($this->once())->method('setEnvironment')->with($environment);
-        $parser->expects($this->once())->method('setConfiguration');
-
+        $parser = new FakeBlockParser();
         $environment->addBlockParser($parser);
 
         // Trigger initialization
         $environment->getBlockParsers();
+
+        $this->assertSame($environment, $parser->getEnvironment());
+        $this->assertNotNull($parser->getConfig());
     }
 
     public function testInjectableBlockRenderersGetInjected()
     {
         $environment = new Environment();
 
-        $renderer = $this->getMockBuilder([BlockRendererInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
-        $renderer->expects($this->once())->method('setEnvironment')->with($environment);
-        $renderer->expects($this->once())->method('setConfiguration');
-
+        $renderer = new FakeBlockRenderer();
         $environment->addBlockRenderer('', $renderer);
 
         // Trigger initialization
         $environment->getBlockParsers();
+
+        $this->assertSame($environment, $renderer->getEnvironment());
+        $this->assertNotNull($renderer->getConfig());
     }
 
     public function testInjectableInlineParsersGetInjected()
     {
         $environment = new Environment();
 
-        $parser = $this->getMockBuilder([InlineParserInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
-        $parser->expects($this->once())->method('setEnvironment')->with($environment);
-        $parser->expects($this->once())->method('setConfiguration');
-
+        $parser = new FakeInlineParser();
         $environment->addInlineParser($parser);
 
         // Trigger initialization
         $environment->getBlockParsers();
+
+        $this->assertSame($environment, $parser->getEnvironment());
+        $this->assertNotNull($parser->getConfig());
     }
 
     public function testInjectableInlineRenderersGetInjected()
     {
         $environment = new Environment();
 
-        $renderer = $this->getMockBuilder([InlineRendererInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
-        $renderer->expects($this->once())->method('setEnvironment')->with($environment);
-        $renderer->expects($this->once())->method('setConfiguration');
-
+        $renderer = new FakeInlineRenderer();
         $environment->addInlineRenderer('', $renderer);
 
         // Trigger initialization
         $environment->getBlockParsers();
+
+        $this->assertSame($environment, $renderer->getEnvironment());
+        $this->assertNotNull($renderer->getConfig());
     }
 
     public function testInjectableDelimiterProcessorsGetInjected()
     {
         $environment = new Environment();
 
-        $processor = $this->getMockBuilder([DelimiterProcessorInterface::class, EnvironmentAwareInterface::class, ConfigurationAwareInterface::class])->getMock();
-        $processor->expects($this->once())->method('setEnvironment')->with($environment);
-        $processor->expects($this->once())->method('setConfiguration');
-
+        $processor = new FakeDelimiterProcessor();
         $environment->addDelimiterProcessor($processor);
 
         // Trigger initialization
         $environment->getBlockParsers();
+
+        $this->assertSame($environment, $processor->getEnvironment());
+        $this->assertNotNull($processor->getConfig());
     }
 
     public function testInjectableEventListenersGetInjected()
@@ -575,11 +566,9 @@ class EnvironmentTest extends TestCase
         $this->assertEquals('b', $actualOrder[2]);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testAddEventListenerFailsAfterInitialization()
     {
+        $this->expectException(\RuntimeException::class);
         $environment = new Environment();
         $event = $this->createMock(AbstractEvent::class);
 

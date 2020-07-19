@@ -89,7 +89,7 @@ class HtmlElementTest extends TestCase
         $div = new HtmlElement('div');
         $div->setContents([$p, $img]);
 
-        $this->assertInternalType('string', $div->getContents(true));
+        $this->assertIsString($div->getContents(true));
         $this->assertEquals('<p></p><img />', $div->getContents(true));
 
         $this->assertEquals('<div><p></p><img /></div>', $div->__toString());
