@@ -18,8 +18,8 @@ Here is a footnote reference,[^1] and another. [^2]
 [^2]: Here is yet another footnote
 .
 <p>Here is a footnote reference,<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup> and another. <sup id="fnref:2"><a class="footnote-ref" href="#fn:2" role="doc-noteref">2</a></sup></p>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Here is the footnote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">&#8617;</a></p></li>
-<li class="footnote" id="fn:2" role="doc-endnote"><p>Here is yet another footnote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">&#8617;</a></p></li></ol></div>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Here is the footnote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">↩</a></p></li>
+<li class="footnote" id="fn:2" role="doc-endnote"><p>Here is yet another footnote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">↩</a></p></li></ol></div>
 ````````````````````````````````
 
 A [footnote] is denoted by a `[^`, followed by a [footnote identifier], then `]:`, plus optional text.
@@ -31,8 +31,8 @@ Foo[^foo] bar[^bar]
 [^bar]:
 .
 <p>Foo<sup id="fnref:foo"><a class="footnote-ref" href="#fn:foo" role="doc-noteref">1</a></sup> bar<sup id="fnref:bar"><a class="footnote-ref" href="#fn:bar" role="doc-noteref">2</a></sup></p>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:foo" role="doc-endnote"><p>This footnote has text, but the next one doesn't (and it's equally valid)&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:foo" role="doc-backlink">&#8617;</a></p></li>
-<li class="footnote" id="fn:bar" role="doc-endnote">&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:bar" role="doc-backlink">&#8617;</a></li></ol></div>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:foo" role="doc-endnote"><p>This footnote has text, but the next one doesn't (and it's equally valid)&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:foo" role="doc-backlink">↩</a></p></li>
+<li class="footnote" id="fn:bar" role="doc-endnote">&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:bar" role="doc-backlink">↩</a></li></ol></div>
 ````````````````````````````````
 
 
@@ -65,7 +65,7 @@ belong to the previous footnote.</p>
 </code></pre>
 <p>The whole paragraph can be indented, or just the first
 line.  In this way, multi-paragraph footnotes work like
-multi-paragraph list items.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:longnote" role="doc-backlink">&#8617;</a></p></li></ol></div>
+multi-paragraph list items.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:longnote" role="doc-backlink">↩</a></p></li></ol></div>
 ````````````````````````````````
 
 A [footnote] may be referenced multiple times within the document:
@@ -76,7 +76,7 @@ My favorite foods are pizza[^1], ice cream[^1], and smoothies.
 [^1]: Though delicious, these are not healthy.
 .
 <p>My favorite foods are pizza<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup>, ice cream<sup id="fnref:1__2"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup>, and smoothies.</p>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Though delicious, these are not healthy.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">&#8617;</a>&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1__2" role="doc-backlink">&#8617;</a></p></li></ol></div>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Though delicious, these are not healthy.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">↩</a>&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1__2" role="doc-backlink">↩</a></p></li></ol></div>
 ````````````````````````````````
 
 A [footnote identifier](@) may not contain spaces, tabs, or newlines.
@@ -115,9 +115,9 @@ A [footnote identifier] can come immediately after a word, or have a space betwe
 <li>Exclamation mark with no space![^4]</li>
 <li>Another exclamation mark![^5](not allowed)</li>
 </ul>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">&#8617;</a></p></li>
-<li class="footnote" id="fn:2" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">&#8617;</a></p></li>
-<li class="footnote" id="fn:3" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:3" role="doc-backlink">&#8617;</a></p></li></ol></div>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">↩</a></p></li>
+<li class="footnote" id="fn:2" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">↩</a></p></li>
+<li class="footnote" id="fn:3" role="doc-endnote"><p>Allowed&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:3" role="doc-backlink">↩</a></p></li></ol></div>
 ````````````````````````````````
 
 These identifiers are used only to correlate the footnote reference with the note itself; in the output, footnotes will be numbered sequentially.
@@ -128,7 +128,7 @@ This reference uses a string identifier[^foo]
 [^foo]: This will be rendered as a number in the output; you won't see "foo"
 .
 <p>This reference uses a string identifier<sup id="fnref:foo"><a class="footnote-ref" href="#fn:foo" role="doc-noteref">1</a></sup></p>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:foo" role="doc-endnote"><p>This will be rendered as a number in the output; you won't see &quot;foo&quot;&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:foo" role="doc-backlink">&#8617;</a></p></li></ol></div>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:foo" role="doc-endnote"><p>This will be rendered as a number in the output; you won't see &quot;foo&quot;&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:foo" role="doc-backlink">↩</a></p></li></ol></div>
 ````````````````````````````````
 
 The footnotes themselves need not be placed at the end of the document. They may appear anywhere except inside other block elements (lists, block quotes, tables, etc.).
@@ -158,10 +158,10 @@ ligula, eget lacinia odio sem nec elit.</p>
 <blockquote>
 <p>Cras mattis consectetur purus sit amet fermentum<sup id="fnref:ref3"><a class="footnote-ref" href="#fn:ref3" role="doc-noteref">3</a></sup>.</p>
 </blockquote>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:ref" role="doc-endnote"><p>Risus Euismod Pharetra&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref" role="doc-backlink">&#8617;</a></p></li>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:ref" role="doc-endnote"><p>Risus Euismod Pharetra&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref" role="doc-backlink">↩</a></p></li>
 <li class="footnote" id="fn:ref2" role="doc-endnote"><p>Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl
-consectetur et. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref2" role="doc-backlink">&#8617;</a></p></li>
-<li class="footnote" id="fn:ref3" role="doc-endnote"><p>This footnote is not allowed because it's in a blockquote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref3" role="doc-backlink">&#8617;</a></p></li></ol></div>
+consectetur et. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref2" role="doc-backlink">↩</a></p></li>
+<li class="footnote" id="fn:ref3" role="doc-endnote"><p>This footnote is not allowed because it's in a blockquote&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:ref3" role="doc-backlink">↩</a></p></li></ol></div>
 ````````````````````````````````
 
 Footnotes should be separated from other blocks with blank lines:
@@ -178,10 +178,10 @@ spans multiple lines because it's a lazy paragraph continuation.
 .
 <p>This[^1] is<sup id="fnref:2"><a class="footnote-ref" href="#fn:2" role="doc-noteref">1</a></sup> a<sup id="fnref:3"><a class="footnote-ref" href="#fn:3" role="doc-noteref">2</a></sup> paragraph<sup id="fnref:4"><a class="footnote-ref" href="#fn:4" role="doc-noteref">3</a></sup>.
 [^1]: This footnote will not be parsed since it's not separated from the paragraph above - it's considered a lazy continuation line</p>
-<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:2" role="doc-endnote"><p>This one is separated from above&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">&#8617;</a></p></li>
-<li class="footnote" id="fn:3" role="doc-endnote"><p>This one isn't, but it's clearly another footnote which is fine&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:3" role="doc-backlink">&#8617;</a></p></li>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:2" role="doc-endnote"><p>This one is separated from above&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:2" role="doc-backlink">↩</a></p></li>
+<li class="footnote" id="fn:3" role="doc-endnote"><p>This one isn't, but it's clearly another footnote which is fine&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:3" role="doc-backlink">↩</a></p></li>
 <li class="footnote" id="fn:4" role="doc-endnote"><p>But this one will be parsed, even though it
-spans multiple lines because it's a lazy paragraph continuation.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:4" role="doc-backlink">&#8617;</a></p></li></ol></div>
+spans multiple lines because it's a lazy paragraph continuation.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:4" role="doc-backlink">↩</a></p></li></ol></div>
 ````````````````````````````````
 
 [Inline footnotes](@), also known as "anonymous footnotes", are also allowed. Though, unlike regular notes, they cannot contain multiple paragraphs. The syntax is slightly different - the caret goes before the opening brace as follows:
@@ -194,5 +194,5 @@ note.]
 <p>Here is an inline note.<sup id="fnref:inline-notes-are-eas"><a class="footnote-ref" href="#fn:inline-notes-are-eas" role="doc-noteref">1</a></sup></p>
 <div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:inline-notes-are-eas" role="doc-endnote"><p>Inline notes are easier to write, since
 you don't have to pick an identifier and move down to type the
-note.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:inline-notes-are-eas" role="doc-backlink">&#8617;</a></p></li></ol></div>
+note.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:inline-notes-are-eas" role="doc-backlink">↩</a></p></li></ol></div>
 ````````````````````````````````
