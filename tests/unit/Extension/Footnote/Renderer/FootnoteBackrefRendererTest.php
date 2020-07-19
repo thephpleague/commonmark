@@ -65,7 +65,7 @@ final class FootnoteBackrefRendererTest extends TestCase
         $this->assertStringContainsString('class="my-custom-class"', $output);
     }
 
-    public function testTextConfiguration(): void
+    public function testSymbolConfiguration(): void
     {
         $renderer = new FootnoteBackrefRenderer();
         $renderer->setConfiguration(new Configuration(['footnote' => ['backref_symbol' => 'Go back.']]));
