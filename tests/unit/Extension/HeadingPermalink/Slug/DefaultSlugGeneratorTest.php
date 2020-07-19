@@ -16,6 +16,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @deprecated
+ *
+ * @group legacy
  */
 final class DefaultSlugGeneratorTest extends TestCase
 {

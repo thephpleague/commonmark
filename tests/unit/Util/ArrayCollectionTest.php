@@ -52,6 +52,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals($array, $iterator->getArrayCopy());
     }
 
+    /**
+     * @group legacy
+     */
     public function testAdd()
     {
         $collection = new ArrayCollection();
@@ -64,6 +67,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals(['foo', 'bar'], $collection->toArray());
     }
 
+    /**
+     * @group legacy
+     */
     public function testSet()
     {
         $collection = new ArrayCollection(['foo']);
@@ -76,6 +82,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals(['foo', 'foo' => 2], $collection->toArray());
     }
 
+    /**
+     * @group legacy
+     */
     public function testGet()
     {
         $collection = new ArrayCollection(['foo' => 1, 'bar']);
@@ -85,6 +94,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertNull($collection->get('bar'));
     }
 
+    /**
+     * @group legacy
+     */
     public function testRemove()
     {
         $collection = new ArrayCollection(['foo' => 1, 'bar', 'baz']);
@@ -106,6 +118,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals([], $collection->toArray());
     }
 
+    /**
+     * @group legacy
+     */
     public function testRemoveNulls()
     {
         $collection = new ArrayCollection(['foo' => null]);
@@ -119,6 +134,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals([], $collection->toArray());
     }
 
+    /**
+     * @group legacy
+     */
     public function testIsEmpty()
     {
         $collection = new ArrayCollection();
@@ -135,6 +153,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertFalse($collection->isEmpty());
     }
 
+    /**
+     * @group legacy
+     */
     public function testContains()
     {
         $object = new \stdClass();
@@ -155,6 +176,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertFalse($collection->contains('FOO'));
     }
 
+    /**
+     * @group legacy
+     */
     public function testIndexOf()
     {
         $object = new \stdClass();
@@ -175,6 +199,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertTrue(false === $collection->indexOf('FOO'));
     }
 
+    /**
+     * @group legacy
+     */
     public function testContainsKey()
     {
         $collection = new ArrayCollection(['foo' => 1, 'bar']);
@@ -197,10 +224,10 @@ class ArrayCollectionTest extends TestCase
         $collection = new ArrayCollection(['foo']);
         $this->assertEquals(1, $collection->count());
 
-        $collection->add('bar');
+        $collection[] = 'bar';
         $this->assertEquals(2, $collection->count());
 
-        $collection->remove(0);
+        unset($collection[0]);
         $this->assertEquals(1, $collection->count());
     }
 
@@ -320,6 +347,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals([2 => 1, 'foo'], $collection->toArray());
     }
 
+    /**
+     * @group legacy
+     */
     public function testReplaceWith()
     {
         $collection = new ArrayCollection(['foo' => 1, 'bar']);
@@ -330,6 +360,9 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals(['baz', 42], $replaced->toArray());
     }
 
+    /**
+     * @group legacy
+     */
     public function testRemoveGaps()
     {
         $collection = new ArrayCollection(['', true, false, null, [], 0, '0', 1]);

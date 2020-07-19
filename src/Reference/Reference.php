@@ -65,6 +65,7 @@ final class Reference implements ReferenceInterface
      * @return string
      *
      * @deprecated Use TextNormalizer::normalize() instead
+     * @group legacy
      */
     public static function normalizeReference(string $string): string
     {

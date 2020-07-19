@@ -17,6 +17,9 @@ namespace League\CommonMark\Tests\Unit;
 use League\CommonMark\Converter;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group legacy
+ */
 class ConverterTest extends TestCase
 {
     public function testInvokeReturnsSameOutputAsConvertToHtml()

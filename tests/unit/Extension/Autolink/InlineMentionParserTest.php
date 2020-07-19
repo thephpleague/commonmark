@@ -18,6 +18,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @deprecated
+ *
+ * @group legacy
  */
 final class InlineMentionParserTest extends TestCase
 {

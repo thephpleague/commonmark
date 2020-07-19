@@ -16,6 +16,9 @@ use League\CommonMark\Extension\TableOfContents\Node\TableOfContents as NewTable
 use League\CommonMark\Extension\TableOfContents\TableOfContents as DeprecatedTableOfContents;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group legacy
+ */
 final class TableOfContentsDeprecationTest extends TestCase
 {
     /**

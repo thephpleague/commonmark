@@ -77,6 +77,9 @@ final class HeadingPermalinkExtensionTest extends TestCase
         yield ["Test\n----", '<h2>Test<a id="custom-prefix-test" href="#test" name="test" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h2>'];
     }
 
+    /**
+     * @group legacy
+     */
     public function testHeadingPermalinksWithDeprecatedInnerContents()
     {
         $environment = Environment::createCommonMarkEnvironment();
