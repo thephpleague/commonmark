@@ -36,6 +36,8 @@
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^4.2"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "conflict": {
         "scrutinizer/ocular": "1.7.*"
     },

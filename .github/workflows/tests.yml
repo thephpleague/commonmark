@@ -30,6 +30,10 @@ jobs:
 
             - run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
+            - name: "Use PHPUnit 9.3+ on PHP 8"
+              run: composer require --no-update --dev phpunit/phpunit:^9.3
+              if: "matrix.php == '8.0'"
+
             - run: composer update --no-progress ${{ matrix.composer-flags }}
 
             - run: vendor/bin/phpunit --no-coverage
