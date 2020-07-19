@@ -24,6 +24,8 @@ use League\CommonMark\Util\HtmlElement;
 
 final class FootnoteBackrefRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
+    public const DEFAULT_SYMBOL = '↩';
+
     /** @var ConfigurationInterface */
     private $config;
 
@@ -43,7 +45,10 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, Configurat
         $attrs['href']  = \mb_strtolower($node->getReference()->getDestination());
         $attrs['role']  = 'doc-backlink';
 
-        return '&nbsp;' . new HtmlElement('a', $attrs, $this->config->get('footnote/backref_text', '&#8617;'), true);
+        $symbol = $this->config->get('footnote/backref_symbol', self::DEFAULT_SYMBOL);
+        \assert(\is_string($symbol));
+
+        return '&nbsp;' . new HtmlElement('a', $attrs, \htmlspecialchars($symbol), true);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void
