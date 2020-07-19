@@ -78,4 +78,17 @@ final class FootnoteBackrefRendererTest extends TestCase
         $this->assertStringContainsString('Go back.', $output);
         $this->assertStringNotContainsString(FootnoteBackrefRenderer::DEFAULT_SYMBOL, $output);
     }
+
+    public function testSymbolSpecialCharacterEscaping(): void
+    {
+        $renderer = new FootnoteBackrefRenderer();
+        $renderer->setConfiguration(new Configuration(['footnote' => ['backref_symbol' => '& <script>']]));
+
+        $fakeReference   = new Reference('label', 'dest', 'title');
+        $footnoteBackref = new FootnoteBackref($fakeReference);
+
+        $output = $renderer->render($footnoteBackref, new FakeChildNodeRenderer());
+
+        $this->assertStringContainsString('&amp; &lt;script&gt;', $output);
+    }
 }
