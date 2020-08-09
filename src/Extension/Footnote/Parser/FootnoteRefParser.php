@@ -14,13 +14,18 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Parser;
 
+use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 
-final class FootnoteRefParser implements InlineParserInterface
+final class FootnoteRefParser implements InlineParserInterface, ConfigurationAwareInterface
 {
+    /** @var ConfigurationInterface */
+    private $config;
+
     public function getCharacters(): array
     {
         return ['['];
@@ -53,6 +58,15 @@ final class FootnoteRefParser implements InlineParserInterface
 
     private function createReference(string $label): Reference
     {
-        return new Reference($label, '#fn:' . $label, $label);
+        return new Reference(
+            $label,
+            '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $label,
+            $label
+        );
+    }
+
+    public function setConfiguration(ConfigurationInterface $config): void
+    {
+        $this->config = $config;
     }
 }

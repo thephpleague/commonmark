@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Parser;
 
+use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
@@ -21,8 +23,11 @@ use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Reference\Reference;
 
-final class AnonymousFootnoteRefParser implements InlineParserInterface
+final class AnonymousFootnoteRefParser implements InlineParserInterface, ConfigurationAwareInterface
 {
+    /** @var ConfigurationInterface */
+    private $config;
+
     /** @var TextNormalizerInterface */
     private $slugNormalizer;
 
@@ -66,6 +71,15 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface
         $refLabel = $this->slugNormalizer->normalize($label);
         $refLabel = \mb_substr($refLabel, 0, 20);
 
-        return new Reference($refLabel, '#fn:' . $refLabel, $label);
+        return new Reference(
+            $refLabel,
+            '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $refLabel,
+            $label
+        );
+    }
+
+    public function setConfiguration(ConfigurationInterface $config): void
+    {
+        $this->config = $config;
     }
 }
