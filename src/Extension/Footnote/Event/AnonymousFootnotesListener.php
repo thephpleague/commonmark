@@ -15,14 +15,14 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Footnote\Event;
 
 use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Util\ConfigurationAwareInterface;
-use League\CommonMark\Util\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Reference\Reference;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
 
 final class AnonymousFootnotesListener implements ConfigurationAwareInterface
 {

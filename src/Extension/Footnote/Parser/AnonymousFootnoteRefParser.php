@@ -14,14 +14,14 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Parser;
 
-use League\CommonMark\Util\ConfigurationAwareInterface;
-use League\CommonMark\Util\ConfigurationInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Reference\Reference;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
 
 final class AnonymousFootnoteRefParser implements InlineParserInterface, ConfigurationAwareInterface
 {
