@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Extension\Footnote;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment\Environment;
+use League\CommonMark\Environment;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +33,7 @@ class IntegrationTest extends TestCase
 
         $converter = new CommonMarkConverter(['footnote' => $config], $environment);
 
-        $html = trim($converter->convertToHtml($string));
+        $html = \trim($converter->convertToHtml($string));
 
         $this->assertSame($expected, $html);
     }
