@@ -11,6 +11,7 @@
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
+use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
@@ -63,7 +64,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         while ($event = $walker->next()) {
             $node = $event->getNode();
             if ($node instanceof Heading && $event->isEntering()) {
-                $this->addHeadingLink($node);
+                $this->addHeadingLink($node, $e->getDocument());
             }
         }
     }
@@ -82,7 +83,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         $this->slugNormalizer = $generator;
     }
 
-    private function addHeadingLink(Heading $heading): void
+    private function addHeadingLink(Heading $heading, Document $document): void
     {
         $text = $this->getChildText($heading);
         if ($this->slugNormalizer instanceof DeprecatedSlugGeneratorInterface) {
@@ -90,6 +91,8 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         } else {
             $slug = $this->slugNormalizer->normalize($text, $heading);
         }
+
+        $slug = $this->ensureUnique($slug, $document);
 
         $headingLinkAnchor = new HeadingPermalink($slug);
 
@@ -122,5 +125,24 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
 
         return $text;
+    }
+
+    private function ensureUnique(string $proposed, Document $document): string
+    {
+        // Quick path, it's a unique ID
+        if (!in_array($proposed, $document->data['heading_ids'] ?? [])) {
+            $document->data['heading_ids'][] = $proposed;
+
+            return $proposed;
+        }
+
+        $extension = 0;
+        do {
+            ++$extension;
+        } while (in_array("$proposed-$extension", $document->data['heading_ids'] ?? []));
+
+        $document->data['heading_ids'][] = "$proposed-$extension";
+
+        return "$proposed-$extension";
     }
 }
