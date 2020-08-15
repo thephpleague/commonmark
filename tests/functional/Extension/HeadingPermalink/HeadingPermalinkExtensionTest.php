@@ -41,6 +41,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         yield ['# Hello *World*', sprintf('<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello <em>World</em></h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
         yield ['# Hello `World`', sprintf('<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello <code>World</code></h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
         yield ["Test\n----", sprintf('<h2><a id="user-content-test" href="#test" name="test" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Test</h2>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
+        yield ["# Hello World!\n\n# Hello World!", sprintf("<h1><a id=\"user-content-hello-world\" href=\"#hello-world\" name=\"hello-world\" class=\"heading-permalink\" aria-hidden=\"true\" title=\"Permalink\">%s</a>Hello World!</h1>\n<h1><a id=\"user-content-hello-world-1\" href=\"#hello-world-1\" name=\"hello-world-1\" class=\"heading-permalink\" aria-hidden=\"true\" title=\"Permalink\">%s</a>Hello World!</h1>", HeadingPermalinkRenderer::DEFAULT_SYMBOL, HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
     }
 
     /**
