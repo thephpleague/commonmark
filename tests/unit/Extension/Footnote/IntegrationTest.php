@@ -27,7 +27,7 @@ class IntegrationTest extends TestCase
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new FootnoteExtension([
-            'ref_id_prefix' => 'custom-ref-',
+            'ref_id_prefix'      => 'custom-ref-',
             'footnote_id_prefix' => 'custom-',
         ]));
 
