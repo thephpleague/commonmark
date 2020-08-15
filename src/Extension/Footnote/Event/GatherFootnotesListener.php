@@ -20,9 +20,14 @@ use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
 use League\CommonMark\Extension\Footnote\Node\FootnoteContainer;
 use League\CommonMark\Reference\Reference;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
 
-final class GatherFootnotesListener
+final class GatherFootnotesListener implements ConfigurationAwareInterface
 {
+    /** @var ConfigurationInterface */
+    private $config;
+
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
@@ -53,12 +58,15 @@ final class GatherFootnotesListener
              * Look for all footnote refs pointing to this footnote
              * and create each footnote backrefs.
              */
-            $backrefs = $document->getData('#fn:' . $node->getReference()->getDestination(), []);
+            $backrefs = $document->getData(
+                '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $node->getReference()->getDestination(),
+                []
+            );
             /** @var Reference $backref */
             foreach ($backrefs as $backref) {
                 $node->addBackref(new FootnoteBackref(new Reference(
                     $backref->getLabel(),
-                    '#fnref:' . $backref->getLabel(),
+                    '#' . $this->config->get('footnote/ref_id_prefix', 'fnref:') . $backref->getLabel(),
                     $backref->getTitle()
                 )));
             }
@@ -83,5 +91,10 @@ final class GatherFootnotesListener
         $document->appendChild($footnoteContainer);
 
         return $footnoteContainer;
+    }
+
+    public function setConfiguration(ConfigurationInterface $config): void
+    {
+        $this->config = $config;
     }
 }

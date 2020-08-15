@@ -21,9 +21,14 @@ use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Reference\Reference;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
 
-final class AnonymousFootnotesListener
+final class AnonymousFootnotesListener implements ConfigurationAwareInterface
 {
+    /** @var ConfigurationInterface */
+    private $config;
+
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
@@ -36,7 +41,7 @@ final class AnonymousFootnotesListener
                 $existingReference = $node->getReference();
                 $reference = new Reference(
                     $existingReference->getLabel(),
-                    '#fnref:' . $existingReference->getLabel(),
+                    '#' . $this->config->get('footnote/ref_id_prefix', 'fnref:') . $existingReference->getLabel(),
                     $existingReference->getTitle()
                 );
                 $footnote = new Footnote($reference);
@@ -47,5 +52,10 @@ final class AnonymousFootnotesListener
                 $document->appendChild($footnote);
             }
         }
+    }
+
+    public function setConfiguration(ConfigurationInterface $config): void
+    {
+        $this->config = $config;
     }
 }
