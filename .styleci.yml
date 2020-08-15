@@ -1,5 +1,7 @@
 preset: recommended
 
+risky: true
+
 enabled:
   - concat_with_spaces
   - no_useless_else
@@ -10,6 +12,7 @@ disabled:
   - no_trailing_comma_in_list_call
   - phpdoc_summary
   - post_increment
+  - self_accessor
 
 finder:
   not-name:

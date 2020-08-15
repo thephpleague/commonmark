@@ -594,7 +594,7 @@ class EnvironmentTest extends TestCase
             $actualOrder[] = 'c';
         }, 10);
 
-        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder) {
+        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) {
             $this->fail('Propogation should have been stopped before here');
         });
 
