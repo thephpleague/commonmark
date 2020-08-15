@@ -18,8 +18,8 @@ use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface as 
 use League\CommonMark\Inline\Element\Code;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
+use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
-use League\CommonMark\Normalizer\UniqueSlugNormalizer;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
 
@@ -46,7 +46,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
             @trigger_error(sprintf('Passing a %s into the %s constructor is deprecated; use a %s instead', DeprecatedSlugGeneratorInterface::class, self::class, TextNormalizerInterface::class), E_USER_DEPRECATED);
         }
 
-        $this->slugNormalizer = $slugNormalizer ?? new UniqueSlugNormalizer();
+        $this->slugNormalizer = $slugNormalizer ?? new SlugNormalizer();
     }
 
     public function setConfiguration(ConfigurationInterface $configuration)
