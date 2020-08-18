@@ -126,4 +126,57 @@ final class HeadingPermalinkProcessorTest extends TestCase
 
         $processor(new DocumentParsedEvent(new Document()));
     }
+
+    public function testDuplicateSlugsAreMadeUnique(): void
+    {
+        $processor = new HeadingPermalinkProcessor();
+        $processor->setConfiguration(new Configuration());
+
+        $document = new Document();
+        $document->appendChild($heading1 = new Heading(1));
+        $heading1->appendChild(new Text('Test Heading'));
+        $document->appendChild($heading2 = new Heading(1));
+        $heading2->appendChild(new Text('Test Heading'));
+        $document->appendChild($heading3 = new Heading(1));
+        $heading3->appendChild(new Text('Test Heading 1'));
+        $document->appendChild($heading4 = new Heading(1));
+        $heading4->appendChild(new Text('Test Heading'));
+
+        $event = new DocumentParsedEvent($document);
+        $processor($event);
+
+        $headingLink1 = $heading1->firstChild();
+        \assert($headingLink1 instanceof HeadingPermalink);
+        $this->assertSame('test-heading', $headingLink1->getSlug());
+
+        $headingLink2 = $heading2->firstChild();
+        \assert($headingLink2 instanceof HeadingPermalink);
+        $this->assertSame('test-heading-1', $headingLink2->getSlug());
+
+        $headingLink3 = $heading3->firstChild();
+        \assert($headingLink3 instanceof HeadingPermalink);
+        $this->assertSame('test-heading-1-1', $headingLink3->getSlug());
+
+        $headingLink4 = $heading4->firstChild();
+        \assert($headingLink4 instanceof HeadingPermalink);
+        $this->assertSame('test-heading-2', $headingLink4->getSlug());
+
+        // Test with a different document
+        $document2 = new Document();
+        $document2->appendChild($heading5 = new Heading(1));
+        $heading5->appendChild(new Text('Test Heading'));
+        $document2->appendChild($heading6 = new Heading(1));
+        $heading6->appendChild(new Text('Test Heading'));
+
+        $event = new DocumentParsedEvent($document2);
+        $processor($event);
+
+        $headingLink5 = $heading5->firstChild();
+        \assert($headingLink5 instanceof HeadingPermalink);
+        $this->assertSame('test-heading', $headingLink5->getSlug());
+
+        $headingLink6 = $heading6->firstChild();
+        \assert($headingLink6 instanceof HeadingPermalink);
+        $this->assertSame('test-heading-1', $headingLink6->getSlug());
+    }
 }

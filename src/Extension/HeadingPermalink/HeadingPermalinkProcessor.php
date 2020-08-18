@@ -18,6 +18,7 @@ use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
+use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\StringContainerHelper;
 use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
@@ -66,7 +67,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         while ($event = $walker->next()) {
             $node = $event->getNode();
             if ($node instanceof Heading && $event->isEntering() && $node->getLevel() >= $min && $node->getLevel() <= $max) {
-                $this->addHeadingLink($node);
+                $this->addHeadingLink($node, $e->getDocument());
             }
         }
     }
@@ -85,10 +86,12 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         $this->slugNormalizer = $normalizer;
     }
 
-    private function addHeadingLink(Heading $heading): void
+    private function addHeadingLink(Heading $heading, Document $document): void
     {
         $text = StringContainerHelper::getChildText($heading);
         $slug = $this->slugNormalizer->normalize($text, $heading);
+
+        $slug = $this->ensureUnique($slug, $document);
 
         $headingLinkAnchor = new HeadingPermalink($slug);
 
@@ -104,5 +107,25 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
             default:
                 throw new \RuntimeException("Invalid configuration value for heading_permalink/insert; expected 'before' or 'after'");
         }
+    }
+
+    private function ensureUnique(string $proposed, Document $document): string
+    {
+        // Quick path, it's a unique ID
+        if (! isset($document->data['heading_ids'][$proposed])) {
+            $document->data['heading_ids'][$proposed] = true;
+
+            return $proposed;
+        }
+
+        $extension = 0;
+        do {
+            ++$extension;
+            $id = \sprintf('%s-%s', $proposed, $extension);
+        } while (isset($document->data['heading_ids'][$id]));
+
+        $document->data['heading_ids'][$id] = true;
+
+        return $id;
     }
 }

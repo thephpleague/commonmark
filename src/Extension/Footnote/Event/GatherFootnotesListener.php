@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Event;
 
+use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
@@ -21,8 +23,11 @@ use League\CommonMark\Extension\Footnote\Node\FootnoteContainer;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Reference\Reference;
 
-final class GatherFootnotesListener
+final class GatherFootnotesListener implements ConfigurationAwareInterface
 {
+    /** @var ConfigurationInterface */
+    private $config;
+
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
@@ -49,7 +54,10 @@ final class GatherFootnotesListener
                 $footnotes[\PHP_INT_MAX] = $node;
             }
 
-            $backrefs = $document->getData('#fn:' . $node->getReference()->getDestination(), []);
+            $backrefs = $document->getData(
+                '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $node->getReference()->getDestination(),
+                []
+            );
             $this->createBackrefs($node, $backrefs);
         }
 
@@ -92,9 +100,14 @@ final class GatherFootnotesListener
         foreach ($backrefs as $backref) {
             $target->appendChild(new FootnoteBackref(new Reference(
                 $backref->getLabel(),
-                '#fnref:' . $backref->getLabel(),
+                '#' . $this->config->get('footnote/ref_id_prefix', 'fnref:') . $backref->getLabel(),
                 $backref->getTitle()
             )));
         }
+    }
+
+    public function setConfiguration(ConfigurationInterface $config): void
+    {
+        $this->config = $config;
     }
 }
