@@ -51,6 +51,6 @@ The following methods can be used to modify the AST:
 * `detachChildren()`
 * `replaceChildren(Node[] $children)`
 
-## Document Processor
+## `DocumentParsedEvent`
 
-The best way to manipulate the AST is by implementing a custom [Document Processor](/1.3/customization/document-processing/).
+The best way to access and manipulate the AST is by adding an [event listener](/1.3/customization/event-dispatcher/) for the `DocumentParsedEvent`.
