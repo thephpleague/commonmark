@@ -107,10 +107,65 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $processor = new HeadingPermalinkProcessor();
         $processor->setConfiguration(new Configuration([
             'heading_permalink' => [
-                'slug_normalizer' => function (string $text) { return md5($text); },
+                'slug_normalizer' => function (string $text) {
+                    return md5($text);
+                },
             ],
         ]));
 
         $processor(new DocumentParsedEvent(new Document()));
+    }
+
+    public function testDuplicateSlugsAreMadeUnique(): void
+    {
+        $processor = new HeadingPermalinkProcessor();
+        $processor->setConfiguration(new Configuration());
+
+        $document = new Document();
+        $document->appendChild($heading1 = new Heading(1, 'Test Heading'));
+        $heading1->appendChild(new Text('Test Heading'));
+        $document->appendChild($heading2 = new Heading(1, 'Test Heading'));
+        $heading2->appendChild(new Text('Test Heading'));
+        $document->appendChild($heading3 = new Heading(1, 'Test Heading 1'));
+        $heading3->appendChild(new Text('Test Heading 1'));
+        $document->appendChild($heading4 = new Heading(1, 'Test Heading'));
+        $heading4->appendChild(new Text('Test Heading'));
+
+        $event = new DocumentParsedEvent($document);
+        $processor($event);
+
+        /** @var HeadingPermalink $headingLink1 */
+        $headingLink1 = $heading1->firstChild();
+        $this->assertSame('test-heading', $headingLink1->getSlug());
+
+        /** @var HeadingPermalink $headingLink2 */
+        $headingLink2 = $heading2->firstChild();
+        $this->assertSame('test-heading-1', $headingLink2->getSlug());
+
+        /** @var HeadingPermalink $headingLink3 */
+        $headingLink3 = $heading3->firstChild();
+        $this->assertSame('test-heading-1-1', $headingLink3->getSlug());
+
+        /** @var HeadingPermalink $headingLink4 */
+        $headingLink4 = $heading4->firstChild();
+        $this->assertSame('test-heading-2', $headingLink4->getSlug());
+
+        // Test with a different document
+        $document2 = new Document();
+        $document2->appendChild($heading5 = new Heading(1, 'Test Heading'));
+        $heading5->appendChild(new Text('Test Heading'));
+        $document2->appendChild($heading6 = new Heading(1, 'Test Heading'));
+        $heading6->appendChild(new Text('Test Heading'));
+
+        $event = new DocumentParsedEvent($document2);
+        $processor($event);
+
+        /** @var HeadingPermalink $headingLink5 */
+        $headingLink5 = $heading5->firstChild();
+        $this->assertSame('test-heading', $headingLink5->getSlug());
+
+        /** @var HeadingPermalink $headingLink6 */
+        $headingLink6 = $heading6->firstChild();
+        $this->assertSame('test-heading-1', $headingLink6->getSlug());
     }
 }
