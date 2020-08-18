@@ -130,8 +130,8 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     private function ensureUnique(string $proposed, Document $document): string
     {
         // Quick path, it's a unique ID
-        if (!in_array($proposed, $document->data['heading_ids'] ?? [])) {
-            $document->data['heading_ids'][] = $proposed;
+        if (!isset($document->data['heading_ids'][$proposed])) {
+            $document->data['heading_ids'][$proposed] = true;
 
             return $proposed;
         }
@@ -139,9 +139,9 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         $extension = 0;
         do {
             ++$extension;
-        } while (in_array("$proposed-$extension", $document->data['heading_ids'] ?? []));
+        } while (isset($document->data['heading_ids']["$proposed-$extension"]));
 
-        $document->data['heading_ids'][] = "$proposed-$extension";
+        $document->data['heading_ids']["$proposed-$extension"] = true;
 
         return "$proposed-$extension";
     }
