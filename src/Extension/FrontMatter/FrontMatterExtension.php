@@ -36,6 +36,11 @@ final class FrontMatterExtension implements ExtensionInterface
         $this->frontMatterParser = new FrontMatterParser($dataParser ?? new SymfonyYamlFrontMatterParser());
     }
 
+    public function getFrontMatterParser(): FrontMatterParserInterface
+    {
+        return $this->frontMatterParser;
+    }
+
     public function register(ConfigurableEnvironmentInterface $environment): void
     {
         $environment->addEventListener(DocumentPreParsedEvent::class, new FrontMatterPreParser($this->frontMatterParser));

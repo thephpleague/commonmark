@@ -114,3 +114,36 @@ echo (string) $result;      // explicit string cast
 // or:
 echo $result->getContent();
 ```
+
+### Parsing Front Matter Only
+
+You don't have to parse the entire file (including all the Markdown) if you only want the front matter.  You can either instantiate the front matter parser yourself and call it directly, like this:
+
+```php
+use League\CommonMark\Extension\FrontMatter\Data\SymfonyYamlFrontMatterParser;
+use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
+
+$markdown = '...'; // TODO: Load some Markdown content somehow
+
+$frontMatterParser = new FrontMatterParser(new SymfonyYamlFrontMatterParser());
+$result = $frontMatterParser->parse($markdown);
+
+var_dump($result->getFrontMatter()); // The parsed front matter
+var_dump($result->getContent()); // Markdown content without the front matter
+```
+
+Or you can use the `getFrontMatterParser()` method from the extension:
+
+```php
+use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
+
+$markdown = '...'; // TODO: Load some Markdown content somehow
+
+$frontMatterExtension = new FrontMatterExtension();
+$result = $frontMatterExtension->getFrontMatterParser()->parse($markdown);
+
+var_dump($result->getFrontMatter()); // The parsed front matter
+var_dump($result->getContent()); // Markdown content without the front matter
+```
+
+This latter approach may be more convenient if you have already instantiated a `FrontMatterExtension` object you're adding to the `Environment` somewhere and just want to call that.
