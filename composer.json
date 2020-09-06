@@ -34,14 +34,15 @@
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^8.5 || ^9.2",
         "scrutinizer/ocular": "^1.5",
-        "symfony/finder": "^4.2",
+        "symfony/finder": "^5.1",
         "unleashedtech/php-coding-standard": "^2.2.1",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^3.14"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "conflict": {
-        "scrutinizer/ocular": "1.7.*"
+        "scrutinizer/ocular": "1.7.*",
+        "vimeo/psalm": "3.15.0"
     },
     "repositories": [
         {
