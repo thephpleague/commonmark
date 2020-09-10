@@ -144,7 +144,7 @@ final class Environment implements ConfigurableEnvironmentInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfig($key = null, $default = null)
+    public function getConfig(?string $key = null, $default = null)
     {
         return $this->config->get($key, $default);
     }
