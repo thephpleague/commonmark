@@ -32,7 +32,7 @@ final class CallbackGenerator implements MentionGeneratorInterface
 
     public function generateMention(Mention $mention): ?AbstractInline
     {
-        $result = \call_user_func_array($this->callback, [$mention]);
+        $result = call_user_func($this->callback, $mention);
         if ($result === null) {
             return null;
         }

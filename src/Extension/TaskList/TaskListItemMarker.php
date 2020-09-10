@@ -22,7 +22,7 @@ final class TaskListItemMarker extends AbstractInline
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $checked = false;
+    private $checked;
 
     public function __construct(bool $isCompleted)
     {

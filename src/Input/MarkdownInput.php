@@ -43,7 +43,7 @@ class MarkdownInput implements MarkdownInputInterface
      *
      * @psalm-readonly
      */
-    private $lineOffset = 0;
+    private $lineOffset;
 
     public function __construct(string $content, int $lineOffset = 0)
     {

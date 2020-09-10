@@ -97,8 +97,7 @@ abstract class AbstractSpecTest extends TestCase
 
     private function showSpaces(string $str): string
     {
-        $str = \str_replace("\t", '→', $str);
-        $str = \str_replace(' ', '␣', $str);
+        $str = \strtr($str, ["\t" => '→', ' ' => '␣']);
 
         return $str;
     }
