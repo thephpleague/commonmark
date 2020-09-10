@@ -41,7 +41,7 @@ final class FencedCodeRenderer implements NodeRendererInterface
         $attrs = $node->getData('attributes', []);
 
         $infoWords = $node->getInfoWords();
-        if (\count($infoWords) !== 0 && \strlen($infoWords[0]) !== 0) {
+        if (\count($infoWords) !== 0 && $infoWords[0] !== '') {
             $attrs['class']  = isset($attrs['class']) ? $attrs['class'] . ' ' : '';
             $attrs['class'] .= 'language-' . $infoWords[0];
         }
