@@ -26,7 +26,7 @@ final class BlockStart
      *
      * @psalm-readonly
      */
-    private $blockParsers = [];
+    private $blockParsers;
 
     /**
      * @var CursorState|null

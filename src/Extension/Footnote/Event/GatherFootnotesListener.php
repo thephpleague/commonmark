@@ -48,7 +48,7 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
             $ref = $document->getReferenceMap()->get($node->getReference()->getLabel());
             if ($ref !== null) {
                 // Use numeric title to get footnotes order
-                $footnotes[\intval($ref->getTitle())] = $node;
+                $footnotes[(int) $ref->getTitle()] = $node;
             } else {
                 // Footnote call is missing, append footnote at the end
                 $footnotes[\PHP_INT_MAX] = $node;

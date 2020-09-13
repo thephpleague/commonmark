@@ -255,7 +255,7 @@ $run = function (array $config, string $parser) use ($exec): array {
             exit(1);
         }
 
-        return preg_split('~ ~', $result);
+        return explode(" ", $result);
     }
 
     return $exec($config, $parser);
