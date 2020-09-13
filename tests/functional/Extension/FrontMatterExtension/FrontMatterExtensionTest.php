@@ -82,7 +82,7 @@ EOT;
 
         $expectedHtml = "<h1>Hello World!</h1>\n";
 
-        $this->assertSame($expectedHtml, (string) $result->getContent());
+        $this->assertSame($expectedHtml, $result->getContent());
         $this->assertSame($expectedHtml, (string) $result);
 
         $this->assertSame(1, $result->getDocument()->getStartLine());
