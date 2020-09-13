@@ -4,6 +4,14 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Bumped CommonMark spec compliance to 0.28.2
+
+### Fixed
+
+ - Fixed `textarea` elements not being treated as a type 1 HTML block (like `script`, `style`, or `pre`)
+
 ## [1.5.4] - 2020-08-17
 
 ### Fixed
