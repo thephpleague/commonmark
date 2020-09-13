@@ -114,7 +114,7 @@ final class TableParser extends AbstractBlockContinueParser
         $head->appendChild($headerRow);
         for ($i = 0; $i < $headerColumns; $i++) {
             $cell      = $this->headerCells[$i];
-            $tableCell = self::parseCell($cell, $i, $inlineParser);
+            $tableCell = $this->parseCell($cell, $i, $inlineParser);
             $tableCell->setType(TableCell::TYPE_HEAD);
             $headerRow->appendChild($tableCell);
         }
@@ -127,7 +127,7 @@ final class TableParser extends AbstractBlockContinueParser
             // Body can not have more columns than head
             for ($i = 0; $i < $headerColumns; $i++) {
                 $cell      = $cells[$i] ?? '';
-                $tableCell = self::parseCell($cell, $i, $inlineParser);
+                $tableCell = $this->parseCell($cell, $i, $inlineParser);
                 $row->appendChild($tableCell);
             }
 
