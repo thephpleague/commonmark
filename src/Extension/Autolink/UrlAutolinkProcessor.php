@@ -107,10 +107,10 @@ final class UrlAutolinkProcessor
                 $leftovers = $matches[2] . $leftovers;
             }
 
-            // Does the URL need its closing paren chopped off?
-            if (\substr($content, -1) === ')' && self::hasMoreCloserParensThanOpeners($content)) {
-                $content   = \substr($content, 0, -1);
-                $leftovers = ')' . $leftovers;
+            // Does the URL need unmatched parens chopped off?
+            if (\substr($content, -1) === ')' && ($diff = self::diffParens($content)) > 0) {
+                $content   = \substr($content, 0, -$diff);
+                $leftovers = \str_repeat(')', $diff) . $leftovers;
             }
 
             self::addLink($node, $content);
@@ -134,12 +134,12 @@ final class UrlAutolinkProcessor
     /**
      * @psalm-pure
      */
-    private static function hasMoreCloserParensThanOpeners(string $content): bool
+    private static function diffParens(string $content): int
     {
         // Scan the entire autolink for the total number of parentheses.
         // If there is a greater number of closing parentheses than opening ones,
-        // we don’t consider the last character part of the autolink, in order to
-        // facilitate including an autolink inside a parenthesis.
+        // we don’t consider ANY of the last characters as part of the autolink,
+        // in order to facilitate including an autolink inside a parenthesis.
         \preg_match_all('/[()]/', $content, $matches);
 
         $charCount = ['(' => 0, ')' => 0];
@@ -147,6 +147,6 @@ final class UrlAutolinkProcessor
             $charCount[$char]++;
         }
 
-        return $charCount[')'] > $charCount['('];
+        return $charCount[')'] - $charCount['('];
     }
 }
