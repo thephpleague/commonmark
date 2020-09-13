@@ -42,9 +42,9 @@ interface EnvironmentInterface
     public function getDelimiterProcessors(): DelimiterProcessorCollection;
 
     /**
-     * @return iterable<NodeRendererInterface>
-     *
      * @psalm-param class-string $nodeClass
+     *
+     * @return iterable<NodeRendererInterface>
      */
     public function getRenderersForClass(string $nodeClass): iterable;
 

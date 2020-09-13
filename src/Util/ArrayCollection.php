@@ -28,7 +28,6 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
 {
     /**
      * @var array<int, mixed>
-     *
      * @phpstan-var array<int, T>
      */
     private $elements;
@@ -105,6 +104,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
      * {@inheritDoc}
      *
      * @phpstan-param int $offset
+     *
      * @phpstan-return T|null
      */
     public function offsetGet($offset)
