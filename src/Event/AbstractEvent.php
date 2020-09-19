@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Event;
 
+use Psr\EventDispatcher\StoppableEventInterface;
+
 /**
  * Base class for classes containing event data.
  *
@@ -25,7 +27,7 @@ namespace League\CommonMark\Event;
  * You can call the method stopPropagation() to abort the execution of
  * further listeners in your event listener.
  */
-abstract class AbstractEvent
+abstract class AbstractEvent implements StoppableEventInterface
 {
     /**
      * @var bool

@@ -7,11 +7,11 @@ description: How to leverage the event dispatcher to hook into the library
 Event Dispatcher
 ================
 
-This library includes basic event dispatcher functionality.  This makes it possible to add hook points throughout the library and third-party extensions which other code can listen for and execute code.  If you're familiar with [Symfony's EventDispatcher](https://symfony.com/doc/current/components/event_dispatcher.html) or [PSR-14](https://www.php-fig.org/psr/psr-14/) then this should be very familiar to you.
+This library includes basic, [PSR-14](https://www.php-fig.org/psr/psr-14/)-compliant event dispatcher functionality.  This makes it possible to add hook points throughout the library and third-party extensions which other code can listen for and execute code.
 
 ## Event Class
 
-All events must extend from the `AbstractEvent` class:
+Any [PSR-14 compliant event](https://www.php-fig.org/psr/psr-14/#events) can be used, though we also provide an `AbstractEvent` class you can use to easily create your own events:
 
 ```php
 use League\CommonMark\Event\AbstractEvent;
@@ -53,7 +53,7 @@ $environment->addEventListener(MyCustomEvent::class, function (MyCustomEvent $ev
 
 ## Dispatching Events
 
-Events can be dispatched via the `$environment->dispatch()` method which takes a single argument - an instance of `AbstractEvent` to dispatch:
+Events can be dispatched via the `$environment->dispatch()` method which takes a single argument - the event object to dispatch:
 
 ```php
 $environment->dispatch(new MyCustomEvent());
@@ -78,6 +78,20 @@ This event is dispatched once all other processing is done.  This offers extensi
 ### `League\CommonMark\Event\DocumentRenderedEvent`
 
 This event is dispatched once the rendering step has been completed, just before the output is returned.  The final output can be adjusted at this point or additional metadata can be attached to the return object.
+
+
+## Bring Your Own PSR-14 Event Dispatcher
+
+Although this library provides PSR-14 compliant event dispatching out-of-the-box, you may want to use your own PSR-14 event dispatcher instead.  This is possible as long as that third-party library both:
+
+ 1. Implements the PSR-14 `EventDispatcherInterface`; and,
+ 2. Allows you to register additional `ListenerProviderInterface` instances with that dispatcher library
+
+Not all libraries support this so please check carefully!  Assuming yours does, delegating all the event behavior to that library can be done with two steps:
+
+First, call the `setEventDispatcher()` method on the `Environment` to register that other implementation.  With that done, any calls to `Environment::dispatch()` will be passed through to that other dispatcher.  But we still need to let that dispatcher know about the events registered by CommonMark extensions, otherwise nothing will happen when events are dispatched.
+
+Because the `Environment` implements PSR-14's `ListenerProviderInterface` you'll also need to pass the configured `Environment` object to your event dispatcher so that it becomes aware of those available events.
 
 ## Example
 

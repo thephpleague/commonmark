@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Event;
 
-class FakeEvent extends FakeEventParent
+use League\CommonMark\Event\AbstractEvent;
+
+class FakeEventParent extends AbstractEvent
 {
 }

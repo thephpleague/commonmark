@@ -26,7 +26,10 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Tests\Unit\Event\FakeEvent;
 use League\CommonMark\Tests\Unit\Event\FakeEventListener;
 use League\CommonMark\Tests\Unit\Event\FakeEventListenerInvokable;
+use League\CommonMark\Tests\Unit\Event\FakeEventParent;
+use League\CommonMark\Util\ArrayCollection;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class EnvironmentTest extends TestCase
 {
@@ -501,7 +504,8 @@ class EnvironmentTest extends TestCase
             $actualOrder[] = 'a';
         });
 
-        $environment->addEventListener(FakeEvent::class, function (FakeEvent $e) use ($event, &$actualOrder): void {
+        // Listeners on parent classes should also be called
+        $environment->addEventListener(FakeEventParent::class, function (FakeEvent $e) use ($event, &$actualOrder): void {
             $this->assertSame($event, $e);
             $actualOrder[] = 'b';
             $e->stopPropagation();
@@ -529,12 +533,43 @@ class EnvironmentTest extends TestCase
         $this->expectException(\RuntimeException::class);
 
         $environment = new Environment();
-        $event       = $this->createMock(AbstractEvent::class);
 
-        $environment->dispatch($event);
+        // Trigger initialization
+        $environment->dispatch($this->createMock(AbstractEvent::class));
 
         $environment->addEventListener(AbstractEvent::class, static function (AbstractEvent $e): void {
         });
+    }
+
+    public function testDispatchDelegatesToProvidedDispatcher(): void
+    {
+        $dispatchersCalled = new ArrayCollection();
+
+        $environment = new Environment();
+
+        $environment->addEventListener(FakeEvent::class, static function (FakeEvent $event) use ($dispatchersCalled): void {
+            $dispatchersCalled[] = 'THIS SHOULD NOT BE CALLED!';
+        });
+
+        $environment->setEventDispatcher(new class ($dispatchersCalled) implements EventDispatcherInterface {
+            /** @var ArrayCollection */
+            private $dispatchersCalled;
+
+            public function __construct(ArrayCollection $dispatchersCalled)
+            {
+                $this->dispatchersCalled = $dispatchersCalled;
+            }
+
+            public function dispatch(object $event): void
+            {
+                $this->dispatchersCalled[] = 'external';
+            }
+        });
+
+        $environment->dispatch(new FakeEvent());
+
+        $this->assertCount(1, $dispatchersCalled);
+        $this->assertSame('external', $dispatchersCalled->first());
     }
 
     /**

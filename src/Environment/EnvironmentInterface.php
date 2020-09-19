@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace League\CommonMark\Environment;
 
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
-use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
-interface EnvironmentInterface
+interface EnvironmentInterface extends EventDispatcherInterface
 {
     /**
      * @param string|null $key     Configuration option key
@@ -54,9 +54,4 @@ interface EnvironmentInterface
      * This allows us to parse multiple non-special characters at once
      */
     public function getInlineParserCharacterRegex(): string;
-
-    /**
-     * Dispatches the given event to listeners
-     */
-    public function dispatch(AbstractEvent $event): void;
 }

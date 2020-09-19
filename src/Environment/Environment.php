@@ -20,7 +20,7 @@ use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
-use League\CommonMark\Event\AbstractEvent;
+use League\CommonMark\Event\ListenerData;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
@@ -29,8 +29,11 @@ use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
 use League\CommonMark\Util\PrioritizedList;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\ListenerProviderInterface;
+use Psr\EventDispatcher\StoppableEventInterface;
 
-final class Environment implements ConfigurableEnvironmentInterface
+final class Environment implements ConfigurableEnvironmentInterface, ListenerProviderInterface
 {
     /**
      * @var ExtensionInterface[]
@@ -89,11 +92,14 @@ final class Environment implements ConfigurableEnvironmentInterface
     private $renderersByClass = [];
 
     /**
-     * @var array<string, PrioritizedList<callable>>
+     * @var PrioritizedList<ListenerData>
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $listeners = [];
+    private $listenerData;
+
+    /** @var EventDispatcherInterface|null */
+    private $eventDispatcher;
 
     /**
      * @var Configuration
@@ -118,6 +124,7 @@ final class Environment implements ConfigurableEnvironmentInterface
 
         $this->blockStartParsers   = new PrioritizedList();
         $this->inlineParsers       = new PrioritizedList();
+        $this->listenerData        = new PrioritizedList();
         $this->delimiterProcessors = new DelimiterProcessorCollection();
     }
 
@@ -352,11 +359,7 @@ final class Environment implements ConfigurableEnvironmentInterface
     {
         $this->assertUninitialized('Failed to add event listener.');
 
-        if (! isset($this->listeners[$eventClass])) {
-            $this->listeners[$eventClass] = new PrioritizedList();
-        }
-
-        $this->listeners[$eventClass]->add($listener, $priority);
+        $this->listenerData->add(new ListenerData($eventClass, $listener), $priority);
 
         if (\is_object($listener)) {
             $this->injectEnvironmentAndConfigurationIfNeeded($listener);
@@ -367,20 +370,56 @@ final class Environment implements ConfigurableEnvironmentInterface
         return $this;
     }
 
-    public function dispatch(AbstractEvent $event): void
+    /**
+     * {@inheritDoc}
+     */
+    public function dispatch(object $event)
     {
         if (! $this->extensionsInitialized) {
             $this->initializeExtensions();
         }
 
-        $type = \get_class($event);
+        if ($this->eventDispatcher !== null) {
+            return $this->eventDispatcher->dispatch($event);
+        }
 
-        foreach ($this->listeners[$type] ?? [] as $listener) {
-            if ($event->isPropagationStopped()) {
-                return;
+        foreach ($this->getListenersForEvent($event) as $listener) {
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
+                return $event;
             }
 
             $listener($event);
+        }
+
+        return $event;
+    }
+
+    public function setEventDispatcher(EventDispatcherInterface $dispatcher): void
+    {
+        $this->eventDispatcher = $dispatcher;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return iterable<callable>
+     */
+    public function getListenersForEvent(object $event): iterable
+    {
+        foreach ($this->listenerData as $listenerData) {
+            \assert($listenerData instanceof ListenerData);
+
+            if (! \is_a($event, $listenerData->getEvent())) {
+                continue;
+            }
+
+            yield function (object $event) use ($listenerData) {
+                if (! $this->extensionsInitialized) {
+                    $this->initializeExtensions();
+                }
+
+                return \call_user_func($listenerData->getListener(), $event);
+            };
         }
     }
 
