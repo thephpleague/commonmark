@@ -85,8 +85,10 @@
         }
     },
     "scripts": {
+        "phpcs": "phpcs",
         "phpstan": "phpstan analyse",
         "phpunit": "phpunit --no-coverage",
+        "psalm": "psalm",
         "test": [
             "@phpcs",
             "@phpstan",
