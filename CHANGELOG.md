@@ -161,6 +161,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `HtmlRenderer::renderInline()`
    - `HtmlRenderer::renderInlines()`
    - `Node::isContainer()`
+   - `RegexHelper::matchAll()` (use the new `matchFirst()` method instead)
    - `RegexHelper::REGEX_WHITESPACE`
  - Removed the second `$contents` argument from the `Heading` constructor
 

@@ -306,6 +306,16 @@ class RegexHelperTest extends TestCase
         ];
     }
 
+    public function testMatchFirst(): void
+    {
+        $this->assertSame(null, RegexHelper::matchFirst('/^bar/', 'foobar'));
+        $this->assertSame(['bar'], RegexHelper::matchFirst('/^bar/', 'foobar', 3));
+        $this->assertSame(['bar', 'bar'], RegexHelper::matchFirst('/^(bar)/', 'foobar', 3));
+        $this->assertSame(['bar', 'ar'], RegexHelper::matchFirst('/^b(.+)/', 'foobar', 3));
+
+        $this->assertSame(['brown fox', 'brown', 'fox'], RegexHelper::matchFirst('/(quick|brown|lazy) (fox|dog)/', 'The quick brown fox jumps over the lazy dog'));
+    }
+
     /**
      * @dataProvider blockTypesWithValidOpenerRegexes
      */

@@ -50,7 +50,7 @@ class HeadingStartParser implements BlockStartParserInterface
 
     private static function getAtxHeader(Cursor $cursor): ?HeadingParser
     {
-        $match = RegexHelper::matchAll('/^#{1,6}(?:[ \t]+|$)/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
+        $match = RegexHelper::matchFirst('/^#{1,6}(?:[ \t]+|$)/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
         if (! $match) {
             return null;
         }
@@ -70,7 +70,7 @@ class HeadingStartParser implements BlockStartParserInterface
 
     private static function getSetextHeadingLevel(Cursor $cursor): int
     {
-        $match = RegexHelper::matchAll('/^(?:=+|-+)[ \t]*$/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
+        $match = RegexHelper::matchFirst('/^(?:=+|-+)[ \t]*$/', $cursor->getLine(), $cursor->getNextNonSpacePosition());
         if ($match === null) {
             return 0;
         }

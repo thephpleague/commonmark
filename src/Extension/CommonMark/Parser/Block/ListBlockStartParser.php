@@ -85,7 +85,7 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
             $data->delimiter    = null;
             $data->bulletChar   = $rest[0];
             $markerLength       = 1;
-        } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (! $inParagraph || $matches[1] === '1')) {
+        } elseif (($matches = RegexHelper::matchFirst('/^(\d{1,9})([.)])/', $rest)) && (! $inParagraph || $matches[1] === '1')) {
             $data               = new ListData();
             $data->markerOffset = $indent;
             $data->type         = ListBlock::TYPE_ORDERED;

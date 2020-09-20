@@ -113,32 +113,25 @@ final class RegexHelper
     }
 
     /**
-     * Functional wrapper around preg_match_all
+     * Functional wrapper around preg_match_all which only returns the first set of matches
      *
-     * @return array<string>|null
+     * @return string[]|null
      *
      * @psalm-pure
      */
-    public static function matchAll(string $pattern, string $subject, int $offset = 0): ?array
+    public static function matchFirst(string $pattern, string $subject, int $offset = 0): ?array
     {
         if ($offset !== 0) {
             $subject = \substr($subject, $offset);
         }
 
-        \preg_match_all($pattern, $subject, $matches, \PREG_PATTERN_ORDER);
+        \preg_match_all($pattern, $subject, $matches, \PREG_SET_ORDER);
 
-        $fullMatches = \reset($matches);
-        if ($fullMatches === false || \count($fullMatches) === 0) {
+        if ($matches === []) {
             return null;
         }
 
-        if (\count($fullMatches) === 1) {
-            foreach ($matches as &$match) {
-                $match = \reset($match);
-            }
-        }
-
-        return $matches ?: null;
+        return $matches[0] ?: null;
     }
 
     /**
