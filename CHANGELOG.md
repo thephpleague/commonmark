@@ -70,6 +70,9 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
    - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` are now just `addRenderer()`
    - `EnvironmentInterface::getBlockRenderersForClass()` and `getInlineRenderersForClass()` are now just `getRenderersForClass()`
+ - Re-implemented the GFM Autolink extension using the new inline parser approach instead of document processors
+   - `EmailAutolinkProcessor` is now `EmailAutolinkParser`
+   - `UrlAutolinkProcessor` is now `UrlAutolinkParser`
  - Combined separate classes/interfaces into one:
    - `DisallowedRawHtmlRenderer` replaces `DisallowedRawHtmlBlockRenderer` and `DisallowedRawHtmlInlineRenderer`
    - `NodeRendererInterface` replaces `BlockRendererInterface` and `InlineRendererInterface`
@@ -121,6 +124,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
  - Fixed parsing of footnotes without content
  - Fixed rendering of orphaned footnotes and footnote refs
+ - Fixed some URL autolinks breaking too early (#492)
 
 ### Removed
 

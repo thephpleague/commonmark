@@ -13,15 +13,17 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Autolink;
 
-use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
-use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
+use League\CommonMark\Parser\InlineParserContext;
 
-final class UrlAutolinkProcessor
+final class UrlAutolinkParser implements InlineParserInterface
 {
+    private const ALLOWED_AFTER = [null, ' ', "\t", "\n", "\x0b", "\x0c", "\x0d", '*', '_', '~', '('];
+
     // RegEx adapted from https://github.com/symfony/symfony/blob/4.2/src/Symfony/Component/Validator/Constraints/UrlValidator.php
     private const REGEX = '~
-        (?<=^|[ \\t\\n\\x0b\\x0c\\x0d*_\\~\\(])  # Can only come at the beginning of a line, after whitespace, or certain delimiting characters
         (
             # Must start with a supported scheme + auth, or "www"
             (?:
@@ -44,6 +46,13 @@ final class UrlAutolinkProcessor
         )~ixu';
 
     /**
+     * @var string[]
+     *
+     * @psalm-readonly
+     */
+    private $prefixes = ['www'];
+
+    /**
      * @var string
      *
      * @psalm-readonly
@@ -56,79 +65,62 @@ final class UrlAutolinkProcessor
     public function __construct(array $allowedProtocols = ['http', 'https', 'ftp'])
     {
         $this->finalRegex = \sprintf(self::REGEX, \implode('|', $allowedProtocols));
-    }
 
-    public function __invoke(DocumentParsedEvent $e): void
-    {
-        $walker = $e->getDocument()->walker();
-
-        while ($event = $walker->next()) {
-            $node = $event->getNode();
-            if ($node instanceof Text && ! ($node->parent() instanceof Link)) {
-                self::processAutolinks($node, $this->finalRegex);
-            }
+        foreach ($allowedProtocols as $protocol) {
+            $this->prefixes[] = $protocol . '://';
         }
     }
 
-    private static function processAutolinks(Text $node, string $regex): void
+    public function getMatchDefinition(): InlineParserMatch
     {
-        $contents = \preg_split($regex, $node->getLiteral(), -1, PREG_SPLIT_DELIM_CAPTURE);
-
-        if ($contents === false || \count($contents) === 1) {
-            return;
-        }
-
-        $leftovers = '';
-        foreach ($contents as $i => $content) {
-            // Even-indexed elements are things before/after the URLs
-            if ($i % 2 === 0) {
-                // Insert any left-over characters here as well
-                $text = $leftovers . $content;
-                if ($text !== '') {
-                    $node->insertBefore(new Text($leftovers . $content));
-                }
-
-                $leftovers = '';
-                continue;
-            }
-
-            $leftovers = '';
-
-            // Does the URL end with punctuation that should be stripped?
-            if (\preg_match('/(.+)([?!.,:*_~]+)$/', $content, $matches)) {
-                // Add the punctuation later
-                $content   = $matches[1];
-                $leftovers = $matches[2];
-            }
-
-            // Does the URL end with something that looks like an entity reference?
-            if (\preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $content, $matches)) {
-                $content   = $matches[1];
-                $leftovers = $matches[2] . $leftovers;
-            }
-
-            // Does the URL need unmatched parens chopped off?
-            if (\substr($content, -1) === ')' && ($diff = self::diffParens($content)) > 0) {
-                $content   = \substr($content, 0, -$diff);
-                $leftovers = \str_repeat(')', $diff) . $leftovers;
-            }
-
-            self::addLink($node, $content);
-        }
-
-        $node->detach();
+        return InlineParserMatch::oneOf(...$this->prefixes);
     }
 
-    private static function addLink(Text $node, string $url): void
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
+        $cursor = $inlineContext->getCursor();
+
+        // Autolinks can only come at the beginning of a line, after whitespace, or certain delimiting characters
+        $previousChar = $cursor->peek(-1);
+        if (! \in_array($previousChar, self::ALLOWED_AFTER, true)) {
+            return false;
+        }
+
+        // Check if we have a valid URL
+        if (! \preg_match($this->finalRegex, $cursor->getRemainder(), $matches)) {
+            return false;
+        }
+
+        $url = $matches[0];
+
+        // Does the URL end with punctuation that should be stripped?
+        if (\preg_match('/(.+)([?!.,:*_~]+)$/', $url, $matches)) {
+            // Add the punctuation later
+            $url = $matches[1];
+        }
+
+        // Does the URL end with something that looks like an entity reference?
+        if (\preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $url, $matches)) {
+            $url = $matches[1];
+        }
+
+        // Does the URL need unmatched parens chopped off?
+        if (\substr($url, -1) === ')' && ($diff = self::diffParens($url)) > 0) {
+            $url = \substr($url, 0, -$diff);
+        }
+
+        $cursor->advanceBy(\mb_strlen($url));
+
         // Auto-prefix 'http://' onto 'www' URLs
         if (\substr($url, 0, 4) === 'www.') {
-            $node->insertBefore(new Link('http://' . $url, $url));
+            $inlineContext->getContainer()->appendChild(new Link('http://' . $url, $url));
 
-            return;
+            return true;
         }
 
-        $node->insertBefore(new Link($url, $url));
+        $inlineContext->getContainer()->appendChild(new Link($url, $url));
+
+        return true;
     }
 
     /**
