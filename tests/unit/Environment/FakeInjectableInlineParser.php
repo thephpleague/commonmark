@@ -28,7 +28,7 @@ final class FakeInjectableInlineParser implements InlineParserInterface, Configu
         return InlineParserMatch::oneOf('');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         return false;
     }

@@ -30,14 +30,11 @@ final class EntityParser implements InlineParserInterface
         return InlineParserMatch::regex(RegexHelper::PARTIAL_ENTITY);
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
-        if ($m = $inlineContext->getCursor()->match('/^' . RegexHelper::PARTIAL_ENTITY . '/i')) {
-            $inlineContext->getContainer()->appendChild(new Text(Html5EntityDecoder::decode($m)));
+        $inlineContext->getCursor()->advanceBy(\mb_strlen($match));
+        $inlineContext->getContainer()->appendChild(new Text(Html5EntityDecoder::decode($match)));
 
-            return true;
-        }
-
-        return false;
+        return true;
     }
 }

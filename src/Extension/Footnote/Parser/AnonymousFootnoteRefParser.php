@@ -46,30 +46,18 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface, Configu
         return InlineParserMatch::regex('\^\[[^\]]+\]');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
-        $container = $inlineContext->getContainer();
-        $cursor    = $inlineContext->getCursor();
-        $nextChar  = $cursor->peek();
-        if ($nextChar !== '[') {
+        if (\preg_match('#\^\[([^\]]+)\]#', $match, $matches) <= 0) {
             return false;
         }
 
-        $state = $cursor->saveState();
+        $inlineContext->getCursor()->advanceBy(\mb_strlen($match));
 
-        $m = $cursor->match('#\^\[[^\]]+\]#');
-        if ($m !== null) {
-            if (\preg_match('#\^\[([^\]]+)\]#', $m, $matches) > 0) {
-                $reference = $this->createReference($matches[1]);
-                $container->appendChild(new FootnoteRef($reference, $matches[1]));
+        $reference = $this->createReference($matches[1]);
+        $inlineContext->getContainer()->appendChild(new FootnoteRef($reference, $matches[1]));
 
-                return true;
-            }
-        }
-
-        $cursor->restoreState($state);
-
-        return false;
+        return true;
     }
 
     /**

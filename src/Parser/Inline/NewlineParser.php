@@ -27,7 +27,7 @@ final class NewlineParser implements InlineParserInterface
         return InlineParserMatch::regex('\\n');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $inlineContext->getCursor()->advanceBy(1);
 

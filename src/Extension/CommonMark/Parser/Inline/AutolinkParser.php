@@ -32,7 +32,7 @@ final class AutolinkParser implements InlineParserInterface
         return InlineParserMatch::regex(self::EMAIL_REGEX . '|' . self::OTHER_LINK_REGEX);
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         if ($m = $cursor->match('/^' . self::EMAIL_REGEX . '/')) {

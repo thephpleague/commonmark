@@ -28,20 +28,19 @@ final class PunctuationParser implements InlineParserInterface
         return InlineParserMatch::oneOf('-', '.');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-        $ch     = $cursor->getCharacter();
 
         // Ellipses
-        if ($ch === '.' && $matched = $cursor->match('/^\\.( ?\\.)\\1/')) {
+        if ($match === '.' && $matched = $cursor->match('/^\\.( ?\\.)\\1/')) {
             $inlineContext->getContainer()->appendChild(new Text('…'));
 
             return true;
         }
 
         // Em/En-dashes
-        if ($ch === '-' && $matched = $cursor->match('/^(?<!-)(-{2,})/')) {
+        if ($match === '-' && $matched = $cursor->match('/^(?<!-)(-{2,})/')) {
             $count   = \strlen($matched);
             $enDash  = '–';
             $enCount = 0;

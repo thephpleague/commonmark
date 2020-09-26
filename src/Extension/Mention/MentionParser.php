@@ -55,7 +55,7 @@ final class MentionParser implements InlineParserInterface
         return InlineParserMatch::string($this->symbol);
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 

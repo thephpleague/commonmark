@@ -46,7 +46,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         return InlineParserMatch::string(']');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         // Look through stack of delimiters for a [ or !
         $opener = $inlineContext->getDelimiterStack()->searchByCharacter(['[', '!']);

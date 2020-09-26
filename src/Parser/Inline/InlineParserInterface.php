@@ -19,5 +19,5 @@ interface InlineParserInterface
 {
     public function getMatchDefinition(): InlineParserMatch;
 
-    public function parse(InlineParserContext $inlineContext): bool;
+    public function parse(string $match, InlineParserContext $inlineContext): bool;
 }

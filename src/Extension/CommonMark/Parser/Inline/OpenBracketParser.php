@@ -29,7 +29,7 @@ final class OpenBracketParser implements InlineParserInterface
         return InlineParserMatch::string('[');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $inlineContext->getCursor()->advanceBy(1);
         $node = new Text('[', ['delim' => true]);

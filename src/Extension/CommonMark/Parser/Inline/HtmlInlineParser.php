@@ -29,14 +29,11 @@ final class HtmlInlineParser implements InlineParserInterface
         return InlineParserMatch::regex(RegexHelper::PARTIAL_HTMLTAG);
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
-        if ($m = $inlineContext->getCursor()->match('/^' . RegexHelper::PARTIAL_HTMLTAG . '/i')) {
-            $inlineContext->getContainer()->appendChild(new HtmlInline($m));
+        $inlineContext->getCursor()->advanceBy(\mb_strlen($match));
+        $inlineContext->getContainer()->appendChild(new HtmlInline($match));
 
-            return true;
-        }
-
-        return false;
+        return true;
     }
 }
