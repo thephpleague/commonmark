@@ -37,7 +37,7 @@ interface EnvironmentInterface extends EventDispatcherInterface
     /**
      * @return iterable<InlineParserInterface>
      */
-    public function getInlineParsersForCharacter(string $character): iterable;
+    public function getInlineParsers(): iterable;
 
     public function getDelimiterProcessors(): DelimiterProcessorCollection;
 
@@ -47,11 +47,4 @@ interface EnvironmentInterface extends EventDispatcherInterface
      * @return iterable<NodeRendererInterface>
      */
     public function getRenderersForClass(string $nodeClass): iterable;
-
-    /**
-     * Regex which matches any character which doesn't indicate an inline element
-     *
-     * This allows us to parse multiple non-special characters at once
-     */
-    public function getInlineParserCharacterRegex(): string;
 }

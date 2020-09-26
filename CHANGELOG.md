@@ -34,6 +34,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RenderedContentInterface`
  - Added several new methods:
    - `Environment::setEventDispatcher()`
+   - `EnvironmentInterface::getInlineParsers()`
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
    - `HtmlRenderer::renderDocument()`
@@ -162,6 +163,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `AbstractBlock::finalize()`
    - `ConfigurableEnvironmentInterface::addBlockParser()`
    - `Delimiter::setCanClose()`
+   - `EnvironmentInterface::getInlineParsersForCharacter()`
+   - `EnvironmentInterface::getInlineParserCharacterRegex()`
    - `HtmlRenderer::renderBlock()`
    - `HtmlRenderer::renderBlocks()`
    - `HtmlRenderer::renderInline()`

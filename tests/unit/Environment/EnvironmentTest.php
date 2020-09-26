@@ -186,21 +186,6 @@ class EnvironmentTest extends TestCase
         $environment->addRenderer('MyClass', $renderer);
     }
 
-    public function testInlineParserCanMatchRegexDelimiter(): void
-    {
-        $environment = new Environment();
-
-        $parser = $this->createMock(InlineParserInterface::class);
-        $parser->expects($this->any())
-            ->method('getCharacters')
-            ->will($this->returnValue(['/']));
-
-        $environment->addInlineParser($parser);
-        $environment->getInlineParsersForCharacter('/');
-
-        $this->assertEquals(1, \preg_match($environment->getInlineParserCharacterRegex(), 'foo/bar'));
-    }
-
     public function testAddInlineParserFailsAfterInitialization(): void
     {
         $this->expectException(\RuntimeException::class);
@@ -208,31 +193,10 @@ class EnvironmentTest extends TestCase
         $environment = new Environment();
 
         // This triggers the initialization
-        $environment->getInlineParsersForCharacter('');
+        $environment->getInlineParsers();
 
         $parser = $this->createMock(InlineParserInterface::class);
         $environment->addInlineParser($parser);
-    }
-
-    public function testGetInlineParsersForCharacter(): void
-    {
-        $environment = new Environment();
-
-        $parser = $this->createMock(InlineParserInterface::class);
-        $parser->expects($this->any())
-            ->method('getCharacters')
-            ->will($this->returnValue(['a']));
-
-        $environment->addInlineParser($parser);
-
-        $this->assertContains($parser, $environment->getInlineParsersForCharacter('a'));
-    }
-
-    public function testGetInlineParsersForNonExistantCharacter(): void
-    {
-        $environment = new Environment();
-
-        $this->assertEmpty($environment->getInlineParsersForCharacter('a'));
     }
 
     public function testAddDelimiterProcessor(): void
@@ -301,61 +265,6 @@ class EnvironmentTest extends TestCase
 
         $extension = $this->createMock(ExtensionInterface::class);
         $environment->addExtension($extension);
-    }
-
-    public function testGetInlineParserCharacterRegexForEmptyEnvironment(): void
-    {
-        $environment = new Environment();
-
-        // This triggers the initialization which builds the regex
-        $environment->getInlineParsersForCharacter('');
-
-        $regex = $environment->getInlineParserCharacterRegex();
-
-        $test    = '*This* should match **everything** including chars like `[`.';
-        $matches = [];
-        \preg_match($regex, $test, $matches);
-        $this->assertSame($test, $matches[0]);
-    }
-
-    public function testGetInlineParserCharacterRegexForAsciiCharacters(): void
-    {
-        $environment = new Environment();
-
-        $parser1 = $this->createMock(InlineParserInterface::class);
-        $parser1->method('getCharacters')->willReturn(['*']);
-        $environment->addInlineParser($parser1);
-
-        $parser2 = $this->createMock(InlineParserInterface::class);
-        $parser2->method('getCharacters')->willReturn(['[']);
-        $environment->addInlineParser($parser2);
-
-        // This triggers the initialization which builds the regex
-        $environment->getInlineParsersForCharacter('');
-
-        $regex = $environment->getInlineParserCharacterRegex();
-
-        $this->assertSame('/^[^\*\[]+/', $regex);
-    }
-
-    public function testGetInlineParserCharacterRegexForMultibyteCharacters(): void
-    {
-        $environment = new Environment();
-
-        $parser1 = $this->createMock(InlineParserInterface::class);
-        $parser1->method('getCharacters')->willReturn(['*']);
-        $environment->addInlineParser($parser1);
-
-        $parser2 = $this->createMock(InlineParserInterface::class);
-        $parser2->method('getCharacters')->willReturn(['★']);
-        $environment->addInlineParser($parser2);
-
-        // This triggers the initialization which builds the regex
-        $environment->getInlineParsersForCharacter('');
-
-        $regex = $environment->getInlineParserCharacterRegex();
-
-        $this->assertSame('/^[^\*★]+/u', $regex);
     }
 
     public function testInjectableBlockStartParsersGetInjected(): void
@@ -451,22 +360,19 @@ class EnvironmentTest extends TestCase
         $this->assertSame($parser3, $parsers[2]);
     }
 
-    public function testInlineParserPrioritization(): void
+    public function testGetInlineParsersWithPrioritization(): void
     {
         $environment = new Environment();
 
         $parser1 = $this->createMock(InlineParserInterface::class);
-        $parser1->method('getCharacters')->willReturn(['a']);
         $parser2 = $this->createMock(InlineParserInterface::class);
-        $parser2->method('getCharacters')->willReturn(['a']);
         $parser3 = $this->createMock(InlineParserInterface::class);
-        $parser3->method('getCharacters')->willReturn(['a']);
 
         $environment->addInlineParser($parser1);
         $environment->addInlineParser($parser2, 50);
         $environment->addInlineParser($parser3);
 
-        $parsers = \iterator_to_array($environment->getInlineParsersForCharacter('a'));
+        $parsers = \iterator_to_array($environment->getInlineParsers());
 
         $this->assertSame($parser2, $parsers[0]);
         $this->assertSame($parser1, $parsers[1]);
