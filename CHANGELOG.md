@@ -22,6 +22,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `BlockStartParserInterface`
    - `ChildNodeRendererInterface`
    - `CursorState`
+   - `DelimiterParser`
    - `DocumentBlockParser`
    - `DocumentRenderedEvent`
    - `HtmlRendererInterface`
@@ -64,6 +65,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserInterface::getCharacters()` is now `getMatchDefinition()` and returns an instance of `InlineParserMatch`
    - `InlineParserInterface::parse()` has a new parameter containing the pre-matched text
    - `InlineParserContext::__construct()` now requires the contents to be provided as a `Cursor` instead of a `string`
+ - Implemented delimiter parsing as a special type of inline parser (via the new `DelimiterParser` class)
  - Changed block and inline rendering to use common methods and interfaces
    - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
    - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` are now just `addRenderer()`

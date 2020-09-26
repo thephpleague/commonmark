@@ -18,6 +18,7 @@ namespace League\CommonMark\Environment;
 
 use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Delimiter\DelimiterParser;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Event\ListenerData;
@@ -270,6 +271,8 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
 
         $this->extensionsInitialized = true;
 
+        // Create the special delimiter parser
+        $this->inlineParsers->add(new DelimiterParser($this->delimiterProcessors), PHP_INT_MIN);
     }
 
     private function injectEnvironmentAndConfigurationIfNeeded(object $object): void
