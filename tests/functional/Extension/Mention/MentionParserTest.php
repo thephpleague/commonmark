@@ -40,7 +40,7 @@ final class MentionParserTest extends TestCase
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
-    public function testMentionParserWithMultiCharacterSymbol(): void
+    public function testMentionParserWithMultiCharacterPrefix(): void
     {
         $input    = 'Try asking u:colinodell about that.';
         $expected = '<p>Try asking <a href="https://www.example.com/users/colinodell">u:colinodell</a> about that.</p>';
@@ -55,7 +55,7 @@ final class MentionParserTest extends TestCase
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
-    public function testMentionParserWithMultiCharacterSymbolContainingSpecialRegexCharsThatShouldBeEscaped(): void
+    public function testMentionParserWithMultiCharacterPrefixContainingSpecialRegexCharsThatShouldBeEscaped(): void
     {
         $input    = 'I spend too much time on the /r/php subreddit.';
         $expected = '<p>I spend too much time on the <a href="https://www.reddit.com/r/php">/r/php</a> subreddit.</p>';
@@ -85,7 +85,7 @@ final class MentionParserTest extends TestCase
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
-    public function testMentionParserWithNonMatchingSymbol(): void
+    public function testMentionParserWithNonMatchingPrefix(): void
     {
         $input    = 'See #123 for more information.';
         $expected = '<p>See #123 for more information.</p>';
@@ -137,7 +137,7 @@ final class MentionParserTest extends TestCase
     {
         $callable = static function (Mention $mention) {
             // Stuff the three params into the URL just to prove we received them all properly
-            $mention->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getIdentifier(), $mention->getLabel(), $mention->getSymbol()));
+            $mention->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getIdentifier(), $mention->getLabel(), $mention->getPrefix()));
             // Change the label
             $mention->setLabel('Replaced Label');
 

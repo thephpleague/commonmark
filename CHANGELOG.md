@@ -55,6 +55,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 ### Changed
 
  - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
+ - Renamed the `symbol` configuration key for custom Mentions to `prefix`
  - Event dispatching is now fully PSR-14 compliant
  - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
  - Implemented a new approach to block parsing. This was a massive change, so here are the highlights:

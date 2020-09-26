@@ -23,18 +23,18 @@ final class MentionExtension implements ExtensionInterface
     {
         $mentions = $environment->getConfig('mentions', []);
         foreach ($mentions as $name => $mention) {
-            foreach (['symbol', 'regex', 'generator'] as $key) {
+            foreach (['prefix', 'regex', 'generator'] as $key) {
                 if (! \array_key_exists($key, $mention)) {
                     throw new \RuntimeException(\sprintf('Missing "%s" from MentionParser configuration', $key));
                 }
             }
 
             if ($mention['generator'] instanceof MentionGeneratorInterface) {
-                $environment->addInlineParser(new MentionParser($mention['symbol'], $mention['regex'], $mention['generator']));
+                $environment->addInlineParser(new MentionParser($mention['prefix'], $mention['regex'], $mention['generator']));
             } elseif (\is_string($mention['generator'])) {
-                $environment->addInlineParser(MentionParser::createWithStringTemplate($mention['symbol'], $mention['regex'], $mention['generator']));
+                $environment->addInlineParser(MentionParser::createWithStringTemplate($mention['prefix'], $mention['regex'], $mention['generator']));
             } elseif (\is_callable($mention['generator'])) {
-                $environment->addInlineParser(MentionParser::createWithCallback($mention['symbol'], $mention['regex'], $mention['generator']));
+                $environment->addInlineParser(MentionParser::createWithCallback($mention['prefix'], $mention['regex'], $mention['generator']));
             } else {
                 throw new \RuntimeException(\sprintf('The "generator" provided for the MentionParser configuration must be a string template, callable, or an object that implements %s.', MentionGeneratorInterface::class));
             }
