@@ -271,8 +271,10 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
 
         $this->extensionsInitialized = true;
 
-        // Create the special delimiter parser
-        $this->inlineParsers->add(new DelimiterParser($this->delimiterProcessors), PHP_INT_MIN);
+        // Create the special delimiter parser if any processors were registered
+        if ($this->delimiterProcessors->count() > 0) {
+            $this->inlineParsers->add(new DelimiterParser($this->delimiterProcessors), PHP_INT_MIN);
+        }
     }
 
     private function injectEnvironmentAndConfigurationIfNeeded(object $object): void
