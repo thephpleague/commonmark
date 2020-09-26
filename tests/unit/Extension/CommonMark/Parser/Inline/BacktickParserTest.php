@@ -19,6 +19,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Parser\Inline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\BacktickParser;
 use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\ReferenceMapInterface;
 use PHPUnit\Framework\TestCase;
@@ -31,14 +32,15 @@ class BacktickParserTest extends TestCase
     public function testParse(string $string, string $expectedContents): void
     {
         $paragraph     = new Paragraph();
-        $inlineContext = new InlineParserContext($string, $paragraph, $this->createMock(ReferenceMapInterface::class));
+        $cursor        = new Cursor($string);
+        $inlineContext = new InlineParserContext($cursor, $paragraph, $this->createMock(ReferenceMapInterface::class));
 
         // Move to just before the first backtick
         $firstBacktickPos = \mb_strpos($string, '`', 0, 'utf-8');
-        $inlineContext->getCursor()->advanceBy($firstBacktickPos);
+        $cursor->advanceBy($firstBacktickPos);
 
         $parser = new BacktickParser();
-        $this->assertTrue($parser->parse('`', $inlineContext));
+        $this->assertTrue($parser->parse($cursor->getCharacter(), $inlineContext));
 
         $codeBlock = $paragraph->firstChild();
         \assert($codeBlock instanceof Code);

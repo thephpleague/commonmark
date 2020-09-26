@@ -63,6 +63,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Implemented a new approach to inline parsing where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
    - `InlineParserInterface::getCharacters()` is now `getMatchDefinition()` and returns an instance of `InlineParserMatch`
    - `InlineParserInterface::parse()` has a new parameter containing the pre-matched text
+   - `InlineParserContext::__construct()` now requires the contents to be provided as a `Cursor` instead of a `string`
  - Changed block and inline rendering to use common methods and interfaces
    - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
    - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` are now just `addRenderer()`
