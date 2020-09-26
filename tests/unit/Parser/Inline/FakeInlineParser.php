@@ -7,34 +7,50 @@ declare(strict_types=1);
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\CommonMark\Parser\Inline;
+namespace League\CommonMark\Tests\Unit\Parser\Inline;
 
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
-use League\CommonMark\Util\Html5EntityDecoder;
-use League\CommonMark\Util\RegexHelper;
 
-final class EntityParser implements InlineParserInterface
+final class FakeInlineParser implements InlineParserInterface
 {
+    /** @var string[] */
+    private $matches = [];
+
+    /** @var InlineParserMatch */
+    private $start;
+
+    public function __construct(InlineParserMatch $start)
+    {
+        $this->start = $start;
+    }
+
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::regex(RegexHelper::PARTIAL_ENTITY);
+        return $this->start;
     }
 
     public function parse(string $match, InlineParserContext $inlineContext): bool
     {
+        $this->matches[] = $match;
+
         $inlineContext->getCursor()->advanceBy(\mb_strlen($match));
-        $inlineContext->getContainer()->appendChild(new Text(Html5EntityDecoder::decode($match)));
+        $inlineContext->getContainer()->appendChild(new Text($match));
 
         return true;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getMatches(): array
+    {
+        return $this->matches;
     }
 }

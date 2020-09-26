@@ -18,33 +18,31 @@ namespace League\CommonMark\Extension\CommonMark\Parser\Inline;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Util\UrlEncoder;
 
 final class AutolinkParser implements InlineParserInterface
 {
-    private const EMAIL_REGEX      = '/^<([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>/';
-    private const OTHER_LINK_REGEX = '/^<[A-Za-z][A-Za-z0-9.+-]{1,31}:[^<>\x00-\x20]*>/i';
+    private const EMAIL_REGEX      = '<([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>';
+    private const OTHER_LINK_REGEX = '<[A-Za-z][A-Za-z0-9.+-]{1,31}:[^<>\x00-\x20]*>';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['<'];
+        return InlineParserMatch::regex(self::EMAIL_REGEX . '|' . self::OTHER_LINK_REGEX);
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-        if ($m = $cursor->match(self::EMAIL_REGEX)) {
+        if ($m = $cursor->match('/^' . self::EMAIL_REGEX . '/')) {
             $email = \substr($m, 1, -1);
             $inlineContext->getContainer()->appendChild(new Link('mailto:' . UrlEncoder::unescapeAndEncode($email), $email));
 
             return true;
         }
 
-        if ($m = $cursor->match(self::OTHER_LINK_REGEX)) {
+        if ($m = $cursor->match('/^' . self::OTHER_LINK_REGEX . '/')) {
             $dest = \substr($m, 1, -1);
             $inlineContext->getContainer()->appendChild(new Link(UrlEncoder::unescapeAndEncode($dest), $dest));
 

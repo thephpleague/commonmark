@@ -50,11 +50,11 @@ final class InlineParserContext
      */
     private $delimiterStack;
 
-    public function __construct(string $contents, AbstractBlock $container, ReferenceMapInterface $referenceMap)
+    public function __construct(Cursor $contents, AbstractBlock $container, ReferenceMapInterface $referenceMap)
     {
         $this->referenceMap   = $referenceMap;
         $this->container      = $container;
-        $this->cursor         = new Cursor(\trim($contents));
+        $this->cursor         = $contents;
         $this->delimiterStack = new DelimiterStack();
     }
 

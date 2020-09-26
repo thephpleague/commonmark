@@ -18,6 +18,7 @@ namespace League\CommonMark\Environment;
 
 use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Delimiter\DelimiterParser;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Event\ListenerData;
@@ -71,13 +72,6 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
     private $inlineParsers;
 
     /**
-     * @var array<string, PrioritizedList<InlineParserInterface>>
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $inlineParsersByCharacter = [];
-
-    /**
      * @var DelimiterProcessorCollection
      *
      * @psalm-readonly
@@ -107,13 +101,6 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
      * @psalm-readonly
      */
     private $config;
-
-    /**
-     * @var string
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $inlineParserCharacterRegex;
 
     /**
      * @param array<string, mixed> $config
@@ -173,14 +160,6 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         $this->inlineParsers->add($parser, $priority);
         $this->injectEnvironmentAndConfigurationIfNeeded($parser);
 
-        foreach ($parser->getCharacters() as $character) {
-            if (! isset($this->inlineParsersByCharacter[$character])) {
-                $this->inlineParsersByCharacter[$character] = new PrioritizedList();
-            }
-
-            $this->inlineParsersByCharacter[$character]->add($parser, $priority);
-        }
-
         return $this;
     }
 
@@ -217,22 +196,6 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         }
 
         return $this->blockStartParsers->getIterator();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getInlineParsersForCharacter(string $character): iterable
-    {
-        if (! $this->extensionsInitialized) {
-            $this->initializeExtensions();
-        }
-
-        if (! isset($this->inlineParsersByCharacter[$character])) {
-            return [];
-        }
-
-        return $this->inlineParsersByCharacter[$character]->getIterator();
     }
 
     public function getDelimiterProcessors(): DelimiterProcessorCollection
@@ -308,9 +271,10 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
 
         $this->extensionsInitialized = true;
 
-        // Lastly, let's build a regex which matches non-inline characters
-        // This will enable a huge performance boost with inline parsing
-        $this->buildInlineParserCharacterRegex();
+        // Create the special delimiter parser if any processors were registered
+        if ($this->delimiterProcessors->count() > 0) {
+            $this->inlineParsers->add(new DelimiterParser($this->delimiterProcessors), PHP_INT_MIN);
+        }
     }
 
     private function injectEnvironmentAndConfigurationIfNeeded(object $object): void
@@ -348,11 +312,6 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
         return $environment;
-    }
-
-    public function getInlineParserCharacterRegex(): string
-    {
-        return $this->inlineParserCharacterRegex;
     }
 
     public function addEventListener(string $eventClass, callable $listener, int $priority = 0): ConfigurableEnvironmentInterface
@@ -423,25 +382,16 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         }
     }
 
-    private function buildInlineParserCharacterRegex(): void
+    /**
+     * @return iterable<InlineParserInterface>
+     */
+    public function getInlineParsers(): iterable
     {
-        $chars = \array_unique(\array_merge(
-            \array_keys($this->inlineParsersByCharacter),
-            $this->delimiterProcessors->getDelimiterCharacters()
-        ));
-
-        if (\count($chars) === 0) {
-            // If no special inline characters exist then parse the whole line
-            $this->inlineParserCharacterRegex = '/^.+$/';
-        } else {
-            // Match any character which inline parsers are not interested in
-            $this->inlineParserCharacterRegex = '/^[^' . \preg_quote(\implode('', $chars), '/') . ']+/';
-
-            // Only add the u modifier (which slows down performance) if we have a multi-byte UTF-8 character in our regex
-            if (\strlen($this->inlineParserCharacterRegex) > \mb_strlen($this->inlineParserCharacterRegex)) {
-                $this->inlineParserCharacterRegex .= 'u';
-            }
+        if (! $this->extensionsInitialized) {
+            $this->initializeExtensions();
         }
+
+        return $this->inlineParsers->getIterator();
     }
 
     /**

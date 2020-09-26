@@ -22,10 +22,12 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `BlockStartParserInterface`
    - `ChildNodeRendererInterface`
    - `CursorState`
+   - `DelimiterParser`
    - `DocumentBlockParser`
    - `DocumentRenderedEvent`
    - `HtmlRendererInterface`
    - `InlineParserEngineInterface`
+   - `InlineParserMatch`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
    - `ReferenceableInterface`
@@ -33,6 +35,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RenderedContentInterface`
  - Added several new methods:
    - `Environment::setEventDispatcher()`
+   - `EnvironmentInterface::getInlineParsers()`
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
    - `HtmlRenderer::renderDocument()`
@@ -58,10 +61,18 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `ConfigurableEnvironmentInterface::addBlockParser()` is now `ConfigurableEnvironmentInterface::addBlockParserFactory()`
    - `ReferenceParser` was re-implemented and works completely different than before
    - The paragraph parser no longer needs to be added manually to the environment
+ - Implemented a new approach to inline parsing where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
+   - `InlineParserInterface::getCharacters()` is now `getMatchDefinition()` and returns an instance of `InlineParserMatch`
+   - `InlineParserInterface::parse()` has a new parameter containing the pre-matched text
+   - `InlineParserContext::__construct()` now requires the contents to be provided as a `Cursor` instead of a `string`
+ - Implemented delimiter parsing as a special type of inline parser (via the new `DelimiterParser` class)
  - Changed block and inline rendering to use common methods and interfaces
    - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
    - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` are now just `addRenderer()`
    - `EnvironmentInterface::getBlockRenderersForClass()` and `getInlineRenderersForClass()` are now just `getRenderersForClass()`
+ - Re-implemented the GFM Autolink extension using the new inline parser approach instead of document processors
+   - `EmailAutolinkProcessor` is now `EmailAutolinkParser`
+   - `UrlAutolinkProcessor` is now `UrlAutolinkParser`
  - Combined separate classes/interfaces into one:
    - `DisallowedRawHtmlRenderer` replaces `DisallowedRawHtmlBlockRenderer` and `DisallowedRawHtmlInlineRenderer`
    - `NodeRendererInterface` replaces `BlockRendererInterface` and `InlineRendererInterface`
@@ -106,11 +117,14 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - Footnote event listeners now have numbered priorities (but still execute in the same order)
    - Footnotes must now be separated from previous content by a blank line
  - The line numbers (keys) returned via `MarkdownInput::getLines()` now start at 1 instead of 0
+ - `DelimiterProcessorCollectionInterface` now extends `Countable`
+ - `RegexHelper::PARTIAL_` constants must always be used in case-insensitive contexts
 
 ### Fixed
 
  - Fixed parsing of footnotes without content
  - Fixed rendering of orphaned footnotes and footnote refs
+ - Fixed some URL autolinks breaking too early (#492)
 
 ### Removed
 
@@ -159,6 +173,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `AbstractBlock::finalize()`
    - `ConfigurableEnvironmentInterface::addBlockParser()`
    - `Delimiter::setCanClose()`
+   - `EnvironmentInterface::getInlineParsersForCharacter()`
+   - `EnvironmentInterface::getInlineParserCharacterRegex()`
    - `HtmlRenderer::renderBlock()`
    - `HtmlRenderer::renderBlocks()`
    - `HtmlRenderer::renderInline()`

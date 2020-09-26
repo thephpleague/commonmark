@@ -19,19 +19,17 @@ namespace League\CommonMark\Extension\CommonMark\Parser\Inline;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 
 final class OpenBracketParser implements InlineParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['['];
+        return InlineParserMatch::string('[');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $inlineContext->getCursor()->advanceBy(1);
         $node = new Text('[', ['delim' => true]);

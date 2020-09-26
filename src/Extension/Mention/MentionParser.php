@@ -17,6 +17,7 @@ use League\CommonMark\Extension\Mention\Generator\CallbackGenerator;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Generator\StringTemplateLinkGenerator;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 
 final class MentionParser implements InlineParserInterface
@@ -49,15 +50,12 @@ final class MentionParser implements InlineParserInterface
         $this->mentionGenerator = $mentionGenerator;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return [$this->symbol];
+        return InlineParserMatch::string($this->symbol);
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 

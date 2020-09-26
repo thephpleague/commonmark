@@ -11,14 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit\Extension\Autolink;
+namespace League\CommonMark\Tests\Functional\Extension\Autolink;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use PHPUnit\Framework\TestCase;
 
-final class UrlAutolinkProcessorTest extends TestCase
+final class UrlAutolinkParserTest extends TestCase
 {
     /**
      * @dataProvider dataProviderForAutolinkTests
@@ -80,5 +80,8 @@ final class UrlAutolinkProcessorTest extends TestCase
 
         // Regression: CommonMark autolinks should not be double-linked
         yield ['<https://www.google.com>', '<p><a href="https://www.google.com">https://www.google.com</a></p>'];
+
+        // Issue 492: underscores in URLs (see https://github.com/thephpleague/commonmark/issues/492)
+        yield ['http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)', '<p><a href="http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)">http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)</a></p>'];
     }
 }

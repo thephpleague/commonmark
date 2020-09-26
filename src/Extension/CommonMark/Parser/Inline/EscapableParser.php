@@ -19,20 +19,18 @@ namespace League\CommonMark\Extension\CommonMark\Parser\Inline;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 final class EscapableParser implements InlineParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['\\'];
+        return InlineParserMatch::string('\\');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor   = $inlineContext->getCursor();
         $nextChar = $cursor->peek();

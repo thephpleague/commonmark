@@ -20,6 +20,7 @@ use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 
@@ -40,38 +41,23 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface, Configu
         $this->slugNormalizer = new SlugNormalizer();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['^'];
+        return InlineParserMatch::regex('\^\[[^\]]+\]');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
-        $container = $inlineContext->getContainer();
-        $cursor    = $inlineContext->getCursor();
-        $nextChar  = $cursor->peek();
-        if ($nextChar !== '[') {
+        if (\preg_match('#\^\[([^\]]+)\]#', $match, $matches) <= 0) {
             return false;
         }
 
-        $state = $cursor->saveState();
+        $inlineContext->getCursor()->advanceBy(\mb_strlen($match));
 
-        $m = $cursor->match('#\^\[[^\]]+\]#');
-        if ($m !== null) {
-            if (\preg_match('#\^\[([^\]]+)\]#', $m, $matches) > 0) {
-                $reference = $this->createReference($matches[1]);
-                $container->appendChild(new FootnoteRef($reference, $matches[1]));
+        $reference = $this->createReference($matches[1]);
+        $inlineContext->getContainer()->appendChild(new FootnoteRef($reference, $matches[1]));
 
-                return true;
-            }
-        }
-
-        $cursor->restoreState($state);
-
-        return false;
+        return true;
     }
 
     /**

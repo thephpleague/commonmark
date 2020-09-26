@@ -11,14 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit\Extension\Autolink;
+namespace League\CommonMark\Tests\Functional\Extension\Autolink;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use PHPUnit\Framework\TestCase;
 
-final class EmailAutolinkProcessorTest extends TestCase
+final class EmailAutolinkParserTest extends TestCase
 {
     /**
      * @dataProvider dataProviderForEmailAutolinks

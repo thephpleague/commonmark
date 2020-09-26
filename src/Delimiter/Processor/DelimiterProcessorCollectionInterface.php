@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Delimiter\Processor;
 
-interface DelimiterProcessorCollectionInterface
+interface DelimiterProcessorCollectionInterface extends \Countable
 {
     /**
      * Add the given delim processor to the collection

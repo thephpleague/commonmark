@@ -79,4 +79,9 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
         $s->add($new);
         $this->processorsByChar[$opening] = $s;
     }
+
+    public function count(): int
+    {
+        return \count($this->processorsByChar);
+    }
 }

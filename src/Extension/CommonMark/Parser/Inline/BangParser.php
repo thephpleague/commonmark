@@ -19,33 +19,28 @@ namespace League\CommonMark\Extension\CommonMark\Parser\Inline;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 
 final class BangParser implements InlineParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['!'];
+        return InlineParserMatch::string('![');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-        if ($cursor->peek() === '[') {
-            $cursor->advanceBy(2);
-            $node = new Text('![', ['delim' => true]);
-            $inlineContext->getContainer()->appendChild($node);
 
-            // Add entry to stack for this opener
-            $delimiter = new Delimiter('!', 1, $node, true, false, $cursor->getPosition());
-            $inlineContext->getDelimiterStack()->push($delimiter);
+        $cursor->advanceBy(2);
+        $node = new Text('![', ['delim' => true]);
+        $inlineContext->getContainer()->appendChild($node);
 
-            return true;
-        }
+        // Add entry to stack for this opener
+        $delimiter = new Delimiter('!', 1, $node, true, false, $cursor->getPosition());
+        $inlineContext->getDelimiterStack()->push($delimiter);
 
-        return false;
+        return true;
     }
 }

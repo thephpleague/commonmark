@@ -18,6 +18,7 @@ use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 
@@ -26,37 +27,21 @@ final class FootnoteRefParser implements InlineParserInterface, ConfigurationAwa
     /** @var ConfigurationInterface */
     private $config;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['['];
+        return InlineParserMatch::regex('\[\^([^\s\]]+)\]');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
-        $container = $inlineContext->getContainer();
-        $cursor    = $inlineContext->getCursor();
-        $nextChar  = $cursor->peek();
-        if ($nextChar !== '^') {
+        if (\preg_match('#\[\^([^\s\]]+)\]#', $match, $matches) <= 0) {
             return false;
         }
 
-        $state = $cursor->saveState();
+        $inlineContext->getCursor()->advanceBy(\mb_strlen($match));
+        $inlineContext->getContainer()->appendChild(new FootnoteRef($this->createReference($matches[1])));
 
-        $m = $cursor->match('#\[\^([^\s\]]+)\]#');
-        if ($m !== null) {
-            if (\preg_match('#\[\^([^\s\]]+)\]#', $m, $matches) > 0) {
-                $container->appendChild(new FootnoteRef($this->createReference($matches[1])));
-
-                return true;
-            }
-        }
-
-        $cursor->restoreState($state);
-
-        return false;
+        return true;
     }
 
     private function createReference(string $label): Reference
