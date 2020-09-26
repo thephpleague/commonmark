@@ -115,6 +115,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - Footnotes must now be separated from previous content by a blank line
  - The line numbers (keys) returned via `MarkdownInput::getLines()` now start at 1 instead of 0
  - `DelimiterProcessorCollectionInterface` now extends `Countable`
+ - `RegexHelper::PARTIAL_` constants must always be used in case-insensitive contexts
 
 ### Fixed
 

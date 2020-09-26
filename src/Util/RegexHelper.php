@@ -21,13 +21,16 @@ use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 /**
  * Provides regular expressions and utilities for parsing Markdown
  *
+ * All of the PARTIAL_ regex constants assume that they'll be used in case-insensitive searches
+ * All other complete regexes provided by this class (either via constants or methods) will have case-insensitivity enabled.
+ *
  * @phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
  *
  * @psalm-immutable
  */
 final class RegexHelper
 {
-    // Partial regular expressions (wrap with `/` on each side before use)
+    // Partial regular expressions (wrap with `/` on each side and add the case-insensitive `i` flag before use)
     public const PARTIAL_ENTITY                = '&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});';
     public const PARTIAL_ESCAPABLE             = '[!"#$%&\'()*+,.\/:;<=>?@[\\\\\]^_`{|}~-]';
     public const PARTIAL_ESCAPED_CHAR          = '\\\\' . self::PARTIAL_ESCAPABLE;
@@ -36,9 +39,9 @@ final class RegexHelper
     public const PARTIAL_IN_PARENS             = '\\((' . self::PARTIAL_ESCAPED_CHAR . '|[^)\x00])*\\)';
     public const PARTIAL_REG_CHAR              = '[^\\\\()\x00-\x20]';
     public const PARTIAL_IN_PARENS_NOSP        = '\((' . self::PARTIAL_REG_CHAR . '|' . self::PARTIAL_ESCAPED_CHAR . '|\\\\)*\)';
-    public const PARTIAL_TAGNAME               = '[A-Za-z][A-Za-z0-9-]*';
+    public const PARTIAL_TAGNAME               = '[a-z][a-z0-9-]*';
     public const PARTIAL_BLOCKTAGNAME          = '(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h1|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)';
-    public const PARTIAL_ATTRIBUTENAME         = '[a-zA-Z_:][a-zA-Z0-9:._-]*';
+    public const PARTIAL_ATTRIBUTENAME         = '[a-z_:][a-z0-9:._-]*';
     public const PARTIAL_UNQUOTEDVALUE         = '[^"\'=<>`\x00-\x20]+';
     public const PARTIAL_SINGLEQUOTEDVALUE     = '\'[^\']*\'';
     public const PARTIAL_DOUBLEQUOTEDVALUE     = '"[^"]*"';
@@ -168,9 +171,9 @@ final class RegexHelper
             case HtmlBlock::TYPE_3:
                 return '/^<[?]/';
             case HtmlBlock::TYPE_4:
-                return '/^<![A-Z]/';
+                return '/^<![A-Z]/i';
             case HtmlBlock::TYPE_5_CDATA:
-                return '/^<!\[CDATA\[/';
+                return '/^<!\[CDATA\[/i';
             case HtmlBlock::TYPE_6_BLOCK_ELEMENT:
                 return '%^<[/]?(?:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[123456]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)(?:\s|[/]?[>]|$)%i';
             case HtmlBlock::TYPE_7_MISC_ELEMENT:
