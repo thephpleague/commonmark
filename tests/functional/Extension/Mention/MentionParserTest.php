@@ -40,6 +40,36 @@ final class MentionParserTest extends TestCase
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
+    public function testMentionParserWithMultiCharacterSymbol(): void
+    {
+        $input    = 'Try asking u:colinodell about that.';
+        $expected = '<p>Try asking <a href="https://www.example.com/users/colinodell">u:colinodell</a> about that.</p>';
+
+        $mentionParser = new MentionParser('u:', '/^\w+/', new StringTemplateLinkGenerator('https://www.example.com/users/%s'));
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addInlineParser($mentionParser);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+    }
+
+    public function testMentionParserWithMultiCharacterSymbolContainingSpecialRegexCharsThatShouldBeEscaped(): void
+    {
+        $input    = 'I spend too much time on the /r/php subreddit.';
+        $expected = '<p>I spend too much time on the <a href="https://www.reddit.com/r/php">/r/php</a> subreddit.</p>';
+
+        $mentionParser = new MentionParser('/r/', '/^\w+/', new StringTemplateLinkGenerator('https://www.reddit.com/r/%s'));
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addInlineParser($mentionParser);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+    }
+
     public function testMentionParserWithoutSpaceInFront(): void
     {
         $input    = 'See#123 for more information.';

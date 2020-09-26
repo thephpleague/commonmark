@@ -70,7 +70,7 @@ final class MentionParser implements InlineParserInterface
         $previousState = $cursor->saveState();
 
         // Advance past the symbol to keep parsing simpler
-        $cursor->advance();
+        $cursor->advanceBy(\mb_strlen($this->symbol));
 
         // Parse the identifier
         $identifier = $cursor->match($this->mentionRegex);

@@ -11,6 +11,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Added new `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
  - Added the ability to delegate event dispatching to PSR-14 compliant event dispatcher libraries
  - Added the ability to configure disallowed raw HTML tags (#507)
+ - Added the ability for Mentions to use multiple characters for their symbol (#514, #550)
  - Added `heading_permalink/min_heading_level` and `heading_permalink/max_heading_level` options to control which headings get permalinks (#519)
  - Added `footnote/backref_symbol` option for customizing backreference link appearance (#522)
  - Added new `HtmlFilter` and `StringContainerHelper` utility classes
