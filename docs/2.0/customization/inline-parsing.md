@@ -29,28 +29,43 @@ If your syntax looks like that, consider using a [delimiter processor](/2.0/cust
 
 Inline parsers should implement `InlineParserInterface` and the following two methods:
 
-### getCharacters()
+### getMatchDefinition()
 
-This method should return an array of single characters which the inline parser engine should stop on.  When it does find a match in the current line the `parse()` method below may be called.
+This method should return an instance of `InlineParserMatch` which defines the text the parser is looking for.  Examples of this might be something like:
+
+```php
+use League\CommonMark\Parser\Inline\InlineParserMatch;
+
+InlineParserMatch::string('@');                  // Match any '@' characters found in the text
+InlineParserMatch::string('foo');                // Match the text 'foo' (case insensitive)
+
+InlineParserMatch::oneOf('@', '!');              // Match either character
+InlineParserMatch::oneOf('http://', 'https://'); // Match either string
+
+InlineParserMatch::regex('\d+');                 // Match the regular expression (omit the regex delimiters and any flags)
+```
+
+Once a match is found, the `parse()` method below may be called.
 
 ### parse()
 
 This method will be called if both conditions are met:
 
-1. The engine has stopped at a matching character; and,
-2. No other inline parsers have successfully parsed the character
+1. The engine has found at a matching string in the current line; and,
+2. No other inline parsers with a [higher priority](/2.0/customization/environment/#addinlineparser) have successfully parsed the text at this point in the line
 
 #### Parameters
 
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/2.0/customization/cursor/) used to parse the current line.
+* `string $match` - Contains the text that matches the start pattern from `getMatchDefinition()`
+* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/2.0/customization/cursor/) used to parse the current line.  (Note that the cursor will be positioned **before** the matching text, so you must advance it yourself if you determine it's a valid match)
 
 #### Return value
 
-`parse()` should return `false` if it's unable to handle the current line/character for any reason.  (The [`Cursor`](/2.0/customization/cursor/) state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the character will be added as plain text.
+`parse()` should return `false` if it's unable to handle the text at the current position for any reason.  Other parsers will then have a chance to try parsing that text.  If all registered parsers return false, the text will be added as plain text.
 
 Returning `true` tells the engine that you've successfully parsed the character (and related ones after it).  It is your responsibility to:
 
-1. Advance the cursor to the end of the parsed text
+1. Advance the cursor to the end of the parsed/matched text
 2. Add the parsed inline to the container (`$inlineContext->getContainer()->appendChild(...)`)
 
 ## Inline Parser Examples
@@ -65,15 +80,17 @@ Let's say you wanted to autolink Twitter handles without using the link syntax. 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 
 class TwitterHandleParser implements InlineParserInterface
 {
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['@'];
+        // Note that you could match the entire regex here instead of in parse() if you wish
+        return InlineParserMatch::string('@');
     }
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         // The @ symbol must not have any other characters immediately prior
@@ -113,33 +130,27 @@ Let's say you want to automatically convert smilies (or "frownies") to emoticon 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 
 class SmilieParser implements InlineParserInterface
 {
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return [':'];
+        return InlineParserMatch::oneOf(':)', ':(');
     }
 
-    public function parse(InlineParserContext $inlineContext): bool
+    public function parse(string $match, InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-
-        // The next character must be a paren; if not, then bail
-        // We use peek() to quickly check without affecting the cursor
-        $nextChar = $cursor->peek();
-        if ($nextChar !== '(' && $nextChar !== ')') {
-            return false;
-        }
 
         // Advance the cursor past the 2 matched chars since we're able to parse them successfully
         $cursor->advanceBy(2);
 
         // Add the corresponding image
-        if ($nextChar === ')') {
+        if ($match === ':)') {
             $inlineContext->getContainer()->appendChild(new Image('/img/happy.png'));
-        } elseif ($nextChar === '(') {
+        } elseif ($match === ':(') {
             $inlineContext->getContainer()->appendChild(new Image('/img/sad.png'));
         }
 
@@ -153,6 +164,8 @@ $environment->addInlineParser(new SmilieParserParser());
 
 ## Tips
 
-* For best performance, `return false` **as soon as possible**.
+* For best performance:
+  * Avoid using overly-complex regular expressions in `getMatchDefinition()` - use the simplest regex you can and have `parse()` do the heavier validation
+  * Have your `parse()` method `return false` **as soon as possible**.
 * You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
 * You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).

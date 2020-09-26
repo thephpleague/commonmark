@@ -19,16 +19,14 @@ namespace League\CommonMark\Extension\CommonMark\Parser\Inline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 
 final class BacktickParser implements InlineParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['`'];
+        return InlineParserMatch::regex('`+');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

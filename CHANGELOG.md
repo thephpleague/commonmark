@@ -26,6 +26,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `DocumentRenderedEvent`
    - `HtmlRendererInterface`
    - `InlineParserEngineInterface`
+   - `InlineParserMatch`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
    - `ReferenceableInterface`
@@ -58,6 +59,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `ConfigurableEnvironmentInterface::addBlockParser()` is now `ConfigurableEnvironmentInterface::addBlockParserFactory()`
    - `ReferenceParser` was re-implemented and works completely different than before
    - The paragraph parser no longer needs to be added manually to the environment
+ - Implemented a new approach to inline parsing where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
+   - `InlineParserInterface::getCharacters()` is now `getMatchDefinition()` and returns an instance of `InlineParserMatch`
  - Changed block and inline rendering to use common methods and interfaces
    - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
    - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` are now just `addRenderer()`

@@ -25,6 +25,7 @@ use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\ReferenceInterface;
 use League\CommonMark\Reference\ReferenceMapInterface;
@@ -40,12 +41,9 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
      */
     private $environment;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return [']'];
+        return InlineParserMatch::string(']');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

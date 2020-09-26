@@ -16,18 +16,16 @@ namespace League\CommonMark\Tests\Unit\Environment;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 
 final class FakeInjectableInlineParser implements InlineParserInterface, ConfigurationAwareInterface, EnvironmentAwareInterface
 {
     use FakeInjectableTrait;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return [];
+        return InlineParserMatch::oneOf('');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

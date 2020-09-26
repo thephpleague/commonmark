@@ -17,16 +17,14 @@ namespace League\CommonMark\Extension\Attributes\Parser;
 use League\CommonMark\Extension\Attributes\Node\AttributesInline;
 use League\CommonMark\Extension\Attributes\Util\AttributesHelper;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 
 final class AttributesInlineParser implements InlineParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return [' ', '{'];
+        return InlineParserMatch::oneOf(' ', '{');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

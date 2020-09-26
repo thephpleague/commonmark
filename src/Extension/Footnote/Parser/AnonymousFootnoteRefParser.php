@@ -20,6 +20,7 @@ use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 
@@ -40,12 +41,9 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface, Configu
         $this->slugNormalizer = new SlugNormalizer();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['^'];
+        return InlineParserMatch::regex('\^\[[^\]]+\]');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

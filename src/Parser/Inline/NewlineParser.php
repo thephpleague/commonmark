@@ -22,12 +22,9 @@ use League\CommonMark\Parser\InlineParserContext;
 
 final class NewlineParser implements InlineParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ["\n"];
+        return InlineParserMatch::regex('\\n');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

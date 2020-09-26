@@ -18,17 +18,15 @@ namespace League\CommonMark\Extension\CommonMark\Parser\Inline;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 final class HtmlInlineParser implements InlineParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['<'];
+        return InlineParserMatch::regex(RegexHelper::PARTIAL_HTMLTAG);
     }
 
     public function parse(InlineParserContext $inlineContext): bool

@@ -18,6 +18,7 @@ use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 
@@ -26,12 +27,9 @@ final class FootnoteRefParser implements InlineParserInterface, ConfigurationAwa
     /** @var ConfigurationInterface */
     private $config;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['['];
+        return InlineParserMatch::regex('\[\^([^\s\]]+)\]');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

@@ -17,10 +17,7 @@ use League\CommonMark\Parser\InlineParserContext;
 
 interface InlineParserInterface
 {
-    /**
-     * @return string[]
-     */
-    public function getCharacters(): array;
+    public function getMatchDefinition(): InlineParserMatch;
 
     public function parse(InlineParserContext $inlineContext): bool;
 }
