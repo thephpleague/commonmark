@@ -74,9 +74,9 @@ URL templates are perfect for situations where the identifier is inserted direct
 
 ```
 "@colinodell" => https://www.twitter.com/colinodell
- ^      ^                                    ^
- |       \________ Identifier ______________/
-Symbol
+ ▲└────┬───┘                             └───┬────┘
+ │     │                                     │
+Symbol └───────────── Identifier ────────────┘
 ```
 
 Examples of using string-based URL templates can be seen in the usage example above - you simply provide a `string` to the `generator` option.
