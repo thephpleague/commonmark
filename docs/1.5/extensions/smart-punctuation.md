@@ -11,7 +11,7 @@ The `SmartPunctExtension` Intelligently converts ASCII quotes, dashes, and ellip
 
 For example, this Markdown...
 
-```md
+```markdown
 "CommonMark is the PHP League's Markdown parser," she said.  "It's super-configurable... you can even use additional extensions to expand its capabilities -- just like this one!"
 ```
 
@@ -25,9 +25,9 @@ Will result in this HTML:
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/1.5/installation/) section for more details.
 
@@ -35,7 +35,7 @@ See the [installation](/1.5/installation/) section for more details.
 
 Extensions can be added to any new `Environment`:
 
-``` php
+```php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;

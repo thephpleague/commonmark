@@ -15,9 +15,9 @@ The [Heading Permalink](/1.5/extensions/heading-permalinks/) extension must also
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/1.5/installation/) section for more details.
 
@@ -105,7 +105,7 @@ These two settings control which headings should appear in the list.  By default
 
 Consider this sample Markdown input:
 
-```md
+```markdown
 ## Level 2 Heading
 
 This is a sample document that starts with a level 2 heading

@@ -17,9 +17,9 @@ This extension can detect links to external sites and adjust the markup accordin
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/1.5/installation/) section for more details.
 
@@ -101,11 +101,13 @@ These options allow you to configure whether a `rel` attribute should be applied
 When an external link is detected, the `ExternalLinkProcessor` will set the `external` data option on the `Link` node to either `true` or `false`.  You can therefore create a [custom link renderer](/1.5/customization/inline-rendering/) which checks this value and behaves accordingly:
 
 ```php
+
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+
 class MyCustomLinkRenderer implements InlineRendererInterface
 {
 
