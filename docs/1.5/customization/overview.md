@@ -24,9 +24,7 @@ The actual process of converting Markdown to HTML has several steps:
 
 `CommonMarkConverter` handles all of this for you, but you can execute that process yourself if you wish:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
@@ -45,7 +43,7 @@ $document = $parser->parse($markdown);
 echo $htmlRenderer->renderBlock($document);
 
 // <h1>Hello World!</h1>
-~~~
+```
 
 Feel free to swap out different components or add your own steps in between.  However, the best way to customize this library is to [create your own extensions](/1.5/customization/extensions/) which hook into the parsing and rendering steps - continue reading to see which kinds of extension points are available to you.
 

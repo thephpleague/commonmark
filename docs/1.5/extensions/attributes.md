@@ -35,9 +35,9 @@ This is *red*{style="color: red"}.
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/1.5/installation/) section for more details.
 
@@ -46,7 +46,6 @@ See the [installation](/1.5/installation/) section for more details.
 Configure your `Environment` as usual and simply add the `AttributesExtension`:
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Attributes\AttributesExtension;
