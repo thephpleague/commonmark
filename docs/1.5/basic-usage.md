@@ -10,22 +10,18 @@ Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting Markdown to HTML:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
 echo $converter->convertToHtml('# Hello World!');
 
 // <h1>Hello World!</h1>
-~~~
+```
 
 Or if you want Github-Flavored Markdown:
 
 ```php
-<?php
-
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 $converter = new GithubFlavoredMarkdownConverter();

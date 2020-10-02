@@ -13,7 +13,9 @@ Markdown can be converted at the command line using the `./bin/commonmark` scrip
 
 ## Usage
 
-    ./bin/commonmark [OPTIONS] [FILE]
+```bash
+./bin/commonmark [OPTIONS] [FILE]
+```
 
 * `-h`, `--help`: Shows help and usage information
 * `--enable-em`: Disable `<em>` parsing by setting to `0`; enable with `1` (default: `1`)
@@ -29,16 +31,24 @@ Output will be written to STDOUT.
 
 ### Converting a file named document.md
 
-    ./bin/commonmark document.md
+```bash
+./bin/commonmark document.md
+```
 
 ### Converting a file and saving its output
 
-    ./bin/commonmark document.md > output.html
+```bash
+./bin/commonmark document.md > output.html
+```
 
 ### Converting from STDIN
 
-    echo -e '# Hello World!' | ./bin/commonmark
+```bash
+echo -e '# Hello World!' | ./bin/commonmark
+```
 
 ### Converting from STDIN and saving the output
 
-    echo -e '# Hello World!' | ./bin/commonmark > output.html
+```bash
+echo -e '# Hello World!' | ./bin/commonmark > output.html
+```
