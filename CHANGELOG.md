@@ -23,9 +23,11 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `BlockStartParserInterface`
    - `ChildNodeRendererInterface`
    - `CursorState`
+   - `DashParser` (extracted from `PunctuationParser`)
    - `DelimiterParser`
    - `DocumentBlockParser`
    - `DocumentRenderedEvent`
+   - `EllipsesParser` (extracted from `PunctuationParser`)
    - `HtmlRendererInterface`
    - `InlineParserEngineInterface`
    - `InlineParserMatch`
@@ -165,6 +167,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `Converter`
    - `ConverterInterface`
    - `InlineRendererInterface`
+   - `PunctuationParser` (was split into two classes: `DashParser` and `EllipsesParser`)
    - `UnmatchedBlockCloser`
  - Removed the following methods, properties, and constants:
    - `AbstractBlock::$open`

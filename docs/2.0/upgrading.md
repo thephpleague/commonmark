@@ -80,6 +80,7 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `Inline\Renderer\ImageRenderer`                                                       | `Extension\CommonMark\Renderer\Inline\ImageRenderer`                                     |
 | `Inline\Renderer\LinkRenderer`                                                        | `Extension\CommonMark\Renderer\Inline\LinkRenderer`                                      |
 | `Inline\Renderer\StrongRenderer`                                                      | `Extension\CommonMark\Renderer\Inline\StrongRenderer`                                    |
+| `Extension\SmartPunct\PunctuationParser`                                              | `Extension\SmartPunct\DashParser` and `Extension\SmartPunct\EllipsesParser`              |
 | `Extension\TableOfContents\TableOfContents`                                           | `Extension\TableOfContents\Node\TableOfContents`                                         |
 | `Block\Element\AbstractBlock`                                                         | `Node\Block\AbstractBlock`                                                               |
 | `Block\Element\Document`                                                              | `Node\Block\Document`                                                                    |

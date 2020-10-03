@@ -30,7 +30,8 @@ final class SmartPunctExtension implements ExtensionInterface
     {
         $environment
             ->addInlineParser(new QuoteParser(), 10)
-            ->addInlineParser(new PunctuationParser(), 0)
+            ->addInlineParser(new DashParser(), 0)
+            ->addInlineParser(new EllipsesParser(), 0)
 
             ->addDelimiterProcessor(QuoteProcessor::createDoubleQuoteProcessor(
                 $environment->getConfig('smartpunct/double_quote_opener', Quote::DOUBLE_QUOTE_OPENER),
