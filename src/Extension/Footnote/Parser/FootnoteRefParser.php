@@ -32,14 +32,12 @@ final class FootnoteRefParser implements InlineParserInterface, ConfigurationAwa
         return InlineParserMatch::regex('\[\^([^\s\]]+)\]');
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
-        if (\preg_match('#\[\^([^\s\]]+)\]#', $match, $matches) <= 0) {
-            return false;
-        }
+        $inlineContext->getCursor()->advanceBy($inlineContext->getFullMatchLength());
 
-        $inlineContext->getCursor()->advanceBy(\mb_strlen($match));
-        $inlineContext->getContainer()->appendChild(new FootnoteRef($this->createReference($matches[1])));
+        [$label] = $inlineContext->getSubMatches();
+        $inlineContext->getContainer()->appendChild(new FootnoteRef($this->createReference($label)));
 
         return true;
     }

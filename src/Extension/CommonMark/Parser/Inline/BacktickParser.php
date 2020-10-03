@@ -29,11 +29,11 @@ final class BacktickParser implements InlineParserInterface
         return InlineParserMatch::regex('`+');
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
-        $ticks  = $match;
+        $ticks  = $inlineContext->getFullMatch();
         $cursor = $inlineContext->getCursor();
-        $cursor->advanceBy(\mb_strlen($ticks));
+        $cursor->advanceBy($inlineContext->getFullMatchLength());
 
         $currentPosition = $cursor->getPosition();
         $previousState   = $cursor->saveState();

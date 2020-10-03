@@ -132,6 +132,14 @@ As a result of making this change, the `addBlockParser()` method on `Configurabl
 
 See [the block parsing documentation](/2.0/customization/block-parsing/) for more information on this new approach.
 
+## New Inline Parsing Approach
+
+The `getCharacters()` method on `InlineParserInterface` has been replaced with a more-robust `getMatchDefinition()` method which allows your parser to match against more than just single characters.  All custom inline parsers will need to change to this new approach.
+
+Additionally, when the `parse()` method is called, the Cursor is no longer proactively advanced past the matching character/start position for you.  You'll need to advance this yourself.  However, the `InlineParserContext` now provides the fully-matched text and its length, allowing you to easily `advanceBy()` the cursor without having to do an expensive `$cursor->match()` yourself which is a nice performance optimization.
+
+See [the inline parsing documentation](/2.0/customization/inline-parsing/) for more information on this new approach.
+
 ## Rendering Changes
 
 This library no longer differentiates between block renderers and inline renderers - everything now uses "node renderers" which allow us to have a unified approach to rendering!  As a result, the following changes were made, which you may need to change in your custom extensions:

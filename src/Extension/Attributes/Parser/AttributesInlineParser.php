@@ -27,12 +27,12 @@ final class AttributesInlineParser implements InlineParserInterface
         return InlineParserMatch::oneOf(' ', '{');
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
-        $char   = $match;
+        $char   = $inlineContext->getFullMatch();
         $cursor = $inlineContext->getCursor();
         if ($char === '{') {
-            $char = (string) $cursor->getCharacter($cursor->getPosition() - 1);
+            $char = (string) $cursor->peek(-1);
         }
 
         $attributes = AttributesHelper::parseAttributes($cursor);

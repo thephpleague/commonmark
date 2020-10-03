@@ -27,20 +27,21 @@ final class EmailAutolinkParser implements InlineParserInterface
         return InlineParserMatch::regex(self::REGEX);
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
+        $email = $inlineContext->getFullMatch();
         // The last character cannot be - or _
-        if (\in_array(\substr($match, -1), ['-', '_'], true)) {
+        if (\in_array(\substr($email, -1), ['-', '_'], true)) {
             return false;
         }
 
         // Does the URL end with punctuation that should be stripped?
-        if (\substr($match, -1) === '.') {
-            $match = \substr($match, 0, -1);
+        if (\substr($email, -1) === '.') {
+            $email = \substr($email, 0, -1);
         }
 
-        $inlineContext->getCursor()->advanceBy(\strlen($match));
-        $inlineContext->getContainer()->appendChild(new Link('mailto:' . $match, $match));
+        $inlineContext->getCursor()->advanceBy(\strlen($email));
+        $inlineContext->getContainer()->appendChild(new Link('mailto:' . $email, $email));
 
         return true;
     }

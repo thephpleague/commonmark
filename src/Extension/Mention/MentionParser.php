@@ -34,7 +34,7 @@ final class MentionParser implements InlineParserInterface
      *
      * @psalm-readonly
      */
-    private $mentionRegex;
+    private $identifierRegex;
 
     /**
      * @var MentionGeneratorInterface
@@ -43,19 +43,22 @@ final class MentionParser implements InlineParserInterface
      */
     private $mentionGenerator;
 
-    public function __construct(string $prefix, string $mentionRegex, MentionGeneratorInterface $mentionGenerator)
+    public function __construct(string $prefix, string $identifierRegex, MentionGeneratorInterface $mentionGenerator)
     {
         $this->prefix           = $prefix;
-        $this->mentionRegex     = $mentionRegex;
+        $this->identifierRegex  = $identifierRegex;
         $this->mentionGenerator = $mentionGenerator;
     }
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::string($this->prefix);
+        return InlineParserMatch::join(
+            InlineParserMatch::string($this->prefix),
+            InlineParserMatch::regex($this->identifierRegex)
+        );
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 
@@ -66,29 +69,15 @@ final class MentionParser implements InlineParserInterface
             return false;
         }
 
-        // Save the cursor state in case we need to rewind and bail
-        $previousState = $cursor->saveState();
+        [$prefix, $identifier] = $inlineContext->getSubMatches();
 
-        // Advance past the prefix to keep parsing simpler
-        $cursor->advanceBy(\mb_strlen($this->prefix));
-
-        // Parse the identifier
-        $identifier = $cursor->match($this->mentionRegex);
-        if ($identifier === null) {
-            // Regex failed to match; this isn't a valid mention
-            $cursor->restoreState($previousState);
-
-            return false;
-        }
-
-        $mention = $this->mentionGenerator->generateMention(new Mention($this->prefix, $identifier));
+        $mention = $this->mentionGenerator->generateMention(new Mention($prefix, $identifier));
 
         if ($mention === null) {
-            $cursor->restoreState($previousState);
-
             return false;
         }
 
+        $cursor->advanceBy($inlineContext->getFullMatchLength());
         $inlineContext->getContainer()->appendChild($mention);
 
         return true;

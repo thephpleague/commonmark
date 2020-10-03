@@ -29,11 +29,11 @@ final class BangParser implements InlineParserInterface
         return InlineParserMatch::string('![');
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-
         $cursor->advanceBy(2);
+
         $node = new Text('![', ['delim' => true]);
         $inlineContext->getContainer()->appendChild($node);
 

@@ -40,6 +40,10 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
    - `HtmlRenderer::renderDocument()`
+   - `InlineParserContext::getFullMatch()`
+   - `InlineParserContext::getFullMatchLength()`
+   - `InlineParserContext::getMatches()`
+   - `InlineParserContext::getSubMatches()`
    - `InvalidOptionException::forConfigOption()`
    - `InvalidOptionException::forParameter()`
    - `LinkParserHelper::parsePartialLinkLabel()`
@@ -65,7 +69,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - The paragraph parser no longer needs to be added manually to the environment
  - Implemented a new approach to inline parsing where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
    - `InlineParserInterface::getCharacters()` is now `getMatchDefinition()` and returns an instance of `InlineParserMatch`
-   - `InlineParserInterface::parse()` has a new parameter containing the pre-matched text
    - `InlineParserContext::__construct()` now requires the contents to be provided as a `Cursor` instead of a `string`
  - Implemented delimiter parsing as a special type of inline parser (via the new `DelimiterParser` class)
  - Changed block and inline rendering to use common methods and interfaces
