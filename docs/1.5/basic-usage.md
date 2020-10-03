@@ -11,6 +11,8 @@ Basic Usage
 The `CommonMarkConverter` class provides a simple wrapper for converting Markdown to HTML:
 
 ```php
+require __DIR__ . '/vendor/autoload.php';
+
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
@@ -22,6 +24,8 @@ echo $converter->convertToHtml('# Hello World!');
 Or if you want Github-Flavored Markdown:
 
 ```php
+require __DIR__ . '/vendor/autoload.php';
+
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 $converter = new GithubFlavoredMarkdownConverter();
