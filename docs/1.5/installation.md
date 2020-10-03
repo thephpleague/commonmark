@@ -15,7 +15,7 @@ In your project root just run:
 composer require league/commonmark:^1.5
 ```
 
-Ensure that you’ve set up your project to [autoload Composer-installed packages](https://getcomposer.org/doc/00-intro.md#autoloading).
+Ensure that you’ve set up your project to [autoload Composer-installed packages](https://getcomposer.org/doc/01-basic-usage.md#autoloading).
 
 ## Versioning
 
