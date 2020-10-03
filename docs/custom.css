@@ -285,7 +285,8 @@ table {
     box-shadow:0 6px 6px 0 rgba(80, 88, 94, .24);
 }
 
-table th {
+table th,
+table th > * {
     color:#fff;
     background: #1672ce;
 }
