@@ -39,5 +39,13 @@ final class InlineParserMatchTest extends TestCase
         yield [InlineParserMatch::oneOf('foo', 'bar'), '/foo|bar/i'];
         yield [InlineParserMatch::oneOf('foo', '.', '[x]'), '/foo|\.|\[x\]/i'];
         yield [InlineParserMatch::regex('[\w-_]{3,}'), '/[\w-_]{3,}/i'];
+
+        $complexExample = InlineParserMatch::join(
+            InlineParserMatch::string('foo'),
+            InlineParserMatch::oneOf('bar', 'baz'),
+            InlineParserMatch::regex('\d+')
+        );
+
+        yield [$complexExample, '/(foo)(bar|baz)(\d+)/i'];
     }
 }

@@ -28,7 +28,7 @@ final class InlineParserMatch
      */
     public function getRegex(): string
     {
-        return $this->regex;
+        return '/' . $this->regex . '/i';
     }
 
     /**
@@ -36,7 +36,7 @@ final class InlineParserMatch
      */
     public static function string(string $str): self
     {
-        return new self('/' . \preg_quote($str, '/') . '/i');
+        return new self(\preg_quote($str, '/'));
     }
 
     /**
@@ -44,9 +44,9 @@ final class InlineParserMatch
      */
     public static function oneOf(string ...$str): self
     {
-        return new self('/' . \implode('|', \array_map(static function (string $str): string {
+        return new self(\implode('|', \array_map(static function (string $str): string {
             return \preg_quote($str, '/');
-        }, $str)) . '/i');
+        }, $str)));
     }
 
     /**
@@ -54,6 +54,16 @@ final class InlineParserMatch
      */
     public static function regex(string $regex): self
     {
-        return new self('/' . $regex . '/i');
+        return new self($regex);
+    }
+
+    public static function join(self ...$definitions): self
+    {
+        $regex = '';
+        foreach ($definitions as $definition) {
+            $regex .= '(' . $definition->regex . ')';
+        }
+
+        return new self($regex);
     }
 }
