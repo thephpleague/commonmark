@@ -12,6 +12,8 @@ The `CommonMarkConverter` class provides a simple wrapper for converting Markdow
 ~~~php
 <?php
 
+require __DIR__ . '/vendor/autoload.php';
+
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
@@ -46,6 +48,8 @@ The actual conversion process has three steps:
 
 ~~~php
 <?php
+
+require __DIR__ . '/vendor/autoload.php';
 
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;

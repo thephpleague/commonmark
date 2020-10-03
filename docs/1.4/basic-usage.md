@@ -12,6 +12,8 @@ The `CommonMarkConverter` class provides a simple wrapper for converting Markdow
 ~~~php
 <?php
 
+require __DIR__ . '/vendor/autoload.php';
+
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
@@ -24,6 +26,8 @@ Or if you want Github-Flavored Markdown:
 
 ```php
 <?php
+
+require __DIR__ . '/vendor/autoload.php';
 
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
