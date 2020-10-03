@@ -56,8 +56,20 @@ This method will be called if both conditions are met:
 
 #### Parameters
 
-* `string $match` - Contains the text that matches the start pattern from `getMatchDefinition()`
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/2.0/customization/cursor/) used to parse the current line.  (Note that the cursor will be positioned **before** the matching text, so you must advance it yourself if you determine it's a valid match)
+* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser - see more information below.
+
+##### InlineParserContext
+
+This class has several useful methods:
+
+* `getContainer()` - Returns the current container block the inline text was found in.  You'll almost always call `$inlineContext->getContainer()->appendChild(...)` to add the parsed inline text inside that block.
+* `getReferenceMap()` - Returns the document's reference map
+* `getCursor()` - Returns the current [`Cursor`](/2.0/customization/cursor/) used to parse the current line.  (Note that the cursor will be positioned **before** the matched text, so you must advance it yourself if you determine it's a valid match)
+* `getDelimiterStack()` - Returns the current delimiter stack. Only used in advanced use cases.
+* `getFullMatch()` - Returns the full string that matched you `InlineParserMatch` definition
+* `getFullMatchLength()` - Returns the length of the full match - useful for advancing the cursor
+* `getSubMatches()` - If your `InlineParserMatch` used a regular expression with capture groups, this will return the text matches by those groups.
+* `getMatches()` - Returns an array where index `0` is the "full match", plus any sub-matches.  It basically simulates `preg_match()`'s behavior.
 
 #### Return value
 
@@ -87,10 +99,9 @@ class TwitterHandleParser implements InlineParserInterface
 {
     public function getMatchDefinition(): InlineParserMatch
     {
-        // Note that you could match the entire regex here instead of in parse() if you wish
-        return InlineParserMatch::string('@');
+        return InlineParserMatch::regex('@([A-Za-z0-9_]{1,15}(?!\w))');
     }
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         // The @ symbol must not have any other characters immediately prior
@@ -99,17 +110,13 @@ class TwitterHandleParser implements InlineParserInterface
             // peek() doesn't modify the cursor, so no need to restore state first
             return false;
         }
-        // Save the cursor state in case we need to rewind and bail
-        $previousState = $cursor->saveState();
-        // Advance past the @ symbol to keep parsing simpler
-        $cursor->advance();
-        // Parse the handle
-        $handle = $cursor->match('/^[A-Za-z0-9_]{1,15}(?!\w)/');
-        if (empty($handle)) {
-            // Regex failed to match; this isn't a valid Twitter handle
-            $cursor->restoreState($previousState);
-            return false;
-        }
+
+        // This seems to be a valid match
+        // Advance the cursor to the end of the match
+        $cursor->advanceBy($inlineContext->getFullMatchLength());
+
+        // Grab the Twitter handle
+        [$handle] = $inlineContext->getSubMatches();
         $profileUrl = 'https://twitter.com/' . $handle;
         $inlineContext->getContainer()->appendChild(new Link($profileUrl, '@' . $handle));
         return true;
@@ -140,7 +147,7 @@ class SmilieParser implements InlineParserInterface
         return InlineParserMatch::oneOf(':)', ':(');
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 
@@ -148,9 +155,9 @@ class SmilieParser implements InlineParserInterface
         $cursor->advanceBy(2);
 
         // Add the corresponding image
-        if ($match === ':)') {
+        if ($inlineContext->getFullMatch() === ':)') {
             $inlineContext->getContainer()->appendChild(new Image('/img/happy.png'));
-        } elseif ($match === ':(') {
+        } elseif ($inlineContext->getFullMatch() === ':(') {
             $inlineContext->getContainer()->appendChild(new Image('/img/sad.png'));
         }
 

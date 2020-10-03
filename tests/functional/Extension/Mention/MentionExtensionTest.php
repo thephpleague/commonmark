@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
@@ -58,8 +59,8 @@ EOT;
         $environment->setConfig([
             'mentions' => [
                 'github_handle' => [
-                    'symbol'    => '@',
-                    'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+                    'prefix'    => '@',
+                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => 'https://github.com/%s',
                 ],
             ],
@@ -86,8 +87,8 @@ EOT;
         $environment->setConfig([
             'mentions' => [
                 'github_handle' => [
-                    'symbol'    => '@',
-                    'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+                    'prefix'    => '@',
+                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => static function (Mention $mention) {
                         $mention->setUrl(\sprintf('https://github.com/%s', $mention->getIdentifier()));
 
@@ -118,8 +119,8 @@ EOT;
         $environment->setConfig([
             'mentions' => [
                 'github_handle' => [
-                    'symbol'    => '@',
-                    'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+                    'prefix'    => '@',
+                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => new class () implements MentionGeneratorInterface {
                         public function generateMention(Mention $mention): ?AbstractInline
                         {
@@ -139,15 +140,15 @@ EOT;
 
     public function testConfigUnknownGenerator(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(InvalidOptionException::class);
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
         $environment->setConfig([
             'mentions' => [
                 'github_handle' => [
-                    'symbol'    => '@',
-                    'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+                    'prefix'    => '@',
+                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => new \stdClass(),
                 ],
             ],
@@ -156,5 +157,47 @@ EOT;
         $converter = new CommonMarkConverter([], $environment);
 
         $converter->convertToHtml('');
+    }
+
+    public function testLegacySymbolOption(): void
+    {
+        $this->expectException(InvalidOptionException::class);
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new MentionExtension());
+        $environment->setConfig([
+            'mentions' => [
+                'github_handle' => [
+                    'symbol'    => '@',
+                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'generator' => 'https://github.com/%s',
+                ],
+            ],
+        ]);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $converter->convertToHtml('foo');
+    }
+
+    public function testWithFullRegexOption(): void
+    {
+        $this->expectException(InvalidOptionException::class);
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new MentionExtension());
+        $environment->setConfig([
+            'mentions' => [
+                'github_handle' => [
+                    'prefix'    => '@',
+                    'regex'     => '/[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/i',
+                    'generator' => 'https://github.com/%s',
+                ],
+            ],
+        ]);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $converter->convertToHtml('foo');
     }
 }

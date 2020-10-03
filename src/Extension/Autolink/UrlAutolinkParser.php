@@ -76,7 +76,7 @@ final class UrlAutolinkParser implements InlineParserInterface
         return InlineParserMatch::oneOf(...$this->prefixes);
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 

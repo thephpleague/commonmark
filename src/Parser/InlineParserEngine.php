@@ -86,9 +86,9 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
             // We're now at a potential start - see which of the current parsers can handle it
             $parsed = false;
-            foreach ($parsers as [$parser, $match]) {
+            foreach ($parsers as [$parser, $matches]) {
                 \assert($parser instanceof InlineParserInterface);
-                if ($parser->parse($match, $inlineParserContext)) {
+                if ($parser->parse($inlineParserContext->withMatches($matches))) {
                     // A parser has successfully handled the text at the given position; don't consider any others at this position
                     $parsed = true;
                     break;
@@ -136,9 +136,9 @@ final class InlineParserEngine implements InlineParserEngineInterface
      *
      * @return array<array<int, InlineParserInterface|string>>
      *
-     * @psalm-return array<int, list<array{0: InlineParserInterface, 1: string}>>
+     * @psalm-return array<int, list<array{0: InlineParserInterface, 1: non-empty-array<string>}>>
      *
-     * @phpstan-return array<int, array<int, array{0: InlineParserInterface, 1: string}>>
+     * @phpstan-return array<int, array<int, array{0: InlineParserInterface, 1: string[]}>>
      */
     private function matchParsers(string $contents): array
     {
@@ -152,10 +152,12 @@ final class InlineParserEngine implements InlineParserEngineInterface
                 $regex .= 'u';
             }
 
+            // See if the parser's InlineParserMatch regex matched against any part of the string
             if (! \preg_match_all($regex, $contents, $matches, \PREG_OFFSET_CAPTURE | \PREG_SET_ORDER)) {
                 continue;
             }
 
+            // For each part that matched...
             foreach ($matches as $match) {
                 if ($isMultibyte) {
                     // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
@@ -164,10 +166,21 @@ final class InlineParserEngine implements InlineParserEngineInterface
                     $offset = (int) $match[0][1];
                 }
 
-                $ret[$offset][] = [$parser, (string) $match[0][0]];
+                // Remove the offsets, keeping only the matched text
+                $m = \array_map(static function (array $s): string {
+                    return (string) $s[0];
+                }, $match);
+
+                if ($m === []) {
+                    continue;
+                }
+
+                // Add this match to the list of character positions to stop at
+                $ret[$offset][] = [$parser, $m];
             }
         }
 
+        // Sort matches by position so we visit them in order
         \ksort($ret);
 
         return $ret;

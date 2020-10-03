@@ -25,7 +25,7 @@ final class CallbackGeneratorTest extends TestCase
     {
         $generator = new CallbackGenerator(static function (Mention $mention) {
             // Stuff the three params into the URL just to prove we received them all properly
-            $mention->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getIdentifier(), $mention->getLabel(), $mention->getSymbol()));
+            $mention->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getIdentifier(), $mention->getLabel(), $mention->getPrefix()));
             // Change the label
             $mention->setLabel('New Label');
 

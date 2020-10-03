@@ -32,9 +32,9 @@ final class DelimiterParser implements InlineParserInterface
         return InlineParserMatch::oneOf(...$this->collection->getDelimiterCharacters());
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
-        $character = $match;
+        $character = $inlineContext->getFullMatch();
         $numDelims = 0;
         $cursor    = $inlineContext->getCursor();
         $processor = $this->collection->getDelimiterProcessor($character);

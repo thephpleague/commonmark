@@ -30,7 +30,7 @@ final class EscapableParser implements InlineParserInterface
         return InlineParserMatch::string('\\');
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor   = $inlineContext->getCursor();
         $nextChar = $cursor->peek();

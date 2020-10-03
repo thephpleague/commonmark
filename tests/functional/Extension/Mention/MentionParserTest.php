@@ -30,7 +30,37 @@ final class MentionParserTest extends TestCase
         $input    = 'See #123 for more information.';
         $expected = '<p>See <a href="https://www.example.com/123">#123</a> for more information.</p>';
 
-        $mentionParser = new MentionParser('#', '/^\d+/', new StringTemplateLinkGenerator('https://www.example.com/%s'));
+        $mentionParser = new MentionParser('#', '\d+', new StringTemplateLinkGenerator('https://www.example.com/%s'));
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addInlineParser($mentionParser);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+    }
+
+    public function testMentionParserWithMultiCharacterPrefix(): void
+    {
+        $input    = 'Try asking u:colinodell about that.';
+        $expected = '<p>Try asking <a href="https://www.example.com/users/colinodell">u:colinodell</a> about that.</p>';
+
+        $mentionParser = new MentionParser('u:', '\w+', new StringTemplateLinkGenerator('https://www.example.com/users/%s'));
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addInlineParser($mentionParser);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+    }
+
+    public function testMentionParserWithMultiCharacterPrefixContainingSpecialRegexCharsThatShouldBeEscaped(): void
+    {
+        $input    = 'I spend too much time on the /r/php subreddit.';
+        $expected = '<p>I spend too much time on the <a href="https://www.reddit.com/r/php">/r/php</a> subreddit.</p>';
+
+        $mentionParser = new MentionParser('/r/', '\w+', new StringTemplateLinkGenerator('https://www.reddit.com/r/%s'));
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -45,7 +75,7 @@ final class MentionParserTest extends TestCase
         $input    = 'See#123 for more information.';
         $expected = '<p>See#123 for more information.</p>';
 
-        $mentionParser = new MentionParser('#', '/^\d+/', $this->createMock(MentionGeneratorInterface::class));
+        $mentionParser = new MentionParser('#', '\d+', $this->createMock(MentionGeneratorInterface::class));
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -55,12 +85,12 @@ final class MentionParserTest extends TestCase
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
 
-    public function testMentionParserWithNonMatchingSymbol(): void
+    public function testMentionParserWithNonMatchingPrefix(): void
     {
         $input    = 'See #123 for more information.';
         $expected = '<p>See #123 for more information.</p>';
 
-        $mentionParser = new MentionParser('@', '/^\d+/', $this->createMock(MentionGeneratorInterface::class));
+        $mentionParser = new MentionParser('@', '\d+', $this->createMock(MentionGeneratorInterface::class));
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -75,7 +105,7 @@ final class MentionParserTest extends TestCase
         $input    = 'See #123 for more information.';
         $expected = '<p>See #123 for more information.</p>';
 
-        $mentionParser = new MentionParser('#', '/^[a-z]+/', $this->createMock(MentionGeneratorInterface::class));
+        $mentionParser = new MentionParser('#', '[a-z]+', $this->createMock(MentionGeneratorInterface::class));
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -93,7 +123,7 @@ final class MentionParserTest extends TestCase
         $returnsNull = $this->createMock(MentionGeneratorInterface::class);
         $returnsNull->method('generateMention')->willReturn(null);
 
-        $mentionParser = new MentionParser('#', '/^\d+/', $returnsNull);
+        $mentionParser = new MentionParser('#', '\d+', $returnsNull);
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -107,7 +137,7 @@ final class MentionParserTest extends TestCase
     {
         $callable = static function (Mention $mention) {
             // Stuff the three params into the URL just to prove we received them all properly
-            $mention->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getIdentifier(), $mention->getLabel(), $mention->getSymbol()));
+            $mention->setUrl(\sprintf('https://www.example.com/%s/%s/%s', $mention->getIdentifier(), $mention->getLabel(), $mention->getPrefix()));
             // Change the label
             $mention->setLabel('Replaced Label');
 
@@ -117,7 +147,7 @@ final class MentionParserTest extends TestCase
         $input    = 'This should parse #123.';
         $expected = '<p>This should parse <a href="https://www.example.com/123/#123/#">Replaced Label</a>.</p>';
 
-        $mentionParser = MentionParser::createWithCallback('#', '/^\d+/', $callable);
+        $mentionParser = MentionParser::createWithCallback('#', '\d+', $callable);
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
@@ -140,7 +170,7 @@ final class MentionParserTest extends TestCase
         $input    = 'This should parse #123.';
         $expected = '<p>This should parse <em>[members only]</em>.</p>';
 
-        $mentionParser = MentionParser::createWithCallback('#', '/^\d+/', $callable);
+        $mentionParser = MentionParser::createWithCallback('#', '\d+', $callable);
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);

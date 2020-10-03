@@ -23,7 +23,7 @@ final class MentionTest extends TestCase
     {
         $mention = new Mention('@', 'colinodell');
 
-        $this->assertSame('@', $mention->getSymbol());
+        $this->assertSame('@', $mention->getPrefix());
         $this->assertSame('colinodell', $mention->getIdentifier());
         $this->assertSame('@colinodell', $mention->getLabel());
         $this->assertSame('', $mention->getUrl());
@@ -38,7 +38,7 @@ final class MentionTest extends TestCase
     {
         $mention = new Mention('#', '123', 'Issue #123');
 
-        $this->assertSame('#', $mention->getSymbol());
+        $this->assertSame('#', $mention->getPrefix());
         $this->assertSame('123', $mention->getIdentifier());
         $this->assertSame('Issue #123', $mention->getLabel());
         $this->assertSame('', $mention->getUrl());

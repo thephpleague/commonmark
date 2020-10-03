@@ -40,7 +40,7 @@ class BacktickParserTest extends TestCase
         $cursor->advanceBy($firstBacktickPos);
 
         $parser = new BacktickParser();
-        $this->assertTrue($parser->parse($cursor->getCharacter(), $inlineContext));
+        $this->assertTrue($parser->parse($inlineContext->withMatches([$cursor->getCharacter()])));
 
         $codeBlock = $paragraph->firstChild();
         \assert($codeBlock instanceof Code);

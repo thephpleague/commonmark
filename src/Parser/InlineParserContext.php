@@ -50,6 +50,14 @@ final class InlineParserContext
      */
     private $delimiterStack;
 
+    /**
+     * @var string[]
+     * @psalm-var non-empty-array<string>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private $matches;
+
     public function __construct(Cursor $contents, AbstractBlock $container, ReferenceMapInterface $referenceMap)
     {
         $this->referenceMap   = $referenceMap;
@@ -76,5 +84,53 @@ final class InlineParserContext
     public function getDelimiterStack(): DelimiterStack
     {
         return $this->delimiterStack;
+    }
+
+    /**
+     * @return string The full text that matched the InlineParserMatch definition
+     */
+    public function getFullMatch(): string
+    {
+        return $this->matches[0];
+    }
+
+    /**
+     * @return int The length of the full match (in characters, not bytes)
+     */
+    public function getFullMatchLength(): int
+    {
+        return \mb_strlen($this->matches[0]);
+    }
+
+    /**
+     * @return string[] Similar to preg_match(), index 0 will contain the full match, and any other array elements will be captured sub-matches
+     *
+     * @psalm-return non-empty-array<string>
+     */
+    public function getMatches(): array
+    {
+        return $this->matches;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSubMatches(): array
+    {
+        return \array_slice($this->matches, 1);
+    }
+
+    /**
+     * @param string[] $matches
+     *
+     * @psalm-param non-empty-array<string> $matches
+     */
+    public function withMatches(array $matches): InlineParserContext
+    {
+        $ctx = clone $this;
+
+        $ctx->matches = $matches;
+
+        return $ctx;
     }
 }

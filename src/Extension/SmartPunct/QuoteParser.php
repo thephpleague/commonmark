@@ -35,11 +35,12 @@ final class QuoteParser implements InlineParserInterface
     /**
      * Normalizes any quote characters found and manually adds them to the delimiter stack
      */
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
+        $char   = $inlineContext->getFullMatch();
         $cursor = $inlineContext->getCursor();
 
-        $normalizedCharacter = $this->getNormalizedQuoteCharacter($match);
+        $normalizedCharacter = $this->getNormalizedQuoteCharacter($char);
 
         $charBefore = $cursor->peek(-1);
         if ($charBefore === null) {

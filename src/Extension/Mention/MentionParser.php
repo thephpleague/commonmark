@@ -27,14 +27,14 @@ final class MentionParser implements InlineParserInterface
      *
      * @psalm-readonly
      */
-    private $symbol;
+    private $prefix;
 
     /**
      * @var string
      *
      * @psalm-readonly
      */
-    private $mentionRegex;
+    private $identifierRegex;
 
     /**
      * @var MentionGeneratorInterface
@@ -43,64 +43,53 @@ final class MentionParser implements InlineParserInterface
      */
     private $mentionGenerator;
 
-    public function __construct(string $symbol, string $mentionRegex, MentionGeneratorInterface $mentionGenerator)
+    public function __construct(string $prefix, string $identifierRegex, MentionGeneratorInterface $mentionGenerator)
     {
-        $this->symbol           = $symbol;
-        $this->mentionRegex     = $mentionRegex;
+        $this->prefix           = $prefix;
+        $this->identifierRegex  = $identifierRegex;
         $this->mentionGenerator = $mentionGenerator;
     }
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::string($this->symbol);
+        return InlineParserMatch::join(
+            InlineParserMatch::string($this->prefix),
+            InlineParserMatch::regex($this->identifierRegex)
+        );
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
 
-        // The symbol must not have any other characters immediately prior
+        // The prefix must not have any other characters immediately prior
         $previousChar = $cursor->peek(-1);
         if ($previousChar !== null && $previousChar !== ' ') {
             // peek() doesn't modify the cursor, so no need to restore state first
             return false;
         }
 
-        // Save the cursor state in case we need to rewind and bail
-        $previousState = $cursor->saveState();
+        [$prefix, $identifier] = $inlineContext->getSubMatches();
 
-        // Advance past the symbol to keep parsing simpler
-        $cursor->advance();
-
-        // Parse the identifier
-        $identifier = $cursor->match($this->mentionRegex);
-        if ($identifier === null) {
-            // Regex failed to match; this isn't a valid mention
-            $cursor->restoreState($previousState);
-
-            return false;
-        }
-
-        $mention = $this->mentionGenerator->generateMention(new Mention($this->symbol, $identifier));
+        $mention = $this->mentionGenerator->generateMention(new Mention($prefix, $identifier));
 
         if ($mention === null) {
-            $cursor->restoreState($previousState);
-
             return false;
         }
 
+        $cursor->advanceBy($inlineContext->getFullMatchLength());
         $inlineContext->getContainer()->appendChild($mention);
 
         return true;
     }
 
-    public static function createWithStringTemplate(string $symbol, string $mentionRegex, string $urlTemplate): MentionParser
+    public static function createWithStringTemplate(string $prefix, string $mentionRegex, string $urlTemplate): MentionParser
     {
-        return new self($symbol, $mentionRegex, new StringTemplateLinkGenerator($urlTemplate));
+        return new self($prefix, $mentionRegex, new StringTemplateLinkGenerator($urlTemplate));
     }
 
-    public static function createWithCallback(string $symbol, string $mentionRegex, callable $callback): MentionParser
+    public static function createWithCallback(string $prefix, string $mentionRegex, callable $callback): MentionParser
     {
-        return new self($symbol, $mentionRegex, new CallbackGenerator($callback));
+        return new self($prefix, $mentionRegex, new CallbackGenerator($callback));
     }
 }

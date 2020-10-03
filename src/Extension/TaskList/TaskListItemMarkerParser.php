@@ -26,7 +26,7 @@ final class TaskListItemMarkerParser implements InlineParserInterface
         return InlineParserMatch::oneOf('[ ]', '[x]');
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $container = $inlineContext->getContainer();
 
@@ -46,7 +46,7 @@ final class TaskListItemMarkerParser implements InlineParserInterface
             return false;
         }
 
-        $isChecked = $match !== '[ ]';
+        $isChecked = $inlineContext->getFullMatch() !== '[ ]';
 
         $container->appendChild(new TaskListItemMarker($isChecked));
 

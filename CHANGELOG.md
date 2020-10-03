@@ -11,6 +11,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Added new `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
  - Added the ability to delegate event dispatching to PSR-14 compliant event dispatcher libraries
  - Added the ability to configure disallowed raw HTML tags (#507)
+ - Added the ability for Mentions to use multiple characters for their symbol (#514, #550)
  - Added `heading_permalink/min_heading_level` and `heading_permalink/max_heading_level` options to control which headings get permalinks (#519)
  - Added `footnote/backref_symbol` option for customizing backreference link appearance (#522)
  - Added new `HtmlFilter` and `StringContainerHelper` utility classes
@@ -39,6 +40,10 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
    - `HtmlRenderer::renderDocument()`
+   - `InlineParserContext::getFullMatch()`
+   - `InlineParserContext::getFullMatchLength()`
+   - `InlineParserContext::getMatches()`
+   - `InlineParserContext::getSubMatches()`
    - `InvalidOptionException::forConfigOption()`
    - `InvalidOptionException::forParameter()`
    - `LinkParserHelper::parsePartialLinkLabel()`
@@ -54,6 +59,9 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 ### Changed
 
  - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
+ - Changes to configuration options:
+     - `mentions/*/symbol` has been renamed to `mentions/*/prefix`
+     - `mentions/*/regex` now requires partial regular expressions (without delimiters or flags)
  - Event dispatching is now fully PSR-14 compliant
  - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
  - Implemented a new approach to block parsing. This was a massive change, so here are the highlights:
@@ -63,7 +71,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - The paragraph parser no longer needs to be added manually to the environment
  - Implemented a new approach to inline parsing where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
    - `InlineParserInterface::getCharacters()` is now `getMatchDefinition()` and returns an instance of `InlineParserMatch`
-   - `InlineParserInterface::parse()` has a new parameter containing the pre-matched text
    - `InlineParserContext::__construct()` now requires the contents to be provided as a `Cursor` instead of a `string`
  - Implemented delimiter parsing as a special type of inline parser (via the new `DelimiterParser` class)
  - Changed block and inline rendering to use common methods and interfaces

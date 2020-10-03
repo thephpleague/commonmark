@@ -16,12 +16,18 @@ namespace League\CommonMark\Exception;
 final class InvalidOptionException extends \UnexpectedValueException
 {
     /**
-     * @param string $option     Name/path of the option
-     * @param mixed  $valueGiven The invalid option that was provided
+     * @param string  $option      Name/path of the option
+     * @param mixed   $valueGiven  The invalid option that was provided
+     * @param ?string $description Additional text describing the issue (optional)
      */
-    public static function forConfigOption(string $option, $valueGiven): self
+    public static function forConfigOption(string $option, $valueGiven, ?string $description = null): self
     {
-        return new self(\sprintf('Invalid config option for "%s": %s', $option, self::getDebugValue($valueGiven)));
+        $message = \sprintf('Invalid config option for "%s": %s', $option, self::getDebugValue($valueGiven));
+        if ($description !== null) {
+            $message .= \sprintf(' (%s)', $description);
+        }
+
+        return new self($message);
     }
 
     /**

@@ -36,8 +36,9 @@ final class FakeInlineParser implements InlineParserInterface
         return $this->start;
     }
 
-    public function parse(string $match, InlineParserContext $inlineContext): bool
+    public function parse(InlineParserContext $inlineContext): bool
     {
+        $match           = $inlineContext->getFullMatch();
         $this->matches[] = $match;
 
         $inlineContext->getCursor()->advanceBy(\mb_strlen($match));
