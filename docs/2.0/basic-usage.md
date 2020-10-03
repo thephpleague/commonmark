@@ -37,7 +37,7 @@ echo $converter->convertToHtml('# Hello World!');
 <i class="fa fa-exclamation-triangle"></i>
 **Important:** See the [security](/2.0/security/) section for important details on avoiding security misconfigurations.
 
-[Additional customization](/2.0/customization/overview/) is also possible, and we have many handy [extensions](/2.0/extensions/) to enable additional syntax and features.
+[Additional customization](/2.0/customization/overview/) is also possible, and we have many handy [extensions](/2.0/extensions/overview/) to enable additional syntax and features.
 
 ## Supported Character Encodings
 
