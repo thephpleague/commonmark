@@ -245,6 +245,10 @@ This previously-deprecated constant was removed in 2.0. Use `HeadingPermalinkRen
 
 This previously-deprecated configuration option was removed in 2.0. Use `heading_permalink/symbol` instead.
 
+## `mentions/*/regex` configuration option
+
+Full regexes are no longer supported.  Remove the leading/trailing `/` delimiters and any PCRE flags.  For example: `/[\w_]+/iu` should be changed to `[\w_]+`.
+
 ## `ArrayCollection` methods
 
 Several methods were removed from this class - here are the methods along with possible alternatives you can switch to:
