@@ -18,4 +18,4 @@ Ensure that you’ve set up your project to [autoload Composer-installed package
 
 ## Versioning
 
-[SemVer](http://semver.org/) will be followed closely.  **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret) to ensure compatibility**; for example: `^1.4`.  This is equivalent to `>=1.4 <2.0`.
+[SemVer](http://semver.org/) will be followed closely.  **It's highly recommended that you use [Composer's caret operator](https://getcomposer.org/doc/articles/versions.md#caret-version-range-) to ensure compatibility**; for example: `^1.4`.  This is equivalent to `>=1.4 <2.0`.
