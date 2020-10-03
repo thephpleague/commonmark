@@ -8,7 +8,6 @@
 /.github              export-ignore
 /.gitignore           export-ignore
 /.nojekyll            export-ignore
-/.ripstech            export-ignore
 /.scrutinizer.yml     export-ignore
 /.styleci.yml         export-ignore
 /docs                 export-ignore
