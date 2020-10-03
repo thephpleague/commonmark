@@ -63,7 +63,7 @@ echo $htmlRenderer->renderBlock($document);
 // <h1>Hello World!</h1>
 ~~~
 
-[Additional customization](/1.3/customization/overview/) is also possible, and we have many handy [extensions](/1.3/extensions/) to enable additional syntax and features.
+[Additional customization](/1.3/customization/overview/) is also possible, and we have many handy [extensions](/1.3/extensions/overview/) to enable additional syntax and features.
 
 ## Supported Character Encodings
 
