@@ -3,7 +3,9 @@ html {
 }
 
 body {
-    min-width: 460px;
+    min-width: 320px;
+    display: flex;
+    flex-flow: column;
 }
 
 blockquote {
@@ -291,9 +293,26 @@ table th > * {
     background: #1672ce;
 }
 
+@media screen and (max-width: 420px) {
+    table {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    main article table td {
+        padding: 2px 5px 2px 2px;
+    }
+    thead tr {
+        font-size: 0.8rem;
+    }
+}
 
 header .logo .name {
-    font-size: 2rem;
+    font-size: 1.6rem;
     line-height: 100%;
     margin: 0 !important;
 }
@@ -317,7 +336,7 @@ header .logo em {
 
 @media screen and (max-width: 549px) {
     header {
-        padding: 20px 0 25px 10px;
+        padding: 25px 0 20px 10px;
     }
 
     menu {
