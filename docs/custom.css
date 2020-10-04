@@ -3,7 +3,6 @@ html {
 }
 
 body {
-    /* ADDED - Add Flexbox for responsiveness */
     min-width: 320px;
     display: flex;
     flex-flow: column;
@@ -294,7 +293,6 @@ table th > * {
     background: #1672ce;
 }
 
-/* ADDED - Responsive table size for mobile */
 @media screen and (max-width: 420px) {
     table {
         display: flex;
@@ -304,7 +302,6 @@ table th > * {
     }
 }
 
-/* ADDED - Responsive table size for mobile */
 @media screen and (max-width: 375px) {
     main article table td {
         padding: 2px 5px 2px 2px;
@@ -315,7 +312,6 @@ table th > * {
 }
 
 header .logo .name {
-    /* ADDED - Add smaller font-size for mobile */
     font-size: 1.6rem;
     line-height: 100%;
     margin: 0 !important;
@@ -340,7 +336,6 @@ header .logo em {
 
 @media screen and (max-width: 549px) {
     header {
-        /* ADDED - Adjust padding for mobile */
         padding: 25px 0 20px 10px;
     }
 
