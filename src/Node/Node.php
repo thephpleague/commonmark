@@ -19,6 +19,13 @@ namespace League\CommonMark\Node;
 abstract class Node
 {
     /**
+     * @var array<string, mixed>
+     *
+     * Used for storage of arbitrary data
+     */
+    public $data = [];
+
+    /**
      * @var int
      *
      * @psalm-readonly-allow-private-mutation
@@ -59,6 +66,16 @@ abstract class Node
      * @psalm-readonly-allow-private-mutation
      */
     protected $lastChild;
+
+    /**
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    public function getData(string $key, $default = null)
+    {
+        return $this->data[$key] ?? $default;
+    }
 
     public function previous(): ?Node
     {

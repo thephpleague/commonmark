@@ -20,20 +20,4 @@ use League\CommonMark\Node\Node;
 
 abstract class AbstractInline extends Node
 {
-    /**
-     * @var array<string, mixed>
-     *
-     * Used for storage of arbitrary data
-     */
-    public $data = [];
-
-    /**
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    public function getData(string $key, $default = null)
-    {
-        return $this->data[$key] ?? $default;
-    }
 }
