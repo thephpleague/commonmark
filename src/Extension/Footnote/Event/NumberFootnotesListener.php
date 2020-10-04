@@ -68,11 +68,7 @@ final class NumberFootnotesListener
              * Store created references in document for
              * creating FootnoteBackrefs
              */
-            if ($document->getData($existingReference->getDestination(), false) === false) {
-                $document->data[$existingReference->getDestination()] = [];
-            }
-
-            $document->data[$existingReference->getDestination()][] = $newReference;
+            $document->data->append($existingReference->getDestination(), $newReference);
 
             $usedLabels[$label]   = 1;
             $usedCounters[$label] = $nextCounter;

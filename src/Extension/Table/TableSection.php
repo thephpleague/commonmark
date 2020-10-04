@@ -31,6 +31,8 @@ final class TableSection extends AbstractBlock
 
     public function __construct(string $type = self::TYPE_BODY)
     {
+        parent::__construct();
+
         $this->type = $type;
     }
 

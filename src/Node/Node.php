@@ -16,14 +16,16 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Node;
 
+use Dflydev\DotAccessData\Data;
+
 abstract class Node
 {
     /**
-     * @var array<string, mixed>
+     * @var Data
      *
-     * Used for storage of arbitrary data
+     * @psalm-readonly
      */
-    public $data = [];
+    public $data;
 
     /**
      * @var int
@@ -67,14 +69,11 @@ abstract class Node
      */
     protected $lastChild;
 
-    /**
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    public function getData(string $key, $default = null)
+    public function __construct()
     {
-        return $this->data[$key] ?? $default;
+        $this->data = new Data([
+            'attributes' => [],
+        ]);
     }
 
     public function previous(): ?Node

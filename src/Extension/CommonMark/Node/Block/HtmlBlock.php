@@ -35,6 +35,8 @@ class HtmlBlock extends AbstractBlock implements StringContainerInterface
 
     public function __construct(int $type)
     {
+        parent::__construct();
+
         $this->type = $type;
     }
 

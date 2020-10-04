@@ -31,6 +31,8 @@ class Document extends AbstractBlock
 
     public function __construct(?ReferenceMapInterface $referenceMap = null)
     {
+        parent::__construct();
+
         $this->setStartLine(1);
 
         $this->referenceMap = $referenceMap ?? new ReferenceMap();

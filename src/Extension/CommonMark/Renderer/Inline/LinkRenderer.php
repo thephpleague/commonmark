@@ -47,15 +47,15 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         $forbidUnsafeLinks = ! $this->config->get('allow_unsafe_links');
         if (! ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($node->getUrl()))) {
             $attrs['href'] = $node->getUrl();
         }
 
-        if (isset($node->data['title'])) {
-            $attrs['title'] = $node->data['title'];
+        if ($node->data->has('title')) {
+            $attrs['title'] = $node->data->get('title');
         }
 
         if (isset($attrs['target']) && $attrs['target'] === '_blank' && ! isset($attrs['rel'])) {

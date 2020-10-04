@@ -37,7 +37,7 @@ final class StrongRenderer implements NodeRendererInterface
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         return new HtmlElement('strong', $attrs, $childRenderer->renderNodes($node->children()));
     }

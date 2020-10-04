@@ -129,7 +129,7 @@ final class AttributesHelperTest extends TestCase
 
         $block = new FakeBlock1();
 
-        $block->data['attributes'] = ['id' => 'block', 'class' => 'block'];
+        $block->data->set('attributes', ['id' => 'block', 'class' => 'block']);
 
         yield [
             $block,
@@ -145,7 +145,7 @@ final class AttributesHelperTest extends TestCase
 
         $inline = new FakeInline1();
 
-        $inline->data['attributes'] = ['id' => 'inline', 'class' => 'inline'];
+        $inline->data->set('attributes', ['id' => 'inline', 'class' => 'inline']);
 
         yield [
             $inline,

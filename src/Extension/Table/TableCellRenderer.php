@@ -35,7 +35,7 @@ final class TableCellRenderer implements NodeRendererInterface
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         if ($node->getAlign() !== null) {
             $attrs['align'] = $node->getAlign();

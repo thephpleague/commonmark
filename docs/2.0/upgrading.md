@@ -176,6 +176,10 @@ The element being rendered is still passed in the first argument, and the object
 passed in the second argument.  Note that blocks are no longer told whether they're being rendered in a tight list - if you
 need to know about this, traverse up the `$node` AST yourself and check any `ListBlock` ancestor for tightness.
 
+## AST Node Changes
+
+The `AbstractBlock::$data` and `AbstractInline::$data` arrays were replaced with a `Data` array-like object on the base `Node` class.
+
 ## Removed Classes
 
 The following classes have been removed:

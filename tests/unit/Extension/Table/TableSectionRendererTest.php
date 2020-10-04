@@ -24,8 +24,8 @@ final class TableSectionRendererTest extends TestCase
 {
     public function testRenderWithTableSection(): void
     {
-        $tableSection                     = new TableSection(TableSection::TYPE_BODY);
-        $tableSection->data['attributes'] = ['class' => 'foo'];
+        $tableSection = new TableSection(TableSection::TYPE_BODY);
+        $tableSection->data->set('attributes/class', 'foo');
         $tableSection->appendChild(new TableRow());
 
         $childRenderer = new FakeChildNodeRenderer();

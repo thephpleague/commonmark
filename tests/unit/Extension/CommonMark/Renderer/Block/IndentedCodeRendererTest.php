@@ -38,8 +38,8 @@ class IndentedCodeRendererTest extends TestCase
     {
         $document = new Document();
 
-        $block                     = new IndentedCode();
-        $block->data['attributes'] = ['id' => 'foo'];
+        $block = new IndentedCode();
+        $block->data->set('attributes/id', 'foo');
         $block->setLiteral('echo "hello world!";');
 
         $document->appendChild($block);

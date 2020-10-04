@@ -32,6 +32,8 @@ final class FootnoteBackref extends AbstractInline implements ReferenceableInter
 
     public function __construct(ReferenceInterface $reference)
     {
+        parent::__construct();
+
         $this->reference = $reference;
     }
 

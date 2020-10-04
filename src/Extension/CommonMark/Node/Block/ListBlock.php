@@ -35,6 +35,8 @@ class ListBlock extends AbstractBlock
 
     public function __construct(ListData $listData)
     {
+        parent::__construct();
+
         $this->listData = $listData;
     }
 

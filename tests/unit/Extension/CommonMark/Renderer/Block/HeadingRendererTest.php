@@ -38,9 +38,9 @@ class HeadingRendererTest extends TestCase
      */
     public function testRender(int $level, string $expectedTag): void
     {
-        $block                     = new Heading($level);
-        $block->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer              = new FakeChildNodeRenderer();
+        $block = new Heading($level);
+        $block->data->set('attributes/id', 'foo');
+        $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);

@@ -35,9 +35,9 @@ class StrongRendererTest extends TestCase
 
     public function testRender(): void
     {
-        $inline                     = new Strong();
-        $inline->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer               = new FakeChildNodeRenderer();
+        $inline = new Strong();
+        $inline->data->set('attributes/id', 'foo');
+        $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($inline, $fakeRenderer);

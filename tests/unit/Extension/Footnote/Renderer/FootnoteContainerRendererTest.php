@@ -42,12 +42,11 @@ final class FootnoteContainerRendererTest extends TestCase
         $renderer->setConfiguration(new Configuration());
 
         $container = new FootnoteContainer();
-
-        $container->data['attributes']['class'] = 'custom class';
+        $container->data->set('attributes/class', 'custom class');
 
         $output = $renderer->render($container, new FakeChildNodeRenderer());
 
-        $this->assertSame('custom class', $output->getAttribute('class'));
+        $this->assertSame('custom class footnotes', $output->getAttribute('class'));
     }
 
     public function testClassConfiguration(): void

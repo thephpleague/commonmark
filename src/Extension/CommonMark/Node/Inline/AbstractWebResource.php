@@ -25,6 +25,8 @@ abstract class AbstractWebResource extends AbstractInline
 
     public function __construct(string $url)
     {
+        parent::__construct();
+
         $this->url = $url;
     }
 

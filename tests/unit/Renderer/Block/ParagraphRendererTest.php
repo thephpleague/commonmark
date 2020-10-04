@@ -35,9 +35,9 @@ class ParagraphRendererTest extends TestCase
 
     public function testRender(): void
     {
-        $block                     = new Paragraph();
-        $block->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer              = new FakeChildNodeRenderer();
+        $block = new Paragraph();
+        $block->data->set('attributes/id', 'foo');
+        $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);

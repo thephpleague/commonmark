@@ -38,7 +38,7 @@ final class CodeRenderer implements NodeRendererInterface
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         return new HtmlElement('code', $attrs, Xml::escape($node->getLiteral()));
     }

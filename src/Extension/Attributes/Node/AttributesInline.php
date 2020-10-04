@@ -29,6 +29,8 @@ final class AttributesInline extends AbstractInline
      */
     public function __construct(array $attributes, bool $block)
     {
+        parent::__construct();
+
         $this->attributes = $attributes;
         $this->block      = $block;
     }

@@ -48,7 +48,7 @@ final class ListItemRenderer implements NodeRendererInterface
             $contents .= "\n";
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         return new HtmlElement('li', $attrs, $contents);
     }

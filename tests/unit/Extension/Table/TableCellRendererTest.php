@@ -23,8 +23,8 @@ final class TableCellRendererTest extends TestCase
 {
     public function testRenderWithTableCell(): void
     {
-        $tableCell                     = new TableCell(TableCell::TYPE_BODY);
-        $tableCell->data['attributes'] = ['class' => 'foo'];
+        $tableCell = new TableCell(TableCell::TYPE_BODY);
+        $tableCell->data->set('attributes/class', 'foo');
 
         $childRenderer = new FakeChildNodeRenderer();
         $childRenderer->pretendChildrenExist();
@@ -36,8 +36,8 @@ final class TableCellRendererTest extends TestCase
 
     public function testRenderWithTableCellHavingAlignment(): void
     {
-        $tableCell                     = new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_CENTER);
-        $tableCell->data['attributes'] = ['class' => 'foo'];
+        $tableCell = new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_CENTER);
+        $tableCell->data->set('attributes/class', 'foo');
 
         $childRenderer = new FakeChildNodeRenderer();
         $childRenderer->pretendChildrenExist();

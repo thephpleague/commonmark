@@ -14,8 +14,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Attributes\Util;
 
-use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Util\RegexHelper;
 
@@ -95,8 +94,8 @@ final class AttributesHelper
     }
 
     /**
-     * @param AbstractBlock|AbstractInline|array<string, mixed> $attributes1
-     * @param AbstractBlock|AbstractInline|array<string, mixed> $attributes2
+     * @param Node|array<string, mixed> $attributes1
+     * @param Node|array<string, mixed> $attributes2
      *
      * @return array<string, mixed>
      */
@@ -104,8 +103,8 @@ final class AttributesHelper
     {
         $attributes = [];
         foreach ([$attributes1, $attributes2] as $arg) {
-            if ($arg instanceof AbstractBlock || $arg instanceof AbstractInline) {
-                $arg = $arg->data['attributes'] ?? [];
+            if ($arg instanceof Node) {
+                $arg = $arg->data->get('attributes');
             }
 
             /** @var array<string, mixed> $arg */

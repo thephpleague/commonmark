@@ -29,6 +29,8 @@ final class Footnote extends AbstractBlock implements ReferenceableInterface
 
     public function __construct(ReferenceInterface $reference)
     {
+        parent::__construct();
+
         $this->reference = $reference;
     }
 

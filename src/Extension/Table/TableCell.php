@@ -42,6 +42,8 @@ final class TableCell extends AbstractBlock
 
     public function __construct(string $type = self::TYPE_BODY, ?string $align = null)
     {
+        parent::__construct();
+
         $this->type  = $type;
         $this->align = $align;
     }

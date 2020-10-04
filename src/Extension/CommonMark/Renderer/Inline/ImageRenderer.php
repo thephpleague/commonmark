@@ -47,7 +47,7 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         $forbidUnsafeLinks = ! $this->config->get('allow_unsafe_links');
         if ($forbidUnsafeLinks && RegexHelper::isLinkPotentiallyUnsafe($node->getUrl())) {
@@ -60,8 +60,8 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
         $alt          = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt ?? '');
 
-        if (isset($node->data['title'])) {
-            $attrs['title'] = $node->data['title'];
+        if ($node->data->has('title')) {
+            $attrs['title'] = $node->data->get('title');
         }
 
         return new HtmlElement('img', $attrs, '', true);

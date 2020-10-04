@@ -23,8 +23,8 @@ final class TableRowRendererTest extends TestCase
 {
     public function testRenderWithTableRow(): void
     {
-        $tableRow                     = new TableRow();
-        $tableRow->data['attributes'] = ['class' => 'foo'];
+        $tableRow = new TableRow();
+        $tableRow->data->set('attributes/class', 'foo');
 
         $childRenderer = new FakeChildNodeRenderer();
         $childRenderer->pretendChildrenExist();

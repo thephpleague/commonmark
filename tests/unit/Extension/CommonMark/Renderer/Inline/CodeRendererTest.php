@@ -35,9 +35,9 @@ class CodeRendererTest extends TestCase
 
     public function testRender(): void
     {
-        $inline                     = new Code('echo "hello world";');
-        $inline->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer               = new FakeChildNodeRenderer();
+        $inline = new Code('echo "hello world";');
+        $inline->data->set('attributes/id', 'foo');
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 

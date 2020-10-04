@@ -59,18 +59,17 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, Configura
             $idPrefix .= '-';
         }
 
-        $attrs = [
-            'id'          => $idPrefix . $slug,
-            'href'        => '#' . $slug,
-            'name'        => $slug,
-            'class'       => $this->config->get('heading_permalink/html_class', 'heading-permalink'),
-            'aria-hidden' => 'true',
-            'title'       => $this->config->get('heading_permalink/title', 'Permalink'),
-        ];
+        $attrs = $node->data->getData('attributes');
+        $attrs->set('id', $idPrefix . $slug);
+        $attrs->set('href', '#' . $slug);
+        $attrs->set('name', $slug);
+        $attrs->append('class', $this->config->get('heading_permalink/html_class', 'heading-permalink'));
+        $attrs->set('aria-hidden', 'true');
+        $attrs->set('title', $this->config->get('heading_permalink/title', 'Permalink'));
 
         $symbol = $this->config->get('heading_permalink/symbol', self::DEFAULT_SYMBOL);
         \assert(\is_string($symbol));
 
-        return new HtmlElement('a', $attrs, \htmlspecialchars($symbol), false);
+        return new HtmlElement('a', $attrs->export(), \htmlspecialchars($symbol), false);
     }
 }

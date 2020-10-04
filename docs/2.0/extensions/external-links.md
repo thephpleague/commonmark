@@ -119,7 +119,7 @@ class MyCustomLinkRenderer implements NodeRendererInterface
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        if ($node->getData('external')) {
+        if ($node->data->get('external')) {
             // This is an external link - render it accordingly
         } else {
             // This is an internal link

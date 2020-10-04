@@ -35,9 +35,9 @@ class EmphasisRendererTest extends TestCase
 
     public function testRender(): void
     {
-        $inline                     = new Emphasis();
-        $inline->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer               = new FakeChildNodeRenderer();
+        $inline = new Emphasis();
+        $inline->data->set('attributes/id', 'foo');
+        $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($inline, $fakeRenderer);

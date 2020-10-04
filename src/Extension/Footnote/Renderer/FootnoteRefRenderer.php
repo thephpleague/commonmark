@@ -36,8 +36,11 @@ final class FootnoteRefRenderer implements NodeRendererInterface, ConfigurationA
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs    = $node->getData('attributes', []);
-        $class    = $attrs['class'] ?? $this->config->get('footnote/ref_class', 'footnote-ref');
+        $attrs = $node->data->getData('attributes');
+        $attrs->append('class', $this->config->get('footnote/ref_class', 'footnote-ref')); // TODO Add tests to all these footnote renderers re: appending classes when some might exist
+        $attrs->set('href', \mb_strtolower($node->getReference()->getDestination()));
+        $attrs->set('role', 'doc-noteref');
+
         $idPrefix = $this->config->get('footnote/ref_id_prefix', 'fnref:');
 
         return new HtmlElement(
@@ -47,11 +50,7 @@ final class FootnoteRefRenderer implements NodeRendererInterface, ConfigurationA
             ],
             new HtmlElement(
                 'a',
-                [
-                    'class' => $class,
-                    'href'  => \mb_strtolower($node->getReference()->getDestination()),
-                    'role'  => 'doc-noteref',
-                ],
+                $attrs->export(),
                 $node->getReference()->getTitle()
             ),
             true

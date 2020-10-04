@@ -54,11 +54,10 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
                 $footnotes[\PHP_INT_MAX] = $node;
             }
 
-            $backrefs = $document->getData(
-                '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $node->getReference()->getDestination(),
-                []
-            );
-            $this->createBackrefs($node, $backrefs);
+            $key = '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $node->getReference()->getDestination();
+            if ($document->data->has($key)) {
+                $this->createBackrefs($node, $document->data->get($key));
+            }
         }
 
         // Only add a footnote container if there are any

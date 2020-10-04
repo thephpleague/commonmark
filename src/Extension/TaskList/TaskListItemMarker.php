@@ -26,6 +26,8 @@ final class TaskListItemMarker extends AbstractInline
 
     public function __construct(bool $isCompleted)
     {
+        parent::__construct();
+
         $this->checked = $isCompleted;
     }
 

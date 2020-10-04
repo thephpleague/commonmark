@@ -28,8 +28,10 @@ class AbstractStringContainer extends AbstractInline implements StringContainerI
      */
     public function __construct(string $contents = '', array $data = [])
     {
+        parent::__construct();
+
         $this->literal = $contents;
-        $this->data    = $data;
+        $this->data->import($data);
     }
 
     public function getLiteral(): string

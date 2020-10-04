@@ -60,7 +60,7 @@ final class ExternalLinkProcessor
             }
 
             if (self::hostMatches($host, $internalHosts)) {
-                $link->data['external'] = false;
+                $link->data->set('external', false);
                 $this->applyRelAttribute($link, false);
                 continue;
             }
@@ -72,23 +72,20 @@ final class ExternalLinkProcessor
 
     private function markLinkAsExternal(Link $link, bool $openInNewWindow, string $classes): void
     {
-        $link->data['external']   = true;
-        $link->data['attributes'] = $link->getData('attributes', []);
+        $link->data->set('external', true);
         $this->applyRelAttribute($link, true);
 
         if ($openInNewWindow) {
-            $link->data['attributes']['target'] = '_blank';
+            $link->data->set('attributes/target', '_blank');
         }
 
         if ($classes !== '') {
-            $link->data['attributes']['class'] = \trim(($link->data['attributes']['class'] ?? '') . ' ' . $classes);
+            $link->data->append('attributes/class', $classes);
         }
     }
 
     private function applyRelAttribute(Link $link, bool $isExternal): void
     {
-        $rel = [];
-
         $options = [
             'nofollow'   => $this->environment->getConfig('external_link/nofollow', self::APPLY_NONE),
             'noopener'   => $this->environment->getConfig('external_link/noopener', self::APPLY_EXTERNAL),
@@ -100,15 +97,9 @@ final class ExternalLinkProcessor
                 case $option === self::APPLY_ALL:
                 case $isExternal && $option === self::APPLY_EXTERNAL:
                 case ! $isExternal && $option === self::APPLY_INTERNAL:
-                    $rel[] = $type;
+                    $link->data->append('attributes/rel', $type);
             }
         }
-
-        if ($rel === []) {
-            return;
-        }
-
-        $link->data['attributes']['rel'] = \implode(' ', $rel);
     }
 
     /**

@@ -98,8 +98,8 @@ class ListBlockRendererTest extends TestCase
         $data->type  = ListBlock::TYPE_ORDERED;
         $data->start = $start;
 
-        $block                     = new ListBlock($data);
-        $block->data['attributes'] = ['id' => 'foo'];
+        $block = new ListBlock($data);
+        $block->data->set('attributes/id', 'foo');
 
         return $block;
     }
@@ -109,8 +109,8 @@ class ListBlockRendererTest extends TestCase
         $data       = new ListData();
         $data->type = ListBlock::TYPE_BULLET;
 
-        $block                     = new ListBlock($data);
-        $block->data['attributes'] = ['id' => 'foo'];
+        $block = new ListBlock($data);
+        $block->data->set('attributes/id', 'foo');
 
         return $block;
     }

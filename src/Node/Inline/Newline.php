@@ -31,6 +31,8 @@ class Newline extends AbstractInline
 
     public function __construct(int $breakType = self::HARDBREAK)
     {
+        parent::__construct();
+
         $this->type = $breakType;
     }
 

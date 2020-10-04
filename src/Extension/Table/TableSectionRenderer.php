@@ -39,7 +39,7 @@ final class TableSectionRenderer implements NodeRendererInterface
             return '';
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         $separator = $childRenderer->getInnerSeparator();
 

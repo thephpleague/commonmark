@@ -35,9 +35,9 @@ class BlockQuoteRendererTest extends TestCase
 
     public function testRenderEmptyBlockQuote(): void
     {
-        $block                     = new BlockQuote();
-        $block->data['attributes'] = ['id' => 'id'];
-        $fakeRenderer              = new FakeChildNodeRenderer();
+        $block = new BlockQuote();
+        $block->data->set('attributes/id', 'id');
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($block, $fakeRenderer);
 
@@ -49,9 +49,9 @@ class BlockQuoteRendererTest extends TestCase
 
     public function testRenderBlockQuote(): void
     {
-        $block                     = new BlockQuote();
-        $block->data['attributes'] = ['id' => 'id'];
-        $fakeRenderer              = new FakeChildNodeRenderer();
+        $block = new BlockQuote();
+        $block->data->set('attributes/id', 'id');
+        $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);

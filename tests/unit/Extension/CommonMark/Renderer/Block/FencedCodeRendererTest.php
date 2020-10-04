@@ -41,7 +41,7 @@ class FencedCodeRendererTest extends TestCase
         $block = new FencedCode(3, '~', 0);
         $block->setInfo('php');
         $block->setLiteral('echo "hello world!";');
-        $block->data['attributes'] = ['id' => 'foo', 'class' => 'bar'];
+        $block->data->set('attributes', ['id' => 'foo', 'class' => 'bar']);
 
         $document->appendChild($block);
 
@@ -65,7 +65,7 @@ class FencedCodeRendererTest extends TestCase
 
         $block = new FencedCode(3, '~', 0);
         $block->setLiteral('echo "hello world!";');
-        $block->data['attributes'] = ['id' => 'foo', 'class' => 'bar'];
+        $block->data->set('attributes', ['id' => 'foo', 'class' => 'bar']);
 
         $document->appendChild($block);
 

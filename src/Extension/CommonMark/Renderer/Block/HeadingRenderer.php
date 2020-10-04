@@ -39,7 +39,7 @@ final class HeadingRenderer implements NodeRendererInterface
 
         $tag = 'h' . $node->getLevel();
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()));
     }

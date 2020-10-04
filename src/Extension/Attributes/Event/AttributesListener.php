@@ -53,7 +53,7 @@ final class AttributesListener
                     $attributes = AttributesHelper::mergeAttributes($node->getAttributes(), $target);
                 }
 
-                $target->data['attributes'] = $attributes;
+                $target->data->set('attributes', $attributes);
             }
 
             $node->detach();

@@ -38,18 +38,17 @@ final class FencedCodeRenderer implements NodeRendererInterface
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->getData('attributes');
 
         $infoWords = $node->getInfoWords();
         if (\count($infoWords) !== 0 && $infoWords[0] !== '') {
-            $attrs['class']  = isset($attrs['class']) ? $attrs['class'] . ' ' : '';
-            $attrs['class'] .= 'language-' . $infoWords[0];
+            $attrs->append('class', 'language-' . $infoWords[0]);
         }
 
         return new HtmlElement(
             'pre',
             [],
-            new HtmlElement('code', $attrs, Xml::escape($node->getLiteral()))
+            new HtmlElement('code', $attrs->export(), Xml::escape($node->getLiteral()))
         );
     }
 }
