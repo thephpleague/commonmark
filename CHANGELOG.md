@@ -83,6 +83,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Re-implemented the GFM Autolink extension using the new inline parser approach instead of document processors
    - `EmailAutolinkProcessor` is now `EmailAutolinkParser`
    - `UrlAutolinkProcessor` is now `UrlAutolinkParser`
+ - `HtmlElement` can now properly handle array (i.e. `class`) and boolean (i.e. `checked`) attribute values
+ - `HtmlElement` automatically flattens any attributes with array values into space-separated strings, removing duplicate entries
  - Combined separate classes/interfaces into one:
    - `DisallowedRawHtmlRenderer` replaces `DisallowedRawHtmlBlockRenderer` and `DisallowedRawHtmlInlineRenderer`
    - `NodeRendererInterface` replaces `BlockRendererInterface` and `InlineRendererInterface`

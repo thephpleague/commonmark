@@ -84,6 +84,51 @@ class HtmlElementTest extends TestCase
         $this->assertEquals('foo', $p->getAttribute('class'));
     }
 
+    public function testGetSetAttributeWithStringAndArrayValues(): void
+    {
+        $p = new HtmlElement('p', ['class' => ['foo', 'bar']]);
+        $this->assertCount(1, $p->getAllAttributes());
+        $this->assertSame('foo bar', $p->getAttribute('class'));
+
+        $p->setAttribute('class', 'baz');
+        $this->assertSame('baz', $p->getAttribute('class'));
+
+        $p->setAttribute('class', ['foo', 'bar', 'baz']);
+        $this->assertSame('foo bar baz', $p->getAttribute('class'));
+
+        $p->setAttribute('class', 'foo bar');
+        $this->assertSame('foo bar', $p->getAttribute('class'));
+    }
+
+    public function testAttributesWithArrayValues(): void
+    {
+        $p = new HtmlElement('p', ['class' => ['a', 'b', 'a']]);
+        $this->assertCount(1, $p->getAllAttributes());
+        $this->assertSame('a b', $p->getAttribute('class'));
+        $this->assertSame('<p class="a b"></p>', $p->__toString());
+
+        $p->setAttribute('class', ['foo', 'bar', 'foo']);
+        $this->assertSame('foo bar', $p->getAttribute('class'));
+        $this->assertSame('<p class="foo bar"></p>', $p->__toString());
+
+        // String attribute values do not have duplicate values removed
+        $p->setAttribute('class', 'x y z x a');
+        $this->assertSame('x y z x a', $p->getAttribute('class'));
+        $this->assertSame('<p class="x y z x a"></p>', $p->__toString());
+    }
+
+    public function testAttributesWithBooleanTrueValues(): void
+    {
+        $checkbox = new HtmlElement('input', ['type' => 'checkbox', 'checked' => true], '', true);
+        $this->assertSame('<input type="checkbox" checked>', $checkbox->__toString());
+
+        $checkbox->setAttribute('checked', false);
+        $this->assertSame('<input type="checkbox">', $checkbox->__toString());
+
+        $checkbox->setAttribute('checked', true);
+        $this->assertSame('<input type="checkbox" checked>', $checkbox->__toString());
+    }
+
     public function testToString(): void
     {
         $img = new HtmlElement('img', [], '', true);
