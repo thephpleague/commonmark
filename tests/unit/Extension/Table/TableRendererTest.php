@@ -23,8 +23,8 @@ final class TableRendererTest extends TestCase
 {
     public function testRenderWithTable(): void
     {
-        $tableRow                     = new Table();
-        $tableRow->data['attributes'] = ['class' => 'striped'];
+        $tableRow = new Table();
+        $tableRow->data->set('attributes/class', 'striped');
 
         $childRenderer = new FakeChildNodeRenderer();
         $childRenderer->pretendChildrenExist();

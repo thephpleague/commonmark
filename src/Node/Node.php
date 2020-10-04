@@ -16,8 +16,17 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Node;
 
+use Dflydev\DotAccessData\Data;
+
 abstract class Node
 {
+    /**
+     * @var Data
+     *
+     * @psalm-readonly
+     */
+    public $data;
+
     /**
      * @var int
      *
@@ -59,6 +68,13 @@ abstract class Node
      * @psalm-readonly-allow-private-mutation
      */
     protected $lastChild;
+
+    public function __construct()
+    {
+        $this->data = new Data([
+            'attributes' => [],
+        ]);
+    }
 
     public function previous(): ?Node
     {

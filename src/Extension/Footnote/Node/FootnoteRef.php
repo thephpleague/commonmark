@@ -35,9 +35,12 @@ final class FootnoteRef extends AbstractInline implements ReferenceableInterface
      */
     public function __construct(ReferenceInterface $reference, ?string $content = null, array $data = [])
     {
+        parent::__construct();
+
         $this->reference = $reference;
         $this->content   = $content;
-        $this->data      = $data;
+
+        $this->data->import($data);
     }
 
     public function getReference(): ReferenceInterface
@@ -45,11 +48,9 @@ final class FootnoteRef extends AbstractInline implements ReferenceableInterface
         return $this->reference;
     }
 
-    public function setReference(ReferenceInterface $reference): FootnoteRef
+    public function setReference(ReferenceInterface $reference): void
     {
         $this->reference = $reference;
-
-        return $this;
     }
 
     public function getContent(): ?string

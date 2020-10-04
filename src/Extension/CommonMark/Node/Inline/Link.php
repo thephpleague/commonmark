@@ -29,7 +29,7 @@ class Link extends AbstractWebResource
         }
 
         if ($title !== null && $title !== '') {
-            $this->data['title'] = $title;
+            $this->data->set('title', $title);
         }
     }
 }

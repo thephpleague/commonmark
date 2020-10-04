@@ -21,7 +21,7 @@ class HtmlElement
     /** @var string */
     protected $tagName;
 
-    /** @var string[] */
+    /** @var array<string, string|bool> */
     protected $attributes = [];
 
     /** @var HtmlElement|HtmlElement[]|string */
@@ -32,15 +32,18 @@ class HtmlElement
 
     /**
      * @param string                                $tagName     Name of the HTML tag
-     * @param string[]                              $attributes  Array of attributes (values should be unescaped)
+     * @param array<string, string|string[]|bool>   $attributes  Array of attributes (values should be unescaped)
      * @param HtmlElement|HtmlElement[]|string|null $contents    Inner contents, pre-escaped if needed
      * @param bool                                  $selfClosing Whether the tag is self-closing
      */
     public function __construct(string $tagName, array $attributes = [], $contents = '', bool $selfClosing = false)
     {
         $this->tagName     = $tagName;
-        $this->attributes  = $attributes;
         $this->selfClosing = $selfClosing;
+
+        foreach ($attributes as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
 
         $this->setContents($contents ?? '');
     }
@@ -51,14 +54,17 @@ class HtmlElement
     }
 
     /**
-     * @return string[]
+     * @return array<string, string|bool>
      */
     public function getAllAttributes(): array
     {
         return $this->attributes;
     }
 
-    public function getAttribute(string $key): ?string
+    /**
+     * @return string|bool|null
+     */
+    public function getAttribute(string $key)
     {
         if (! isset($this->attributes[$key])) {
             return null;
@@ -67,9 +73,16 @@ class HtmlElement
         return $this->attributes[$key];
     }
 
-    public function setAttribute(string $key, string $value): self
+    /**
+     * @param string|string[]|bool $value
+     */
+    public function setAttribute(string $key, $value): self
     {
-        $this->attributes[$key] = $value;
+        if (\is_array($value)) {
+            $this->attributes[$key] = \implode(' ', \array_unique($value));
+        } else {
+            $this->attributes[$key] = $value;
+        }
 
         return $this;
     }
@@ -105,7 +118,13 @@ class HtmlElement
         $result = '<' . $this->tagName;
 
         foreach ($this->attributes as $key => $value) {
-            $result .= ' ' . $key . '="' . Xml::escape($value) . '"';
+            if ($value === true) {
+                $result .= ' ' . $key;
+            } elseif ($value === false) {
+                continue;
+            } else {
+                $result .= ' ' . $key . '="' . Xml::escape($value) . '"';
+            }
         }
 
         if ($this->contents !== '') {

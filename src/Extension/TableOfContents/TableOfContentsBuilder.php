@@ -56,7 +56,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         // Add custom CSS class(es), if defined
         $class = $this->config->get('table_of_contents/html_class', 'table-of-contents');
         if ($class !== null) {
-            $toc->data['attributes']['class'] = $class;
+            $toc->data->append('attributes/class', $class);
         }
 
         // Add the TOC to the Document

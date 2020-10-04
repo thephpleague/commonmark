@@ -25,13 +25,6 @@ use League\CommonMark\Node\Node;
  */
 abstract class AbstractBlock extends Node
 {
-    /**
-     * Used for storage of arbitrary data.
-     *
-     * @var array<string, mixed>
-     */
-    public $data = [];
-
     /** @var int|null */
     protected $startLine;
 
@@ -68,15 +61,5 @@ abstract class AbstractBlock extends Node
     public function getEndLine(): ?int
     {
         return $this->endLine;
-    }
-
-    /**
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    public function getData(string $key, $default = null)
-    {
-        return \array_key_exists($key, $this->data) ? $this->data[$key] : $default;
     }
 }

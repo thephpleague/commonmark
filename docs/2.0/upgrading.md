@@ -176,6 +176,10 @@ The element being rendered is still passed in the first argument, and the object
 passed in the second argument.  Note that blocks are no longer told whether they're being rendered in a tight list - if you
 need to know about this, traverse up the `$node` AST yourself and check any `ListBlock` ancestor for tightness.
 
+## AST Node Changes
+
+The `AbstractBlock::$data` and `AbstractInline::$data` arrays were replaced with a `Data` array-like object on the base `Node` class.
+
 ## Removed Classes
 
 The following classes have been removed:
@@ -266,6 +270,10 @@ Several methods were removed from this class - here are the methods along with p
 | `containsKey($key)` | `isset($collection[$key])`                           |
 | `replaceWith()`     | (none provided)                                      |
 | `removeGaps()`      | (none provided)                                      |
+
+## Node setter methods return void
+
+All `set*()` methods on all Node types now return `void` (whereas some used to return `$this` in 1.x) for consistency.
 
 ## Unused methods
 

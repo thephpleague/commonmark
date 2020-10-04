@@ -36,17 +36,17 @@ final class FootnoteContainerRenderer implements NodeRendererInterface, Configur
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->getData('attributes');
 
-        $attrs['class'] = $attrs['class'] ?? $this->config->get('footnote/container_class', 'footnotes');
-        $attrs['role']  = 'doc-endnotes';
+        $attrs->append('class', $this->config->get('footnote/container_class', 'footnotes'));
+        $attrs->set('role', 'doc-endnotes');
 
         $contents = new HtmlElement('ol', [], $childRenderer->renderNodes($node->children()));
         if ($this->config->get('footnote/container_add_hr', true)) {
             $contents = [new HtmlElement('hr', [], null, true), $contents];
         }
 
-        return new HtmlElement('div', $attrs, $contents);
+        return new HtmlElement('div', $attrs->export(), $contents);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

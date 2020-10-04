@@ -32,7 +32,7 @@ final class FrontMatterPreParser
 
         $parsed = $this->parser->parse($content);
 
-        $event->getDocument()->data['front_matter'] = $parsed->getFrontMatter();
+        $event->getDocument()->data->set('front_matter', $parsed->getFrontMatter());
         $event->replaceMarkdown($parsed);
     }
 }

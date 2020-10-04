@@ -36,15 +36,15 @@ final class FootnoteRenderer implements NodeRendererInterface, ConfigurationAwar
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->getData('attributes');
 
-        $attrs['class'] = $attrs['class'] ?? $this->config->get('footnote/footnote_class', 'footnote');
-        $attrs['id']    = $this->config->get('footnote/footnote_id_prefix', 'fn:') . \mb_strtolower($node->getReference()->getLabel());
-        $attrs['role']  = 'doc-endnote';
+        $attrs->append('class', $this->config->get('footnote/footnote_class', 'footnote'));
+        $attrs->set('id', $this->config->get('footnote/footnote_id_prefix', 'fn:') . \mb_strtolower($node->getReference()->getLabel()));
+        $attrs->set('role', 'doc-endnote');
 
         return new HtmlElement(
             'li',
-            $attrs,
+            $attrs->export(),
             $childRenderer->renderNodes($node->children()),
             true
         );

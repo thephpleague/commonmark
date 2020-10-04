@@ -36,9 +36,9 @@ class ListItemRendererTest extends TestCase
 
     public function testRenderUnorderedList(): void
     {
-        $block                     = new ListItem(new ListData());
-        $block->data['attributes'] = ['id' => 'foo'];
-        $fakeRenderer              = new FakeChildNodeRenderer();
+        $block = new ListItem(new ListData());
+        $block->data->set('attributes/id', 'foo');
+        $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($block, $fakeRenderer);

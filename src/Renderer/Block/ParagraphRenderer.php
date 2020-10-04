@@ -43,7 +43,7 @@ final class ParagraphRenderer implements NodeRendererInterface
             return $childRenderer->renderNodes($node->children());
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         return new HtmlElement('p', $attrs, $childRenderer->renderNodes($node->children()));
     }

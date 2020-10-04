@@ -33,9 +33,9 @@ class StrikethroughRendererTest extends TestCase
 
     public function testRender(): void
     {
-        $inline                     = new Strikethrough();
-        $inline->data['attributes'] = ['id' => 'some"&amp;id'];
-        $fakeRenderer               = new FakeChildNodeRenderer();
+        $inline = new Strikethrough();
+        $inline->data->set('attributes/id', 'some"&amp;id');
+        $fakeRenderer = new FakeChildNodeRenderer();
         $fakeRenderer->pretendChildrenExist();
 
         $result = $this->renderer->render($inline, $fakeRenderer);

@@ -37,9 +37,9 @@ class LinkRendererTest extends TestCase
 
     public function testRenderWithTitle(): void
     {
-        $inline                     = new Link('http://example.com/foo.html', '::label::', '::title::');
-        $inline->data['attributes'] = ['id' => '::id::', 'title' => '::title2::', 'href' => '::href2::'];
-        $fakeRenderer               = new FakeChildNodeRenderer();
+        $inline = new Link('http://example.com/foo.html', '::label::', '::title::');
+        $inline->data->set('attributes', ['id' => '::id::', 'title' => '::title2::', 'href' => '::href2::']);
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -107,9 +107,9 @@ class LinkRendererTest extends TestCase
 
     public function testRenderWithExternalTarget(): void
     {
-        $inline                     = new Link('http://example.com/foo.html', '::label::', '::title::');
-        $inline->data['attributes'] = ['target' => '_blank'];
-        $fakeRenderer               = new FakeChildNodeRenderer();
+        $inline = new Link('http://example.com/foo.html', '::label::', '::title::');
+        $inline->data->set('attributes/target', '_blank');
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 

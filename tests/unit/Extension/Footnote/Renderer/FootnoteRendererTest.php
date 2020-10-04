@@ -45,11 +45,11 @@ final class FootnoteRendererTest extends TestCase
         $fakeReference = new Reference('label', 'dest', 'title');
         $footnote      = new Footnote($fakeReference);
 
-        $footnote->data['attributes']['class'] = 'custom class';
+        $footnote->data->set('attributes/class', 'custom class');
 
         $output = $renderer->render($footnote, new FakeChildNodeRenderer());
 
-        $this->assertSame('custom class', $output->getAttribute('class'));
+        $this->assertSame('custom class footnote', $output->getAttribute('class'));
     }
 
     public function testClassConfiguration(): void

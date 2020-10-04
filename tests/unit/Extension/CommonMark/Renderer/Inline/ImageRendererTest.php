@@ -37,9 +37,9 @@ class ImageRendererTest extends TestCase
 
     public function testRenderWithTitle(): void
     {
-        $inline                     = new Image('http://example.com/foo.jpg', '::label::', '::title::');
-        $inline->data['attributes'] = ['id' => '::id::', 'title' => '::title2::', 'label' => '::label2::', 'alt' => '::alt2::'];
-        $fakeRenderer               = new FakeChildNodeRenderer();
+        $inline = new Image('http://example.com/foo.jpg', '::label::', '::title::');
+        $inline->data->set('attributes', ['id' => '::id::', 'title' => '::title2::', 'label' => '::label2::', 'alt' => '::alt2::']);
+        $fakeRenderer = new FakeChildNodeRenderer();
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 

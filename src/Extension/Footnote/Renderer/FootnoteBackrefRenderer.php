@@ -38,17 +38,17 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, Configurat
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->getData('attributes');
 
-        $attrs['class'] = $attrs['class'] ?? $this->config->get('footnote/backref_class', 'footnote-backref');
-        $attrs['rev']   = 'footnote';
-        $attrs['href']  = \mb_strtolower($node->getReference()->getDestination());
-        $attrs['role']  = 'doc-backlink';
+        $attrs->append('class', $this->config->get('footnote/backref_class', 'footnote-backref'));
+        $attrs->set('rev', 'footnote');
+        $attrs->set('href', \mb_strtolower($node->getReference()->getDestination()));
+        $attrs->set('role', 'doc-backlink');
 
         $symbol = $this->config->get('footnote/backref_symbol', self::DEFAULT_SYMBOL);
         \assert(\is_string($symbol));
 
-        return '&nbsp;' . new HtmlElement('a', $attrs, \htmlspecialchars($symbol), true);
+        return '&nbsp;' . new HtmlElement('a', $attrs->export(), \htmlspecialchars($symbol), true);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

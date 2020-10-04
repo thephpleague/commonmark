@@ -127,7 +127,7 @@ class ExternalLinkProcessor
 
             $url = $node->getUrl();
             if ($this->isUrlExternal($url)) {
-                $node->data['attributes']['class'] = 'external-link';
+                $node->data->append('attributes/class', 'external-link');
             }
         }
     }

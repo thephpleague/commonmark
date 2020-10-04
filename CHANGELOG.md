@@ -65,6 +65,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
      - `mentions/*/symbol` has been renamed to `mentions/*/prefix`
      - `mentions/*/regex` now requires partial regular expressions (without delimiters or flags)
  - Event dispatching is now fully PSR-14 compliant
+ - The `AbstractBlock::$data` and `AbstractInline::$data` arrays were replaced with a `Data` array-like object on the base `Node` class
  - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
  - Implemented a new approach to block parsing. This was a massive change, so here are the highlights:
    - Functionality previously found in block parsers and node elements has moved to block parser factories and block parsers, respectively ([more details](https://commonmark.thephpleague.com/2.0/upgrading/#new-block-parsing-approach))
@@ -82,6 +83,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Re-implemented the GFM Autolink extension using the new inline parser approach instead of document processors
    - `EmailAutolinkProcessor` is now `EmailAutolinkParser`
    - `UrlAutolinkProcessor` is now `UrlAutolinkParser`
+ - `HtmlElement` can now properly handle array (i.e. `class`) and boolean (i.e. `checked`) attribute values
+ - `HtmlElement` automatically flattens any attributes with array values into space-separated strings, removing duplicate entries
  - Combined separate classes/interfaces into one:
    - `DisallowedRawHtmlRenderer` replaces `DisallowedRawHtmlBlockRenderer` and `DisallowedRawHtmlInlineRenderer`
    - `NodeRendererInterface` replaces `BlockRendererInterface` and `InlineRendererInterface`
@@ -181,6 +184,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `AbstractBlock::shouldLastLineBeBlank()`
    - `AbstractBlock::isOpen()`
    - `AbstractBlock::finalize()`
+   - `AbstractBlock::getData()`
+   - `AbstractInline::getData()`
    - `ConfigurableEnvironmentInterface::addBlockParser()`
    - `Delimiter::setCanClose()`
    - `EnvironmentInterface::getInlineParsersForCharacter()`

@@ -25,6 +25,8 @@ class Heading extends AbstractBlock
 
     public function __construct(int $level)
     {
+        parent::__construct();
+
         $this->level = $level;
     }
 

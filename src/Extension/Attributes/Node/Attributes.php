@@ -33,6 +33,8 @@ final class Attributes extends AbstractBlock
      */
     public function __construct(array $attributes)
     {
+        parent::__construct();
+
         $this->attributes = $attributes;
     }
 

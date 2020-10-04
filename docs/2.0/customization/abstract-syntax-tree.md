@@ -61,3 +61,55 @@ The following methods can be used to modify the AST:
 ## `DocumentParsedEvent`
 
 The best way to access and manipulate the AST is by adding an [event listener](/2.0/customization/event-dispatcher/) for the `DocumentParsedEvent`.
+
+## Data Storage
+
+Each `Node` has a property called `data` which is a `Data` (array-like) object.  This can be used to store any arbitrary data you'd like on the node:
+
+```php
+use League\CommonMark\Node\Inline\Text;
+
+$text1 = new Text('Hello, world!');
+$text1->data->set('language', 'English');
+$text1->data->set('is_good_translation', true);
+
+$text2 = new Text('Bonjour monde!');
+$text2->data->set('language', 'French');
+$text2->data->set('is_good_translation', false);
+
+foreach ([$text1, $text2] as $text) {
+    if ($text->data->get('is_good_translation')) {
+        sprintf('In %s we would say: "%s"', $text->data->get('language'), $text->getLiteral());
+    } else {
+        sprintf('I think they would say "%s" in %s, but I\'m not sure.', $text->getLiteral(), $text->data->get('language'));
+    }
+}
+```
+
+You can also access deeply-nested paths using `/` or `.` as delimiters:
+
+```php
+use League\CommonMark\Node\Inline\Text;
+
+$text = new Text('Hello, world!');
+$text->data->set('info', ['language' => 'English', 'is_good_translation' => true]);
+
+var_dump($text->data->get('info/language'));
+var_dump($text->data->get('info.is_good_translation'));
+
+$text->data->set('info/is_example', true);
+```
+
+### HTML Attributes
+
+The `data` property comes pre-instantiated with a single data element called `attributes` which is used to store any HTML attributes that need to be rendered.  For example:
+
+```php
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+
+$link = new Link('https://twitter.com/colinodell', '@colinodell');
+$link->data->append('attributes/class', 'social-link');
+$link->data->append('attributes/class', 'twitter');
+$link->data->set('attributes/target', '_blank');
+$link->data->set('attributes/rel', 'noopener');
+```

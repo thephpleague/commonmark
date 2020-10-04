@@ -33,6 +33,6 @@ final class StrikethroughRenderer implements NodeRendererInterface
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        return new HtmlElement('del', $node->getData('attributes', []), $childRenderer->renderNodes($node->children()));
+        return new HtmlElement('del', $node->data->get('attributes'), $childRenderer->renderNodes($node->children()));
     }
 }

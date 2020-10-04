@@ -35,7 +35,7 @@ final class TableRenderer implements NodeRendererInterface
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
         $separator = $childRenderer->getInnerSeparator();
 

@@ -62,6 +62,8 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         $min = (int) $this->config->get('heading_permalink/min_heading_level', 1);
         $max = (int) $this->config->get('heading_permalink/max_heading_level', 6);
 
+        $e->getDocument()->data->set('heading_ids', []);
+
         $walker = $e->getDocument()->walker();
 
         while ($event = $walker->next()) {
@@ -111,9 +113,12 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
     private function ensureUnique(string $proposed, Document $document): string
     {
+        $usedIds = $document->data->get('heading_ids');
+
         // Quick path, it's a unique ID
-        if (! isset($document->data['heading_ids'][$proposed])) {
-            $document->data['heading_ids'][$proposed] = true;
+        if (! isset($usedIds[$proposed])) {
+            $usedIds[$proposed] = true;
+            $document->data->set('heading_ids', $usedIds);
 
             return $proposed;
         }
@@ -122,9 +127,10 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         do {
             ++$extension;
             $id = \sprintf('%s-%s', $proposed, $extension);
-        } while (isset($document->data['heading_ids'][$id]));
+        } while (isset($usedIds[$id]));
 
-        $document->data['heading_ids'][$id] = true;
+        $usedIds[$id] = true;
+        $document->data->set('heading_ids', $usedIds);
 
         return $id;
     }

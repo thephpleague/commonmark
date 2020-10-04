@@ -20,10 +20,11 @@ final class FrontMatterPostRenderListener
 {
     public function __invoke(DocumentRenderedEvent $event): void
     {
-        $frontMatter = $event->getOutput()->getDocument()->getData('front_matter');
-        if ($frontMatter === null) {
+        if ($event->getOutput()->getDocument()->data->get('front_matter', null) === null) {
             return;
         }
+
+        $frontMatter = $event->getOutput()->getDocument()->data->get('front_matter');
 
         $event->replaceOutput(new RenderedContentWithFrontMatter(
             $event->getOutput()->getDocument(),

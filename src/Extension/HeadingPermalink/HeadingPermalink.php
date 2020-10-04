@@ -29,6 +29,8 @@ final class HeadingPermalink extends AbstractInline
 
     public function __construct(string $slug)
     {
+        parent::__construct();
+
         $this->slug = $slug;
     }
 
