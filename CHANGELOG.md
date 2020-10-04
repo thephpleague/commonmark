@@ -9,6 +9,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 ### Added
 
  - Added new `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
+ - Added `Query` class to simplify Node traversal when looking to take action on certain Nodes
  - Added the ability to delegate event dispatching to PSR-14 compliant event dispatcher libraries
  - Added the ability to configure disallowed raw HTML tags (#507)
  - Added the ability for Mentions to use multiple characters for their symbol (#514, #550)
@@ -28,11 +29,13 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `DocumentBlockParser`
    - `DocumentRenderedEvent`
    - `EllipsesParser` (extracted from `PunctuationParser`)
+   - `ExpressionInterface`
    - `HtmlRendererInterface`
    - `InlineParserEngineInterface`
    - `InlineParserMatch`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
+   - `Query`
    - `ReferenceableInterface`
    - `RenderedContent`
    - `RenderedContentInterface`
