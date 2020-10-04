@@ -21,7 +21,6 @@ use League\CommonMark\Extension\Attributes\Util\AttributesHelper;
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Node;
 
@@ -41,7 +40,7 @@ final class AttributesListener
 
             [$target, $direction] = self::findTargetAndDirection($node);
 
-            if ($target instanceof AbstractBlock || $target instanceof AbstractInline) {
+            if ($target instanceof Node) {
                 $parent = $target->parent();
                 if ($parent instanceof ListItem && $parent->parent() instanceof ListBlock && $parent->parent()->isTight()) {
                     $target = $parent;

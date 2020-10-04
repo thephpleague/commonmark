@@ -17,7 +17,6 @@ namespace League\CommonMark\Extension\Attributes\Parser;
 use League\CommonMark\Extension\Attributes\Node\Attributes;
 use League\CommonMark\Extension\Attributes\Util\AttributesHelper;
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -28,7 +27,7 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
     /** @var Attributes */
     private $block;
 
-    /** @var Node */
+    /** @var AbstractBlock */
     private $container;
 
     /** @var bool */
@@ -36,9 +35,9 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
 
     /**
      * @param array<string, mixed> $attributes The attributes identified by the block start parser
-     * @param Node                 $container  The node we were in when these attributes were discovered
+     * @param AbstractBlock        $container  The node we were in when these attributes were discovered
      */
-    public function __construct(array $attributes, Node $container)
+    public function __construct(array $attributes, AbstractBlock $container)
     {
         $this->block = new Attributes($attributes);
 

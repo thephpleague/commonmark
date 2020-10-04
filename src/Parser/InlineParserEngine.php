@@ -20,7 +20,6 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Reference\ReferenceMapInterface;
 
@@ -118,7 +117,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
         AdjacentTextMerger::mergeChildNodes($block);
     }
 
-    private function addPlainText(string $text, Node $container): void
+    private function addPlainText(string $text, AbstractBlock $container): void
     {
         $lastInline = $container->lastChild();
         if ($lastInline instanceof Text && ! $lastInline->data->has('delim')) {
