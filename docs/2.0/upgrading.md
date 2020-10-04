@@ -271,6 +271,10 @@ Several methods were removed from this class - here are the methods along with p
 | `replaceWith()`     | (none provided)                                      |
 | `removeGaps()`      | (none provided)                                      |
 
+## Node setter methods return void
+
+All `set*()` methods on all Node types now return `void` (whereas some used to return `$this` in 1.x) for consistency.
+
 ## Unused methods
 
 The following unused methods have been removed:

@@ -78,14 +78,9 @@ class FencedCode extends AbstractBlock implements StringContainerInterface
         return $this->char;
     }
 
-    /**
-     * @return $this
-     */
-    public function setChar(string $char): self
+    public function setChar(string $char): void
     {
         $this->char = $char;
-
-        return $this;
     }
 
     public function getLength(): int
@@ -93,14 +88,9 @@ class FencedCode extends AbstractBlock implements StringContainerInterface
         return $this->length;
     }
 
-    /**
-     * @return $this
-     */
-    public function setLength(int $length): self
+    public function setLength(int $length): void
     {
         $this->length = $length;
-
-        return $this;
     }
 
     public function getOffset(): int
@@ -108,13 +98,8 @@ class FencedCode extends AbstractBlock implements StringContainerInterface
         return $this->offset;
     }
 
-    /**
-     * @return $this
-     */
-    public function setOffset(int $offset): self
+    public function setOffset(int $offset): void
     {
         $this->offset = $offset;
-
-        return $this;
     }
 }

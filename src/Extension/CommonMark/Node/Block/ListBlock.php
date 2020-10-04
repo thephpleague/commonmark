@@ -50,10 +50,8 @@ class ListBlock extends AbstractBlock
         return $this->tight;
     }
 
-    public function setTight(bool $tight): self
+    public function setTight(bool $tight): void
     {
         $this->tight = $tight;
-
-        return $this;
     }
 }

@@ -36,10 +36,8 @@ final class TaskListItemMarker extends AbstractInline
         return $this->checked;
     }
 
-    public function setChecked(bool $checked): self
+    public function setChecked(bool $checked): void
     {
         $this->checked = $checked;
-
-        return $this;
     }
 }

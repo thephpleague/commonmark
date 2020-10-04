@@ -48,11 +48,9 @@ final class FootnoteRef extends AbstractInline implements ReferenceableInterface
         return $this->reference;
     }
 
-    public function setReference(ReferenceInterface $reference): FootnoteRef
+    public function setReference(ReferenceInterface $reference): void
     {
         $this->reference = $reference;
-
-        return $this;
     }
 
     public function getContent(): ?string
