@@ -16,9 +16,21 @@ The root node of the AST will always be a `Document` object.  You can obtain thi
  - By calling the `parse()` method on the `MarkdownParser`
  - By calling the `getDocument()` method on either the `DocumentPreParsedEvent` or `DocumentParsedEvent` (see the (Event Dispatcher documentation)[/2.0/customization/event-dispatcher/])
 
-## Traversal
+## Node Traversal
 
-The following methods can be used to traverse the AST:
+There are three different ways to traverse/iterate the Nodes within the AST:
+
+| Method | Pros | Cons |
+| --- | --- | --- |
+| Manual Traversal | Best way to access/check direct relatives of nodes | Not useful for iteration |
+| Walking the Tree | Fast and efficient | Adding/removing nodes while iterating them can lead to weird behaviors |
+| Querying Nodes | Easier to write and understand; no weird behaviors | Not memory efficient |
+
+Each is described in more detail below
+
+### Manual Traversal
+
+The following methods can be used to manually traverse from one `Node` to any of its direct relatives:
 
 * `previous()`
 * `next()`
@@ -27,7 +39,9 @@ The following methods can be used to traverse the AST:
 * `lastChild()`
 * `children()`
 
-## Iteration / Walking the Tree
+This is best suited for situations when you need to know information about those relatives.
+
+### Walking the Tree
 
 If you'd like to iterate through all the nodes, use the `walker()` method to obtain an instance of `NodeWalker`.  This will walk through the entire tree, emitting `NodeWalkerEvent`s along the way.
 
@@ -43,7 +57,71 @@ while ($event = $walker->next()) {
 }
 ~~~
 
-This walker doesn't use recursion, so you won't blow the stack when working with deeply-nested nodes.
+This walker doesn't use recursion, so you won't blow the stack when working with deeply-nested nodes.  It's also very memory-efficient.
+
+However, if you add/remove nodes while walking the tree, this can lead to the walker losing track of where it was, which may result in some nodes being visited multiple times or not at all.
+
+### Querying Nodes
+
+If you're trying to locate certain nodes to perform actions on them, querying the nodes from the AST might be easier to implement.  This can be done with the `Query` class:
+
+~~~php
+<?php
+
+use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\Query;
+
+// Find all paragraphs and blockquotes that contain links
+$matchingNodes = (new Query())
+    ->where(Query::type(Paragraph::class))
+    ->orWhere(Query::type(BlockQuote::class))
+    ->andWhere(Query::hasChild(Query::type(Link::class)))
+    ->findAll($document);
+
+foreach ($matchingNodes as $node) {
+    // TODO: Do something with them
+}
+~~~
+
+Each condition passed into `where()`, `orWhere()`, or `andWhere()` must be a callable "filter" that accepts a `Node` and returns `true` or `false`.  We provide several methods that can help create these filters for you:
+
+| Method | Description |
+| --- | --- |
+| `Query::type(string $class)` | Creates a filter that matches nodes with the given class name |
+| `Query::hasChild()` | Creates a filter that matches nodes which contain at least one child |
+| `Query::hasChild(callable $condition)` | Creates a filter that matches nodes which contain at least one child that matches the inner `$condition` |
+| `Query::hasParent()` | Creates a filter that matches nodes which have a parent |
+| `Query::hasParent(callable $condition)` | Creates a filter that matches nodes which have a parent that matches the inner `$condition` |
+
+You can of course create your own custom filters/conditions using an anonymous function or by implementing `ExpressionInterface`:
+
+~~~php
+<?php
+
+use League\CommonMark\Node\Node;
+use League\CommonMark\Node\Query;
+use League\CommonMark\Node\Query\ExpressionInterface;
+
+class ChildCountGreaterThan implements ExpressionInterface
+{
+    private $count;
+
+    public function __construct(int $count)
+    {
+        $this->count = $count;
+    }
+
+    public function __invoke(Node $node) : bool{
+        return count($node->children()) > $this->count;
+    }
+}
+
+$query = (new Query())
+    ->where(function (Node $node): bool { return $node->data->has('attributes/class'); })
+    ->andWhere(new ChildCountGreaterThan(3));
+~~~
 
 ## Modification
 
