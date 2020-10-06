@@ -7,13 +7,13 @@ description: The MentionParser makes it easy to parse shortened references like 
 # Mention Extension
 
 The `MentionExtension` makes it easy to parse shortened mentions and references like `@colinodell` to a Twitter URL
-or `#123` to a GitHub issue URL.  You can create your own custom syntax by defining which symbol you want to use and
+or `#123` to a GitHub issue URL.  You can create your own custom syntax by defining which prefix you want to use and
 how to generate the corresponding URL.
 
 ## Usage
 
 You can create your own custom syntax by supplying the configuration with an array of options that
-define the starting symbol, a regular expression to match against, and any custom URL template or callable to
+define the starting prefix, a regular expression to match against, and any custom URL template or callable to
 generate the URL.
 
 ```php
@@ -35,26 +35,26 @@ $config = [
         // Sample Input:  `@colinodell`
         // Sample Output: `<a href="https://www.github.com/colinodell">@colinodell</a>`
         'github_handle' => [
-            'symbol'    => '@',
-            'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+            'prefix'    => '@',
+            'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
             'generator' => 'https://github.com/%s',
         ],
         // GitHub issue mention configuration.
         // Sample Input:  `#473`
         // Sample Output: `<a href="https://github.com/thephpleague/commonmark/issues/473">#473</a>`
         'github_issue' => [
-            'symbol'    => '#',
-            'regex'     => '/^\d+/',
+            'prefix'    => '#',
+            'regex'     => '\d+',
             'generator' => "https://github.com/thephpleague/commonmark/issues/%d",
         ],
         // Twitter handler mention configuration.
         // Sample Input:  `@colinodell`
         // Sample Output: `<a href="https://www.twitter.com/colinodell">@colinodell</a>`
-        // Note: when registering more than one mention parser with the same symbol, the last one registered will
+        // Note: when registering more than one mention parser with the same prefix, the last one registered will
         // always take precedence.
         'twitter_handle' => [
-            'symbol'    => '@',
-            'regex'     => '/^[A-Za-z0-9_]{1,15}(?!\w)/',
+            'prefix'    => '@',
+            'regex'     => '[A-Za-z0-9_]{1,15}(?!\w)',
             'generator' => 'https://twitter.com/%s',
         ],
     ],
@@ -75,12 +75,12 @@ URL templates are perfect for situations where the identifier is inserted direct
 "@colinodell" => https://www.twitter.com/colinodell
  ▲└────┬───┘                             └───┬────┘
  │     │                                     │
-Symbol └───────────── Identifier ────────────┘
+Prefix └───────────── Identifier ────────────┘
 ```
 
 Examples of using string-based URL templates can be seen in the usage example above - you simply provide a `string` to the `generator` option.
 
-Note that the URL template must be a string, and that the `%s` placeholder will be replaced by whatever the user enters after the symbol (in this case, `@`).  You can use any symbol, regex pattern, or URL template you want!
+Note that the URL template must be a string, and that the `%s` placeholder will be replaced by whatever the user enters after the prefix (in this case, `@`).  You can use any prefix, regex pattern (without opening/closing delimiter or modifiers), or URL template you want!
 
 ## Custom Callback-Based Parsers
 
@@ -107,14 +107,14 @@ $environment->addExtension(new MentionExtension());
 $config = [
     'mentions' => [
         'github_handle' => [
-            'symbol'    => '@',
-            'regex'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+            'prefix'    => '@',
+            'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
             // The recommended approach is to provide a class that implements MentionGeneratorInterface.
             'generator' => new GithubUserMentionGenerator(), // TODO: Implement such a class yourself
         ],
         'github_issue' => [
-            'symbol'    => '#',
-            'regex'     => '/^\d+/',
+            'prefix'    => '#',
+            'regex'     => '\d+',
             // Alternatively, if your logic is simple, you can implement an inline anonymous class like this example.
             'generator' => new class implements MentionGeneratorInterface {
                  public function generateMention(Mention $mention): ?AbstractInline
@@ -126,8 +126,8 @@ $config = [
              },
         ],
         'github_issue' => [
-            'symbol'    => '#',
-            'regex'     => '/^\d+/',
+            'prefix'    => '#',
+            'regex'     => '\d+',
             // Any type of callable, including anonymous closures, (with optional typehints) are also supported.
             // This allows for better compatibility between different major versions of CommonMark.
             // However, you sacrifice the ability to type-check which means automated development tools
@@ -230,8 +230,8 @@ $environment->addExtension(new MentionExtension());
 $config = [
     'mentions' => [
         'user_url_generator' => [
-            'symbol'    => '@',
-            'regex'     => '/^[a-z0-9]+/i',
+            'prefix'    => '@',
+            'regex'     => '[a-z0-9]+',
             'generator' => $userMentionGenerator,
         ],
     ],
