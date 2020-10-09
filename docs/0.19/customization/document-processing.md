@@ -8,24 +8,20 @@ Document Processing
 
 The best way to manipulate the [Abstract Syntax Tree](/0.19/customization/abstract-syntax-tree/) is by implementing a custom Document Processor.  These are executed once all other processing is done and the document is ready to be rendered. Simply create a class which implements the `DocumentProcessorInterface` which contains a single method:
 
-~~~php
-<?php
-
+```php
 /**
  * @param Document $document
  *
  * @return void
  */
 public function processDocument(Document $document);
-~~~
+```
 
 This method receives the root `Document` node which you could then walk across, modifying nodes as needed.
 
 Here's an example of a Document Processor which adds an `external-link` class to external URLs.
- 
-~~~php
-<?php
 
+```php
 class ExternalLinkProcessor implements DocumentProcessorInterface, ConfigurationAwareInterface
 {
     private $config;
@@ -78,13 +74,11 @@ class ExternalLinkProcessor implements DocumentProcessorInterface, Configuration
         return $host != $this->config->getConfig('host');
     }
 }
-~~~
+```
 
 And here's how you'd use it:
 
-~~~php
-<?php
-
+```php
 $env = Environment::createCommonMarkEnvironment();
 $env->addDocumentProcessor(new ExternalLinkProcessor());
 
@@ -93,15 +87,15 @@ $converter = new CommonMarkConverter(['host' => 'commonmark.thephpleague.com'], 
 $input = 'My two favorite sites are <https://google.com> and <https://commonmark.thephpleague.com>';
 
 echo $converter->convertToHtml($input);
-~~~
+```
 
 Output (formatted for readability):
 
-~~~html
+```html
 <p>
     My two favorite sites are
     <a class="external-link" href="https://google.com">https://google.com</a>
     and
     <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a>
 </p>
-~~~
+```

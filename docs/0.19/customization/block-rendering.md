@@ -32,28 +32,24 @@ You are responsible for handling any escaping that may be necessary.
 
 When registering your render, you must tell the `Environment` which block element class your renderer should handle. For example:
 
-~~~php
-<?php
-
+```php
 $environment = Environment::createCommonMarkEnvironment();
 
 // First param - the block class type that should use our renderer
 // Second param - instance of the block renderer
 $environment->addBlockRenderer(League\CommonMark\Block\Element\FencedCode::class, new MyCustomCodeRenderer());
-~~~
+```
 
 A single renderer could even be used for multiple block types:
 
-~~~php
-<?php
-
+```php
 $environment = Environment::createCommonMarkEnvironment();
 
 $myRenderer = new MyCustomCodeRenderer();
 
 $environment->addBlockRenderer(League\CommonMark\Block\Element\FencedCode::class, $myRenderer, 10);
 $environment->addBlockRenderer(League\CommonMark\Block\Element\IndentedCode::class, $myRenderer, 20);
-~~~
+```
 
 Multiple renderers can be added per element type - when this happens, we use the result from the highest-priority renderer that returns a non-`null` result.
 
@@ -61,9 +57,7 @@ Multiple renderers can be added per element type - when this happens, we use the
 
 Here's a custom renderer which renders thematic breaks as text (instead of `<hr>`):
 
-~~~php
-<?php
-
+```php
 class TextDividerRenderer implements BlockRendererInterface
 {
     public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, $inTightList = false)
@@ -74,7 +68,7 @@ class TextDividerRenderer implements BlockRendererInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addBlockRenderer('League\CommonMark\Block\Element\ThematicBreak', new TextDividerRenderer());
-~~~
+```
 
 ## Tips
 
