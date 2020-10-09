@@ -38,15 +38,14 @@ Returning `true` tells the engine that you've successfully parsed the character 
 
 Let's say you wanted to autolink Twitter handles without using the link syntax.  This could be accomplished by registering a new inline parser to handle the `@` character:
 
-~~~php
-<?php
-
+```php
 class TwitterHandleParser extends AbstractInlineParser
 {
     public function getCharacters()
     {
         return ['@'];
     }
+
     public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
@@ -75,15 +74,13 @@ class TwitterHandleParser extends AbstractInlineParser
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineParser(new TwitterHandleParser());
-~~~
+```
 
 ### Example 2 - Emoticons
 
 Let's say you want to automatically convert smilies (or "frownies") to emoticon images.  This is incredibly easy with an inline parser:
 
-~~~php
-<?php
-
+```php
 class SmilieParser extends AbstractInlineParser
 {
     public function getCharacters()
@@ -104,7 +101,7 @@ class SmilieParser extends AbstractInlineParser
 
         // Advance the cursor past the 2 matched chars since we're able to parse them successfully
         $cursor->advanceBy(2);
-        
+
         // Add the corresponding image
         if ($nextChar === ')') {
             $inlineContext->getContainer()->appendChild(new Image('/img/happy.png'));
@@ -118,7 +115,7 @@ class SmilieParser extends AbstractInlineParser
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineParser(new SmilieParserParser());
-~~~
+```
 
 ## Tips
 

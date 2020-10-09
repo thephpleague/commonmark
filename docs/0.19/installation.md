@@ -9,9 +9,9 @@ The recommended installation method is via Composer.
 
 In your project root just run:
 
-~~~bash
+```bash
 composer require league/commonmark:^0.19
-~~~
+```
 
 Ensure that you’ve set up your project to [autoload Composer-installed packages](https://getcomposer.org/doc/01-basic-usage.md#autoloading).
 

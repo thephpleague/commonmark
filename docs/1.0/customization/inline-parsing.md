@@ -20,11 +20,11 @@ The difference between normal inlines and delimiter-run-based inlines is subtle 
 
 An example of this would be emphasis:
 
-~~~markdown
-This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after. 
-~~~
+```markdown
+This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after.
+```
 
-If your syntax looks like that, consider using a [delimiter processor](/1.0/customization/delimiter-processing/) instead.  Otherwise, an inline parser is your best bet. 
+If your syntax looks like that, consider using a [delimiter processor](/1.0/customization/delimiter-processing/) instead.  Otherwise, an inline parser is your best bet.
 
 ## Implementing Inline Parsers
 
@@ -60,9 +60,7 @@ Returning `true` tells the engine that you've successfully parsed the character 
 
 Let's say you wanted to autolink Twitter handles without using the link syntax.  This could be accomplished by registering a new inline parser to handle the `@` character:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Environment;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
@@ -74,6 +72,7 @@ class TwitterHandleParser implements InlineParserInterface
     {
         return ['@'];
     }
+
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
@@ -102,15 +101,13 @@ class TwitterHandleParser implements InlineParserInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineParser(new TwitterHandleParser());
-~~~
+```
 
 ### Example 2 - Emoticons
 
 Let's say you want to automatically convert smilies (or "frownies") to emoticon images.  This is incredibly easy with an inline parser:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Environment;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
@@ -136,7 +133,7 @@ class SmilieParser implements InlineParserInterface
 
         // Advance the cursor past the 2 matched chars since we're able to parse them successfully
         $cursor->advanceBy(2);
-        
+
         // Add the corresponding image
         if ($nextChar === ')') {
             $inlineContext->getContainer()->appendChild(new Image('/img/happy.png'));
@@ -150,7 +147,7 @@ class SmilieParser implements InlineParserInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineParser(new SmilieParserParser());
-~~~
+```
 
 ## Tips
 

@@ -12,9 +12,9 @@ The `CommonMarkCoreExtension` class contains all of the core Markdown syntax - t
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/1.4/installation/) section for more details.
 

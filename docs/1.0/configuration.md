@@ -9,9 +9,7 @@ Configuration
 
 You can provide an array of configuration options to the `CommonMarkConverter` when creating it:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter([
@@ -29,7 +27,7 @@ $converter = new CommonMarkConverter([
     'allow_unsafe_links' => false,
     'max_nesting_level' => INF,
 ]);
-~~~
+```
 
 Here's a list of currently-supported options:
 

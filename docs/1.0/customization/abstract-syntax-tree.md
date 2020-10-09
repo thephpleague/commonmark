@@ -25,9 +25,7 @@ The following methods can be used to traverse the AST:
 
 If you'd like to iterate through all the nodes, use the `walker()` method to obtain an instance of `NodeWalker`.  This will walk through the entire tree, emitting `NodeWalkerEvent`s along the way.
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Node\NodeWalker;
 
 /** @var NodeWalker $walker */
@@ -35,7 +33,7 @@ $walker = $document->walker();
 while ($event = $walker->next()) {
     echo 'I am ' . ($event->isEntering() ? 'entering' : 'leaving') . ' a ' . get_class($event->getNode()) . ' node' . "\n";
 }
-~~~
+```
 
 This walker doesn't use recursion, so you won't blow the stack when working with deeply-nested nodes.
 

@@ -34,9 +34,7 @@ Return `null` if your renderer cannot handle the given inline element - the next
 
 When registering your render, you must tell the `Environment` which inline element class your renderer should handle. For example:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Environment;
 
 $environment = Environment::createCommonMarkEnvironment();
@@ -44,15 +42,13 @@ $environment = Environment::createCommonMarkEnvironment();
 // First param - the inline class type that should use our renderer
 // Second param - instance of the block renderer
 $environment->addInlineRenderer('League\CommonMark\Inline\Element\Link', new MyCustomLinkRenderer());
-~~~
+```
 
 ## Example
 
 Here's a custom renderer which puts a special class on links to external sites:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\Inline\Element\Link;
@@ -98,7 +94,7 @@ class MyCustomLinkRenderer implements InlineRendererInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineRenderer(Link::class, new MyCustomLinkRenderer());
-~~~
+```
 
 ## Tips
 
