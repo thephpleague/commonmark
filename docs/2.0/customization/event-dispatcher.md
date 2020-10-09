@@ -98,8 +98,6 @@ Because the `Environment` implements PSR-14's `ListenerProviderInterface` you'll
 Here's an example of a listener which uses the `DocumentParsedEvent` to add an `external-link` class to external URLs:
 
 ```php
-<?php
-
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -149,8 +147,6 @@ class ExternalLinkProcessor
 And here's how you'd use it:
 
 ```php
-<?php
-
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;

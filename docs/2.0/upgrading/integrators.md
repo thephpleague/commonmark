@@ -13,7 +13,6 @@ The minimum supported PHP version was increased from 7.1 to 7.2.
 In 1.x, calling `convertToHtml()` would return a `string`. In 2.x this changed to return a `RenderedContentInterface`.  To get the resulting HTML, either cast the return value to a `string` or call `->getContent()`.  (This new interface extends from `Stringable` so you can type hint against that instead, if needed.)
 
 ```diff
- <?php
  use League\CommonMark\CommonMarkConverter;
 
  $converter = new CommonMarkConverter();

@@ -15,8 +15,6 @@ block renderers and inline renderers share the same interface and method:
 ## render()
 
 ```php
-<?php
-
 public function render(Node $node, ChildNodeRendererInterface $childRenderer);
 ```
 
@@ -40,8 +38,6 @@ If you choose to return an HTML `string` you are responsible for handling any es
 Instead of manually building the HTML output yourself, you can leverage the `HtmlElement` to generate that for you.  For example:
 
 ```php
-<?php
-
 use League\CommonMark\Util\HtmlElement;
 
 $link = new HtmlElement('a', ['href' => 'https://github.com'], 'GitHub');
@@ -53,8 +49,6 @@ $img = new HtmlElement('img', ['src' => 'logo.jpg'], '', true);
 When registering your renderer, you must tell the `Environment` which node element class your renderer should handle. For example:
 
 ```php
-<?php
-
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 
@@ -68,8 +62,6 @@ $environment->addRenderer(FencedCode::class, new MyCustomCodeRenderer());
 A single renderer could even be used for multiple types:
 
 ```php
-<?php
-
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
@@ -89,8 +81,6 @@ Multiple renderers can be added per element type - when this happens, we use the
 Here's a custom renderer which renders thematic breaks as text (instead of `<hr>`):
 
 ```php
-<?php
-
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
 use League\CommonMark\Node\Node;

@@ -119,8 +119,6 @@ Here are some additional tips to consider when writing your own custom parsers:
 Although parsing requires two classes, you can use the anonymous class feature of PHP to combine both into a single file!  Here's an example:
 
 ```php
-<?php
-
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 

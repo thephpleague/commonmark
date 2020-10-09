@@ -67,7 +67,6 @@ And the HTML output will only contain the one heading:
 Configure your `Environment` as usual and add the `FrontMatterExtension`:
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;

@@ -17,7 +17,6 @@ define the starting prefix, a regular expression to match against, and any custo
 generate the URL.
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Mention\MentionExtension;
@@ -212,7 +211,6 @@ You can then hook this class up to a mention definition in the configuration to 
 mentions:
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Mention\MentionExtension;

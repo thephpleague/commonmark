@@ -33,6 +33,7 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 ```
 
 ### Example - Strip all HTML from the input:
+
 ```php
 use League\CommonMark\CommonMarkConverter;
 

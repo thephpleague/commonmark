@@ -12,8 +12,6 @@ The `Environment` contains all of the parsers, renderers, configurations, etc. t
 A pre-configured `Environment` can be obtained like this:
 
 ```php
-<?php
-
 use League\CommonMark\Environment\Environment;
 
 $environment = Environment::createCommonMarkEnvironment();
@@ -26,8 +24,6 @@ You can customize this default `Environment` (or even a new, empty one) using an
 ## mergeConfig()
 
 ```php
-<?php
-
 public function mergeConfig(array $config = []);
 ```
 
@@ -36,8 +32,6 @@ Merges the given [configuration](/2.0/configuration/) settings into any existing
 ## setConfig()
 
 ```php
-<?php
-
 public function setConfig(array $config = []);
 ```
 
@@ -46,8 +40,6 @@ Completely replaces the previous [configuration](/2.0/configuration/) settings w
 ## addExtension()
 
 ```php
-<?php
-
 public function addExtension(ExtensionInterface $extension);
 ```
 
@@ -56,8 +48,6 @@ Registers the given [extension](/2.0/customization/extensions/) with the environ
 ## addBlockParser()
 
 ```php
-<?php
-
 public function addBlockParser(BlockParserInterface $parser, int $priority = 0);
 ```
 
@@ -68,8 +58,6 @@ See [Block Parsing](/2.0/customization/block-parsing/) for details.
 ## addInlineParser()
 
 ```php
-<?php
-
 public function addInlineParser(InlineParserInterface $parser, int $priority = 0);
 ```
 
@@ -80,8 +68,6 @@ See [Inline Parsing](/2.0/customization/inline-parsing/) for details.
 ## addDelimiterProcessor()
 
 ```php
-<?php
-
 public function addDelimiterProcessor(DelimiterProcessorInterface $processor);
 ```
 
@@ -92,8 +78,6 @@ See [Inline Parsing](/2.0/customization/delimiter-processing/) for details.
 ## addRenderer()
 
 ```php
-<?php
-
 public function addRenderer(string $blockOrInlineClass, NodeRendererInterface $blockRenderer, int $priority = 0);
 ```
 
@@ -104,8 +88,6 @@ See [Rendering](/2.0/customization/rendering/) for details.
 ## addEventListener()
 
 ```php
-<?php
-
 public function addEventListener(string $eventClass, callable $listener, int $priority = 0);
 ```
 

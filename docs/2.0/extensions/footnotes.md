@@ -54,7 +54,6 @@ Result:
 Configure your `Environment` as usual and simply add the `FootnoteExtension`:
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;

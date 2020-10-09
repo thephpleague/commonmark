@@ -45,7 +45,6 @@ See the [installation](/2.0/installation/) section for more details.
 Configure your `Environment` as usual and simply add the `AttributesExtension`:
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Attributes\AttributesExtension;
