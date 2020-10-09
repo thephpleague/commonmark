@@ -14,9 +14,9 @@ This extension makes all of your heading elements (`<h1>`, `<h2>`, etc) linkable
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/2.0/installation/) section for more details.
 
@@ -100,8 +100,6 @@ You can change the string that is used as the "slug" by setting the `slug_normal
 For example, if you'd like each slug to be an MD5 hash, you could create a class like this:
 
 ```php
-<?php
-
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 
 final class MD5Normalizer implements TextNormalizerInterface

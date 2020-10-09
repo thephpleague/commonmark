@@ -97,9 +97,7 @@ Because the `Environment` implements PSR-14's `ListenerProviderInterface` you'll
 
 Here's an example of a listener which uses the `DocumentParsedEvent` to add an `external-link` class to external URLs:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -144,13 +142,11 @@ class ExternalLinkProcessor
         return $host != $this->environment->getConfig('host');
     }
 }
-~~~
+```
 
 And here's how you'd use it:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
@@ -165,15 +161,15 @@ $converter = new CommonMarkConverter(['host' => 'commonmark.thephpleague.com'], 
 $input = 'My two favorite sites are <https://google.com> and <https://commonmark.thephpleague.com>';
 
 echo $converter->convertToHtml($input);
-~~~
+```
 
 Output (formatted for readability):
 
-~~~html
+```html
 <p>
     My two favorite sites are
     <a class="external-link" href="https://google.com">https://google.com</a>
     and
     <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a>
 </p>
-~~~
+```

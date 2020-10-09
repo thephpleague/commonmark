@@ -52,61 +52,61 @@ This interface has several methods, so it's usually easier to extend from `Abstr
 
 ### `getBlock()`
 
-~~~php
+```php
 public function getBlock(): AbstractBlock;
-~~~
+```
 
 Each instance of a `BlockContinueParserInterface` is associated with a new block that is being parsed.  This method here returns that block.
 
 ### `isContainer()`
 
-~~~php
+```php
 public function isContainer(): bool;
-~~~
+```
 
 This method returns whether or not the block is a "container" capable of containing other blocks as children.
 
 ### `canContain()`
 
-~~~
+```php
 public function canContain(AbstractBlock $childBlock): bool;
-~~~
+```
 
 This method returns whether the current block being parsed can contain the given child block.
 
 ### `canHaveLazyContinuationLines()`
 
-~~~php
+```php
 public function canHaveLazyContinuationLines(): bool;
-~~~
+```
 
 This method returns whether or not this parser should also receive subsequent lines of Markdown input.  This is primarily used when a block can span multiple lines, like code blocks do.
 
 ### `addLine()`
 
-~~~php
+```php
 public function addLine(string $line): void;
-~~~
+```
 
 If `canHaveLazyContinuationLines()` returned `true`, this method will be called with the additional lines of content.
 
 ### `tryContinue()`
 
-~~~php
+```php
 public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue;
-~~~
+```
 
 This method allows you to try and parse an additional line of Markdown.
 
-~~~php
+```php
 public function closeBlock(): void;
-~~~
+```
 
 This method is called when the block is done being parsed.  Any final adjustments to the block should be made at this time.
 
-~~~php
+```php
 public function parseInlines(InlineParserEngineInterface $inlineParser): void;
-~~~
+```
 
 This method is called when the engine is ready to parse any inline child elements.
 
@@ -118,9 +118,7 @@ Here are some additional tips to consider when writing your own custom parsers:
 
 Although parsing requires two classes, you can use the anonymous class feature of PHP to combine both into a single file!  Here's an example:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 
@@ -137,7 +135,7 @@ final class MyCustomBlockParser extends AbstractBlockContinueParser
     }
 }
 
-~~~
+```
 
 ### Performance
 

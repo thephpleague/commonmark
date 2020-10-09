@@ -21,9 +21,9 @@ title: Overview
 
 This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/2.0/installation/) section for more details.
 
@@ -31,16 +31,14 @@ See the [installation](/2.0/installation/) section for more details.
 
 Simply instantiate the converter and start converting some Markdown to HTML!
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
 echo $converter->convertToHtml('# Hello World!');
 
 // <h1>Hello World!</h1>
-~~~
+```
 
 <i class="fa fa-exclamation-triangle"></i>
 **Important:** See the [basic usage](/2.0/basic-usage/) and [security](/2.0/security/) sections for important details.

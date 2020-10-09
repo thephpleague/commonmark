@@ -45,9 +45,7 @@ This is best suited for situations when you need to know information about those
 
 If you'd like to iterate through all the nodes, use the `walker()` method to obtain an instance of `NodeWalker`.  This will walk through the entire tree, emitting `NodeWalkerEvent`s along the way.
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Node\NodeWalker;
 
 /** @var NodeWalker $walker */
@@ -55,7 +53,7 @@ $walker = $document->walker();
 while ($event = $walker->next()) {
     echo 'I am ' . ($event->isEntering() ? 'entering' : 'leaving') . ' a ' . get_class($event->getNode()) . ' node' . "\n";
 }
-~~~
+```
 
 This walker doesn't use recursion, so you won't blow the stack when working with deeply-nested nodes.  It's also very memory-efficient.
 
@@ -65,9 +63,7 @@ However, if you add/remove nodes while walking the tree, this can lead to the wa
 
 If you're trying to locate certain nodes to perform actions on them, querying the nodes from the AST might be easier to implement.  This can be done with the `Query` class:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Node\Block\Paragraph;
@@ -83,7 +79,7 @@ $matchingNodes = (new Query())
 foreach ($matchingNodes as $node) {
     // TODO: Do something with them
 }
-~~~
+```
 
 Each condition passed into `where()`, `orWhere()`, or `andWhere()` must be a callable "filter" that accepts a `Node` and returns `true` or `false`.  We provide several methods that can help create these filters for you:
 
@@ -97,9 +93,7 @@ Each condition passed into `where()`, `orWhere()`, or `andWhere()` must be a cal
 
 You can of course create your own custom filters/conditions using an anonymous function or by implementing `ExpressionInterface`:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Node\Node;
 use League\CommonMark\Node\Query;
 use League\CommonMark\Node\Query\ExpressionInterface;
@@ -121,7 +115,7 @@ class ChildCountGreaterThan implements ExpressionInterface
 $query = (new Query())
     ->where(function (Node $node): bool { return $node->data->has('attributes/class'); })
     ->andWhere(new ChildCountGreaterThan(3));
-~~~
+```
 
 ## Modification
 
