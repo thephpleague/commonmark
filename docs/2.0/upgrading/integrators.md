@@ -12,7 +12,7 @@ The minimum supported PHP version was increased from 7.1 to 7.2.
 
 In 1.x, calling `convertToHtml()` would return a `string`. In 2.x this changed to return a `RenderedContentInterface`.  To get the resulting HTML, either cast the return value to a `string` or call `->getContent()`.  (This new interface extends from `Stringable` so you can type hint against that instead, if needed.)
 
-~~~diff
+```diff
  <?php
  use League\CommonMark\CommonMarkConverter;
 
@@ -21,7 +21,7 @@ In 1.x, calling `convertToHtml()` would return a `string`. In 2.x this changed t
 +echo $converter->convertToHtml('# Hello World!')->getContent();
 +// or
 +echo (string) $converter->convertToHtml('# Hello World!');
-~~~
+```
 
 ## Method Return Types
 
@@ -142,7 +142,7 @@ This library no longer differentiates between block renderers and inline rendere
 Renderers now implement the unified `NodeRendererInterface` which has a similar (but slightly different) signature from
 the old `BlockRendererInterface` and `InlineRendererInterface` interfaces:
 
-~~~php
+```php
 /**
  * @param Node                       $node
  * @param ChildNodeRendererInterface $childRenderer
@@ -150,7 +150,7 @@ the old `BlockRendererInterface` and `InlineRendererInterface` interfaces:
  * @return HtmlElement|string|null
  */
 public function render(Node $node, ChildNodeRendererInterface $childRenderer);
-~~~
+```
 
 The element being rendered is still passed in the first argument, and the object that helps you render children is still
 passed in the second argument.  Note that blocks are no longer told whether they're being rendered in a tight list - if you

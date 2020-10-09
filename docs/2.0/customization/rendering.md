@@ -14,11 +14,11 @@ block renderers and inline renderers share the same interface and method:
 
 ## render()
 
-~~~php
+```php
 <?php
 
 public function render(Node $node, ChildNodeRendererInterface $childRenderer);
-~~~
+```
 
 The `HtmlRenderer` will call this method during the rendering process whenever a supported element is encountered.
 
@@ -39,20 +39,20 @@ If you choose to return an HTML `string` you are responsible for handling any es
 
 Instead of manually building the HTML output yourself, you can leverage the `HtmlElement` to generate that for you.  For example:
 
-~~~php
+```php
 <?php
 
 use League\CommonMark\Util\HtmlElement;
 
 $link = new HtmlElement('a', ['href' => 'https://github.com'], 'GitHub');
 $img = new HtmlElement('img', ['src' => 'logo.jpg'], '', true);
-~~~
+```
 
 ## Designating Renderers
 
 When registering your renderer, you must tell the `Environment` which node element class your renderer should handle. For example:
 
-~~~php
+```php
 <?php
 
 use League\CommonMark\Environment\Environment;
@@ -63,11 +63,11 @@ $environment = Environment::createCommonMarkEnvironment();
 // First param - the node class type that should use our renderer
 // Second param - instance of the renderer
 $environment->addRenderer(FencedCode::class, new MyCustomCodeRenderer());
-~~~
+```
 
 A single renderer could even be used for multiple types:
 
-~~~php
+```php
 <?php
 
 use League\CommonMark\Environment\Environment;
@@ -80,7 +80,7 @@ $myRenderer = new MyCustomCodeRenderer();
 
 $environment->addRenderer(FencedCode::class, $myRenderer, 10);
 $environment->addRenderer(IndentedCode::class, $myRenderer, 20);
-~~~
+```
 
 Multiple renderers can be added per element type - when this happens, we use the result from the highest-priority renderer that returns a non-`null` result.
 
@@ -88,7 +88,7 @@ Multiple renderers can be added per element type - when this happens, we use the
 
 Here's a custom renderer which renders thematic breaks as text (instead of `<hr>`):
 
-~~~php
+```php
 <?php
 
 use League\CommonMark\Environment\Environment;
@@ -108,7 +108,7 @@ class TextDividerRenderer implements NodeRendererInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addRenderer(ThematicBreak::class, new TextDividerRenderer());
-~~~
+```
 
 Note that thematic breaks should not contain children, which is why the `$childRenderer` is unused in this example.  Otherwise we'd have to call code like this and return the result as part of the rendered HTML we're generating here: `$innerHtml = $childRenderer->renderNodes($node->children());`
 

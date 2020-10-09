@@ -14,9 +14,9 @@ This extension makes all of your heading elements (`<h1>`, `<h2>`, etc) linkable
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/2.0/installation/) section for more details.
 

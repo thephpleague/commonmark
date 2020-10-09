@@ -13,17 +13,17 @@ The `FrontMatterExtension` adds the ability to parse YAML front matter from the 
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/2.0/installation/) section for more details.
 
 You will also need to install `symfony/yaml` to use this extension:
 
-~~~bash
+```bash
 composer require symfony/yaml
-~~~
+```
 
 (You can use any version of `symfony/yaml` 2.3 or higher, though we recommend using 4.0 or higher.)
 
@@ -31,7 +31,7 @@ composer require symfony/yaml
 
 This extension follows the [Jekyll Front Matter syntax](https://jekyllrb.com/docs/front-matter/). The front matter must be the first thing in the file and must take the form of valid YAML set between triple-dashed lines. Here is a basic example:
 
-```md
+```markdown
 ---
 layout: post
 title: I Love Markdown

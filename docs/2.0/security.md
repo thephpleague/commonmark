@@ -23,24 +23,24 @@ If you're developing an application which renders user-provided Markdown from po
 
 ### Example - Escape all raw HTML input:
 
-~~~php
+```php
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter(['html_input' => 'escape']);
 echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 
 // &lt;script&gt;alert("Hello XSS!");&lt;/script&gt;
-~~~
+```
 
 ### Example - Strip all HTML from the input:
-~~~php
+```php
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter(['html_input' => 'strip']);
 echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 
 // (empty output)
-~~~
+```
 
 **Failing to set this option could make your site vulnerable to cross-site scripting (XSS) attacks!**
 
@@ -65,7 +65,7 @@ If you need to parse untrusted input, consider setting a reasonable `max_nesting
 
 ### Example - Prevent deep nesting
 
-~~~php
+```php
 use League\CommonMark\CommonMarkConverter;
 
 $markdown = str_repeat('> ', 10000) . ' Foo';
@@ -83,7 +83,7 @@ echo $converter->convertToHtml($markdown);
 //     </blockquote>
 //   </blockquote>
 // </blockquote>
-~~~
+```
 
 See the [configuration](/2.0/configuration/) section for more information.
 

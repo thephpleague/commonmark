@@ -12,9 +12,9 @@ The `FootnoteExtension` adds the ability to create footnotes in Markdown documen
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/2.0/installation/) section for more details.
 
@@ -22,7 +22,7 @@ See the [installation](/2.0/installation/) section for more details.
 
 Sample Markdown input:
 
-```md
+```markdown
 Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi[^note1] leo risus, porta ac consectetur ac.
 
@@ -31,7 +31,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi[^note1] leo risus
 
 Result:
 
-```md
+```html
 <p>
     Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.

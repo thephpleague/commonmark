@@ -19,9 +19,9 @@ The difference between normal inlines and delimiter-run-based inlines is subtle 
 
 An example of this would be emphasis:
 
-~~~markdown
+```markdown
 This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after.
-~~~
+```
 
 If your syntax looks like that, consider using a [delimiter processor](/2.0/customization/delimiter-processing/) instead.  Otherwise, an inline parser is your best bet.
 
@@ -86,7 +86,7 @@ Returning `true` tells the engine that you've successfully parsed the character 
 
 Let's say you wanted to autolink Twitter handles without using the link syntax.  This could be accomplished by registering a new inline parser to handle the `@` character:
 
-~~~php
+```php
 <?php
 
 use League\CommonMark\Environment\Environment;
@@ -125,13 +125,13 @@ class TwitterHandleParser implements InlineParserInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineParser(new TwitterHandleParser());
-~~~
+```
 
 ### Example 2 - Emoticons
 
 Let's say you want to automatically convert smilies (or "frownies") to emoticon images.  This is incredibly easy with an inline parser:
 
-~~~php
+```php
 <?php
 
 use League\CommonMark\Environment\Environment;
@@ -167,7 +167,7 @@ class SmilieParser implements InlineParserInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineParser(new SmilieParserParser());
-~~~
+```
 
 ## Tips
 
