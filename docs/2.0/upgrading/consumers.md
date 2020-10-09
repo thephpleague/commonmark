@@ -89,6 +89,8 @@ This previously-deprecated constant was removed in 2.0. Use `HeadingPermalinkRen
 
 This previously-deprecated configuration option was removed in 2.0. Use `heading_permalink/symbol` instead.
 
-## `mentions/*/regex` configuration option
+## `mentions` configuration options
 
-Full regexes are no longer supported.  Remove the leading/trailing `/` delimiters and any PCRE flags.  For example: `/[\w_]+/iu` should be changed to `[\w_]+`.
+The `mentions/*/symbol` option has been renamed to `mentions/*/prefix`.
+
+The `mentions/*/regex` option has been renamed to `mentions/*/pattern`.  Additionally, full regular expressions are no longer supported.  Remove the leading/trailing `/` delimiters and any PCRE flags.  For example: `/[\w_]+/iu` should be changed to `[\w_]+`.

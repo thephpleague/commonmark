@@ -34,7 +34,7 @@ final class MentionParser implements InlineParserInterface
      *
      * @psalm-readonly
      */
-    private $identifierRegex;
+    private $identifierPattern;
 
     /**
      * @var MentionGeneratorInterface
@@ -43,18 +43,18 @@ final class MentionParser implements InlineParserInterface
      */
     private $mentionGenerator;
 
-    public function __construct(string $prefix, string $identifierRegex, MentionGeneratorInterface $mentionGenerator)
+    public function __construct(string $prefix, string $identifierPattern, MentionGeneratorInterface $mentionGenerator)
     {
-        $this->prefix           = $prefix;
-        $this->identifierRegex  = $identifierRegex;
-        $this->mentionGenerator = $mentionGenerator;
+        $this->prefix            = $prefix;
+        $this->identifierPattern = $identifierPattern;
+        $this->mentionGenerator  = $mentionGenerator;
     }
 
     public function getMatchDefinition(): InlineParserMatch
     {
         return InlineParserMatch::join(
             InlineParserMatch::string($this->prefix),
-            InlineParserMatch::regex($this->identifierRegex)
+            InlineParserMatch::regex($this->identifierPattern)
         );
     }
 

@@ -24,22 +24,22 @@ final class MentionExtension implements ExtensionInterface
     {
         $mentions = $environment->getConfig('mentions', []);
         foreach ($mentions as $name => $mention) {
-            foreach (['prefix', 'regex', 'generator'] as $key) {
+            foreach (['prefix', 'pattern', 'generator'] as $key) {
                 if (! \array_key_exists($key, $mention)) {
                     throw new InvalidOptionException(\sprintf('Required option "mentions/%s/%s" for the Mention extension is missing', $name, $key));
                 }
             }
 
-            if (! self::isAValidPartialRegex($mention['regex'])) {
-                throw InvalidOptionException::forConfigOption(\sprintf('mentions/%s/regex', $name), $mention['regex'], 'Invalid partial regex. Make sure to exclude starting/ending delimiters and flags.');
+            if (! self::isAValidPartialRegex($mention['pattern'])) {
+                throw InvalidOptionException::forConfigOption(\sprintf('mentions/%s/pattern', $name), $mention['pattern'], 'Invalid pattern. Make sure to exclude starting/ending delimiters (like "/") and flags from the regular expression.');
             }
 
             if ($mention['generator'] instanceof MentionGeneratorInterface) {
-                $environment->addInlineParser(new MentionParser($mention['prefix'], $mention['regex'], $mention['generator']));
+                $environment->addInlineParser(new MentionParser($mention['prefix'], $mention['pattern'], $mention['generator']));
             } elseif (\is_string($mention['generator'])) {
-                $environment->addInlineParser(MentionParser::createWithStringTemplate($mention['prefix'], $mention['regex'], $mention['generator']));
+                $environment->addInlineParser(MentionParser::createWithStringTemplate($mention['prefix'], $mention['pattern'], $mention['generator']));
             } elseif (\is_callable($mention['generator'])) {
-                $environment->addInlineParser(MentionParser::createWithCallback($mention['prefix'], $mention['regex'], $mention['generator']));
+                $environment->addInlineParser(MentionParser::createWithCallback($mention['prefix'], $mention['pattern'], $mention['generator']));
             } else {
                 throw new InvalidOptionException(\sprintf('The "generator" provided for the "%s" MentionParser configuration must be a string template, callable, or an object that implements %s.', $name, MentionGeneratorInterface::class));
             }
