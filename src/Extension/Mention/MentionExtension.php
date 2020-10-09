@@ -35,11 +35,11 @@ final class MentionExtension implements ExtensionInterface
             }
 
             if ($mention['generator'] instanceof MentionGeneratorInterface) {
-                $environment->addInlineParser(new MentionParser($mention['prefix'], $mention['pattern'], $mention['generator']));
+                $environment->addInlineParser(new MentionParser($name, $mention['prefix'], $mention['pattern'], $mention['generator']));
             } elseif (\is_string($mention['generator'])) {
-                $environment->addInlineParser(MentionParser::createWithStringTemplate($mention['prefix'], $mention['pattern'], $mention['generator']));
+                $environment->addInlineParser(MentionParser::createWithStringTemplate($name, $mention['prefix'], $mention['pattern'], $mention['generator']));
             } elseif (\is_callable($mention['generator'])) {
-                $environment->addInlineParser(MentionParser::createWithCallback($mention['prefix'], $mention['pattern'], $mention['generator']));
+                $environment->addInlineParser(MentionParser::createWithCallback($name, $mention['prefix'], $mention['pattern'], $mention['generator']));
             } else {
                 throw new InvalidOptionException(\sprintf('The "generator" provided for the "%s" MentionParser configuration must be a string template, callable, or an object that implements %s.', $name, MentionGeneratorInterface::class));
             }

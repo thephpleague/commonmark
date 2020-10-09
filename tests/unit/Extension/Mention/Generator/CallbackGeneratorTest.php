@@ -32,7 +32,7 @@ final class CallbackGeneratorTest extends TestCase
             return $mention;
         });
 
-        $mention = $generator->generateMention(new Mention('@', 'colinodell'));
+        $mention = $generator->generateMention(new Mention('test', '@', 'colinodell'));
 
         $this->assertSame('https://www.example.com/colinodell/@colinodell/@', $mention->getUrl());
 
@@ -47,7 +47,7 @@ final class CallbackGeneratorTest extends TestCase
             return null;
         });
 
-        $mention = $generator->generateMention(new Mention('@', 'colinodell'));
+        $mention = $generator->generateMention(new Mention('test', '@', 'colinodell'));
 
         $this->assertNull($mention);
     }
@@ -62,7 +62,7 @@ final class CallbackGeneratorTest extends TestCase
             return $emphasis;
         });
 
-        $mention = $generator->generateMention(new Mention('@', 'colinodell'));
+        $mention = $generator->generateMention(new Mention('test', '@', 'colinodell'));
 
         $this->assertSame($emphasis, $mention);
 
@@ -82,7 +82,7 @@ final class CallbackGeneratorTest extends TestCase
             return $mention;
         });
 
-        $generator->generateMention(new Mention('@', 'colinodell'));
+        $generator->generateMention(new Mention('test', '@', 'colinodell'));
     }
 
     public function testWithNewMentionButNoUrlReturn(): void
@@ -91,10 +91,10 @@ final class CallbackGeneratorTest extends TestCase
 
         $generator = new CallbackGenerator(static function (Mention $mention) {
             // Test what happens when returning a new mention without a URL
-            return new Mention('@', 'foo');
+            return new Mention('test', '@', 'foo');
         });
 
-        $generator->generateMention(new Mention('@', 'colinodell'));
+        $generator->generateMention(new Mention('test', '@', 'colinodell'));
     }
 
     public function testWithInvalidReturn(): void
@@ -105,6 +105,6 @@ final class CallbackGeneratorTest extends TestCase
             return new \stdClass(); // something that is not a string or null
         });
 
-        $generator->generateMention(new Mention('@', 'colinodell'));
+        $generator->generateMention(new Mention('test', '@', 'colinodell'));
     }
 }

@@ -27,6 +27,13 @@ final class MentionParser implements InlineParserInterface
      *
      * @psalm-readonly
      */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @psalm-readonly
+     */
     private $prefix;
 
     /**
@@ -43,8 +50,9 @@ final class MentionParser implements InlineParserInterface
      */
     private $mentionGenerator;
 
-    public function __construct(string $prefix, string $identifierPattern, MentionGeneratorInterface $mentionGenerator)
+    public function __construct(string $name, string $prefix, string $identifierPattern, MentionGeneratorInterface $mentionGenerator)
     {
+        $this->name              = $name;
         $this->prefix            = $prefix;
         $this->identifierPattern = $identifierPattern;
         $this->mentionGenerator  = $mentionGenerator;
@@ -71,7 +79,7 @@ final class MentionParser implements InlineParserInterface
 
         [$prefix, $identifier] = $inlineContext->getSubMatches();
 
-        $mention = $this->mentionGenerator->generateMention(new Mention($prefix, $identifier));
+        $mention = $this->mentionGenerator->generateMention(new Mention($this->name, $prefix, $identifier));
 
         if ($mention === null) {
             return false;
@@ -83,13 +91,13 @@ final class MentionParser implements InlineParserInterface
         return true;
     }
 
-    public static function createWithStringTemplate(string $prefix, string $mentionRegex, string $urlTemplate): MentionParser
+    public static function createWithStringTemplate(string $name, string $prefix, string $mentionRegex, string $urlTemplate): MentionParser
     {
-        return new self($prefix, $mentionRegex, new StringTemplateLinkGenerator($urlTemplate));
+        return new self($name, $prefix, $mentionRegex, new StringTemplateLinkGenerator($urlTemplate));
     }
 
-    public static function createWithCallback(string $prefix, string $mentionRegex, callable $callback): MentionParser
+    public static function createWithCallback(string $name, string $prefix, string $mentionRegex, callable $callback): MentionParser
     {
-        return new self($prefix, $mentionRegex, new CallbackGenerator($callback));
+        return new self($name, $prefix, $mentionRegex, new CallbackGenerator($callback));
     }
 }

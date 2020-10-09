@@ -21,8 +21,9 @@ final class MentionTest extends TestCase
 {
     public function testConstructorAndGetters(): void
     {
-        $mention = new Mention('@', 'colinodell');
+        $mention = new Mention('test', '@', 'colinodell');
 
+        $this->assertSame('test', $mention->getName());
         $this->assertSame('@', $mention->getPrefix());
         $this->assertSame('colinodell', $mention->getIdentifier());
         $this->assertSame('@colinodell', $mention->getLabel());
@@ -36,7 +37,7 @@ final class MentionTest extends TestCase
 
     public function testConstructorAndGettersWithCustomLabel(): void
     {
-        $mention = new Mention('#', '123', 'Issue #123');
+        $mention = new Mention('test', '#', '123', 'Issue #123');
 
         $this->assertSame('#', $mention->getPrefix());
         $this->assertSame('123', $mention->getIdentifier());
@@ -51,7 +52,7 @@ final class MentionTest extends TestCase
 
     public function testSetUrl(): void
     {
-        $mention = new Mention('@', 'colinodell');
+        $mention = new Mention('test', '@', 'colinodell');
         $mention->setUrl('https://www.twitter.com/colinodell');
 
         $this->assertSame('https://www.twitter.com/colinodell', $mention->getUrl());
@@ -59,7 +60,7 @@ final class MentionTest extends TestCase
 
     public function testSetLabel(): void
     {
-        $mention = new Mention('@', 'colinodell');
+        $mention = new Mention('test', '@', 'colinodell');
 
         $this->assertSame('@colinodell', $mention->getLabel());
 
@@ -82,7 +83,7 @@ final class MentionTest extends TestCase
 
     public function testLabelFunctionsWhenLabelDetached(): void
     {
-        $mention = new Mention('@', 'colinodell');
+        $mention = new Mention('test', '@', 'colinodell');
 
         $this->assertSame('@colinodell', $mention->getLabel());
 
