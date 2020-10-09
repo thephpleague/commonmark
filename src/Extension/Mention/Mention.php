@@ -22,13 +22,17 @@ use League\CommonMark\Node\Inline\Text;
 class Mention extends Link
 {
     /** @var string */
+    private $name;
+
+    /** @var string */
     private $prefix;
 
     /** @var string */
     private $identifier;
 
-    public function __construct(string $prefix, string $identifier, ?string $label = null)
+    public function __construct(string $name, string $prefix, string $identifier, ?string $label = null)
     {
+        $this->name       = $name;
         $this->prefix     = $prefix;
         $this->identifier = $identifier;
 
@@ -47,6 +51,11 @@ class Mention extends Link
     public function getIdentifier(): string
     {
         return $this->identifier;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 
     public function getPrefix(): string

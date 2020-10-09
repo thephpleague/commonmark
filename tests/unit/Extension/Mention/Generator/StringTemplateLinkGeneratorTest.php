@@ -24,7 +24,7 @@ final class StringTemplateLinkGeneratorTest extends TestCase
     {
         $generator = new StringTemplateLinkGenerator('https://www.twitter.com/%s');
 
-        $mention = $generator->generateMention(new Mention('@', 'colinodell'));
+        $mention = $generator->generateMention(new Mention('test', '@', 'colinodell'));
         \assert($mention instanceof Mention);
 
         $this->assertSame('https://www.twitter.com/colinodell', $mention->getUrl());
