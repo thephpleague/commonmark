@@ -34,7 +34,6 @@ To hook up your new extension to the `Environment`, simply do this:
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 
-
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new EmojiExtension());
 
