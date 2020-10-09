@@ -60,7 +60,7 @@ EOT;
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
-                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => 'https://github.com/%s',
                 ],
             ],
@@ -88,7 +88,7 @@ EOT;
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
-                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => static function (Mention $mention) {
                         $mention->setUrl(\sprintf('https://github.com/%s', $mention->getIdentifier()));
 
@@ -120,7 +120,7 @@ EOT;
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
-                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => new class () implements MentionGeneratorInterface {
                         public function generateMention(Mention $mention): ?AbstractInline
                         {
@@ -148,7 +148,7 @@ EOT;
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
-                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => new \stdClass(),
                 ],
             ],
@@ -169,7 +169,7 @@ EOT;
             'mentions' => [
                 'github_handle' => [
                     'symbol'    => '@',
-                    'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
                     'generator' => 'https://github.com/%s',
                 ],
             ],
@@ -190,7 +190,7 @@ EOT;
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
-                    'regex'     => '/[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/i',
+                    'pattern'   => '/[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/i',
                     'generator' => 'https://github.com/%s',
                 ],
             ],

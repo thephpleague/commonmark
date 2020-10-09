@@ -66,7 +66,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
  - Changes to configuration options:
      - `mentions/*/symbol` has been renamed to `mentions/*/prefix`
-     - `mentions/*/regex` now requires partial regular expressions (without delimiters or flags)
+     - `mentions/*/regex` has been renamed to `mentions/*/pattern` and requires partial regular expressions (without delimiters or flags)
  - Event dispatching is now fully PSR-14 compliant
  - The `AbstractBlock::$data` and `AbstractInline::$data` arrays were replaced with a `Data` array-like object on the base `Node` class
  - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
