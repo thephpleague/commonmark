@@ -78,8 +78,6 @@ This event is dispatched once all other processing is done.  This offers extensi
 Here's an example of a listener which uses the `DocumentParsedEvent` to add an `external-link` class to external URLs:
 
 ```php
-<?php
-
 use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Inline\Element\Link;
@@ -129,8 +127,6 @@ class ExternalLinkProcessor
 And here's how you'd use it:
 
 ```php
-<?php
-
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
