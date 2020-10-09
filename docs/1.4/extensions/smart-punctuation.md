@@ -24,9 +24,9 @@ Will result in this HTML:
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
 
-~~~bash
+```bash
 composer require league/commonmark
-~~~
+```
 
 See the [installation](/1.4/installation/) section for more details.
 

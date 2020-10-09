@@ -9,7 +9,7 @@ Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting Markdown to HTML:
 
-~~~php
+```php
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
@@ -20,7 +20,7 @@ $converter = new CommonMarkConverter();
 echo $converter->convertToHtml('# Hello World!');
 
 // <h1>Hello World!</h1>
-~~~
+```
 
 Or if you want Github-Flavored Markdown:
 
