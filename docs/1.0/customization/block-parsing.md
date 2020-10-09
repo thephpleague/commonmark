@@ -12,11 +12,11 @@ Block parsers should implement `BlockParserInterface` and implement the followin
 
 ## parse()
 
-~~~php
+```php
 <?php
 
 public function parse(ContextInterface $context, Cursor $cursor): bool;
-~~~
+```
 
 When parsing a new line, the `DocParser` iterates through all registered block parsers and calls their `parse()` method.  Each parser must determine whether it can handle the given line; if so, it should parse the given block and return `true`.
 
