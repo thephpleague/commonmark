@@ -13,8 +13,6 @@ Block parsers should implement `BlockParserInterface` and implement the followin
 ## parse()
 
 ```php
-<?php
-
 public function parse(ContextInterface $context, Cursor $cursor): bool;
 ```
 

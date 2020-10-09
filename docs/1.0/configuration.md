@@ -10,8 +10,6 @@ Configuration
 You can provide an array of configuration options to the `CommonMarkConverter` when creating it:
 
 ```php
-<?php
-
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter([

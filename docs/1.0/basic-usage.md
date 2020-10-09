@@ -11,8 +11,6 @@ Basic Usage
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
 ```php
-<?php
-
 require __DIR__ . '/vendor/autoload.php';
 
 use League\CommonMark\CommonMarkConverter;
@@ -35,8 +33,6 @@ The actual conversion process has three steps:
 `CommonMarkConverter` handles this for you, but you can execute that process yourself if you wish:
 
 ```php
-<?php
-
 require __DIR__ . '/vendor/autoload.php';
 
 use League\CommonMark\DocParser;

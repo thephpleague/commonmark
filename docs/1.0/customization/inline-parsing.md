@@ -61,8 +61,6 @@ Returning `true` tells the engine that you've successfully parsed the character 
 Let's say you wanted to autolink Twitter handles without using the link syntax.  This could be accomplished by registering a new inline parser to handle the `@` character:
 
 ```php
-<?php
-
 use League\CommonMark\Environment;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
@@ -74,6 +72,7 @@ class TwitterHandleParser implements InlineParserInterface
     {
         return ['@'];
     }
+
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
@@ -109,8 +108,6 @@ $environment->addInlineParser(new TwitterHandleParser());
 Let's say you want to automatically convert smilies (or "frownies") to emoticon images.  This is incredibly easy with an inline parser:
 
 ```php
-<?php
-
 use League\CommonMark\Environment;
 use League\CommonMark\Inline\Element\Image;
 use League\CommonMark\Inline\Parser\InlineParserInterface;

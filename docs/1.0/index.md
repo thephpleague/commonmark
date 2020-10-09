@@ -33,8 +33,6 @@ See the [installation](/1.0/installation/) section for more details.
 Simply instantiate the converter and start converting some Markdown to HTML!
 
 ```php
-<?php
-
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
