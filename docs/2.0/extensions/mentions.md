@@ -35,7 +35,7 @@ $config = [
         // Sample Output: `<a href="https://www.github.com/colinodell">@colinodell</a>`
         'github_handle' => [
             'prefix'    => '@',
-            'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+            'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
             'generator' => 'https://github.com/%s',
         ],
         // GitHub issue mention configuration.
@@ -43,17 +43,20 @@ $config = [
         // Sample Output: `<a href="https://github.com/thephpleague/commonmark/issues/473">#473</a>`
         'github_issue' => [
             'prefix'    => '#',
-            'regex'     => '\d+',
+            'pattern'   => '\d+',
             'generator' => "https://github.com/thephpleague/commonmark/issues/%d",
         ],
         // Twitter handler mention configuration.
         // Sample Input:  `@colinodell`
         // Sample Output: `<a href="https://www.twitter.com/colinodell">@colinodell</a>`
-        // Note: when registering more than one mention parser with the same prefix, the last one registered will
-        // always take precedence.
+        // Note: when registering more than one mention parser with the same prefix, the first mention parser to
+        // successfully match and return a properly constructed Mention object (where the URL has been set) will be the
+        // the mention parser that is used. In this example, the GitHub handle would actually match first because
+        // there isn't any real validation to check whether https://www.github.com/colinodell exists. However, in
+        // CMS applications, you could check whether its a local user first, then check Twitter and then GitHub, etc.
         'twitter_handle' => [
             'prefix'    => '@',
-            'regex'     => '[A-Za-z0-9_]{1,15}(?!\w)',
+            'pattern'   => '[A-Za-z0-9_]{1,15}(?!\w)',
             'generator' => 'https://twitter.com/%s',
         ],
     ],
@@ -61,9 +64,9 @@ $config = [
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new CommonMarkConverter($config, $environment);
-echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
+echo $converter->convertToHtml('Follow me on GitHub: @colinodell');
 // Output:
-// <p>Follow me on Twitter: <a href="https://twitter.com/colinodell">@colinodell</a></p>
+// <p>Follow me on GitHub: <a href="https://www.github.com/colinodell">@colinodell</a></p>
 ```
 
 ## String-Based URL Templates
@@ -79,7 +82,7 @@ Prefix └───────────── Identifier ──────�
 
 Examples of using string-based URL templates can be seen in the usage example above - you simply provide a `string` to the `generator` option.
 
-Note that the URL template must be a string, and that the `%s` placeholder will be replaced by whatever the user enters after the prefix (in this case, `@`).  You can use any prefix, regex pattern (without opening/closing delimiter or modifiers), or URL template you want!
+Note that the URL template must be a string, and that the `%s` placeholder will be replaced by whatever the user enters after the prefix (in this case, `@`).  You can use any prefix, regular expression pattern (without opening/closing delimiter or modifiers), or URL template you want!
 
 ## Custom Callback-Based Parsers
 
@@ -107,13 +110,13 @@ $config = [
     'mentions' => [
         'github_handle' => [
             'prefix'    => '@',
-            'regex'     => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+            'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
             // The recommended approach is to provide a class that implements MentionGeneratorInterface.
             'generator' => new GithubUserMentionGenerator(), // TODO: Implement such a class yourself
         ],
         'github_issue' => [
             'prefix'    => '#',
-            'regex'     => '\d+',
+            'pattern'   => '\d+',
             // Alternatively, if your logic is simple, you can implement an inline anonymous class like this example.
             'generator' => new class implements MentionGeneratorInterface {
                  public function generateMention(Mention $mention): ?AbstractInline
@@ -126,7 +129,7 @@ $config = [
         ],
         'github_issue' => [
             'prefix'    => '#',
-            'regex'     => '\d+',
+            'pattern'   => '\d+',
             // Any type of callable, including anonymous closures, (with optional typehints) are also supported.
             // This allows for better compatibility between different major versions of CommonMark.
             // However, you sacrifice the ability to type-check which means automated development tools
@@ -229,7 +232,7 @@ $config = [
     'mentions' => [
         'user_url_generator' => [
             'prefix'    => '@',
-            'regex'     => '[a-z0-9]+',
+            'pattern'   => '[a-z0-9]+',
             'generator' => $userMentionGenerator,
         ],
     ],
