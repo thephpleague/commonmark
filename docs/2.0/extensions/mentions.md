@@ -49,8 +49,11 @@ $config = [
         // Twitter handler mention configuration.
         // Sample Input:  `@colinodell`
         // Sample Output: `<a href="https://www.twitter.com/colinodell">@colinodell</a>`
-        // Note: when registering more than one mention parser with the same prefix, the last one registered will
-        // always take precedence.
+        // Note: when registering more than one mention parser with the same prefix, the first mention parser to
+        // successfully match and return a properly constructed Mention object (where the URL has been set) will be the
+        // the mention parser that is used. In this example, the GitHub handle would actually match first because
+        // there isn't any real validation to check whether https://www.github.com/colinodell exists. However, in
+        // CMS applications, you could check whether its a local user first, then check Twitter and then GitHub, etc.
         'twitter_handle' => [
             'prefix'    => '@',
             'pattern'   => '[A-Za-z0-9_]{1,15}(?!\w)',
@@ -61,9 +64,9 @@ $config = [
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new CommonMarkConverter($config, $environment);
-echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
+echo $converter->convertToHtml('Follow me on GitHub: @colinodell');
 // Output:
-// <p>Follow me on Twitter: <a href="https://twitter.com/colinodell">@colinodell</a></p>
+// <p>Follow me on GitHub: <a href="https://www.github.com/colinodell">@colinodell</a></p>
 ```
 
 ## String-Based URL Templates
