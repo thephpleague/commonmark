@@ -34,7 +34,7 @@ Put the following code in it and save:
 
 When the file is set up, run the following command and you are done.
 
-```sh
+```bash
 composer install
 ```
 
