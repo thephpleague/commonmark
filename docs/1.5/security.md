@@ -9,9 +9,9 @@ redirect_from: /security/
 
 In order to be fully compliant with the CommonMark spec, certain security settings are disabled by default.  You will want to configure these settings if untrusted users will be providing the Markdown content:
 
- - `html_input`: How to handle raw HTML
- - `allow_unsafe_links`: Whether unsafe links are permitted
- - `max_nesting_level`: Protected against long render times or segfaults
+- `html_input`: How to handle raw HTML
+- `allow_unsafe_links`: Whether unsafe links are permitted
+- `max_nesting_level`: Protected against long render times or segfaults
 
 Further information about each option can be found below.
 
@@ -51,10 +51,10 @@ See the [configuration](/1.5/configuration/) section for more information.
 
 Unsafe links are also allowed by default due to CommonMark spec compliance.  An unsafe link is one that uses any of these protocols:
 
- - `javascript:`
- - `vbscript:`
- - `file:`
- - `data:` (except for `data:image` in png, gif, jpeg, or webp format)
+- `javascript:`
+- `vbscript:`
+- `file:`
+- `data:` (except for `data:image` in png, gif, jpeg, or webp format)
 
 To prevent these from being parsed and rendered, you should set the `allow_unsafe_links` option to `false`.
 

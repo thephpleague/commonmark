@@ -11,8 +11,8 @@ Delimiter processors allow you to implement [delimiter runs](https://spec.common
 
 Delimiter runs are a special type of inline:
 
- - They are denoted by "wrapping" text with one or more characters before **and** after those inner contents
- - They can contain other delimiter runs or inlines inside of them
+- They are denoted by "wrapping" text with one or more characters before **and** after those inner contents
+- They can contain other delimiter runs or inlines inside of them
 
 ```markdown
 This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after.
