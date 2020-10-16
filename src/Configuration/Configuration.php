@@ -84,14 +84,10 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
     /**
      * {@inheritDoc}
      */
-    public function get(?string $key = null)
+    public function get(string $key)
     {
         if ($this->finalConfig === null) {
             $this->finalConfig = $this->build();
-        }
-
-        if ($key === null) {
-            return $this->finalConfig->export();
         }
 
         try {

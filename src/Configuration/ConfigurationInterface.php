@@ -33,7 +33,7 @@ interface ConfigurationInterface
      *
      * @throws InvalidConfigurationException if the key does not exist
      */
-    public function get(?string $key = null);
+    public function get(string $key);
 
     /**
      * Set the configuration value at the given key
