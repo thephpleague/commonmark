@@ -80,5 +80,5 @@ to essentially "swap out" built-in renderers with your own.
 
 Some examples of what's possible:
 
-* [Parse Twitter handles into profile links](/1.5/customization/inline-parsing#example-1---twitter-handles)
-* [Convert smilies into emoticon images](/1.5/customization/inline-parsing#example-2---emoticons)
+- [Parse Twitter handles into profile links](/1.5/customization/inline-parsing#example-1---twitter-handles)
+- [Convert smilies into emoticon images](/1.5/customization/inline-parsing#example-2---emoticons)
