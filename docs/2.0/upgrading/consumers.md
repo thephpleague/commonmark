@@ -38,7 +38,7 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `HtmlRenderer`                                                                        | `Renderer\HtmlRenderer`                                                                  |
 | `ElementRendererInterface`                                                            | `Renderer\HtmlRendererInterface`                                                         |
 
-(This is only a partial list of the clases and interfaces you're likely to work with as a consumer - see the [developer upgrade guide](/2.0/upgrading/developers/) for the complete list.)
+(This is only a partial list of the clases and interfaces you're likely to work with as a consumer – see the [developer upgrade guide](/2.0/upgrading/developers/) for the complete list.)
 
 ## Removed Classes
 
@@ -78,7 +78,7 @@ This command was buggy to test and was relatively unpopular, so it has been remo
 
 ## `CommonMarkConverter::VERSION` constant
 
-This previously-deprecated constant was removed in 2.0 Use `\Composer\InstalledVersions` provided by composer-runtime-api instead.
+This previously-deprecated constant was removed in 2.0. Use `\Composer\InstalledVersions` provided by `composer-runtime-api` instead.
 
 ## `HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS` constant
 
@@ -92,4 +92,4 @@ This previously-deprecated configuration option was removed in 2.0. Use `heading
 
 The `mentions/*/symbol` option has been renamed to `mentions/*/prefix`.
 
-The `mentions/*/regex` option has been renamed to `mentions/*/pattern`.  Additionally, full regular expressions are no longer supported.  Remove the leading/trailing `/` delimiters and any PCRE flags.  For example: `/[\w_]+/iu` should be changed to `[\w_]+`.
+The `mentions/*/regex` option has been renamed to `mentions/*/pattern`.  Additionally, full regular expressions are no longer supported.  Remove the leading and trailing `/` delimiters, and any PCRE flags. For example: `/[\w_]+/iu` should be changed to `[\w_]+`.
