@@ -159,9 +159,10 @@ echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 ```
 
 When implementing `MentionGeneratorInterface` or a simple callable, you'll receive a single `Mention` parameter and must either:
-  - Return the same passed `Mention` object along with setting the URL; or,
-  - Return a new object that extends `\League\CommonMark\Inline\Element\AbstractInline`; or,
-  - Return `null` (and not set a URL on the `Mention` object) if the mention isn't a match and should be skipped; not parsed.
+
+- Return the same passed `Mention` object along with setting the URL; or,
+- Return a new object that extends `\League\CommonMark\Inline\Element\AbstractInline`; or,
+- Return `null` (and not set a URL on the `Mention` object) if the mention isn't a match and should be skipped; not parsed.
 
 Here's a faux-real-world example of how you might use such a generator for your application. Imagine you
 want to parse `@username` into custom user profile links for your application, but only if the user exists. You could

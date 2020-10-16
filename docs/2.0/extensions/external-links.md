@@ -8,9 +8,9 @@ description: The ExternalLinksExtension detects external links and adjusts their
 
 This extension can detect links to external sites and adjust the markup accordingly:
 
- - Make the links open in new tabs/windows
- - Adds a `rel` attribute to the resulting `<a>` tag with values like `"nofollow noopener noreferrer"`
- - Optionally adds any custom HTML classes
+- Make the links open in new tabs/windows
+- Adds a `rel` attribute to the resulting `<a>` tag with values like `"nofollow noopener noreferrer"`
+- Optionally adds any custom HTML classes
 
 ## Installation
 
@@ -90,10 +90,10 @@ This option allows you to provide a `string` containing one or more HTML classes
 
 These options allow you to configure whether a `rel` attribute should be applied to links.  Each of these options can be set to one of the following `string` values:
 
- - `'external'` - **Apply to external links only (default)**
- - `'internal'` - Apply to internal links only
- - `'all'` - Apply to all links (both internal and external)
- - `''` (empty string) - Don't apply to any links
+- `'external'` - **Apply to external links only (default)**
+- `'internal'` - Apply to internal links only
+- `'all'` - Apply to all links (both internal and external)
+- `''` (empty string) - Don't apply to any links
 
 ## Advanced Rendering
 

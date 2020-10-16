@@ -44,10 +44,10 @@ echo $converter->convertToHtml('Some Markdown with a table in it');
 
 This package is fully compatible with [GFM-style tables](https://github.github.com/gfm/#tables-extension-):
 
-
 ### Simple
 
 Code:
+
 ```markdown
 th | th(center) | th(right)
 ---|:----------:|----------:
@@ -55,6 +55,7 @@ td | td         | td
 ```
 
 Result:
+
 ```html
 <table>
 <thead>

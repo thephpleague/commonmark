@@ -10,15 +10,15 @@ _(Note: this extension is included by default within [the GFM extension](/2.0/ex
 
 The `DisallowedRawHTMLExtension` automatically escapes certain HTML tags when rendering raw HTML, such as:
 
- - `<title>`
- - `<textarea>`
- - `<style>`
- - `<xmp>`
- - `<iframe>`
- - `<noembed>`
- - `<noframes>`
- - `<script>`
- - `<plaintext>`
+- `<title>`
+- `<textarea>`
+- `<style>`
+- `<xmp>`
+- `<iframe>`
+- `<noembed>`
+- `<noframes>`
+- `<script>`
+- `<plaintext>`
 
 Filtering is done by replacing the leading `<` with the entity `&lt;`.
 

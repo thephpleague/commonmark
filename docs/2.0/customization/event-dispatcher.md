@@ -79,7 +79,6 @@ This event is dispatched once all other processing is done.  This offers extensi
 
 This event is dispatched once the rendering step has been completed, just before the output is returned.  The final output can be adjusted at this point or additional metadata can be attached to the return object.
 
-
 ## Bring Your Own PSR-14 Event Dispatcher
 
 Although this library provides PSR-14 compliant event dispatching out-of-the-box, you may want to use your own PSR-14 event dispatcher instead.  This is possible as long as that third-party library both:
