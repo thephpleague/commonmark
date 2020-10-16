@@ -5,8 +5,7 @@ description: How to customize the rendering of block-level elements
 redirect_from: /customization/block-rendering/
 ---
 
-Block Rendering
-===============
+# Block Rendering
 
 Block renderers are responsible for converting the parsed AST elements into their HTML representation.
 

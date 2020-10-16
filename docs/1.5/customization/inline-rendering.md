@@ -5,8 +5,7 @@ description: Customizing the output when rendering inline elements
 redirect_from: /customization/inline-rendering/
 ---
 
-Inline Rendering
-===============
+# Inline Rendering
 
 Inline renderers are responsible for converting the parsed inline elements into their HTML representation.
 

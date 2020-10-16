@@ -5,8 +5,7 @@ description: Parsing inline elements with a custom parser
 redirect_from: /customization/inline-parsing/
 ---
 
-Inline Parsing
-==============
+# Inline Parsing
 
 There are two ways to implement custom inline syntax:
 

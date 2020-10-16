@@ -4,8 +4,7 @@ title: Command Line
 redirect_from: /command-line/
 ---
 
-Command Line
-============
+# Command Line
 
 **This functionality has been deprecated in version 1.4 and will be removed in 2.0.**
 

@@ -7,8 +7,7 @@ redirect_from:
   - /customization/overview/
 ---
 
-Customization Overview
-======================
+# Customization Overview
 
 Ready to go beyond the basics of converting Markdown to HTML? This page describes some of the more advanced things you can customize this library to do.
 

@@ -5,8 +5,7 @@ description: Using the Abstract Syntax Tree (AST) to manipulate the parsed conte
 redirect_from: /customization/abstract-syntax-tree/
 ---
 
-Abstract Syntax Tree
-====================
+# Abstract Syntax Tree
 
 This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent the parsed block and inline elements.  All such elements extend from the `Node` class.
 

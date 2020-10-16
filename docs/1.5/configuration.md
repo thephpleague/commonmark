@@ -4,8 +4,7 @@ title: Configuration
 redirect_from: /configuration/
 ---
 
-Configuration
-=============
+# Configuration
 
 You can provide an array of configuration options to the `CommonMarkConverter` when creating it:
 

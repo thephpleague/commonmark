@@ -5,8 +5,7 @@ description: Creating custom extensions to add new syntax and other custom funct
 redirect_from: /customization/extensions/
 ---
 
-Extensions
-==========
+# Extensions
 
 Extensions provide a way to group related parsers, renderers, etc. together with pre-defined priorities, configuration settings, etc.  They are perfect for distributing your customizations as reusable, open-source packages that others can plug into their own projects!
 
