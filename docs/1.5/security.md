@@ -21,7 +21,7 @@ Further information about each option can be found below.
 
 If you're developing an application which renders user-provided Markdown from potentially untrusted users, you are **strongly** encouraged to set the `html_input` option in your configuration to either `escape` or `strip`:
 
-### Example - Escape all raw HTML input:
+### Example - Escape all raw HTML input
 
 ```php
 use League\CommonMark\CommonMarkConverter;
@@ -32,7 +32,7 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 // &lt;script&gt;alert("Hello XSS!");&lt;/script&gt;
 ```
 
-### Example - Strip all HTML from the input:
+### Example - Strip all HTML from the input
 
 ```php
 use League\CommonMark\CommonMarkConverter;

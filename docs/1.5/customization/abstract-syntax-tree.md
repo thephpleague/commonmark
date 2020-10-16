@@ -14,7 +14,7 @@ This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent t
 The root node of the AST will always be a `Document` object.  You can obtain this node a few different ways:
 
 - By calling the `parse()` method on the `DocParser`
-- By calling the `getDocument()` method on either the `DocumentPreParsedEvent` or `DocumentParsedEvent` (see the (Event Dispatcher documentation)[/1.5/customization/event-dispatcher/])
+- By calling the `getDocument()` method on either the `DocumentPreParsedEvent` or `DocumentParsedEvent` (see the [Event Dispatcher documentation](/1.5/customization/event-dispatcher/))
 
 ## Traversal
 
