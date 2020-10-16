@@ -4,8 +4,7 @@ title: Delimiter Processing
 description: Processing CommonMark delimiter runs with a custom processor
 ---
 
-Delimiter Processing
-====================
+# Delimiter Processing
 
 Delimiter processors allow you to implement [delimiter runs](https://spec.commonmark.org/0.29/#delimiter-run) the same way the core library implements emphasis.
 

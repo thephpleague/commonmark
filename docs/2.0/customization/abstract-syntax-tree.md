@@ -4,8 +4,7 @@ title: Abstract Syntax Tree
 description: Using the Abstract Syntax Tree (AST) to manipulate the parsed content
 ---
 
-Abstract Syntax Tree
-====================
+# Abstract Syntax Tree
 
 This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent the parsed block and inline elements.  All such elements extend from the `Node` class.
 
@@ -32,12 +31,12 @@ Each is described in more detail below
 
 The following methods can be used to manually traverse from one `Node` to any of its direct relatives:
 
-* `previous()`
-* `next()`
-* `parent()`
-* `firstChild()`
-* `lastChild()`
-* `children()`
+- `previous()`
+- `next()`
+- `parent()`
+- `firstChild()`
+- `lastChild()`
+- `children()`
 
 This is best suited for situations when you need to know information about those relatives.
 
@@ -121,14 +120,14 @@ $query = (new Query())
 
 The following methods can be used to modify the AST:
 
-* `insertAfter(Node $sibling)`
-* `insertBefore(Node $sibling)`
-* `replaceWith(Node $replacement)`
-* `detach()`
-* `appendChild(Node $child)`
-* `prependChild(Node $child)`
-* `detachChildren()`
-* `replaceChildren(Node[] $children)`
+- `insertAfter(Node $sibling)`
+- `insertBefore(Node $sibling)`
+- `replaceWith(Node $replacement)`
+- `detach()`
+- `appendChild(Node $child)`
+- `prependChild(Node $child)`
+- `detachChildren()`
+- `replaceChildren(Node[] $children)`
 
 ## `DocumentParsedEvent`
 

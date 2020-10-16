@@ -73,7 +73,7 @@ echo $converter->convertToHtml('Follow me on GitHub: @colinodell');
 
 URL templates are perfect for situations where the identifier is inserted directly into a URL:
 
-```
+```text
 "@colinodell" => https://www.twitter.com/colinodell
  ▲└────┬───┘                             └───┬────┘
  │     │                                     │

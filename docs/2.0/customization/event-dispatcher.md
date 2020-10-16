@@ -4,8 +4,7 @@ title: Event Dispatcher
 description: How to leverage the event dispatcher to hook into the library
 ---
 
-Event Dispatcher
-================
+# Event Dispatcher
 
 This library includes basic, [PSR-14](https://www.php-fig.org/psr/psr-14/)-compliant event dispatcher functionality.  This makes it possible to add hook points throughout the library and third-party extensions which other code can listen for and execute code.
 

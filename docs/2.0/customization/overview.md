@@ -4,8 +4,7 @@ title: Customization Overview
 description: An overview of the powerful customization features
 ---
 
-Customization Overview
-======================
+# Customization Overview
 
 Ready to go beyond the basics of converting Markdown to HTML? This page describes some of the more advanced things you can customize this library to do.
 
@@ -72,5 +71,5 @@ Once the [Abstract Syntax Tree](/2.0/customization/abstract-syntax-tree/) is par
 
 Some examples of what's possible:
 
-* [Parse Twitter handles into profile links](/2.0/customization/inline-parsing#example-1---twitter-handles)
-* [Convert smilies into emoticon images](/2.0/customization/inline-parsing#example-2---emoticons)
+- [Parse Twitter handles into profile links](/2.0/customization/inline-parsing#example-1---twitter-handles)
+- [Convert smilies into emoticon images](/2.0/customization/inline-parsing#example-2---emoticons)
