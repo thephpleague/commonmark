@@ -18,9 +18,24 @@ That consists of a left curly brace, optionally followed by a colon, the attribu
 ```markdown
 > A nice blockquote
 {: title="Blockquote title"}
+```
 
+This results in the following output:
+```html
+<blockquote title="Blockquote title">
+<p>A nice blockquote</p>
+</blockquote>
+```
+
+CSS-selector-style declarations can be used to set the `id` and `class` attributes:
+```markdown
 {#id .class}
 ## Header
+```
+
+Output:
+```html
+<h2 class="class" id="id">Header</h2>
 ```
 
 As with a block-level element you can assign any attribute to a span-level elements using a span inline attribute list,
@@ -28,6 +43,11 @@ that has the same syntax and must immediately follow the span-level element:
 
 ```markdown
 This is *red*{style="color: red"}.
+```
+
+Output:
+```html
+<p>This is <em style="color: red">red</em>.</p>
 ```
 
 ## Installation
