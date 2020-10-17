@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.5.6] - 2020-10-17
+
 ### Changed
 
  - Blocks added outside of the parsing context now have their start/end line numbers defaulted to 0 to avoid type errors (#579)
@@ -390,7 +392,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.5...1.5
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.6...1.5
+[1.5.6]: https://github.com/thephpleague/commonmark/compare/1.5.5...1.5.6
 [1.5.5]: https://github.com/thephpleague/commonmark/compare/1.5.4...1.5.5
 [1.5.4]: https://github.com/thephpleague/commonmark/compare/1.5.3...1.5.4
 [1.5.3]: https://github.com/thephpleague/commonmark/compare/1.5.2...1.5.3
