@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Blocks added outside of the parsing context now have their start/end line numbers defaulted to 0 to avoid type errors (#579)
+
 ### Fixed
 
  - Fixed replacement blocks not inheriting the start line number of the container they're replacing (#579)
