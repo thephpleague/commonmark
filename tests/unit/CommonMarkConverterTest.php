@@ -33,9 +33,10 @@ class CommonMarkConverterTest extends TestCase
 
         $this->assertCount(1, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
+        $this->assertEquals($expectedEnvironment->getConfig(), $environment->getConfig());
     }
 
-    public function testConfigPassedIntoConstructor(): void
+    public function testConfigOnlyConstructor(): void
     {
         $config    = ['foo' => 'bar'];
         $converter = new CommonMarkConverter($config);
@@ -44,7 +45,22 @@ class CommonMarkConverterTest extends TestCase
 
         $this->assertCount(1, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
-        $this->assertSame('bar', $environment->getConfig('foo', 'DEFAULT'));
+        $this->assertArrayHasKey('foo', $environment->getConfig());
+    }
+
+    public function testEnvironmentAndConfigConstructor(): void
+    {
+        $config          = ['foo' => 'bar'];
+        $mockEnvironment = $this->createMock(EnvironmentBuilderInterface::class);
+        $mockEnvironment->expects($this->once())
+            ->method('mergeConfig')
+            ->with($config);
+
+        $converter = new CommonMarkConverter($config, $mockEnvironment);
+
+        $environment = $converter->getEnvironment();
+
+        $this->assertSame($mockEnvironment, $environment);
     }
 
     public function testConvertingInvalidUTF8(): void

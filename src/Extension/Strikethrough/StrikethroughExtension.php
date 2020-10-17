@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Strikethrough;
 
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 
 final class StrikethroughExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addDelimiterProcessor(new StrikethroughDelimiterProcessor());
         $environment->addRenderer(Strikethrough::class, new StrikethroughRenderer());

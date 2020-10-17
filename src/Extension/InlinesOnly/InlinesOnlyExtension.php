@@ -15,7 +15,7 @@ namespace League\CommonMark\Extension\InlinesOnly;
 
 use League\CommonMark as Core;
 use League\CommonMark\Configuration\ConfigurationBuilderInterface;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\CommonMark;
 use League\CommonMark\Extension\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
@@ -34,7 +34,7 @@ final class InlinesOnlyExtension implements ConfigurableExtensionInterface
     }
 
     // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma,Squiz.WhiteSpace.SemicolonSpacing.Incorrect
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $childRenderer = new ChildRenderer();
 

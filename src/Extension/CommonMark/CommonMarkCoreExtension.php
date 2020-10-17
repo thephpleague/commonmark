@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark;
 
 use League\CommonMark\Configuration\ConfigurationBuilderInterface;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Node as CoreNode;
@@ -39,7 +39,7 @@ final class CommonMarkCoreExtension implements ConfigurableExtensionInterface
     }
 
     // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma,Squiz.WhiteSpace.SemicolonSpacing.Incorrect
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
             ->addBlockStartParser(new Parser\Block\BlockQuoteStartParser(),     70)

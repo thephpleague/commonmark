@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\ExternalLink;
 
 use League\CommonMark\Configuration\ConfigurationBuilderInterface;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use Nette\Schema\Expect;
@@ -40,7 +40,7 @@ final class ExternalLinkExtension implements ConfigurableExtensionInterface
         ]));
     }
 
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addEventListener(DocumentParsedEvent::class, new ExternalLinkProcessor($environment));
     }

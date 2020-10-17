@@ -16,9 +16,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension;
 
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 
 interface ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment): void;
+    public function register(EnvironmentBuilderInterface $environment): void;
 }

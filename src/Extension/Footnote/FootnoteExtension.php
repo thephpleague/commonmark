@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Footnote;
 
 use League\CommonMark\Configuration\ConfigurationBuilderInterface;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\Footnote\Event\AnonymousFootnotesListener;
@@ -51,7 +51,7 @@ final class FootnoteExtension implements ConfigurableExtensionInterface
         ]));
     }
 
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addBlockStartParser(new FootnoteStartParser(), 51);
         $environment->addInlineParser(new AnonymousFootnoteRefParser(), 35);

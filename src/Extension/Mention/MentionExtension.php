@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Mention;
 
 use League\CommonMark\Configuration\ConfigurationBuilderInterface;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
@@ -43,7 +43,7 @@ final class MentionExtension implements ConfigurableExtensionInterface
         ));
     }
 
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $mentions = $environment->getConfig('mentions');
         foreach ($mentions as $name => $mention) {

@@ -36,7 +36,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
-final class Environment implements ConfigurableEnvironmentInterface, ListenerProviderInterface
+final class Environment implements EnvironmentBuilderInterface, ListenerProviderInterface
 {
     /**
      * @var ExtensionInterface[]
@@ -146,7 +146,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         return $this->config->get($key, $default);
     }
 
-    public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add block start parser.');
 
@@ -156,7 +156,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         return $this;
     }
 
-    public function addInlineParser(InlineParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addInlineParser(InlineParserInterface $parser, int $priority = 0): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add inline parser.');
 
@@ -166,7 +166,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         return $this;
     }
 
-    public function addDelimiterProcessor(DelimiterProcessorInterface $processor): ConfigurableEnvironmentInterface
+    public function addDelimiterProcessor(DelimiterProcessorInterface $processor): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add delimiter processor.');
         $this->delimiterProcessors->add($processor);
@@ -175,7 +175,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         return $this;
     }
 
-    public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add renderer.');
 
@@ -252,7 +252,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
      *
      * @return $this
      */
-    public function addExtension(ExtensionInterface $extension): ConfigurableEnvironmentInterface
+    public function addExtension(ExtensionInterface $extension): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add extension.');
 
@@ -298,7 +298,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
     /**
      * @param array<string, mixed> $config
      */
-    public static function createCommonMarkEnvironment(array $config = []): ConfigurableEnvironmentInterface
+    public static function createCommonMarkEnvironment(array $config = []): EnvironmentBuilderInterface
     {
         $environment = new self($config);
         $environment->addExtension(new CommonMarkCoreExtension());
@@ -309,7 +309,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
     /**
      * @param array<string, mixed> $config
      */
-    public static function createGFMEnvironment(array $config = []): ConfigurableEnvironmentInterface
+    public static function createGFMEnvironment(array $config = []): EnvironmentBuilderInterface
     {
         $environment = self::createCommonMarkEnvironment($config);
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
@@ -317,7 +317,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         return $environment;
     }
 
-    public function addEventListener(string $eventClass, callable $listener, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addEventListener(string $eventClass, callable $listener, int $priority = 0): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add event listener.');
 

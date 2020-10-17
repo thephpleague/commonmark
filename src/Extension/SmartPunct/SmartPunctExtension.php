@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\SmartPunct;
 
 use League\CommonMark\Configuration\ConfigurationBuilderInterface;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
@@ -38,7 +38,7 @@ final class SmartPunctExtension implements ConfigurableExtensionInterface
         ]));
     }
 
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
             ->addInlineParser(new QuoteParser(), 10)
