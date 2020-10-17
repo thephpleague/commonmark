@@ -13,12 +13,15 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Configuration;
 
-use Nette\Schema\Schema;
-
-interface ConfigurationBuilderInterface extends MutableConfigurationInterface
+interface MutableConfigurationInterface
 {
     /**
-     * Registers a new configuration schema at the given top-level key
+     * @param mixed|null $value
      */
-    public function addSchema(string $key, Schema $schema): void;
+    public function set(string $key, $value = null): void;
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    public function merge(array $config = []): void;
 }

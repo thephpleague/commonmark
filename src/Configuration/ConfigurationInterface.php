@@ -18,29 +18,11 @@ use League\CommonMark\Exception\InvalidConfigurationException;
 interface ConfigurationInterface
 {
     /**
-     * Merge an existing array into the current configuration
-     *
-     * @param array<string, mixed> $config
-     */
-    public function merge(array $config = []): void;
-
-    /**
-     * Return the configuration value at the given key
-     *
-     * @param ?string $key Configuration option path/key
+     * @param string $key Configuration option path/key
      *
      * @return mixed
      *
-     * @throws InvalidConfigurationException if the key does not exist
+     * @throws InvalidConfigurationException
      */
     public function get(string $key);
-
-    /**
-     * Set the configuration value at the given key
-     *
-     * The key can be a string or a slash-delimited path to a nested value
-     *
-     * @param mixed|null $value
-     */
-    public function set(string $key, $value = null): void;
 }
