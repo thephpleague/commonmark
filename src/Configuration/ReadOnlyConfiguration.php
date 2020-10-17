@@ -30,4 +30,9 @@ final class ReadOnlyConfiguration implements ConfigurationInterface
     {
         return $this->config->get($key);
     }
+
+    public function exists(string $key): bool
+    {
+        return $this->config->exists($key);
+    }
 }

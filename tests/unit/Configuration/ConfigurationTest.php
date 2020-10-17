@@ -118,6 +118,31 @@ final class ConfigurationTest extends TestCase
         }
     }
 
+    public function testExists(): void
+    {
+        $config = new Configuration([
+            'str' => Expect::string(''),
+            'int' => Expect::int(0),
+            'arr' => Expect::array([]),
+            'null' => Expect::null(),
+            'nested' => Expect::structure([
+                'foo' => Expect::type('int')->nullable(),
+            ])->castTo('array'),
+        ]);
+
+        $this->assertTrue($config->exists('str'));
+        $this->assertTrue($config->exists('int'));
+        $this->assertTrue($config->exists('arr'));
+        $this->assertTrue($config->exists('null'));
+        $this->assertTrue($config->exists('nested'));
+        $this->assertTrue($config->exists('nested/foo'));
+
+        $this->assertFalse($config->exists('does-not-exist'));
+        $this->assertFalse($config->exists('arr.0'));
+        $this->assertFalse($config->exists('nested/bar'));
+        $this->assertFalse($config->exists('nested/foo/bar'));
+    }
+
     public function testSet(): void
     {
         $config = new Configuration([

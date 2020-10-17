@@ -111,6 +111,17 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
         }
     }
 
+    public function exists(string $key): bool
+    {
+        if ($this->finalConfig === null) {
+            $this->finalConfig = $this->build();
+        } elseif (\array_key_exists($key, $this->cache)) {
+            return true;
+        }
+
+        return $this->finalConfig->has($key);
+    }
+
     public function reader(): ConfigurationInterface
     {
         return $this->reader;

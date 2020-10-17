@@ -25,4 +25,6 @@ interface ConfigurationInterface
      * @throws InvalidConfigurationException
      */
     public function get(string $key);
+
+    public function exists(string $key): bool;
 }
