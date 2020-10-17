@@ -42,12 +42,21 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
     private $cache = [];
 
     /**
+     * @var ConfigurationInterface
+     *
+     * @psalm-readonly
+     */
+    private $reader;
+
+    /**
      * @param array<string, Schema> $baseSchemas
      */
     public function __construct(array $baseSchemas = [])
     {
         $this->configSchemas = $baseSchemas;
         $this->userConfig    = new Data();
+
+        $this->reader = new ReadOnlyConfiguration($this);
     }
 
     /**
@@ -100,6 +109,11 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
         } catch (InvalidPathException | MissingPathException $ex) {
             throw InvalidConfigurationException::missingOption($key);
         }
+    }
+
+    public function reader(): ConfigurationInterface
+    {
+        return $this->reader;
     }
 
     private function invalidate(): void

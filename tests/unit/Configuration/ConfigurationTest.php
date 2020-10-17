@@ -222,4 +222,19 @@ final class ConfigurationTest extends TestCase
         $this->assertSame(2, $config->get('baz/b'));
         $this->assertSame(3, $config->get('baz/c'));
     }
+
+    public function testReader(): void
+    {
+        $config = new Configuration(['foo' => Expect::string('bar')]);
+
+        $reader = $config->reader();
+
+        $this->assertSame('bar', $config->get('foo'));
+        $this->assertSame('bar', $reader->get('foo'));
+
+        $config->set('foo', 'baz');
+
+        $this->assertSame('baz', $config->get('foo'));
+        $this->assertSame('baz', $reader->get('foo'));
+    }
 }
