@@ -25,14 +25,6 @@ interface ConfigurationInterface
     public function merge(array $config = []): void;
 
     /**
-     * Replace the entire array with something else
-     *
-     * @param array<string, mixed> $config
-     */
-    public function replace(array $config = []): void;
-
-
-    /**
      * Return the configuration value at the given key
      *
      * @param ?string $key Configuration option path/key

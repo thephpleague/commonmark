@@ -74,16 +74,6 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
     /**
      * {@inheritdoc}
      */
-    public function replace(array $config = []): void
-    {
-        $this->invalidate();
-
-        $this->userConfig = new Data($config);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function set(string $key, $value = null): void
     {
         $this->invalidate();

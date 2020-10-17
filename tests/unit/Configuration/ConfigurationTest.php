@@ -222,22 +222,4 @@ final class ConfigurationTest extends TestCase
         $this->assertSame(2, $config->get('baz/b'));
         $this->assertSame(3, $config->get('baz/c'));
     }
-
-    public function testReplace(): void
-    {
-        $config = new Configuration([
-            'foo' => Expect::string(),
-            'test' => Expect::string('test'),
-        ]);
-
-        $config->set('foo', 'bar');
-
-        $this->assertSame('bar', $config->get('foo'));
-        $this->assertEquals('test', $config->get('test'));
-
-        $config->replace(['test' => '123']);
-
-        $this->assertNull($config->get('foo'));
-        $this->assertEquals('123', $config->get('test'));
-    }
 }
