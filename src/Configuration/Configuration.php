@@ -38,6 +38,9 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
     /** @var Data|null */
     private $finalConfig;
 
+    /** @var array<string, mixed> */
+    private $cache = [];
+
     /**
      * @param array<string, Schema> $baseSchemas
      */
@@ -88,10 +91,12 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
     {
         if ($this->finalConfig === null) {
             $this->finalConfig = $this->build();
+        } elseif (\array_key_exists($key, $this->cache)) {
+            return $this->cache[$key];
         }
 
         try {
-            return $this->finalConfig->get($key);
+            return $this->cache[$key] = $this->finalConfig->get($key);
         } catch (InvalidPathException | MissingPathException $ex) {
             throw InvalidConfigurationException::missingOption($key);
         }
@@ -99,6 +104,7 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
 
     private function invalidate(): void
     {
+        $this->cache       = [];
         $this->finalConfig = null;
     }
 
