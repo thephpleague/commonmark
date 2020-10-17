@@ -16,7 +16,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Renderer\Inline;
 
-use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Renderer\Inline\NewlineRenderer;
@@ -48,7 +50,7 @@ class NewlineRendererTest extends TestCase
     {
         $inline       = new Newline(Newline::SOFTBREAK);
         $fakeRenderer = new FakeChildNodeRenderer();
-        $this->renderer->setConfiguration(new Configuration(['renderer' => ['soft_break' => '::softbreakChar::']]));
+        $this->renderer->setConfiguration($this->createConfiguration(['renderer' => ['soft_break' => '::softbreakChar::']]));
 
         $result = $this->renderer->render($inline, $fakeRenderer);
 
@@ -64,5 +66,17 @@ class NewlineRendererTest extends TestCase
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
+    }
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    private function createConfiguration(array $values = []): ConfigurationInterface
+    {
+        $config = Environment::createDefaultConfiguration();
+        (new CommonMarkCoreExtension())->configureSchema($config);
+        $config->merge($values);
+
+        return $config->reader();
     }
 }

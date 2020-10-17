@@ -16,11 +16,9 @@ namespace League\CommonMark\Extension\HeadingPermalink;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\StringContainerHelper;
-use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 
 /**
@@ -45,11 +43,6 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
      */
     private $config;
 
-    public function __construct(?TextNormalizerInterface $slugNormalizer = null)
-    {
-        $this->slugNormalizer = $slugNormalizer ?? new SlugNormalizer();
-    }
-
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
@@ -57,10 +50,10 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
     public function __invoke(DocumentParsedEvent $e): void
     {
-        $this->useNormalizerFromConfigurationIfProvided();
+        $this->slugNormalizer = $this->config->get('heading_permalink/slug_normalizer');
 
-        $min = (int) $this->config->get('heading_permalink/min_heading_level', 1);
-        $max = (int) $this->config->get('heading_permalink/max_heading_level', 6);
+        $min = (int) $this->config->get('heading_permalink/min_heading_level');
+        $max = (int) $this->config->get('heading_permalink/max_heading_level');
 
         $e->getDocument()->data->set('heading_ids', []);
 
@@ -74,20 +67,6 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         }
     }
 
-    private function useNormalizerFromConfigurationIfProvided(): void
-    {
-        $normalizer = $this->config->get('heading_permalink/slug_normalizer');
-        if ($normalizer === null) {
-            return;
-        }
-
-        if (! $normalizer instanceof TextNormalizerInterface) {
-            throw new InvalidConfigurationException('The heading_permalink/slug_normalizer option must be an instance of ' . TextNormalizerInterface::class);
-        }
-
-        $this->slugNormalizer = $normalizer;
-    }
-
     private function addHeadingLink(Heading $heading, Document $document): void
     {
         $text = StringContainerHelper::getChildText($heading);
@@ -97,7 +76,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
         $headingLinkAnchor = new HeadingPermalink($slug);
 
-        switch ($this->config->get('heading_permalink/insert', 'before')) {
+        switch ($this->config->get('heading_permalink/insert')) {
             case self::INSERT_BEFORE:
                 $heading->prependChild($headingLinkAnchor);
 

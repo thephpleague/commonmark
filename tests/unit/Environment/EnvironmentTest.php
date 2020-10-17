@@ -16,9 +16,12 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
+use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\CommonMark\Configuration\MutableConfigurationInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\AbstractEvent;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
@@ -28,6 +31,8 @@ use League\CommonMark\Tests\Unit\Event\FakeEventListener;
 use League\CommonMark\Tests\Unit\Event\FakeEventListenerInvokable;
 use League\CommonMark\Tests\Unit\Event\FakeEventParent;
 use League\CommonMark\Util\ArrayCollection;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -82,6 +87,9 @@ class EnvironmentTest extends TestCase
         ];
         $environment = new Environment($config);
 
+        // No arguments should return the whole thing
+        $this->assertEquals($config, $environment->getConfig());
+
         // Test getting a single scalar element
         $this->assertEquals('bar', $environment->getConfig('foo'));
 
@@ -101,10 +109,46 @@ class EnvironmentTest extends TestCase
         $this->assertEquals(42, $environment->getConfig('answer', 42));
     }
 
+    public function testSetConfig(): void
+    {
+        $environment = $this->createEnvironmentWithSchema([
+            'foo' => Expect::string()->default('bar'),
+            'test' => Expect::string(),
+        ]);
+        $environment->setConfig(['test' => '123']);
+        $this->assertEquals('bar', $environment->getConfig('foo'));
+        $this->assertEquals('123', $environment->getConfig('test'));
+    }
+
+    public function testSetConfigAfterInit(): void
+    {
+        $this->expectException(\RuntimeException::class);
+
+        $environment = new Environment();
+        // This triggers the initialization
+        $environment->getBlockStartParsers();
+        $environment->setConfig(['foo' => 'bar']);
+    }
+
     public function testMergeConfig(): void
     {
-        $environment = new Environment(['foo' => 'bar', 'test' => '123']);
+        $environment = $this->createEnvironmentWithSchema([
+            'foo' => Expect::string(),
+            'test' => Expect::string(),
+        ]);
+
+        $environment->mergeConfig(['foo' => 'foo']);
+
+        $this->assertEquals('foo', $environment->getConfig('foo'));
+        $this->assertNull($environment->getConfig('test'));
+
+        $environment->mergeConfig(['test' => '123', 'foo' => 'bar']);
+
+        $this->assertEquals('bar', $environment->getConfig('foo'));
+        $this->assertEquals('123', $environment->getConfig('test'));
+
         $environment->mergeConfig(['test' => '456']);
+
         $this->assertEquals('bar', $environment->getConfig('foo'));
         $this->assertEquals('456', $environment->getConfig('test'));
     }
@@ -470,5 +514,38 @@ class EnvironmentTest extends TestCase
         }
 
         $this->assertSame($expected, null);
+    }
+
+    /**
+     * @param array<string, Schema> $schemas
+     */
+    private function createEnvironmentWithSchema(array $schemas): Environment
+    {
+        $environment = new Environment();
+        $environment->addExtension(new class ($schemas) implements ConfigurableExtensionInterface {
+            /** @var array<string, Schema> */
+            private $schemas;
+
+            /**
+             * @param array<string, Schema> $schemas
+             */
+            public function __construct(array $schemas)
+            {
+                $this->schemas = $schemas;
+            }
+
+            public function configureSchema(ConfigurationBuilderInterface $builder): void
+            {
+                foreach ($this->schemas as $key => $schema) {
+                    $builder->addSchema($key, $schema);
+                }
+            }
+
+            public function register(EnvironmentBuilderInterface $environment): void
+            {
+            }
+        });
+
+        return $environment;
     }
 }

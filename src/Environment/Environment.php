@@ -23,6 +23,7 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Event\ListenerData;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
@@ -30,6 +31,7 @@ use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
 use League\CommonMark\Util\PrioritizedList;
+use Nette\Schema\Expect;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
@@ -107,7 +109,8 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
      */
     public function __construct(array $config = [])
     {
-        $this->config = new Configuration($config);
+        $this->config = self::createDefaultConfiguration();
+        $this->config->merge($config);
 
         $this->blockStartParsers   = new PrioritizedList();
         $this->inlineParsers       = new PrioritizedList();
@@ -118,7 +121,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
     /**
      * {@inheritdoc}
      */
-    public function mergeConfig(array $config): void
+    public function mergeConfig(array $config = []): void
     {
         $this->assertUninitialized('Failed to modify configuration.');
 
@@ -126,9 +129,19 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function getConfig(string $key, $default = null)
+    public function setConfig(array $config = []): void
+    {
+        $this->assertUninitialized('Failed to modify configuration.');
+
+        $this->config->replace($config);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfig(?string $key = null, $default = null)
     {
         return $this->config->get($key, $default);
     }
@@ -246,6 +259,10 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         $this->extensions[]              = $extension;
         $this->uninitializedExtensions[] = $extension;
 
+        if ($extension instanceof ConfigurableExtensionInterface) {
+            $extension->configureSchema($this->config);
+        }
+
         return $this;
     }
 
@@ -278,27 +295,23 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         }
     }
 
-    public static function createCommonMarkEnvironment(): Environment
+    /**
+     * @param array<string, mixed> $config
+     */
+    public static function createCommonMarkEnvironment(array $config = []): ConfigurableEnvironmentInterface
     {
-        $environment = new static();
+        $environment = new self($config);
         $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->mergeConfig([
-            'renderer' => [
-                'block_separator' => "\n",
-                'inner_separator' => "\n",
-                'soft_break'      => "\n",
-            ],
-            'html_input'         => HtmlFilter::ALLOW,
-            'allow_unsafe_links' => true,
-            'max_nesting_level'  => \PHP_INT_MAX,
-        ]);
 
         return $environment;
     }
 
-    public static function createGFMEnvironment(): Environment
+    /**
+     * @param array<string, mixed> $config
+     */
+    public static function createGFMEnvironment(array $config = []): ConfigurableEnvironmentInterface
     {
-        $environment = self::createCommonMarkEnvironment();
+        $environment = self::createCommonMarkEnvironment($config);
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
         return $environment;
@@ -392,5 +405,19 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         if ($this->extensionsInitialized) {
             throw new \RuntimeException($message . ' Extensions have already been initialized.');
         }
+    }
+
+    public static function createDefaultConfiguration(): Configuration
+    {
+        return new Configuration([
+            'html_input' => Expect::anyOf(HtmlFilter::STRIP, HtmlFilter::ALLOW, HtmlFilter::ESCAPE)->default(HtmlFilter::ALLOW),
+            'allow_unsafe_links' => Expect::bool(true),
+            'max_nesting_level' => Expect::type('int|float')->default(PHP_INT_MAX),
+            'renderer' => Expect::structure([
+                'block_separator' => Expect::string("\n"),
+                'inner_separator' => Expect::string("\n"),
+                'soft_break' => Expect::string("\n"),
+            ])->castTo('array'),
+        ]);
     }
 }

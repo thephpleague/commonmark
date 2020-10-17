@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\DisallowedRawHtml;
 
-use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlRenderer;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -28,6 +30,7 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         $mockRenderer->method('render')->willReturn('');
 
         $renderer = new DisallowedRawHtmlRenderer($mockRenderer);
+        $renderer->setConfiguration($this->createConfiguration());
 
         $this->assertSame('', $renderer->render($this->createMock(Node::class), new FakeChildNodeRenderer()));
     }
@@ -41,7 +44,7 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         $mockRenderer->method('render')->willReturn($input);
 
         $renderer = new DisallowedRawHtmlRenderer($mockRenderer);
-        $renderer->setConfiguration(new Configuration());
+        $renderer->setConfiguration($this->createConfiguration());
 
         $this->assertSame($expectedOutput, $renderer->render($this->createMock(Node::class), new FakeChildNodeRenderer()));
     }
@@ -81,7 +84,7 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         $mockRenderer->method('render')->willReturn($input);
 
         $renderer = new DisallowedRawHtmlRenderer($mockRenderer);
-        $renderer->setConfiguration(new Configuration([
+        $renderer->setConfiguration($this->createConfiguration([
             'disallowed_raw_html' => [
                 'disallowed_tags' => [
                     'strong',
@@ -114,5 +117,17 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         yield ['<noframes>', '<noframes>'];
         yield ['<script>', '<script>'];
         yield ['<plaintext>', '<plaintext>'];
+    }
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    private function createConfiguration(array $values = []): ConfigurationInterface
+    {
+        $config = Environment::createDefaultConfiguration();
+        (new DisallowedRawHtmlExtension())->configureSchema($config);
+        $config->merge($values);
+
+        return $config->reader();
     }
 }

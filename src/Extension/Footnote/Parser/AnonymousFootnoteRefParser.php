@@ -67,7 +67,7 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface, Configu
 
         return new Reference(
             $refLabel,
-            '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $refLabel,
+            '#' . $this->config->get('footnote/footnote_id_prefix') . $refLabel,
             $label
         );
     }

@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\Footnote\Renderer;
 
-use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteRenderer;
 use League\CommonMark\Reference\Reference;
@@ -25,7 +27,7 @@ final class FootnoteRendererTest extends TestCase
     public function testDefaultAttributes(): void
     {
         $renderer = new FootnoteRenderer();
-        $renderer->setConfiguration(new Configuration());
+        $renderer->setConfiguration($this->createConfiguration());
 
         $fakeReference = new Reference('label', 'dest', 'title');
         $footnote      = new Footnote($fakeReference);
@@ -40,7 +42,7 @@ final class FootnoteRendererTest extends TestCase
     public function testCustomClassAddedViaAST(): void
     {
         $renderer = new FootnoteRenderer();
-        $renderer->setConfiguration(new Configuration());
+        $renderer->setConfiguration($this->createConfiguration());
 
         $fakeReference = new Reference('label', 'dest', 'title');
         $footnote      = new Footnote($fakeReference);
@@ -55,7 +57,7 @@ final class FootnoteRendererTest extends TestCase
     public function testClassConfiguration(): void
     {
         $renderer = new FootnoteRenderer();
-        $renderer->setConfiguration(new Configuration(['footnote' => ['footnote_class' => 'my-custom-class']]));
+        $renderer->setConfiguration($this->createConfiguration(['footnote' => ['footnote_class' => 'my-custom-class']]));
 
         $fakeReference = new Reference('label', 'dest', 'title');
         $footnote      = new Footnote($fakeReference);
@@ -68,7 +70,7 @@ final class FootnoteRendererTest extends TestCase
     public function testIdPrefixConfiguration(): void
     {
         $renderer = new FootnoteRenderer();
-        $renderer->setConfiguration(new Configuration(['footnote' => ['footnote_id_prefix' => 'custom-']]));
+        $renderer->setConfiguration($this->createConfiguration(['footnote' => ['footnote_id_prefix' => 'custom-']]));
 
         $fakeReference = new Reference('label', 'dest', 'title');
         $footnote      = new Footnote($fakeReference);
@@ -76,5 +78,17 @@ final class FootnoteRendererTest extends TestCase
         $output = $renderer->render($footnote, new FakeChildNodeRenderer());
 
         $this->assertSame('custom-label', $output->getAttribute('id'));
+    }
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    private function createConfiguration(array $values = []): ConfigurationInterface
+    {
+        $config = Environment::createDefaultConfiguration();
+        (new FootnoteExtension())->configureSchema($config);
+        $config->merge($values);
+
+        return $config->reader();
     }
 }

@@ -14,136 +14,230 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Configuration;
 
 use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Exception\InvalidConfigurationException;
+use Nette\Schema\Expect;
+use Nette\Schema\ValidationException;
 use PHPUnit\Framework\TestCase;
 
-class ConfigurationTest extends TestCase
+final class ConfigurationTest extends TestCase
 {
+    public function testAddSchema(): void
+    {
+        $config = new Configuration();
+
+        try {
+            $config->get('foo');
+            $this->fail('A validation exception should be thrown since no schemas exist yet');
+        } catch (\Throwable $t) {
+            $this->assertInstanceOf(InvalidConfigurationException::class, $t);
+        }
+
+        $config->addSchema('foo', Expect::string()->default('bar'));
+        $this->assertSame('bar', $config->get('foo'));
+
+        $config->addSchema('a', Expect::string()->required());
+
+        try {
+            $config->get('foo');
+            $this->fail('A validation exception should be thrown since the full schema doesn\'t pass validation');
+        } catch (\Throwable $t) {
+            $this->assertInstanceOf(InvalidConfigurationException::class, $t);
+            $this->assertInstanceOf(ValidationException::class, $t->getPrevious());
+        }
+
+        // Overwrite the previous schema we added
+        $config->addSchema('a', Expect::int(42));
+
+        $this->assertSame(42, $config->get('a'));
+    }
+
     public function testGet(): void
     {
-        $data = [
-            'foo' => 'bar',
-            'a'   => [
-                'b' => 'c',
-            ],
-        ];
+        $config = new Configuration([
+            'foo' => Expect::string('bar'),
+            'required_number' => Expect::int()->required(),
+            'default_string' => Expect::string()->default('default'),
+            'nested' => Expect::structure([
+                'lucky_number' => Expect::int()->default(42),
+            ])->castTo('array'),
+            'array' => Expect::arrayOf('mixed'),
+        ]);
 
-        $config = new Configuration($data);
+        $config->merge([
+            'required_number' => 3,
+            'array' => ['a' => 1, 'b' => 2],
+        ]);
 
         // Test getting a single scalar element
-        $this->assertEquals('bar', $config->get('foo'));
+        $this->assertSame(3, $config->get('required_number'));
+
+        // Test getting a single scalar element with a default value
+        $this->assertSame('bar', $config->get('foo'));
 
         // Test getting a single array element
-        $this->assertEquals($data['a'], $config->get('a'));
+        $this->assertSame(['a' => 1, 'b' => 2], $config->get('array'));
 
-        // Test getting an element by path
-        $this->assertEquals('c', $config->get('a/b'));
+        // Test getting a nested array element by path
+        $this->assertSame(2, $config->get('array/b'));
+        $this->assertSame(2, $config->get('array.b'));
 
-        // Test getting a path that's one level too deep
-        $this->assertNull($config->get('a/b/c'));
+        // Test getting a nested structure element by path
+        $this->assertSame(42, $config->get('nested/lucky_number'));
+        $this->assertSame(42, $config->get('nested.lucky_number'));
+    }
 
-        // Test getting a path with no existing components
-        $this->assertNull($config->get('x/y/z'));
+    public function testGetNonExistentPath(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessageMatches('/does not exist/');
 
-        // Test getting a path with a default that isn't a string or null
-        $this->assertSame(true, $config->get('x/y/z', true));
+        (new Configuration())->get('does-not-exist');
+    }
 
-        // Test getting a non-existent element
-        $this->assertNull($config->get('test'));
+    public function testGetWhenSchemaValidationFails(): void
+    {
+        $config = new Configuration();
+        $config->addSchema('foo', Expect::int()->required());
+        $config->addSchema('bar', Expect::int());
 
-        // Test getting a non-existent element with a default value
-        $this->assertEquals(42, $config->get('answer', 42));
+        try {
+            $config->get('foo');
+            $this->fail('A validation exception should have been thrown');
+        } catch (\Throwable $t) {
+            $this->assertInstanceOf(InvalidConfigurationException::class, $t);
+            $this->assertInstanceOf(ValidationException::class, $t->getPrevious());
+        }
+
+        try {
+            $config->set('bar', 'not an integer value');
+            $config->get('bar');
+            $this->fail('A validation exception should have been thrown');
+        } catch (\Throwable $t) {
+            $this->assertInstanceOf(InvalidConfigurationException::class, $t);
+            $this->assertInstanceOf(ValidationException::class, $t->getPrevious());
+        }
     }
 
     public function testSet(): void
     {
-        $data = [
-            'foo' => 'bar',
-            'a'   => [
-                'b' => 'c',
-            ],
-        ];
+        $config = new Configuration([
+            'foo' => Expect::type('int|string'),
+        ]);
 
-        $config = new Configuration($data);
+        $config->set('foo', 'bar');
+        $this->assertSame('bar', $config->get('foo'));
 
-        // Creating a new scalar
-        $config->set('lucky_number', 3);
-        $this->assertEquals(3, $config->get('lucky_number'));
+        $config->set('foo', 42);
+        $this->assertSame(42, $config->get('foo'));
 
-        // Replacing the scalar with a null
-        $config->set('lucky_number', null);
-        $this->assertNull($config->get('lucky_number'));
-
-        // Simple replacement of a scalar value
-        $config->set('foo', 'baz');
-        $this->assertEquals('baz', $config->get('foo'));
-
-        // Replacing a scalar with an array
-        $config->set('foo', ['bar' => 'baz']);
-        $this->assertEquals(['bar' => 'baz'], $config->get('foo'));
-        $this->assertEquals('baz', $config->get('foo/bar'));
-
-        // Replacing a nested scalar
-        $config->set('a/b', 'd');
-        $this->assertEquals(['b' => 'd'], $config->get('a'));
-        $this->assertEquals('d', $config->get('a/b'));
-
-        // Replacing a nested scalar with an array
-        $config->set('a/b/c', 'd');
-        $this->assertEquals(['c' => 'd'], $config->get('a/b'));
-        $this->assertEquals('d', $config->get('a/b/c'));
-
-        // Replacing a nested array with a scalar
-        $config->set('a/b', 'c');
-        $this->assertEquals(['b' => 'c'], $config->get('a'));
-        $this->assertEquals('c', $config->get('a/b'));
-
-        // Creating a brand new nested array
-        $config->set('x/y/z', 42);
-        $this->assertEquals(['y' => ['z' => 42]], $config->get('x'));
-        $this->assertEquals(['z' => 42], $config->get('x/y'));
-        $this->assertSame(42, $config->get('x/y/z'));
+        $config->set('foo', new \DateTimeImmutable());
+        $this->expectException(InvalidConfigurationException::class);
+        $this->assertSame('bar', $config->get('foo'));
     }
 
-    public function testReplace(): void
+    public function testSetNested(): void
     {
-        $config = new Configuration(['foo' => 'bar']);
-        $config->replace(['test' => '123']);
+        $config = new Configuration([
+            'a' => Expect::structure([
+                'b' => Expect::structure([
+                    'c' => Expect::string('d'),
+                ])->castTo('array'),
+            ])->castTo('array'),
+        ]);
 
-        $this->assertNull($config->get('foo'));
-        $this->assertEquals('123', $config->get('test'));
+        $config->set('a/b/c', 'e');
+        $this->assertSame('e', $config->get('a/b/c'));
+        $this->assertSame(['c' => 'e'], $config->get('a/b'));
+        $this->assertSame(['b' => ['c' => 'e']], $config->get('a'));
+
+        $config->set('a/b', ['c' => 'f']);
+        $this->assertSame('f', $config->get('a/b/c'));
+        $this->assertSame(['c' => 'f'], $config->get('a/b'));
+        $this->assertSame(['b' => ['c' => 'f']], $config->get('a'));
+
+        $config->set('a', ['b' => ['c' => 'g']]);
+        $this->assertSame('g', $config->get('a/b/c'));
+        $this->assertSame(['c' => 'g'], $config->get('a/b'));
+        $this->assertSame(['b' => ['c' => 'g']], $config->get('a'));
+    }
+
+    public function testSetInvalidType(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessageMatches("/item 'foo' expects to be int/");
+
+        $config = new Configuration(['foo' => Expect::int()]);
+
+        $config->set('foo', 'bar');
+        $config->get('foo');
+    }
+
+    public function testSetUndefinedKey(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessageMatches("/Unexpected item 'bar'/");
+
+        $config = new Configuration(['foo' => Expect::int(42)]);
+
+        $config->set('bar', 3);
+        $config->get('foo');
     }
 
     public function testMerge(): void
     {
-        $config = new Configuration(['foo' => 'bar', 'test' => '123']);
-        $config->merge(['test' => '456']);
-
-        $this->assertEquals('bar', $config->get('foo'));
-        $this->assertEquals('456', $config->get('test'));
-    }
-
-    public function testExists(): void
-    {
         $config = new Configuration([
-            'a' => [
-                'b' => 'c',
-            ],
-            'emptyarr' => [],
-            'null'     => null,
-            'false'    => false,
-            'zero'     => 0,
+            'foo' => Expect::int(1),
+            'bar' => Expect::int(1),
+            'baz' => Expect::structure([
+                'a' => Expect::int(1),
+                'b' => Expect::int(1),
+                'c' => Expect::int(1),
+            ])->castTo('array'),
         ]);
 
-        $this->assertTrue($config->exists('a'));
-        $this->assertTrue($config->exists('a/b'));
-        $this->assertTrue($config->exists('emptyarr'));
-        $this->assertTrue($config->exists('false'));
-        $this->assertTrue($config->exists('zero'));
+        $config->set('foo', 1);
+        $config->merge([
+            'foo' => 2,
+            'baz' => [
+                'b' => 2,
+            ],
+        ]);
 
-        $this->assertFalse($config->exists('null'));
+        $this->assertSame(2, $config->get('foo'));
+        $this->assertSame(1, $config->get('bar'));
+        $this->assertSame(1, $config->get('baz/a'));
+        $this->assertSame(2, $config->get('baz/b'));
+        $this->assertSame(1, $config->get('baz/c'));
 
-        $this->assertFalse($config->exists('a/b/c'));
-        $this->assertFalse($config->exists('null/null'));
-        $this->assertFalse($config->exists('does-not-exist'));
+        $config->merge([
+            'foo' => 3,
+            'baz' => [
+                'c' => 3,
+            ],
+        ]);
+
+        $this->assertSame(3, $config->get('foo'));
+        $this->assertSame(1, $config->get('bar'));
+        $this->assertSame(1, $config->get('baz/a'));
+        $this->assertSame(2, $config->get('baz/b'));
+        $this->assertSame(3, $config->get('baz/c'));
+    }
+
+    public function testReplace(): void
+    {
+        $config = new Configuration([
+            'foo' => Expect::string(),
+            'test' => Expect::string('test'),
+        ]);
+
+        $config->set('foo', 'bar');
+
+        $this->assertSame('bar', $config->get('foo'));
+        $this->assertEquals('test', $config->get('test'));
+
+        $config->replace(['test' => '123']);
+
+        $this->assertNull($config->get('foo'));
+        $this->assertEquals('123', $config->get('test'));
     }
 }

@@ -16,8 +16,14 @@ namespace League\CommonMark\Configuration;
 use Dflydev\DotAccessData\Data;
 use Dflydev\DotAccessData\Exception\InvalidPathException;
 use Dflydev\DotAccessData\Exception\MissingPathException;
+use League\CommonMark\Exception\InvalidConfigurationException;
+use Nette\Schema\Elements\Structure;
+use Nette\Schema\Expect;
+use Nette\Schema\Processor;
+use Nette\Schema\Schema;
+use Nette\Schema\ValidationException;
 
-final class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationBuilderInterface, ConfigurationInterface
 {
     /**
      * @var Data
@@ -26,13 +32,33 @@ final class Configuration implements ConfigurationInterface
      */
     private $userConfig;
 
+    /** @var array<string, Schema> */
+    private $configSchemas = [];
+
+    /** @var Data|null */
+    private $finalConfig;
 
     /**
-     * @param array<string, mixed> $config
+     * @param array<string, Schema> $baseSchemas
      */
-    public function __construct(array $config = [])
+    public function __construct(array $baseSchemas = [])
     {
-        $this->userConfig = $config;
+        $this->configSchemas = $baseSchemas;
+        $this->userConfig    = new Data();
+    }
+
+    /**
+     * Registers a new configuration schema at the given top-level key
+     */
+    public function addSchema(string $key, Schema $schema): void
+    {
+        $this->invalidate();
+
+        if ($schema instanceof Structure) {
+            $schema->castTo('array');
+        }
+
+        $this->configSchemas[$key] = $schema;
     }
 
     /**
@@ -40,6 +66,8 @@ final class Configuration implements ConfigurationInterface
      */
     public function merge(array $config = []): void
     {
+        $this->invalidate();
+
         $this->userConfig->import($config, Data::REPLACE);
     }
 
@@ -48,30 +76,59 @@ final class Configuration implements ConfigurationInterface
      */
     public function replace(array $config = []): void
     {
+        $this->invalidate();
+
         $this->userConfig = new Data($config);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function get(?string $key = null, $default = null)
+    public function set(string $key, $value = null): void
     {
-        if ($key === null) {
-            return $this->userConfig->export();
-        }
+        $this->invalidate();
 
-        try {
-            return $this->userConfig->get($key);
-        } catch (InvalidPathException | MissingPathException $ex) {
-            return $default;
-        }
+        $this->userConfig->set($key, $value);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function set(string $key, $value = null): void
+    public function get(?string $key = null)
     {
-        $this->userConfig->set($key, $value);
+        if ($this->finalConfig === null) {
+            $this->finalConfig = $this->build();
+        }
+
+        if ($key === null) {
+            return $this->finalConfig->export();
+        }
+
+        try {
+            return $this->finalConfig->get($key);
+        } catch (InvalidPathException | MissingPathException $ex) {
+            throw InvalidConfigurationException::missingOption($key);
+        }
+    }
+
+    private function invalidate(): void
+    {
+        $this->finalConfig = null;
+    }
+
+    /**
+     * Applies the schema against the configuration to return the final configuration
+     */
+    private function build(): Data
+    {
+        try {
+            $schema    = Expect::structure($this->configSchemas)->castTo('array');
+            $processor = new Processor();
+            $config    = new Data($processor->process($schema, $this->userConfig->export()));
+
+            return $this->finalConfig = $config;
+        } catch (ValidationException $ex) {
+            throw InvalidConfigurationException::fromValidation($ex);
+        }
     }
 }

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Configuration;
 
+use League\CommonMark\Exception\InvalidConfigurationException;
+
 interface ConfigurationInterface
 {
     /**
@@ -29,28 +31,24 @@ interface ConfigurationInterface
      */
     public function replace(array $config = []): void;
 
+
     /**
-     * Return the configuration value at the given key, or $default if no such config exists
+     * Return the configuration value at the given key
      *
-     * The key can be a string or a slash-delimited path to a nested value
+     * @param ?string $key Configuration option path/key
      *
-     * @param mixed|null $default
+     * @return mixed
      *
-     * @return mixed|null
+     * @throws InvalidConfigurationException if the key does not exist
      */
-    public function get(string $key, $default = null);
+    public function get(?string $key = null);
 
     /**
      * Set the configuration value at the given key
      *
      * The key can be a string or a slash-delimited path to a nested value
      *
-     * @param mixed $value
+     * @param mixed|null $value
      */
-    public function set(string $key, $value): void;
-
-    /**
-     * Returns whether a configuration option exists at the given key
-     */
-    public function exists(string $key): bool;
+    public function set(string $key, $value = null): void;
 }

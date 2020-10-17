@@ -96,11 +96,11 @@ final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInte
 
     public function getBlockSeparator(): string
     {
-        return $this->environment->getConfig('renderer/block_separator', "\n");
+        return $this->environment->getConfig('renderer/block_separator');
     }
 
     public function getInnerSeparator(): string
     {
-        return $this->environment->getConfig('renderer/inner_separator', "\n");
+        return $this->environment->getConfig('renderer/inner_separator');
     }
 }

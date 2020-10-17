@@ -23,6 +23,7 @@
         "php": "^7.2.5 || ^8.0",
         "ext-mbstring": "*",
         "dflydev/dot-access-data": "^3.0",
+        "nette/schema": "^1.1",
         "psr/event-dispatcher": "^1.0",
         "symfony/polyfill-php80": "^1.15"
     },

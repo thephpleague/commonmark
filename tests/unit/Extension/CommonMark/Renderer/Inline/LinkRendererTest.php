@@ -16,7 +16,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Inline;
 
-use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\LinkRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
@@ -32,7 +34,7 @@ class LinkRendererTest extends TestCase
     protected function setUp(): void
     {
         $this->renderer = new LinkRenderer();
-        $this->renderer->setConfiguration(new Configuration());
+        $this->renderer->setConfiguration($this->createConfiguration());
     }
 
     public function testRenderWithTitle(): void
@@ -67,7 +69,7 @@ class LinkRendererTest extends TestCase
 
     public function testRenderAllowUnsafeLink(): void
     {
-        $this->renderer->setConfiguration(new Configuration([
+        $this->renderer->setConfiguration($this->createConfiguration([
             'allow_unsafe_links' => true,
         ]));
 
@@ -82,7 +84,7 @@ class LinkRendererTest extends TestCase
 
     public function testRenderDisallowUnsafeLink(): void
     {
-        $this->renderer->setConfiguration(new Configuration([
+        $this->renderer->setConfiguration($this->createConfiguration([
             'allow_unsafe_links' => false,
         ]));
 
@@ -118,5 +120,17 @@ class LinkRendererTest extends TestCase
         $this->assertStringContainsString('http://example.com/foo.html', $result->getAttribute('href'));
         $this->assertStringContainsString('noopener', $result->getAttribute('rel'));
         $this->assertStringContainsString('noreferrer', $result->getAttribute('rel'));
+    }
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    private function createConfiguration(array $values = []): ConfigurationInterface
+    {
+        $config = Environment::createDefaultConfiguration();
+        (new CommonMarkCoreExtension())->configureSchema($config);
+        $config->merge($values);
+
+        return $config->reader();
     }
 }

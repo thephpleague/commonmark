@@ -14,13 +14,25 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\InlinesOnly;
 
 use League\CommonMark as Core;
+use League\CommonMark\Configuration\ConfigurationBuilderInterface;
 use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 use League\CommonMark\Extension\CommonMark;
 use League\CommonMark\Extension\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor;
-use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
+use Nette\Schema\Expect;
 
-final class InlinesOnlyExtension implements ExtensionInterface
+final class InlinesOnlyExtension implements ConfigurableExtensionInterface
 {
+    public function configureSchema(ConfigurationBuilderInterface $builder): void
+    {
+        $builder->addSchema('commonmark', Expect::structure([
+            'use_asterisk' => Expect::bool(true),
+            'use_underscore' => Expect::bool(true),
+            'enable_strong' => Expect::bool(true),
+            'enable_em' => Expect::bool(true),
+        ]));
+    }
+
     // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma,Squiz.WhiteSpace.SemicolonSpacing.Incorrect
     public function register(ConfigurableEnvironmentInterface $environment): void
     {
@@ -50,11 +62,11 @@ final class InlinesOnlyExtension implements ExtensionInterface
             ->addRenderer(Core\Node\Inline\Text::class,             new Core\Renderer\Inline\TextRenderer(),             0)
         ;
 
-        if ($environment->getConfig('commonmark/use_asterisk', true)) {
+        if ($environment->getConfig('commonmark/use_asterisk')) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));
         }
 
-        if ($environment->getConfig('commonmark/use_underscore', true)) {
+        if ($environment->getConfig('commonmark/use_underscore')) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('_'));
         }
     }

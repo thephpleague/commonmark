@@ -38,8 +38,8 @@ final class FootnoteRenderer implements NodeRendererInterface, ConfigurationAwar
 
         $attrs = $node->data->getData('attributes');
 
-        $attrs->append('class', $this->config->get('footnote/footnote_class', 'footnote'));
-        $attrs->set('id', $this->config->get('footnote/footnote_id_prefix', 'fn:') . \mb_strtolower($node->getReference()->getLabel()));
+        $attrs->append('class', $this->config->get('footnote/footnote_class'));
+        $attrs->set('id', $this->config->get('footnote/footnote_id_prefix') . \mb_strtolower($node->getReference()->getLabel()));
         $attrs->set('role', 'doc-endnote');
 
         return new HtmlElement(

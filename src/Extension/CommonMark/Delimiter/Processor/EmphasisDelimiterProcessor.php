@@ -37,7 +37,7 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
     private $char;
 
     /**
-     * @var ConfigurationInterface|null
+     * @var ConfigurationInterface
      *
      * @psalm-readonly-allow-private-mutation
      */
@@ -75,14 +75,14 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
 
         // Calculate actual number of delimiters used from this closer
         if ($opener->getLength() >= 2 && $closer->getLength() >= 2) {
-            if ($this->config && $this->config->get('commonmark/enable_strong', true)) {
+            if ($this->config->get('commonmark/enable_strong')) {
                 return 2;
             }
 
             return 0;
         }
 
-        if ($this->config && $this->config->get('commonmark/enable_em', true)) {
+        if ($this->config->get('commonmark/enable_em')) {
             return 1;
         }
 

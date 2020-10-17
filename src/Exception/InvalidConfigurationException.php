@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Exception;
 
+use Nette\Schema\ValidationException;
+
 final class InvalidConfigurationException extends \UnexpectedValueException
 {
     /**
@@ -37,6 +39,16 @@ final class InvalidConfigurationException extends \UnexpectedValueException
     public static function forParameter(string $option, $valueGiven): self
     {
         return new self(\sprintf('Invalid %s: %s', $option, self::getDebugValue($valueGiven)));
+    }
+
+    public static function fromValidation(ValidationException $ex): self
+    {
+        return new self($ex->getMessage(), 0, $ex);
+    }
+
+    public static function missingOption(string $option): self
+    {
+        return new self(\sprintf('Config option "%s" does not exist', $option));
     }
 
     /**

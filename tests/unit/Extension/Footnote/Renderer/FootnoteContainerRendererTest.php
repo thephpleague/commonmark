@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\Footnote\Renderer;
 
-use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\Footnote\Node\FootnoteContainer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteContainerRenderer;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
@@ -24,7 +26,7 @@ final class FootnoteContainerRendererTest extends TestCase
     public function testDefaultSettings(): void
     {
         $renderer = new FootnoteContainerRenderer();
-        $renderer->setConfiguration(new Configuration());
+        $renderer->setConfiguration($this->createConfiguration());
 
         $container = new FootnoteContainer();
 
@@ -39,7 +41,7 @@ final class FootnoteContainerRendererTest extends TestCase
     public function testCustomClassAddedViaAST(): void
     {
         $renderer = new FootnoteContainerRenderer();
-        $renderer->setConfiguration(new Configuration());
+        $renderer->setConfiguration($this->createConfiguration());
 
         $container = new FootnoteContainer();
         $container->data->set('attributes/class', 'custom class');
@@ -52,7 +54,7 @@ final class FootnoteContainerRendererTest extends TestCase
     public function testClassConfiguration(): void
     {
         $renderer = new FootnoteContainerRenderer();
-        $renderer->setConfiguration(new Configuration(['footnote' => ['container_class' => 'my-custom-class']]));
+        $renderer->setConfiguration($this->createConfiguration(['footnote' => ['container_class' => 'my-custom-class']]));
 
         $container = new FootnoteContainer();
 
@@ -64,12 +66,24 @@ final class FootnoteContainerRendererTest extends TestCase
     public function testAddHRConfiguration(): void
     {
         $renderer = new FootnoteContainerRenderer();
-        $renderer->setConfiguration(new Configuration(['footnote' => ['container_add_hr' => false]]));
+        $renderer->setConfiguration($this->createConfiguration(['footnote' => ['container_add_hr' => false]]));
 
         $container = new FootnoteContainer();
 
         $output = $renderer->render($container, new FakeChildNodeRenderer());
 
         $this->assertStringNotContainsString('<hr />', $output->getContents());
+    }
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    private function createConfiguration(array $values = []): ConfigurationInterface
+    {
+        $config = Environment::createDefaultConfiguration();
+        (new FootnoteExtension())->configureSchema($config);
+        $config->merge($values);
+
+        return $config->reader();
     }
 }

@@ -38,9 +38,9 @@ final class ExternalLinkProcessor
 
     public function __invoke(DocumentParsedEvent $e): void
     {
-        $internalHosts   = $this->environment->getConfig('external_link/internal_hosts', []);
-        $openInNewWindow = $this->environment->getConfig('external_link/open_in_new_window', false);
-        $classes         = $this->environment->getConfig('external_link/html_class', '');
+        $internalHosts   = $this->environment->getConfig('external_link/internal_hosts');
+        $openInNewWindow = $this->environment->getConfig('external_link/open_in_new_window');
+        $classes         = $this->environment->getConfig('external_link/html_class');
 
         $walker = $e->getDocument()->walker();
         while ($event = $walker->next()) {
@@ -87,9 +87,9 @@ final class ExternalLinkProcessor
     private function applyRelAttribute(Link $link, bool $isExternal): void
     {
         $options = [
-            'nofollow'   => $this->environment->getConfig('external_link/nofollow', self::APPLY_NONE),
-            'noopener'   => $this->environment->getConfig('external_link/noopener', self::APPLY_EXTERNAL),
-            'noreferrer' => $this->environment->getConfig('external_link/noreferrer', self::APPLY_EXTERNAL),
+            'nofollow'   => $this->environment->getConfig('external_link/nofollow'),
+            'noopener'   => $this->environment->getConfig('external_link/noopener'),
+            'noreferrer' => $this->environment->getConfig('external_link/noreferrer'),
         ];
 
         foreach ($options as $type => $option) {

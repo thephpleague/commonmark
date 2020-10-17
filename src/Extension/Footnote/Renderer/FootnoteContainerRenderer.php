@@ -38,11 +38,11 @@ final class FootnoteContainerRenderer implements NodeRendererInterface, Configur
 
         $attrs = $node->data->getData('attributes');
 
-        $attrs->append('class', $this->config->get('footnote/container_class', 'footnotes'));
+        $attrs->append('class', $this->config->get('footnote/container_class'));
         $attrs->set('role', 'doc-endnotes');
 
         $contents = new HtmlElement('ol', [], $childRenderer->renderNodes($node->children()));
-        if ($this->config->get('footnote/container_add_hr', true)) {
+        if ($this->config->get('footnote/container_add_hr')) {
             $contents = [new HtmlElement('hr', [], null, true), $contents];
         }
 
