@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Fixed
 
  - Fixed replacement blocks not inheriting the start line number of the container they're replacing (#579)
+ - Fixed Table of Contents blocks not having correct start/end line numbers (#579)
 
 ## [1.5.5] - 2020-09-13
 
