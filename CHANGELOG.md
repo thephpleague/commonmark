@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed replacement blocks not inheriting the start line number of the container they're replacing (#579)
+
 ## [1.5.5] - 2020-09-13
 
 ### Changed

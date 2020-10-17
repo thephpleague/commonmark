@@ -167,6 +167,7 @@ class Context implements ContextInterface
     public function replaceContainerBlock(AbstractBlock $replacement)
     {
         $this->blockCloser->closeUnmatchedBlocks();
+        $replacement->setStartLine($this->container->getStartLine());
         $this->container->replaceWith($replacement);
 
         if ($this->tip === $this->container) {
