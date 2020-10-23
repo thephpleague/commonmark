@@ -4,8 +4,7 @@ title: Block Rendering
 description: How to customize the rendering of block-level elements
 ---
 
-Block Rendering
-===============
+# Block Rendering
 
 Block renderers are responsible for converting the parsed AST elements into their HTML representation.
 
@@ -23,9 +22,9 @@ If the method can only handle certain block types, be sure to verify that you've
 
 ### Parameters
 
-* `AbstractBlock $block` - The encountered block you must render
-* `ElementRendererInterface $htmlRenderer` - The AST renderer; use this to render inlines or easily generate HTML tags
-* `$inTightList = false` - Whether the element is being rendered in a tight list or not
+- `AbstractBlock $block` - The encountered block you must render
+- `ElementRendererInterface $htmlRenderer` - The AST renderer; use this to render inlines or easily generate HTML tags
+- `$inTightList = false` - Whether the element is being rendered in a tight list or not
 
 ### Return value
 
@@ -101,5 +100,5 @@ $environment->addBlockRenderer('League\CommonMark\Block\Element\ThematicBreak', 
 
 ## Tips
 
-* Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
-* Don't forget to render any inlines your block might contain!
+- Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
+- Don't forget to render any inlines your block might contain!

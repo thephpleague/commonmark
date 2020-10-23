@@ -4,8 +4,7 @@ title: Abstract Syntax Tree
 description: Using the Abstract Syntax Tree (AST) to manipulate the parsed content
 ---
 
-Abstract Syntax Tree
-====================
+# Abstract Syntax Tree
 
 This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent the parsed block and inline elements.  All such elements extend from the `Node` class.
 
@@ -13,12 +12,12 @@ This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent t
 
 The following methods can be used to traverse the AST:
 
-* `previous()`
-* `next()`
-* `parent()`
-* `firstChild()`
-* `lastChild()`
-* `children()`
+- `previous()`
+- `next()`
+- `parent()`
+- `firstChild()`
+- `lastChild()`
+- `children()`
 
 ## Iteration / Walking the Tree
 
@@ -40,14 +39,14 @@ This walker doesn't use recursion, so you won't blow the stack when working with
 
 The following methods can be used to modify the AST:
 
-* `insertAfter(Node $sibling)`
-* `insertBefore(Node $sibling)`
-* `replaceWith(Node $replacement)`
-* `detach()`
-* `appendChild(Node $child)`
-* `prependChild(Node $child)`
-* `detachChildren()`
-* `replaceChildren(Node[] $children)`
+- `insertAfter(Node $sibling)`
+- `insertBefore(Node $sibling)`
+- `replaceWith(Node $replacement)`
+- `detach()`
+- `appendChild(Node $child)`
+- `prependChild(Node $child)`
+- `detachChildren()`
+- `replaceChildren(Node[] $children)`
 
 ## `DocumentParsedEvent`
 
