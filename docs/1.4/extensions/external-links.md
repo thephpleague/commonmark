@@ -8,8 +8,8 @@ description: The ExternalLinksExtension detects external links and adjusts their
 
 This extension can detect links to external sites and adjust the markup accordingly:
 
- - Adds a `rel="noopener noreferrer"` attribute
- - Optionally adds any custom HTML classes
+- Adds a `rel="noopener noreferrer"` attribute
+- Optionally adds any custom HTML classes
 
 ## Installation
 

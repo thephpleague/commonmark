@@ -9,13 +9,13 @@ Inline Parsing
 
 There are two ways to implement custom inline syntax:
 
- - Inline Parsers (covered here)
- - [Delimiter Processors](/1.4/customization/delimiter-processing/)
+- Inline Parsers (covered here)
+- [Delimiter Processors](/1.4/customization/delimiter-processing/)
 
 The difference between normal inlines and delimiter-run-based inlines is subtle but important to understand.  In a nutshell, delimiter-run-based inlines:
 
- - Are denoted by "wrapping" text with one or more characters before **and** after those inner contents
- - Can contain other delimiter runs or inlines inside of them
+- Are denoted by "wrapping" text with one or more characters before **and** after those inner contents
+- Can contain other delimiter runs or inlines inside of them
 
 An example of this would be emphasis:
 
