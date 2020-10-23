@@ -3,10 +3,9 @@ layout: default
 title: Cursor
 ---
 
-Cursor
-======
+# Cursor
 
-At it's core, a `Cursor` is just a fancy string that remembers your current position as you parse it  It contains a set of highly-optimized methods making it easy to parse characters, match regular expressions, and more.  
+At it's core, a `Cursor` is just a fancy string that remembers your current position as you parse it  It contains a set of highly-optimized methods making it easy to parse characters, match regular expressions, and more.
 
 ## Supported Encodings
 

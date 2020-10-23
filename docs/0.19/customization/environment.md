@@ -3,8 +3,7 @@ layout: default
 title: The Environment
 ---
 
-The Environment
-===============
+# The Environment
 
 All parsers, renderers, etc. must be registered with the `Environment` class so that the library is aware of them.
 

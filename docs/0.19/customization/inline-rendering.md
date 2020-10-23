@@ -3,8 +3,7 @@ layout: default
 title: Inline Rendering
 ---
 
-Inline Rendering
-===============
+# Inline Rendering
 
 Inline renderers are responsible for converting the parsed inline elements into their HTML representation.
 
@@ -18,8 +17,8 @@ If the method can only handle certain inline types, be sure to verify that you'v
 
 ### Parameters
 
-* `AbstractInline $inline` - The encountered inline you must render
-* `ElementRendererInterface $htmlRenderer` - The AST renderer; use this to help escape output or easily generate HTML tags
+- `AbstractInline $inline` - The encountered inline you must render
+- `ElementRendererInterface $htmlRenderer` - The AST renderer; use this to help escape output or easily generate HTML tags
 
 ### Return value
 
@@ -88,5 +87,5 @@ $environment->addInlineRenderer('League\CommonMark\Inline\Element\Link', new MyC
 
 ## Tips
 
-* Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
-* Some inlines can contain other inlines - don't forget to render those too!
+- Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
+- Some inlines can contain other inlines - don't forget to render those too!

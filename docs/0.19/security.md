@@ -3,8 +3,7 @@ layout: default
 title: Security
 ---
 
-Security
-========
+# Security
 
 ## HTML Input
 

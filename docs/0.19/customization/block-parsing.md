@@ -3,8 +3,7 @@ layout: default
 title: Block Parsing
 ---
 
-Block Parsing
-=============
+# Block Parsing
 
 Block parsers should implement `BlockParserInterface` and implement the following method:
 
@@ -14,8 +13,8 @@ When parsing a new line, the `DocParser` iterates through all registered block p
 
 ### Parameters
 
-* `ContextInterface $context` - Provides information about the current context of the DocParser. Includes access to things like the document, current block container, and more.
-* `Cursor $cursor` - The [`Cursor`](/0.19/customization/cursor/) encapsulates the current state of the line being parsed and provides helpers for looking around the current position.
+- `ContextInterface $context` - Provides information about the current context of the DocParser. Includes access to things like the document, current block container, and more.
+- `Cursor $cursor` - The [`Cursor`](/0.19/customization/cursor/) encapsulates the current state of the line being parsed and provides helpers for looking around the current position.
 
 ### Return value
 
@@ -28,7 +27,7 @@ Returning `true` tells the engine that you've successfully parsed the block at t
 
 ## Tips
 
-* For best performance, `return false` as soon as possible
+- For best performance, `return false` as soon as possible
 
 ## Block Elements
 

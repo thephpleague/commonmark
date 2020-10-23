@@ -3,8 +3,7 @@ layout: default
 title: Basic Usage
 ---
 
-Basic Usage
-==============
+# Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
