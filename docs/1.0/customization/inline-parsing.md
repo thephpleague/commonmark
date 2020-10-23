@@ -5,8 +5,7 @@ description: Parsing inline elements with a custom parser
 redirect_from: /0.20/customization/inline-parsing/
 ---
 
-Inline Parsing
-==============
+# Inline Parsing
 
 There are two ways to implement custom inline syntax:
 
@@ -43,7 +42,7 @@ This method will be called if both conditions are met:
 
 #### Parameters
 
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/1.0/customization/cursor/) used to parse the current line.
+- `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/1.0/customization/cursor/) used to parse the current line.
 
 #### Return value
 
@@ -151,6 +150,6 @@ $environment->addInlineParser(new SmilieParserParser());
 
 ## Tips
 
-* For best performance, `return false` **as soon as possible**.
-* You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
-* You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).
+- For best performance, `return false` **as soon as possible**.
+- You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
+- You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).

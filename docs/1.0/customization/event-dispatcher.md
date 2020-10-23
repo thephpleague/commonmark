@@ -7,8 +7,7 @@ redirect_from:
   - /1.0/customization/document-processing/
 ---
 
-Event Dispatcher
-================
+# Event Dispatcher
 
 This library includes basic event dispatcher functionality.  This makes it possible to add hook points throughout the library and third-party extensions which other code can listen for and execute code.  If you're familiar with [Symfony's EventDispatcher](https://symfony.com/doc/current/components/event_dispatcher.html) or [PSR-14](https://www.php-fig.org/psr/psr-14/) then this should be very familiar to you.
 
