@@ -65,4 +65,3 @@ If the text contained by your block should be parsed for inline elements, you sh
 ### Multi-line Code Blocks
 
 If you have a block which spans multiple lines and doesn't contain any child blocks, consider having `isCode()` return `true`.  Code blocks have a special feature which enables "greedy parsing" - once it first parses your block, the engine will assume that most of the subsequent lines of Markdown belong to your block - it won't try using any other parsers until your parser's `matchesNextLine()` method returns `false`, indicating that we've reached the end of that code block.
-

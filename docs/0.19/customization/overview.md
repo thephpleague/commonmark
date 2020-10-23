@@ -22,7 +22,7 @@ There are two types of parsers:
 
 The parsing approach is identical for both types - examine text at the current position (via the [`Cursor`](/0.19/customization/cursor/)) and determine if you can handle it;
 if so, create the corresponding AST element,
-otherwise you abort and the engine will try other parsers.  If no parser succeeds then the current text is treated as plain text. 
+otherwise you abort and the engine will try other parsers.  If no parser succeeds then the current text is treated as plain text.
 
 ## Custom renderers
 

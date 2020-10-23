@@ -12,9 +12,9 @@ At it's core, a `Cursor` is just a fancy string that remembers your current posi
 
 As of now, only ASCII-compatible encodings are supported.  These include:
 
- - UTF-8 (preferred)
- - ISO-8859-1
- - ASCII
+- UTF-8 (preferred)
+- ISO-8859-1
+- ASCII
 
 Other encodings are not fully supported or tested so consider using UTF-8.
 

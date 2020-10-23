@@ -12,7 +12,7 @@ Security
 
 If you're developing an application which renders user-provided Markdown from potentially untrusted users, you are **strongly** encouraged to set the `html_input` option in your configuration to either `escape` or `strip`:
 
-### Example - Escape all raw HTML input:
+### Example - Escape all raw HTML input
 
 ```php
 use League\CommonMark\CommonMarkConverter;
@@ -23,7 +23,8 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 // &lt;script&gt;alert("Hello XSS!");&lt;/script&gt;
 ```
 
-### Example - Strip all HTML from the input:
+### Example - Strip all HTML from the input
+
 ```php
 use League\CommonMark\CommonMarkConverter;
 
@@ -41,10 +42,10 @@ See the [configuration](/0.19/configuration/) section for more information.
 
 Unsafe links are also allowed by default due to CommonMark spec compliance.  An unsafe link is one that uses any of these protocols:
 
- - `javascript:`
- - `vbscript:`
- - `file:`
- - `data:` (except for `data:image` in png, gif, jpeg, or webp format)
+- `javascript:`
+- `vbscript:`
+- `file:`
+- `data:` (except for `data:image` in png, gif, jpeg, or webp format)
 
 To prevent these from being parsed and rendered, you should set the `allow_unsafe_links` option to `false`.
 
@@ -55,6 +56,7 @@ To prevent these from being parsed and rendered, you should set the `allow_unsaf
 If you need to parse untrusted input, consider setting a reasonable `max_nesting_level` (perhaps 10-50) depending on your needs.  Once this nesting level is hit, any subsequent Markdown will be rendered as plain text.
 
 ### Example - Prevent deep nesting
+
 ```php
 use League\CommonMark\CommonMarkConverter;
 
