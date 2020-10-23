@@ -21,4 +21,4 @@ jobs:
 
           VALIDATE_MARKDOWN: true
           MARKDOWN_CONFIG_FILE: docs/.markdownlint.yml
-          FILTER_REGEX_INCLUDE: '^docs/'
+          FILTER_REGEX_INCLUDE: '^docs/.*\.md'
