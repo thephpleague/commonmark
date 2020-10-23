@@ -4,8 +4,7 @@ title: Security
 description: How to configure league/commonmark against possible security issues when handling untrusted user input
 ---
 
-Security
-========
+# Security
 
 In order to be fully compliant with the CommonMark spec, certain security settings are disabled by default.  You will want to configure these settings if untrusted users will be providing the Markdown content:
 
