@@ -11,10 +11,10 @@ redirect_from: /0.20/upgrading/
 
 All previously-deprecated code has been removed. This includes:
 
- - The `safe` option (use `html_input` and `allow_unsafe_links` options instead)
- - All deprecated `RegexHelper` constants
- - `DocParser::getEnvironment()` (you should obtain it some other way)
- - `AbstractInlineContainer` (use `AbstractInline` instead and make `isContainer()` return `true`)
+- The `safe` option (use `html_input` and `allow_unsafe_links` options instead)
+- All deprecated `RegexHelper` constants
+- `DocParser::getEnvironment()` (you should obtain it some other way)
+- `AbstractInlineContainer` (use `AbstractInline` instead and make `isContainer()` return `true`)
 
 ## Document Processors Removed
 
@@ -71,11 +71,11 @@ Now that we have proper delimiter handling, we've `final`ized the `Delimiter` cl
 
 We also deleted these unused `Delimiter` methods:
 
- - `setCanOpen()`
- - `setCanClose()`
- - `setChar()`
- - `setIndex()`
- - `setInlineNode()`
+- `setCanOpen()`
+- `setCanClose()`
+- `setChar()`
+- `setIndex()`
+- `setInlineNode()`
 
 And all of the remaining `Delimiter::set___()` methods no longer return `$this`.
 
