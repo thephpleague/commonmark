@@ -23,11 +23,11 @@ echo $converter->convertToHtml('Hello GFM!');
 
 This will automatically include all of these sub-extensions/features for you:
 
- - [Autolinks](/1.5/extensions/autolinks/)
- - [Disallowed Raw HTML](/1.5/extensions/disallowed-raw-html/)
- - [Strikethrough](/1.5/extensions/strikethrough/)
- - [Tables](/1.5/extensions/tables/)
- - [Task Lists](/1.5/extensions/task-lists/)
+- [Autolinks](/1.5/extensions/autolinks/)
+- [Disallowed Raw HTML](/1.5/extensions/disallowed-raw-html/)
+- [Strikethrough](/1.5/extensions/strikethrough/)
+- [Tables](/1.5/extensions/tables/)
+- [Task Lists](/1.5/extensions/task-lists/)
 
 Or, if you only want a subset of GFM extensions, you can add them individually like this instead:
 

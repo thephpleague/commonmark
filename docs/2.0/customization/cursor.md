@@ -4,8 +4,7 @@ title: Cursor
 description: Using the Cursor object to parse Markdown content
 ---
 
-Cursor
-======
+# Cursor
 
 A `Cursor` is essentially a fancy string wrapper that remembers your current position as you parse it.  It contains a set of highly-optimized methods making it easy to parse characters, match regular expressions, and more.
 

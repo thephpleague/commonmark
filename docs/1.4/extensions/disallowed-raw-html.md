@@ -10,15 +10,15 @@ _(Note: this extension is included by default within [the GFM extension](/1.4/ex
 
 The `DisallowedRawHTMLExtension` automatically filters certain HTML tags when rendering output, such as:
 
- - `<title>`
- - `<textarea>`
- - `<style>`
- - `<xmp>`
- - `<iframe>`
- - `<noembed>`
- - `<noframes>`
- - `<script>`
- - `<plaintext>`
+- `<title>`
+- `<textarea>`
+- `<style>`
+- `<xmp>`
+- `<iframe>`
+- `<noembed>`
+- `<noframes>`
+- `<script>`
+- `<plaintext>`
 
 Filtering is done by replacing the leading `<` with the entity `&lt;`.
 

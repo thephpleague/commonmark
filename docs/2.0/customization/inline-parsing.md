@@ -4,18 +4,17 @@ title: Inline Parsing
 description: Parsing inline elements with a custom parser
 ---
 
-Inline Parsing
-==============
+# Inline Parsing
 
 There are two ways to implement custom inline syntax:
 
- - Inline Parsers (covered here)
- - [Delimiter Processors](/2.0/customization/delimiter-processing/)
+- Inline Parsers (covered here)
+- [Delimiter Processors](/2.0/customization/delimiter-processing/)
 
 The difference between normal inlines and delimiter-run-based inlines is subtle but important to understand.  In a nutshell, delimiter-run-based inlines:
 
- - Are denoted by "wrapping" text with one or more characters before **and** after those inner contents
- - Can contain other delimiter runs or inlines inside of them
+- Are denoted by "wrapping" text with one or more characters before **and** after those inner contents
+- Can contain other delimiter runs or inlines inside of them
 
 An example of this would be emphasis:
 
@@ -56,20 +55,20 @@ This method will be called if both conditions are met:
 
 #### Parameters
 
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser - see more information below.
+- `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser - see more information below.
 
 ##### InlineParserContext
 
 This class has several useful methods:
 
-* `getContainer()` - Returns the current container block the inline text was found in.  You'll almost always call `$inlineContext->getContainer()->appendChild(...)` to add the parsed inline text inside that block.
-* `getReferenceMap()` - Returns the document's reference map
-* `getCursor()` - Returns the current [`Cursor`](/2.0/customization/cursor/) used to parse the current line.  (Note that the cursor will be positioned **before** the matched text, so you must advance it yourself if you determine it's a valid match)
-* `getDelimiterStack()` - Returns the current delimiter stack. Only used in advanced use cases.
-* `getFullMatch()` - Returns the full string that matched you `InlineParserMatch` definition
-* `getFullMatchLength()` - Returns the length of the full match - useful for advancing the cursor
-* `getSubMatches()` - If your `InlineParserMatch` used a regular expression with capture groups, this will return the text matches by those groups.
-* `getMatches()` - Returns an array where index `0` is the "full match", plus any sub-matches.  It basically simulates `preg_match()`'s behavior.
+- `getContainer()` - Returns the current container block the inline text was found in.  You'll almost always call `$inlineContext->getContainer()->appendChild(...)` to add the parsed inline text inside that block.
+- `getReferenceMap()` - Returns the document's reference map
+- `getCursor()` - Returns the current [`Cursor`](/2.0/customization/cursor/) used to parse the current line.  (Note that the cursor will be positioned **before** the matched text, so you must advance it yourself if you determine it's a valid match)
+- `getDelimiterStack()` - Returns the current delimiter stack. Only used in advanced use cases.
+- `getFullMatch()` - Returns the full string that matched you `InlineParserMatch` definition
+- `getFullMatchLength()` - Returns the length of the full match - useful for advancing the cursor
+- `getSubMatches()` - If your `InlineParserMatch` used a regular expression with capture groups, this will return the text matches by those groups.
+- `getMatches()` - Returns an array where index `0` is the "full match", plus any sub-matches.  It basically simulates `preg_match()`'s behavior.
 
 #### Return value
 
@@ -168,8 +167,8 @@ $environment->addInlineParser(new SmilieParserParser());
 
 ## Tips
 
-* For best performance:
-  * Avoid using overly-complex regular expressions in `getMatchDefinition()` - use the simplest regex you can and have `parse()` do the heavier validation
-  * Have your `parse()` method `return false` **as soon as possible**.
-* You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
-* You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).
+- For best performance:
+  - Avoid using overly-complex regular expressions in `getMatchDefinition()` - use the simplest regex you can and have `parse()` do the heavier validation
+  - Have your `parse()` method `return false` **as soon as possible**.
+- You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
+- You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).

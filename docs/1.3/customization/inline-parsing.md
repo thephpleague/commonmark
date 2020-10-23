@@ -4,18 +4,17 @@ title: Inline Parsing
 description: Parsing inline elements with a custom parser
 ---
 
-Inline Parsing
-==============
+# Inline Parsing
 
 There are two ways to implement custom inline syntax:
 
- - Inline Parsers (covered here)
- - [Delimiter Processors](/1.3/customization/delimiter-processing/)
+- Inline Parsers (covered here)
+- [Delimiter Processors](/1.3/customization/delimiter-processing/)
 
 The difference between normal inlines and delimiter-run-based inlines is subtle but important to understand.  In a nutshell, delimiter-run-based inlines:
 
- - Are denoted by "wrapping" text with one or more characters before **and** after those inner contents
- - Can contain other delimiter runs or inlines inside of them
+- Are denoted by "wrapping" text with one or more characters before **and** after those inner contents
+- Can contain other delimiter runs or inlines inside of them
 
 An example of this would be emphasis:
 
@@ -42,7 +41,7 @@ This method will be called if both conditions are met:
 
 #### Parameters
 
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/1.3/customization/cursor/) used to parse the current line.
+- `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/1.3/customization/cursor/) used to parse the current line.
 
 #### Return value
 
@@ -150,6 +149,6 @@ $environment->addInlineParser(new SmilieParserParser());
 
 ## Tips
 
-* For best performance, `return false` **as soon as possible**.
-* You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
-* You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).
+- For best performance, `return false` **as soon as possible**.
+- You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
+- You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).

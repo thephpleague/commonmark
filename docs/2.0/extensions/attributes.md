@@ -21,6 +21,7 @@ That consists of a left curly brace, optionally followed by a colon, the attribu
 ```
 
 This results in the following output:
+
 ```html
 <blockquote title="Blockquote title">
 <p>A nice blockquote</p>
@@ -28,12 +29,14 @@ This results in the following output:
 ```
 
 CSS-selector-style declarations can be used to set the `id` and `class` attributes:
+
 ```markdown
 {#id .class}
 ## Header
 ```
 
 Output:
+
 ```html
 <h2 class="class" id="id">Header</h2>
 ```
@@ -46,6 +49,7 @@ This is *red*{style="color: red"}.
 ```
 
 Output:
+
 ```html
 <p>This is <em style="color: red">red</em>.</p>
 ```

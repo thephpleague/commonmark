@@ -69,9 +69,9 @@ The value of this nested configuration option should be a `string` that you want
 
 This should be a `string` that defines one of three different strategies to use when generating a (potentially-nested) list from your various headings:
 
-  - `'flat'`
-  - `'as-is'`
-  - **`'relative'`** (default)
+- `'flat'`
+- `'as-is'`
+- **`'relative'`** (default)
 
 See "[Normalization Strategies](#normalization-strategies)" below for more information.
 
@@ -79,9 +79,9 @@ See "[Normalization Strategies](#normalization-strategies)" below for more infor
 
 This `string` controls where in the document your table of contents will be placed.  There are two options:
 
- - **`'top'`** (default) - Insert at the very top of the document, before any content
- - `'before-headings'` - Insert just before the very first heading - useful if you want to have some descriptive text show above the table of content.
- - `'placeholder'` - Location is manually defined by a user-provided placeholder somewhere in the document (see the `placeholder` option below)
+- **`'top'`** (default) - Insert at the very top of the document, before any content
+- `'before-headings'` - Insert just before the very first heading - useful if you want to have some descriptive text show above the table of content.
+- `'placeholder'` - Location is manually defined by a user-provided placeholder somewhere in the document (see the `placeholder` option below)
 
 If you'd like to customize this further, you can implement a [custom event listener](/2.0/customization/event-dispatcher/#registering-listeners) to locate the `TableOfContents` node and reposition it somewhere else in the document prior to rendering.
 
@@ -93,8 +93,8 @@ When combined with `'position' => 'placeholder'`, this setting tells the extensi
 
 This `string` option controls what style of HTML list should be used to render the table of contents:
 
- - **`'bullet'`** (default) - Unordered, bulleted list (`<ul>`)
- - `'ordered'` - Ordered list (`<ol>`)
+- **`'bullet'`** (default) - Unordered, bulleted list (`<ul>`)
+- `'ordered'` - Ordered list (`<ol>`)
 
 ### `min_heading_level` and `max_heading_level`
 

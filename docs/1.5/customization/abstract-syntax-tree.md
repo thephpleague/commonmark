@@ -5,8 +5,7 @@ description: Using the Abstract Syntax Tree (AST) to manipulate the parsed conte
 redirect_from: /customization/abstract-syntax-tree/
 ---
 
-Abstract Syntax Tree
-====================
+# Abstract Syntax Tree
 
 This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent the parsed block and inline elements.  All such elements extend from the `Node` class.
 
@@ -14,19 +13,19 @@ This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent t
 
 The root node of the AST will always be a `Document` object.  You can obtain this node a few different ways:
 
- - By calling the `parse()` method on the `DocParser`
- - By calling the `getDocument()` method on either the `DocumentPreParsedEvent` or `DocumentParsedEvent` (see the (Event Dispatcher documentation)[/1.5/customization/event-dispatcher/])
+- By calling the `parse()` method on the `DocParser`
+- By calling the `getDocument()` method on either the `DocumentPreParsedEvent` or `DocumentParsedEvent` (see the [Event Dispatcher documentation](/1.5/customization/event-dispatcher/))
 
 ## Traversal
 
 The following methods can be used to traverse the AST:
 
-* `previous()`
-* `next()`
-* `parent()`
-* `firstChild()`
-* `lastChild()`
-* `children()`
+- `previous()`
+- `next()`
+- `parent()`
+- `firstChild()`
+- `lastChild()`
+- `children()`
 
 ## Iteration / Walking the Tree
 
@@ -48,14 +47,14 @@ This walker doesn't use recursion, so you won't blow the stack when working with
 
 The following methods can be used to modify the AST:
 
-* `insertAfter(Node $sibling)`
-* `insertBefore(Node $sibling)`
-* `replaceWith(Node $replacement)`
-* `detach()`
-* `appendChild(Node $child)`
-* `prependChild(Node $child)`
-* `detachChildren()`
-* `replaceChildren(Node[] $children)`
+- `insertAfter(Node $sibling)`
+- `insertBefore(Node $sibling)`
+- `replaceWith(Node $replacement)`
+- `detach()`
+- `appendChild(Node $child)`
+- `prependChild(Node $child)`
+- `detachChildren()`
+- `replaceChildren(Node[] $children)`
 
 ## `DocumentParsedEvent`
 

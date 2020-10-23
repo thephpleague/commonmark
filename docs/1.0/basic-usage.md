@@ -5,8 +5,7 @@ description: Basic usage of the CommonMark parser
 redirect_from: /0.20/basic-usage/
 ---
 
-Basic Usage
-==============
+# Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 

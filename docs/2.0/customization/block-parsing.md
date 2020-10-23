@@ -4,8 +4,7 @@ title: Block Parsing
 description: How to parse block-level elements
 ---
 
-Block Parsing
-=============
+# Block Parsing
 
 At a high level, block parsing is a two-step process:
 

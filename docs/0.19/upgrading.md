@@ -21,8 +21,8 @@ This does not affect inner contents which may still need pre-escaping of untrust
 
 The `getName()` method has been removed from several classes:
 
- - `BlockParserInterface` and `AbstractBlockParser`
- - `InlineParserInterface` and `AbstractInlineParser`
+- `BlockParserInterface` and `AbstractBlockParser`
+- `InlineParserInterface` and `AbstractInlineParser`
 
 This method was originally intended for supporting XML rendering, which was never implemented, and will likely define names a bit differently if/when we do add support.
 
@@ -44,8 +44,8 @@ Pretty much every method now uses parameter and return types, including several 
 
 We have extracted two interfaces from the `Environment` class:
 
- - `EnvironmentInterface` - contains all the getters; use this in your parsers, renderers, etc.
- - `ConfigurableEnvironmentInterface` - contains all the `add` methods, as well as `setConfig()` and `mergeConfig`
+- `EnvironmentInterface` - contains all the getters; use this in your parsers, renderers, etc.
+- `ConfigurableEnvironmentInterface` - contains all the `add` methods, as well as `setConfig()` and `mergeConfig`
 
 As a result, `EnvironmentAwareInterface` now requires an `EnvironmentInterface` instead of an `Environment`, so update your parsers/processors/renderers accordingly.
 
@@ -53,16 +53,16 @@ As a result, `EnvironmentAwareInterface` now requires an `EnvironmentInterface` 
 
 A few methods from `AbstractBlock` have been extracted into a new `AbstractStringContainerBlock` class and corresponding `StringContainerInterface` interface:
 
- - `addLine(string $line)`
- - `getStringContent()`
- - `handleRemainingContents(ContextInterface $context, Cursor $cursor)`
+- `addLine(string $line)`
+- `getStringContent()`
+- `handleRemainingContents(ContextInterface $context, Cursor $cursor)`
 
 These are used to represent a block which can contain strings of text inside (even if those strings do not contain "inline" elements but just plain text).
 
 To determine how to best upgrade your existing block element classes, look at the value returned by the `acceptsLines()` method:
 
- - If `acceptsLines()` returns `false`, simply remove the three methods from the bulleted list above, along with `acceptsLines()` and any calls to `parent::__construct()`.
- - If `acceptsLines()` returns `true`, change your base class from `AbstractBlock` to `AbstractStringContainerBlock` and remove `acceptsLines()`.
+- If `acceptsLines()` returns `false`, simply remove the three methods from the bulleted list above, along with `acceptsLines()` and any calls to `parent::__construct()`.
+- If `acceptsLines()` returns `true`, change your base class from `AbstractBlock` to `AbstractStringContainerBlock` and remove `acceptsLines()`.
 
 Additionally, `StringContainerInterface` now extends this new `StringContainerInterface` interface. Just make sure you've implemented the change mentioned above and you should be fine.
 
@@ -90,7 +90,7 @@ The execution order of these things no longer depends on the order you add them 
 
 ## Multiple block/inline renderers per class
 
-Thanks to the new prioritization system, we now support multiple renderers for the same block/inline class!  The first renderer to return a non-null result will be considered the "winner" and no subsequent renderers will execute for that block/inline.  No change should be required for most extensions unless you were using some weird workaround to support multiple renderers yourself. 
+Thanks to the new prioritization system, we now support multiple renderers for the same block/inline class!  The first renderer to return a non-null result will be considered the "winner" and no subsequent renderers will execute for that block/inline.  No change should be required for most extensions unless you were using some weird workaround to support multiple renderers yourself.
 
 ## `RegexHelper::isEscapable()` no longer accepts `null` values
 

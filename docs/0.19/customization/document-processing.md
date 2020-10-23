@@ -3,8 +3,7 @@ layout: default
 title: Document Processing
 ---
 
-Document Processing
-===================
+# Document Processing
 
 The best way to manipulate the [Abstract Syntax Tree](/0.19/customization/abstract-syntax-tree/) is by implementing a custom Document Processor.  These are executed once all other processing is done and the document is ready to be rendered. Simply create a class which implements the `DocumentProcessorInterface` which contains a single method:
 

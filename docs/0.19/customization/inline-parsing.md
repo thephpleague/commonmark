@@ -3,8 +3,7 @@ layout: default
 title: Inline Parsing
 ---
 
-Inline Parsing
-==============
+# Inline Parsing
 
 Inline parsers should implement `InlineParserInterface` and the following two methods:
 
@@ -21,7 +20,7 @@ This method will be called if both conditions are met:
 
 ### Parameters
 
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/0.19/customization/cursor/) used to parse the current line.
+- `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/0.19/customization/cursor/) used to parse the current line.
 
 ### Return value
 
@@ -119,6 +118,6 @@ $environment->addInlineParser(new SmilieParserParser());
 
 ## Tips
 
-* For best performance, `return false` **as soon as possible**
-* You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
-* You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).
+- For best performance, `return false` **as soon as possible**
+- You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
+- You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).

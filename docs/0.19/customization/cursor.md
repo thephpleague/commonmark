@@ -3,18 +3,17 @@ layout: default
 title: Cursor
 ---
 
-Cursor
-======
+# Cursor
 
-At it's core, a `Cursor` is just a fancy string that remembers your current position as you parse it  It contains a set of highly-optimized methods making it easy to parse characters, match regular expressions, and more.  
+At it's core, a `Cursor` is just a fancy string that remembers your current position as you parse it  It contains a set of highly-optimized methods making it easy to parse characters, match regular expressions, and more.
 
 ## Supported Encodings
 
 As of now, only ASCII-compatible encodings are supported.  These include:
 
- - UTF-8 (preferred)
- - ISO-8859-1
- - ASCII
+- UTF-8 (preferred)
+- ISO-8859-1
+- ASCII
 
 Other encodings are not fully supported or tested so consider using UTF-8.
 

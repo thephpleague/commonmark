@@ -4,8 +4,7 @@ title: Customization Overview
 description: An overview of the powerful customization features
 ---
 
-Customization Overview
-======================
+# Customization Overview
 
 This library uses a three-step process to convert Markdown to HTML:
 
@@ -49,5 +48,5 @@ to essentially "swap out" built-in renderers with your own.
 
 Some examples of what's possible:
 
-* [Parse Twitter handles into profile links](/1.3/customization/inline-parsing#example-1---twitter-handles)
-* [Convert smilies into emoticon images](/1.3/customization/inline-parsing#example-2---emoticons)
+- [Parse Twitter handles into profile links](/1.3/customization/inline-parsing#example-1---twitter-handles)
+- [Convert smilies into emoticon images](/1.3/customization/inline-parsing#example-2---emoticons)

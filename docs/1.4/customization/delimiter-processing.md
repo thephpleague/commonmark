@@ -4,20 +4,18 @@ title: Delimiter Processing
 description: Processing CommonMark delimiter runs with a custom processor
 ---
 
-Delimiter Processing
-====================
+# Delimiter Processing
 
 Delimiter processors allow you to implement [delimiter runs](https://spec.commonmark.org/0.29/#delimiter-run) the same way the core library implements emphasis.
 
 Delimiter runs are a special type of inline:
 
- - They are denoted by "wrapping" text with one or more characters before **and** after those inner contents
- - They can contain other delimiter runs or inlines inside of them
+- They are denoted by "wrapping" text with one or more characters before **and** after those inner contents
+- They can contain other delimiter runs or inlines inside of them
 
 ```markdown
 This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after.
 ```
-
 
 When implementing something with these characteristics you should consider leveraging delimiter runs; otherwise, a basic [inline parser](/1.4/inline-parsing/) should be sufficient.
 
@@ -97,4 +95,3 @@ $inlineContext->getDelimiterStack()->push($delimiter);
 This basically tells the engine that text was found which _might_ be emphasis, but due to the delimiter run rules we can't make that determination just yet.  That final determination is later on by a "delimiter processor".
 
 Your implementation of the delimiter processor won't look any different in this approach - you'll still need to implement all of the same methods especially `process()`.  The difference is that **you've identified where the delimiter is, instead of relying on the engine to do this for you.**
-

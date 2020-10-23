@@ -4,8 +4,7 @@ title: The Environment
 description: Configuring the CommonMark environment with custom options and added functionality
 ---
 
-The Environment
-===============
+# The Environment
 
 The `Environment` contains all of the parsers, renderers, configurations, etc. that the library uses during the conversion process.  You therefore must register all parsers, renderers, etc. with the `Environment` so that the library is aware of them.
 

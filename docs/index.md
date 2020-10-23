@@ -1,8 +1,9 @@
 ---
 layout: homepage
 ---
-
+<!-- markdownlint-disable first-line-heading -->
 {% assign version = site.data.project.default_version %}
+<!-- markdownlint-restore -->
 
 # Features
 
@@ -41,4 +42,3 @@ This library allows you to add custom syntax, renderers, and more.  Check out th
 ## Community Integrations & Extensions
 
 An updated list of pre-built integrations and extensions can be found in the [Related Packages](https://github.com/thephpleague/commonmark#%EF%B8%8F-related-packages) section of the `README`.
-

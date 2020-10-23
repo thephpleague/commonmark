@@ -4,8 +4,7 @@ title: Event Dispatcher
 description: How to leverage the event dispatcher to hook into the library
 ---
 
-Event Dispatcher
-================
+# Event Dispatcher
 
 This library includes basic, [PSR-14](https://www.php-fig.org/psr/psr-14/)-compliant event dispatcher functionality.  This makes it possible to add hook points throughout the library and third-party extensions which other code can listen for and execute code.
 
@@ -78,7 +77,6 @@ This event is dispatched once all other processing is done.  This offers extensi
 ### `League\CommonMark\Event\DocumentRenderedEvent`
 
 This event is dispatched once the rendering step has been completed, just before the output is returned.  The final output can be adjusted at this point or additional metadata can be attached to the return object.
-
 
 ## Bring Your Own PSR-14 Event Dispatcher
 

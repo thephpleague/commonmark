@@ -4,8 +4,7 @@ title: Rendering
 description: How to customize the rendering of block and inline elements
 ---
 
-Custom Rendering
-================
+# Custom Rendering
 
 Renderers are responsible for converting the parsed AST elements into their HTML representation.
 
@@ -24,8 +23,8 @@ If your renderer can only handle certain block types, be sure to verify that you
 
 ### Parameters
 
-* `Node $node` - The encountered block or inline element that needs to be rendered
-* `ChildNodeRendererInterface $childRenderer` - If the given $node has children, use this to render those child elements
+- `Node $node` - The encountered block or inline element that needs to be rendered
+- `ChildNodeRendererInterface $childRenderer` - If the given $node has children, use this to render those child elements
 
 ### Return value
 
@@ -104,5 +103,5 @@ Note that thematic breaks should not contain children, which is why the `$childR
 
 ## Tips
 
-* Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
-* Don't forget to render any child elements that your node might contain!
+- Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
+- Don't forget to render any child elements that your node might contain!
