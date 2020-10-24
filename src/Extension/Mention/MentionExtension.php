@@ -45,7 +45,7 @@ final class MentionExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
-        $mentions = $environment->getConfig('mentions');
+        $mentions = $environment->getConfiguration()->get('mentions');
         foreach ($mentions as $name => $mention) {
             if ($mention['generator'] instanceof MentionGeneratorInterface) {
                 $environment->addInlineParser(new MentionParser($name, $mention['prefix'], $mention['pattern'], $mention['generator']));

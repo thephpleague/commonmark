@@ -20,6 +20,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
+use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
 final class GithubFlavoredMarkdownConverterTest extends TestCase
@@ -38,14 +39,14 @@ final class GithubFlavoredMarkdownConverterTest extends TestCase
 
     public function testConfigOnlyConstructor(): void
     {
-        $config = ['foo' => 'bar'];
+        $config = ['html_input' => HtmlFilter::ESCAPE];
 
         $converter   = new GithubFlavoredMarkdownConverter($config);
         $environment = $converter->getEnvironment();
 
         $this->assertCount(2, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
-        $this->assertSame('bar', $environment->getConfig('foo', 'DEFAULT'));
+        $this->assertSame(HtmlFilter::ESCAPE, $environment->getConfiguration()->get('html_input'));
     }
 
     public function testConvertingInvalidUTF8(): void

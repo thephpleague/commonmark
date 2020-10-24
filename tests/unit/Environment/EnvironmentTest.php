@@ -17,6 +17,8 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Environment;
 
 use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Configuration\MutableConfigurationInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\AbstractEvent;
@@ -71,41 +73,20 @@ class EnvironmentTest extends TestCase
 
     public function testConstructor(): void
     {
-        $config      = ['foo' => 'bar'];
+        $config      = ['max_nesting_level' => 42];
         $environment = new Environment($config);
-        $this->assertEquals('bar', $environment->getConfig('foo'));
+        $this->assertSame(42, $environment->getConfiguration()->get('max_nesting_level'));
     }
 
-    public function testGetConfig(): void
+    public function testGetConfiguration(): void
     {
-        $config      = [
-            'foo' => 'bar',
-            'a'   => [
-                'b' => 'c',
-            ],
-        ];
+        $config      = ['max_nesting_level' => 3];
         $environment = new Environment($config);
 
-        // No arguments should return the whole thing
-        $this->assertEquals($config, $environment->getConfig());
-
-        // Test getting a single scalar element
-        $this->assertEquals('bar', $environment->getConfig('foo'));
-
-        // Test getting a single array element
-        $this->assertEquals($config['a'], $environment->getConfig('a'));
-
-        // Test getting an element by path
-        $this->assertEquals('c', $environment->getConfig('a/b'));
-
-        // Test getting a path that's one level too deep
-        $this->assertNull($environment->getConfig('a/b/c'));
-
-        // Test getting a non-existent element
-        $this->assertNull($environment->getConfig('test'));
-
-        // Test getting a non-existent element with a default value
-        $this->assertEquals(42, $environment->getConfig('answer', 42));
+        $configuration = $environment->getConfiguration();
+        $this->assertInstanceOf(ConfigurationInterface::class, $configuration);
+        $this->assertNotInstanceOf(MutableConfigurationInterface::class, $configuration);
+        $this->assertSame(3, $configuration->get('max_nesting_level'));
     }
 
     public function testMergeConfig(): void
@@ -117,18 +98,18 @@ class EnvironmentTest extends TestCase
 
         $environment->mergeConfig(['foo' => 'foo']);
 
-        $this->assertEquals('foo', $environment->getConfig('foo'));
-        $this->assertNull($environment->getConfig('test'));
+        $this->assertEquals('foo', $environment->getConfiguration()->get('foo'));
+        $this->assertNull($environment->getConfiguration()->get('test'));
 
         $environment->mergeConfig(['test' => '123', 'foo' => 'bar']);
 
-        $this->assertEquals('bar', $environment->getConfig('foo'));
-        $this->assertEquals('123', $environment->getConfig('test'));
+        $this->assertEquals('bar', $environment->getConfiguration()->get('foo'));
+        $this->assertEquals('123', $environment->getConfiguration()->get('test'));
 
         $environment->mergeConfig(['test' => '456']);
 
-        $this->assertEquals('bar', $environment->getConfig('foo'));
-        $this->assertEquals('456', $environment->getConfig('test'));
+        $this->assertEquals('bar', $environment->getConfiguration()->get('foo'));
+        $this->assertEquals('456', $environment->getConfiguration()->get('test'));
     }
 
     public function testMergeConfigAfterInit(): void

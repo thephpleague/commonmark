@@ -43,7 +43,7 @@ final class MarkdownParser implements MarkdownParserInterface
     /**
      * @var int|float
      *
-     * @psalm-readonly
+     * @psalm-readonly-allow-private-mutation
      */
     private $maxNestingLevel;
 
@@ -94,7 +94,7 @@ final class MarkdownParser implements MarkdownParserInterface
         $this->allBlockParsers    = [];
         $this->activeBlockParsers = [];
 
-        $this->maxNestingLevel = $this->environment->getConfig('max_nesting_level');
+        $this->maxNestingLevel = $this->environment->getConfiguration()->get('max_nesting_level');
     }
 
     /**

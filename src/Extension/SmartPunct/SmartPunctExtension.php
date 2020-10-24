@@ -46,12 +46,12 @@ final class SmartPunctExtension implements ConfigurableExtensionInterface
             ->addInlineParser(new EllipsesParser(), 0)
 
             ->addDelimiterProcessor(QuoteProcessor::createDoubleQuoteProcessor(
-                $environment->getConfig('smartpunct/double_quote_opener'),
-                $environment->getConfig('smartpunct/double_quote_closer')
+                $environment->getConfiguration()->get('smartpunct/double_quote_opener'),
+                $environment->getConfiguration()->get('smartpunct/double_quote_closer')
             ))
             ->addDelimiterProcessor(QuoteProcessor::createSingleQuoteProcessor(
-                $environment->getConfig('smartpunct/single_quote_opener'),
-                $environment->getConfig('smartpunct/single_quote_closer')
+                $environment->getConfiguration()->get('smartpunct/single_quote_opener'),
+                $environment->getConfiguration()->get('smartpunct/single_quote_closer')
             ))
 
             ->addRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)

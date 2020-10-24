@@ -62,11 +62,11 @@ final class InlinesOnlyExtension implements ConfigurableExtensionInterface
             ->addRenderer(Core\Node\Inline\Text::class,             new Core\Renderer\Inline\TextRenderer(),             0)
         ;
 
-        if ($environment->getConfig('commonmark/use_asterisk')) {
+        if ($environment->getConfiguration()->get('commonmark/use_asterisk')) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));
         }
 
-        if ($environment->getConfig('commonmark/use_underscore')) {
+        if ($environment->getConfiguration()->get('commonmark/use_underscore')) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('_'));
         }
     }

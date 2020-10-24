@@ -18,6 +18,7 @@ namespace League\CommonMark\Environment;
 
 use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Delimiter\DelimiterParser;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
@@ -118,6 +119,11 @@ final class Environment implements EnvironmentBuilderInterface, ListenerProvider
         $this->delimiterProcessors = new DelimiterProcessorCollection();
     }
 
+    public function getConfiguration(): ConfigurationInterface
+    {
+        return $this->config->reader();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -126,14 +132,6 @@ final class Environment implements EnvironmentBuilderInterface, ListenerProvider
         $this->assertUninitialized('Failed to modify configuration.');
 
         $this->config->merge($config);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfig(?string $key = null, $default = null)
-    {
-        return $this->config->get($key, $default);
     }
 
     public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0): EnvironmentBuilderInterface

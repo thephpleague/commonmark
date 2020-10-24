@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Environment;
 
+use League\CommonMark\Configuration\ConfigurationProviderInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
@@ -22,7 +23,7 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 /**
  * Interface for building the Environment with any extensions, parsers, listeners, etc. that it may need
  */
-interface EnvironmentBuilderInterface extends EnvironmentInterface
+interface EnvironmentBuilderInterface extends ConfigurationProviderInterface, EnvironmentInterface
 {
     /**
      * @param array<string, mixed> $config
