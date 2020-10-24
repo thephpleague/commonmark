@@ -86,7 +86,7 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
     /**
      * {@inheritdoc}
      */
-    public function set(string $key, $value = null): void
+    public function set(string $key, $value): void
     {
         $this->invalidate();
 

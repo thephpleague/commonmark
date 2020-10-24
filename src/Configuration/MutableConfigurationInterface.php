@@ -16,9 +16,9 @@ namespace League\CommonMark\Configuration;
 interface MutableConfigurationInterface
 {
     /**
-     * @param mixed|null $value
+     * @param mixed $value
      */
-    public function set(string $key, $value = null): void;
+    public function set(string $key, $value): void;
 
     /**
      * @param array<string, mixed> $config
