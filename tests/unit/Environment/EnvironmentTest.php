@@ -21,6 +21,7 @@ use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Configuration\MutableConfigurationInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;

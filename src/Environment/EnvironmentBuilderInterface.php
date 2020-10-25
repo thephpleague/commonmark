@@ -23,7 +23,7 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 /**
  * Interface for building the Environment with any extensions, parsers, listeners, etc. that it may need
  */
-interface EnvironmentBuilderInterface extends ConfigurationProviderInterface, EnvironmentInterface
+interface EnvironmentBuilderInterface extends ConfigurationProviderInterface
 {
     /**
      * @param array<string, mixed> $config

@@ -37,7 +37,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
-final class Environment implements EnvironmentBuilderInterface, ListenerProviderInterface
+final class Environment implements EnvironmentInterface, EnvironmentBuilderInterface, ListenerProviderInterface
 {
     /**
      * @var ExtensionInterface[]
@@ -286,7 +286,7 @@ final class Environment implements EnvironmentBuilderInterface, ListenerProvider
     /**
      * @param array<string, mixed> $config
      */
-    public static function createCommonMarkEnvironment(array $config = []): EnvironmentBuilderInterface
+    public static function createCommonMarkEnvironment(array $config = []): Environment
     {
         $environment = new self($config);
         $environment->addExtension(new CommonMarkCoreExtension());
@@ -297,7 +297,7 @@ final class Environment implements EnvironmentBuilderInterface, ListenerProvider
     /**
      * @param array<string, mixed> $config
      */
-    public static function createGFMEnvironment(array $config = []): EnvironmentBuilderInterface
+    public static function createGFMEnvironment(array $config = []): Environment
     {
         $environment = self::createCommonMarkEnvironment($config);
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
