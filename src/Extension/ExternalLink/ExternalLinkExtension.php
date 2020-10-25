@@ -42,6 +42,6 @@ final class ExternalLinkExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
-        $environment->addEventListener(DocumentParsedEvent::class, new ExternalLinkProcessor($environment));
+        $environment->addEventListener(DocumentParsedEvent::class, new ExternalLinkProcessor($environment->getConfiguration()));
     }
 }
