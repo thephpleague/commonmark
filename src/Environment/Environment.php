@@ -291,7 +291,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         }
 
         if ($object instanceof ConfigurationAwareInterface) {
-            $object->setConfiguration($this->config);
+            $object->setConfiguration($this->config->reader());
         }
     }
 
