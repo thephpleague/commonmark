@@ -15,7 +15,7 @@ use League\CommonMark\Exception\UnexpectedEncodingException;
 
 final class MarkdownInput implements MarkdownInputInterface
 {
-    /** @var iterable<int, string>|null */
+    /** @var array<int, string>|null */
     private $lines;
 
     /** @var string */
