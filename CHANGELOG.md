@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.5.7] - 2020-10-31
+
 ### Fixed
 
  - Fixed mentions not being parsed when appearing after non-word characters (#582)
