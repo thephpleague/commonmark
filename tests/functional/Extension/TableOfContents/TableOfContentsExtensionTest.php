@@ -157,6 +157,15 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
+    public function testWithSetextHeadings(): void
+    {
+        $this->setUpConverter();
+
+        foreach ($this->loadTests(__DIR__ . '/data', 'setext-headings.md') as [$markdown, $html, $testName]) {
+            $this->assertMarkdownRendersAs($markdown, $html, $testName);
+        }
+    }
+
     public function testMinMaxHeadingLevels(): void
     {
         $this->setUpConverter([

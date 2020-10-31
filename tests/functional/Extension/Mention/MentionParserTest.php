@@ -179,4 +179,24 @@ final class MentionParserTest extends TestCase
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
+
+    public function testMentionParserWithNonWordCharacterBefore(): void
+    {
+        $input    = "Test\n#123 for more information.";
+        $expected = "<p>Test\n<a href=\"https://www.example.com/123\">#123</a> for more information.</p>";
+
+        $mentionParser = new MentionParser(
+            'test',
+            '#',
+            '\d+',
+            new StringTemplateLinkGenerator('https://www.example.com/%s')
+        );
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addInlineParser($mentionParser);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+    }
 }

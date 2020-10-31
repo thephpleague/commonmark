@@ -3,8 +3,6 @@ parameters:
   paths:
     - src
   ignoreErrors:
-   - path: src/Input/MarkdownInput.php
-     message: '#Argument of an invalid type iterable<int, string>\|null supplied for foreach#'
    - path: src/Reference/ReferenceParser.php
      message: '#Parameter .+ of class .+Reference constructor expects string, string\|null given#'
    - path: src/Util/RegexHelper.php

@@ -78,7 +78,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
 
     public function generate(Document $document): ?TableOfContents
     {
-        $toc = $this->createToc();
+        $toc = $this->createToc($document);
 
         $normalizer = $this->getNormalizer($toc);
 
@@ -127,7 +127,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         return $toc;
     }
 
-    private function createToc(): TableOfContents
+    private function createToc(Document $document): TableOfContents
     {
         $listData = new ListData();
 
@@ -139,7 +139,12 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             throw InvalidOptionException::forParameter('table of contents list style', $this->style);
         }
 
-        return new TableOfContents($listData);
+        $toc = new TableOfContents($listData);
+
+        $toc->setStartLine($document->getStartLine());
+        $toc->setEndLine($document->getEndLine());
+
+        return $toc;
     }
 
     /**

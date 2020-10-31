@@ -18,7 +18,7 @@ use League\CommonMark\Exception\UnexpectedEncodingException;
 class MarkdownInput implements MarkdownInputInterface
 {
     /**
-     * @var iterable<int, string>|null
+     * @var array<int, string>|null
      *
      * @psalm-readonly-allow-private-mutation
      */
@@ -67,6 +67,7 @@ class MarkdownInput implements MarkdownInputInterface
     {
         $this->splitLinesIfNeeded();
 
+        \assert($this->lines !== null);
         /** @psalm-suppress PossiblyNullIterator */
         foreach ($this->lines as $i => $line) {
             yield $this->lineOffset + $i + 1 => $line;
