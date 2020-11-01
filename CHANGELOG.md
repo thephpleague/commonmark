@@ -398,7 +398,7 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.7...1.5
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.7...1.6
 [1.5.7]: https://github.com/thephpleague/commonmark/compare/1.5.6...1.5.7
 [1.5.6]: https://github.com/thephpleague/commonmark/compare/1.5.5...1.5.6
 [1.5.5]: https://github.com/thephpleague/commonmark/compare/1.5.4...1.5.5
