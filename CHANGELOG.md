@@ -26,6 +26,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Deprecated the [configuration options shown above](https://commonmark.thephpleague.com/1.6/upgrading/)
  - Deprecated `RegexHelper::matchAll()`; use `RegexHelper::matchFirst()` instead
 
+### Fixed
+
+ - Fixed missing check for empty arrays being passed into the `unordered_list_markers` configuration option
+
 ## [1.5.7] - 2020-10-31
 
 ### Fixed

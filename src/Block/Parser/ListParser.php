@@ -145,7 +145,7 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
 
         $markers = $this->config->get('commonmark/unordered_list_markers', $deprecatedMarkers);
 
-        if (!\is_array($markers)) {
+        if (!\is_array($markers) || $markers === []) {
             throw new \RuntimeException('Invalid configuration option "unordered_list_markers": value must be an array of strings');
         }
 
