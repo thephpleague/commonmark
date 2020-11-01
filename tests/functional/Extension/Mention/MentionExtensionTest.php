@@ -194,9 +194,9 @@ EOT;
         $environment->setConfig([
             'mentions' => [
                 'github_handle' => [
-                    'prefix'    => '@',
+                    'prefix'      => '@',
                     'pattern'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
-                    'generator' => 'https://github.com/%s',
+                    'generator'   => 'https://github.com/%s',
                 ],
             ],
         ]);
