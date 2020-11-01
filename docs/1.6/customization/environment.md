@@ -101,3 +101,7 @@ See [Event Dispatcher](/1.6/customization/event-dispatcher/) for details.
 ## Priority
 
 Several of these methods allows you to specify a numeric `$priority`.  In cases where multiple things are registered, the internal engine will attempt to use the higher-priority ones first, falling back to lower priority ones if the first one(s) were unable to handle things.
+
+## Accessing the Environment and Configuration within parsers/renderers/etc
+
+If your custom parser/renderer/listener/etc. implements either `EnvironmentAwareInterface` or `ConfigurationAwareInterface` we'll automatically inject the environment or configuration into them once the environment has been fully initialized.  This will provide your code with access to the finalized information it may need.
