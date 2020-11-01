@@ -98,3 +98,7 @@ Calling `Configuration::set()` without the second `$value` parameter is deprecat
 ## RegexHelper::matchAll()
 
 The `RegexHelper::matchAll()` method has been deprecated and will be removed in 2.0. Use the new, more-efficient `RegexHelper::matchFirst()` method instead.
+
+## Extending ArrayCollection
+
+The `ArrayCollection` class will be marked `final` in 2.0 so avoid extending it.
