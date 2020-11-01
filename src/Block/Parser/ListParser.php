@@ -59,7 +59,7 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
             $data->delimiter = null;
             $data->bulletChar = $rest[0];
             $markerLength = 1;
-        } elseif (($matches = RegexHelper::matchAll('/^(\d{1,9})([.)])/', $rest)) && (!($context->getContainer() instanceof Paragraph) || $matches[1] === '1')) {
+        } elseif (($matches = RegexHelper::matchFirst('/^(\d{1,9})([.)])/', $rest)) && (!($context->getContainer() instanceof Paragraph) || $matches[1] === '1')) {
             $data = new ListData();
             $data->markerOffset = $indent;
             $data->type = ListBlock::TYPE_ORDERED;

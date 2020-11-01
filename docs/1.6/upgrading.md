@@ -59,3 +59,7 @@ Version 1.6 will support both the 1.x and 2.0 variations mentioned above but 2.0
      ],
  ];
 ```
+
+## RegexHelper::matchAll()
+
+The `RegexHelper::matchAll()` method has been deprecated and will be removed in 2.0. Use the new, more-efficient `RegexHelper::matchFirst()` method instead.

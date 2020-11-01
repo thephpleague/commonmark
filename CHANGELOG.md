@@ -15,6 +15,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `mentions/*/prefix` (currently `mentions/*/symbol` in 1.x)
    - `mentions/*/pattern` (currently `mentions/*/regex` in 1.x)
    - `max_nesting_level` (currently supports `int` and `float` values in 1.x; will only support `int` in 2.0)
+ - Added new `RegexHelper::matchFirst()` method
 
 ### Changed
 
@@ -23,6 +24,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Deprecated
 
  - Deprecated the [configuration options shown above](https://commonmark.thephpleague.com/1.6/upgrading/)
+ - Deprecated `RegexHelper::matchAll()`; use `RegexHelper::matchFirst()` instead
 
 ## [1.5.7] - 2020-10-31
 

@@ -102,9 +102,13 @@ final class RegexHelper
      * @param int    $offset
      *
      * @return array<string>|null
+     *
+     * @deprecated in 1.6; use matchFirst() instead
      */
     public static function matchAll(string $pattern, string $subject, int $offset = 0): ?array
     {
+        @\trigger_error('RegexHelper::matchAll() is deprecated in league/commonmark 1.6 and will be removed in 2.0; use RegexHelper::matchFirst() instead', \E_USER_DEPRECATED);
+
         if ($offset !== 0) {
             $subject = \substr($subject, $offset);
         }
@@ -123,6 +127,28 @@ final class RegexHelper
         }
 
         return $matches ?: null;
+    }
+
+    /**
+     * Functional wrapper around preg_match_all which only returns the first set of matches
+     *
+     * @return string[]|null
+     *
+     * @psalm-pure
+     */
+    public static function matchFirst(string $pattern, string $subject, int $offset = 0): ?array
+    {
+        if ($offset !== 0) {
+            $subject = \substr($subject, $offset);
+        }
+
+        \preg_match_all($pattern, $subject, $matches, \PREG_SET_ORDER);
+
+        if ($matches === []) {
+            return null;
+        }
+
+        return $matches[0] ?: null;
     }
 
     /**
