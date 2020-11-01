@@ -3,8 +3,7 @@ layout: default
 title: Inline Parsing
 ---
 
-Inline Parsing
-==============
+# Inline Parsing
 
 Inline parsers should implement `InlineParserInterface` and the following two methods:
 
@@ -21,7 +20,7 @@ This method will be called if both conditions are met:
 
 ### Parameters
 
-* `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/0.19/customization/cursor/) used to parse the current line.
+- `InlineParserContext $inlineContext` - Encapsulates the current state of the inline parser, including the [`Cursor`](/0.19/customization/cursor/) used to parse the current line.
 
 ### Return value
 
@@ -38,15 +37,14 @@ Returning `true` tells the engine that you've successfully parsed the character 
 
 Let's say you wanted to autolink Twitter handles without using the link syntax.  This could be accomplished by registering a new inline parser to handle the `@` character:
 
-~~~php
-<?php
-
+```php
 class TwitterHandleParser extends AbstractInlineParser
 {
     public function getCharacters()
     {
         return ['@'];
     }
+
     public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
@@ -75,15 +73,13 @@ class TwitterHandleParser extends AbstractInlineParser
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineParser(new TwitterHandleParser());
-~~~
+```
 
 ### Example 2 - Emoticons
 
 Let's say you want to automatically convert smilies (or "frownies") to emoticon images.  This is incredibly easy with an inline parser:
 
-~~~php
-<?php
-
+```php
 class SmilieParser extends AbstractInlineParser
 {
     public function getCharacters()
@@ -104,7 +100,7 @@ class SmilieParser extends AbstractInlineParser
 
         // Advance the cursor past the 2 matched chars since we're able to parse them successfully
         $cursor->advanceBy(2);
-        
+
         // Add the corresponding image
         if ($nextChar === ')') {
             $inlineContext->getContainer()->appendChild(new Image('/img/happy.png'));
@@ -118,10 +114,10 @@ class SmilieParser extends AbstractInlineParser
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineParser(new SmilieParserParser());
-~~~
+```
 
 ## Tips
 
-* For best performance, `return false` **as soon as possible**
-* You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
-* You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).
+- For best performance, `return false` **as soon as possible**
+- You can `peek()` without modifying the cursor state. This makes it useful for validating nearby characters as it's quick and you can bail without needed to restore state.
+- You can look at (and modify) any part of the AST if needed (via `$inlineContext->getContainer()`).

@@ -9,8 +9,10 @@ All notable changes made in `0.19.x` releases are shown below. See the [full lis
 
 {% assign releases = site.github.releases | where_exp: "r", "r.name >= '0.19'" | where_exp: "r", "r.name < '0.20'" %}
 
-{% for release in releases %}   
+{% for release in releases %}
+
 ## [{{ release.name }}]({{ release.html_url }}) - {{ release.published_at | date: "%Y-%m-%d" }}
+
 {{ release.body | markdownify }}
 {% endfor %}
 

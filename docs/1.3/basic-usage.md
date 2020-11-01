@@ -4,13 +4,12 @@ title: Basic Usage
 description: Basic usage of the CommonMark parser
 ---
 
-Basic Usage
-==============
+# Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting Markdown to HTML:
 
-~~~php
-<?php
+```php
+require __DIR__ . '/vendor/autoload.php';
 
 use League\CommonMark\CommonMarkConverter;
 
@@ -18,13 +17,11 @@ $converter = new CommonMarkConverter();
 echo $converter->convertToHtml('# Hello World!');
 
 // <h1>Hello World!</h1>
-~~~
+```
 
 Or if you want Github-Flavored Markdown:
 
 ```php
-<?php
-
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 $converter = new GithubFlavoredMarkdownConverter();
@@ -44,8 +41,8 @@ The actual conversion process has three steps:
 
 `CommonMarkConverter` handles this for you, but you can execute that process yourself if you wish:
 
-~~~php
-<?php
+```php
+require __DIR__ . '/vendor/autoload.php';
 
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
@@ -61,9 +58,9 @@ $document = $parser->parse($markdown);
 echo $htmlRenderer->renderBlock($document);
 
 // <h1>Hello World!</h1>
-~~~
+```
 
-[Additional customization](/1.3/customization/overview/) is also possible, and we have many handy [extensions](/1.3/extensions/) to enable additional syntax and features.
+[Additional customization](/1.3/customization/overview/) is also possible, and we have many handy [extensions](/1.3/extensions/overview/) to enable additional syntax and features.
 
 ## Supported Character Encodings
 

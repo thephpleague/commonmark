@@ -12,6 +12,16 @@ The `AutolinkExtension` adds [GFM-style autolinking][link-gfm-spec-autolinking].
 
 It also provides a parser to autolink `@mentions` to Twitter, Github, or any custom service you wish, though this is disabled by default.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+```bash
+composer require league/commonmark
+```
+
+See the [installation](/1.3/installation/) section for more details.
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `AutolinkExtension` provided by this package:
@@ -74,8 +84,8 @@ $environment->addInlineParser(new InlineMentionParser('https://www.example.com/u
 
 When creating your own, you can provide two parameters to the constructor:
 
- - A URL template where `%s` is replaced with the username (required)
- - A regular expression to parse and validate the username (optional - defaults to `'/^[A-Za-z0-9_]+(?!\w)/'`)
+- A URL template where `%s` is replaced with the username (required)
+- A regular expression to parse and validate the username (optional - defaults to `'/^[A-Za-z0-9_]+(?!\w)/'`)
 
 Note that `@mention`-style linking doesn't actually require you to add the extension - just the `InlineParser` of your choice.
 

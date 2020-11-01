@@ -18,9 +18,8 @@ define the starting symbol, a regular expression to match against, and any custo
 generate the URL.
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Mention\MentionExtension;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go.
@@ -65,18 +64,18 @@ $config = [
 $converter = new CommonMarkConverter($config, $environment);
 echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 // Output:
-// <p>Follow me on Twitter: <a href="https://www.github.com/colinodell">@colinodell</a></p>
+// <p>Follow me on Twitter: <a href="https://twitter.com/colinodell">@colinodell</a></p>
 ```
 
 ## String-Based URL Templates
 
 URL templates are perfect for situations where the identifier is inserted directly into a URL:
 
-```
+```text
 "@colinodell" => https://www.twitter.com/colinodell
- ^      ^                                    ^
- |       \________ Identifier ______________/
-Symbol
+ ▲└────┬───┘                             └───┬────┘
+ │     │                                     │
+Symbol └───────────── Identifier ────────────┘
 ```
 
 Examples of using string-based URL templates can be seen in the usage example above - you simply provide a `string` to the `generator` option.
@@ -92,11 +91,11 @@ resulting URL.
 
 ```php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Inline\AbstractInline;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go.
 $environment = Environment::createCommonMarkEnvironment();
@@ -120,7 +119,9 @@ $config = [
             'generator' => new class implements MentionGeneratorInterface {
                  public function generateMention(Mention $mention): ?AbstractInline
                  {
-                     return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getIdentifier()));
+                     $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getIdentifier()));
+
+                     return $mention;
                  }
              },
         ],
@@ -139,7 +140,9 @@ $config = [
                     return null;
                 }
 
-                return $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getIdentifier()));
+                $mention->setUrl(\sprintf('https://github.com/thephpleague/commonmark/issues/%d', $mention->getIdentifier()));
+
+                return $mention;
             },
         ],
 
@@ -154,9 +157,10 @@ echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 ```
 
 When implementing `MentionGeneratorInterface` or a simple callable, you'll receive a single `Mention` parameter and must either:
-  - Return the same passed `Mention` object along with setting the URL; or,
-  - Return a new object that extends `\League\CommonMark\Inline\Element\AbstractInline`; or,
-  - Return `null` (and not set a URL on the `Mention` object) if the mention isn't a match and should be skipped; not parsed.
+
+- Return the same passed `Mention` object along with setting the URL; or,
+- Return a new object that extends `\League\CommonMark\Inline\Element\AbstractInline`; or,
+- Return `null` (and not set a URL on the `Mention` object) if the mention isn't a match and should be skipped; not parsed.
 
 Here's a faux-real-world example of how you might use such a generator for your application. Imagine you
 want to parse `@username` into custom user profile links for your application, but only if the user exists. You could
@@ -193,13 +197,14 @@ class UserMentionGenerator implements MentionGeneratorInterface
             return null;
         }
 
-        return $mention
-            // Change the label.
-            ->setLabel($user->getFullName())
-            // Use the path to their profile as the URL, typecasting to a string in case the service returns
-            // a __toString object; otherwise you will need to figure out a way to extract the string URL
-            // from the service.
-            ->setUrl((string) $this->router->generate('user_profile', ['id' => $user->getId()]));
+        // Change the label.
+        $mention->setLabel($user->getFullName());
+        // Use the path to their profile as the URL, typecasting to a string in case the service returns
+        // a __toString object; otherwise you will need to figure out a way to extract the string URL
+        // from the service.
+        $mention->setUrl((string) $this->router->generate('user_profile', ['id' => $user->getId()]));
+
+        return $mention;
     }
 }
 ```
@@ -208,9 +213,8 @@ You can then hook this class up to a mention definition in the configuration to 
 mentions:
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Mention\MentionExtension;
 
 // Grab your UserMentionGenerator somehow, perhaps from a DI container or instantiate it if needed
@@ -243,3 +247,11 @@ echo $converter->convertToHtml('You should ask @colinodell about that');
 // Output (if current user doesn't have has access to view profiles):
 // <p>You should ask <em>[members only]</em> about that</p>
 ```
+
+## Rendering
+
+Whenever a mention is found, a `Mention` object is added to the [document's AST](/1.5/customization/abstract-syntax-tree/).
+This object extends from `Link`, so it'll be rendered as a normal `<a>` tag by default.
+
+If you need more control over the output you can implement a [custom renderer](/1.5/customization/inline-rendering/) for the `Mention` type
+and convert it to whatever HTML you wish!

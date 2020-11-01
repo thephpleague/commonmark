@@ -7,8 +7,7 @@ redirect_from:
   - /1.0/customization/document-processing/
 ---
 
-Event Dispatcher
-================
+# Event Dispatcher
 
 This library includes basic event dispatcher functionality.  This makes it possible to add hook points throughout the library and third-party extensions which other code can listen for and execute code.  If you're familiar with [Symfony's EventDispatcher](https://symfony.com/doc/current/components/event_dispatcher.html) or [PSR-14](https://www.php-fig.org/psr/psr-14/) then this should be very familiar to you.
 
@@ -78,9 +77,7 @@ This event is dispatched once all other processing is done.  This offers extensi
 
 Here's an example of a listener which uses the `DocumentParsedEvent` to add an `external-link` class to external URLs:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Inline\Element\Link;
@@ -125,13 +122,11 @@ class ExternalLinkProcessor
         return $host != $this->environment->getConfig('host');
     }
 }
-~~~
+```
 
 And here's how you'd use it:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
@@ -146,15 +141,15 @@ $converter = new CommonMarkConverter(['host' => 'commonmark.thephpleague.com'], 
 $input = 'My two favorite sites are <https://google.com> and <https://commonmark.thephpleague.com>';
 
 echo $converter->convertToHtml($input);
-~~~
+```
 
 Output (formatted for readability):
 
-~~~html
+```html
 <p>
     My two favorite sites are
     <a class="external-link" href="https://google.com">https://google.com</a>
     and
     <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a>
 </p>
-~~~
+```

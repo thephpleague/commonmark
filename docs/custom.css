@@ -3,7 +3,9 @@ html {
 }
 
 body {
-    min-width: 460px;
+    min-width: 320px;
+    display: flex;
+    flex-flow: column;
 }
 
 blockquote {
@@ -182,6 +184,10 @@ h4 {
     font-size:1em;
 }
 
+main article p {
+    max-width: 840px;
+}
+
 main article p code,
 main article li code,
 main article div > code {
@@ -195,7 +201,7 @@ main article div > code {
 
 main article p img {
     box-sizing: border-box;
-    margin:.3em auto;
+    margin:.3em;
     padding:0;
     display: block;
 }
@@ -270,6 +276,13 @@ main menu ul li.selected a:hover {
 pre {
     border-width:0 0 0 4px;
     background: #fff;
+    width: fit-content;
+    max-width: 100%;
+}
+
+main article table {
+    width: initial;
+    max-width: 100%;
 }
 
 table {
@@ -278,15 +291,34 @@ table {
     box-shadow:0 6px 6px 0 rgba(80, 88, 94, .24);
 }
 
-table th {
+table th,
+table th > * {
     color:#fff;
     background: #1672ce;
 }
 
+@media screen and (max-width: 420px) {
+    table {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    main article table td {
+        padding: 2px 5px 2px 2px;
+    }
+    thead tr {
+        font-size: 0.8rem;
+    }
+}
 
 header .logo .name {
-    font-size: 2rem;
+    font-size: 1.6rem;
     line-height: 100%;
+    margin: 0 !important;
 }
 
 @media screen and (min-width: 768px) {
@@ -308,7 +340,7 @@ header .logo em {
 
 @media screen and (max-width: 549px) {
     header {
-        padding: 20px 0 25px 10px;
+        padding: 25px 0 20px 10px;
     }
 
     menu {
@@ -327,8 +359,6 @@ header .logo em {
 
     header .header-content {
         box-sizing: border-box;
-        max-width:1192px;
-        margin:0 auto;
         padding:1em;
     }
 
@@ -364,14 +394,9 @@ header .logo em {
     }
 }
 
-@media screen and (min-width: 1200px) {
-    header .header-content {
-        width:1192px;
-    }
-    main {
-        margin-left:auto;
-        margin-right:auto;
-        width:1192px;
+@media screen and (min-width: 850px) {
+    main article {
+        max-width: none;
     }
 }
 

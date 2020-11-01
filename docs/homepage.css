@@ -41,7 +41,7 @@ main div > code {
 .homepage header h1 {
     margin:.3em auto;
     font-family: "Museo 300", sans-serif;
-    font-size:72px;
+    line-height: 250%;
     font-weight: normal;
 }
 
@@ -163,6 +163,47 @@ main div > code {
     clear:both;
 }
 
+.projects,
+.sponsors {
+    color: #fff;
+}
+
+.projects h2,
+.sponsors h2 {
+    font-size:50px;
+    line-height:100%;
+    font-weight:normal;
+    font-family:"Museo Sans 300", sans-serif;
+    text-transform:uppercase;
+    margin: 0 0 1em 0;
+}
+
+.project-logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-logos a {
+    display: block;
+    object-fit: contain;
+    margin: 0 16px;
+}
+
+.project-logos img {
+    height: 70px;
+    max-width: 180px;
+}
+
+.sponsors a {
+    color: #3399ff;
+}
+.sponsors ul {
+    list-style: none;
+    font-size: 1.1em;
+}
+
 .features {
     background: #F2F7FC;
     border-bottom:1px solid #CFE4F9;
@@ -262,10 +303,6 @@ main div > code {
 }
 
 @media screen and (max-width: 549px) {
-    .homepage header {
-        padding:3em 0;
-    }
-
     .homepage header h1 {
         font-size:48px;
     }

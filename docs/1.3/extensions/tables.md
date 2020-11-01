@@ -10,6 +10,16 @@ _(Note: this extension is included by default within [the GFM extension](/1.3/ex
 
 The `TableExtension` adds the ability to create tables in CommonMark documents.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+```bash
+composer require league/commonmark
+```
+
+See the [installation](/1.3/installation/) section for more details.
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `TableExtension` provided by this package:
@@ -34,10 +44,10 @@ echo $converter->convertToHtml('Some Markdown with a table in it');
 
 This package is fully compatible with [GFM-style tables](https://github.github.com/gfm/#tables-extension-):
 
-
 ### Simple
 
 Code:
+
 ```markdown
 th | th(center) | th(right)
 ---|:----------:|----------:
@@ -45,6 +55,7 @@ td | td         | td
 ```
 
 Result:
+
 ```html
 <table>
 <thead>

@@ -4,8 +4,7 @@ title: Customization Overview
 description: An overview of the powerful customization features
 ---
 
-Customization Overview
-======================
+# Customization Overview
 
 Ready to go beyond the basics of converting Markdown to HTML? This page describes some of the more advanced things you can customize this library to do.
 
@@ -21,9 +20,7 @@ The actual process of converting Markdown to HTML has several steps:
 
 `CommonMarkConverter` handles all of this for you, but you can execute that process yourself if you wish:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
@@ -42,7 +39,7 @@ $document = $parser->parse($markdown);
 echo $htmlRenderer->renderBlock($document);
 
 // <h1>Hello World!</h1>
-~~~
+```
 
 Feel free to swap out different components or add your own steps in between.  However, the best way to customize this library is to [create your own extensions](/1.4/customization/extensions/) which hook into the parsing and rendering steps - continue reading to see which kinds of extension points are available to you.
 
@@ -80,5 +77,5 @@ to essentially "swap out" built-in renderers with your own.
 
 Some examples of what's possible:
 
-* [Parse Twitter handles into profile links](/1.4/customization/inline-parsing#example-1---twitter-handles)
-* [Convert smilies into emoticon images](/1.4/customization/inline-parsing#example-2---emoticons)
+- [Parse Twitter handles into profile links](/1.4/customization/inline-parsing#example-1---twitter-handles)
+- [Convert smilies into emoticon images](/1.4/customization/inline-parsing#example-2---emoticons)

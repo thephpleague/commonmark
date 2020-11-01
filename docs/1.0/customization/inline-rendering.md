@@ -5,8 +5,7 @@ description: Customizing the output when rendering inline elements
 redirect_from: /0.20/customization/inline-rendering/
 ---
 
-Inline Rendering
-===============
+# Inline Rendering
 
 Inline renderers are responsible for converting the parsed inline elements into their HTML representation.
 
@@ -20,8 +19,8 @@ If the method can only handle certain inline types, be sure to verify that you'v
 
 ### Parameters
 
-* `AbstractInline $inline` - The encountered inline you must render
-* `ElementRendererInterface $htmlRenderer` - The AST renderer; use this to help escape output or easily generate HTML tags
+- `AbstractInline $inline` - The encountered inline you must render
+- `ElementRendererInterface $htmlRenderer` - The AST renderer; use this to help escape output or easily generate HTML tags
 
 ### Return value
 
@@ -35,9 +34,7 @@ Return `null` if your renderer cannot handle the given inline element - the next
 
 When registering your render, you must tell the `Environment` which inline element class your renderer should handle. For example:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\Environment;
 
 $environment = Environment::createCommonMarkEnvironment();
@@ -45,15 +42,13 @@ $environment = Environment::createCommonMarkEnvironment();
 // First param - the inline class type that should use our renderer
 // Second param - instance of the block renderer
 $environment->addInlineRenderer('League\CommonMark\Inline\Element\Link', new MyCustomLinkRenderer());
-~~~
+```
 
 ## Example
 
 Here's a custom renderer which puts a special class on links to external sites:
 
-~~~php
-<?php
-
+```php
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\Inline\Element\Link;
@@ -99,9 +94,9 @@ class MyCustomLinkRenderer implements InlineRendererInterface
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addInlineRenderer(Link::class, new MyCustomLinkRenderer());
-~~~
+```
 
 ## Tips
 
-* Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
-* Some inlines can contain other inlines - don't forget to render those too!
+- Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
+- Some inlines can contain other inlines - don't forget to render those too!

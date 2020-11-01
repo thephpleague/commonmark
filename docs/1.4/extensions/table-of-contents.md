@@ -10,6 +10,16 @@ The `TableOfContentsExtension` automatically inserts a table of contents into yo
 
 The [Heading Permalink](/1.4/extensions/heading-permalinks/) extension must also be included for this to work.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+```bash
+composer require league/commonmark
+```
+
+See the [installation](/1.4/installation/) section for more details.
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `TableOfContentsExtension` and `HeadingPermalinkExtension` provided by this package:
@@ -58,9 +68,9 @@ The value of this nested configuration option should be a `string` that you want
 
 This should be a `string` that defines one of three different strategies to use when generating a (potentially-nested) list from your various headings:
 
-  - `'flat'`
-  - `'as-is'`
-  - **`'relative'`** (default)
+- `'flat'`
+- `'as-is'`
+- **`'relative'`** (default)
 
 See "[Normalization Strategies](#normalization-strategies)" below for more information.
 
@@ -68,8 +78,8 @@ See "[Normalization Strategies](#normalization-strategies)" below for more infor
 
 This `string` controls where in the document your table of contents will be placed.  There are two options:
 
- - **`'top'`** (default) - Insert at the very top of the document, before any content
- - `'before-headings'` - Insert just before the very first heading - useful if you want to have some descriptive text show above the table of content.
+- **`'top'`** (default) - Insert at the very top of the document, before any content
+- `'before-headings'` - Insert just before the very first heading - useful if you want to have some descriptive text show above the table of content.
 
 If you'd like to customize this further, you can implement a [custom event listener](/1.4/customization/event-dispatcher/#registering-listeners) to locate the `TableOfContents` node and reposition it somewhere else in the document prior to rendering.
 
@@ -77,8 +87,8 @@ If you'd like to customize this further, you can implement a [custom event liste
 
 This `string` option controls what style of HTML list should be used to render the table of contents:
 
- - **`'bullet'`** (default) - Unordered, bulleted list (`<ul>`)
- - `'ordered'` - Ordered list (`<ol>`)
+- **`'bullet'`** (default) - Unordered, bulleted list (`<ul>`)
+- `'ordered'` - Ordered list (`<ol>`)
 
 ### `min_heading_level` and `max_heading_level`
 

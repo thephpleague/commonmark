@@ -4,20 +4,18 @@ title: Delimiter Processing
 description: Processing CommonMark delimiter runs with a custom processor
 ---
 
-Delimiter Processing
-====================
+# Delimiter Processing
 
 Delimiter processors allow you to implement [delimiter runs](https://spec.commonmark.org/0.29/#delimiter-run) the same way the core library implements emphasis.
 
 Delimiter runs are a special type of inline:
 
- - They are denoted by "wrapping" text with one or more characters before **and** after those inner contents
- - They can contain other delimiter runs or inlines inside of them
+- They are denoted by "wrapping" text with one or more characters before **and** after those inner contents
+- They can contain other delimiter runs or inlines inside of them
 
-~~~markdown
+```markdown
 This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after.
-~~~
-
+```
 
 When implementing something with these characteristics you should consider leveraging delimiter runs; otherwise, a basic [inline parser](/1.3/inline-parsing/) should be sufficient.
 
@@ -29,9 +27,9 @@ Delimiter processors have a lower priority than inline parsers - if an [inline p
 
 Implement the `DelimiterProcessorInterface` and add it to your environment:
 
-~~~php
+```php
 $environment->addDelimiterProcessor(new MyCustomDelimiterProcessor());
-~~~
+```
 
 ### `getOpeningCharacter()` and `getClosingCharacter()`
 
@@ -43,21 +41,21 @@ This method tells the engine the minimum number of characters needed to match or
 
 ### `getDelimiterUse()`
 
-~~~php
+```php
 public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int;
-~~~
+```
 
 This method is used to tell the engine how many characters from the matching delimiters should be consumed.  For simple processors you'll likely return `1` (or whatever your minimum length is).  In more advanced cases, you can examine the opening and closing delimiters and perform additional logic to determine whether they should be fully or partially consumed.  You can also return `0` if you'd like.
 
 ### `process()`
 
-~~~php
+```php
 public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse);
-~~~
+```
 
 This is where the magic happens.  Once the engine determines it can use the delimiter it found (by looking at all the other methods above) it'll call this method.  Your job is to take everything between the `$opener` and `$closer` and wrap that in whatever custom inline element you'd like.  Here's a basic example of wrapping the inner contents inside a new `Emphasis` element:
 
-~~~php
+```php
 // Create the outer element
 $emphasis = new Emphasis();
 
@@ -71,7 +69,7 @@ while ($tmp !== null && $tmp !== $closer) {
 
 // Place the outer element into the AST
 $opener->insertAfter($emphasis);
-~~~
+```
 
 Note that `$opener` and `$closer` will be automatically removed for you after this function returns - no need to do that yourself.
 
@@ -83,7 +81,7 @@ Basic delimiter processors, as covered above, do not require any custom inline p
 
 As your identifies potential delimiter-based inlines, it should create a new `AbstractStringContainer` node (either `Text` or something custom) with the inner contents and also push a new `DelimiterInterface` onto the `DelimiterStack`:
 
-~~~php
+```php
 $node = new Text($cursor->getPreviousText(), [
     'delim' => true,
 ]);
@@ -92,9 +90,8 @@ $inlineContext->getContainer()->appendChild($node);
 // Add entry to stack to this opener
 $delimiter = new Delimiter($character, $numDelims, $node, $canOpen, $canClose);
 $inlineContext->getDelimiterStack()->push($delimiter);
-~~~
+```
 
 This basically tells the engine that text was found which _might_ be emphasis, but due to the delimiter run rules we can't make that determination just yet.  That final determination is later on by a "delimiter processor".
 
 Your implementation of the delimiter processor won't look any different in this approach - you'll still need to implement all of the same methods especially `process()`.  The difference is that **you've identified where the delimiter is, instead of relying on the engine to do this for you.**
-

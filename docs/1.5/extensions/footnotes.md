@@ -9,11 +9,21 @@ redirect_from: /extensions/footnotes/
 
 The `FootnoteExtension` adds the ability to create footnotes in Markdown documents.
 
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+```bash
+composer require league/commonmark
+```
+
+See the [installation](/1.5/installation/) section for more details.
+
 ## Footnote Syntax
 
 Sample Markdown input:
 
-```md
+```markdown
 Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi[^note1] leo risus, porta ac consectetur ac.
 
@@ -22,7 +32,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi[^note1] leo risus
 
 Result:
 
-```md
+```html
 <p>
     Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -45,7 +55,6 @@ Result:
 Configure your `Environment` as usual and simply add the `FootnoteExtension`:
 
 ```php
-<?php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;

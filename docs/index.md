@@ -1,8 +1,9 @@
 ---
 layout: homepage
 ---
-
+<!-- markdownlint-disable first-line-heading -->
 {% assign version = site.data.project.default_version %}
+<!-- markdownlint-restore -->
 
 # Features
 
@@ -32,7 +33,7 @@ echo $converter->convertToHtml('# Hello World!');
 
 ## Included Extensions
 
-This project includes [several built-in extensions you can use](/{{ version }}/extensions/) to enable additional features and syntax.
+This project includes [several built-in extensions you can use](/{{ version }}/extensions/overview/) to enable additional features and syntax.
 
 ## Customization
 
@@ -41,12 +42,3 @@ This library allows you to add custom syntax, renderers, and more.  Check out th
 ## Community Integrations & Extensions
 
 An updated list of pre-built integrations and extensions can be found in the [Related Packages](https://github.com/thephpleague/commonmark#%EF%B8%8F-related-packages) section of the `README`.
-
-# Sponsors
-
-We'd like to thank the following people for supporting the ongoing development of this project:
-
- - [RIPS Technologies](https://www.ripstech.com/) for supporting this project with a complimentary [RIPS SaaS](https://www.ripstech.com/product/) license
- - [JetBrains](https://www.jetbrains.com/) for supporting this project with complimentary [PhpStorm](https://www.jetbrains.com/phpstorm/) licenses
-
-Are you interested in sponsoring this project? [Make a pledge via Patreon](https://www.patreon.com/join/colinodell) and we may include your name here!

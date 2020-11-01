@@ -21,6 +21,23 @@ module Jekyll
 
         return nil
     end
+
+    def get_version_link(targetVersion, page)
+        defaultUrl = '/' + targetVersion + '/'
+
+        menuByVersion = @context.registers[:site].data['menu']['version']
+        return defaultUrl if not menuByVersion.has_key?(targetVersion)
+
+        expectedUrl = page.gsub(/^\/[\d\.]+\//, defaultUrl)
+
+        menuByVersion[targetVersion].each do |section, pages|
+            pages.each do |title, url|
+                return url if url == expectedUrl
+            end
+        end
+
+        return defaultUrl
+    end
   end
 end
 

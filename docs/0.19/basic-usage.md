@@ -3,13 +3,12 @@ layout: default
 title: Basic Usage
 ---
 
-Basic Usage
-==============
+# Basic Usage
 
 The `CommonMarkConverter` class provides a simple wrapper for converting CommonMark to HTML:
 
-~~~php
-<?php
+```php
+require __DIR__ . '/vendor/autoload.php';
 
 use League\CommonMark\CommonMarkConverter;
 
@@ -17,7 +16,7 @@ $converter = new CommonMarkConverter();
 echo $converter->convertToHtml('# Hello World!');
 
 // <h1>Hello World!</h1>
-~~~
+```
 
 <i class="fa fa-exclamation-triangle"></i>
 **Important:** See the [security](/0.19/security/) section for important details on avoiding security misconfigurations.
@@ -30,8 +29,8 @@ The actual conversion process requires three steps:
 
 You can do this yourself if you wish:
 
-~~~php
-<?php
+```php
+require __DIR__ . '/vendor/autoload.php';
 
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
@@ -47,6 +46,6 @@ $document = $parser->parse($markdown);
 echo $htmlRenderer->renderBlock($document);
 
 // <h1>Hello World!</h1>
-~~~
+```
 
 [Additional customization](/0.19/customization/overview/) is also possible.

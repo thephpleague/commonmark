@@ -3,8 +3,7 @@ layout: default
 title: Extensions
 ---
 
-Extensions
-==========
+# Extensions
 
 Extensions provide a way to group multiple related parsers, processors, and/or renderers together with pre-defined priorities.  They are perfect for distributing your customizations as reusable, open-source packages that others can plug into their own projects!
 

@@ -3,8 +3,7 @@ layout: default
 title: Customization Overview
 ---
 
-Customization Overview
-======================
+# Customization Overview
 
 This library supports several types of customizations, which are summarized below.
 
@@ -22,7 +21,7 @@ There are two types of parsers:
 
 The parsing approach is identical for both types - examine text at the current position (via the [`Cursor`](/0.19/customization/cursor/)) and determine if you can handle it;
 if so, create the corresponding AST element,
-otherwise you abort and the engine will try other parsers.  If no parser succeeds then the current text is treated as plain text. 
+otherwise you abort and the engine will try other parsers.  If no parser succeeds then the current text is treated as plain text.
 
 ## Custom renderers
 
@@ -42,5 +41,5 @@ Once the [Abstract Syntax Tree](/0.19/customization/abstract-syntax-tree/) is pa
 
 Some examples of what's possible:
 
-* [Parse Twitter handles into profile links](/0.19/customization/inline-parsing#example-1---twitter-handles)
-* [Convert smilies into emoticon images](/0.19/customization/inline-parsing#example-2---emoticons)
+- [Parse Twitter handles into profile links](/0.19/customization/inline-parsing#example-1---twitter-handles)
+- [Convert smilies into emoticon images](/0.19/customization/inline-parsing#example-2---emoticons)

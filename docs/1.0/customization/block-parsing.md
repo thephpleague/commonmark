@@ -5,25 +5,22 @@ description: How to parse block-level elements
 redirect_from: /0.20/customization/block-parsing/
 ---
 
-Block Parsing
-=============
+# Block Parsing
 
 Block parsers should implement `BlockParserInterface` and implement the following method:
 
 ## parse()
 
-~~~php
-<?php
-
+```php
 public function parse(ContextInterface $context, Cursor $cursor): bool;
-~~~
+```
 
 When parsing a new line, the `DocParser` iterates through all registered block parsers and calls their `parse()` method.  Each parser must determine whether it can handle the given line; if so, it should parse the given block and return `true`.
 
 ### Parameters
 
-* `ContextInterface $context` - Provides information about the current context of the DocParser. Includes access to things like the document, current block container, and more.
-* `Cursor $cursor` - The [`Cursor`](/1.0/customization/cursor/) encapsulates the current state of the line being parsed and provides helpers for looking around the current position.
+- `ContextInterface $context` - Provides information about the current context of the DocParser. Includes access to things like the document, current block container, and more.
+- `Cursor $cursor` - The [`Cursor`](/1.0/customization/cursor/) encapsulates the current state of the line being parsed and provides helpers for looking around the current position.
 
 ### Return value
 
@@ -36,8 +33,8 @@ Returning `true` tells the engine that you've successfully parsed the block at t
 
 ## Tips
 
-* For best performance, `return false` as soon as possible
-* Your `parse()` method may be called thousands of times so be sure your code is optimized
+- For best performance, `return false` as soon as possible
+- Your `parse()` method may be called thousands of times so be sure your code is optimized
 
 ## Block Elements
 

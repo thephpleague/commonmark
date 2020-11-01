@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Disallowed Raw HTML Extension
-description: The DisallowedRawHTMLExtension automatically converts URLs in plain text to clickable links
+description: The DisallowedRawHTMLExtension automatically escapes certain HTML tags when rendering raw HTML
 ---
 
 # Disallowed Raw HTML Extension
@@ -10,21 +10,31 @@ _(Note: this extension is included by default within [the GFM extension](/1.4/ex
 
 The `DisallowedRawHTMLExtension` automatically filters certain HTML tags when rendering output, such as:
 
- - `<title>`
- - `<textarea>`
- - `<style>`
- - `<xmp>`
- - `<iframe>`
- - `<noembed>`
- - `<noframes>`
- - `<script>`
- - `<plaintext>`
+- `<title>`
+- `<textarea>`
+- `<style>`
+- `<xmp>`
+- `<iframe>`
+- `<noembed>`
+- `<noframes>`
+- `<script>`
+- `<plaintext>`
 
 Filtering is done by replacing the leading `<` with the entity `&lt;`.
 
 This is required by the [GFM spec](https://github.github.com/gfm/#disallowed-raw-html-extension-) because these particular tags could cause undesirable side-effects if a malicious user tries to introduce them.
 
 All other HTML tags are left untouched by this extension.
+
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+```bash
+composer require league/commonmark
+```
+
+See the [installation](/1.4/installation/) section for more details.
 
 ## Usage
 

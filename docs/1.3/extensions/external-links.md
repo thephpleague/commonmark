@@ -8,8 +8,18 @@ description: The ExternalLinksExtension detects external links and adjusts their
 
 This extension can detect links to external sites and adjust the markup accordingly:
 
- - Adds a `rel="noopener noreferrer"` attribute
- - Optionally adds any custom HTML classes
+- Adds a `rel="noopener noreferrer"` attribute
+- Optionally adds any custom HTML classes
+
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+```bash
+composer require league/commonmark
+```
+
+See the [installation](/1.3/installation/) section for more details.
 
 ## Usage
 

@@ -9,9 +9,19 @@ redirect_from: /extensions/external-links/
 
 This extension can detect links to external sites and adjust the markup accordingly:
 
- - Make the links open in new tabs/windows
- - Adds a `rel` attribute to the resulting `<a>` tag with values like `"nofollow noopener noreferrer"`
- - Optionally adds any custom HTML classes
+- Make the links open in new tabs/windows
+- Adds a `rel` attribute to the resulting `<a>` tag with values like `"nofollow noopener noreferrer"`
+- Optionally adds any custom HTML classes
+
+## Installation
+
+This extension is bundled with `league/commonmark`. This library can be installed via Composer:
+
+```bash
+composer require league/commonmark
+```
+
+See the [installation](/1.5/installation/) section for more details.
 
 ## Usage
 
@@ -81,21 +91,23 @@ This option allows you to provide a `string` containing one or more HTML classes
 
 These options allow you to configure whether a `rel` attribute should be applied to links.  Each of these options can be set to one of the following `string` values:
 
- - `'external'` - **Apply to external links only (default)**
- - `'internal'` - Apply to internal links only
- - `'all'` - Apply to all links (both internal and external)
- - `''` (empty string) - Don't apply to any links
+- `'external'` - **Apply to external links only (default)**
+- `'internal'` - Apply to internal links only
+- `'all'` - Apply to all links (both internal and external)
+- `''` (empty string) - Don't apply to any links
 
 ## Advanced Rendering
 
 When an external link is detected, the `ExternalLinkProcessor` will set the `external` data option on the `Link` node to either `true` or `false`.  You can therefore create a [custom link renderer](/1.5/customization/inline-rendering/) which checks this value and behaves accordingly:
 
 ```php
+
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+
 class MyCustomLinkRenderer implements InlineRendererInterface
 {
 

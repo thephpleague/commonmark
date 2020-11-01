@@ -12,7 +12,9 @@ All notable changes made in `1.0` - `1.2` releases are shown below. See the [ful
 {% assign releases = site.github.releases | where_exp: "r", "r.name >= '1.0'" | where_exp: "r", "r.name < '1.3'" %}
 
 {% for release in releases %}
+
 ## [{{ release.name }}]({{ release.html_url }}) - {{ release.published_at | date: "%Y-%m-%d" }}
+
 {{ release.body | markdownify }}
 {% endfor %}
 
