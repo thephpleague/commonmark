@@ -305,7 +305,7 @@ final class Environment implements ConfigurableEnvironmentInterface
             ],
             'html_input'         => self::HTML_INPUT_ALLOW,
             'allow_unsafe_links' => true,
-            'max_nesting_level'  => \INF,
+            'max_nesting_level'  => \PHP_INT_MAX,
         ]);
 
         return $environment;

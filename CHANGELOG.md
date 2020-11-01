@@ -4,6 +4,26 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added forward-compatibility for [configuration options which will be changing in 2.0](https://commonmark.thephpleague.com/1.6/upgrading/):
+   - `commonmark/enable_em` (currently `enable_em` in 1.x)
+   - `commonmark/enable_strong` (currently `enable_strong` in 1.x)
+   - `commonmark/use_asterisk` (currently `use_asterisk` in 1.x)
+   - `commonmark/use_underscore` (currently `use_underscore` in 1.x)
+   - `commonmark/unordered_list_markers` (currently `unordered_list_markers` in 1.x)
+   - `mentions/*/prefix` (currently `mentions/*/symbol` in 1.x)
+   - `mentions/*/pattern` (currently `mentions/*/regex` in 1.x)
+   - `max_nesting_level` (currently supports `int` and `float` values in 1.x; will only support `int` in 2.0)
+
+### Changed
+
+ - The `max_nesting_level` option now defaults to `PHP_INT_MAX` instead of `INF`
+
+### Deprecated
+
+ - Deprecated the [configuration options shown above](https://commonmark.thephpleague.com/1.6/upgrading/)
+
 ## [1.5.7] - 2020-10-31
 
 ### Fixed

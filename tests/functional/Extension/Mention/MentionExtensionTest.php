@@ -13,6 +13,7 @@ namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
+use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
@@ -150,5 +151,58 @@ EOT;
         $converter = new CommonMarkConverter([], $environment);
 
         $converter->convertToHtml('');
+    }
+
+    public function testV2Configuration(): void
+    {
+        $input = <<<'EOT'
+You can follow the author of this library on Github - he's @colinodell!
+EOT;
+
+        $expected = <<<'EOT'
+<p>You can follow the author of this library on Github - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
+
+EOT;
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new MentionExtension());
+        $environment->setConfig([
+            'mentions' => [
+                'github_handle' => [
+                    'prefix'    => '@',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'generator' => 'https://github.com/%s',
+                ],
+            ],
+        ]);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $this->assertEquals($expected, $converter->convertToHtml($input));
+    }
+
+    public function testV2ConfigurationWithFullRegex(): void
+    {
+        $this->expectException(InvalidOptionException::class);
+
+        $input = <<<'EOT'
+You can follow the author of this library on Github - he's @colinodell!
+EOT;
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new MentionExtension());
+        $environment->setConfig([
+            'mentions' => [
+                'github_handle' => [
+                    'prefix'    => '@',
+                    'pattern'     => '/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/',
+                    'generator' => 'https://github.com/%s',
+                ],
+            ],
+        ]);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $converter->convertToHtml($input);
     }
 }

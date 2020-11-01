@@ -47,7 +47,15 @@ final class DocParser implements DocParserInterface
     {
         $this->environment = $environment;
         $this->inlineParserEngine = new InlineParserEngine($environment);
-        $this->maxNestingLevel = $environment->getConfig('max_nesting_level', \INF);
+        $this->maxNestingLevel = $environment->getConfig('max_nesting_level', \PHP_INT_MAX);
+
+        if (\is_float($this->maxNestingLevel)) {
+            if ($this->maxNestingLevel === \INF) {
+                @\trigger_error('Using the "INF" constant for the "max_nesting_level" configuration option is deprecated in league/commonmark 1.6 and will not be allowed in 2.0; use "PHP_INT_MAX" instead', \E_USER_DEPRECATED);
+            } else {
+                @\trigger_error('Using a float for the "max_nesting_level" configuration option is deprecated in league/commonmark 1.6 and will not be allowed in 2.0', \E_USER_DEPRECATED);
+            }
+        }
     }
 
     /**

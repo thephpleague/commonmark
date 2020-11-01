@@ -136,7 +136,14 @@ final class ListParser implements BlockParserInterface, ConfigurationAwareInterf
             return $this->listMarkerRegex = '/^[*+-]/';
         }
 
-        $markers = $this->config->get('unordered_list_markers', ['*', '+', '-']);
+        $deprecatedMarkers = $this->config->get('unordered_list_markers', ConfigurationInterface::MISSING);
+        if ($deprecatedMarkers !== ConfigurationInterface::MISSING) {
+            @\trigger_error('The "unordered_list_markers" configuration option is deprecated in league/commonmark 1.6 and will be replaced with "commonmark > unordered_list_markers" in 2.0', \E_USER_DEPRECATED);
+        } else {
+            $deprecatedMarkers = ['*', '+', '-'];
+        }
+
+        $markers = $this->config->get('commonmark/unordered_list_markers', $deprecatedMarkers);
 
         if (!\is_array($markers)) {
             throw new \RuntimeException('Invalid configuration option "unordered_list_markers": value must be an array of strings');
