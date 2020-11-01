@@ -104,6 +104,10 @@ final class Environment implements ConfigurableEnvironmentInterface
 
     public function mergeConfig(array $config = [])
     {
+        if (\func_num_args() === 0) {
+            @\trigger_error('Calling Environment::mergeConfig() without any parameters is deprecated in league/commonmark 1.6 and will not be allowed in 2.0', \E_USER_DEPRECATED);
+        }
+
         $this->assertUninitialized('Failed to modify configuration.');
 
         $this->config->merge($config);

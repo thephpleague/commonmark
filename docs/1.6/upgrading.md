@@ -89,6 +89,12 @@ Version 2.0 will no longer allow custom environments to be injected via the cons
 
 The environment's `setConfig()` method is now deprecated and will be removed in 2.0 - use `mergeConfig()` instead.
 
+Calling `ConfigurableEnvironmentInterface::mergeConfig()` without the array parameter is deprecated and won't be allowed in 2.0.
+
+Calling `Configuration::getConfig()` without any parameters to retrieve the full configuration is deprecated and won't be allowed in 2.0. Future versions should only fetch the config items they need, not the whole configuration.
+
+Calling `Configuration::set()` without the second `$value` parameter is deprecated and won't be allowed in 2.0.  You should always explicitly define the value you want to be set.
+
 ## RegexHelper::matchAll()
 
 The `RegexHelper::matchAll()` method has been deprecated and will be removed in 2.0. Use the new, more-efficient `RegexHelper::matchFirst()` method instead.
