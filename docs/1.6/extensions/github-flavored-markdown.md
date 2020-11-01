@@ -2,7 +2,6 @@
 layout: default
 title: Github-Flavored Markdown
 description: The GithubFlavoredMarkdownExtension class includes all the GFM addons
-redirect_from: /extensions/github-flavored-markdown/
 ---
 
 # Github-Flavored Markdown

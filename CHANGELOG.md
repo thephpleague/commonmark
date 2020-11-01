@@ -29,7 +29,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Deprecated the ability to pass a custom `Environment` into the constructors of `CommonMarkConverter` and `GithubFlavoredMarkdownConverter`; use `MarkdownConverter` instead
  - Deprecated `ConfigurableEnvironmentInterface::setConfig()`; use `mergeConfig()` instead
  - Deprecated calling `ConfigurableEnvironmentInterface::mergeConfig()` without any parameters
- - Deprecated calling `Configuration::get()` without any parameters
+ - Deprecated calling `Configuration::get()` and `EnvironmentInterface::getConfig()` without any parameters
  - Deprecated calling `Configuration::set()` without the second `$value` parameter
  - Deprecated `RegexHelper::matchAll()`; use `RegexHelper::matchFirst()` instead
  - Deprecated extending the `ArrayCollection` class; will be marked `final` in 2.0

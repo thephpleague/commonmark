@@ -1,12 +1,11 @@
 ---
 layout: default
 title: Configuration
-redirect_from: /configuration/
 ---
 
 # Configuration
 
-Many aspects of this library's behavior can be tweaked using configuration options:
+Many aspects of this library's behavior can be tweaked using configuration options.
 
 You can provide an array of configuration options to the `CommonMarkConverter` when creating it:
 

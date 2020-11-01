@@ -2,7 +2,6 @@
 layout: default
 title: Autolink Extension
 description: The Autolink extension automatically converts URLs in plain text to clickable links
-redirect_from: /extensions/autolinks/
 ---
 
 # Autolink Extension
