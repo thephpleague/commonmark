@@ -60,6 +60,31 @@ Version 1.6 will support both the 1.x and 2.0 variations mentioned above but 2.0
  ];
 ```
 
+## Converters with custom environments
+
+Version 2.0 will no longer allow custom environments to be injected via the constructors of `CommonMarkConverter` or `GithubFlavoredMarkdownConverter`. You should instead use the newly-added `MarkdownConverter` class:
+
+```diff
+-use League\CommonMark\CommonMarkConverter;
+ use League\CommonMark\Environment;
+ use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
++use League\CommonMark\MarkdownConverter;
+
+ $config = [
+     'html_input' => 'escape',
+     'allow_unsafe_links' => false,
+ ];
+
+ $environment = Environment::createCommonMarkEnvironment();
+ $environment->addExtension(new InlinesOnlyExtension());
++$environment->mergeConfig($config);
+
+ // Go forth and convert you some Markdown!
+-$converter = new CommonMarkConverter($config, $environment);
++$converter = new MarkdownConverter($environment);
+ echo $converter->convertToHtml('# Hello World!');
+```
+
 ## RegexHelper::matchAll()
 
 The `RegexHelper::matchAll()` method has been deprecated and will be removed in 2.0. Use the new, more-efficient `RegexHelper::matchFirst()` method instead.

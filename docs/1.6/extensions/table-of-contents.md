@@ -26,10 +26,10 @@ See the [installation](/1.6/installation/) section for more details.
 Configure your `Environment` as usual and simply add the `TableOfContentsExtension` and `HeadingPermalinkExtension` provided by this package:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -39,7 +39,7 @@ $environment->addExtension(new HeadingPermalinkExtension());
 $environment->addExtension(new TableOfContentsExtension());
 
 // Set your configuration
-$config = [
+$environment->mergeConfig([
     // Extension defaults are shown below
     // If you're happy with the defaults, feel free to remove them from this array
     'table_of_contents' => [
@@ -51,10 +51,10 @@ $config = [
         'normalize' => 'relative',
         'placeholder' => null,
     ],
-];
+]);
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('# Awesome!');
 ```
 

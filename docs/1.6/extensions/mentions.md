@@ -18,9 +18,9 @@ define the starting symbol prefix, a regular expression pattern to match against
 generate the URL.
 
 ```php
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment\Environment;
+use League\CommonMark\Environment;
 use League\CommonMark\Extension\Mention\MentionExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go.
 $environment = Environment::createCommonMarkEnvironment();
@@ -29,7 +29,7 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new MentionExtension());
 
 // Set your configuration.
-$config = [
+$environment->mergeConfig([
     'mentions' => [
         // GitHub handler mention configuration.
         // Sample Input:  `@colinodell`
@@ -58,10 +58,10 @@ $config = [
             'generator' => 'https://twitter.com/%s',
         ],
     ],
-];
+]);
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 // Output:
 // <p>Follow me on Twitter: <a href="https://twitter.com/colinodell">@colinodell</a></p>
@@ -90,12 +90,12 @@ or a valid [PHP callable](https://www.php.net/manual/en/language.types.callable.
 resulting URL.
 
 ```php
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment\Environment;
+use League\CommonMark\Environment;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
-use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go.
 $environment = Environment::createCommonMarkEnvironment();
@@ -104,7 +104,7 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new MentionExtension());
 
 // Set your configuration.
-$config = [
+$environment->mergeConfig([
     'mentions' => [
         'github_handle' => [
             'prefix'    => '@',
@@ -147,10 +147,10 @@ $config = [
         ],
 
     ],
-];
+]);
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
 // Output:
 // <p>Follow me on Twitter: <a href="https://www.github.com/colinodell">@colinodell</a></p>
@@ -213,9 +213,9 @@ You can then hook this class up to a mention definition in the configuration to 
 mentions:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment\Environment;
+use League\CommonMark\Environment;
 use League\CommonMark\Extension\Mention\MentionExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Grab your UserMentionGenerator somehow, perhaps from a DI container or instantiate it if needed
 $userMentionGenerator = $container->get(UserMentionGenerator::class);
@@ -227,7 +227,7 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new MentionExtension());
 
 // Set your configuration.
-$config = [
+$environment->mergeConfig([
     'mentions' => [
         'user_url_generator' => [
             'prefix'    => '@',
@@ -235,10 +235,10 @@ $config = [
             'generator' => $userMentionGenerator,
         ],
     ],
-];
+]);
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('You should ask @colinodell about that');
 
 // Output (if current user has permission to view profiles):

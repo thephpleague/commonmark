@@ -6,12 +6,12 @@ redirect_from: /configuration/
 
 # Configuration
 
+Many aspects of this library's behavior can be tweaked using configuration options:
+
 You can provide an array of configuration options to the `CommonMarkConverter` when creating it:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
-
-$converter = new CommonMarkConverter([
+$config = [
     'renderer' => [
         'block_separator' => "\n",
         'inner_separator' => "\n",
@@ -27,7 +27,37 @@ $converter = new CommonMarkConverter([
     'html_input' => 'escape',
     'allow_unsafe_links' => false,
     'max_nesting_level' => PHP_INT_MAX,
-]);
+];
+```
+
+If you're using the basic `CommonMarkConverter` or `GithubFlavoredMarkdown` classes, simply pass the configuration array into the constructor:
+
+```php
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
+
+$converter = new CommonMarkConverter($config);
+// or
+$converter = new GithubFlavoredMarkdownConverter($config);
+```
+
+Otherwise, if you're using `MarkdownConverter` to customize the extensions in your parser, pass the configuration into the [Environment](/1.6/customization/environment/)'s `mergeConfig()` method instead:
+
+```php
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
+use League\CommonMark\MarkdownConverter;
+
+$environment = new Environment();
+
+// TODO: Add any/all the extensions you wish; for example:
+$environment->addExtension(new InlinesOnlyExtension());
+
+// Here's where we set the configuration array:
+$environment->mergeConfig($config);
+
+// Go forth and convert you some Markdown!
+$converter = new MarkdownConverter($environment);
 ```
 
 Here's a list of currently-supported options:

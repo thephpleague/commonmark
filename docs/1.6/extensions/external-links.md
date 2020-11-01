@@ -28,9 +28,9 @@ See the [installation](/1.6/installation/) section for more details.
 Configure your `Environment` as usual and simply add the `ExternalLinkExtension` provided by this package:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -39,7 +39,7 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new ExternalLinkExtension());
 
 // Set your configuration
-$config = [
+$environment->mergeConfig([
     'external_link' => [
         'internal_hosts' => 'www.example.com', // TODO: Don't forget to set this!
         'open_in_new_window' => true,
@@ -48,10 +48,10 @@ $config = [
         'noopener' => 'external',
         'noreferrer' => 'external',
     ],
-];
+]);
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($config, $environment);
 echo $converter->convertToHtml('I successfully installed the <https://github.com/thephpleague/commonmark> project!');
 ```
 
