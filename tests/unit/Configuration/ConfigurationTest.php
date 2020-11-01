@@ -129,9 +129,9 @@ class ConfigurationTest extends TestCase
                 'b' => 'c',
             ],
             'emptyarr' => [],
-            'null' => null,
-            'false' => false,
-            'zero' => 0,
+            'null'     => null,
+            'false'    => false,
+            'zero'     => 0,
         ]);
 
         $this->assertTrue($config->exists('a'));
