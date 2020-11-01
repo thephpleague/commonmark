@@ -85,10 +85,9 @@ Additional configuration options are available for some of the [available extens
 
 The configuration is ultimately passed to (and managed via) the `Environment`.  If you're creating your own `Environment`, simply pass your config array into its constructor instead.
 
-The `Environment` also exposes three methods for managing the configuration:
+The `Environment` also exposes two methods for managing the configuration:
 
-- `setConfig(array $config = [])` - Replace the current configuration with something else
-- `mergeConfig(array $config = [])` - Recursively merge the current configuration with the given options
+- `mergeConfig(array $config)` - Recursively merge the current configuration with the given options
 - `getConfig(string $key, $default = null)` - Returns the config value. For nested configs, use a `/`-separate path; for example: `renderer/soft_break`
 
 [Learn more about customizing the Environment](/1.6/customization/environment/)

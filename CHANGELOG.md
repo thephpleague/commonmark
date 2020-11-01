@@ -26,6 +26,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Deprecated the [configuration options shown above](https://commonmark.thephpleague.com/1.6/upgrading/)
  - Deprecated the ability to pass a custom `Environment` into the constructors of `CommonMarkConverter` and `GithubFlavoredMarkdownConverter`; use `MarkdownConverter` instead
+ - Deprecated `ConfigurableEnvironmentInterface::setConfig()`; use `mergeConfig()` instead
  - Deprecated `RegexHelper::matchAll()`; use `RegexHelper::matchFirst()` instead
 
 ### Fixed

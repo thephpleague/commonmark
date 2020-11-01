@@ -85,6 +85,10 @@ Version 2.0 will no longer allow custom environments to be injected via the cons
  echo $converter->convertToHtml('# Hello World!');
 ```
 
+## Environment and Configuration method changes
+
+The environment's `setConfig()` method is now deprecated and will be removed in 2.0 - use `mergeConfig()` instead.
+
 ## RegexHelper::matchAll()
 
 The `RegexHelper::matchAll()` method has been deprecated and will be removed in 2.0. Use the new, more-efficient `RegexHelper::matchFirst()` method instead.

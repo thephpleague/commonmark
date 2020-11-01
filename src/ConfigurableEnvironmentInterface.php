@@ -34,6 +34,8 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
      * @param array<string, mixed> $config
      *
      * @return void
+     *
+     * @deprecated in 1.6 and will be removed in 2.0; use mergeConfig() instead
      */
     public function setConfig(array $config = []);
 

@@ -111,6 +111,8 @@ final class Environment implements ConfigurableEnvironmentInterface
 
     public function setConfig(array $config = [])
     {
+        @\trigger_error('The Environment::setConfig() method is deprecated in league/commonmark 1.6 and will be removed in 2.0. Use mergeConfig() instead.', \E_USER_DEPRECATED);
+
         $this->assertUninitialized('Failed to modify configuration.');
 
         $this->config->replace($config);

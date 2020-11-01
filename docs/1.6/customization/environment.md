@@ -29,14 +29,6 @@ public function mergeConfig(array $config = []);
 
 Merges the given [configuration](/1.6/configuration/) settings into any existing ones.
 
-## setConfig()
-
-```php
-public function setConfig(array $config = []);
-```
-
-Completely replaces the previous [configuration](/1.6/configuration/) settings with the new `$config` you provide.
-
 ## addExtension()
 
 ```php
