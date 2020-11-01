@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\TaskList;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
+use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
 final class TaskListExtensionTest extends TestCase
@@ -118,7 +118,7 @@ EOT;
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new TaskListExtension());
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, $converter->convertToHtml($input));
     }

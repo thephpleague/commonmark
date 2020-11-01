@@ -30,12 +30,13 @@ final class EmojiExtension implements ExtensionInterface
 To hook up your new extension to the `Environment`, simply do this:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\MarkdownConverter;
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new EmojiExtension());
+$environment->mergeConfig([]);
 
-$converter = new CommonMarkConverter([], $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Hello! :wave:');
 ```

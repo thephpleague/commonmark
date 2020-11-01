@@ -9,14 +9,15 @@ description: The GithubFlavoredMarkdownExtension class includes all the GFM addo
 You can manually add the GFM extension to your environment like this:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\MarkdownConverter;
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new GithubFlavoredMarkdownExtension());
+$environment->mergeConfig([]);
 
-$converter = new CommonMarkConverter([], $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Hello GFM!');
 ```
 
@@ -31,13 +32,13 @@ This will automatically include all of these sub-extensions/features for you:
 Or, if you only want a subset of GFM extensions, you can add them individually like this instead:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
+use League\CommonMark\MarkdownConverter;
 
 $environment = Environment::createCommonMarkEnvironment();
 // Remove any of the lines below if you don't want a particular feature
@@ -46,8 +47,9 @@ $environment->addExtension(new DisallowedRawHtmlExtension());
 $environment->addExtension(new StrikethroughExtension());
 $environment->addExtension(new TableExtension());
 $environment->addExtension(new TaskListExtension());
+$environment->mergeConfig([]);
 
-$converter = new CommonMarkConverter([], $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Hello GFM!');
 ```
 

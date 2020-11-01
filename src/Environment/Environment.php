@@ -118,7 +118,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
     /**
      * {@inheritdoc}
      */
-    public function mergeConfig(array $config = []): void
+    public function mergeConfig(array $config): void
     {
         $this->assertUninitialized('Failed to modify configuration.');
 
@@ -126,19 +126,9 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function setConfig(array $config = []): void
-    {
-        $this->assertUninitialized('Failed to modify configuration.');
-
-        $this->config->replace($config);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfig(?string $key = null, $default = null)
+    public function getConfig(string $key, $default = null)
     {
         return $this->config->get($key, $default);
     }
@@ -288,7 +278,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         }
     }
 
-    public static function createCommonMarkEnvironment(): ConfigurableEnvironmentInterface
+    public static function createCommonMarkEnvironment(): Environment
     {
         $environment = new static();
         $environment->addExtension(new CommonMarkCoreExtension());
@@ -300,13 +290,13 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
             ],
             'html_input'         => HtmlFilter::ALLOW,
             'allow_unsafe_links' => true,
-            'max_nesting_level'  => \INF,
+            'max_nesting_level'  => \PHP_INT_MAX,
         ]);
 
         return $environment;
     }
 
-    public static function createGFMEnvironment(): ConfigurableEnvironmentInterface
+    public static function createGFMEnvironment(): Environment
     {
         $environment = self::createCommonMarkEnvironment();
         $environment->addExtension(new GithubFlavoredMarkdownExtension());

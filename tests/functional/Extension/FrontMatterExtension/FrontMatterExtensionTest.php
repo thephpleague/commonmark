@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\FrontMatterExtension;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\FrontMatter\Exception\InvalidFrontMatterException;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
+use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Output\RenderedContentInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -54,7 +54,7 @@ EOT;
             ],
         ];
 
-        $converter = new CommonMarkConverter([], $this->environment);
+        $converter = new MarkdownConverter($this->environment);
         $result    = $converter->convertToHtml($markdown);
 
         $this->assertInstanceOf(RenderedContentWithFrontMatter::class, $result);
@@ -73,7 +73,7 @@ EOT;
     public function testWithNoFrontMatter(): void
     {
         $markdown  = '# Hello World!';
-        $converter = new CommonMarkConverter([], $this->environment);
+        $converter = new MarkdownConverter($this->environment);
         $result    = $converter->convertToHtml($markdown);
 
         $this->assertInstanceOf(RenderedContentInterface::class, $result);
@@ -103,7 +103,7 @@ EOT;
 # Oh no!
 
 EOT;
-        $converter = new CommonMarkConverter([], $this->environment);
+        $converter = new MarkdownConverter($this->environment);
         $converter->convertToHtml($markdown);
     }
 }

@@ -82,9 +82,6 @@ class EnvironmentTest extends TestCase
         ];
         $environment = new Environment($config);
 
-        // No arguments should return the whole thing
-        $this->assertEquals($config, $environment->getConfig());
-
         // Test getting a single scalar element
         $this->assertEquals('bar', $environment->getConfig('foo'));
 
@@ -102,24 +99,6 @@ class EnvironmentTest extends TestCase
 
         // Test getting a non-existent element with a default value
         $this->assertEquals(42, $environment->getConfig('answer', 42));
-    }
-
-    public function testSetConfig(): void
-    {
-        $environment = new Environment(['foo' => 'bar']);
-        $environment->setConfig(['test' => '123']);
-        $this->assertNull($environment->getConfig('foo'));
-        $this->assertEquals('123', $environment->getConfig('test'));
-    }
-
-    public function testSetConfigAfterInit(): void
-    {
-        $this->expectException(\RuntimeException::class);
-
-        $environment = new Environment();
-        // This triggers the initialization
-        $environment->getBlockStartParsers();
-        $environment->setConfig(['foo' => 'bar']);
     }
 
     public function testMergeConfig(): void

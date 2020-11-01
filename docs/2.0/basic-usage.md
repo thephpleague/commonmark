@@ -22,12 +22,37 @@ echo $converter->convertToHtml('# Hello World!');
 Or if you want Github-Flavored Markdown:
 
 ```php
+require __DIR__ . '/vendor/autoload.php';
+
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 $converter = new GithubFlavoredMarkdownConverter();
 echo $converter->convertToHtml('# Hello World!');
 
 // <h1>Hello World!</h1>
+```
+
+Or you can use the generic `MarkdownConverter` class to customize [the environment](/2.0/customization/environment/) with whatever extensions you wish to use:
+
+```php
+require __DIR__ . '/vendor/autoload.php';
+
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
+use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
+use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
+use League\CommonMark\MarkdownConverter;
+
+$environment = new Environment();
+
+$environment->addExtension(new InlinesOnlyExtension());
+$environment->addExtension(new SmartPunctExtension());
+$environment->addExtension(new StrikethroughExtension());
+
+$converter = new MarkdownConverter($environment);
+echo $converter->convertToHtml('**Hello World!**');
+
+// <p><strong>Hello World!</strong></p>
 ```
 
 <i class="fa fa-exclamation-triangle"></i>

@@ -158,7 +158,7 @@ final class ListBlockStartParserTest extends TestCase
         $cursor = new Cursor('^ Foo');
 
         $parser = new ListBlockStartParser();
-        $parser->setConfiguration(new Configuration(['unordered_list_markers' => ['^']]));
+        $parser->setConfiguration(new Configuration(['commonmark' => ['unordered_list_markers' => ['^']]]));
         $start = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
 
         $this->assertNotNull($start);
@@ -185,7 +185,7 @@ final class ListBlockStartParserTest extends TestCase
         $cursor = new Cursor('+ Foo');
 
         $parser = new ListBlockStartParser();
-        $parser->setConfiguration(new Configuration(['unordered_list_markers' => ['-', '*']]));
+        $parser->setConfiguration(new Configuration(['commonmark' => ['unordered_list_markers' => ['-', '*']]]));
         $start = $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
 
         $this->assertNull($start);
@@ -194,12 +194,12 @@ final class ListBlockStartParserTest extends TestCase
     public function testInvalidListMarkerConfiguration(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Invalid configuration option "unordered_list_markers": value must be an array of strings');
+        $this->expectExceptionMessage('Invalid configuration option "commonmark/unordered_list_markers": value must be an array of strings');
 
         $cursor = new Cursor('- Foo');
 
         $parser = new ListBlockStartParser();
-        $parser->setConfiguration(new Configuration(['unordered_list_markers' => '-']));
+        $parser->setConfiguration(new Configuration(['commonmark' => ['unordered_list_markers' => '-']]));
         $parser->tryStart($cursor, $this->createMock(MarkdownParserStateInterface::class));
     }
 }

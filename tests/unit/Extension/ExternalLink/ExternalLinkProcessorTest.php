@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\ExternalLink;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkProcessor;
+use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
 final class ExternalLinkProcessorTest extends TestCase
@@ -61,8 +61,9 @@ final class ExternalLinkProcessorTest extends TestCase
     {
         $e = Environment::createCommonMarkEnvironment();
         $e->addExtension(new ExternalLinkExtension());
+        $e->mergeConfig($config);
 
-        $c = new CommonMarkConverter($config, $e);
+        $c = new MarkdownConverter($e);
 
         return \rtrim((string) $c->convertToHtml($markdown));
     }

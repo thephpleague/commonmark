@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Footnote;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
+use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
 final class FootnoteExtensionTest extends TestCase
@@ -29,8 +29,9 @@ final class FootnoteExtensionTest extends TestCase
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new FootnoteExtension());
+        $environment->mergeConfig(['footnote' => $config]);
 
-        $converter = new CommonMarkConverter(['footnote' => $config], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $html = \trim((string) $converter->convertToHtml($string));
 
@@ -65,7 +66,7 @@ final class FootnoteExtensionTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new FootnoteExtension());
 
-        $config = [
+        $environment->mergeConfig([
             'footnote' => [
                 'backref_class'      => 'custom-backref',
                 // Ensure multiple characters are allowed (including multibyte) and special HTML characters are escaped.
@@ -77,9 +78,9 @@ final class FootnoteExtensionTest extends TestCase
                 'footnote_class'     => 'custom-footnote',
                 'footnote_id_prefix' => 'fn:',
             ],
-        ];
+        ]);
 
-        $converter = new CommonMarkConverter($config, $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
@@ -95,13 +96,13 @@ final class FootnoteExtensionTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new FootnoteExtension());
 
-        $config = [
+        $environment->mergeConfig([
             'footnote' => [
                 'backref_symbol' => '',
             ],
-        ];
+        ]);
 
-        $converter = new CommonMarkConverter($config, $environment);
+        $converter = new MarkdownConverter($environment);
 
         $input    = "Here[^note1]\n\n[^note1]: There";
         $expected = '<p>Here<sup id="fnref:note1"><a class="footnote-ref" href="#fn:note1" role="doc-noteref">1</a></sup></p>' . "\n" . '<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:note1" role="doc-endnote"><p>There&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:note1" role="doc-backlink" /></p></li></ol></div>';

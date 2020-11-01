@@ -25,10 +25,10 @@ See the [installation](/2.0/installation/) section for more details.
 This extension can be added to any new `Environment`:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
+use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Normalizer\SlugNormalizer;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
@@ -38,7 +38,7 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new HeadingPermalinkExtension());
 
 // Set your configuration
-$config = [
+$environment->mergeConfig([
     // Extension defaults are shown below
     // If you're happy with the defaults, feel free to remove them from this array
     'heading_permalink' => [
@@ -51,10 +51,10 @@ $config = [
         'symbol' => HeadingPermalinkRenderer::DEFAULT_SYMBOL,
         'slug_normalizer' => new SlugNormalizer(),
     ],
-];
+]);
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('# Hello World!');
 ```
 

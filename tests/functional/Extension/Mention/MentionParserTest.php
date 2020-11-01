@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Generator\StringTemplateLinkGenerator;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionParser;
+use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Node\Inline\Text;
 use PHPUnit\Framework\TestCase;
 
@@ -35,7 +35,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -50,7 +50,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -65,7 +65,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -80,7 +80,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -95,7 +95,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -110,7 +110,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -128,7 +128,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -152,7 +152,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -175,7 +175,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }
@@ -195,7 +195,7 @@ final class MentionParserTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addInlineParser($mentionParser);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
     }

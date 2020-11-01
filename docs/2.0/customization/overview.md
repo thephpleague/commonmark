@@ -18,7 +18,7 @@ The actual process of converting Markdown to HTML has several steps:
  4. Use the `MarkdownParser` to parse the Markdown input into an [Abstract Syntax Tree](/2.0/customization/abstract-syntax-tree/) (aka an "AST")
  5. Use the `HtmlRenderer` to convert the [AST `Document`](/2.0/customization/abstract-syntax-tree/#document) into HTML
 
-`CommonMarkConverter` handles all of this for you, but you can execute that process yourself if you wish:
+The `MarkdownConverter` class handles all of this for you, but you can execute that process yourself if you wish:
 
 ```php
 use League\CommonMark\Parser\MarkdownParser;
@@ -26,7 +26,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Renderer\HtmlRenderer;
 
 $environment = Environment::createCommonMarkEnvironment();
-$environment->setConfig([
+$environment->mergeConfig([
     'html_input' => 'strip',
 ]);
 

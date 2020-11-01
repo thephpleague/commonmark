@@ -23,9 +23,9 @@ See the [installation](/2.0/installation/) section for more details.
 Although you normally add extra extensions along with [the default CommonMark Core extension](/2.0/extensions/commonmark/), we're not going to do that here, because this is essentially a slimmed-down version of the core extension:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Create a new, empty environment
 $environment = new Environment();
@@ -33,7 +33,10 @@ $environment = new Environment();
 // Add this extension
 $environment->addExtension(new InlinesOnlyExtension());
 
+// Set any custom configuration options you wish
+$environment->mergeConfig([]);
+
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('**Hello World!**');
 ```

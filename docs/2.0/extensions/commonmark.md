@@ -52,21 +52,21 @@ echo $htmlRenderer->renderDocument($document);
 If you ever create a `new Environment()` from scratch, you'll probably want to include the `CommonMarkCoreExtension()` so you get all the standard Markdown syntax included:
 
 ```php
-use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Renderer\HtmlRenderer;
+use League\CommonMark\MarkdownConverter;
 
 $environment = new Environment();
 $environment->addExtension(new CommonMarkCoreExtension());
 
-$parser = new MarkdownParser($environment);
-$htmlRenderer = new HtmlRenderer($environment);
+// Set your configuration if needed
+$environment->mergeConfig([
+    // ...
+]);
 
-$markdown = '# Hello World!';
-
-$document = $parser->parse($markdown);
-echo $htmlRenderer->renderDocument($document);
+// Instantiate the converter engine and start converting some Markdown!
+$converter = new MarkdownConverter($environment);
+echo $converter->convertToHtml('# Hello World!');
 ```
 
 Alternatively, if you don't want all of the core Markdown syntax, avoid using `CommonMarkCoreExtension`.  You can always add just the individual parsers, renderers, etc. you actually want with the [`Environment`](/2.0/customization/environment/).  (This is actually how the [Inlines Only Extension](/2.0/extensions/inlines-only/) works - it only includes a subset of things that `CommonMarkCoreExtension` does!)

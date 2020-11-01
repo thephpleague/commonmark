@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
@@ -34,10 +33,9 @@ class CommonMarkConverterTest extends TestCase
 
         $this->assertCount(1, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
-        $this->assertEquals($expectedEnvironment->getConfig(), $environment->getConfig());
     }
 
-    public function testConfigOnlyConstructor(): void
+    public function testConfigPassedIntoConstructor(): void
     {
         $config    = ['foo' => 'bar'];
         $converter = new CommonMarkConverter($config);
@@ -46,22 +44,7 @@ class CommonMarkConverterTest extends TestCase
 
         $this->assertCount(1, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
-        $this->assertArrayHasKey('foo', $environment->getConfig());
-    }
-
-    public function testEnvironmentAndConfigConstructor(): void
-    {
-        $config          = ['foo' => 'bar'];
-        $mockEnvironment = $this->createMock(ConfigurableEnvironmentInterface::class);
-        $mockEnvironment->expects($this->once())
-            ->method('mergeConfig')
-            ->with($config);
-
-        $converter = new CommonMarkConverter($config, $mockEnvironment);
-
-        $environment = $converter->getEnvironment();
-
-        $this->assertSame($mockEnvironment, $environment);
+        $this->assertSame('bar', $environment->getConfig('foo', 'DEFAULT'));
     }
 
     public function testConvertingInvalidUTF8(): void

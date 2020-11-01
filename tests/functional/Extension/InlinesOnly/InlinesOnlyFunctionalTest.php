@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\InlinesOnly;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
+use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,14 +23,14 @@ use PHPUnit\Framework\TestCase;
  */
 class InlinesOnlyFunctionalTest extends TestCase
 {
-    /** @var CommonMarkConverter */
+    /** @var MarkdownConverter */
     protected $converter;
 
     protected function setUp(): void
     {
         $environment = new Environment();
         $environment->addExtension(new InlinesOnlyExtension());
-        $this->converter = new CommonMarkConverter([], $environment);
+        $this->converter = new MarkdownConverter($environment);
     }
 
     /**

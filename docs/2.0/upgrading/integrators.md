@@ -8,6 +8,10 @@ description: Integrator guide to upgrading to newer versions of this library
 
 The minimum supported PHP version was increased from 7.1 to 7.2.
 
+## `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` constructors
+
+The constructor methods for both `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` no longer accept passing in a customized `Environment`.  If you want to customize the extensions used in your converter you should switch to using `MarkdownConverter`. See the [Basic Usage](/2.0/basic-usage/) documentation for an example.
+
 ## `CommonMarkConverter` Return Type
 
 In 1.x, calling `convertToHtml()` would return a `string`. In 2.x this changed to return a `RenderedContentInterface`.  To get the resulting HTML, either cast the return value to a `string` or call `->getContent()`.  (This new interface extends from `Stringable` so you can type hint against that instead, if needed.)
@@ -21,6 +25,22 @@ In 1.x, calling `convertToHtml()` would return a `string`. In 2.x this changed t
 +// or
 +echo (string) $converter->convertToHtml('# Hello World!');
 ```
+
+## Configuration Option Changes
+
+Several configuration options now have new names:
+
+| Old Key/Path                       | New Key/Path                        | Notes                                   |
+| ---------------------------------- | ----------------------------------- | --------------------------------------- |
+| `enable_em`                        | `commonmark/enable_em`              |                                         |
+| `enable_strong`                    | `commonmark/enable_strong`          |                                         |
+| `use_asterisk`                     | `commonmark/use_asterisk`           |                                         |
+| `use_underscore`                   | `commonmark/use_underscore`         |                                         |
+| `unordered_list_markers`           | `commonmark/unordered_list_markers` | Empty arrays no longer allowed          |
+| `heading_permalink/inner_contents` | `heading_permalink/symbol`          |                                         |
+| `max_nesting_level`                | (unchanged)                         | Only integer values are supported       |
+| `mentions/*/symbol`                | `mentions/*/prefix`                 |                                         |
+| `mentions/*/regex`                 | `mentions/*/pattern`                | Cannot contain start/end `/` delimiters |
 
 ## Method Return Types
 
@@ -164,7 +184,7 @@ The following classes have been removed:
 | `AbstractStringContainerBlock` | Use `extends AbstractBlock implements StringContainerInterface` instead. Note the new method names.           |
 | `Context`                      | Use `MarkdownParserState` instead (has different methods but serves a similar purpose)                        |
 | `ContextInterface`             | Use `MarkdownParserStateInterface` instead (has different methods but serves a similar purpose)               |
-| `Converter`                    | Use `CommonMarkConverter` instead. Note that this has a different constructor but the same methods.           |
+| `Converter`                    | Use `MarkdownConverter` instead.                                                                              |
 | `ConverterInterface`           | Use `MarkdownConverterInterface`.  This interface has the same methods so it should be a drop-in replacement. |
 | `UnmatchedBlockCloser`         | No longer needed 2.x                                                                                          |
 
@@ -189,6 +209,16 @@ The following methods have been renamed:
 | `ReferenceMap` / `ReferenceMapInterface`           | `getReference()`   | `get()`                 |
 | `ReferenceMap` / `ReferenceMapInterface`           | `listReferences()` | `getIterator()`         |
 
+## Configuration Method Changes
+
+Calling `EnvironmentInterface::getConfig()` or `ConfigurationInterface::get()` without any parameters is no longer supported.
+
+Calling `ConfigurableEnvironmentInterface::mergeConfig()` without any parameters is no longer supported.
+
+The `ConfigurableEnvironmentInterface::setConfig()` method has been removed.  Use `getConfig()` instead.
+
+Calls to `ConfigurationInterface::set()` should always explicitly include the value being set.
+
 ## `bin/commonmark` command
 
 This command was buggy to test and was relatively unpopular, so it has been removed. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.
@@ -200,13 +230,3 @@ This previously-deprecated constant was removed in 2.0 Use `\Composer\InstalledV
 ## `HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS` constant
 
 This previously-deprecated constant was removed in 2.0. Use `HeadingPermalinkRenderer::DEFAULT_SYMBOL` instead.
-
-## `heading_permalink/inner_contents` configuration option
-
-This previously-deprecated configuration option was removed in 2.0. Use `heading_permalink/symbol` instead.
-
-## `mentions` configuration options
-
-The `mentions/*/symbol` option has been renamed to `mentions/*/prefix`.
-
-The `mentions/*/regex` option has been renamed to `mentions/*/pattern`.  Additionally, full regular expressions are no longer supported.  Remove the leading/trailing `/` delimiters and any PCRE flags.  For example: `/[\w_]+/iu` should be changed to `[\w_]+`.

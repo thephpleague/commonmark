@@ -40,6 +40,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RenderedContent`
    - `RenderedContentInterface`
  - Added several new methods:
+   - `ConfigurationInterface::exists()`
    - `Environment::setEventDispatcher()`
    - `EnvironmentInterface::getInlineParsers()`
    - `FencedCode::setInfo()`
@@ -65,14 +66,22 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
  - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
  - Changes to configuration options:
+     - `enable_em` has been renamed to `commonmark/enable_em`
+     - `enable_strong` has been renamed to `commonmark/enable_strong`
+     - `use_asterisk` has been renamed to `commonmark/use_asterisk`
+     - `use_underscore` has been renamed to `commonmark/use_underscore`
+     - `unordered_list_markers` has been renamed to `commonmark/unordered_list_markers`
      - `mentions/*/symbol` has been renamed to `mentions/*/prefix`
      - `mentions/*/regex` has been renamed to `mentions/*/pattern` and requires partial regular expressions (without delimiters or flags)
+     - `max_nesting_level` now defaults to `PHP_INT_MAX` and no longer supports floats
  - Event dispatching is now fully PSR-14 compliant
  - The `AbstractBlock::$data` and `AbstractInline::$data` arrays were replaced with a `Data` array-like object on the base `Node` class
  - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
  - Implemented a new approach to block parsing. This was a massive change, so here are the highlights:
    - Functionality previously found in block parsers and node elements has moved to block parser factories and block parsers, respectively ([more details](https://commonmark.thephpleague.com/2.0/upgrading/#new-block-parsing-approach))
    - `ConfigurableEnvironmentInterface::addBlockParser()` is now `ConfigurableEnvironmentInterface::addBlockParserFactory()`
+   - `ConfigurableEnvironmentInterface::mergeConfig()` can no longer be called without an argument
+   - `EnvironmentInterface::getConfig()` can no longer be called without an argument
    - `ReferenceParser` was re-implemented and works completely different than before
    - The paragraph parser no longer needs to be added manually to the environment
  - Implemented a new approach to inline parsing where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
@@ -161,6 +170,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
      - `containsKey()`
      - `replaceWith()`
      - `removeGaps()`
+   - Removed the `ConfigurableEnvironmentInterface::setConfig()` method
    - Removed the `ListBlock::TYPE_UNORDERED` constant
    - Removed the `CommonMarkConverter::VERSION` constant
    - Removed the `HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS` constant
@@ -202,4 +212,4 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RegexHelper::REGEX_WHITESPACE`
  - Removed the second `$contents` argument from the `Heading` constructor
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5...latest
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6...latest

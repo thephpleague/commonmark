@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\TableOfContents;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
+use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
 
 final class TableOfContentsExtensionTest extends AbstractLocalDataTest
@@ -188,7 +188,8 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new HeadingPermalinkExtension());
         $environment->addExtension(new TableOfContentsExtension());
+        $environment->mergeConfig($config);
 
-        $this->converter = new CommonMarkConverter($config, $environment);
+        $this->converter = new MarkdownConverter($environment);
     }
 }

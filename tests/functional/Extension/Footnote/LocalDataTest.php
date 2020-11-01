@@ -14,9 +14,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Footnote;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
+use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
 
 /**
@@ -24,10 +24,10 @@ use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
  */
 final class LocalDataTest extends AbstractLocalDataTest
 {
-    /** @var CommonMarkConverter */
+    /** @var MarkdownConverter */
     private $commonMarkConverter;
 
-    /** @var CommonMarkConverter */
+    /** @var MarkdownConverter */
     private $gfmConverter;
 
     protected function setUp(): void
@@ -37,14 +37,14 @@ final class LocalDataTest extends AbstractLocalDataTest
          */
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new FootnoteExtension());
-        $this->commonMarkConverter = new CommonMarkConverter([], $environment);
+        $this->commonMarkConverter = new MarkdownConverter($environment);
 
         /*
          * Test with other extensions
          */
         $gfmEnvironment = Environment::createGFMEnvironment();
         $gfmEnvironment->addExtension(new FootnoteExtension());
-        $this->gfmConverter = new CommonMarkConverter([], $gfmEnvironment);
+        $this->gfmConverter = new MarkdownConverter($gfmEnvironment);
     }
 
     /**

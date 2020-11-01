@@ -25,9 +25,9 @@ See the [installation](/2.0/installation/) section for more details.
 Configure your `Environment` as usual and simply add the `TaskListExtension` provided by this package:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -36,7 +36,7 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new TaskListExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter([], $environment);
+$converter = new MarkdownConverter($environment);
 
 $markdown = <<<EOT
  - [x] Install this extension

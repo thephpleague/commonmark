@@ -16,9 +16,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\SmartPunct;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
+use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -37,21 +37,23 @@ final class SmartPunctExtensionTest extends TestCase
 
     public function testDefaultConfiguration(): void
     {
-        $converter    = new CommonMarkConverter([], $this->environment);
+        $converter    = new MarkdownConverter($this->environment);
         $actualResult = $converter->convertToHtml('"double" \'single\'');
         $this->assertEquals("<p>“double” ‘single’</p>\n", $actualResult);
     }
 
     public function testCustomConfiguration(): void
     {
-        $converter = new CommonMarkConverter([
+        $this->environment->mergeConfig([
             'smartpunct' => [
                 'double_quote_opener' => '«',
                 'double_quote_closer' => '»',
                 'single_quote_opener' => '‹',
                 'single_quote_closer' => '›',
             ],
-        ], $this->environment);
+        ]);
+
+        $converter = new MarkdownConverter($this->environment);
 
         $actualResult = $converter->convertToHtml('"double" \'single\'');
         $this->assertEquals("<p>«double» ‹single›</p>\n", $actualResult);

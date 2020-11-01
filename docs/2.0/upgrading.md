@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Upgrading from 1.5 to 2.0
+title: Upgrading from 1.6 to 2.0
 description: Guide to upgrading to newer versions of this library
 ---
 
-# Upgrading from 1.5 to 2.0
+# Upgrading from 1.6 to 2.0
 
 Version 2.0 contains **lots** of changes throughout the library.  We've split the upgrade guide into three sections to help you better identify the changes that are most relevant to you:
 

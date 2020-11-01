@@ -27,12 +27,7 @@ interface ConfigurableEnvironmentInterface extends EnvironmentInterface
     /**
      * @param array<string, mixed> $config
      */
-    public function mergeConfig(array $config = []): void;
-
-    /**
-     * @param array<string, mixed> $config
-     */
-    public function setConfig(array $config = []): void;
+    public function mergeConfig(array $config): void;
 
     /**
      * Registers the given extension with the Environment

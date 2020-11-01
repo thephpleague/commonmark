@@ -18,6 +18,11 @@ namespace League\CommonMark\Configuration;
 
 final class Configuration implements ConfigurationInterface
 {
+    /**
+     * @internal
+     */
+    private const MISSING = '833f2700-af8d-49d4-9171-4b5f12d3bfbc';
+
     /** @var array<string, mixed> */
     private $config;
 
@@ -48,12 +53,8 @@ final class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function get(?string $key = null, $default = null)
+    public function get(string $key, $default = null)
     {
-        if ($key === null) {
-            return $this->config;
-        }
-
         // accept a/b/c as ['a']['b']['c']
         if (\strpos($key, '/')) {
             return $this->getConfigByPath($key, $default);
@@ -69,7 +70,7 @@ final class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function set(string $key, $value = null): void
+    public function set(string $key, $value): void
     {
         // accept a/b/c as ['a']['b']['c']
         if (\strpos($key, '/')) {
@@ -77,6 +78,11 @@ final class Configuration implements ConfigurationInterface
         }
 
         $this->config[$key] = $value;
+    }
+
+    public function exists(string $key): bool
+    {
+        return $this->getConfigByPath($key, self::MISSING) !== self::MISSING;
     }
 
     /**

@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
+use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Node\Inline\AbstractInline;
 use PHPUnit\Framework\TestCase;
 
@@ -38,7 +38,7 @@ EOT;
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, $converter->convertToHtml($input));
     }
@@ -56,7 +56,7 @@ EOT;
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
-        $environment->setConfig([
+        $environment->mergeConfig([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -66,7 +66,7 @@ EOT;
             ],
         ]);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, $converter->convertToHtml($input));
     }
@@ -84,7 +84,7 @@ EOT;
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
-        $environment->setConfig([
+        $environment->mergeConfig([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -98,7 +98,7 @@ EOT;
             ],
         ]);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, $converter->convertToHtml($input));
     }
@@ -116,7 +116,7 @@ EOT;
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
-        $environment->setConfig([
+        $environment->mergeConfig([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -133,7 +133,7 @@ EOT;
             ],
         ]);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, $converter->convertToHtml($input));
     }
@@ -144,7 +144,7 @@ EOT;
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
-        $environment->setConfig([
+        $environment->mergeConfig([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -154,7 +154,7 @@ EOT;
             ],
         ]);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $converter->convertToHtml('');
     }
@@ -165,7 +165,7 @@ EOT;
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
-        $environment->setConfig([
+        $environment->mergeConfig([
             'mentions' => [
                 'github_handle' => [
                     'symbol'    => '@',
@@ -175,7 +175,7 @@ EOT;
             ],
         ]);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $converter->convertToHtml('foo');
     }
@@ -186,7 +186,7 @@ EOT;
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
-        $environment->setConfig([
+        $environment->mergeConfig([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -196,7 +196,7 @@ EOT;
             ],
         ]);
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $converter->convertToHtml('foo');
     }

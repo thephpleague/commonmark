@@ -42,27 +42,28 @@ In an effort to streamline the extensions used in GitHub Flavored Markdown (GFM)
 column above for you:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\MarkdownConverter;
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new GithubFlavoredMarkdownExtension());
+$environment->mergeConfig([]);
 
-$converter = new CommonMarkConverter([], $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Hello World!');
 ```
 
 Or maybe you only want a subset of GFM extensions, plus the [Smart Punctuation extension](/2.0/extensions/smart-punctuation/):
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\MarkdownConverter;
 
 $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new AutolinkExtension());
@@ -70,8 +71,9 @@ $environment->addExtension(new DisallowedRawHtmlExtension());
 $environment->addExtension(new SmartPunctExtension());
 $environment->addExtension(new StrikethroughExtension());
 $environment->addExtension(new TableExtension());
+$environment->mergeConfig([]);
 
-$converter = new CommonMarkConverter([], $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Hello World!');
 ```
 

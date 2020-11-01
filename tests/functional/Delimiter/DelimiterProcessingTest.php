@@ -16,8 +16,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Delimiter;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
 final class DelimiterProcessingTest extends TestCase
@@ -28,7 +28,7 @@ final class DelimiterProcessingTest extends TestCase
         $e->addDelimiterProcessor(new FakeDelimiterProcessor(':', 0));
         $e->addDelimiterProcessor(new FakeDelimiterProcessor(';', -1));
 
-        $c = new CommonMarkConverter([], $e);
+        $c = new MarkdownConverter($e);
 
         $this->assertEquals("<p>:test:</p>\n", $c->convertToHtml(':test:'));
         $this->assertEquals("<p>;test;</p>\n", $c->convertToHtml(';test;'));
@@ -43,7 +43,7 @@ final class DelimiterProcessingTest extends TestCase
         $e->addDelimiterProcessor(new UppercaseDelimiterProcessor());
         $e->addRenderer(UppercaseText::class, new UppercaseTextRenderer());
 
-        $converter = new CommonMarkConverter([], $e);
+        $converter = new MarkdownConverter($e);
 
         $this->assertEquals($expected, $converter->convertToHtml($input));
     }
@@ -72,7 +72,7 @@ final class DelimiterProcessingTest extends TestCase
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 2));
 
-        $c = new CommonMarkConverter([], $e);
+        $c = new MarkdownConverter($e);
 
         $this->assertEquals("<p>(1)one(/1) (2)two(/2)</p>\n", $c->convertToHtml('@one@ @@two@@'));
         $this->assertEquals("<p>(1)(2)both(/2)(/1)</p>\n", $c->convertToHtml('@@@both@@@'));

@@ -35,9 +35,9 @@ See the [installation](/2.0/installation/) section for more details.
 Extensions can be added to any new `Environment`:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -46,16 +46,16 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new SmartPunctExtension());
 
 // Set your configuration
-$config = [
+$environment->mergeConfig([
     'smartpunct' => [
         'double_quote_opener' => '“',
         'double_quote_closer' => '”',
         'single_quote_opener' => '‘',
         'single_quote_closer' => '’',
     ],
-];
+]);
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('# Hello World!');
 ```

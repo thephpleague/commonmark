@@ -85,7 +85,7 @@ final class MarkdownParser implements MarkdownParserInterface
     public function __construct(EnvironmentInterface $environment)
     {
         $this->environment     = $environment;
-        $this->maxNestingLevel = $environment->getConfig('max_nesting_level', \INF);
+        $this->maxNestingLevel = $environment->getConfig('max_nesting_level', \PHP_INT_MAX);
     }
 
     private function initialize(): void

@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\HeadingPermalink;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
+use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingPermalinkExtensionTest extends TestCase
@@ -29,7 +29,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new HeadingPermalinkExtension());
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
@@ -51,7 +51,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new HeadingPermalinkExtension());
 
-        $config = [
+        $environment->mergeConfig([
             'heading_permalink' => [
                 'html_class'     => 'custom-class',
                 'id_prefix'      => 'custom-prefix',
@@ -60,9 +60,9 @@ final class HeadingPermalinkExtensionTest extends TestCase
                 'insert'         => 'after',
                 'title'          => 'Link',
             ],
-        ];
+        ]);
 
-        $converter = new CommonMarkConverter($config, $environment);
+        $converter = new MarkdownConverter($environment);
 
         $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
@@ -79,13 +79,13 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new HeadingPermalinkExtension());
 
-        $config = [
+        $environment->mergeConfig([
             'heading_permalink' => [
                 'id_prefix' => '',
             ],
-        ];
+        ]);
 
-        $converter = new CommonMarkConverter($config, $environment);
+        $converter = new MarkdownConverter($environment);
 
         $input    = '# Hello World!';
         $expected = \sprintf('<h1><a id="hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
@@ -98,13 +98,13 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new HeadingPermalinkExtension());
 
-        $config = [
+        $environment->mergeConfig([
             'heading_permalink' => [
                 'symbol' => '',
             ],
-        ];
+        ]);
 
-        $converter = new CommonMarkConverter($config, $environment);
+        $converter = new MarkdownConverter($environment);
 
         $input    = '# Hello World!';
         $expected = '<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink"></a>Hello World!</h1>';
@@ -119,13 +119,13 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new HeadingPermalinkExtension());
 
-        $config = [
+        $environment->mergeConfig([
             'heading_permalink' => [
                 'insert' => 'invalid value here',
             ],
-        ];
+        ]);
 
-        $converter = new CommonMarkConverter($config, $environment);
+        $converter = new MarkdownConverter($environment);
         $converter->convertToHtml('# This will fail');
     }
 
@@ -134,14 +134,14 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new HeadingPermalinkExtension());
 
-        $config = [
+        $environment->mergeConfig([
             'heading_permalink' => [
                 'min_heading_level' => 2,
                 'max_heading_level' => 3,
             ],
-        ];
+        ]);
 
-        $converter = new CommonMarkConverter($config, $environment);
+        $converter = new MarkdownConverter($environment);
 
         $input    = <<<EOT
 # 1

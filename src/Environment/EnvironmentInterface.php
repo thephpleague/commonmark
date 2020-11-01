@@ -22,12 +22,12 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 interface EnvironmentInterface extends EventDispatcherInterface
 {
     /**
-     * @param string|null $key     Configuration option key
-     * @param mixed       $default Default value to return if config option is not set
+     * @param string $key     Configuration option key
+     * @param mixed  $default Default value to return if config option is not set
      *
      * @return mixed
      */
-    public function getConfig(?string $key = null, $default = null);
+    public function getConfig(string $key, $default = null);
 
     /**
      * @return iterable<BlockStartParserInterface>

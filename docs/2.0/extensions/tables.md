@@ -25,9 +25,9 @@ See the [installation](/2.0/installation/) section for more details.
 Configure your `Environment` as usual and simply add the `TableExtension` provided by this package:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -36,7 +36,7 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new TableExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Some Markdown with a table in it');
 ```
 

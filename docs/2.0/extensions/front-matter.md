@@ -67,10 +67,10 @@ And the HTML output will only contain the one heading:
 Configure your `Environment` as usual and add the `FrontMatterExtension`:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -79,12 +79,12 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new FrontMatterExtension());
 
 // Set your configuration if needed
-$config = [
+$environment->mergeConfig([
     // ...
-];
+]);
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 
 // A sample Markdown file with some front matter:
 $markdown = <<<MD

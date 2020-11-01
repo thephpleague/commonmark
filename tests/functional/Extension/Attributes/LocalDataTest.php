@@ -14,9 +14,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Attributes;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Attributes\AttributesExtension;
+use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
 
 /**
@@ -28,7 +28,7 @@ final class LocalDataTest extends AbstractLocalDataTest
     {
         $environment = Environment::createGFMEnvironment();
         $environment->addExtension(new AttributesExtension());
-        $this->converter = new CommonMarkConverter([], $environment);
+        $this->converter = new MarkdownConverter($environment);
     }
 
     /**

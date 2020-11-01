@@ -68,11 +68,11 @@ final class CommonMarkCoreExtension implements ExtensionInterface
             ->addRenderer(CoreNode\Inline\Text::class,    new CoreRenderer\Inline\TextRenderer(),    0)
         ;
 
-        if ($environment->getConfig('use_asterisk', true)) {
+        if ($environment->getConfig('commonmark/use_asterisk', true)) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));
         }
 
-        if ($environment->getConfig('use_underscore', true)) {
+        if ($environment->getConfig('commonmark/use_underscore', true)) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('_'));
         }
     }

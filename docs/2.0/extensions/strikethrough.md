@@ -25,9 +25,9 @@ See the [installation](/2.0/installation/) section for more details.
 This extension can be added to any new `Environment`:
 
 ```php
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
+use League\CommonMark\MarkdownConverter;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();
@@ -36,6 +36,6 @@ $environment = Environment::createCommonMarkEnvironment();
 $environment->addExtension(new StrikethroughExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
-$converter = new CommonMarkConverter($config, $environment);
+$converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('This extension is ~~really good~~ great!');
 ```

@@ -146,10 +146,10 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
             return $this->listMarkerRegex = '/^[*+-]/';
         }
 
-        $markers = $this->config->get('unordered_list_markers', ['*', '+', '-']);
+        $markers = $this->config->get('commonmark/unordered_list_markers', ['*', '+', '-']);
 
         if (! \is_array($markers)) {
-            throw new \RuntimeException('Invalid configuration option "unordered_list_markers": value must be an array of strings');
+            throw new \RuntimeException('Invalid configuration option "commonmark/unordered_list_markers": value must be an array of strings');
         }
 
         return $this->listMarkerRegex = '/^[' . \preg_quote(\implode('', $markers), '/') . ']/';

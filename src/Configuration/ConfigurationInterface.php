@@ -38,14 +38,19 @@ interface ConfigurationInterface
      *
      * @return mixed|null
      */
-    public function get(?string $key = null, $default = null);
+    public function get(string $key, $default = null);
 
     /**
      * Set the configuration value at the given key
      *
      * The key can be a string or a slash-delimited path to a nested value
      *
-     * @param mixed|null $value
+     * @param mixed $value
      */
-    public function set(string $key, $value = null): void;
+    public function set(string $key, $value): void;
+
+    /**
+     * Returns whether a configuration option exists at the given key
+     */
+    public function exists(string $key): bool;
 }
