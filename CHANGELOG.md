@@ -17,6 +17,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
    - `max_nesting_level` (currently supports `int` and `float` values in 1.x; will only support `int` in 2.0)
  - Added new `MarkdownConverter` class for creating converters with custom environments; this replaces the previously-deprecated `Converter` class
  - Added new `RegexHelper::matchFirst()` method
+ - Added new `Configuration::exists()` method
 
 ### Changed
 

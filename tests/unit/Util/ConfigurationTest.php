@@ -122,4 +122,29 @@ class ConfigurationTest extends TestCase
         $this->assertEquals('bar', $config->get('foo'));
         $this->assertEquals('456', $config->get('test'));
     }
+
+    public function testExists()
+    {
+        $config = new Configuration([
+            'a' => [
+                'b' => 'c',
+            ],
+            'emptyarr' => [],
+            'null' => null,
+            'false' => false,
+            'zero' => 0,
+        ]);
+
+        $this->assertTrue($config->exists('a'));
+        $this->assertTrue($config->exists('a/b'));
+        $this->assertTrue($config->exists('emptyarr'));
+        $this->assertTrue($config->exists('false'));
+        $this->assertTrue($config->exists('zero'));
+
+        $this->assertFalse($config->exists('null'));
+
+        $this->assertFalse($config->exists('a/b/c'));
+        $this->assertFalse($config->exists('null/null'));
+        $this->assertFalse($config->exists('does-not-exist'));
+    }
 }

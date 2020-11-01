@@ -71,6 +71,11 @@ final class Configuration implements ConfigurationInterface
         $this->config[$key] = $value;
     }
 
+    public function exists(string $key): bool
+    {
+        return $this->getConfigByPath($key, self::MISSING) !== self::MISSING;
+    }
+
     /**
      * @param string      $keyPath
      * @param string|null $default
