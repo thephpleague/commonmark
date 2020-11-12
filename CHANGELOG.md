@@ -35,6 +35,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserMatch`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
+   - `MutableConfigurationInterface`
    - `Query`
    - `ReferenceableInterface`
    - `RenderedContent`
@@ -92,6 +93,10 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
    - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` are now just `addRenderer()`
    - `EnvironmentInterface::getBlockRenderersForClass()` and `getInlineRenderersForClass()` are now just `getRenderersForClass()`
+ - Completely refactored the Configuration implementation
+   - `Configuration` object must now be configured with a schema and all options must match that schema - arbitrary keys are no longer permitted
+   - `Configuration::__construct()` no longer accepts the default configuration values - use `Configuration::merge()` instead
+   - `ConfigurationInterface` now only contains a getter method; this method no longer allows default values to be returned if the option is missing
  - Re-implemented the GFM Autolink extension using the new inline parser approach instead of document processors
    - `EmailAutolinkProcessor` is now `EmailAutolinkParser`
    - `UrlAutolinkProcessor` is now `UrlAutolinkParser`
@@ -143,6 +148,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - The line numbers (keys) returned via `MarkdownInput::getLines()` now start at 1 instead of 0
  - `DelimiterProcessorCollectionInterface` now extends `Countable`
  - `RegexHelper::PARTIAL_` constants must always be used in case-insensitive contexts
+ - `HeadingPermalinkProcessor` no longer accepts text normalizers via the constructor - these must be provided via configuration instead
 
 ### Fixed
 
@@ -200,6 +206,9 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `AbstractBlock::getData()`
    - `AbstractInline::getData()`
    - `ConfigurableEnvironmentInterface::addBlockParser()`
+   - `ConfigurationInterface::merge()` (moved to new `MutableConfigurationInterface`)
+   - `ConfigurationInterface::replace()`
+   - `ConfigurationInterface::set()` (moved to new `MutableConfigurationInterface`)
    - `Delimiter::setCanClose()`
    - `EnvironmentInterface::getInlineParsersForCharacter()`
    - `EnvironmentInterface::getInlineParserCharacterRegex()`
