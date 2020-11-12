@@ -68,6 +68,7 @@ class MarkdownInput implements MarkdownInputInterface
         $this->splitLinesIfNeeded();
 
         \assert($this->lines !== null);
+
         /** @psalm-suppress PossiblyNullIterator */
         foreach ($this->lines as $i => $line) {
             yield $this->lineOffset + $i + 1 => $line;
