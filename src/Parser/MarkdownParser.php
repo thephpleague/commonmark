@@ -41,7 +41,7 @@ final class MarkdownParser implements MarkdownParserInterface
     private $environment;
 
     /**
-     * @var int|float
+     * @var int
      *
      * @psalm-readonly-allow-private-mutation
      */

@@ -400,7 +400,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         return new Configuration([
             'html_input' => Expect::anyOf(HtmlFilter::STRIP, HtmlFilter::ALLOW, HtmlFilter::ESCAPE)->default(HtmlFilter::ALLOW),
             'allow_unsafe_links' => Expect::bool(true),
-            'max_nesting_level' => Expect::type('int|float')->default(PHP_INT_MAX),
+            'max_nesting_level' => Expect::type('int')->default(PHP_INT_MAX),
             'renderer' => Expect::structure([
                 'block_separator' => Expect::string("\n"),
                 'inner_separator' => Expect::string("\n"),
