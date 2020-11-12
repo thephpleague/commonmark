@@ -19,26 +19,13 @@ namespace League\CommonMark;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
-use League\CommonMark\Output\RenderedContentInterface;
-use League\CommonMark\Parser\MarkdownParser;
-use League\CommonMark\Parser\MarkdownParserInterface;
-use League\CommonMark\Renderer\HtmlRenderer;
-use League\CommonMark\Renderer\HtmlRendererInterface;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 
 /**
  * Converts CommonMark-compatible Markdown to HTML.
  */
-class CommonMarkConverter implements MarkdownConverterInterface
+class CommonMarkConverter extends MarkdownConverter
 {
-    /** @var EnvironmentInterface */
-    protected $environment;
-
-    /** @var MarkdownParserInterface */
-    protected $markdownParser;
-
-    /** @var HtmlRendererInterface */
-    protected $htmlRenderer;
-
     /**
      * Create a new commonmark converter instance.
      *
@@ -46,50 +33,23 @@ class CommonMarkConverter implements MarkdownConverterInterface
      */
     public function __construct(array $config = [], ?EnvironmentInterface $environment = null)
     {
-        if ($environment === null) {
-            $environment = Environment::createCommonMarkEnvironment();
+        if ($environment !== null) {
+            if ($config !== []) {
+                if (! ($environment instanceof EnvironmentBuilderInterface)) {
+                    throw new \RuntimeException('Unable to configure the environment as only ' . EnvironmentBuilderInterface::class . ' instances can be configured');
+                }
+
+                $environment->mergeConfig($config);
+            }
+
+            parent::__construct($environment);
+
+            return;
         }
 
-        if ($environment instanceof EnvironmentBuilderInterface) {
-            $environment->mergeConfig($config);
-        }
+        $environment = new Environment($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
 
-        $this->environment = $environment;
-
-        $this->markdownParser = new MarkdownParser($environment);
-        $this->htmlRenderer   = new HtmlRenderer($environment);
-    }
-
-    public function getEnvironment(): EnvironmentInterface
-    {
-        return $this->environment;
-    }
-
-    /**
-     * Converts CommonMark to HTML.
-     *
-     * @param string $commonMark The Markdown to convert
-     *
-     * @return RenderedContentInterface Rendered HTML
-     *
-     * @throws \RuntimeException
-     */
-    public function convertToHtml(string $commonMark): RenderedContentInterface
-    {
-        $documentAST = $this->markdownParser->parse($commonMark);
-
-        return $this->htmlRenderer->renderDocument($documentAST);
-    }
-
-    /**
-     * Converts CommonMark to HTML.
-     *
-     * @see Converter::convertToHtml
-     *
-     * @throws \RuntimeException
-     */
-    public function __invoke(string $commonMark): RenderedContentInterface
-    {
-        return $this->convertToHtml($commonMark);
+        parent::__construct($environment);
     }
 }
