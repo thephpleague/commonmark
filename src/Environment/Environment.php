@@ -226,9 +226,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
     }
 
     /**
-     * Get all registered extensions
-     *
-     * @return ExtensionInterface[]
+     * {@inheritDoc}
      */
     public function getExtensions(): iterable
     {

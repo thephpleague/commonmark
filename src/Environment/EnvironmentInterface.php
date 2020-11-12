@@ -15,6 +15,7 @@ namespace League\CommonMark\Environment;
 
 use League\CommonMark\Configuration\ConfigurationProviderInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
+use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -22,6 +23,13 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 interface EnvironmentInterface extends ConfigurationProviderInterface, EventDispatcherInterface
 {
+    /**
+     * Get all registered extensions
+     *
+     * @return ExtensionInterface[]
+     */
+    public function getExtensions(): iterable;
+
     /**
      * @return iterable<BlockStartParserInterface>
      */
