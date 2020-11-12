@@ -127,7 +127,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
     /**
      * {@inheritdoc}
      */
-    public function mergeConfig(array $config = []): void
+    public function mergeConfig(array $config): void
     {
         $this->assertUninitialized('Failed to modify configuration.');
 
