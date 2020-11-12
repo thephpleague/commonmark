@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Extension\CommonMark\Parser\Block\ListBlockStartParser;
@@ -193,8 +194,8 @@ final class ListBlockStartParserTest extends TestCase
 
     public function testInvalidListMarkerConfiguration(): void
     {
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Invalid configuration option "commonmark/unordered_list_markers": value must be an array of strings');
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessageMatches('/value must be an array of strings/');
 
         $cursor = new Cursor('- Foo');
 
