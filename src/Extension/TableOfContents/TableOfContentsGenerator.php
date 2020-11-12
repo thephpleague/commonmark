@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\TableOfContents;
 
-use League\CommonMark\Exception\InvalidOptionException;
+use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
@@ -136,7 +136,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         } elseif ($this->style === self::STYLE_ORDERED) {
             $listData->type = ListBlock::TYPE_ORDERED;
         } else {
-            throw InvalidOptionException::forParameter('table of contents list style', $this->style);
+            throw InvalidConfigurationException::forParameter('table of contents list style', $this->style);
         }
 
         $toc = new TableOfContents($listData);
@@ -170,7 +170,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             case self::NORMALIZE_FLAT:
                 return new FlatNormalizerStrategy($toc);
             default:
-                throw InvalidOptionException::forParameter('table of contents normalization strategy', $this->normalizationStrategy);
+                throw InvalidConfigurationException::forParameter('table of contents normalization strategy', $this->normalizationStrategy);
         }
     }
 }

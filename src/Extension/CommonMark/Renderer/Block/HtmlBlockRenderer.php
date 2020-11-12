@@ -18,7 +18,7 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
-use League\CommonMark\Exception\InvalidOptionException;
+use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
@@ -49,7 +49,7 @@ final class HtmlBlockRenderer implements NodeRendererInterface, ConfigurationAwa
 
         $htmlInput = $this->config->get('html_input', HtmlFilter::ALLOW);
         if (! \is_string($htmlInput)) {
-            throw InvalidOptionException::forConfigOption('html_input', $htmlInput);
+            throw InvalidConfigurationException::forConfigOption('html_input', $htmlInput);
         }
 
         return HtmlFilter::filter($node->getLiteral(), $htmlInput);

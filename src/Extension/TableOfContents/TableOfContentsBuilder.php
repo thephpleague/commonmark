@@ -16,7 +16,7 @@ namespace League\CommonMark\Extension\TableOfContents;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Exception\InvalidOptionException;
+use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
@@ -68,7 +68,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         } elseif ($position === self::POSITION_PLACEHOLDER) {
             $this->replacePlaceholders($document, $toc);
         } else {
-            throw InvalidOptionException::forConfigOption('table_of_contents/position', $position);
+            throw InvalidConfigurationException::forConfigOption('table_of_contents/position', $position);
         }
     }
 

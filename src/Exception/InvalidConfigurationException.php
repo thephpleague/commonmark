@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Exception;
 
-final class InvalidOptionException extends \UnexpectedValueException
+final class InvalidConfigurationException extends \UnexpectedValueException
 {
     /**
      * @param string  $option      Name/path of the option

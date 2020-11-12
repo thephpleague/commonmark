@@ -15,7 +15,7 @@ namespace League\CommonMark\Tests\Unit\Extension\HeadingPermalink;
 
 use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Exception\InvalidOptionException;
+use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
@@ -113,7 +113,7 @@ final class HeadingPermalinkProcessorTest extends TestCase
 
     public function testInvalidSlugNormalizerOption(): void
     {
-        $this->expectException(InvalidOptionException::class);
+        $this->expectException(InvalidConfigurationException::class);
 
         $processor = new HeadingPermalinkProcessor();
         $processor->setConfiguration(new Configuration([

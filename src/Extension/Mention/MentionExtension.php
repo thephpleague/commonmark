@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Mention;
 
 use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
-use League\CommonMark\Exception\InvalidOptionException;
+use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 
@@ -26,12 +26,12 @@ final class MentionExtension implements ExtensionInterface
         foreach ($mentions as $name => $mention) {
             foreach (['prefix', 'pattern', 'generator'] as $key) {
                 if (! \array_key_exists($key, $mention)) {
-                    throw new InvalidOptionException(\sprintf('Required option "mentions/%s/%s" for the Mention extension is missing', $name, $key));
+                    throw new InvalidConfigurationException(\sprintf('Required option "mentions/%s/%s" for the Mention extension is missing', $name, $key));
                 }
             }
 
             if (! self::isAValidPartialRegex($mention['pattern'])) {
-                throw InvalidOptionException::forConfigOption(\sprintf('mentions/%s/pattern', $name), $mention['pattern'], 'Invalid pattern. Make sure to exclude starting/ending delimiters (like "/") and flags from the regular expression.');
+                throw InvalidConfigurationException::forConfigOption(\sprintf('mentions/%s/pattern', $name), $mention['pattern'], 'Invalid pattern. Make sure to exclude starting/ending delimiters (like "/") and flags from the regular expression.');
             }
 
             if ($mention['generator'] instanceof MentionGeneratorInterface) {
@@ -41,7 +41,7 @@ final class MentionExtension implements ExtensionInterface
             } elseif (\is_callable($mention['generator'])) {
                 $environment->addInlineParser(MentionParser::createWithCallback($name, $mention['prefix'], $mention['pattern'], $mention['generator']));
             } else {
-                throw new InvalidOptionException(\sprintf('The "generator" provided for the "%s" MentionParser configuration must be a string template, callable, or an object that implements %s.', $name, MentionGeneratorInterface::class));
+                throw new InvalidConfigurationException(\sprintf('The "generator" provided for the "%s" MentionParser configuration must be a string template, callable, or an object that implements %s.', $name, MentionGeneratorInterface::class));
             }
         }
     }
