@@ -26,11 +26,6 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 interface EnvironmentBuilderInterface extends ConfigurationProviderInterface
 {
     /**
-     * @param array<string, mixed> $config
-     */
-    public function mergeConfig(array $config): void;
-
-    /**
      * Registers the given extension with the Environment
      */
     public function addExtension(ExtensionInterface $extension): EnvironmentBuilderInterface;

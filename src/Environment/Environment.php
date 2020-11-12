@@ -125,7 +125,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
     }
 
     /**
-     * {@inheritdoc}
+     * @param array<string, mixed> $config
      */
     public function mergeConfig(array $config): void
     {

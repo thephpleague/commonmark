@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark;
 
 use League\CommonMark\Environment\Environment;
-use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
@@ -34,8 +33,8 @@ final class GithubFlavoredMarkdownConverter extends MarkdownConverter
         // Passing in an $environment is deprecated
         if ($environment !== null) {
             if ($config !== []) {
-                if (! ($environment instanceof EnvironmentBuilderInterface)) {
-                    throw new \RuntimeException('Unable to configure the environment as only ' . EnvironmentBuilderInterface::class . ' instances can be configured');
+                if (! ($environment instanceof Environment)) {
+                    throw new \RuntimeException('Unable to configure the environment as only ' . Environment::class . ' can be configured after instantiation');
                 }
 
                 $environment->mergeConfig($config);
