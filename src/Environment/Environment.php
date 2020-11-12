@@ -131,16 +131,6 @@ final class Environment implements EnvironmentBuilderInterface, ListenerProvider
     /**
      * {@inheritdoc}
      */
-    public function setConfig(array $config = []): void
-    {
-        $this->assertUninitialized('Failed to modify configuration.');
-
-        $this->config->replace($config);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getConfig(?string $key = null, $default = null)
     {
         return $this->config->get($key, $default);

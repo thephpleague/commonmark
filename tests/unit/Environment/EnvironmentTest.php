@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Environment;
 
 use League\CommonMark\Configuration\ConfigurationBuilderInterface;
-use League\CommonMark\Configuration\MutableConfigurationInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\AbstractEvent;
@@ -107,27 +106,6 @@ class EnvironmentTest extends TestCase
 
         // Test getting a non-existent element with a default value
         $this->assertEquals(42, $environment->getConfig('answer', 42));
-    }
-
-    public function testSetConfig(): void
-    {
-        $environment = $this->createEnvironmentWithSchema([
-            'foo' => Expect::string()->default('bar'),
-            'test' => Expect::string(),
-        ]);
-        $environment->setConfig(['test' => '123']);
-        $this->assertEquals('bar', $environment->getConfig('foo'));
-        $this->assertEquals('123', $environment->getConfig('test'));
-    }
-
-    public function testSetConfigAfterInit(): void
-    {
-        $this->expectException(\RuntimeException::class);
-
-        $environment = new Environment();
-        // This triggers the initialization
-        $environment->getBlockStartParsers();
-        $environment->setConfig(['foo' => 'bar']);
     }
 
     public function testMergeConfig(): void
