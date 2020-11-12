@@ -24,7 +24,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 /**
  * Converts CommonMark-compatible Markdown to HTML.
  */
-class CommonMarkConverter extends MarkdownConverter
+final class CommonMarkConverter extends MarkdownConverter
 {
     /**
      * Create a new commonmark converter instance.

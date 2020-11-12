@@ -22,7 +22,7 @@ use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 /**
  * Converts Github Flavored Markdown to HTML.
  */
-class GithubFlavoredMarkdownConverter extends MarkdownConverter
+final class GithubFlavoredMarkdownConverter extends MarkdownConverter
 {
     /**
      * Create a new commonmark converter instance.
