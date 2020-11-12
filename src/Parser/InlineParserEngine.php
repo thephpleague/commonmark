@@ -137,7 +137,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
      *
      * @psalm-return array<int, list<array{0: InlineParserInterface, 1: non-empty-array<string>}>>
      *
-     * @phpstan-return array<int, array<int, array{0: InlineParserInterface, 1: string[]}>>
+     * @phpstan-return array<int, array<int, array{0: InlineParserInterface, 1: non-empty-array<string>}>>
      */
     private function matchParsers(string $contents): array
     {
