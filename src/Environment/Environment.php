@@ -125,10 +125,14 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
     }
 
     /**
+     * @deprecated Environment::mergeConfig() is deprecated since league/commonmark v2.0 and will be removed in v3.0. Configuration should be set when instantiating the environment instead.
+     *
      * @param array<string, mixed> $config
      */
     public function mergeConfig(array $config): void
     {
+        @\trigger_error('Environment::mergeConfig() is deprecated since league/commonmark v2.0 and will be removed in v3.0. Configuration should be set when instantiating the environment instead.', \E_USER_DEPRECATED);
+
         $this->assertUninitialized('Failed to modify configuration.');
 
         $this->config->merge($config);
