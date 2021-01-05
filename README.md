@@ -88,6 +88,7 @@ See the [Extensions documentation](https://commonmark.thephpleague.com/customiza
 - [Symfony 4](https://github.com/avensome/commonmark-bundle)
 - [Twig Markdown extension](https://github.com/twigphp/markdown-extension)
 - [Twig filter and tag](https://github.com/aptoma/twig-markdown)
+- [Laravel CommonMark Blog](https://github.com/spekulatius/laravel-commonmark-blog)
 
 ### Included Extensions
 
