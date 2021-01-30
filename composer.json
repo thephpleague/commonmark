@@ -35,13 +35,13 @@
         "erusev/parsedown": "~1.0",
         "github/gfm": "0.29.0",
         "michelf/php-markdown": "~1.4",
-        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan": "^0.12.70",
         "phpunit/phpunit": "^8.5 || ^9.2",
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^5.1",
         "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0",
         "unleashedtech/php-coding-standard": "^2.5",
-        "vimeo/psalm": "^3.14"
+        "vimeo/psalm": "^4.4.1"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

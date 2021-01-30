@@ -51,7 +51,6 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
         }
 
         $lastListItem = \current($this->listItemStack);
-        \assert($lastListItem instanceof ListItem || $lastListItem === false);
 
         // Need to go one level deeper? Add that level
         if ($lastListItem !== false && $level > $previousLevel) {

@@ -58,11 +58,7 @@ final class FixOrphanedFootnotesAndRefsListener
             }
 
             $node = $event->getNode();
-            if (! ($node instanceof ReferenceableInterface && \get_class($node) === $type)) {
-                continue;
-            }
-
-            if ($node->getReference()->getLabel() === $label) {
+            if ($node instanceof ReferenceableInterface && \get_class($node) === $type && $node->getReference()->getLabel() === $label) {
                 return true;
             }
         }
