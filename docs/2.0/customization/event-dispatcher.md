@@ -137,7 +137,7 @@ class ExternalLinkProcessor
 
         $host = parse_url($url, PHP_URL_HOST);
 
-        return $host != $this->environment->getConfig('host');
+        return $host != $this->environment->getConfiguration()->get('host');
     }
 }
 ```
@@ -149,7 +149,7 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
 
-$env = Environment::createCommonMarkEnvironment();
+$env = new Environment();
 
 $listener = new ExternalLinkProcessor($env);
 $env->addEventListener(DocumentParsedEvent::class, [$listener, 'onDocumentParsed']);

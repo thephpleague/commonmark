@@ -42,23 +42,25 @@ Configure your `Environment` as usual and simply add the `DisallowedRawHTMLExten
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\DisallowedRawHTML\DisallowedRawHTMLExtension;
 use League\CommonMark\MarkdownConverter;
-
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-$environment = Environment::createCommonMarkEnvironment();
-
-// Add this extension
-$environment->addExtension(new DisallowedRawHTMLExtension());
 
 // Customize the extension's configuration if needed
 // Default values are shown below - you can omit this configuration if you're happy with those defaults
 // and don't want to customize them
-$environment->mergeConfig([
+$config = [
     'disallowed_raw_html' => [
         'disallowed_tags' => ['title', 'textarea', 'style', 'xmp', 'iframe', 'noembed', 'noframes', 'script', 'plaintext'],
     ],
-]);
+];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
+
+// Add this extension
+$environment->addExtension(new DisallowedRawHTMLExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);

@@ -6,27 +6,29 @@ description: Configuring the CommonMark environment with custom options and adde
 
 # The Environment
 
-The `Environment` contains all of the parsers, renderers, configurations, etc. that the library uses during the conversion process.  You therefore must register all parsers, renderers, etc. with the `Environment` so that the library is aware of them.
+The `Environment` contains all of the parsers, renderers, configurations, etc. that the library uses during the conversion process.  You therefore must register all extensions, parsers, renderers, etc. with the `Environment` so that the library is aware of them.
 
-A pre-configured `Environment` can be obtained like this:
+An empty `Environment` can be obtained like this:
 
 ```php
 use League\CommonMark\Environment\Environment;
 
-$environment = Environment::createCommonMarkEnvironment();
+$config = [];
+$environment = new Environment($config);
 ```
 
-All of the core renders, parsers, etc. needed to implement the CommonMark spec will be pre-registered and ready to go.
+You can customize the `Environment` using any of the methods below (from the `EnvironmentBuilderInterface` interface).
 
-You can customize this default `Environment` (or even a new, empty one) using any of the methods below (from the `ConfigurableEnvironmentInterface` interface).
-
-## mergeConfig()
+Once your `Environment` is configured with whatever configuration and extensions you want, you can instantiate a `MarkdownConverter` and start converting MD to HTML:
 
 ```php
-public function mergeConfig(array $config = []);
-```
+use League\CommonMark\MarkdownConverter;
 
-Merges the given [configuration](/2.0/configuration/) settings into any existing ones.
+// Using $environment from the previous code sample
+$converter = new MarkdownConverter($environment);
+
+echo $converter->convertToHtml('# Hello World!');
+```
 
 ## addExtension()
 
@@ -34,15 +36,27 @@ Merges the given [configuration](/2.0/configuration/) settings into any existing
 public function addExtension(ExtensionInterface $extension);
 ```
 
-Registers the given [extension](/2.0/customization/extensions/) with the environment.  This is typically how you'd integrate third-party extensions with this library.
-
-## addBlockParser()
+Registers the given [extension](/2.0/customization/extensions/) with the environment.  For example, if you want core CommonMark functionality plus footnote support:
 
 ```php
-public function addBlockParser(BlockParserInterface $parser, int $priority = 0);
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
+
+$config = [];
+$environment = new Environment($config);
+
+$environment->addExtension(new CommonMarkCoreExtension());
+$environment->addExtension(new FootnoteExtension());
 ```
 
-Registers the given `BlockParserInterface` with the environment with the given priority (a higher number will be executed earlier).
+## addBlockStartParser()
+
+```php
+public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0);
+```
+
+Registers the given `BlockStartParserInterface` with the environment with the given priority (a higher number will be executed earlier).
 
 See [Block Parsing](/2.0/customization/block-parsing/) for details.
 
@@ -69,10 +83,10 @@ See [Inline Parsing](/2.0/customization/delimiter-processing/) for details.
 ## addRenderer()
 
 ```php
-public function addRenderer(string $blockOrInlineClass, NodeRendererInterface $blockRenderer, int $priority = 0);
+public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0);
 ```
 
-Registers a `NodeRendererInterface` to handle a specific type of AST node (`$blockOrInlineClass`)  with the given priority (a higher number will be executed earlier).
+Registers a `NodeRendererInterface` to handle a specific type of AST node (`$nodeClass`)  with the given priority (a higher number will be executed earlier).
 
 See [Rendering](/2.0/customization/rendering/) for details.
 

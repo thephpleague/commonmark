@@ -87,6 +87,7 @@ Let's say you wanted to autolink Twitter handles without using the link syntax. 
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
@@ -121,7 +122,10 @@ class TwitterHandleParser implements InlineParserInterface
     }
 }
 
-$environment = Environment::createCommonMarkEnvironment();
+// And here's how to hook it up:
+
+$environment = new Environment();
+$environment->addExtension(new CommonMarkCoreExtension());
 $environment->addInlineParser(new TwitterHandleParser());
 ```
 
@@ -161,7 +165,8 @@ class SmilieParser implements InlineParserInterface
     }
 }
 
-$environment = Environment::createCommonMarkEnvironment();
+$environment = new Environment();
+$environment->addExtension(new CommonMarkCoreExtension());
 $environment->addInlineParser(new SmilieParserParser());
 ```
 

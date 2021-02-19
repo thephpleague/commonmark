@@ -31,11 +31,12 @@ To hook up your new extension to the `Environment`, simply do this:
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 
-$environment = Environment::createCommonMarkEnvironment();
+$environment = new Environment();
+$environment->addExtension(new CommonMarkCoreExtension());
 $environment->addExtension(new EmojiExtension());
-$environment->mergeConfig([]);
 
 $converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Hello! :wave:');

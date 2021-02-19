@@ -29,24 +29,6 @@ $converter = new CommonMarkConverter();
 echo $converter->convertToHtml('# Hello World!');
 ```
 
-Or if you call the `Environment::createCommonMarkEnvironment()` helper:
-
-```php
-use League\CommonMark\Parser\MarkdownParser;
-use League\CommonMark\Environment\Environment;
-use League\CommonMark\Renderer\HtmlRenderer;
-
-$environment = Environment::createCommonMarkEnvironment();
-
-$parser = new MarkdownParser($environment);
-$htmlRenderer = new HtmlRenderer($environment);
-
-$markdown = '# Hello World!';
-
-$document = $parser->parse($markdown);
-echo $htmlRenderer->renderDocument($document);
-```
-
 ## Manual Usage
 
 If you ever create a `new Environment()` from scratch, you'll probably want to include the `CommonMarkCoreExtension()` so you get all the standard Markdown syntax included:
@@ -56,13 +38,12 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 
-$environment = new Environment();
-$environment->addExtension(new CommonMarkCoreExtension());
+// Define your configuration, if needed
+$config = [];
 
-// Set your configuration if needed
-$environment->mergeConfig([
-    // ...
-]);
+// Create a new Environment with the core extension
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);

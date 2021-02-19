@@ -26,11 +26,16 @@ Configure your `Environment` as usual and simply add the `TableExtension` provid
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-$environment = Environment::createCommonMarkEnvironment();
+// Define your configuration, if needed
+$config = [];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
 
 // Add this extension
 $environment->addExtension(new TableExtension());

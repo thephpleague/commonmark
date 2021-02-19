@@ -27,14 +27,14 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
 
+// Define your configuration, if needed
+$config = [];
+
 // Create a new, empty environment
-$environment = new Environment();
+$environment = new Environment($config);
 
 // Add this extension
 $environment->addExtension(new InlinesOnlyExtension());
-
-// Set any custom configuration options you wish
-$environment->mergeConfig([]);
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
