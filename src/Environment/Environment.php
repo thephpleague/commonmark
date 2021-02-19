@@ -286,6 +286,8 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
     }
 
     /**
+     * @deprecated Instantiate the environment and add the extension yourself
+     *
      * @param array<string, mixed> $config
      */
     public static function createCommonMarkEnvironment(array $config = []): Environment
@@ -297,6 +299,8 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
     }
 
     /**
+     * @deprecated Instantiate the environment and add the extension yourself
+     *
      * @param array<string, mixed> $config
      */
     public static function createGFMEnvironment(array $config = []): Environment
