@@ -18,21 +18,23 @@ use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Parser\MarkdownParserInterface;
 use League\CommonMark\Renderer\HtmlRenderer;
+use League\CommonMark\Renderer\HtmlRendererInterface;
 
 class MarkdownConverter implements MarkdownConverterInterface
 {
     /** @var EnvironmentInterface */
-    private $environment;
+    protected $environment;
 
     /** @var MarkdownParserInterface */
-    private $markdownParser;
+    protected $markdownParser;
 
-    /** @var HtmlRenderer */
-    private $htmlRenderer;
+    /** @var HtmlRendererInterface */
+    protected $htmlRenderer;
 
     public function __construct(EnvironmentInterface $environment)
     {
-        $this->environment    = $environment;
+        $this->environment = $environment;
+
         $this->markdownParser = new MarkdownParser($environment);
         $this->htmlRenderer   = new HtmlRenderer($environment);
     }
@@ -43,7 +45,7 @@ class MarkdownConverter implements MarkdownConverterInterface
     }
 
     /**
-     * Converts CommonMark to HTML.
+     * Converts Markdown to HTML.
      *
      * @param string $markdown The Markdown to convert
      *

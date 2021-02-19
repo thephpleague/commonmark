@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
 use League\CommonMark\Environment\Environment;
-use League\CommonMark\Exception\InvalidOptionException;
+use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
@@ -140,7 +140,7 @@ EOT;
 
     public function testConfigUnknownGenerator(): void
     {
-        $this->expectException(InvalidOptionException::class);
+        $this->expectException(InvalidConfigurationException::class);
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
@@ -161,7 +161,7 @@ EOT;
 
     public function testLegacySymbolOption(): void
     {
-        $this->expectException(InvalidOptionException::class);
+        $this->expectException(InvalidConfigurationException::class);
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());
@@ -182,7 +182,7 @@ EOT;
 
     public function testWithFullRegexOption(): void
     {
-        $this->expectException(InvalidOptionException::class);
+        $this->expectException(InvalidConfigurationException::class);
 
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new MentionExtension());

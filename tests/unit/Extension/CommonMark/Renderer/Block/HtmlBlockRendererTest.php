@@ -16,7 +16,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 
-use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\HtmlBlockRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
@@ -32,7 +34,7 @@ class HtmlBlockRendererTest extends TestCase
     protected function setUp(): void
     {
         $this->renderer = new HtmlBlockRenderer();
-        $this->renderer->setConfiguration(new Configuration());
+        $this->renderer->setConfiguration($this->createConfiguration());
     }
 
     public function testRender(): void
@@ -50,7 +52,7 @@ class HtmlBlockRendererTest extends TestCase
 
     public function testRenderAllowHtml(): void
     {
-        $this->renderer->setConfiguration(new Configuration([
+        $this->renderer->setConfiguration($this->createConfiguration([
             'html_input' => HtmlFilter::ALLOW,
         ]));
 
@@ -67,7 +69,7 @@ class HtmlBlockRendererTest extends TestCase
 
     public function testRenderEscapeHtml(): void
     {
-        $this->renderer->setConfiguration(new Configuration([
+        $this->renderer->setConfiguration($this->createConfiguration([
             'html_input' => HtmlFilter::ESCAPE,
         ]));
 
@@ -84,7 +86,7 @@ class HtmlBlockRendererTest extends TestCase
 
     public function testRenderStripHtml(): void
     {
-        $this->renderer->setConfiguration(new Configuration([
+        $this->renderer->setConfiguration($this->createConfiguration([
             'html_input' => HtmlFilter::STRIP,
         ]));
 
@@ -107,5 +109,17 @@ class HtmlBlockRendererTest extends TestCase
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);
+    }
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    private function createConfiguration(array $values = []): ConfigurationInterface
+    {
+        $config = Environment::createDefaultConfiguration();
+        (new CommonMarkCoreExtension())->configureSchema($config);
+        $config->merge($values);
+
+        return $config->reader();
     }
 }

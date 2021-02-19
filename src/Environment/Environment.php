@@ -18,11 +18,13 @@ namespace League\CommonMark\Environment;
 
 use League\CommonMark\Configuration\Configuration;
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Delimiter\DelimiterParser;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Event\ListenerData;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
@@ -30,11 +32,12 @@ use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
 use League\CommonMark\Util\PrioritizedList;
+use Nette\Schema\Expect;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
-final class Environment implements ConfigurableEnvironmentInterface, ListenerProviderInterface
+final class Environment implements EnvironmentInterface, EnvironmentBuilderInterface, ListenerProviderInterface
 {
     /**
      * @var ExtensionInterface[]
@@ -107,7 +110,8 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
      */
     public function __construct(array $config = [])
     {
-        $this->config = new Configuration($config);
+        $this->config = self::createDefaultConfiguration();
+        $this->config->merge($config);
 
         $this->blockStartParsers   = new PrioritizedList();
         $this->inlineParsers       = new PrioritizedList();
@@ -115,25 +119,26 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         $this->delimiterProcessors = new DelimiterProcessorCollection();
     }
 
+    public function getConfiguration(): ConfigurationInterface
+    {
+        return $this->config->reader();
+    }
+
     /**
-     * {@inheritdoc}
+     * @deprecated Environment::mergeConfig() is deprecated since league/commonmark v2.0 and will be removed in v3.0. Configuration should be set when instantiating the environment instead.
+     *
+     * @param array<string, mixed> $config
      */
     public function mergeConfig(array $config): void
     {
+        @\trigger_error('Environment::mergeConfig() is deprecated since league/commonmark v2.0 and will be removed in v3.0. Configuration should be set when instantiating the environment instead.', \E_USER_DEPRECATED);
+
         $this->assertUninitialized('Failed to modify configuration.');
 
         $this->config->merge($config);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getConfig(string $key, $default = null)
-    {
-        return $this->config->get($key, $default);
-    }
-
-    public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add block start parser.');
 
@@ -143,7 +148,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         return $this;
     }
 
-    public function addInlineParser(InlineParserInterface $parser, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addInlineParser(InlineParserInterface $parser, int $priority = 0): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add inline parser.');
 
@@ -153,7 +158,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         return $this;
     }
 
-    public function addDelimiterProcessor(DelimiterProcessorInterface $processor): ConfigurableEnvironmentInterface
+    public function addDelimiterProcessor(DelimiterProcessorInterface $processor): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add delimiter processor.');
         $this->delimiterProcessors->add($processor);
@@ -162,7 +167,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         return $this;
     }
 
-    public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add renderer.');
 
@@ -225,9 +230,7 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
     }
 
     /**
-     * Get all registered extensions
-     *
-     * @return ExtensionInterface[]
+     * {@inheritDoc}
      */
     public function getExtensions(): iterable
     {
@@ -239,12 +242,16 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
      *
      * @return $this
      */
-    public function addExtension(ExtensionInterface $extension): ConfigurableEnvironmentInterface
+    public function addExtension(ExtensionInterface $extension): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add extension.');
 
         $this->extensions[]              = $extension;
         $this->uninitializedExtensions[] = $extension;
+
+        if ($extension instanceof ConfigurableExtensionInterface) {
+            $extension->configureSchema($this->config);
+        }
 
         return $this;
     }
@@ -274,37 +281,37 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         }
 
         if ($object instanceof ConfigurationAwareInterface) {
-            $object->setConfiguration($this->config);
+            $object->setConfiguration($this->config->reader());
         }
     }
 
-    public static function createCommonMarkEnvironment(): Environment
+    /**
+     * @deprecated Instantiate the environment and add the extension yourself
+     *
+     * @param array<string, mixed> $config
+     */
+    public static function createCommonMarkEnvironment(array $config = []): Environment
     {
-        $environment = new static();
+        $environment = new self($config);
         $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->mergeConfig([
-            'renderer' => [
-                'block_separator' => "\n",
-                'inner_separator' => "\n",
-                'soft_break'      => "\n",
-            ],
-            'html_input'         => HtmlFilter::ALLOW,
-            'allow_unsafe_links' => true,
-            'max_nesting_level'  => \PHP_INT_MAX,
-        ]);
 
         return $environment;
     }
 
-    public static function createGFMEnvironment(): Environment
+    /**
+     * @deprecated Instantiate the environment and add the extension yourself
+     *
+     * @param array<string, mixed> $config
+     */
+    public static function createGFMEnvironment(array $config = []): Environment
     {
-        $environment = self::createCommonMarkEnvironment();
+        $environment = self::createCommonMarkEnvironment($config);
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
         return $environment;
     }
 
-    public function addEventListener(string $eventClass, callable $listener, int $priority = 0): ConfigurableEnvironmentInterface
+    public function addEventListener(string $eventClass, callable $listener, int $priority = 0): EnvironmentBuilderInterface
     {
         $this->assertUninitialized('Failed to add event listener.');
 
@@ -392,5 +399,19 @@ final class Environment implements ConfigurableEnvironmentInterface, ListenerPro
         if ($this->extensionsInitialized) {
             throw new \RuntimeException($message . ' Extensions have already been initialized.');
         }
+    }
+
+    public static function createDefaultConfiguration(): Configuration
+    {
+        return new Configuration([
+            'html_input' => Expect::anyOf(HtmlFilter::STRIP, HtmlFilter::ALLOW, HtmlFilter::ESCAPE)->default(HtmlFilter::ALLOW),
+            'allow_unsafe_links' => Expect::bool(true),
+            'max_nesting_level' => Expect::type('int')->default(PHP_INT_MAX),
+            'renderer' => Expect::structure([
+                'block_separator' => Expect::string("\n"),
+                'inner_separator' => Expect::string("\n"),
+                'soft_break' => Expect::string("\n"),
+            ])->castTo('array'),
+        ]);
     }
 }

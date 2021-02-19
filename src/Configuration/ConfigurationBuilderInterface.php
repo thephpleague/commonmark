@@ -13,18 +13,12 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Configuration;
 
-use League\CommonMark\Exception\InvalidConfigurationException;
+use Nette\Schema\Schema;
 
-interface ConfigurationInterface
+interface ConfigurationBuilderInterface extends MutableConfigurationInterface
 {
     /**
-     * @param string $key Configuration option path/key
-     *
-     * @return mixed
-     *
-     * @throws InvalidConfigurationException
+     * Registers a new configuration schema at the given top-level key
      */
-    public function get(string $key);
-
-    public function exists(string $key): bool;
+    public function addSchema(string $key, Schema $schema): void;
 }

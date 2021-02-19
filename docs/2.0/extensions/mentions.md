@@ -18,17 +18,12 @@ generate the URL.
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Mention\MentionExtension;
 use League\CommonMark\MarkdownConverter;
 
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go.
-$environment = Environment::createCommonMarkEnvironment();
-
-// Add the Mention extension.
-$environment->addExtension(new MentionExtension());
-
-// Set your configuration.
-$environment->mergeConfig([
+// Define your configuration
+$config = [
     'mentions' => [
         // GitHub handler mention configuration.
         // Sample Input:  `@colinodell`
@@ -60,7 +55,14 @@ $environment->mergeConfig([
             'generator' => 'https://twitter.com/%s',
         ],
     ],
-]);
+];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
+
+// Add the Mention extension.
+$environment->addExtension(new MentionExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
@@ -93,20 +95,15 @@ resulting URL.
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\MarkdownConverter;
 
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go.
-$environment = Environment::createCommonMarkEnvironment();
-
-// Add the Mention extension.
-$environment->addExtension(new MentionExtension());
-
-// Set your configuration.
-$environment->mergeConfig([
+// Define your configuration
+$config = [
     'mentions' => [
         'github_handle' => [
             'prefix'    => '@',
@@ -149,7 +146,14 @@ $environment->mergeConfig([
         ],
 
     ],
-]);
+];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
+
+// Add the Mention extension.
+$environment->addExtension(new MentionExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
@@ -216,20 +220,15 @@ mentions:
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Mention\MentionExtension;
 use League\CommonMark\MarkdownConverter;
 
 // Grab your UserMentionGenerator somehow, perhaps from a DI container or instantiate it if needed
 $userMentionGenerator = $container->get(UserMentionGenerator::class);
 
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-$environment = Environment::createCommonMarkEnvironment();
-
-// Add the Mention extension.
-$environment->addExtension(new MentionExtension());
-
-// Set your configuration.
-$environment->mergeConfig([
+// Define your configuration
+$config = [
     'mentions' => [
         'user_url_generator' => [
             'prefix'    => '@',
@@ -237,7 +236,14 @@ $environment->mergeConfig([
             'generator' => $userMentionGenerator,
         ],
     ],
-]);
+];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
+
+// Add the Mention extension.
+$environment->addExtension(new MentionExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);

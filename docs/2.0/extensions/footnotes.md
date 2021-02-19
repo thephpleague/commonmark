@@ -55,19 +55,14 @@ Configure your `Environment` as usual and simply add the `FootnoteExtension`:
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\MarkdownConverter;
 
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-$environment = Environment::createCommonMarkEnvironment();
-
-// Add the extension
-$environment->addExtension(new FootnoteExtension());
-
-// Set your configuration
-$environment->mergeConfig([
-    // Extension defaults are shown below
-    // If you're happy with the defaults, feel free to remove them from this array
+// Define your configuration, if needed
+// Extension defaults are shown below
+// If you're happy with the defaults, feel free to remove them from this array
+$config = [
     'footnote' => [
         'backref_class'      => 'footnote-backref',
         'backref_symbol'     => '↩',
@@ -78,7 +73,14 @@ $environment->mergeConfig([
         'footnote_class'     => 'footnote',
         'footnote_id_prefix' => 'fn:',
     ],
-]);
+];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
+
+// Add the extension
+$environment->addExtension(new FootnoteExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);

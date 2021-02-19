@@ -26,21 +26,15 @@ Configure your `Environment` as usual and simply add the `TableOfContentsExtensi
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\MarkdownConverter;
 
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-$environment = Environment::createCommonMarkEnvironment();
-
-// Add the two extensions
-$environment->addExtension(new HeadingPermalinkExtension());
-$environment->addExtension(new TableOfContentsExtension());
-
-// Set your configuration
-$environment->mergeConfig([
-    // Extension defaults are shown below
-    // If you're happy with the defaults, feel free to remove them from this array
+// Define your configuration, if needed
+// Extension defaults are shown below
+// If you're happy with the defaults, feel free to remove them from this array
+$config = [
     'table_of_contents' => [
         'html_class' => 'table-of-contents',
         'position' => 'top',
@@ -50,7 +44,15 @@ $environment->mergeConfig([
         'normalize' => 'relative',
         'placeholder' => null,
     ],
-]);
+];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
+
+// Add the two extensions
+$environment->addExtension(new HeadingPermalinkExtension());
+$environment->addExtension(new TableOfContentsExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);

@@ -14,9 +14,10 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote;
 
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\Footnote\Event\AnonymousFootnotesListener;
 use League\CommonMark\Extension\Footnote\Event\FixOrphanedFootnotesAndRefsListener;
 use League\CommonMark\Extension\Footnote\Event\GatherFootnotesListener;
@@ -32,10 +33,25 @@ use League\CommonMark\Extension\Footnote\Renderer\FootnoteBackrefRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteContainerRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteRefRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteRenderer;
+use Nette\Schema\Expect;
 
-final class FootnoteExtension implements ExtensionInterface
+final class FootnoteExtension implements ConfigurableExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function configureSchema(ConfigurationBuilderInterface $builder): void
+    {
+        $builder->addSchema('footnote', Expect::structure([
+            'backref_class' => Expect::string('footnote-backref'),
+            'backref_symbol' => Expect::string('↩'),
+            'container_add_hr' => Expect::bool(true),
+            'container_class' => Expect::string('footnotes'),
+            'ref_class' => Expect::string('footnote-ref'),
+            'ref_id_prefix' => Expect::string('fnref:'),
+            'footnote_class' => Expect::string('footnote'),
+            'footnote_id_prefix' => Expect::string('fn:'),
+        ]));
+    }
+
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addBlockStartParser(new FootnoteStartParser(), 51);
         $environment->addInlineParser(new AnonymousFootnoteRefParser(), 35);

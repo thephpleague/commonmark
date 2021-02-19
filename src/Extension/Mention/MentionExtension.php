@@ -13,27 +13,40 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Mention;
 
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
-use League\CommonMark\Exception\InvalidOptionException;
-use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
+use League\CommonMark\Exception\InvalidConfigurationException;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
+use Nette\Schema\Expect;
 
-final class MentionExtension implements ExtensionInterface
+final class MentionExtension implements ConfigurableExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
-        $mentions = $environment->getConfig('mentions', []);
+        $isAValidPartialRegex = static function (string $regex): bool {
+            $regex = '/' . $regex . '/i';
+
+            return @\preg_match($regex, '') !== false;
+        };
+
+        $builder->addSchema('mentions', Expect::arrayOf(
+            Expect::structure([
+                'prefix' => Expect::string()->required(),
+                'pattern' => Expect::string()->assert($isAValidPartialRegex, 'Pattern must not include starting/ending delimiters (like "/")')->required(),
+                'generator' => Expect::anyOf(
+                    Expect::type(MentionGeneratorInterface::class),
+                    Expect::string(),
+                    Expect::type('callable')
+                )->required(),
+            ])->castTo('array')
+        ));
+    }
+
+    public function register(EnvironmentBuilderInterface $environment): void
+    {
+        $mentions = $environment->getConfiguration()->get('mentions');
         foreach ($mentions as $name => $mention) {
-            foreach (['prefix', 'pattern', 'generator'] as $key) {
-                if (! \array_key_exists($key, $mention)) {
-                    throw new InvalidOptionException(\sprintf('Required option "mentions/%s/%s" for the Mention extension is missing', $name, $key));
-                }
-            }
-
-            if (! self::isAValidPartialRegex($mention['pattern'])) {
-                throw InvalidOptionException::forConfigOption(\sprintf('mentions/%s/pattern', $name), $mention['pattern'], 'Invalid pattern. Make sure to exclude starting/ending delimiters (like "/") and flags from the regular expression.');
-            }
-
             if ($mention['generator'] instanceof MentionGeneratorInterface) {
                 $environment->addInlineParser(new MentionParser($name, $mention['prefix'], $mention['pattern'], $mention['generator']));
             } elseif (\is_string($mention['generator'])) {
@@ -41,15 +54,8 @@ final class MentionExtension implements ExtensionInterface
             } elseif (\is_callable($mention['generator'])) {
                 $environment->addInlineParser(MentionParser::createWithCallback($name, $mention['prefix'], $mention['pattern'], $mention['generator']));
             } else {
-                throw new InvalidOptionException(\sprintf('The "generator" provided for the "%s" MentionParser configuration must be a string template, callable, or an object that implements %s.', $name, MentionGeneratorInterface::class));
+                throw new InvalidConfigurationException(\sprintf('The "generator" provided for the "%s" MentionParser configuration must be a string template, callable, or an object that implements %s.', $name, MentionGeneratorInterface::class));
             }
         }
-    }
-
-    private static function isAValidPartialRegex(string $regex): bool
-    {
-        $regex = '/' . $regex . '/i';
-
-        return @\preg_match($regex, '') !== false;
     }
 }

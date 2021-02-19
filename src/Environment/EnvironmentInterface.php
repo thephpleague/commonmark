@@ -13,21 +13,22 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Environment;
 
+use League\CommonMark\Configuration\ConfigurationProviderInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
+use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-interface EnvironmentInterface extends EventDispatcherInterface
+interface EnvironmentInterface extends ConfigurationProviderInterface, EventDispatcherInterface
 {
     /**
-     * @param string $key     Configuration option key
-     * @param mixed  $default Default value to return if config option is not set
+     * Get all registered extensions
      *
-     * @return mixed
+     * @return ExtensionInterface[]
      */
-    public function getConfig(string $key, $default = null);
+    public function getExtensions(): iterable;
 
     /**
      * @return iterable<BlockStartParserInterface>

@@ -49,9 +49,11 @@ When registering your renderer, you must tell the `Environment` which node eleme
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 
-$environment = Environment::createCommonMarkEnvironment();
+$environment = new Environment();
+$environment->addExtension(new CommonMarkCoreExtension());
 
 // First param - the node class type that should use our renderer
 // Second param - instance of the renderer
@@ -62,10 +64,12 @@ A single renderer could even be used for multiple types:
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
 
-$environment = Environment::createCommonMarkEnvironment();
+$environment = new Environment();
+$environment->addExtension(new CommonMarkCoreExtension());
 
 $myRenderer = new MyCustomCodeRenderer();
 
@@ -81,6 +85,7 @@ Here's a custom renderer which renders thematic breaks as text (instead of `<hr>
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
@@ -95,7 +100,8 @@ class TextDividerRenderer implements NodeRendererInterface
     }
 }
 
-$environment = Environment::createCommonMarkEnvironment();
+$environment = new Environment();
+$environment->addExtension(new CommonMarkCoreExtension());
 $environment->addRenderer(ThematicBreak::class, new TextDividerRenderer());
 ```
 

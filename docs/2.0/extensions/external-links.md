@@ -28,17 +28,12 @@ Configure your `Environment` as usual and simply add the `ExternalLinkExtension`
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\MarkdownConverter;
 
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-$environment = Environment::createCommonMarkEnvironment();
-
-// Add this extension
-$environment->addExtension(new ExternalLinkExtension());
-
-// Set your configuration
-$environment->mergeConfig([
+// Define your configuration, if needed
+$config = [
     'external_link' => [
         'internal_hosts' => 'www.example.com', // TODO: Don't forget to set this!
         'open_in_new_window' => true,
@@ -47,7 +42,14 @@ $environment->mergeConfig([
         'noopener' => 'external',
         'noreferrer' => 'external',
     ],
-]);
+];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
+
+// Add this extension
+$environment->addExtension(new ExternalLinkExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);

@@ -29,6 +29,7 @@ version:
             'Overview': '/2.0/customization/overview/'
             'Environment': '/2.0/customization/environment/'
             'Extensions': '/2.0/customization/extensions/'
+            'Configuration': '/2.0/customization/configuration/'
             'Event Dispatcher': '/2.0/customization/event-dispatcher/'
             'Cursor': '/2.0/customization/cursor/'
             'Block Parsing': '/2.0/customization/block-parsing/'

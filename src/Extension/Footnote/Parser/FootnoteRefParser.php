@@ -46,7 +46,7 @@ final class FootnoteRefParser implements InlineParserInterface, ConfigurationAwa
     {
         return new Reference(
             $label,
-            '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $label,
+            '#' . $this->config->get('footnote/footnote_id_prefix') . $label,
             $label
         );
     }

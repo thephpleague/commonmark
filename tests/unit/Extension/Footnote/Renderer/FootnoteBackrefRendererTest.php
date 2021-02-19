@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\Footnote\Renderer;
 
-use League\CommonMark\Configuration\Configuration;
+use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteBackrefRenderer;
 use League\CommonMark\Reference\Reference;
@@ -25,7 +27,7 @@ final class FootnoteBackrefRendererTest extends TestCase
     public function testDefaultAttributes(): void
     {
         $renderer = new FootnoteBackrefRenderer();
-        $renderer->setConfiguration(new Configuration());
+        $renderer->setConfiguration($this->createConfiguration());
 
         $fakeReference   = new Reference('label', 'dest', 'title');
         $footnoteBackref = new FootnoteBackref($fakeReference);
@@ -40,7 +42,7 @@ final class FootnoteBackrefRendererTest extends TestCase
     public function testCustomClassAddedViaAST(): void
     {
         $renderer = new FootnoteBackrefRenderer();
-        $renderer->setConfiguration(new Configuration());
+        $renderer->setConfiguration($this->createConfiguration());
 
         $fakeReference   = new Reference('label', 'dest', 'title');
         $footnoteBackref = new FootnoteBackref($fakeReference);
@@ -55,7 +57,7 @@ final class FootnoteBackrefRendererTest extends TestCase
     public function testClassConfiguration(): void
     {
         $renderer = new FootnoteBackrefRenderer();
-        $renderer->setConfiguration(new Configuration(['footnote' => ['backref_class' => 'my-custom-class']]));
+        $renderer->setConfiguration($this->createConfiguration(['footnote' => ['backref_class' => 'my-custom-class']]));
 
         $fakeReference   = new Reference('label', 'dest', 'title');
         $footnoteBackref = new FootnoteBackref($fakeReference);
@@ -63,5 +65,17 @@ final class FootnoteBackrefRendererTest extends TestCase
         $output = $renderer->render($footnoteBackref, new FakeChildNodeRenderer());
 
         $this->assertStringContainsString('class="my-custom-class"', $output);
+    }
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    private function createConfiguration(array $values = []): ConfigurationInterface
+    {
+        $config = Environment::createDefaultConfiguration();
+        (new FootnoteExtension())->configureSchema($config);
+        $config->merge($values);
+
+        return $config->reader();
     }
 }

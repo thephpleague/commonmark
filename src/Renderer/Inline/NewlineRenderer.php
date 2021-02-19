@@ -55,6 +55,6 @@ final class NewlineRenderer implements NodeRendererInterface, ConfigurationAware
             return new HtmlElement('br', [], '', true) . "\n";
         }
 
-        return $this->config->get('renderer/soft_break', "\n");
+        return $this->config->get('renderer/soft_break');
     }
 }

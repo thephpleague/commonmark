@@ -16,17 +16,30 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\CommonMark;
 
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor;
-use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Node as CoreNode;
 use League\CommonMark\Parser as CoreParser;
 use League\CommonMark\Renderer as CoreRenderer;
+use Nette\Schema\Expect;
 
-final class CommonMarkCoreExtension implements ExtensionInterface
+final class CommonMarkCoreExtension implements ConfigurableExtensionInterface
 {
+    public function configureSchema(ConfigurationBuilderInterface $builder): void
+    {
+        $builder->addSchema('commonmark', Expect::structure([
+            'use_asterisk' => Expect::bool(true),
+            'use_underscore' => Expect::bool(true),
+            'enable_strong' => Expect::bool(true),
+            'enable_em' => Expect::bool(true),
+            'unordered_list_markers' => Expect::listOf('string')->min(1)->default(['*', '+', '-'])->mergeDefaults(false),
+        ]));
+    }
+
     // phpcs:disable Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma,Squiz.WhiteSpace.SemicolonSpacing.Incorrect
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
             ->addBlockStartParser(new Parser\Block\BlockQuoteStartParser(),     70)
@@ -68,11 +81,11 @@ final class CommonMarkCoreExtension implements ExtensionInterface
             ->addRenderer(CoreNode\Inline\Text::class,    new CoreRenderer\Inline\TextRenderer(),    0)
         ;
 
-        if ($environment->getConfig('commonmark/use_asterisk', true)) {
+        if ($environment->getConfiguration()->get('commonmark/use_asterisk')) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));
         }
 
-        if ($environment->getConfig('commonmark/use_underscore', true)) {
+        if ($environment->getConfiguration()->get('commonmark/use_underscore')) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('_'));
         }
     }

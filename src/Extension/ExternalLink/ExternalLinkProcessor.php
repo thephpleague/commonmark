@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\ExternalLink;
 
-use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 
@@ -25,22 +25,22 @@ final class ExternalLinkProcessor
     public const APPLY_INTERNAL = 'internal';
 
     /**
-     * @var EnvironmentInterface
+     * @var ConfigurationInterface
      *
      * @psalm-readonly
      */
-    private $environment;
+    private $config;
 
-    public function __construct(EnvironmentInterface $environment)
+    public function __construct(ConfigurationInterface $config)
     {
-        $this->environment = $environment;
+        $this->config = $config;
     }
 
     public function __invoke(DocumentParsedEvent $e): void
     {
-        $internalHosts   = $this->environment->getConfig('external_link/internal_hosts', []);
-        $openInNewWindow = $this->environment->getConfig('external_link/open_in_new_window', false);
-        $classes         = $this->environment->getConfig('external_link/html_class', '');
+        $internalHosts   = $this->config->get('external_link/internal_hosts');
+        $openInNewWindow = $this->config->get('external_link/open_in_new_window');
+        $classes         = $this->config->get('external_link/html_class');
 
         $walker = $e->getDocument()->walker();
         while ($event = $walker->next()) {
@@ -87,9 +87,9 @@ final class ExternalLinkProcessor
     private function applyRelAttribute(Link $link, bool $isExternal): void
     {
         $options = [
-            'nofollow'   => $this->environment->getConfig('external_link/nofollow', self::APPLY_NONE),
-            'noopener'   => $this->environment->getConfig('external_link/noopener', self::APPLY_EXTERNAL),
-            'noreferrer' => $this->environment->getConfig('external_link/noreferrer', self::APPLY_EXTERNAL),
+            'nofollow'   => $this->config->get('external_link/nofollow'),
+            'noopener'   => $this->config->get('external_link/noopener'),
+            'noreferrer' => $this->config->get('external_link/noreferrer'),
         ];
 
         foreach ($options as $type => $option) {

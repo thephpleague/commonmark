@@ -18,7 +18,6 @@ namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
-use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
@@ -47,10 +46,7 @@ final class HtmlInlineRenderer implements NodeRendererInterface, ConfigurationAw
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $htmlInput = $this->config->get('html_input', HtmlFilter::ALLOW);
-        if (! \is_string($htmlInput)) {
-            throw InvalidOptionException::forConfigOption('html_input', $htmlInput);
-        }
+        $htmlInput = $this->config->get('html_input');
 
         return HtmlFilter::filter($node->getLiteral(), $htmlInput);
     }

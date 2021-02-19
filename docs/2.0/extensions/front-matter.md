@@ -68,20 +68,19 @@ Configure your `Environment` as usual and add the `FrontMatterExtension`:
 
 ```php
 use League\CommonMark\Environment\Environment;
-use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
 use League\CommonMark\MarkdownConverter;
 
-// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-$environment = Environment::createCommonMarkEnvironment();
+// Define your configuration, if needed
+$config = [];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
 
 // Add the extension
 $environment->addExtension(new FrontMatterExtension());
-
-// Set your configuration if needed
-$environment->mergeConfig([
-    // ...
-]);
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);

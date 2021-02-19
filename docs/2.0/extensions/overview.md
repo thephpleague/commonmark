@@ -43,12 +43,17 @@ column above for you:
 
 ```php
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\MarkdownConverter;
 
-$environment = Environment::createCommonMarkEnvironment();
+// Define your configuration, if needed
+$config = [];
+
+// Configure the Environment with all the extensions you need
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
 $environment->addExtension(new GithubFlavoredMarkdownExtension());
-$environment->mergeConfig([]);
 
 $converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Hello World!');
@@ -59,19 +64,26 @@ Or maybe you only want a subset of GFM extensions, plus the [Smart Punctuation e
 ```php
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 
-$environment = Environment::createCommonMarkEnvironment();
+// Define your configuration, if needed
+$config = [];
+
+// Configure the Environment with all the CommonMark parsers/renderers
+$environment = new Environment($config);
+$environment->addExtension(new CommonMarkCoreExtension());
+
+// Add the other extensions you need
 $environment->addExtension(new AutolinkExtension());
 $environment->addExtension(new DisallowedRawHtmlExtension());
 $environment->addExtension(new SmartPunctExtension());
 $environment->addExtension(new StrikethroughExtension());
 $environment->addExtension(new TableExtension());
-$environment->mergeConfig([]);
 
 $converter = new MarkdownConverter($environment);
 echo $converter->convertToHtml('Hello World!');

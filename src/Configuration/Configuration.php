@@ -7,31 +7,70 @@ declare(strict_types=1);
  *
  * (c) Colin O'Dell <colinodell@gmail.com>
  *
- * Original code based on the CommonMark JS reference parser (https://bitly.com/commonmark-js)
- *  - (c) John MacFarlane
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 namespace League\CommonMark\Configuration;
 
-final class Configuration implements ConfigurationInterface
+use Dflydev\DotAccessData\Data;
+use Dflydev\DotAccessData\Exception\InvalidPathException;
+use Dflydev\DotAccessData\Exception\MissingPathException;
+use League\CommonMark\Exception\InvalidConfigurationException;
+use Nette\Schema\Elements\Structure;
+use Nette\Schema\Expect;
+use Nette\Schema\Processor;
+use Nette\Schema\Schema;
+use Nette\Schema\ValidationException;
+
+final class Configuration implements ConfigurationBuilderInterface, ConfigurationInterface
 {
     /**
-     * @internal
+     * @var Data
+     *
+     * @psalm-readonly
      */
-    private const MISSING = '833f2700-af8d-49d4-9171-4b5f12d3bfbc';
+    private $userConfig;
+
+    /** @var array<string, Schema> */
+    private $configSchemas = [];
+
+    /** @var Data|null */
+    private $finalConfig;
 
     /** @var array<string, mixed> */
-    private $config;
+    private $cache = [];
 
     /**
-     * @param array<string, mixed> $config
+     * @var ConfigurationInterface
+     *
+     * @psalm-readonly
      */
-    public function __construct(array $config = [])
+    private $reader;
+
+    /**
+     * @param array<string, Schema> $baseSchemas
+     */
+    public function __construct(array $baseSchemas = [])
     {
-        $this->config = $config;
+        $this->configSchemas = $baseSchemas;
+        $this->userConfig    = new Data();
+
+        $this->reader = new ReadOnlyConfiguration($this);
+    }
+
+    /**
+     * Registers a new configuration schema at the given top-level key
+     */
+    public function addSchema(string $key, Schema $schema): void
+    {
+        $this->invalidate();
+
+        if ($schema instanceof Structure) {
+            $schema->castTo('array');
+        }
+
+        $this->configSchemas[$key] = $schema;
     }
 
     /**
@@ -39,32 +78,9 @@ final class Configuration implements ConfigurationInterface
      */
     public function merge(array $config = []): void
     {
-        $this->config = \array_replace_recursive($this->config, $config);
-    }
+        $this->invalidate();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function replace(array $config = []): void
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get(string $key, $default = null)
-    {
-        // accept a/b/c as ['a']['b']['c']
-        if (\strpos($key, '/')) {
-            return $this->getConfigByPath($key, $default);
-        }
-
-        if (! isset($this->config[$key])) {
-            return $default;
-        }
-
-        return $this->config[$key];
+        $this->userConfig->import($config, Data::REPLACE);
     }
 
     /**
@@ -72,58 +88,64 @@ final class Configuration implements ConfigurationInterface
      */
     public function set(string $key, $value): void
     {
-        // accept a/b/c as ['a']['b']['c']
-        if (\strpos($key, '/')) {
-            $this->setByPath($key, $value);
+        $this->invalidate();
+
+        $this->userConfig->set($key, $value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get(string $key)
+    {
+        if ($this->finalConfig === null) {
+            $this->finalConfig = $this->build();
+        } elseif (\array_key_exists($key, $this->cache)) {
+            return $this->cache[$key];
         }
 
-        $this->config[$key] = $value;
+        try {
+            return $this->cache[$key] = $this->finalConfig->get($key);
+        } catch (InvalidPathException | MissingPathException $ex) {
+            throw InvalidConfigurationException::missingOption($key);
+        }
     }
 
     public function exists(string $key): bool
     {
-        return $this->getConfigByPath($key, self::MISSING) !== self::MISSING;
+        if ($this->finalConfig === null) {
+            $this->finalConfig = $this->build();
+        } elseif (\array_key_exists($key, $this->cache)) {
+            return true;
+        }
+
+        return $this->finalConfig->has($key);
+    }
+
+    public function reader(): ConfigurationInterface
+    {
+        return $this->reader;
+    }
+
+    private function invalidate(): void
+    {
+        $this->cache       = [];
+        $this->finalConfig = null;
     }
 
     /**
-     * @param mixed|null $default
-     *
-     * @return mixed|null
+     * Applies the schema against the configuration to return the final configuration
      */
-    private function getConfigByPath(string $keyPath, $default = null)
+    private function build(): Data
     {
-        $keyArr = \explode('/', $keyPath);
-        $data   = $this->config;
-        foreach ($keyArr as $k) {
-            if (! \is_array($data) || ! isset($data[$k])) {
-                return $default;
-            }
+        try {
+            $schema    = Expect::structure($this->configSchemas)->castTo('array');
+            $processor = new Processor();
+            $config    = new Data($processor->process($schema, $this->userConfig->export()));
 
-            $data = $data[$k];
+            return $this->finalConfig = $config;
+        } catch (ValidationException $ex) {
+            throw InvalidConfigurationException::fromValidation($ex);
         }
-
-        return $data;
-    }
-
-    /**
-     * @param mixed|null $value
-     */
-    private function setByPath(string $keyPath, $value = null): void
-    {
-        $keyArr  = \explode('/', $keyPath);
-        $pointer = &$this->config;
-        while (($k = \array_shift($keyArr)) !== null) {
-            if (! \is_array($pointer)) {
-                $pointer = [];
-            }
-
-            if (! isset($pointer[$k])) {
-                $pointer[$k] = null;
-            }
-
-            $pointer = &$pointer[$k];
-        }
-
-        $pointer = $value;
     }
 }

@@ -23,6 +23,9 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `BlockStart`
    - `BlockStartParserInterface`
    - `ChildNodeRendererInterface`
+   - `ConfigurableExtensionInterface`
+   - `ConfigurationBuilderInterface`
+   - `ConfigurationProviderInterface`
    - `CursorState`
    - `DashParser` (extracted from `PunctuationParser`)
    - `DelimiterParser`
@@ -35,13 +38,17 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserMatch`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
+   - `MutableConfigurationInterface`
    - `Query`
+   - `ReadOnlyConfiguration`
    - `ReferenceableInterface`
    - `RenderedContent`
    - `RenderedContentInterface`
  - Added several new methods:
    - `ConfigurationInterface::exists()`
+   - `Environment::createDefaultConfiguration()`
    - `Environment::setEventDispatcher()`
+   - `EnvironmentInterface::getExtensions()`
    - `EnvironmentInterface::getInlineParsers()`
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
@@ -79,9 +86,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
  - Implemented a new approach to block parsing. This was a massive change, so here are the highlights:
    - Functionality previously found in block parsers and node elements has moved to block parser factories and block parsers, respectively ([more details](https://commonmark.thephpleague.com/2.0/upgrading/#new-block-parsing-approach))
-   - `ConfigurableEnvironmentInterface::addBlockParser()` is now `ConfigurableEnvironmentInterface::addBlockParserFactory()`
-   - `ConfigurableEnvironmentInterface::mergeConfig()` can no longer be called without an argument
-   - `EnvironmentInterface::getConfig()` can no longer be called without an argument
+   - `ConfigurableEnvironmentInterface::addBlockParser()` is now `EnvironmentBuilderInterface::addBlockParserFactory()`
    - `ReferenceParser` was re-implemented and works completely different than before
    - The paragraph parser no longer needs to be added manually to the environment
  - Implemented a new approach to inline parsing where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
@@ -90,8 +95,14 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Implemented delimiter parsing as a special type of inline parser (via the new `DelimiterParser` class)
  - Changed block and inline rendering to use common methods and interfaces
    - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
-   - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` are now just `addRenderer()`
+   - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` were combined into `EnvironmentBuilderInterface::addRenderer()`
    - `EnvironmentInterface::getBlockRenderersForClass()` and `getInlineRenderersForClass()` are now just `getRenderersForClass()`
+ - Completely refactored the Configuration implementation
+   - `Configuration` object must now be configured with a schema and all options must match that schema - arbitrary keys are no longer permitted
+   - `Configuration::__construct()` no longer accepts the default configuration values - use `Configuration::merge()` instead
+   - `ConfigurationInterface` now only contains a `get(string $key)`; this method no longer allows arbitrary default values to be returned if the option is missing
+   - `ConfigurableEnvironmentInterface` was renamed to `EnvironmentBuilderInterface`
+   - `ExtensionInterface::register()` now requires an `EnvironmentBuilderInterface` param instead of `ConfigurableEnvironmentInterface`
  - Re-implemented the GFM Autolink extension using the new inline parser approach instead of document processors
    - `EmailAutolinkProcessor` is now `EmailAutolinkParser`
    - `UrlAutolinkProcessor` is now `UrlAutolinkParser`
@@ -132,7 +143,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `ArrayCollection` is now final and only supports integer keys
  - `Cursor::saveState()` and `Cursor::restoreState()` now use `CursorState` objects instead of arrays
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
- - `InvalidOptionException` now extends from `UnexpectedValueException`
+ - `InvalidOptionException` was renamed to `InvalidConfigurationException` and now extends from `UnexpectedValueException`
  - Anything with a `getReference(): ReferenceInterface` method now implements `ReferencableInterface`
  - Several changes made to the Footnote extension:
    - Footnote identifiers can no longer contain spaces
@@ -143,6 +154,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - The line numbers (keys) returned via `MarkdownInput::getLines()` now start at 1 instead of 0
  - `DelimiterProcessorCollectionInterface` now extends `Countable`
  - `RegexHelper::PARTIAL_` constants must always be used in case-insensitive contexts
+ - `HeadingPermalinkProcessor` no longer accepts text normalizers via the constructor - these must be provided via configuration instead
 
 ### Fixed
 
@@ -200,7 +212,12 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `AbstractBlock::getData()`
    - `AbstractInline::getData()`
    - `ConfigurableEnvironmentInterface::addBlockParser()`
+   - `ConfigurableEnvironmentInterface::mergeConfig()`
+   - `ConfigurationInterface::merge()` (moved to new `MutableConfigurationInterface`)
+   - `ConfigurationInterface::replace()`
+   - `ConfigurationInterface::set()` (moved to new `MutableConfigurationInterface`)
    - `Delimiter::setCanClose()`
+   - `EnvironmentInterface::getConfig()`
    - `EnvironmentInterface::getInlineParsersForCharacter()`
    - `EnvironmentInterface::getInlineParserCharacterRegex()`
    - `HtmlRenderer::renderBlock()`
@@ -211,5 +228,15 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RegexHelper::matchAll()` (use the new `matchFirst()` method instead)
    - `RegexHelper::REGEX_WHITESPACE`
  - Removed the second `$contents` argument from the `Heading` constructor
+
+### Deprecated
+
+The following things have been deprecated and will not be supported in v3.0:
+
+ - `Environment::mergeConfig()` (set configuration before instantiation instead)
+ - Instantiating `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` with custom environments (use `MarkdownConverter` instead)
+ - `Environment::createCommonMarkEnvironment()` and `Environment::createGFMEnvironment()`
+    - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
+    - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
 [unreleased]: https://github.com/thephpleague/commonmark/compare/1.6...latest

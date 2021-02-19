@@ -48,7 +48,7 @@ final class AnonymousFootnotesListener implements ConfigurationAwareInterface
             $existingReference = $node->getReference();
             $newReference      = new Reference(
                 $existingReference->getLabel(),
-                '#' . $this->config->get('footnote/ref_id_prefix', 'fnref:') . $existingReference->getLabel(),
+                '#' . $this->config->get('footnote/ref_id_prefix') . $existingReference->getLabel(),
                 $existingReference->getTitle()
             );
 

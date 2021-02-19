@@ -12,11 +12,10 @@ Ready to go beyond the basics of converting Markdown to HTML? This page describe
 
 The actual process of converting Markdown to HTML has several steps:
 
- 1. Create an [`Environment`](/2.0/customization/environment/), adding whichever extensions/parser/renders you need
- 2. Set custom configuration options within the `Environment`
- 3. Instantiate a `MarkdownParser` and `HtmlRenderer` using that `Environment`
- 4. Use the `MarkdownParser` to parse the Markdown input into an [Abstract Syntax Tree](/2.0/customization/abstract-syntax-tree/) (aka an "AST")
- 5. Use the `HtmlRenderer` to convert the [AST `Document`](/2.0/customization/abstract-syntax-tree/#document) into HTML
+ 1. Create an [`Environment`](/2.0/customization/environment/), adding whichever extensions/parser/renders/configuration you need
+ 2. Instantiate a `MarkdownParser` and `HtmlRenderer` using that `Environment`
+ 3. Use the `MarkdownParser` to parse the Markdown input into an [Abstract Syntax Tree](/2.0/customization/abstract-syntax-tree/) (aka an "AST")
+ 4. Use the `HtmlRenderer` to convert the [AST `Document`](/2.0/customization/abstract-syntax-tree/#document) into HTML
 
 The `MarkdownConverter` class handles all of this for you, but you can execute that process yourself if you wish:
 
@@ -25,10 +24,10 @@ use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Renderer\HtmlRenderer;
 
-$environment = Environment::createCommonMarkEnvironment();
-$environment->mergeConfig([
+$environment = new Environment([
     'html_input' => 'strip',
 ]);
+$environment->addExtension(new CommonMarkCoreExtension());
 
 $parser = new MarkdownParser($environment);
 $htmlRenderer = new HtmlRenderer($environment);

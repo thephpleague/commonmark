@@ -13,16 +13,34 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
+use League\CommonMark\Normalizer\SlugNormalizer;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
+use Nette\Schema\Expect;
 
 /**
  * Extension which automatically anchor links to heading elements
  */
-final class HeadingPermalinkExtension implements ExtensionInterface
+final class HeadingPermalinkExtension implements ConfigurableExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function configureSchema(ConfigurationBuilderInterface $builder): void
+    {
+        $builder->addSchema('heading_permalink', Expect::structure([
+            'min_heading_level' => Expect::int()->min(1)->max(6)->default(1),
+            'max_heading_level' => Expect::int()->min(1)->max(6)->default(6),
+            'slug_normalizer' => Expect::type(TextNormalizerInterface::class)->default(new SlugNormalizer()),
+            'insert' => Expect::anyOf(HeadingPermalinkProcessor::INSERT_BEFORE, HeadingPermalinkProcessor::INSERT_AFTER)->default(HeadingPermalinkProcessor::INSERT_BEFORE),
+            'id_prefix' => Expect::string()->default('user-content'),
+            'html_class' => Expect::string()->default('heading-permalink'),
+            'title' => Expect::string()->default('Permalink'),
+            'symbol' => Expect::string()->default(HeadingPermalinkRenderer::DEFAULT_SYMBOL),
+        ]));
+    }
+
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addEventListener(DocumentParsedEvent::class, new HeadingPermalinkProcessor(), -100);
         $environment->addRenderer(HeadingPermalink::class, new HeadingPermalinkRenderer());

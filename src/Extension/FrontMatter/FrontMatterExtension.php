@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\FrontMatter;
 
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentPreParsedEvent;
 use League\CommonMark\Event\DocumentRenderedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
@@ -41,7 +41,7 @@ final class FrontMatterExtension implements ExtensionInterface
         return $this->frontMatterParser;
     }
 
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addEventListener(DocumentPreParsedEvent::class, new FrontMatterPreParser($this->frontMatterParser));
         $environment->addEventListener(DocumentRenderedEvent::class, new FrontMatterPostRenderListener(), -500);

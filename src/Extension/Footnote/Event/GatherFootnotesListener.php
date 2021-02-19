@@ -54,7 +54,7 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
                 $footnotes[\PHP_INT_MAX] = $node;
             }
 
-            $key = '#' . $this->config->get('footnote/footnote_id_prefix', 'fn:') . $node->getReference()->getDestination();
+            $key = '#' . $this->config->get('footnote/footnote_id_prefix') . $node->getReference()->getDestination();
             if ($document->data->has($key)) {
                 $this->createBackrefs($node, $document->data->get($key));
             }
@@ -99,7 +99,7 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
         foreach ($backrefs as $backref) {
             $target->appendChild(new FootnoteBackref(new Reference(
                 $backref->getLabel(),
-                '#' . $this->config->get('footnote/ref_id_prefix', 'fnref:') . $backref->getLabel(),
+                '#' . $this->config->get('footnote/ref_id_prefix') . $backref->getLabel(),
                 $backref->getTitle()
             )));
         }

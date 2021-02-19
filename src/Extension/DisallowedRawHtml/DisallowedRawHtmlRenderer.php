@@ -21,18 +21,6 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 
 final class DisallowedRawHtmlRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {
-    private const DEFAULT_DISALLOWED_TAGS = [
-        'title',
-        'textarea',
-        'style',
-        'xmp',
-        'iframe',
-        'noembed',
-        'noframes',
-        'script',
-        'plaintext',
-    ];
-
     /**
      * @var NodeRendererInterface
      *
@@ -63,7 +51,7 @@ final class DisallowedRawHtmlRenderer implements NodeRendererInterface, Configur
             return '';
         }
 
-        $tags = (array) $this->config->get('disallowed_raw_html/disallowed_tags', self::DEFAULT_DISALLOWED_TAGS);
+        $tags = (array) $this->config->get('disallowed_raw_html/disallowed_tags');
         if (\count($tags) === 0) {
             return $rendered;
         }

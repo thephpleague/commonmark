@@ -13,18 +13,15 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Configuration;
 
-use League\CommonMark\Exception\InvalidConfigurationException;
-
-interface ConfigurationInterface
+interface MutableConfigurationInterface
 {
     /**
-     * @param string $key Configuration option path/key
-     *
-     * @return mixed
-     *
-     * @throws InvalidConfigurationException
+     * @param mixed $value
      */
-    public function get(string $key);
+    public function set(string $key, $value): void;
 
-    public function exists(string $key): bool;
+    /**
+     * @param array<string, mixed> $config
+     */
+    public function merge(array $config = []): void;
 }

@@ -40,12 +40,12 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, Configurat
 
         $attrs = $node->data->getData('attributes');
 
-        $attrs->append('class', $this->config->get('footnote/backref_class', 'footnote-backref'));
+        $attrs->append('class', $this->config->get('footnote/backref_class'));
         $attrs->set('rev', 'footnote');
         $attrs->set('href', \mb_strtolower($node->getReference()->getDestination()));
         $attrs->set('role', 'doc-backlink');
 
-        $symbol = $this->config->get('footnote/backref_symbol', self::DEFAULT_SYMBOL);
+        $symbol = $this->config->get('footnote/backref_symbol');
         \assert(\is_string($symbol));
 
         return '&nbsp;' . new HtmlElement('a', $attrs->export(), \htmlspecialchars($symbol), true);

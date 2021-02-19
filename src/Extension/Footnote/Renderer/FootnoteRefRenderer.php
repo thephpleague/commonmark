@@ -37,11 +37,11 @@ final class FootnoteRefRenderer implements NodeRendererInterface, ConfigurationA
         }
 
         $attrs = $node->data->getData('attributes');
-        $attrs->append('class', $this->config->get('footnote/ref_class', 'footnote-ref')); // TODO Add tests to all these footnote renderers re: appending classes when some might exist
+        $attrs->append('class', $this->config->get('footnote/ref_class'));
         $attrs->set('href', \mb_strtolower($node->getReference()->getDestination()));
         $attrs->set('role', 'doc-noteref');
 
-        $idPrefix = $this->config->get('footnote/ref_id_prefix', 'fnref:');
+        $idPrefix = $this->config->get('footnote/ref_id_prefix');
 
         return new HtmlElement(
             'sup',
