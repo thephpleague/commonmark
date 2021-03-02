@@ -1,14 +1,14 @@
 ---
 layout: default
 title: Disallowed Raw HTML Extension
-description: The DisallowedRawHTMLExtension automatically escapes certain HTML tags when rendering raw HTML
+description: The DisallowedRawHtmlExtension automatically escapes certain HTML tags when rendering raw HTML
 ---
 
 # Disallowed Raw HTML Extension
 
 _(Note: this extension is included by default within [the GFM extension](/2.0/extensions/github-flavored-markdown/))_
 
-The `DisallowedRawHTMLExtension` automatically escapes certain HTML tags when rendering raw HTML, such as:
+The `DisallowedRawHtmlExtension` automatically escapes certain HTML tags when rendering raw HTML, such as:
 
 - `<title>`
 - `<textarea>`
@@ -38,12 +38,12 @@ See the [installation](/2.0/installation/) section for more details.
 
 ## Usage
 
-Configure your `Environment` as usual and simply add the `DisallowedRawHTMLExtension` provided by this package:
+Configure your `Environment` as usual and simply add the `DisallowedRawHtmlExtension` provided by this package:
 
 ```php
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\DisallowedRawHTML\DisallowedRawHTMLExtension;
+use League\CommonMark\Extension\DisallowedRawHTML\DisallowedRawHtmlExtension;
 use League\CommonMark\MarkdownConverter;
 
 // Customize the extension's configuration if needed
@@ -60,7 +60,7 @@ $environment = new Environment($config);
 $environment->addExtension(new CommonMarkCoreExtension());
 
 // Add this extension
-$environment->addExtension(new DisallowedRawHTMLExtension());
+$environment->addExtension(new DisallowedRawHtmlExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
