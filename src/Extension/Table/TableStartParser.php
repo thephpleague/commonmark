@@ -17,6 +17,7 @@ namespace League\CommonMark\Extension\Table;
 
 use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
+use League\CommonMark\Parser\Block\ParagraphParser;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
 
@@ -25,7 +26,7 @@ final class TableStartParser implements BlockStartParserInterface
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
         $paragraph = $parserState->getParagraphContent();
-        if ($paragraph === null || \strpos($paragraph, '|') === false || \strpos($paragraph, "\n") !== false) {
+        if ($paragraph === null || \strpos($paragraph, '|') === false) {
             return BlockStart::none();
         }
 
@@ -34,14 +35,27 @@ final class TableStartParser implements BlockStartParserInterface
             return BlockStart::none();
         }
 
-        $headerCells = TableParser::split($paragraph);
+        $lines    = \explode("\n", $paragraph);
+        $lastLine = \array_pop($lines);
+
+        $headerCells = TableParser::split($lastLine);
         if (\count($headerCells) > \count($columns)) {
             return BlockStart::none();
         }
 
         $cursor->advanceToEnd();
 
-        return BlockStart::of(new TableParser($columns, $headerCells))
+        $parsers = [];
+
+        if (\count($lines) > 0) {
+            $p = new ParagraphParser();
+            $p->addLine(\implode("\n", $lines));
+            $parsers[] = $p;
+        }
+
+        $parsers[] = new TableParser($columns, $headerCells);
+
+        return BlockStart::of(...$parsers)
             ->at($cursor)
             ->replaceActiveBlockParser();
     }

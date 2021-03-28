@@ -38,6 +38,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 - Fixed missing check for empty arrays being passed into the `unordered_list_markers` configuration option
 
+## [1.5.8] - 2021-03-28
+
+### Fixed
+
+- Fixed Table of Contents not rendering heading inlines properly (#587, #588)
+- Fixed parsing of tables within list items (#590)
+
 ## [1.5.7] - 2020-10-31
 
 ### Fixed
@@ -432,7 +439,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.7...1.6
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.8...1.6
+[1.5.8]: https://github.com/thephpleague/commonmark/compare/1.5.7...1.5.8
 [1.5.7]: https://github.com/thephpleague/commonmark/compare/1.5.6...1.5.7
 [1.5.6]: https://github.com/thephpleague/commonmark/compare/1.5.5...1.5.6
 [1.5.5]: https://github.com/thephpleague/commonmark/compare/1.5.4...1.5.5

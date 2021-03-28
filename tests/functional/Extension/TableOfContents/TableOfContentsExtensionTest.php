@@ -180,6 +180,15 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
         }
     }
 
+    public function testHeadingsWithInlines(): void
+    {
+        $this->setupConverter();
+
+        foreach ($this->loadTests(__DIR__ . '/data', 'headings-with-inlines.md') as [$markdown, $html, $testName]) {
+            $this->assertMarkdownRendersAs($markdown, $html, $testName);
+        }
+    }
+
     /**
      * @param array<string, mixed> $config
      */

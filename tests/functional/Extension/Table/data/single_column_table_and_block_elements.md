@@ -7,7 +7,7 @@ Not a paragraph
 
 Paragraph
 
-Paragraph and not a table
+Paragraph followed by a table
 | header 1 |
 | -------- |
 | cell 1.1 |
