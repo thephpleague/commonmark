@@ -39,11 +39,12 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
         }
 
         $lines = $container->getStrings();
-        if (count($lines) !== 1) {
+        if (count($lines) === 0) {
             return false;
         }
 
-        if (\strpos($lines[0], '|') === false) {
+        $lastLine = \array_pop($lines);
+        if (\strpos($lastLine, '|') === false) {
             return false;
         }
 
@@ -57,7 +58,7 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
             return false;
         }
 
-        $head = $this->parseRow(trim((string) array_pop($lines)), $columns, TableCell::TYPE_HEAD);
+        $head = $this->parseRow(trim((string) $lastLine), $columns, TableCell::TYPE_HEAD);
         if (null === $head) {
             $cursor->restoreState($oldState);
 

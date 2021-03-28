@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Fixed
 
  - Fixed Table of Contents not rendering heading inlines properly (#587, #588)
+ - Fixed parsing of tables within list items (#590)
 
 ## [1.5.7] - 2020-10-31
 
