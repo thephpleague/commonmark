@@ -19,10 +19,10 @@ td | td
 th | th
 ---|---
 td | td
-Paragraph
+Cell
 
 Paragraph
 th | th
 ---|---
 td | td
-Paragraph
+Cell
