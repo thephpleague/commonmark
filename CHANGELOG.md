@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.5.8] - 2021-03-28
+
 ### Fixed
 
  - Fixed Table of Contents not rendering heading inlines properly (#587, #588)
@@ -403,7 +405,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.7...1.5
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.8...1.5
+[1.5.8]: https://github.com/thephpleague/commonmark/compare/1.5.7...1.5.8
 [1.5.7]: https://github.com/thephpleague/commonmark/compare/1.5.6...1.5.7
 [1.5.6]: https://github.com/thephpleague/commonmark/compare/1.5.5...1.5.6
 [1.5.5]: https://github.com/thephpleague/commonmark/compare/1.5.4...1.5.5
