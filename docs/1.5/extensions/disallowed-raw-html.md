@@ -44,7 +44,7 @@ Configure your `Environment` as usual and simply add the `DisallowedRawHtmlExten
 ```php
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
-use League\CommonMark\Extension\DisallowedRawHTML\DisallowedRawHtmlExtension;
+use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 
 // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 $environment = Environment::createCommonMarkEnvironment();

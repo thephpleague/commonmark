@@ -43,7 +43,7 @@ Configure your `Environment` as usual and simply add the `DisallowedRawHtmlExten
 ```php
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\DisallowedRawHTML\DisallowedRawHtmlExtension;
+use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\MarkdownConverter;
 
 // Customize the extension's configuration if needed
