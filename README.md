@@ -12,7 +12,7 @@
 
 ![league/commonmark](commonmark-banner.png)
 
-**league/commonmark** is a highly-extensible PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec and [Github-Flavored Markdown].  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
+**league/commonmark** is a highly-extensible PHP Markdown parser created by [Colin O'Dell][@colinodell] which supports the full [CommonMark] spec and [GitHub-Flavored Markdown].  It is based on the [CommonMark JS reference implementation][commonmark.js] by [John MacFarlane] \([@jgm]\).
 
 ## 📦 Installation & Basic Usage
 
@@ -37,7 +37,7 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
-Or if you want Github-Flavored Markdown, use the `GithubFlavoredMarkdownConverter` class instead:
+Or if you want GitHub-Flavored Markdown, use the `GithubFlavoredMarkdownConverter` class instead:
 
 ```php
 use League\CommonMark\GithubFlavoredMarkdownConverter;
@@ -64,7 +64,7 @@ Full documentation on advanced usage, configuration, and customization can be fo
 
 Information on how to upgrade to newer versions of this library can be found at <https://commonmark.thephpleague.com/releases>.
 
-## 💻 Github-Flavored Markdown
+## 💻 GitHub-Flavored Markdown
 
 The `GithubFlavoredMarkdownConverter` shown earlier is a drop-in replacement for the `CommonMarkConverter` which adds additional features found in the GFM spec:
 
@@ -204,7 +204,7 @@ This project is used by [Drupal](https://www.drupal.org/project/markdown), [Lara
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
 [commonmark.js]: https://github.com/jgm/commonmark.js
-[Github-Flavored Markdown]: https://github.github.com/gfm/
+[GitHub-Flavored Markdown]: https://github.github.com/gfm/
 [John MacFarlane]: http://johnmacfarlane.net
 [docs]: https://commonmark.thephpleague.com/
 [docs-examples]: https://commonmark.thephpleague.com/customization/overview/#examples

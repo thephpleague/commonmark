@@ -44,7 +44,7 @@ echo $converter->convertToHtml('Hello! :wave:');
 
 ## Included Extensions
 
-Starting in v1.3, this library includes several extensions to support Github-Flavored Markdown.  You can manually add the GFM extension to your environment like this:
+Starting in v1.3, this library includes several extensions to support GitHub-Flavored Markdown.  You can manually add the GFM extension to your environment like this:
 
 ```php
 use League\CommonMark\CommonMarkConverter;

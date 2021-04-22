@@ -20,7 +20,7 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
-Or if you want Github-Flavored Markdown:
+Or if you want GitHub-Flavored Markdown:
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
