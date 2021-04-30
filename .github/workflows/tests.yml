@@ -41,6 +41,8 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
+              with:
+                fetch-depth: 0
 
             - uses: shivammathur/setup-php@v2
               with:
