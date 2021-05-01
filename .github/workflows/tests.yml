@@ -69,8 +69,9 @@ jobs:
               if: ${{ matrix.coverage }}
               continue-on-error: true
 
-            - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.clover
-              if: ${{ matrix.coverage }}
+            - uses: codacy/codacy-coverage-reporter-action@v1
+              with:
+                  project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
               continue-on-error: true
 
     phpstan:
