@@ -28,7 +28,6 @@ use League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrateg
 use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;
 use League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
 use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\StringContainerHelper;
 
 final class TableOfContentsGenerator implements TableOfContentsGeneratorInterface
@@ -104,16 +103,12 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             $toc->setEndLine($heading->getEndLine());
 
             // Create the new link
-            $link      = new Link('#' . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [HtmlBlock::class, HtmlInline::class]));
-            $paragraph = new Paragraph();
-            $paragraph->setStartLine($heading->getStartLine());
-            $paragraph->setEndLine($heading->getEndLine());
-            $paragraph->appendChild($link);
+            $link = new Link('#' . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [HtmlBlock::class, HtmlInline::class]));
 
             $listItem = new ListItem($toc->getListData());
             $listItem->setStartLine($heading->getStartLine());
             $listItem->setEndLine($heading->getEndLine());
-            $listItem->appendChild($paragraph);
+            $listItem->appendChild($link);
 
             // Add it to the correct place
             $normalizer->addItem($heading->getLevel(), $listItem);

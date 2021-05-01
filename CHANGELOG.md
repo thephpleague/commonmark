@@ -72,6 +72,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 ### Changed
 
  - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
+ - Table of Contents items are no longer wrapped with `<p>` tags (#613)
  - Changes to configuration options:
      - `enable_em` has been renamed to `commonmark/enable_em`
      - `enable_strong` has been renamed to `commonmark/enable_strong`
