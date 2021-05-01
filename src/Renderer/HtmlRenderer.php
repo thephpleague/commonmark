@@ -56,20 +56,16 @@ final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInte
     {
         $output = '';
 
-        // Track whether the previous item was a block, as we'll need to insert newlines after them
-        $lastItemWasBlock = false;
+        $isFirstItem = true;
 
         foreach ($nodes as $node) {
-            if ($lastItemWasBlock) {
-                $lastItemWasBlock = false;
-                $output          .= $this->getBlockSeparator();
+            if (! $isFirstItem && $node instanceof AbstractBlock) {
+                $output .= $this->getBlockSeparator();
             }
 
             $output .= $this->renderNode($node);
 
-            if ($node instanceof AbstractBlock) {
-                $lastItemWasBlock = true;
-            }
+            $isFirstItem = false;
         }
 
         return $output;

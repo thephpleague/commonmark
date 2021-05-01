@@ -26,6 +26,29 @@ In 1.x, calling `convertToHtml()` would return a `string`. In 2.x this changed t
 +echo (string) $converter->convertToHtml('# Hello World!');
 ```
 
+## HTML Changes
+
+Table of Contents items are no longer wrapped with `<p>` tags:
+
+```diff
+ <ul class="table-of-contents">
+     <li>
+-        <p><a href="#level-2-heading">Level 2 Heading</a></p>
++        <a href="#level-2-heading">Level 2 Heading</a>
+     </li>
+     <li>
+-        <p><a href="#level-4-heading">Level 4 Heading</a></p>
++        <a href="#level-4-heading">Level 4 Heading</a>
+     </li>
+     <li>
+-        <p><a href="#level-3-heading">Level 3 Heading</a></p>
++        <a href="#level-3-heading">Level 3 Heading</a>
+     </li>
+ </ul>
+```
+
+See [#613](https://github.com/thephpleague/commonmark/issues/613) for details.
+
 ## Configuration Option Changes
 
 Several configuration options now have new names:
