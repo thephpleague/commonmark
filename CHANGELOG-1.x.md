@@ -36,31 +36,31 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Fixed
 
-- Fixed missing check for empty arrays being passed into the `unordered_list_markers` configuration option
+ - Fixed Table of Contents not rendering heading inlines properly (#587)
 
 ## [1.5.8] - 2021-03-28
 
 ### Fixed
 
-- Fixed Table of Contents not rendering heading inlines properly (#587, #588)
-- Fixed parsing of tables within list items (#590)
+ - Fixed Table of Contents not rendering heading inlines properly (#587, #588)
+ - Fixed parsing of tables within list items (#590)
 
 ## [1.5.7] - 2020-10-31
 
 ### Fixed
 
-- Fixed mentions not being parsed when appearing after non-word characters (#582)
+ - Fixed mentions not being parsed when appearing after non-word characters (#582)
 
 ## [1.5.6] - 2020-10-17
 
 ### Changed
 
-- Blocks added outside of the parsing context now have their start/end line numbers defaulted to 0 to avoid type errors (#579)
+ - Blocks added outside of the parsing context now have their start/end line numbers defaulted to 0 to avoid type errors (#579)
 
 ### Fixed
 
-- Fixed replacement blocks not inheriting the start line number of the container they're replacing (#579)
-- Fixed Table of Contents blocks not having correct start/end line numbers (#579)
+ - Fixed replacement blocks not inheriting the start line number of the container they're replacing (#579)
+ - Fixed Table of Contents blocks not having correct start/end line numbers (#579)
 
 ## [1.5.5] - 2020-09-13
 
@@ -449,7 +449,7 @@ No changes were made since 1.0.0-rc1.
 [1.5.2]: https://github.com/thephpleague/commonmark/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/thephpleague/commonmark/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/thephpleague/commonmark/compare/1.4.3...1.5.0
-[1.4.3]: https://github.com/thephpleague/commonmark/compare/1.4.1...1.4.3
+[1.4.3]: https://github.com/thephpleague/commonmark/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/thephpleague/commonmark/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/thephpleague/commonmark/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/thephpleague/commonmark/compare/1.3.4...1.4.0
