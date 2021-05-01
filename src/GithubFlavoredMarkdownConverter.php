@@ -19,7 +19,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 
 /**
- * Converts Github Flavored Markdown to HTML.
+ * Converts GitHub Flavored Markdown to HTML.
  */
 final class GithubFlavoredMarkdownConverter extends MarkdownConverter
 {

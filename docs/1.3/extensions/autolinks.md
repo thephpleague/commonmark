@@ -10,7 +10,7 @@ _(Note: this extension is included by default within [the GFM extension](/1.3/ex
 
 The `AutolinkExtension` adds [GFM-style autolinking][link-gfm-spec-autolinking].  It automatically links URLs and email addresses even when the CommonMark `<...>` autolink syntax is not used.
 
-It also provides a parser to autolink `@mentions` to Twitter, Github, or any custom service you wish, though this is disabled by default.
+It also provides a parser to autolink `@mentions` to Twitter, GitHub, or any custom service you wish, though this is disabled by default.
 
 ## Installation
 
@@ -44,7 +44,7 @@ echo $converter->convertToHtml('I successfully installed the https://github.com/
 
 ## `@mention`-style Autolinking
 
-This extension also provides functionality to automatically link "mentions" like `@colinodell` to Twitter, Github, or any other site of your choice!
+This extension also provides functionality to automatically link "mentions" like `@colinodell` to Twitter, GitHub, or any other site of your choice!
 
 For Twitter:
 

@@ -27,11 +27,11 @@ class MentionExtensionTest extends TestCase
     public function testNoConfig(): void
     {
         $input = <<<'EOT'
-You can follow the author of this library on Github - he's @colinodell!
+You can follow the author of this library on GitHub - he's @colinodell!
 EOT;
 
         $expected = <<<'EOT'
-<p>You can follow the author of this library on Github - he's @colinodell!</p>
+<p>You can follow the author of this library on GitHub - he's @colinodell!</p>
 
 EOT;
 
@@ -46,11 +46,11 @@ EOT;
     public function testConfigStringGenerator(): void
     {
         $input = <<<'EOT'
-You can follow the author of this library on Github - he's @colinodell!
+You can follow the author of this library on GitHub - he's @colinodell!
 EOT;
 
         $expected = <<<'EOT'
-<p>You can follow the author of this library on Github - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
+<p>You can follow the author of this library on GitHub - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
 
 EOT;
 
@@ -74,11 +74,11 @@ EOT;
     public function testConfigCallableGenerator(): void
     {
         $input = <<<'EOT'
-You can follow the author of this library on Github - he's @colinodell!
+You can follow the author of this library on GitHub - he's @colinodell!
 EOT;
 
         $expected = <<<'EOT'
-<p>You can follow the author of this library on Github - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
+<p>You can follow the author of this library on GitHub - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
 
 EOT;
 
@@ -106,11 +106,11 @@ EOT;
     public function testConfigObjectImplementingMentionGeneratorInterface(): void
     {
         $input = <<<'EOT'
-You can follow the author of this library on Github - he's @colinodell!
+You can follow the author of this library on GitHub - he's @colinodell!
 EOT;
 
         $expected = <<<'EOT'
-<p>You can follow the author of this library on Github - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
+<p>You can follow the author of this library on GitHub - he's <a href="https://github.com/colinodell">@colinodell</a>!</p>
 
 EOT;
 

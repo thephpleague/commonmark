@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Github-Flavored Markdown
+title: GitHub-Flavored Markdown
 description: The GithubFlavoredMarkdownExtension class includes all the GFM addons
 redirect_from: /extensions/github-flavored-markdown/
 ---
 
-# Github-Flavored Markdown
+# GitHub-Flavored Markdown
 
 You can manually add the GFM extension to your environment like this:
 

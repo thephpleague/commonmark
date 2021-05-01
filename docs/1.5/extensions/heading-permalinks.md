@@ -100,7 +100,7 @@ This option sets the `title` attribute on the `<a>` tag.  This defaults to `'Per
 ### `slug_normalizer`
 
 "Slugs" are the strings used within the `href`, `name`, and `id` attributes to identify a particular permalink.
-By default, this extension will generate slugs based on the contents of the heading, just like Github-Flavored Markdown does.
+By default, this extension will generate slugs based on the contents of the heading, just like GitHub-Flavored Markdown does.
 
 You can change the string that is used as the "slug" by setting the `slug_normalizer` option to any class that implements `TextNormalizerInterface`.
 
