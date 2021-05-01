@@ -4,9 +4,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.6.0] - 2021-05-01
+
 ### Added
 
-- Added forward-compatibility for [configuration options which will be changing in 2.0](https://commonmark.thephpleague.com/1.6/upgrading/):
+ - Added forward-compatibility for [configuration options which will be changing in 2.0](https://commonmark.thephpleague.com/1.6/upgrading/):
     - `commonmark/enable_em` (currently `enable_em` in 1.x)
     - `commonmark/enable_strong` (currently `enable_strong` in 1.x)
     - `commonmark/use_asterisk` (currently `use_asterisk` in 1.x)
@@ -15,28 +17,28 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - `mentions/*/prefix` (currently `mentions/*/symbol` in 1.x)
     - `mentions/*/pattern` (currently `mentions/*/regex` in 1.x)
     - `max_nesting_level` (currently supports `int` and `float` values in 1.x; will only support `int` in 2.0)
-- Added new `MarkdownConverter` class for creating converters with custom environments; this replaces the previously-deprecated `Converter` class
-- Added new `RegexHelper::matchFirst()` method
-- Added new `Configuration::exists()` method
+ - Added new `MarkdownConverter` class for creating converters with custom environments; this replaces the previously-deprecated `Converter` class
+ - Added new `RegexHelper::matchFirst()` method
+ - Added new `Configuration::exists()` method
 
 ### Changed
 
-- The `max_nesting_level` option now defaults to `PHP_INT_MAX` instead of `INF`
+ - The `max_nesting_level` option now defaults to `PHP_INT_MAX` instead of `INF`
 
 ### Deprecated
 
-- Deprecated the [configuration options shown above](https://commonmark.thephpleague.com/1.6/upgrading/)
-- Deprecated the ability to pass a custom `Environment` into the constructors of `CommonMarkConverter` and `GithubFlavoredMarkdownConverter`; use `MarkdownConverter` instead
-- Deprecated `ConfigurableEnvironmentInterface::setConfig()`; use `mergeConfig()` instead
-- Deprecated calling `ConfigurableEnvironmentInterface::mergeConfig()` without any parameters
-- Deprecated calling `Configuration::get()` and `EnvironmentInterface::getConfig()` without any parameters
-- Deprecated calling `Configuration::set()` without the second `$value` parameter
-- Deprecated `RegexHelper::matchAll()`; use `RegexHelper::matchFirst()` instead
-- Deprecated extending the `ArrayCollection` class; will be marked `final` in 2.0
+ - Deprecated the [configuration options shown above](https://commonmark.thephpleague.com/1.6/upgrading/)
+ - Deprecated the ability to pass a custom `Environment` into the constructors of `CommonMarkConverter` and `GithubFlavoredMarkdownConverter`; use `MarkdownConverter` instead
+ - Deprecated `ConfigurableEnvironmentInterface::setConfig()`; use `mergeConfig()` instead
+ - Deprecated calling `ConfigurableEnvironmentInterface::mergeConfig()` without any parameters
+ - Deprecated calling `Configuration::get()` and `EnvironmentInterface::getConfig()` without any parameters
+ - Deprecated calling `Configuration::set()` without the second `$value` parameter
+ - Deprecated `RegexHelper::matchAll()`; use `RegexHelper::matchFirst()` instead
+ - Deprecated extending the `ArrayCollection` class; will be marked `final` in 2.0
 
 ### Fixed
 
- - Fixed Table of Contents not rendering heading inlines properly (#587)
+ - Fixed missing check for empty arrays being passed into the `unordered_list_markers` configuration option
 
 ## [1.5.8] - 2021-03-28
 
@@ -439,7 +441,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.8...1.6
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6.0...1.6
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.5.8...1.6.0
 [1.5.8]: https://github.com/thephpleague/commonmark/compare/1.5.7...1.5.8
 [1.5.7]: https://github.com/thephpleague/commonmark/compare/1.5.6...1.5.7
 [1.5.6]: https://github.com/thephpleague/commonmark/compare/1.5.5...1.5.6
