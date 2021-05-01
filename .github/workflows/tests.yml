@@ -69,6 +69,10 @@ jobs:
               if: ${{ matrix.coverage }}
               continue-on-error: true
 
+            - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.clover
+              if: ${{ matrix.coverage }}
+              continue-on-error: true
+
     phpstan:
         name: PHPStan
         runs-on: ubuntu-latest
