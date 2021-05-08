@@ -90,10 +90,12 @@ This option allows you to provide a `string` containing one or more HTML classes
 
 These options allow you to configure whether a `rel` attribute should be applied to links.  Each of these options can be set to one of the following `string` values:
 
-- `'external'` - **Apply to external links only (default)**
+- `'external'` - Apply to external links only
 - `'internal'` - Apply to internal links only
 - `'all'` - Apply to all links (both internal and external)
 - `''` (empty string) - Don't apply to any links
+
+Unless you override these options, `nofollow` defaults to `''` and the others default to `'external'`.
 
 ## Advanced Rendering
 
