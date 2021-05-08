@@ -16,8 +16,7 @@ use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidOptionException;
 use League\CommonMark\Extension\HeadingPermalink\Slug\SlugGeneratorInterface as DeprecatedSlugGeneratorInterface;
-use League\CommonMark\Inline\Element\Code;
-use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
@@ -119,7 +118,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
         $walker = $node->walker();
         while ($event = $walker->next()) {
-            if ($event->isEntering() && (($child = $event->getNode()) instanceof Text || $child instanceof Code)) {
+            if ($event->isEntering() && (($child = $event->getNode()) instanceof AbstractStringContainer)) {
                 $text .= $child->getContent();
             }
         }

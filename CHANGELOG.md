@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed `HeadingPermalinkProcessor` skipping text contents from certain nodes (#615)
+
 ## [1.6.0] - 2021-05-01
 
 ### Added
