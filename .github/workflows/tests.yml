@@ -67,12 +67,6 @@ jobs:
               if: ${{ matrix.coverage }}
               continue-on-error: true
 
-            - uses: codacy/codacy-coverage-reporter-action@v1
-              with:
-                  project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-                  coverage-reports: coverage.clover
-              continue-on-error: true
-
     phpstan:
         name: PHPStan
         runs-on: ubuntu-latest
