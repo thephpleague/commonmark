@@ -110,7 +110,11 @@ final class AttributesHelper
             /** @var array<string, mixed> $arg */
             $arg = (array) $arg;
             if (isset($arg['class'])) {
-                foreach (\array_filter(\explode(' ', \trim($arg['class']))) as $class) {
+                if (\is_string($arg['class'])) {
+                    $arg['class'] = \array_filter(\explode(' ', \trim($arg['class'])));
+                }
+
+                foreach ($arg['class'] as $class) {
                     $attributes['class'][] = $class;
                 }
 
