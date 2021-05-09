@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\HeadingPermalink;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
@@ -31,7 +31,7 @@ final class HeadingPermalinkProcessorTest extends TestCase
     public function testUsesDefaultSlugNormalizer(): void
     {
         $processor = new HeadingPermalinkProcessor();
-        $processor->setConfiguration($this->createConfiguration());
+        $processor->setEnvironment($this->createEnvironment());
 
         $document = new Document();
         $document->appendChild($heading = new Heading(1));
@@ -60,9 +60,9 @@ final class HeadingPermalinkProcessorTest extends TestCase
             }
         };
 
-        $processor->setConfiguration($this->createConfiguration([
-            'heading_permalink' => [
-                'slug_normalizer' => $overridingSlugNormalizer,
+        $processor->setEnvironment($this->createEnvironment([
+            'slug_normalizer' => [
+                'instance' => $overridingSlugNormalizer,
             ],
         ]));
 
@@ -84,21 +84,19 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $this->expectException(InvalidConfigurationException::class);
 
         $processor = new HeadingPermalinkProcessor();
-        $processor->setConfiguration($this->createConfiguration([
-            'heading_permalink' => [
-                'slug_normalizer' => static function (string $text): string {
+        $processor->setEnvironment($this->createEnvironment([
+            'slug_normalizer' => [
+                'instance' => static function (string $text): string {
                     return \md5($text);
                 },
             ],
         ]));
-
-        $processor(new DocumentParsedEvent(new Document()));
     }
 
     public function testDuplicateSlugsAreMadeUnique(): void
     {
         $processor = new HeadingPermalinkProcessor();
-        $processor->setConfiguration($this->createConfiguration());
+        $processor->setEnvironment($this->createEnvironment());
 
         $document = new Document();
         $document->appendChild($heading1 = new Heading(1));
@@ -128,35 +126,16 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $headingLink4 = $heading4->firstChild();
         \assert($headingLink4 instanceof HeadingPermalink);
         $this->assertSame('test-heading-2', $headingLink4->getSlug());
-
-        // Test with a different document
-        $document2 = new Document();
-        $document2->appendChild($heading5 = new Heading(1));
-        $heading5->appendChild(new Text('Test Heading'));
-        $document2->appendChild($heading6 = new Heading(1));
-        $heading6->appendChild(new Text('Test Heading'));
-
-        $event = new DocumentParsedEvent($document2);
-        $processor($event);
-
-        $headingLink5 = $heading5->firstChild();
-        \assert($headingLink5 instanceof HeadingPermalink);
-        $this->assertSame('test-heading', $headingLink5->getSlug());
-
-        $headingLink6 = $heading6->firstChild();
-        \assert($headingLink6 instanceof HeadingPermalink);
-        $this->assertSame('test-heading-1', $headingLink6->getSlug());
     }
 
     /**
      * @param array<string, mixed> $values
      */
-    private function createConfiguration(array $values = []): ConfigurationInterface
+    private function createEnvironment(array $values = []): EnvironmentInterface
     {
-        $config = Environment::createDefaultConfiguration();
-        (new HeadingPermalinkExtension())->configureSchema($config);
-        $config->merge($values);
+        $environment = new Environment($values);
+        $environment->addExtension(new HeadingPermalinkExtension());
 
-        return $config->reader();
+        return $environment;
     }
 }

@@ -25,16 +25,22 @@ final class SlugNormalizer implements TextNormalizerInterface
      *
      * @psalm-pure
      */
-    public function normalize(string $text, $context = null): string
+    public function normalize(string $text, array $context = []): string
     {
+        // Add any requested prefix
+        $slug = ($context['prefix'] ?? '') . $text;
         // Trim whitespace
-        $slug = \trim($text);
+        $slug = \trim($slug);
         // Convert to lowercase
         $slug = \mb_strtolower($slug);
         // Try replacing whitespace with a dash
         $slug = \preg_replace('/\s+/u', '-', $slug) ?? $slug;
         // Try removing characters other than letters, numbers, and marks.
         $slug = \preg_replace('/[^\p{L}\p{Nd}\p{Nl}\p{M}-]+/u', '', $slug) ?? $slug;
+        // Trim to requested length if given
+        if ($length = $context['length'] ?? false) {
+            $slug = \mb_substr($slug, 0, $length);
+        }
 
         return $slug;
     }

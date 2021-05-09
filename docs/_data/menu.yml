@@ -37,6 +37,7 @@ version:
             'Delimiter Processing': '/2.0/customization/delimiter-processing/'
             'Abstract Syntax Tree': '/2.0/customization/abstract-syntax-tree/'
             'Rendering': '/2.0/customization/rendering/'
+            'Slug Normalizer': '/2.0/customization/slug-normalizer/'
     '1.6':
         Getting Started:
             'Overview': '/1.6/'

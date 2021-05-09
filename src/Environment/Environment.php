@@ -22,11 +22,15 @@ use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Delimiter\DelimiterParser;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Event\DocumentRenderedEvent;
 use League\CommonMark\Event\ListenerData;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Normalizer\SlugNormalizer;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
+use League\CommonMark\Normalizer\UniqueSlugNormalizer;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -104,6 +108,9 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
      * @psalm-readonly
      */
     private $config;
+
+    /** @var TextNormalizerInterface|null */
+    private $slugNormalizer = null;
 
     /**
      * @param array<string, mixed> $config
@@ -258,6 +265,9 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
 
     private function initializeExtensions(): void
     {
+        // Initialize the slug normalizer
+        $this->getSlugNormalizer();
+
         // Ask all extensions to register their components
         while (\count($this->uninitializedExtensions) > 0) {
             foreach ($this->uninitializedExtensions as $i => $extension) {
@@ -391,6 +401,16 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         return $this->inlineParsers->getIterator();
     }
 
+    public function getSlugNormalizer(): TextNormalizerInterface
+    {
+        if ($this->slugNormalizer === null) {
+            $this->slugNormalizer = new UniqueSlugNormalizer($this->config->get('slug_normalizer/instance'), $this->config->get('slug_normalizer/scope'));
+            $this->addEventListener(DocumentRenderedEvent::class, [$this->slugNormalizer, 'onDocumentRendered'], -1000);
+        }
+
+        return $this->slugNormalizer;
+    }
+
     /**
      * @throws \RuntimeException
      */
@@ -411,6 +431,10 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
                 'block_separator' => Expect::string("\n"),
                 'inner_separator' => Expect::string("\n"),
                 'soft_break' => Expect::string("\n"),
+            ])->castTo('array'),
+            'slug_normalizer' => Expect::structure([
+                'instance' => Expect::type(TextNormalizerInterface::class)->default(new SlugNormalizer()),
+                'scope' => Expect::anyOf(UniqueSlugNormalizer::SCOPE_ENVIRONMENT, UniqueSlugNormalizer::SCOPE_DOCUMENT)->default(UniqueSlugNormalizer::SCOPE_DOCUMENT),
             ])->castTo('array'),
         ]);
     }

@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\EnvironmentAwareInterface;
+use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
@@ -24,7 +25,7 @@ use League\CommonMark\Normalizer\TextNormalizerInterface;
 /**
  * Searches the Document for Heading elements and adds HeadingPermalinks to each one
  */
-final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
+final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
 {
     public const INSERT_BEFORE = 'before';
     public const INSERT_AFTER  = 'after';
@@ -43,36 +44,36 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
      */
     private $config;
 
-    public function setConfiguration(ConfigurationInterface $configuration): void
+    public function setEnvironment(EnvironmentInterface $environment): void
     {
-        $this->config = $configuration;
+        $this->config         = $environment->getConfiguration();
+        $this->slugNormalizer = $environment->getSlugNormalizer();
     }
 
     public function __invoke(DocumentParsedEvent $e): void
     {
-        $this->slugNormalizer = $this->config->get('heading_permalink/slug_normalizer');
-
         $min = (int) $this->config->get('heading_permalink/min_heading_level');
         $max = (int) $this->config->get('heading_permalink/max_heading_level');
 
-        $e->getDocument()->data->set('heading_ids', []);
+        $slugLength = (int) $this->config->get('heading_permalink/slug_length');
 
         $walker = $e->getDocument()->walker();
 
         while ($event = $walker->next()) {
             $node = $event->getNode();
             if ($node instanceof Heading && $event->isEntering() && $node->getLevel() >= $min && $node->getLevel() <= $max) {
-                $this->addHeadingLink($node, $e->getDocument());
+                $this->addHeadingLink($node, $e->getDocument(), $slugLength);
             }
         }
     }
 
-    private function addHeadingLink(Heading $heading, Document $document): void
+    private function addHeadingLink(Heading $heading, Document $document, int $slugLength): void
     {
         $text = StringContainerHelper::getChildText($heading);
-        $slug = $this->slugNormalizer->normalize($text, $heading);
-
-        $slug = $this->ensureUnique($slug, $document);
+        $slug = $this->slugNormalizer->normalize($text, [
+            'node' => $heading,
+            'length' => $slugLength,
+        ]);
 
         $headingLinkAnchor = new HeadingPermalink($slug);
 
@@ -88,29 +89,5 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
             default:
                 throw new \RuntimeException("Invalid configuration value for heading_permalink/insert; expected 'before' or 'after'");
         }
-    }
-
-    private function ensureUnique(string $proposed, Document $document): string
-    {
-        $usedIds = $document->data->get('heading_ids');
-
-        // Quick path, it's a unique ID
-        if (! isset($usedIds[$proposed])) {
-            $usedIds[$proposed] = true;
-            $document->data->set('heading_ids', $usedIds);
-
-            return $proposed;
-        }
-
-        $extension = 0;
-        do {
-            ++$extension;
-            $id = \sprintf('%s-%s', $proposed, $extension);
-        } while (isset($usedIds[$id]));
-
-        $usedIds[$id] = true;
-        $document->data->set('heading_ids', $usedIds);
-
-        return $id;
     }
 }

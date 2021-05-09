@@ -25,6 +25,7 @@ use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -459,6 +460,38 @@ class EnvironmentTest extends TestCase
 
         $this->assertCount(1, $dispatchersCalled);
         $this->assertSame('external', $dispatchersCalled->first());
+    }
+
+    public function testGetDefaultSlugNormalizer(): void
+    {
+        $environment = new Environment();
+        $normalizer  = $environment->getSlugNormalizer();
+
+        $this->assertSame('test', $normalizer->normalize('Test'));
+        $this->assertSame('test-1', $normalizer->normalize('Test'));
+    }
+
+    public function testCustomSlugNormalizer(): void
+    {
+        $innerNormalizer = new class implements TextNormalizerInterface {
+            /**
+             * {@inheritDoc}
+             */
+            public function normalize(string $text, array $context = []): string
+            {
+                return 'foo';
+            }
+        };
+
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'instance' => $innerNormalizer,
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo', $normalizer->normalize('Test'));
+        $this->assertSame('foo-1', $normalizer->normalize('Something else'));
     }
 
     /**
