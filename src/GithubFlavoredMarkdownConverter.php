@@ -27,7 +27,7 @@ class GithubFlavoredMarkdownConverter extends CommonMarkConverter
         if ($environment === null) {
             $environment = Environment::createGFMEnvironment();
         } else {
-            @\trigger_error(\sprintf('Passing an $environment into the "%s" constructor is deprecated in 1.6 and will not be supported in 2.0; use MarkdownConverter instead', self::class));
+            @\trigger_error(\sprintf('Passing an $environment into the "%s" constructor is deprecated in 1.6 and will not be supported in 2.0; use MarkdownConverter instead', self::class), \E_USER_DEPRECATED);
         }
 
         if ($environment instanceof ConfigurableEnvironmentInterface) {

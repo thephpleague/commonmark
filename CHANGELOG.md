@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed incorrect error level for deprecation notices
+
 ## [1.6.1] - 2021-05-08
 
 ### Fixed
