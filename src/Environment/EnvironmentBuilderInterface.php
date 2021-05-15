@@ -16,6 +16,7 @@ namespace League\CommonMark\Environment;
 use League\CommonMark\Configuration\ConfigurationProviderInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -63,6 +64,8 @@ interface EnvironmentBuilderInterface extends ConfigurationProviderInterface
      * @param string                $nodeClass The fully-qualified node element class name the renderer below should handle
      * @param NodeRendererInterface $renderer  The renderer responsible for rendering the type of element given above
      * @param int                   $priority  Priority (a higher number will be executed earlier)
+     *
+     * @psalm-param class-string<Node> $nodeClass
      *
      * @return self
      */
