@@ -44,6 +44,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `ReferenceableInterface`
    - `RenderedContent`
    - `RenderedContentInterface`
+   - `SpecReader`
  - Added several new methods:
    - `ConfigurationInterface::exists()`
    - `Environment::createDefaultConfiguration()`
