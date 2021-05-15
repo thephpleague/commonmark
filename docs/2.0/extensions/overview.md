@@ -19,6 +19,7 @@ to enhance your experience out-of-the-box depending on your specific use-cases.
 | --------- | ------- | ------------------ | --- |
 | [Attributes] | Add HTML attributes (like `id` and `class`) from within the Markdown content | `1.5.0` | |
 | [Autolinks] | Enables automatic linking of URLs within text without needing to wrap them with Markdown syntax | `1.3.0`  | <i class="fab fa-github"></i> |
+| [Default Attributes] | Easily apply default HTML classes using configuration options to match your site's styles  | `2.0.0` | |
 | [Disallowed Raw HTML] | Disables certain kinds of HTML tags that could affect page rendering | `1.3.0`  | <i class="fab fa-github"></i> |
 | [External Links] | Tags external links with additional markup | `1.3.0` | |
 | [Footnotes] | Add footnote references throughout the document and show a listing of them at the bottom | `1.5.0` | |
@@ -97,6 +98,7 @@ See the [Custom Extensions](/2.0/customization/extensions/) page for details on 
 
 [Attributes]: /2.0/extensions/attributes/
 [Autolinks]: /2.0/extensions/autolinks/
+[Default Attributes]: /2.0/extensions/default-attributes/
 [Disallowed Raw HTML]: /2.0/extensions/disallowed-raw-html/
 [External Links]: /2.0/extensions/external-links/
 [Footnotes]: /2.0/extensions/footnotes/
