@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Util;
 
+/**
+ * Reads in a CommonMark spec document and extracts the input/output examples for testing against them
+ */
 final class SpecReader
 {
     private function __construct()
