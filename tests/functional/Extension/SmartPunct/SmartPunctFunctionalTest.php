@@ -21,7 +21,6 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractSpecTest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the parser against the CommonMark spec

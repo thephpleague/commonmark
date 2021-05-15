@@ -54,7 +54,7 @@ abstract class AbstractSpecTest extends TestCase
         yield from $this->loadSpecExamples();
     }
 
-    private function loadSpecExamples(): \Generator
+    protected function loadSpecExamples(): \Generator
     {
         yield from SpecReader::readFile($this->getFileName());
     }
