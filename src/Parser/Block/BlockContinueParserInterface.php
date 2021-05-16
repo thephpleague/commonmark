@@ -18,7 +18,6 @@ namespace League\CommonMark\Parser\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Cursor;
-use League\CommonMark\Parser\InlineParserEngineInterface;
 
 /**
  * Interface for a block continuation parser
@@ -62,9 +61,4 @@ interface BlockContinueParserInterface
      * Close and finalize the current block
      */
     public function closeBlock(): void;
-
-    /**
-     * Parse any inlines inside of the current block
-     */
-    public function parseInlines(InlineParserEngineInterface $inlineParser): void;
 }

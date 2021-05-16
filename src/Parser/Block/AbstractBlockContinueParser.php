@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Parser\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Parser\InlineParserEngineInterface;
 
 /**
  * Base class for a block parser
@@ -43,10 +42,6 @@ abstract class AbstractBlockContinueParser implements BlockContinueParserInterfa
     }
 
     public function closeBlock(): void
-    {
-    }
-
-    public function parseInlines(InlineParserEngineInterface $inlineParser): void
     {
     }
 }

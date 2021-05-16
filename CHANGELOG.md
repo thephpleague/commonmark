@@ -21,6 +21,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Added several new classes and interfaces:
    - `BlockContinue`
    - `BlockContinueParserInterface`
+   - `BlockContinueParserWithInlinesInterface`
    - `BlockStart`
    - `BlockStartParserInterface`
    - `ChildNodeRendererInterface`
@@ -158,6 +159,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `DelimiterProcessorCollectionInterface` now extends `Countable`
  - `RegexHelper::PARTIAL_` constants must always be used in case-insensitive contexts
  - `HeadingPermalinkProcessor` no longer accepts text normalizers via the constructor - these must be provided via configuration instead
+ - Block which can't contain inlines will no longer be asked to render inlines
 
 ### Fixed
 

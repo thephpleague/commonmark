@@ -20,7 +20,7 @@ use League\CommonMark\Parser\InlineParserEngineInterface;
 use League\CommonMark\Reference\ReferenceInterface;
 use League\CommonMark\Reference\ReferenceParser;
 
-final class ParagraphParser extends AbstractBlockContinueParser
+final class ParagraphParser extends AbstractBlockContinueParser implements BlockContinueParserWithInlinesInterface
 {
     /**
      * @var Paragraph

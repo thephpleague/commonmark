@@ -95,6 +95,8 @@ If `canHaveLazyContinuationLines()` returned `true`, this method will be called 
 public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue;
 ```
 
+### `closeBlock()`
+
 This method allows you to try and parse an additional line of Markdown.
 
 ```php
@@ -103,11 +105,15 @@ public function closeBlock(): void;
 
 This method is called when the block is done being parsed.  Any final adjustments to the block should be made at this time.
 
+### `parseInlines()`
+
 ```php
 public function parseInlines(InlineParserEngineInterface $inlineParser): void;
 ```
 
 This method is called when the engine is ready to parse any inline child elements.
+
+**Note:** For performance reasons, this method is not part of `BlockContinueParserInterface`. If your block may contain inlines, you should make sure that your "continue parser" also implements `BlockContinueParserWithInlinesInterface`.
 
 ## Tips
 
