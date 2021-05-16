@@ -19,11 +19,12 @@ use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
+use League\CommonMark\Parser\Block\BlockContinueParserWithInlinesInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\InlineParserEngineInterface;
 use League\CommonMark\Util\ArrayCollection;
 
-final class TableParser extends AbstractBlockContinueParser
+final class TableParser extends AbstractBlockContinueParser implements BlockContinueParserWithInlinesInterface
 {
     /**
      * @var Table

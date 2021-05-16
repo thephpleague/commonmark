@@ -26,6 +26,7 @@ use League\CommonMark\Input\MarkdownInput;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
+use League\CommonMark\Parser\Block\BlockContinueParserWithInlinesInterface;
 use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Block\DocumentBlockParser;
@@ -246,9 +247,7 @@ final class MarkdownParser implements MarkdownParserInterface
         for ($i = 0; $i < $count; $i++) {
             $blockParser = $this->deactivateBlockParser();
             $this->finalize($blockParser, $endLineNumber);
-            // Remember for inline parsing. Note that a lot of blocks don't need inline parsing. We could have a
-            // separate interface (e.g. BlockParserWithInlines) so that we only have to remember those that actually
-            // have inlines to parse.
+            // Remember for inline parsing
             $this->closedBlockParsers[] = $blockParser;
         }
     }
@@ -275,9 +274,10 @@ final class MarkdownParser implements MarkdownParserInterface
     {
         $p = new InlineParserEngine($this->environment, $this->referenceMap);
 
-        foreach ($this->allBlockParsers as $blockParser) {
-            \assert($blockParser instanceof BlockContinueParserInterface);
-            $blockParser->parseInlines($p);
+        foreach ($this->closedBlockParsers as $blockParser) {
+            if ($blockParser instanceof BlockContinueParserWithInlinesInterface) {
+                $blockParser->parseInlines($p);
+            }
         }
     }
 

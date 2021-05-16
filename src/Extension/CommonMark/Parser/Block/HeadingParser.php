@@ -18,10 +18,11 @@ use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
+use League\CommonMark\Parser\Block\BlockContinueParserWithInlinesInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\InlineParserEngineInterface;
 
-final class HeadingParser extends AbstractBlockContinueParser
+final class HeadingParser extends AbstractBlockContinueParser implements BlockContinueParserWithInlinesInterface
 {
     /**
      * @var Heading
