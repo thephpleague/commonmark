@@ -6,6 +6,9 @@ description: Basic usage of the CommonMark parser
 
 # Basic Usage
 
+<i class="fa fa-exclamation-triangle"></i>
+**Important:** See the [security](/2.0/security/) section for important details on avoiding security misconfigurations.
+
 The `CommonMarkConverter` class provides a simple wrapper for converting Markdown to HTML:
 
 ```php
@@ -32,7 +35,9 @@ echo $converter->convertToHtml('# Hello World!');
 // <h1>Hello World!</h1>
 ```
 
-Or you can use the generic `MarkdownConverter` class to customize [the environment](/2.0/customization/environment/) with whatever extensions you wish to use:
+## Using Extensions
+
+The `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` shown above automatically configure [the environment](/2.0/customization/environment/) for you, but if you want to use [additional extensions](/2.0/customization/extensions/) you'll need to avoid those classes and use the generic `MarkdownConverter` class instead to customize [the environment](/2.0/customization/environment/) with whatever extensions you wish to use:
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
@@ -55,10 +60,37 @@ echo $converter->convertToHtml('**Hello World!**');
 // <p><strong>Hello World!</strong></p>
 ```
 
-<i class="fa fa-exclamation-triangle"></i>
-**Important:** See the [security](/2.0/security/) section for important details on avoiding security misconfigurations.
+## Configuration
 
-[Additional customization](/2.0/customization/overview/) is also possible, and we have many handy [extensions](/2.0/extensions/overview/) to enable additional syntax and features.
+If you're using the `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` class you can pass configuration options directly into their constructor:
+
+```php
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
+
+$converter = new CommonMarkConverter($config);
+// or
+$converter = new GithubFlavoredMarkdownConverter($config);
+```
+
+Otherwise, if you’re using `MarkdownConverter` to customize the extensions in your parser, pass the configuration into the `Environment`'s constructor instead:
+
+```php
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
+use League\CommonMark\MarkdownConverter;
+
+// Here's where we set the configuration array:
+$environment = new Environment($config);
+
+// TODO: Add any/all the extensions you wish; for example:
+$environment->addExtension(new InlinesOnlyExtension());
+
+// Go forth and convert you some Markdown!
+$converter = new MarkdownConverter($environment);
+```
+
+See the [configuration section](/2.0/configuration/) for more information on the available configuration options.
 
 ## Supported Character Encodings
 

@@ -12,6 +12,30 @@ The minimum supported PHP version was increased from 7.1 to 7.2.
 
 The constructor methods for both `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` no longer accept passing in a customized `Environment`.  If you want to customize the extensions used in your converter you should switch to using `MarkdownConverter`. See the [Basic Usage](/2.0/basic-usage/) documentation for an example.
 
+```diff
+-use League\CommonMark\CommonMarkConverter;
+ use League\CommonMark\Environment\Environment;
+ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+ use League\CommonMark\Extension\Table\TableExtension;
++use League\CommonMark\MarkdownConverter;
+
+ $config = [
+     'html_input' => 'escape',
+     'allow_unsafe_links' => false,
+     'max_nesting_level' => 100,
+ ];
+
+-$environment = new Environment();
++$environment = new Environment($config);
+ $environment->addExtension(new CommonMarkCoreExtension());
+ $environment->addExtension(new TableExtension());
+
+-$converter = new CommonMarkConverter($config, $environment); // or GithubFlavoredMarkdownConverter
++$converter = new MarkdownConverter($environment);
+
+ echo $converter->convertToHtml('Hello World!');
+```
+
 ## `CommonMarkConverter` Return Type
 
 In 1.x, calling `convertToHtml()` would return a `string`. In 2.x this changed to return a `RenderedContentInterface`.  To get the resulting HTML, either cast it to a `string` or call `->getContent()`.  (This new interface extends from `Stringable` so you can type hint against that instead, if needed.)
