@@ -18,21 +18,22 @@ The constructor methods for both `CommonMarkConverter` and `GithubFlavoredMarkdo
  use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
  use League\CommonMark\Extension\Table\TableExtension;
 +use League\CommonMark\MarkdownConverter;
-
+ 
  $config = [
      'html_input' => 'escape',
      'allow_unsafe_links' => false,
      'max_nesting_level' => 100,
  ];
-
+ 
+ 
 -$environment = new Environment();
 +$environment = new Environment($config);
  $environment->addExtension(new CommonMarkCoreExtension());
  $environment->addExtension(new TableExtension());
-
+ 
 -$converter = new CommonMarkConverter($config, $environment); // or GithubFlavoredMarkdownConverter
 +$converter = new MarkdownConverter($environment);
-
+ 
  echo $converter->convertToHtml('Hello World!');
 ```
 
