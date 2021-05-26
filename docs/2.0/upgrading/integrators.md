@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Upgrading from 1.5 to 2.0 (for integrators)
+title: Upgrading from 1.6 to 2.0 (for integrators)
 description: Integrator guide to upgrading to newer versions of this library
 ---
 

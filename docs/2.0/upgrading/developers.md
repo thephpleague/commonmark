@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Upgrading from 1.5 to 2.0 (for developers)
+title: Upgrading from 1.6 to 2.0 (for developers)
 description: Upgrade guide for those who develop custom extensions and more using this library
 ---
 
