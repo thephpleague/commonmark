@@ -407,3 +407,11 @@ h2 code {
 .features ul {
     list-style-type: none;
 }
+
+:target:before {
+    content: ' ';
+    display: block;
+    padding-top: 100px;
+    margin-top: -100px;
+    visibility: hidden;
+}
