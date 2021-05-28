@@ -43,7 +43,6 @@ $config = [
         'max_heading_level' => 6,
         'title' => 'Permalink',
         'symbol' => HeadingPermalinkRenderer::DEFAULT_SYMBOL,
-        'slug_length' => 255,
     ],
 ];
 
@@ -90,13 +89,6 @@ If you want to use a custom icon, then set this to an empty string `''` and chec
 ### `title`
 
 This option sets the `title` attribute on the `<a>` tag.  This defaults to `'Permalink'`.
-
-## `slug_length`
-
-"Slugs" are the strings used within the `href`, `name`, and `id` attributes to identify a particular permalink.
-This extension can be configured to limit the length of that slug to prevent overly-long values. By default, that limit is 255 characters. You may set this to any value greater than 1.
-
-(Note that generated slugs might be slightly longer than this "limit" if the slug generator detects a duplicate slug and needs to add a suffix to make it unique.)
 
 ## Example
 

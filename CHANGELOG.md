@@ -15,8 +15,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Added the ability to configure disallowed raw HTML tags (#507)
  - Added the ability for Mentions to use multiple characters for their symbol (#514, #550)
  - Added `heading_permalink/min_heading_level` and `heading_permalink/max_heading_level` options to control which headings get permalinks (#519)
- - Added `heading_permalink/slug_length` option to control the maximum length of generated URL slugs
  - Added `footnote/backref_symbol` option for customizing backreference link appearance (#522)
+ - Added `slug_normalizer/max_length` option to control the maximum length of generated URL slugs
  - Added `slug_normalizer/scope` option to control whether unique slugs should be generated per-document or per-environment
  - Added new `HtmlFilter` and `StringContainerHelper` utility classes
  - Added new `AbstractBlockContinueParser` class to simplify the creation of custom block parsers

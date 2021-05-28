@@ -404,7 +404,11 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
     public function getSlugNormalizer(): TextNormalizerInterface
     {
         if ($this->slugNormalizer === null) {
-            $this->slugNormalizer = new UniqueSlugNormalizer($this->config->get('slug_normalizer/instance'), $this->config->get('slug_normalizer/scope'));
+            $normalizer = $this->config->get('slug_normalizer/instance');
+            \assert($normalizer instanceof TextNormalizerInterface);
+            $this->injectEnvironmentAndConfigurationIfNeeded($normalizer);
+
+            $this->slugNormalizer = new UniqueSlugNormalizer($normalizer, $this->config->get('slug_normalizer/scope'));
             $this->addEventListener(DocumentRenderedEvent::class, [$this->slugNormalizer, 'onDocumentRendered'], -1000);
         }
 
@@ -434,6 +438,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
             ])->castTo('array'),
             'slug_normalizer' => Expect::structure([
                 'instance' => Expect::type(TextNormalizerInterface::class)->default(new SlugNormalizer()),
+                'max_length' => Expect::int()->min(0)->default(255),
                 'scope' => Expect::anyOf(UniqueSlugNormalizer::SCOPE_ENVIRONMENT, UniqueSlugNormalizer::SCOPE_DOCUMENT)->default(UniqueSlugNormalizer::SCOPE_DOCUMENT),
             ])->castTo('array'),
         ]);

@@ -55,7 +55,7 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
         $min = (int) $this->config->get('heading_permalink/min_heading_level');
         $max = (int) $this->config->get('heading_permalink/max_heading_level');
 
-        $slugLength = (int) $this->config->get('heading_permalink/slug_length');
+        $slugLength = (int) $this->config->get('slug_normalizer/max_length');
 
         $walker = $e->getDocument()->walker();
 

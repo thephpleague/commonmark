@@ -85,6 +85,12 @@ $config = [
 
 This `instance` doesn't need to worry about generating unique slugs, as we automagically decorate your `instance` with `UniqueSlugNormalizer` which provides that functionality.
 
+### `max_length`
+
+This can be configured to limit the length of that slug to prevent overly-long values. By default, that limit is `255` characters. You may set this to any positive integer, or `0` for no limit.
+
+(Note that generated slugs might be slightly longer than this "limit" if the `unique` option is enabled and the slug generator detects a duplicate slug and needs to add a suffix to make it unique.)
+
 ### `scope`
 
 This options controls whether slugs should be unique per-document or per-environment.  This defaults to `document` by default.
