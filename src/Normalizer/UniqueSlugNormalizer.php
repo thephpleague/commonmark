@@ -56,12 +56,12 @@ final class UniqueSlugNormalizer implements TextNormalizerInterface
 
         // If it's not unique, add an incremental number to the end until we get a unique version
         if (\array_key_exists($normalized, $this->alreadyUsed)) {
-            $extension = 0;
+            $suffix = 0;
             do {
-                ++$extension;
-            } while (\array_key_exists("$normalized-$extension", $this->alreadyUsed));
+                ++$suffix;
+            } while (\array_key_exists("$normalized-$suffix", $this->alreadyUsed));
 
-            $normalized = "$normalized-$extension";
+            $normalized = "$normalized-$suffix";
         }
 
         $this->alreadyUsed[$normalized] = true;
