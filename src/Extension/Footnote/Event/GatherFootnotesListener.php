@@ -105,8 +105,8 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
         }
     }
 
-    public function setConfiguration(ConfigurationInterface $config): void
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
-        $this->config = $config;
+        $this->config = $configuration;
     }
 }

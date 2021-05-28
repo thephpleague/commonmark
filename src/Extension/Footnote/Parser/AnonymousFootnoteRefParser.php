@@ -72,8 +72,8 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface, Configu
         );
     }
 
-    public function setConfiguration(ConfigurationInterface $config): void
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
-        $this->config = $config;
+        $this->config = $configuration;
     }
 }

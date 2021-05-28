@@ -63,8 +63,8 @@ final class AnonymousFootnotesListener implements ConfigurationAwareInterface
         }
     }
 
-    public function setConfiguration(ConfigurationInterface $config): void
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
-        $this->config = $config;
+        $this->config = $configuration;
     }
 }

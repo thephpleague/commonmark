@@ -39,8 +39,8 @@ class AbstractStringContainer extends AbstractInline implements StringContainerI
         return $this->literal;
     }
 
-    public function setLiteral(string $contents): void
+    public function setLiteral(string $literal): void
     {
-        $this->literal = $contents;
+        $this->literal = $literal;
     }
 }
