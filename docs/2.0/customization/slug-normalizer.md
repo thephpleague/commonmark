@@ -36,11 +36,12 @@ You can then call `$this->slugNormalizer->normalize($text)` as needed.
 
 ## Configuration
 
-The `slug_normalizer` configuration section allows you to adjust these two options:
+The `slug_normalizer` configuration section allows you to adjust the following options:
 
 ### `instance`
 
 You can change the string that is used as the "slug" by setting the `instance` option to any class that implements `TextNormalizerInterface`.
+We provide a simple `SlugNormalizer` by default, but you may want to plug in a different library or create your own normalizer instead.
 
 For example, if you'd like each slug to be an MD5 hash, you could create a class like this:
 
@@ -83,16 +84,20 @@ $config = [
 ];
 ```
 
-This `instance` doesn't need to worry about generating unique slugs, as we automagically decorate your `instance` with `UniqueSlugNormalizer` which provides that functionality.
-
 ### `max_length`
 
 This can be configured to limit the length of that slug to prevent overly-long values. By default, that limit is `255` characters. You may set this to any positive integer, or `0` for no limit.
 
 (Note that generated slugs might be slightly longer than this "limit" if the `unique` option is enabled and the slug generator detects a duplicate slug and needs to add a suffix to make it unique.)
 
-### `scope`
+### `unique`
 
-This options controls whether slugs should be unique per-document or per-environment.  This defaults to `document` by default.
+This options controls whether slugs should be unique.  Possible values include:
 
-However, you might have a use case where you're converting several different Markdown documents on the same page and so you'd like to ensure that none of those documents use conflicting slugs.  In that case, you should set the `scope` option to `environment` to ensure that a single instance of a `MarkdownConverter` (which uses a single `Environment`) will never produce the same slug twice during its lifetime (which usually lasts the entire duration of a single HTTP request).
+- `'document'` (string; **default**) - Ensures slugs are unique within a single document
+- `'environment'` (string) - Ensures slugs are unique across multiple documents - see below
+- `false` (boolean) - Disables unique slug generation
+
+You might have a use case where you're converting several different Markdown documents on the same page and so you'd like to ensure that none of those documents use conflicting slugs.  In that case, you should set the `scope` option to `'environment'` to ensure that a single instance of a `MarkdownConverter` (which uses a single `Environment`) will never produce the same slug twice during its lifetime (which usually lasts the entire duration of a single HTTP request).
+
+If you need complete control over how unique slugs are generated, make your `'instance'` implement `UniqueSlugNormalizerInterface`; otherwise, we'll simply append incremental numbers to slugs to ensure they are unique.

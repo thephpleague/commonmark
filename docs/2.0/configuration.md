@@ -72,10 +72,10 @@ Here's a list of the core configuration options available:
   - `escape` - Escape all HTML
 - `allow_unsafe_links` - Remove risky link and image URLs by setting this to `false` (default: `true`)
 - `max_nesting_level` - The maximum nesting level for blocks (default: `PHP_INT_MAX`). Setting this to a positive integer can help protect against long parse times and/or segfaults if blocks are too deeply-nested.
-- `slug_normalizer` - Array of options for configuring how URL-safe slugs are created; see [the slug normalizer docs](/2.0/customization/slug-normalizer/) for more details
+- `slug_normalizer` - Array of options for configuring how URL-safe slugs are created; see [the slug normalizer docs](/2.0/customization/slug-normalizer/#configuration) for more details
   - `instance` - An alternative normalizer to use (defaults to the included `SlugNormalizer`)
   - `max_length` - Limits the size of generated slugs (defaults to 255 characters)
-  - `scope` - Controls whether slugs should be unique per `document` (default) or per `environment`
+  - `unique` - Controls whether slugs should be unique per `'document'` (default) or per `'environment'`; can be disabled with `false`
 
 Additional configuration options are available for most of the [available extensions](/2.0/customization/extensions/) - refer to their individual documentation for more details.  For example, the CommonMark core extension offers these additional options:
 

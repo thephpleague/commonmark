@@ -13,42 +13,28 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Normalizer;
 
-use League\CommonMark\Event\DocumentRenderedEvent;
-
 // phpcs:disable Squiz.Strings.DoubleQuoteUsage.ContainsVar
-final class UniqueSlugNormalizer implements TextNormalizerInterface
+final class UniqueSlugNormalizer implements UniqueSlugNormalizerInterface
 {
-    public const SCOPE_ENVIRONMENT = 'environment';
-    public const SCOPE_DOCUMENT    = 'document';
-
     /** @var TextNormalizerInterface */
     private $innerNormalizer;
-    /** @psalm-var self::SCOPE_* */
-    private $scope;
     /** @var array<string, bool> */
     private $alreadyUsed = [];
 
-    /**
-     * @psalm-param self::SCOPE_* $scope
-     */
-    public function __construct(TextNormalizerInterface $innerNormalizer, string $scope = self::SCOPE_DOCUMENT)
+    public function __construct(TextNormalizerInterface $innerNormalizer)
     {
         $this->innerNormalizer = $innerNormalizer;
-        $this->scope           = $scope;
     }
 
-    /**
-     * @internal
-     */
-    public function onDocumentRendered(DocumentRenderedEvent $event): void
+    public function clearHistory(): void
     {
-        if ($this->scope === self::SCOPE_DOCUMENT) {
-            $this->alreadyUsed = [];
-        }
+        $this->alreadyUsed = [];
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-allow-private-mutation
      */
     public function normalize(string $text, array $context = []): string
     {

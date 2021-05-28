@@ -76,7 +76,7 @@ namespace PHPSTORM_META
         'slug_normalizer',
         'slug_normalizer/instance',
         'slug_normalizer/max_length',
-        'slug_normalizer/scope',
+        'slug_normalizer/unique',
         'table_of_contents',
         'table_of_contents/html_class',
         'table_of_contents/max_heading_level',
