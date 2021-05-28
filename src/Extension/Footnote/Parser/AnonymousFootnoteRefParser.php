@@ -14,17 +14,17 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Parser;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Configuration\ConfigurationInterface;
+use League\CommonMark\Environment\EnvironmentAwareInterface;
+use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
-use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\Reference;
 
-final class AnonymousFootnoteRefParser implements InlineParserInterface, ConfigurationAwareInterface
+final class AnonymousFootnoteRefParser implements InlineParserInterface, EnvironmentAwareInterface
 {
     /** @var ConfigurationInterface */
     private $config;
@@ -32,14 +32,9 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface, Configu
     /**
      * @var TextNormalizerInterface
      *
-     * @psalm-readonly
+     * @psalm-readonly-allow-private-mutation
      */
     private $slugNormalizer;
-
-    public function __construct()
-    {
-        $this->slugNormalizer = new SlugNormalizer();
-    }
 
     public function getMatchDefinition(): InlineParserMatch
     {
@@ -57,13 +52,9 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface, Configu
         return true;
     }
 
-    /**
-     * @psalm-immutable
-     */
     private function createReference(string $label): Reference
     {
-        $refLabel = $this->slugNormalizer->normalize($label);
-        $refLabel = \mb_substr($refLabel, 0, 20);
+        $refLabel = $this->slugNormalizer->normalize($label, ['length' => 20]);
 
         return new Reference(
             $refLabel,
@@ -72,8 +63,9 @@ final class AnonymousFootnoteRefParser implements InlineParserInterface, Configu
         );
     }
 
-    public function setConfiguration(ConfigurationInterface $configuration): void
+    public function setEnvironment(EnvironmentInterface $environment): void
     {
-        $this->config = $configuration;
+        $this->config         = $environment->getConfiguration();
+        $this->slugNormalizer = $environment->getSlugNormalizer();
     }
 }

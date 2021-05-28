@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Normalizer;
 
+use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Normalizer\SlugNormalizer;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +24,7 @@ final class SlugNormalizerTest extends TestCase
      */
     public function testNormalize(string $input, string $expectedOutput): void
     {
-        $this->assertEquals($expectedOutput, (new SlugNormalizer())->normalize($input));
+        $this->assertSame($expectedOutput, (new SlugNormalizer())->normalize($input));
     }
 
     /**
@@ -67,5 +68,34 @@ final class SlugNormalizerTest extends TestCase
         yield ['测试 # 标题', '测试--标题'];
         yield ['测试 x² 标题', '测试-x-标题'];
         yield ['試験タイトル', '試験タイトル'];
+    }
+
+    /**
+     * @dataProvider dataProviderForTestNormalizeWithMaxLength
+     */
+    public function testNormalizeWithMaxLength(string $input, int $maxLength, string $expectedOutput): void
+    {
+        $this->assertSame($expectedOutput, (new SlugNormalizer())->normalize($input, ['length' => $maxLength]));
+    }
+
+    /**
+     * @return iterable<mixed>
+     */
+    public function dataProviderForTestNormalizeWithMaxLength(): iterable
+    {
+        yield ['Hello World', 8, 'hello-wo'];
+        yield ['Hello World', 999, 'hello-world'];
+        yield ['Hello World', 0, 'hello-world'];
+    }
+
+    public function testNormalizerWithDefaultMaxLength(): void
+    {
+        $config = $this->createMock(ConfigurationInterface::class);
+        $config->expects($this->once())->method('get')->with('slug_normalizer/max_length')->willReturn(8);
+
+        $normalizer = new SlugNormalizer();
+        $normalizer->setConfiguration($config);
+
+        $this->assertSame('hello-wo', $normalizer->normalize('Hello World'));
     }
 }

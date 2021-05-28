@@ -77,17 +77,18 @@ See [#613](https://github.com/thephpleague/commonmark/issues/613) for details.
 
 Several configuration options now have new names:
 
-| Old Key/Path                       | New Key/Path                        | Notes                                   |
-| ---------------------------------- | ----------------------------------- | --------------------------------------- |
-| `enable_em`                        | `commonmark/enable_em`              |                                         |
-| `enable_strong`                    | `commonmark/enable_strong`          |                                         |
-| `use_asterisk`                     | `commonmark/use_asterisk`           |                                         |
-| `use_underscore`                   | `commonmark/use_underscore`         |                                         |
-| `unordered_list_markers`           | `commonmark/unordered_list_markers` | Empty arrays no longer allowed          |
-| `heading_permalink/inner_contents` | `heading_permalink/symbol`          |                                         |
-| `max_nesting_level`                | (unchanged)                         | Only integer values are supported       |
-| `mentions/*/symbol`                | `mentions/*/prefix`                 |                                         |
-| `mentions/*/regex`                 | `mentions/*/pattern`                | Cannot contain start/end `/` delimiters |
+| Old Key/Path                        | New Key/Path                        | Notes                                   |
+| ----------------------------------- | ----------------------------------- | --------------------------------------- |
+| `enable_em`                         | `commonmark/enable_em`              |                                         |
+| `enable_strong`                     | `commonmark/enable_strong`          |                                         |
+| `use_asterisk`                      | `commonmark/use_asterisk`           |                                         |
+| `use_underscore`                    | `commonmark/use_underscore`         |                                         |
+| `unordered_list_markers`            | `commonmark/unordered_list_markers` | Empty arrays no longer allowed          |
+| `heading_permalink/inner_contents`  | `heading_permalink/symbol`          |                                         |
+| `heading_permalink/slug_normalizer` | `slug_normalizer/instance`          |                                         |
+| `max_nesting_level`                 | (unchanged)                         | Only integer values are supported       |
+| `mentions/*/symbol`                 | `mentions/*/prefix`                 |                                         |
+| `mentions/*/regex`                  | `mentions/*/pattern`                | Cannot contain start/end `/` delimiters |
 
 ## Method Return Types
 
@@ -359,3 +360,11 @@ All `set*()` methods on all Node types now return `void` (whereas some used to r
 The following unused methods have been removed:
 
 - `Delimiter::setCanClose()`
+
+## Slug Normalizer
+
+Need to generate unique slugs in your extensions? Use the new [Slug Normalizer](/2.0/customization/slug-normalizer/) provided by the `Environment`.
+
+## Text Normalizers
+
+The second argument to `TextNormalizerInterface::normalize()` used to allow any arbitrary object. This was changed to an `array` so that multiple things can be passed in at once.

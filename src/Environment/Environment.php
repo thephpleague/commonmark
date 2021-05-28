@@ -22,11 +22,16 @@ use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Delimiter\DelimiterParser;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Event\ListenerData;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Normalizer\SlugNormalizer;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
+use League\CommonMark\Normalizer\UniqueSlugNormalizer;
+use League\CommonMark\Normalizer\UniqueSlugNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -104,6 +109,9 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
      * @psalm-readonly
      */
     private $config;
+
+    /** @var TextNormalizerInterface|null */
+    private $slugNormalizer = null;
 
     /**
      * @param array<string, mixed> $config
@@ -258,6 +266,9 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
 
     private function initializeExtensions(): void
     {
+        // Initialize the slug normalizer
+        $this->getSlugNormalizer();
+
         // Ask all extensions to register their components
         while (\count($this->uninitializedExtensions) > 0) {
             foreach ($this->uninitializedExtensions as $i => $extension) {
@@ -391,6 +402,29 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         return $this->inlineParsers->getIterator();
     }
 
+    public function getSlugNormalizer(): TextNormalizerInterface
+    {
+        if ($this->slugNormalizer === null) {
+            $normalizer = $this->config->get('slug_normalizer/instance');
+            \assert($normalizer instanceof TextNormalizerInterface);
+            $this->injectEnvironmentAndConfigurationIfNeeded($normalizer);
+
+            if ($this->config->get('slug_normalizer/unique') !== UniqueSlugNormalizerInterface::DISABLED && ! $normalizer instanceof UniqueSlugNormalizer) {
+                $normalizer = new UniqueSlugNormalizer($normalizer);
+            }
+
+            if ($normalizer instanceof UniqueSlugNormalizer) {
+                if ($this->config->get('slug_normalizer/unique') === UniqueSlugNormalizerInterface::PER_DOCUMENT) {
+                    $this->addEventListener(DocumentParsedEvent::class, [$normalizer, 'clearHistory'], -1000);
+                }
+            }
+
+            $this->slugNormalizer = $normalizer;
+        }
+
+        return $this->slugNormalizer;
+    }
+
     /**
      * @throws \RuntimeException
      */
@@ -411,6 +445,11 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
                 'block_separator' => Expect::string("\n"),
                 'inner_separator' => Expect::string("\n"),
                 'soft_break' => Expect::string("\n"),
+            ])->castTo('array'),
+            'slug_normalizer' => Expect::structure([
+                'instance' => Expect::type(TextNormalizerInterface::class)->default(new SlugNormalizer()),
+                'max_length' => Expect::int()->min(0)->default(255),
+                'unique' => Expect::anyOf(UniqueSlugNormalizerInterface::DISABLED, UniqueSlugNormalizerInterface::PER_ENVIRONMENT, UniqueSlugNormalizerInterface::PER_DOCUMENT)->default(UniqueSlugNormalizerInterface::PER_DOCUMENT),
             ])->castTo('array'),
         ]);
     }

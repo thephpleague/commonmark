@@ -43,7 +43,6 @@ $config = [
         'max_heading_level' => 6,
         'title' => 'Permalink',
         'symbol' => HeadingPermalinkRenderer::DEFAULT_SYMBOL,
-        'slug_normalizer' => new SlugNormalizer(),
     ],
 ];
 
@@ -90,54 +89,6 @@ If you want to use a custom icon, then set this to an empty string `''` and chec
 ### `title`
 
 This option sets the `title` attribute on the `<a>` tag.  This defaults to `'Permalink'`.
-
-### `slug_normalizer`
-
-"Slugs" are the strings used within the `href`, `name`, and `id` attributes to identify a particular permalink.
-By default, this extension will generate slugs based on the contents of the heading, just like GitHub-Flavored Markdown does.
-
-You can change the string that is used as the "slug" by setting the `slug_normalizer` option to any class that implements `TextNormalizerInterface`.
-
-For example, if you'd like each slug to be an MD5 hash, you could create a class like this:
-
-```php
-use League\CommonMark\Normalizer\TextNormalizerInterface;
-
-final class MD5Normalizer implements TextNormalizerInterface
-{
-    public function normalize(string $text, $context = null): string
-    {
-        return md5($text);
-    }
-}
-```
-
-And then configure it like this:
-
-```php
-$config = [
-    'heading_permalink' => [
-        // ... other options here ...
-        'slug_normalizer' => new MD5Normalizer(),
-    ],
-];
-```
-
-Or you could use [PHP's anonymous class feature](https://www.php.net/manual/en/language.oop5.anonymous.php) to define the generator's behavior without creating a new class file:
-
-```php
-$config = [
-    'heading_permalink' => [
-        // ... other options here ...
-        'slug_normalizer' => new class implements TextNormalizerInterface {
-            public function normalize(string $text, $context = null): string
-            {
-                // TODO: Implement your code here
-            }
-        },
-    ],
-];
-```
 
 ## Example
 

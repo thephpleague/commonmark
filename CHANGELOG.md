@@ -16,6 +16,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Added the ability for Mentions to use multiple characters for their symbol (#514, #550)
  - Added `heading_permalink/min_heading_level` and `heading_permalink/max_heading_level` options to control which headings get permalinks (#519)
  - Added `footnote/backref_symbol` option for customizing backreference link appearance (#522)
+ - Added `slug_normalizer/max_length` option to control the maximum length of generated URL slugs
+ - Added `slug_normalizer/unique` option to control whether unique slugs should be generated per-document or per-environment
  - Added new `HtmlFilter` and `StringContainerHelper` utility classes
  - Added new `AbstractBlockContinueParser` class to simplify the creation of custom block parsers
  - Added several new classes and interfaces:
@@ -47,12 +49,15 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RenderedContent`
    - `RenderedContentInterface`
    - `SpecReader`
+   - `UniqueSlugNormalizer`
+   - `UniqueSlugNormalizerInterface`
  - Added several new methods:
    - `ConfigurationInterface::exists()`
    - `Environment::createDefaultConfiguration()`
    - `Environment::setEventDispatcher()`
    - `EnvironmentInterface::getExtensions()`
    - `EnvironmentInterface::getInlineParsers()`
+   - `EnvironmentInterface::getSlugNormalizer()`
    - `FencedCode::setInfo()`
    - `Heading::setLevel()`
    - `HtmlRenderer::renderDocument()`
@@ -85,7 +90,10 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
      - `mentions/*/symbol` has been renamed to `mentions/*/prefix`
      - `mentions/*/regex` has been renamed to `mentions/*/pattern` and requires partial regular expressions (without delimiters or flags)
      - `max_nesting_level` now defaults to `PHP_INT_MAX` and no longer supports floats
+     - `heading_permalink/slug_normalizer` has been renamed to `slug_normalizer/instance`
  - Event dispatching is now fully PSR-14 compliant
+ - The `HeadingPermalinkExtension` and `FootnoteExtension` were modified to ensure they never produce a slug which conflicts with slugs created by the other extension
+ - `SlugNormalizer::normalizer()` now supports optional prefixes and max length options passed in via the `$context` argument
  - The `AbstractBlock::$data` and `AbstractInline::$data` arrays were replaced with a `Data` array-like object on the base `Node` class
  - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
  - Implemented a new approach to block parsing. This was a massive change, so here are the highlights:
@@ -160,6 +168,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `RegexHelper::PARTIAL_` constants must always be used in case-insensitive contexts
  - `HeadingPermalinkProcessor` no longer accepts text normalizers via the constructor - these must be provided via configuration instead
  - Block which can't contain inlines will no longer be asked to render inlines
+ - `AnonymousFootnoteRefParser` and `HeadingPermalinkProcessor` now implement `EnvironmentAwareInterface` instead of `ConfigurationAwareInterface`
+ - The second argument to `TextNormalizerInterface::normalize()` must now be an array
 
 ### Fixed
 

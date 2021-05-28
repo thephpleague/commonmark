@@ -35,7 +35,7 @@ final class TextNormalizer implements TextNormalizerInterface
      *
      * @psalm-pure
      */
-    public function normalize(string $text, $context = null): string
+    public function normalize(string $text, array $context = []): string
     {
         // Collapse internal whitespace to single space and remove
         // leading/trailing whitespace

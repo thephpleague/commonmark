@@ -23,8 +23,11 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\AbstractEvent;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -459,6 +462,85 @@ class EnvironmentTest extends TestCase
 
         $this->assertCount(1, $dispatchersCalled);
         $this->assertSame('external', $dispatchersCalled->first());
+    }
+
+    public function testGetDefaultSlugNormalizer(): void
+    {
+        $environment = new Environment();
+        $normalizer  = $environment->getSlugNormalizer();
+
+        $this->assertSame('test', $normalizer->normalize('Test'));
+        $this->assertSame('test-1', $normalizer->normalize('Test'));
+    }
+
+    public function testCustomSlugNormalizer(): void
+    {
+        $innerNormalizer = $this->createStub(TextNormalizerInterface::class);
+        $innerNormalizer->method('normalize')->willReturn('foo');
+
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'instance' => $innerNormalizer,
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-1', $normalizer->normalize('Foo'));
+    }
+
+    public function testUniqueSlugNormalizerDisabled(): void
+    {
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'unique' => false,
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+    }
+
+    public function testUniqueSlugNormalizerPerDocument(): void
+    {
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'unique' => 'document',
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-1', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-2', $normalizer->normalize('Foo'));
+
+        $environment->dispatch(new DocumentParsedEvent(new Document()));
+
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-1', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-2', $normalizer->normalize('Foo'));
+    }
+
+    public function testUniqueSlugNormalizerPerEnvironment(): void
+    {
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'unique' => 'environment',
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-1', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-2', $normalizer->normalize('Foo'));
+
+        $environment->dispatch(new DocumentParsedEvent(new Document()));
+
+        $this->assertSame('foo-3', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-4', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-5', $normalizer->normalize('Foo'));
     }
 
     /**

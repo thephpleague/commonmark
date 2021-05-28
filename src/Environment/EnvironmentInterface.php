@@ -17,6 +17,7 @@ use League\CommonMark\Configuration\ConfigurationProviderInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Node\Node;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -49,4 +50,6 @@ interface EnvironmentInterface extends ConfigurationProviderInterface, EventDisp
      * @return iterable<NodeRendererInterface>
      */
     public function getRenderersForClass(string $nodeClass): iterable;
+
+    public function getSlugNormalizer(): TextNormalizerInterface;
 }
