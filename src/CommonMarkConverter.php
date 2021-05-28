@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace League\CommonMark;
 
 use League\CommonMark\Environment\Environment;
-use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 
 /**
@@ -26,30 +25,12 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 final class CommonMarkConverter extends MarkdownConverter
 {
     /**
-     * Create a new commonmark converter instance.
+     * Create a new Markdown converter pre-configured for CommonMark
      *
-     * @param array<string, mixed>      $config
-     * @param EnvironmentInterface|null $environment DEPRECATED - Instantiate a MarkdownConverter instead
+     * @param array<string, mixed> $config
      */
-    public function __construct(array $config = [], ?EnvironmentInterface $environment = null)
+    public function __construct(array $config = [])
     {
-        // Passing in an $environment is deprecated
-        if ($environment !== null) {
-            @\trigger_error('Passing an $environment into the CommonMarkConverter constructor is deprecated in league/commonmark v2.0 and will be removed in v3.0; use MarkdownConverter instead of CommonMarkConverter', \E_USER_DEPRECATED);
-            if ($config !== []) {
-                if (! ($environment instanceof Environment)) {
-                    throw new \RuntimeException('Unable to configure the environment as only ' . Environment::class . ' can be configured after instantiation');
-                }
-
-                @\trigger_error('Configuring custom environments via the constructor is deprecated in league/commonmark v2.0 and will be removed in v3.0; configure it beforehand and create MarkdownConverter with it instead', \E_USER_DEPRECATED);
-                $environment->mergeConfig($config);
-            }
-
-            parent::__construct($environment);
-
-            return;
-        }
-
         $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension());
 

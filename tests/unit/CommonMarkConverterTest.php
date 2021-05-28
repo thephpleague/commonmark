@@ -17,8 +17,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment\Environment;
-use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Util\HtmlFilter;
@@ -36,7 +34,7 @@ class CommonMarkConverterTest extends TestCase
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
     }
 
-    public function testConfigOnlyConstructor(): void
+    public function testConstructorWithConfig(): void
     {
         $config    = ['html_input' => HtmlFilter::ESCAPE];
         $converter = new CommonMarkConverter($config);
@@ -46,26 +44,6 @@ class CommonMarkConverterTest extends TestCase
         $this->assertCount(1, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
         $this->assertSame(HtmlFilter::ESCAPE, $environment->getConfiguration()->get('html_input'));
-    }
-
-    public function testConstructorWithConfigAndEnvironment(): void
-    {
-        $config            = ['html_input' => HtmlFilter::ESCAPE];
-        $passedEnvironment = new Environment();
-
-        $converter = new CommonMarkConverter($config, $passedEnvironment);
-
-        $environment = $converter->getEnvironment();
-
-        $this->assertSame($passedEnvironment, $environment);
-        $this->assertSame(HtmlFilter::ESCAPE, $converter->getEnvironment()->getConfiguration()->get('html_input'));
-    }
-
-    public function testConstructorWithConfigAndGenericEnvironmentInterface(): void
-    {
-        $this->expectException(\RuntimeException::class);
-
-        new CommonMarkConverter(['foo' => 'bar'], $this->createMock(EnvironmentInterface::class));
     }
 
     public function testConvertingInvalidUTF8(): void
