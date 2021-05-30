@@ -59,7 +59,7 @@ final class ConfigurationTest extends TestCase
             'default_string' => Expect::string()->default('default'),
             'nested' => Expect::structure([
                 'lucky_number' => Expect::int()->default(42),
-            ])->castTo('array'),
+            ]),
             'array' => Expect::arrayOf('mixed'),
         ]);
 
@@ -127,7 +127,7 @@ final class ConfigurationTest extends TestCase
             'null' => Expect::null(),
             'nested' => Expect::structure([
                 'foo' => Expect::type('int')->nullable(),
-            ])->castTo('array'),
+            ]),
         ]);
 
         $this->assertTrue($config->exists('str'));
@@ -166,8 +166,8 @@ final class ConfigurationTest extends TestCase
             'a' => Expect::structure([
                 'b' => Expect::structure([
                     'c' => Expect::string('d'),
-                ])->castTo('array'),
-            ])->castTo('array'),
+                ]),
+            ]),
         ]);
 
         $config->set('a/b/c', 'e');
@@ -217,7 +217,7 @@ final class ConfigurationTest extends TestCase
                 'a' => Expect::int(1),
                 'b' => Expect::int(1),
                 'c' => Expect::int(1),
-            ])->castTo('array'),
+            ]),
         ]);
 
         $config->set('foo', 1);

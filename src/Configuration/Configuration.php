@@ -17,7 +17,6 @@ use Dflydev\DotAccessData\Data;
 use Dflydev\DotAccessData\Exception\InvalidPathException;
 use Dflydev\DotAccessData\Exception\MissingPathException;
 use League\CommonMark\Exception\InvalidConfigurationException;
-use Nette\Schema\Elements\Structure;
 use Nette\Schema\Expect;
 use Nette\Schema\Processor;
 use Nette\Schema\Schema;
@@ -65,10 +64,6 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
     public function addSchema(string $key, Schema $schema): void
     {
         $this->invalidate();
-
-        if ($schema instanceof Structure) {
-            $schema->castTo('array');
-        }
 
         $this->configSchemas[$key] = $schema;
     }
@@ -139,13 +134,36 @@ final class Configuration implements ConfigurationBuilderInterface, Configuratio
     private function build(): Data
     {
         try {
-            $schema    = Expect::structure($this->configSchemas)->castTo('array');
+            $schema    = Expect::structure($this->configSchemas);
             $processor = new Processor();
-            $config    = new Data($processor->process($schema, $this->userConfig->export()));
+            $processed = $processor->process($schema, $this->userConfig->export());
+            $config    = new Data(self::convertStdClassesToArrays($processed));
 
             return $this->finalConfig = $config;
         } catch (ValidationException $ex) {
             throw InvalidConfigurationException::fromValidation($ex);
         }
+    }
+
+    /**
+     * Recursively converts stdClass instances to arrays
+     *
+     * @param mixed $data
+     *
+     * @return mixed
+     */
+    private static function convertStdClassesToArrays($data)
+    {
+        if ($data instanceof \stdClass) {
+            $data = (array) $data;
+        }
+
+        if (\is_array($data)) {
+            foreach ($data as &$v) {
+                $v = self::convertStdClassesToArrays($v);
+            }
+        }
+
+        return $data;
     }
 }

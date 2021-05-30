@@ -39,7 +39,7 @@ final class MentionExtension implements ConfigurableExtensionInterface
                     Expect::string(),
                     Expect::type('callable')
                 )->required(),
-            ])->castTo('array')
+            ])
         ));
     }
 
