@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Parser\Block\BlockStart;
@@ -22,6 +20,8 @@ use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
 use League\CommonMark\Util\RegexHelper;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 final class ListBlockStartParser implements BlockStartParserInterface, ConfigurationAwareInterface
 {

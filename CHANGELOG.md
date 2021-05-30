@@ -28,8 +28,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `BlockStartParserInterface`
    - `ChildNodeRendererInterface`
    - `ConfigurableExtensionInterface`
-   - `ConfigurationBuilderInterface`
-   - `ConfigurationProviderInterface`
    - `CursorState`
    - `DashParser` (extracted from `PunctuationParser`)
    - `DelimiterParser`
@@ -42,9 +40,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserMatch`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
-   - `MutableConfigurationInterface`
    - `Query`
-   - `ReadOnlyConfiguration`
    - `ReferenceableInterface`
    - `RenderedContent`
    - `RenderedContentInterface`
@@ -52,7 +48,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `UniqueSlugNormalizer`
    - `UniqueSlugNormalizerInterface`
  - Added several new methods:
-   - `ConfigurationInterface::exists()`
    - `Environment::createDefaultConfiguration()`
    - `Environment::setEventDispatcher()`
    - `EnvironmentInterface::getExtensions()`
@@ -65,8 +60,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserContext::getFullMatchLength()`
    - `InlineParserContext::getMatches()`
    - `InlineParserContext::getSubMatches()`
-   - `InvalidOptionException::forConfigOption()`
-   - `InvalidOptionException::forParameter()`
    - `LinkParserHelper::parsePartialLinkLabel()`
    - `LinkParserHelper::parsePartialLinkTitle()`
    - `RegexHelper::isLetter()`
@@ -110,7 +103,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` were combined into `EnvironmentBuilderInterface::addRenderer()`
    - `EnvironmentInterface::getBlockRenderersForClass()` and `getInlineRenderersForClass()` are now just `getRenderersForClass()`
  - Completely refactored the Configuration implementation
-   - `Configuration` object must now be configured with a schema and all options must match that schema - arbitrary keys are no longer permitted
+   - All configuration-specific classes have been moved into a new `league/config` package with a new namespace
+   - `Configuration` objects must now be configured with a schema and all options must match that schema - arbitrary keys are no longer permitted
    - `Configuration::__construct()` no longer accepts the default configuration values - use `Configuration::merge()` instead
    - `ConfigurationInterface` now only contains a `get(string $key)`; this method no longer allows arbitrary default values to be returned if the option is missing
    - `ConfigurableEnvironmentInterface` was renamed to `EnvironmentBuilderInterface`
@@ -155,7 +149,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `ArrayCollection` is now final and only supports integer keys
  - `Cursor::saveState()` and `Cursor::restoreState()` now use `CursorState` objects instead of arrays
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
- - `InvalidOptionException` was renamed to `InvalidConfigurationException` and now extends from `UnexpectedValueException`
+ - `InvalidOptionException` was removed
  - Anything with a `getReference(): ReferenceInterface` method now implements `ReferencableInterface`
  - Several changes made to the Footnote extension:
    - Footnote identifiers can no longer contain spaces
@@ -229,9 +223,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `AbstractInline::getData()`
    - `ConfigurableEnvironmentInterface::addBlockParser()`
    - `ConfigurableEnvironmentInterface::mergeConfig()`
-   - `ConfigurationInterface::merge()` (moved to new `MutableConfigurationInterface`)
-   - `ConfigurationInterface::replace()`
-   - `ConfigurationInterface::set()` (moved to new `MutableConfigurationInterface`)
    - `Delimiter::setCanClose()`
    - `EnvironmentInterface::getConfig()`
    - `EnvironmentInterface::getInlineParsersForCharacter()`

@@ -16,9 +16,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Environment;
 
-use League\CommonMark\Configuration\Configuration;
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Delimiter\DelimiterParser;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
@@ -37,6 +34,9 @@ use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
 use League\CommonMark\Util\PrioritizedList;
+use League\Config\Configuration;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 use Nette\Schema\Expect;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;

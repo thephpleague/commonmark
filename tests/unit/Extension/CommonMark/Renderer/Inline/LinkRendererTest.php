@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Inline;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -24,6 +23,7 @@ use League\CommonMark\Extension\CommonMark\Renderer\Inline\LinkRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
+use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
 class LinkRendererTest extends TestCase

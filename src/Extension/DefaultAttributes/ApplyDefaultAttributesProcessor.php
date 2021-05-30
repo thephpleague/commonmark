@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\DefaultAttributes;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\Attributes\Util\AttributesHelper;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 final class ApplyDefaultAttributesProcessor implements ConfigurationAwareInterface
 {

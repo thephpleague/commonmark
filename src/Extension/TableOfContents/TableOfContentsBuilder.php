@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\TableOfContents;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsPlaceholder;
 use League\CommonMark\Node\Block\Document;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
+use League\Config\Exception\InvalidConfigurationException;
 
 final class TableOfContentsBuilder implements ConfigurationAwareInterface
 {

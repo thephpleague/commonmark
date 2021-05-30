@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\DisallowedRawHtml;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlRenderer;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
+use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
 final class DisallowedRawHtmlRendererTest extends TestCase

@@ -15,7 +15,7 @@ Unlike in 1.x, all configuration options must have a defined schema.  This defin
 These custom options can be defined from within your [custom extension](/2.0/customization/extensions/) by implementing the `ConfigurableExtensionInterface`:
 
 ```php
-use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\Config\ConfigurationBuilderInterface;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use Nette\Schema\Expect;
 
@@ -38,7 +38,7 @@ final class MyCustomExtension implements ConfigurableExtensionInterface
 }
 ```
 
-See the [nette/schema documentation](https://github.com/nette/schema#defining-schema) for more examples of how to define custom configuration schemas.
+See the [league/config documentation](https://config.thephpleague.com/1.0/schemas/) for more examples of how to define custom configuration schemas.
 
 Note that you only need to implement `ConfigurableExtensionInterface` if you plan to define new configuration options - you don't need this if you're only reading existing options.
 
@@ -51,7 +51,7 @@ Okay, so your extension has defined the different options that are available, bu
 Perhaps your extension needs to decide whether/how to register certain parsers/renderers/etc based on the user-provided configuration values - in that case, you can read the value from the `$environment` - for example:
 
 ```php
-use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\Config\ConfigurationBuilderInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 
@@ -77,11 +77,11 @@ final class MyCustomExtension implements ConfigurableExtensionInterface
 Perhaps you want to reference those configuration values from within a custom parser, renderer, event listener, or something else.  This can easily by done by having that class also implement `ConfigurationAwareInterface`.  This interface signals to the `Environment` that your class needs a copy of the final configuration so it can read it later:
 
 ```php
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 final class MyCustomRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {

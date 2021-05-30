@@ -16,13 +16,13 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Renderer\Inline;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Renderer\Inline\NewlineRenderer;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
+use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
 class NewlineRendererTest extends TestCase

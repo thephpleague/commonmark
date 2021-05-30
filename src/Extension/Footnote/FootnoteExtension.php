@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote;
 
-use League\CommonMark\Configuration\ConfigurationBuilderInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
@@ -33,6 +32,7 @@ use League\CommonMark\Extension\Footnote\Renderer\FootnoteBackrefRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteContainerRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteRefRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteRenderer;
+use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
 final class FootnoteExtension implements ConfigurableExtensionInterface

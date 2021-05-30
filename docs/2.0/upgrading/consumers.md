@@ -143,13 +143,11 @@ The following methods have been renamed:
 
 ## Configuration Method Changes
 
-Calling `EnvironmentInterface::getConfig()` or `ConfigurationInterface::get()` without any parameters is no longer supported.
+Calling `EnvironmentInterface::getConfig()` without any parameters is no longer supported.
 
 Calling `ConfigurableEnvironmentInterface::mergeConfig()` without any parameters is no longer supported.
 
 The `ConfigurableEnvironmentInterface::setConfig()` method has been removed.  Use `getConfig()` instead.
-
-Calls to `ConfigurationInterface::set()` should always explicitly include the value being set.
 
 ## `bin/commonmark` command
 

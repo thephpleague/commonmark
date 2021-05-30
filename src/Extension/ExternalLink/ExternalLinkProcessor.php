@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\ExternalLink;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\Config\ConfigurationInterface;
 
 final class ExternalLinkProcessor
 {

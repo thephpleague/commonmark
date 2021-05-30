@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\TableOfContents;
 
-use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
@@ -29,6 +28,7 @@ use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInt
 use League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\StringContainerHelper;
+use League\Config\Exception\InvalidConfigurationException;
 
 final class TableOfContentsGenerator implements TableOfContentsGeneratorInterface
 {
@@ -131,7 +131,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         } elseif ($this->style === self::STYLE_ORDERED) {
             $listData->type = ListBlock::TYPE_ORDERED;
         } else {
-            throw InvalidConfigurationException::forParameter('table of contents list style', $this->style);
+            throw new InvalidConfigurationException(\sprintf('Invalid table of contents list style: "%s"', $this->style));
         }
 
         $toc = new TableOfContents($listData);
@@ -165,7 +165,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             case self::NORMALIZE_FLAT:
                 return new FlatNormalizerStrategy($toc);
             default:
-                throw InvalidConfigurationException::forParameter('table of contents normalization strategy', $this->normalizationStrategy);
+                throw new InvalidConfigurationException(\sprintf('Invalid table of contents normalization strategy: "%s"', $this->normalizationStrategy));
         }
     }
 }

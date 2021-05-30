@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Normalizer;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 /**
  * Creates URL-friendly strings based on the given string input

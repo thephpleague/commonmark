@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\DisallowedRawHtml;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 final class DisallowedRawHtmlRenderer implements NodeRendererInterface, ConfigurationAwareInterface
 {

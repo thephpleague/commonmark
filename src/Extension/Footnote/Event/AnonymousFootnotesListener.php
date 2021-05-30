@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Event;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
@@ -23,6 +21,8 @@ use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Reference\Reference;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 final class AnonymousFootnotesListener implements ConfigurationAwareInterface
 {

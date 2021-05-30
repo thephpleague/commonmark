@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\TableOfContents;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsPlaceholder;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
@@ -24,6 +22,8 @@ use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
 {

@@ -16,7 +16,6 @@ namespace League\CommonMark\Tests\Unit\Extension\HeadingPermalink;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
@@ -24,6 +23,7 @@ use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
+use League\Config\Exception\InvalidConfigurationException;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingPermalinkProcessorTest extends TestCase

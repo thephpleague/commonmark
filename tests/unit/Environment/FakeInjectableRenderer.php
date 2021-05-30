@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use League\Config\ConfigurationAwareInterface;
 
 final class FakeInjectableRenderer implements NodeRendererInterface, ConfigurationAwareInterface, EnvironmentAwareInterface
 {

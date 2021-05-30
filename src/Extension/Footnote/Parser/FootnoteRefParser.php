@@ -14,13 +14,13 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Parser;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\Reference;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 final class FootnoteRefParser implements InlineParserInterface, ConfigurationAwareInterface
 {

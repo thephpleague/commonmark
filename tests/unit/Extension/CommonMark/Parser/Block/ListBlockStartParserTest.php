@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Parser\Block;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\Environment;
-use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Extension\CommonMark\Parser\Block\ListBlockStartParser;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
+use League\Config\ConfigurationInterface;
+use League\Config\Exception\InvalidConfigurationException;
 use PHPUnit\Framework\TestCase;
 
 final class ListBlockStartParserTest extends TestCase

@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Node\Inline\AbstractStringContainer;
+use League\Config\ConfigurationAwareInterface;
 
 final class FakeInjectableDelimiterProcessor implements DelimiterProcessorInterface, ConfigurationAwareInterface, EnvironmentAwareInterface
 {
