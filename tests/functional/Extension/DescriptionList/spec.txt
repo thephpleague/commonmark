@@ -78,6 +78,98 @@ Four Spaces
 : NOT OKAY</p>
 ````````````````````````````````
 
+The number of spaces can vary between consecutive descriptions, so long as they don't exceed three spaces of indentation.
+
+```````````````````````````````` example
+No Spaces
+: Okay (0)
+ : Okay (1)
+  : Okay (2)
+   : Okay (3)
+    : NOT OKAY
+
+One Space
+ : Okay (1)
+: Okay (0)
+ : Okay (1)
+  : Okay (2)
+   : Okay (3)
+    : NOT OKAY
+
+Two Spaces
+  : Okay (2)
+ : Okay (1)
+: Okay (0)
+ : Okay (1)
+  : Okay (2)
+   : Okay (3)
+    : NOT OKAY
+
+Three Spaces
+   : Okay (3)
+  : Okay (2)
+ : Okay (1)
+: Okay (0)
+ : Okay (2)
+  : Okay (3)
+   : Okay (4)
+    : NOT OKAY
+
+Four Spaces
+    : NOT OKAY
+   : Okay (3)
+  : Okay (2)
+ : Okay (1)
+: Okay (0)
+ : Okay (1)
+  : Okay (2)
+   : Okay (3)
+    : NOT OKAY
+.
+<dl>
+<dt>No Spaces</dt>
+<dd>Okay (0)</dd>
+<dd>Okay (1)</dd>
+<dd>Okay (2)</dd>
+<dd>Okay (3)
+: NOT OKAY</dd>
+<dt>One Space</dt>
+<dd>Okay (1)</dd>
+<dd>Okay (0)</dd>
+<dd>Okay (1)</dd>
+<dd>Okay (2)</dd>
+<dd>Okay (3)
+: NOT OKAY</dd>
+<dt>Two Spaces</dt>
+<dd>Okay (2)</dd>
+<dd>Okay (1)</dd>
+<dd>Okay (0)</dd>
+<dd>Okay (1)</dd>
+<dd>Okay (2)</dd>
+<dd>Okay (3)
+: NOT OKAY</dd>
+<dt>Three Spaces</dt>
+<dd>Okay (3)</dd>
+<dd>Okay (2)</dd>
+<dd>Okay (1)</dd>
+<dd>Okay (0)</dd>
+<dd>Okay (2)</dd>
+<dd>Okay (3)</dd>
+<dd>Okay (4)
+: NOT OKAY</dd>
+<dt>Four Spaces</dt>
+<dt>: NOT OKAY</dt>
+<dd>Okay (3)</dd>
+<dd>Okay (2)</dd>
+<dd>Okay (1)</dd>
+<dd>Okay (0)</dd>
+<dd>Okay (1)</dd>
+<dd>Okay (2)</dd>
+<dd>Okay (3)
+: NOT OKAY</dd>
+</dl>
+````````````````````````````````
+
 Description markers must be followed by one or more spaces or a tab:
 
 ```````````````````````````````` example
@@ -101,13 +193,11 @@ Orange
 .
 <dl>
 <dt>Apple</dt>
-<dd>Pomaceous fruit of plants of the genus Malus in the family Rosaceae.
-</dd>
-<dd>An American computer company.
-</dd>
+<dd>Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</dd>
+<dd>An American computer company.</dd>
 <dt>Orange</dt>
-<dd>The fruit of an evergreen tree of the genus Citrus.
-</dd>
+<dd>The fruit of an evergreen tree of the genus Citrus.</dd>
 </dl>
 ````````````````````````````````
 
@@ -143,12 +233,35 @@ Orange
 .
 <dl>
 <dt>Apple</dt>
-<dd>
-<p>Pomaceous fruit of plants of the genus Malus in
-the family Rosaceae.</p>
-</dd>
+<dd><p>Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</p></dd>
 <dt>Orange</dt>
 <dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+````````````````````````````````
+
+When multiple descriptions are given, the tightness of each can vary based on whether there's a blank line preceding each one:
+
+```````````````````````````````` example
+Apple
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.
+
+:   An American computer company.
+
+Orange
+
+:   The fruit of an evergreen tree of the genus Citrus.
+:   The color between yellow and red on the spectrum of visible light.
+.
+<dl>
+<dt>Apple</dt>
+<dd>Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</dd>
+<dd><p>An American computer company.</p></dd>
+<dt>Orange</dt>
+<dd><p>The fruit of an evergreen tree of the genus Citrus.</p></dd>
+<dd>The color between yellow and red on the spectrum of visible light.</dd>
 </dl>
 ````````````````````````````````
 
@@ -176,16 +289,12 @@ This is a term
 <dd>Description goes here</dd>
 <dt>This is a term</dt>
 <dt>This is also a term</dt>
-<dd>
-<p>Description goes here</p>
-</dd>
+<dd><p>Description goes here</p></dd>
 </dl>
 <p>This is a paragraph</p>
 <dl>
 <dt>This is a term</dt>
-<dd>
-<p>Description goes here</p>
-</dd>
+<dd><p>Description goes here</p></dd>
 </dl>
 ````````````````````````````````
 
@@ -206,7 +315,7 @@ Term 1
 
 Term 2
 
-:   This description has a code block, a blockquote and a list.
+:   This description has a code block, a blockquote, two lists, and a short paragraph.
 
         code block.
 
@@ -215,25 +324,38 @@ Term 2
 
     1.  first list item
     2.  second list item
+
+    Nested Term
+      : A nested definition
+
+    A short paragraph.
 .
 <dl>
 <dt>Term 1</dt>
-<dd><p>This is a description with two paragraphs. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</p>
-<p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
-</dd>
-<dd><p>Second description for term 1, also wrapped in a paragraph because of the blank line preceding it.</p>
-</dd>
+<dd><p>This is a description with two paragraphs. Lorem ipsum
+dolor sit amet, consectetuer adipiscing elit. Aliquam
+hendrerit mi posuere lectus.</p>
+<p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+vitae, risus.</p></dd>
+<dd><p>Second description for term 1, also wrapped in a paragraph
+because of the blank line preceding it.</p></dd>
 <dt>Term 2</dt>
-<dd><p>This description has a code block, a blockquote and a list.</p>
-<pre><code>code block.</code></pre>
+<dd><p>This description has a code block, a blockquote, two lists, and a short paragraph.</p>
+<pre><code>code block.
+</code></pre>
 <blockquote>
-<p>block quote on two lines.</p>
+<p>block quote
+on two lines.</p>
 </blockquote>
-<ol type="1">
+<ol>
 <li>first list item</li>
 <li>second list item</li>
 </ol>
-</dd>
+<dl>
+<dt>Nested Term</dt>
+<dd>A nested definition</dd>
+</dl>
+<p>A short paragraph.</p></dd>
 </dl>
 ````````````````````````````````
 
@@ -267,4 +389,18 @@ Description lists will not be parsed if no preceding terms exist. Note that term
 <p>: No terms before this one</p>
 <h1>This is a heading, not a term</h1>
 <p>: So this doesn't count either</p>
+````````````````````````````````
+
+Descriptions cannot be blank:
+
+```````````````````````````````` example
+The description below is blank
+
+:
+
+We treat that as a paragraph
+.
+<p>The description below is blank</p>
+<p>:</p>
+<p>We treat that as a paragraph</p>
 ````````````````````````````````
