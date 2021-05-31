@@ -17,8 +17,9 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Node\Block\TightBlockInterface;
 
-class ListBlock extends AbstractBlock
+class ListBlock extends AbstractBlock implements TightBlockInterface
 {
     public const TYPE_BULLET  = 'bullet';
     public const TYPE_ORDERED = 'ordered';

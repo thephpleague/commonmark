@@ -16,9 +16,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Renderer\Block;
 
-use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
-use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\Block\TightBlockInterface;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -50,16 +49,14 @@ final class ParagraphRenderer implements NodeRendererInterface
 
     private function inTightList(Paragraph $node): bool
     {
-        $parent = $node->parent();
-        if (! $parent instanceof ListItem) {
-            return false;
+        // Only check up to two (2) levels above this for tightness
+        $i = 2;
+        while (($node = $node->parent()) && $i--) {
+            if ($node instanceof TightBlockInterface) {
+                return $node->isTight();
+            }
         }
 
-        $gramps = $parent->parent();
-        if (! $gramps instanceof ListBlock) {
-            return false;
-        }
-
-        return $gramps->isTight();
+        return false;
     }
 }

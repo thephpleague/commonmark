@@ -9,6 +9,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 ### Added
 
  - Added new `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
+ - Added new `DescriptionListExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/description-lists/))
  - Added new `DefaultAttributesExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/default-attributes/))
  - Added `Query` class to simplify Node traversal when looking to take action on certain Nodes
  - Added the ability to delegate event dispatching to PSR-14 compliant event dispatcher libraries
