@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Environment;
 
-use League\CommonMark\Configuration\ConfigurationProviderInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use League\Config\ConfigurationProviderInterface;
 
 /**
  * Interface for building the Environment with any extensions, parsers, listeners, etc. that it may need

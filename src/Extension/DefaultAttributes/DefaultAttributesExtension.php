@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\DefaultAttributes;
 
-use League\CommonMark\Configuration\ConfigurationBuilderInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
+use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
 final class DefaultAttributesExtension implements ConfigurableExtensionInterface

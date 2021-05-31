@@ -16,9 +16,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Configuration\ConfigurationBuilderInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
-use League\CommonMark\Configuration\MutableConfigurationInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
@@ -36,6 +33,9 @@ use League\CommonMark\Tests\Unit\Event\FakeEventListener;
 use League\CommonMark\Tests\Unit\Event\FakeEventListenerInvokable;
 use League\CommonMark\Tests\Unit\Event\FakeEventParent;
 use League\CommonMark\Util\ArrayCollection;
+use League\Config\ConfigurationBuilderInterface;
+use League\Config\ConfigurationInterface;
+use League\Config\MutableConfigurationInterface;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use PHPUnit\Framework\TestCase;

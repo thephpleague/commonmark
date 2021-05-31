@@ -19,13 +19,13 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\CommonMark\Delimiter\Processor;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 use League\CommonMark\Node\Inline\AbstractStringContainer;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, ConfigurationAwareInterface
 {

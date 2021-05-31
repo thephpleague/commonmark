@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Normalizer;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Normalizer\SlugNormalizer;
+use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
 final class SlugNormalizerTest extends TestCase

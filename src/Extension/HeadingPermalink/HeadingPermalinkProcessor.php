@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
@@ -21,6 +20,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\StringContainerHelper;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
+use League\Config\ConfigurationInterface;
 
 /**
  * Searches the Document for Heading elements and adds HeadingPermalinks to each one

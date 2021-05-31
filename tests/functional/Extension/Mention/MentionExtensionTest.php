@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
 use League\CommonMark\Environment\Environment;
-use League\CommonMark\Exception\InvalidConfigurationException;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Node\Inline\AbstractInline;
+use League\Config\Exception\InvalidConfigurationException;
 use PHPUnit\Framework\TestCase;
 
 class MentionExtensionTest extends TestCase

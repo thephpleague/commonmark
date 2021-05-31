@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
@@ -24,6 +23,7 @@ use League\CommonMark\Extension\CommonMark\Renderer\Block\HtmlBlockRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlFilter;
+use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
 class HtmlBlockRendererTest extends TestCase

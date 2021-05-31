@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
+use League\Config\ConfigurationAwareInterface;
 
 final class FakeInjectableInlineParser implements InlineParserInterface, ConfigurationAwareInterface, EnvironmentAwareInterface
 {

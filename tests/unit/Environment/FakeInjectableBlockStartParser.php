@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
+use League\Config\ConfigurationAwareInterface;
 
 final class FakeInjectableBlockStartParser implements BlockStartParserInterface, ConfigurationAwareInterface, EnvironmentAwareInterface
 {

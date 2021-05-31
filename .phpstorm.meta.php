@@ -86,7 +86,7 @@ namespace PHPSTORM_META
         'table_of_contents/position',
         'table_of_contents/style',
     );
-    expectedArguments(\League\CommonMark\Configuration\ConfigurationInterface::get(), 0, argumentsSet('league_commonmark_options'));
-    expectedArguments(\League\CommonMark\Configuration\ConfigurationInterface::exists(), 0, argumentsSet('league_commonmark_options'));
-    expectedArguments(\League\CommonMark\Configuration\MutableConfigurationInterface::set(), 0, argumentsSet('league_commonmark_options'));
+    expectedArguments(\League\Config\ConfigurationInterface::get(), 0, argumentsSet('league_commonmark_options'));
+    expectedArguments(\League\Config\ConfigurationInterface::exists(), 0, argumentsSet('league_commonmark_options'));
+    expectedArguments(\League\Config\MutableConfigurationInterface::set(), 0, argumentsSet('league_commonmark_options'));
 }

@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\SmartPunct;
 
-use League\CommonMark\Configuration\ConfigurationBuilderInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Node\Block\Document;
@@ -24,6 +23,7 @@ use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Renderer\Block as CoreBlockRenderer;
 use League\CommonMark\Renderer\Inline as CoreInlineRenderer;
+use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
 final class SmartPunctExtension implements ConfigurableExtensionInterface

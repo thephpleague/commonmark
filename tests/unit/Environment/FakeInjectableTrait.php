@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Environment;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
+use League\Config\ConfigurationInterface;
 
 trait FakeInjectableTrait
 {

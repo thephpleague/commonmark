@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Event;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\AbstractEvent;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 class FakeEventListener implements ConfigurationAwareInterface, EnvironmentAwareInterface
 {

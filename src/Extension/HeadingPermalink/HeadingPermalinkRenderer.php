@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
-use League\CommonMark\Configuration\ConfigurationAwareInterface;
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
 
 /**
  * Renders the HeadingPermalink elements

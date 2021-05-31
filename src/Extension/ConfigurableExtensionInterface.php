@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension;
 
-use League\CommonMark\Configuration\ConfigurationBuilderInterface;
+use League\Config\ConfigurationBuilderInterface;
 
 interface ConfigurableExtensionInterface extends ExtensionInterface
 {

@@ -94,6 +94,16 @@ Several configuration options now have new names:
 
 Return types have been added to virtually all class and interface methods.  If you implement or extend anything from this library, ensure you also have the proper return types added.
 
+## Configuration Classes Relocated
+
+The following classes have been moved to the `league/config` package:
+
+| Old Class Namespace/Name (1.x)                       | Moved To                                    |
+| ---------------------------------------------------- | ------------------------------------------- |
+| `League\CommonMark\Util\ConfigurationAwareInterface` | `League\Config\ConfigurationAwareInterface` |
+| `League\CommonMark\Util\ConfigurationInterface`      | `League\Config\ConfigurationInterface`      |
+| `League\CommonMark\Util\Configuration`               | `League\Config\Configuration`               |
+
 ## Classes/Namespaces Renamed
 
 Many classes now live in different namespaces, and some have also been renamed.  Here's a quick guide showing their new locations:
@@ -102,9 +112,6 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 
 | Old Class Namespace/Name (1.x)                                                        | New Class Namespace/Name (2.0)                                                           |
 | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `Util\ConfigurationAwareInterface`                                                    | `Configuration\ConfigurationAwareInterface`                                              |
-| `Util\ConfigurationInterface`                                                         | `Configuration\ConfigurationInterface`                                                   |
-| `Util\Configuration`                                                                  | `Configuration\Configuration`                                                            |
 | `ConfigurableEnvironmentInterface`                                                    | `Environment\ConfigurableEnvironmentInterface`                                           |
 | `EnvironmentAwareInterface`                                                           | `Environment\EnvironmentAwareInterface`                                                  |
 | `Environment`                                                                         | `Environment\Environment`                                                                |
@@ -302,13 +309,11 @@ The following properties have had their visibility changed:
 
 ## Configuration Method Changes
 
-Calling `EnvironmentInterface::getConfig()` or `ConfigurationInterface::get()` without any parameters is no longer supported.
+Calling `EnvironmentInterface::getConfig()` without any parameters is no longer supported.
 
 Calling `ConfigurableEnvironmentInterface::mergeConfig()` without any parameters is no longer supported.
 
 The `ConfigurableEnvironmentInterface::setConfig()` method has been removed.  Use `getConfig()` instead.
-
-Calls to `ConfigurationInterface::set()` should always explicitly include the value being set.
 
 ## New approach to the `ReferenceParser`
 

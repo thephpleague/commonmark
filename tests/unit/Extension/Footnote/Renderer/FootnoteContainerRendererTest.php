@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\Footnote\Renderer;
 
-use League\CommonMark\Configuration\ConfigurationInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\Footnote\Node\FootnoteContainer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteContainerRenderer;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
+use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
 final class FootnoteContainerRendererTest extends TestCase

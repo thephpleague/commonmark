@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\DisallowedRawHtml;
 
-use League\CommonMark\Configuration\ConfigurationBuilderInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\HtmlBlockRenderer;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\HtmlInlineRenderer;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
+use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
 final class DisallowedRawHtmlExtension implements ConfigurableExtensionInterface
