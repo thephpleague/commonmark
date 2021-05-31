@@ -1,0 +1,270 @@
+# Description List Spec
+
+Based on <https://michelf.ca/projects/php-markdown/extra/#def-list>
+
+-----
+
+Description lists are made of terms and descriptions of these terms, much like in a dictionary.
+
+A simple description list is made of a single-line term followed by a colon and the description for that term.
+
+```````````````````````````````` example
+Apple
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.
+
+Orange
+:   The fruit of an evergreen tree of the genus Citrus.
+.
+<dl>
+<dt>Apple</dt>
+<dd>Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</dd>
+<dt>Orange</dt>
+<dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+````````````````````````````````
+
+Terms must be separated from the previous description by a blank line.
+Descriptions can span on multiple lines, in which case they should be indented.
+But you don’t really have to: if you want to be lazy, you could forget to indent a description that span on multiple lines and it will still work:
+
+```````````````````````````````` example
+Apple
+:   Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.
+
+Orange
+:   The fruit of an evergreen tree of the genus Citrus.
+.
+<dl>
+<dt>Apple</dt>
+<dd>Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</dd>
+<dt>Orange</dt>
+<dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+````````````````````````````````
+
+Colons as description markers typically start at the left margin, but may be indented by up to three spaces:
+
+```````````````````````````````` example
+No Spaces
+: Okay
+
+One Space
+ : Okay
+
+Two Spaces
+  : Okay
+
+Three Spaces
+   : Okay
+
+Four Spaces
+    : NOT OKAY
+.
+<dl>
+<dt>No Spaces</dt>
+<dd>Okay</dd>
+<dt>One Space</dt>
+<dd>Okay</dd>
+<dt>Two Spaces</dt>
+<dd>Okay</dd>
+<dt>Three Spaces</dt>
+<dd>Okay</dd>
+</dl>
+<p>Four Spaces
+: NOT OKAY</p>
+````````````````````````````````
+
+Description markers must be followed by one or more spaces or a tab:
+
+```````````````````````````````` example
+Not Valid
+:because there's no space or tab after the `:`
+.
+<p>Not Valid
+:because there's no space or tab after the <code>:</code></p>
+````````````````````````````````
+
+Description lists can have more than one description associated with one term:
+
+```````````````````````````````` example
+Apple
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.
+:   An American computer company.
+
+Orange
+:   The fruit of an evergreen tree of the genus Citrus.
+.
+<dl>
+<dt>Apple</dt>
+<dd>Pomaceous fruit of plants of the genus Malus in the family Rosaceae.
+</dd>
+<dd>An American computer company.
+</dd>
+<dt>Orange</dt>
+<dd>The fruit of an evergreen tree of the genus Citrus.
+</dd>
+</dl>
+````````````````````````````````
+
+You can also associate more than one term to a description:
+
+```````````````````````````````` example
+Term 1
+Term 2
+:   Description a
+
+Term 3
+:   Description b
+.
+<dl>
+<dt>Term 1</dt>
+<dt>Term 2</dt>
+<dd>Description a</dd>
+<dt>Term 3</dt>
+<dd>Description b</dd>
+</dl>
+````````````````````````````````
+
+If a description is preceded by a blank line, the description will be wrapped in `<p>` tags in the HTML output:
+
+```````````````````````````````` example
+Apple
+
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.
+
+Orange
+:    The fruit of an evergreen tree of the genus Citrus.
+.
+<dl>
+<dt>Apple</dt>
+<dd>
+<p>Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</p>
+</dd>
+<dt>Orange</dt>
+<dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+````````````````````````````````
+
+Multiple terms for a single definition must not be separated by spaces:
+
+```````````````````````````````` example
+This is a term
+This is also a term
+: Description goes here
+
+This is a term
+This is also a term
+
+: Description goes here
+
+This is a paragraph
+
+This is a term
+
+: Description goes here
+.
+<dl>
+<dt>This is a term</dt>
+<dt>This is also a term</dt>
+<dd>Description goes here</dd>
+<dt>This is a term</dt>
+<dt>This is also a term</dt>
+<dd>
+<p>Description goes here</p>
+</dd>
+</dl>
+<p>This is a paragraph</p>
+<dl>
+<dt>This is a term</dt>
+<dd>
+<p>Description goes here</p>
+</dd>
+</dl>
+````````````````````````````````
+
+Just like regular list items, descriptions can contain multiple paragraphs, and include other block-level elements such as blockquotes, code blocks, lists, and even other description lists.
+
+```````````````````````````````` example
+Term 1
+
+:   This is a description with two paragraphs. Lorem ipsum
+    dolor sit amet, consectetuer adipiscing elit. Aliquam
+    hendrerit mi posuere lectus.
+
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+    vitae, risus.
+
+:   Second description for term 1, also wrapped in a paragraph
+    because of the blank line preceding it.
+
+Term 2
+
+:   This description has a code block, a blockquote and a list.
+
+        code block.
+
+    > block quote
+    > on two lines.
+
+    1.  first list item
+    2.  second list item
+.
+<dl>
+<dt>Term 1</dt>
+<dd><p>This is a description with two paragraphs. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</p>
+<p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+</dd>
+<dd><p>Second description for term 1, also wrapped in a paragraph because of the blank line preceding it.</p>
+</dd>
+<dt>Term 2</dt>
+<dd><p>This description has a code block, a blockquote and a list.</p>
+<pre><code>code block.</code></pre>
+<blockquote>
+<p>block quote on two lines.</p>
+</blockquote>
+<ol type="1">
+<li>first list item</li>
+<li>second list item</li>
+</ol>
+</dd>
+</dl>
+````````````````````````````````
+
+And terms can contain inline-level elements, like emphasis and links:
+
+```````````````````````````````` example
+The **Big Apple**
+
+: Another name for New York City
+
+[Orange County](https://en.wikipedia.org/wiki/Orange_County,_California)
+
+:    The third-most populous county in California; home to Disneyland
+.
+<dl>
+<dt>The <strong>Big Apple</strong></dt>
+<dd><p>Another name for New York City</p></dd>
+<dt><a href="https://en.wikipedia.org/wiki/Orange_County,_California">Orange County</a></dt>
+<dd><p>The third-most populous county in California; home to Disneyland</p></dd>
+</dl>
+````````````````````````````````
+
+Description lists will not be parsed if no preceding terms exist. Note that terms cannot contain block elements.
+
+```````````````````````````````` example
+: No terms before this one
+
+# This is a heading, not a term
+: So this doesn't count either
+.
+<p>: No terms before this one</p>
+<h1>This is a heading, not a term</h1>
+<p>: So this doesn't count either</p>
+````````````````````````````````
