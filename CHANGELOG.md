@@ -247,4 +247,4 @@ The following things have been deprecated and will not be supported in v3.0:
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6...latest
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6...main

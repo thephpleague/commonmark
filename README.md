@@ -3,7 +3,7 @@
 [![Latest Version](https://img.shields.io/packagist/v/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
 [![Total Downloads](https://img.shields.io/packagist/dt/league/commonmark.svg?style=flat-square)](https://packagist.org/packages/league/commonmark)
 [![Software License](https://img.shields.io/badge/License-BSD--3-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/github/workflow/status/thephpleague/commonmark/Tests/latest.svg?style=flat-square)](https://github.com/thephpleague/commonmark/actions?query=workflow%3ATests+branch%3Alatest)
+[![Build Status](https://img.shields.io/github/workflow/status/thephpleague/commonmark/Tests/main.svg?style=flat-square)](https://github.com/thephpleague/commonmark/actions?query=workflow%3ATests+branch%3Amain)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/commonmark.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/commonmark)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/126/badge)](https://bestpractices.coreinfrastructure.org/projects/126)
@@ -142,7 +142,7 @@ Contributions to this library are **welcome**, especially ones that:
 
 Major refactoring to core parsing logic should be avoided if possible so that we can easily follow updates made to [the reference implementation][commonmark.js]. That being said, we will absolutely consider changes which don't deviate too far from the reference spec or which are favored by other popular CommonMark implementations.
 
-Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/latest/.github/CONTRIBUTING.md) for additional details.
+Please see [CONTRIBUTING](https://github.com/thephpleague/commonmark/blob/main/.github/CONTRIBUTING.md) for additional details.
 
 ## 🧪 Testing
 

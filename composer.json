@@ -100,7 +100,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-latest": "2.0-dev"
+            "dev-main": "2.0-dev"
         }
     },
     "config": {
