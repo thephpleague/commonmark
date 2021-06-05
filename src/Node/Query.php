@@ -112,8 +112,6 @@ final class Query
     }
 
     /**
-     * @param ?callable $condition
-     *
      * @psalm-param ?callable(Node): bool $condition
      *
      * @return callable(Node): bool
@@ -132,8 +130,6 @@ final class Query
     }
 
     /**
-     * @param ?callable $condition
-     *
      * @psalm-param ?callable(Node): bool $condition
      *
      * @return callable(Node): bool

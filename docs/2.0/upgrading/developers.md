@@ -6,7 +6,7 @@ description: Upgrade guide for those who develop custom extensions and more usin
 
 ## Minimum PHP Version
 
-The minimum supported PHP version was increased from 7.1 to 7.2.
+The minimum supported PHP version was increased from 7.1 to 7.3.
 
 ## `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` constructors
 

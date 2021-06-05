@@ -27,12 +27,20 @@ class HtmlBlock extends AbstractBlock implements StringContainerInterface
     public const TYPE_6_BLOCK_ELEMENT  = 6;
     public const TYPE_7_MISC_ELEMENT   = 7;
 
-    /** @var int */
+    /**
+     * @psalm-var self::TYPE_* $type
+     * @phpstan-var self::TYPE_* $type
+     */
     protected $type;
 
     /** @var string */
     protected $literal = '';
 
+    /**
+     * @psalm-param self::TYPE_* $type
+     *
+     * @phpstan-param self::TYPE_* $type
+     */
     public function __construct(int $type)
     {
         parent::__construct();
@@ -40,11 +48,21 @@ class HtmlBlock extends AbstractBlock implements StringContainerInterface
         $this->type = $type;
     }
 
+    /**
+     * @psalm-return self::TYPE_*
+     *
+     * @phpstan-return self::TYPE_*
+     */
     public function getType(): int
     {
         return $this->type;
     }
 
+    /**
+     * @psalm-param self::TYPE_* $type
+     *
+     * @phpstan-param self::TYPE_* $type
+     */
     public function setType(int $type): void
     {
         $this->type = $type;

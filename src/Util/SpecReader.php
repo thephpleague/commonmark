@@ -55,6 +55,8 @@ final class SpecReader
 
     /**
      * @return iterable<string, array{input: string, output: string, type: string, section: string, number: int}>
+     *
+     * @throws \RuntimeException if the file cannot be loaded
      */
     public static function readFile(string $filename): iterable
     {

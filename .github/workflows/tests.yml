@@ -14,7 +14,7 @@ jobs:
 
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.2
+                  php-version: 7.3
                   extensions: curl, mbstring
                   coverage: none
                   tools: composer:v2, cs2pr
@@ -28,12 +28,11 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: ['7.2', '7.3', '7.4']
+                php: ['7.3', '7.4', '8.0']
                 coverage: [true]
                 composer-flags: ['']
                 include:
-                    - php: '8.0'
-                    - php: '7.2'
+                    - php: '7.3'
                       coverage: false
                       composer-flags: '--prefer-lowest'
 
@@ -76,7 +75,7 @@ jobs:
 
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.2
+                  php-version: 7.3
                   extensions: curl, mbstring
                   coverage: none
                   tools: composer:v2
@@ -94,7 +93,7 @@ jobs:
 
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.2
+                  php-version: 7.3
                   extensions: curl, mbstring
                   coverage: none
                   tools: composer:v2

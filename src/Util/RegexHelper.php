@@ -159,6 +159,12 @@ final class RegexHelper
      *
      * @param int $type HTML block type
      *
+     * @psalm-param HtmlBlock::TYPE_* $type
+     *
+     * @phpstan-param HtmlBlock::TYPE_* $type
+     *
+     * @throws \InvalidArgumentException if an invalid type is given
+     *
      * @psalm-pure
      */
     public static function getHtmlBlockOpenRegex(int $type): string
@@ -187,6 +193,12 @@ final class RegexHelper
      * @internal
      *
      * @param int $type HTML block type
+     *
+     * @psalm-param HtmlBlock::TYPE_* $type
+     *
+     * @phpstan-param HtmlBlock::TYPE_* $type
+     *
+     * @throws \InvalidArgumentException if an invalid type is given
      *
      * @psalm-pure
      */

@@ -66,7 +66,7 @@ MD;
 <p>Welcome to my blog!</p>
 <h2>About Me</h2>
 <p>I'm a nerd who <strong>loves</strong> the <a href="https://commonmark.thephpleague.com">league/commonmark</a> library.</p>
-HTML
+HTML,
         ];
 
         yield [
@@ -79,7 +79,7 @@ HTML
 <p>Welcome to my blog!</p>
 <h2>About Me</h2>
 <p>I'm a nerd who <strong>loves</strong> the <a href="https://commonmark.thephpleague.com">league/commonmark</a> library.</p>
-HTML
+HTML,
         ];
 
         yield [
@@ -109,7 +109,7 @@ HTML
 <p class="text-center font-comic-sans">Welcome to my blog!</p>
 <h2>About Me</h2>
 <p class="text-center font-comic-sans">I'm a nerd who <strong>loves</strong> the <a class="btn btn-link" target="_blank" href="https://commonmark.thephpleague.com" rel="noopener noreferrer">league/commonmark</a> library.</p>
-HTML
+HTML,
         ];
 
         // One last test to theme some Bootstrap 4 content
@@ -185,7 +185,7 @@ MD
 </tr>
 </tbody>
 </table>
-HTML
+HTML,
         ];
     }
 }
