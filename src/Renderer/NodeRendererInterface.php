@@ -20,6 +20,8 @@ interface NodeRendererInterface
 {
     /**
      * @return HtmlElement|string|null
+     *
+     * @throws \InvalidArgumentException if the wrong type of Node is provided
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer);
 }

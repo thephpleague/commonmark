@@ -36,6 +36,11 @@ final class HtmlBlockParser extends AbstractBlockContinueParser
     /** @var bool */
     private $finished = false;
 
+    /**
+     * @psalm-param HtmlBlock::TYPE_* $blockType
+     *
+     * @phpstan-param HtmlBlock::TYPE_* $blockType
+     */
     public function __construct(int $blockType)
     {
         $this->block = new HtmlBlock($blockType);
@@ -72,7 +77,7 @@ final class HtmlBlockParser extends AbstractBlockContinueParser
 
         // Check for end condition
         // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-        if ($this->block->getType() >= HtmlBlock::TYPE_1_CODE_CONTAINER && $this->block->getType() <= HtmlBlock::TYPE_5_CDATA) {
+        if ($this->block->getType() <= HtmlBlock::TYPE_5_CDATA) {
             if (\preg_match(RegexHelper::getHtmlBlockCloseRegex($this->block->getType()), $line) === 1) {
                 $this->finished = true;
             }

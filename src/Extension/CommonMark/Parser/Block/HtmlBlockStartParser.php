@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
+use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
@@ -33,6 +34,8 @@ final class HtmlBlockStartParser implements BlockStartParserInterface
         $line = $tmpCursor->getRemainder();
 
         for ($blockType = 1; $blockType <= 7; $blockType++) {
+            /** @psalm-var HtmlBlock::TYPE_* $blockType */
+            /** @phpstan-var HtmlBlock::TYPE_* $blockType */
             $match = RegexHelper::matchAt(
                 RegexHelper::getHtmlBlockOpenRegex($blockType),
                 $line

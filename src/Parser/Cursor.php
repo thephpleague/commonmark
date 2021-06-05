@@ -243,7 +243,7 @@ class Cursor
             $asArray = \str_split($nextFewChars);
         }
 
-        foreach ($asArray as $relPos => $c) {
+        foreach ($asArray as $c) {
             if ($c === "\t") {
                 $charsToTab = 4 - ($this->column % 4);
                 if ($advanceByColumns) {
@@ -277,8 +277,6 @@ class Cursor
         $this->partiallyConsumedTab = false;
         $this->currentPosition     += $length;
         $this->column              += $length;
-
-        return;
     }
 
     /**

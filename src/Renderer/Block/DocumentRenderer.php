@@ -26,7 +26,6 @@ final class DocumentRenderer implements NodeRendererInterface
     /**
      * @param Document $node
      *
-     * @return string
      *
      * {@inheritdoc}
      *
