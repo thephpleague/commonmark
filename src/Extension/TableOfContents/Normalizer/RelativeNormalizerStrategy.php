@@ -40,17 +40,15 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
 
     public function addItem(int $level, ListItem $listItemToAdd): void
     {
-        \end($this->listItemStack);
-        $previousLevel = \key($this->listItemStack);
+        $previousLevel = \array_key_last($this->listItemStack);
 
         // Pop the stack if we're too deep
         while ($previousLevel !== null && $level < $previousLevel) {
             \array_pop($this->listItemStack);
-            \end($this->listItemStack);
-            $previousLevel = \key($this->listItemStack);
+            $previousLevel = \array_key_last($this->listItemStack);
         }
 
-        $lastListItem = \current($this->listItemStack);
+        $lastListItem = \end($this->listItemStack);
 
         // Need to go one level deeper? Add that level
         if ($lastListItem !== false && $level > $previousLevel) {
