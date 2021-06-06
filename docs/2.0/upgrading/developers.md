@@ -375,3 +375,7 @@ Need to generate unique slugs in your extensions? Use the new [Slug Normalizer](
 ## Text Normalizers
 
 The second argument to `TextNormalizerInterface::normalize()` used to allow any arbitrary object. This was changed to an `array` so that multiple things can be passed in at once.
+
+## `title` attribute for `Link` and `Image` nodes
+
+The `title` attribute for `Link` and `Image` nodes is now stored using a dedicated property instead of stashing it in `$data`.  Use `getTitle()` and `setTitle()` to access the value.

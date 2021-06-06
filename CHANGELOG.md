@@ -167,6 +167,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Block which can't contain inlines will no longer be asked to render inlines
  - `AnonymousFootnoteRefParser` and `HeadingPermalinkProcessor` now implement `EnvironmentAwareInterface` instead of `ConfigurationAwareInterface`
  - The second argument to `TextNormalizerInterface::normalize()` must now be an array
+ - The `title` attribute for `Link` and `Image` nodes is now stored using a dedicated property instead of stashing it in `$data`
 
 ### Fixed
 

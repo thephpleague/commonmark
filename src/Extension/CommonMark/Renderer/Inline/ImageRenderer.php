@@ -60,8 +60,8 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
         $alt          = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt ?? '');
 
-        if ($node->data->has('title')) {
-            $attrs['title'] = $node->data->get('title');
+        if (($title = $node->getTitle()) !== null) {
+            $attrs['title'] = $title;
         }
 
         return new HtmlElement('img', $attrs, '', true);

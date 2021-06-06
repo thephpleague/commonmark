@@ -54,8 +54,8 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
             $attrs['href'] = $node->getUrl();
         }
 
-        if ($node->data->has('title')) {
-            $attrs['title'] = $node->data->get('title');
+        if (($title = $node->getTitle()) !== null) {
+            $attrs['title'] = $title;
         }
 
         if (isset($attrs['target']) && $attrs['target'] === '_blank' && ! isset($attrs['rel'])) {
