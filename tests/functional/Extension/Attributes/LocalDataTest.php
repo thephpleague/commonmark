@@ -44,7 +44,7 @@ final class LocalDataTest extends AbstractLocalDataTest
      */
     public function dataProvider(): iterable
     {
-        foreach ($this->loadTests(__DIR__ . '/data', '*.md') as $test) {
+        foreach ($this->loadTests(__DIR__ . '/data') as $test) {
             yield $test;
         }
     }
