@@ -33,6 +33,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `DashParser` (extracted from `PunctuationParser`)
    - `DelimiterParser`
    - `DocumentBlockParser`
+   - `DocumentPreRenderEvent`
    - `DocumentRenderedEvent`
    - `EllipsesParser` (extracted from `PunctuationParser`)
    - `ExpressionInterface`

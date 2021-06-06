@@ -74,6 +74,10 @@ This event is dispatched just before any processing is done. It can be used to p
 
 This event is dispatched once all other processing is done.  This offers extensions the opportunity to inspect and modify the [Abstract Syntax Tree](/2.0/customization/abstract-syntax-tree/) prior to rendering.
 
+### `League\CommonMark\Event\DocumentPreRenderEvent`
+
+This event is dispatched by the renderer just before rendering begins.  Like with `DocumentParsedEvent`, this offers extensions the opportunity to inspect and modify the [Abstract Syntax Tree](/2.0/customization/abstract-syntax-tree/) prior to rendering, but with the added knowledge of which format is being rendered to (e.g. `html`).
+
 ### `League\CommonMark\Event\DocumentRenderedEvent`
 
 This event is dispatched once the rendering step has been completed, just before the output is returned.  The final output can be adjusted at this point or additional metadata can be attached to the return object.
