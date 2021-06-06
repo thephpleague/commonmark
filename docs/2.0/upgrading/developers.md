@@ -186,8 +186,8 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `InlineParserEngine`                                                                  | `Parser\InlineParserEngine`                                                              |
 | `Block\Renderer\DocumentRenderer`                                                     | `Renderer\Block\DocumentRenderer`                                                        |
 | `Block\Renderer\ParagraphRenderer`                                                    | `Renderer\Block\ParagraphRenderer`                                                       |
+| `ElementRendererInterface`                                                            | `Renderer\ChildNodeRendererInterface`                                                    |
 | `HtmlRenderer`                                                                        | `Renderer\HtmlRenderer`                                                                  |
-| `ElementRendererInterface`                                                            | `Renderer\HtmlRendererInterface`                                                         |
 | `Inline\Renderer\NewlineRenderer`                                                     | `Renderer\Inline\NewlineRenderer`                                                        |
 | `Inline\Renderer\TextRenderer`                                                        | `Renderer\Inline\TextRenderer`                                                           |
 | `Block\Renderer\BlockRendererInterface` and `Inline\Renderer\InlineRendererInterface` | `Renderer\NodeRendererInterface`                                                         |

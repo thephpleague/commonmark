@@ -104,8 +104,8 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `Block\Element\Document`                                                              | `Node\Block\Document`                                                                    |
 | `DocParser`                                                                           | `Parser\MarkdownParser`                                                                  |
 | `DocParserInterface`                                                                  | `Parser\MarkdownParserInterface`                                                         |
+| `ElementRendererInterface`                                                            | `Renderer\ChildNodeRendererInterface`                                                    |
 | `HtmlRenderer`                                                                        | `Renderer\HtmlRenderer`                                                                  |
-| `ElementRendererInterface`                                                            | `Renderer\HtmlRendererInterface`                                                         |
 
 (This is only a partial list of the clases and interfaces you're likely to work with as a consumer – see the [developer upgrade guide](/2.0/upgrading/developers/) for the complete list.)
 

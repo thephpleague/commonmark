@@ -36,11 +36,11 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `DocumentRenderedEvent`
    - `EllipsesParser` (extracted from `PunctuationParser`)
    - `ExpressionInterface`
-   - `HtmlRendererInterface`
    - `InlineParserEngineInterface`
    - `InlineParserMatch`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
+   - `MarkdownRendererInterface`
    - `Query`
    - `ReferenceableInterface`
    - `RenderedContent`

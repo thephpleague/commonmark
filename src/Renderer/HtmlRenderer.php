@@ -25,7 +25,7 @@ use League\CommonMark\Output\RenderedContent;
 use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInterface
+final class HtmlRenderer implements MarkdownRendererInterface, ChildNodeRendererInterface
 {
     /**
      * @var EnvironmentInterface
@@ -39,9 +39,9 @@ final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInte
         $this->environment = $environment;
     }
 
-    public function renderDocument(Document $node): RenderedContentInterface
+    public function renderDocument(Document $document): RenderedContentInterface
     {
-        $output = new RenderedContent($node, (string) $this->renderNode($node));
+        $output = new RenderedContent($document, (string) $this->renderNode($document));
 
         $event = new DocumentRenderedEvent($output);
         $this->environment->dispatch($event);
