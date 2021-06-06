@@ -132,6 +132,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `EnvironmentInterface::HTML_INPUT_ALLOW` is now `HtmlFilter::ALLOW`
    - `EnvironmentInterface::HTML_INPUT_ESCAPE` is now `HtmlFilter::ESCAPE`
    - `EnvironmentInterface::HTML_INPUT_STRIP` is now `HtmlFilter::STRIP`
+   - `TableCell::TYPE_HEAD` is now `TableCell::TYPE_HEADER`
+   - `TableCell::TYPE_BODY` is now `TableCell::TYPE_DATA`
  - Changed the visibility of the following properties:
    - `TableCell::$align` is now `private`
    - `TableCell::$type` is now `private`

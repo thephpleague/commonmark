@@ -41,6 +41,8 @@ final class TableCellRenderer implements NodeRendererInterface
             $attrs['align'] = $node->getAlign();
         }
 
-        return new HtmlElement($node->getType(), $attrs, $childRenderer->renderNodes($node->children()));
+        $tag = $node->getType() === TableCell::TYPE_HEADER ? 'th' : 'td';
+
+        return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()));
     }
 }

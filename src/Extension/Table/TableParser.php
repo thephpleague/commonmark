@@ -42,6 +42,8 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
 
     /**
      * @var array<int, string|null>
+     * @psalm-var array<int, TableCell::ALIGN_*|null>
+     * @phpstan-var array<int, TableCell::ALIGN_*|null>
      *
      * @psalm-readonly
      */
@@ -64,6 +66,10 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
     /**
      * @param array<int, string|null> $columns
      * @param array<int, string>      $headerCells
+     *
+     * @psalm-param array<int, TableCell::ALIGN_*|null> $columns
+     *
+     * @phpstan-param array<int, TableCell::ALIGN_*|null> $columns
      */
     public function __construct(array $columns, array $headerCells)
     {
@@ -116,7 +122,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
         for ($i = 0; $i < $headerColumns; $i++) {
             $cell      = $this->headerCells[$i];
             $tableCell = $this->parseCell($cell, $i, $inlineParser);
-            $tableCell->setType(TableCell::TYPE_HEAD);
+            $tableCell->setType(TableCell::TYPE_HEADER);
             $headerRow->appendChild($tableCell);
         }
 

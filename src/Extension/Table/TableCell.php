@@ -19,8 +19,8 @@ use League\CommonMark\Node\Block\AbstractBlock;
 
 final class TableCell extends AbstractBlock
 {
-    public const TYPE_HEAD = 'th';
-    public const TYPE_BODY = 'td';
+    public const TYPE_HEADER = 'header';
+    public const TYPE_DATA   = 'data';
 
     public const ALIGN_LEFT   = 'left';
     public const ALIGN_RIGHT  = 'right';
@@ -28,19 +28,30 @@ final class TableCell extends AbstractBlock
 
     /**
      * @var string
+     * @psalm-var self::TYPE_*
+     * @phpstan-var self::TYPE_*
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $type = self::TYPE_BODY;
+    private $type = self::TYPE_DATA;
 
     /**
      * @var string|null
+     * @psalm-var self::ALIGN_*|null
+     * @phpstan-var self::ALIGN_*|null
      *
      * @psalm-readonly-allow-private-mutation
      */
     private $align;
 
-    public function __construct(string $type = self::TYPE_BODY, ?string $align = null)
+    /**
+     * @psalm-param self::TYPE_* $type
+     * @psalm-param self::ALIGN_*|null $align
+     *
+     * @phpstan-param self::TYPE_* $type
+     * @phpstan-param self::ALIGN_*|null $align
+     */
+    public function __construct(string $type = self::TYPE_DATA, ?string $align = null)
     {
         parent::__construct();
 
@@ -48,21 +59,41 @@ final class TableCell extends AbstractBlock
         $this->align = $align;
     }
 
+    /**
+     * @psalm-return self::TYPE_*
+     *
+     * @phpstan-return self::TYPE_*
+     */
     public function getType(): string
     {
         return $this->type;
     }
 
+    /**
+     * @psalm-param self::TYPE_* $type
+     *
+     * @phpstan-param self::TYPE_* $type
+     */
     public function setType(string $type): void
     {
         $this->type = $type;
     }
 
+    /**
+     * @psalm-return self::ALIGN_*|null
+     *
+     * @phpstan-return self::ALIGN_*|null
+     */
     public function getAlign(): ?string
     {
         return $this->align;
     }
 
+    /**
+     * @psalm-param self::ALIGN_*|null $align
+     *
+     * @phpstan-param self::ALIGN_*|null $align
+     */
     public function setAlign(?string $align): void
     {
         $this->align = $align;

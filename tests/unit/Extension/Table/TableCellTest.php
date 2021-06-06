@@ -20,21 +20,21 @@ final class TableCellTest extends TestCase
 {
     public function testDefaultType(): void
     {
-        $this->assertSame(TableCell::TYPE_BODY, (new TableCell())->getType());
+        $this->assertSame(TableCell::TYPE_DATA, (new TableCell())->getType());
     }
 
     public function testTypeConstructorArgument(): void
     {
-        $this->assertSame(TableCell::TYPE_HEAD, (new TableCell(TableCell::TYPE_HEAD))->getType());
-        $this->assertSame(TableCell::TYPE_BODY, (new TableCell(TableCell::TYPE_BODY))->getType());
+        $this->assertSame(TableCell::TYPE_HEADER, (new TableCell(TableCell::TYPE_HEADER))->getType());
+        $this->assertSame(TableCell::TYPE_DATA, (new TableCell(TableCell::TYPE_DATA))->getType());
     }
 
     public function testSetType(): void
     {
-        $cell = new TableCell(TableCell::TYPE_HEAD);
-        $cell->setType(TableCell::TYPE_BODY);
+        $cell = new TableCell(TableCell::TYPE_HEADER);
+        $cell->setType(TableCell::TYPE_DATA);
 
-        $this->assertSame(TableCell::TYPE_BODY, $cell->getType());
+        $this->assertSame(TableCell::TYPE_DATA, $cell->getType());
     }
 
     public function testDefaultAlign(): void
@@ -44,10 +44,10 @@ final class TableCellTest extends TestCase
 
     public function testAlignConstructorArgument(): void
     {
-        $this->assertNull((new TableCell(TableCell::TYPE_BODY, null))->getAlign());
-        $this->assertSame(TableCell::ALIGN_LEFT, (new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_LEFT))->getAlign());
-        $this->assertSame(TableCell::ALIGN_CENTER, (new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_CENTER))->getAlign());
-        $this->assertSame(TableCell::ALIGN_RIGHT, (new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_RIGHT))->getAlign());
+        $this->assertNull((new TableCell(TableCell::TYPE_DATA, null))->getAlign());
+        $this->assertSame(TableCell::ALIGN_LEFT, (new TableCell(TableCell::TYPE_DATA, TableCell::ALIGN_LEFT))->getAlign());
+        $this->assertSame(TableCell::ALIGN_CENTER, (new TableCell(TableCell::TYPE_DATA, TableCell::ALIGN_CENTER))->getAlign());
+        $this->assertSame(TableCell::ALIGN_RIGHT, (new TableCell(TableCell::TYPE_DATA, TableCell::ALIGN_RIGHT))->getAlign());
     }
 
     public function testSetAlign(): void

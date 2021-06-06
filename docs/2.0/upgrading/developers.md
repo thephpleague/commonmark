@@ -276,15 +276,17 @@ The following classes have been removed:
 | `ConverterInterface`           | Use `MarkdownConverterInterface`.  This interface has the same methods so it should be a drop-in replacement. |
 | `UnmatchedBlockCloser`         | No longer needed 2.x                                                                                          |
 
-## `EnvironmentInterface::HTML_INPUT_*` constants moved
+## Renamed constants
 
-The following constants have been moved:
+The following constants have been moved/renamed:
 
-| Old Location (1.x)                        | New Location (2.0)   |
-| ----------------------------------------- | -------------------- |
-| `EnvironmentInterface::HTML_INPUT_ALLOW`  | `HtmlFilter::ALLOW`  |
-| `EnvironmentInterface::HTML_INPUT_ESCAPE` | `HtmlFilter::ESCAPE` |
-| `EnvironmentInterface::HTML_INPUT_STRIP`  | `HtmlFilter::STRIP`  |
+| Old Name/Location (1.x)                   | New Name/Location (2.0)  |
+| ----------------------------------------- | ------------------------ |
+| `EnvironmentInterface::HTML_INPUT_ALLOW`  | `HtmlFilter::ALLOW`      |
+| `EnvironmentInterface::HTML_INPUT_ESCAPE` | `HtmlFilter::ESCAPE`     |
+| `EnvironmentInterface::HTML_INPUT_STRIP`  | `HtmlFilter::STRIP`      |
+| `TableCell::TYPE_HEAD`                    | `TableCell::TYPE_HEADER` |
+| `TableCell::TYPE_BODY`                    | `TableCell::TYPE_DATA`   |
 
 ## Renamed Methods
 
