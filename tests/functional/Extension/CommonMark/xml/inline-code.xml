@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>I use the </text>
+        <code>CommonMarkConverter</code>
+        <text> everywhere I can!</text>
+    </paragraph>
+</document>

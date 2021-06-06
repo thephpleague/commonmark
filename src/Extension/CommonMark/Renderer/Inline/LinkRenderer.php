@@ -22,10 +22,11 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\RegexHelper;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
-final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInterface
+final class LinkRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface
@@ -66,5 +67,27 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'link';
+    }
+
+    /**
+     * @param Link $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        Link::assertInstanceOf($node);
+
+        return [
+            'destination' => $node->getUrl(),
+            'title' => $node->getTitle() ?? '',
+        ];
     }
 }

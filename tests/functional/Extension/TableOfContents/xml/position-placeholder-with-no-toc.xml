@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>Here is my placeholder:</text>
+    </paragraph>
+    <table_of_contents_placeholder />
+    <paragraph>
+        <text>But I don't actually have any heading elements here!</text>
+    </paragraph>
+</document>

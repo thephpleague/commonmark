@@ -23,8 +23,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class ListItemRenderer implements NodeRendererInterface
+final class ListItemRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param ListItem $node
@@ -49,6 +50,19 @@ final class ListItemRenderer implements NodeRendererInterface
         $attrs = $node->data->get('attributes');
 
         return new HtmlElement('li', $attrs, $contents);
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'item';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 
     private function startsTaskListItem(ListItem $block): bool

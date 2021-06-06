@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>Just some plain text,</text>
+        <softbreak />
+        <text>some new lines,</text>
+        <softbreak />
+        <linebreak />
+        <text>and some hard breaks.</text>
+    </paragraph>
+    <paragraph>
+        <text>And a &quot;quoted string&quot; for good measure!</text>
+    </paragraph>
+</document>

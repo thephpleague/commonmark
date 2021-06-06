@@ -19,8 +19,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class TableRowRenderer implements NodeRendererInterface
+final class TableRowRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param TableRow $node
@@ -38,5 +39,18 @@ final class TableRowRenderer implements NodeRendererInterface
         $separator = $childRenderer->getInnerSeparator();
 
         return new HtmlElement('tr', $attrs, $separator . $childRenderer->renderNodes($node->children()) . $separator);
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'table_row';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

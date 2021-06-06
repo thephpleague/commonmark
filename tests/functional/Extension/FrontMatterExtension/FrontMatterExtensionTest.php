@@ -10,6 +10,8 @@ use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Output\RenderedContentInterface;
+use League\CommonMark\Parser\MarkdownParser;
+use League\CommonMark\Xml\XmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 final class FrontMatterExtensionTest extends TestCase
@@ -105,5 +107,39 @@ EOT;
 EOT;
         $converter = new MarkdownConverter($this->environment);
         $converter->convertToHtml($markdown);
+    }
+
+    public function testRenderXml(): void
+    {
+        $markdown = <<<MD
+---
+layout: post
+title: Blogging Like a Hacker
+redirect_from:
+- /blog/my-post
+- /blog/2020-04/my-post
+---
+
+# Hello World!
+
+This is my awesome blog post
+MD;
+
+        $expectedXml = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <heading level="1">
+        <text>Hello World!</text>
+    </heading>
+    <paragraph>
+        <text>This is my awesome blog post</text>
+    </paragraph>
+</document>
+XML;
+
+        $document = (new MarkdownParser($this->environment))->parse($markdown);
+        $xml      = (new XmlRenderer($this->environment))->renderDocument($document)->getContent();
+
+        $this->assertSame($expectedXml, \rtrim($xml));
     }
 }

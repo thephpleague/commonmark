@@ -19,8 +19,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class TableSectionRenderer implements NodeRendererInterface
+final class TableSectionRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param TableSection $node
@@ -44,5 +45,26 @@ final class TableSectionRenderer implements NodeRendererInterface
         $tag = $node->getType() === TableSection::TYPE_HEAD ? 'thead' : 'tbody';
 
         return new HtmlElement($tag, $attrs, $separator . $childRenderer->renderNodes($node->children()) . $separator);
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'table_section';
+    }
+
+    /**
+     * @param TableSection $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        TableSection::assertInstanceOf($node);
+
+        return [
+            'type' => $node->getType(),
+        ];
     }
 }

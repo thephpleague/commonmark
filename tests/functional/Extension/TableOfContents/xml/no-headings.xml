@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>This is a document </text>
+        <strong>
+            <text>without any headings</text>
+        </strong>
+    </paragraph>
+</document>

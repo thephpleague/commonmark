@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <heading level="1">
+        <text>One</text>
+    </heading>
+    <heading level="2">
+        <text>Two</text>
+    </heading>
+    <heading level="1">
+        <text>One</text>
+    </heading>
+    <heading level="2">
+        <text>Two</text>
+    </heading>
+    <heading level="3">
+        <text>Three</text>
+    </heading>
+    <heading level="4">
+        <text>Four</text>
+    </heading>
+    <heading level="5">
+        <text>Five</text>
+    </heading>
+    <heading level="6">
+        <text>Six</text>
+    </heading>
+</document>

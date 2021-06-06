@@ -22,7 +22,7 @@ use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
 /**
  * @internal
  */
-final class LocalDataTest extends AbstractLocalDataTest
+final class FootnoteExtensionMarkdownTest extends AbstractLocalDataTest
 {
     /** @var MarkdownConverter */
     private $commonMarkConverter;
@@ -70,7 +70,7 @@ final class LocalDataTest extends AbstractLocalDataTest
      */
     public function dataProvider(): iterable
     {
-        foreach ($this->loadTests(__DIR__ . '/data') as $test) {
+        foreach ($this->loadTests(__DIR__ . '/md') as $test) {
             yield $test;
         }
     }

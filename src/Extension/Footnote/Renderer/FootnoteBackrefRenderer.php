@@ -19,10 +19,11 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
-final class FootnoteBackrefRenderer implements NodeRendererInterface, ConfigurationAwareInterface
+final class FootnoteBackrefRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
     public const DEFAULT_SYMBOL = '↩';
 
@@ -56,5 +57,26 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, Configurat
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'footnote_backref';
+    }
+
+    /**
+     * @param FootnoteBackref $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        FootnoteBackref::assertInstanceOf($node);
+
+        return [
+            'reference' => $node->getReference()->getLabel(),
+        ];
     }
 }

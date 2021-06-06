@@ -22,10 +22,11 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\RegexHelper;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
-final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareInterface
+final class ImageRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface
@@ -68,5 +69,27 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'image';
+    }
+
+    /**
+     * @param Image $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        Image::assertInstanceOf($node);
+
+        return [
+            'destination' => $node->getUrl(),
+            'title' => $node->getTitle() ?? '',
+        ];
     }
 }

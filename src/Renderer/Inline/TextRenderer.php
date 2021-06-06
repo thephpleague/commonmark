@@ -21,8 +21,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\Xml;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class TextRenderer implements NodeRendererInterface
+final class TextRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param Text $node
@@ -36,5 +37,18 @@ final class TextRenderer implements NodeRendererInterface
         Text::assertInstanceOf($node);
 
         return Xml::escape($node->getLiteral());
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'text';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

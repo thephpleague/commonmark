@@ -16,7 +16,9 @@ namespace League\CommonMark\Extension\TableOfContents;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use League\CommonMark\Extension\CommonMark\Renderer\Block\ListBlockRenderer;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsPlaceholder;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
@@ -38,6 +40,7 @@ final class TableOfContentsExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
+        $environment->addRenderer(TableOfContents::class, new TableOfContentsRenderer(new ListBlockRenderer()));
         $environment->addEventListener(DocumentParsedEvent::class, [new TableOfContentsBuilder(), 'onDocumentParsed'], -150);
 
         // phpcs:ignore SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed

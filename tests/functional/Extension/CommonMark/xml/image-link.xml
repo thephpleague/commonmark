@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <link destination="https://commonmark.thephpleague.com" title="">
+            <text>https://commonmark.thephpleague.com</text>
+        </link>
+    </paragraph>
+    <paragraph>
+        <link destination="https://commonmark.thephpleague.com" title="">
+            <text>Read the docs</text>
+        </link>
+    </paragraph>
+    <paragraph>
+        <link destination="https://commonmark.thephpleague.com" title="Documentation for league/commonmark">
+            <text>Read the docs</text>
+        </link>
+    </paragraph>
+    <paragraph>
+        <image destination="foo.jpg" title="" />
+    </paragraph>
+    <paragraph>
+        <image destination="foo.jpg" title="">
+            <text>alt text</text>
+        </image>
+    </paragraph>
+    <paragraph>
+        <image destination="foo.jpg" title="title">
+            <text>alt text</text>
+        </image>
+    </paragraph>
+    <paragraph>
+        <image destination="foo.jpg" title="title" />
+    </paragraph>
+</document>

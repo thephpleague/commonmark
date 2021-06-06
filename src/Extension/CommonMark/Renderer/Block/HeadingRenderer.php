@@ -21,8 +21,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class HeadingRenderer implements NodeRendererInterface
+final class HeadingRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param Heading $node
@@ -40,5 +41,24 @@ final class HeadingRenderer implements NodeRendererInterface
         $attrs = $node->data->get('attributes');
 
         return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()));
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'heading';
+    }
+
+    /**
+     * @param Heading $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        Heading::assertInstanceOf($node);
+
+        return ['level' => $node->getLevel()];
     }
 }

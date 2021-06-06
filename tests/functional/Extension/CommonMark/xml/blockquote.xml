@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <block_quote>
+        <block_quote>
+            <paragraph>
+                <text>You miss 100% of the shots you don't take</text>
+            </paragraph>
+        </block_quote>
+        <paragraph>
+            <text>– Wayne Gretzky</text>
+        </paragraph>
+    </block_quote>
+    <paragraph>
+        <text>– Michael Scott</text>
+    </paragraph>
+</document>

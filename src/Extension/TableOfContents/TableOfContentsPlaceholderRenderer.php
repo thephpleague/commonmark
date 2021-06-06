@@ -16,8 +16,9 @@ namespace League\CommonMark\Extension\TableOfContents;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class TableOfContentsPlaceholderRenderer implements NodeRendererInterface
+final class TableOfContentsPlaceholderRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * {@inheritDoc}
@@ -25,5 +26,18 @@ final class TableOfContentsPlaceholderRenderer implements NodeRendererInterface
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
         return '<!-- table of contents -->';
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'table_of_contents_placeholder';
+    }
+
+    /**
+     * @return array<string, scalar>
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

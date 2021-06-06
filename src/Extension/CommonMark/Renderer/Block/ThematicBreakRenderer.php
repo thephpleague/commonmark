@@ -21,8 +21,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class ThematicBreakRenderer implements NodeRendererInterface
+final class ThematicBreakRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param ThematicBreak $node
@@ -38,5 +39,18 @@ final class ThematicBreakRenderer implements NodeRendererInterface
         $attrs = $node->data->get('attributes');
 
         return new HtmlElement('hr', $attrs, '', true);
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'thematic_break';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

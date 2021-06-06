@@ -15,6 +15,10 @@ The root node of the AST will always be a `Document` object.  You can obtain thi
 - By calling the `parse()` method on the `MarkdownParser`
 - By calling the `getDocument()` method on either the `DocumentPreParsedEvent` or `DocumentParsedEvent` [see the (Event Dispatcher documentation](/2.0/customization/event-dispatcher/))
 
+## Visualization
+
+Even with an interactive debugger it can be tricky to view an entire tree at once.  Consider using the [`XmlRenderer`](/2.0/xml/) to provide a simple text-based representation of the AST for debugging purposes.
+
 ## Node Traversal
 
 There are three different ways to traverse/iterate the Nodes within the AST:

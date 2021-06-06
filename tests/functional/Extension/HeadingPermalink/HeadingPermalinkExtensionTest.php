@@ -14,9 +14,12 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\HeadingPermalink;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Parser\MarkdownParser;
+use League\CommonMark\Xml\XmlRenderer;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingPermalinkExtensionTest extends TestCase
@@ -157,5 +160,31 @@ EOT;
 EOT;
 
         $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
+    }
+
+    public function testXml(): void
+    {
+        $md = '# Hello *World*';
+
+        $expectedXml = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <heading level="1">
+        <heading_permalink slug="hello-world" />
+        <text>Hello </text>
+        <emph>
+            <text>World</text>
+        </emph>
+    </heading>
+</document>
+XML;
+
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $document = (new MarkdownParser($environment))->parse($md);
+
+        $this->assertSame($expectedXml, \rtrim((new XmlRenderer($environment))->renderDocument($document)->getContent()));
     }
 }

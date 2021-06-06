@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>This footnote has no content</text>
+        <footnote_ref reference="ref" />
+    </paragraph>
+    <footnote_container>
+        <footnote reference="ref">
+            <footnote_backref reference="ref" />
+        </footnote>
+    </footnote_container>
+</document>

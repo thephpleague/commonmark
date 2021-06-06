@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#these" title="">
+                <text>These</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#should" title="">
+                        <text>Should</text>
+                    </link>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#be" title="">
+                                <text>Be</text>
+                            </link>
+                        </item>
+                    </list>
+                </item>
+                <item>
+                    <link destination="#in" title="">
+                        <text>In</text>
+                    </link>
+                </item>
+            </list>
+        </item>
+        <item>
+            <link destination="#an" title="">
+                <text>An</text>
+            </link>
+        </item>
+        <item>
+            <link destination="#unordered" title="">
+                <text>Unordered</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#list" title="">
+                        <text>List</text>
+                    </link>
+                </item>
+            </list>
+        </item>
+    </table_of_contents>
+    <heading level="1">
+        <heading_permalink slug="these" />
+        <text>These</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="should" />
+        <text>Should</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="be" />
+        <text>Be</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="in" />
+        <text>In</text>
+    </heading>
+    <heading level="1">
+        <heading_permalink slug="an" />
+        <text>An</text>
+    </heading>
+    <heading level="1">
+        <heading_permalink slug="unordered" />
+        <text>Unordered</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="list" />
+        <text>List</text>
+    </heading>
+</document>

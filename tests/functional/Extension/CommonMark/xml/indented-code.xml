@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>This code has an unnecessary check:</text>
+    </paragraph>
+    <code_block>&lt;?php
+
+if (true) {
+    echo &quot;Hello World!&quot;;
+}
+</code_block>
+    <paragraph>
+        <text>Do you see it?</text>
+    </paragraph>
+</document>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>a</text>
+        <html_inline>&lt;sup&gt;</html_inline>
+        <text>2</text>
+        <html_inline>&lt;/sup&gt;</html_inline>
+        <text> + b</text>
+        <html_inline>&lt;sup&gt;</html_inline>
+        <text>2</text>
+        <html_inline>&lt;/sup&gt;</html_inline>
+        <text> = c</text>
+        <html_inline>&lt;sup&gt;</html_inline>
+        <text>2</text>
+        <html_inline>&lt;/sup&gt;</html_inline>
+    </paragraph>
+</document>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>Hello World! </text>
+        <footnote_ref reference="ref" />
+    </paragraph>
+    <footnote_container>
+        <footnote reference="ref">
+            <paragraph>
+                <text>A common type of simple computer program</text>
+                <footnote_backref reference="ref" />
+            </paragraph>
+        </footnote>
+    </footnote_container>
+</document>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>Donec sed odio dui</text>
+        <footnote_ref reference="ref" />
+        <text>.</text>
+    </paragraph>
+    <paragraph>
+        <text>Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit sit amet non magna.</text>
+        <softbreak />
+        <text>Nullam quis risus eget urna mollis</text>
+        <footnote_ref reference="ref2" />
+        <text> ornare vel eu leo. Donec id elit non mi</text>
+        <softbreak />
+        <text>porta gravida at eget metus. Duis mollis, est non commodo luctus, nisi erat porttitor</text>
+        <softbreak />
+        <text>ligula, eget lacinia odio sem nec elit.</text>
+    </paragraph>
+    <paragraph>
+        <text>Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus,</text>
+        <softbreak />
+        <text>nisi erat porttitor ligula, eget lacinia odio</text>
+        <footnote_ref reference="ref3" />
+        <text> sem nec elit. Donec sed odio dui.</text>
+        <softbreak />
+        <text>Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus</text>
+        <softbreak />
+        <text>commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</text>
+        <softbreak />
+        <text>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</text>
+    </paragraph>
+    <footnote_container>
+        <footnote reference="ref">
+            <paragraph>
+                <text>Risus Euismod Pharetra</text>
+                <footnote_backref reference="ref" />
+            </paragraph>
+        </footnote>
+        <footnote reference="ref2">
+            <paragraph>
+                <text>Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl</text>
+                <softbreak />
+                <text>consectetur et. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum.</text>
+                <footnote_backref reference="ref2" />
+            </paragraph>
+        </footnote>
+        <footnote reference="ref3">
+            <paragraph>
+                <text>Ullamcorper Etiam Fringilla (test)</text>
+                <footnote_backref reference="ref3" />
+            </paragraph>
+        </footnote>
+    </footnote_container>
+</document>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>Hello</text>
+        <footnote_ref reference="scriptjavascriptaler" />
+        <text> World!</text>
+    </paragraph>
+    <footnote_container>
+        <footnote reference="scriptjavascriptaler">
+            <paragraph>
+                <text>&lt;script&gt;javascript:alert('XSS')&lt;/script&gt;</text>
+                <footnote_backref reference="scriptjavascriptaler" />
+            </paragraph>
+        </footnote>
+    </footnote_container>
+</document>
