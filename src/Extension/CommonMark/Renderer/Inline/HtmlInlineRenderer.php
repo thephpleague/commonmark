@@ -42,9 +42,7 @@ final class HtmlInlineRenderer implements NodeRendererInterface, ConfigurationAw
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof HtmlInline)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        HtmlInline::assertInstanceOf($node);
 
         $htmlInput = $this->config->get('html_input');
 

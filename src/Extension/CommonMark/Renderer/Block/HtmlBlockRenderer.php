@@ -42,9 +42,7 @@ final class HtmlBlockRenderer implements NodeRendererInterface, ConfigurationAwa
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof HtmlBlock)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        HtmlBlock::assertInstanceOf($node);
 
         $htmlInput = $this->config->get('html_input');
 

@@ -33,9 +33,7 @@ final class ThematicBreakRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof ThematicBreak)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        ThematicBreak::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

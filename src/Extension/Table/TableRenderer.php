@@ -31,9 +31,7 @@ final class TableRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! $node instanceof Table) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Table::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

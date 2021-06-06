@@ -26,16 +26,13 @@ final class DocumentRenderer implements NodeRendererInterface
     /**
      * @param Document $node
      *
-     *
      * {@inheritdoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {
-        if (! ($node instanceof Document)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Document::assertInstanceOf($node);
 
         $wholeDoc = $childRenderer->renderNodes($node->children());
 

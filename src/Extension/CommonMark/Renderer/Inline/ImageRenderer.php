@@ -43,9 +43,7 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Image)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Image::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

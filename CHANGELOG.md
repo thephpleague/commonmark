@@ -65,6 +65,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserContext::getSubMatches()`
    - `LinkParserHelper::parsePartialLinkLabel()`
    - `LinkParserHelper::parsePartialLinkTitle()`
+   - `Node::assertInstanceOf()`
    - `RegexHelper::isLetter()`
    - `StringContainerInterface::setLiteral()`
    - `TableCell::getType()`

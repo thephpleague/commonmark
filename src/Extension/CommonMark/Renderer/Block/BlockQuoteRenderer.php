@@ -33,9 +33,7 @@ final class BlockQuoteRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof BlockQuote)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        BlockQuote::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

@@ -31,9 +31,7 @@ final class TableRowRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! $node instanceof TableRow) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        TableRow::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

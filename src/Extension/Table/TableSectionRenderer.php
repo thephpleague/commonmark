@@ -31,9 +31,7 @@ final class TableSectionRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! $node instanceof TableSection) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        TableSection::assertInstanceOf($node);
 
         if (! $node->hasChildren()) {
             return '';

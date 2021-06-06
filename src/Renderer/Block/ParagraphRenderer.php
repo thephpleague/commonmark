@@ -34,9 +34,7 @@ final class ParagraphRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Paragraph)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Paragraph::assertInstanceOf($node);
 
         if ($this->inTightList($node)) {
             return $childRenderer->renderNodes($node->children());

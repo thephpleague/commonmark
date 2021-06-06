@@ -34,9 +34,7 @@ final class FencedCodeRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof FencedCode)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        FencedCode::assertInstanceOf($node);
 
         $attrs = $node->data->getData('attributes');
 

@@ -33,9 +33,7 @@ final class StrongRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Strong)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Strong::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

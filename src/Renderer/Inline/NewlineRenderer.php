@@ -47,9 +47,7 @@ final class NewlineRenderer implements NodeRendererInterface, ConfigurationAware
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Newline)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Newline::assertInstanceOf($node);
 
         if ($node->getType() === Newline::HARDBREAK) {
             return new HtmlElement('br', [], '', true) . "\n";

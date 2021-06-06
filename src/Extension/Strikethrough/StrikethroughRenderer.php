@@ -29,9 +29,7 @@ final class StrikethroughRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Strikethrough)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Strikethrough::assertInstanceOf($node);
 
         return new HtmlElement('del', $node->data->get('attributes'), $childRenderer->renderNodes($node->children()));
     }

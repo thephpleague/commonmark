@@ -274,4 +274,11 @@ abstract class Node
             $this->appendChild(clone $child);
         }
     }
+
+    public static function assertInstanceOf(Node $node): void
+    {
+        if (! $node instanceof static) {
+            throw new \InvalidArgumentException(\sprintf('Incompatible node type: expected %s, got %s', static::class, \get_class($node)));
+        }
+    }
 }

@@ -34,9 +34,7 @@ final class IndentedCodeRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof IndentedCode)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        IndentedCode::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

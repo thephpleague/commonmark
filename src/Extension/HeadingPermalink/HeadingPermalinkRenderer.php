@@ -48,9 +48,7 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, Configura
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! $node instanceof HeadingPermalink) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        HeadingPermalink::assertInstanceOf($node);
 
         $slug = $node->getSlug();
 

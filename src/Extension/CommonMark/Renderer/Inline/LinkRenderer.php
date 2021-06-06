@@ -43,9 +43,7 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Link)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Link::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

@@ -31,9 +31,7 @@ final class TableCellRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! $node instanceof TableCell) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        TableCell::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 
