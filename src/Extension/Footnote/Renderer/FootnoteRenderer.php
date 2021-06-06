@@ -30,7 +30,7 @@ final class FootnoteRenderer implements NodeRendererInterface, ConfigurationAwar
     /**
      * @param Footnote $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

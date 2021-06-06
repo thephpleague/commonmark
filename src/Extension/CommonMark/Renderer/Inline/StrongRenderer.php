@@ -27,7 +27,7 @@ final class StrongRenderer implements NodeRendererInterface
     /**
      * @param Strong $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

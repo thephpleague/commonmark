@@ -39,7 +39,7 @@
         "scrutinizer/ocular": "^1.5",
         "symfony/finder": "^5.1",
         "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0",
-        "unleashedtech/php-coding-standard": "^2.5",
+        "unleashedtech/php-coding-standard": "^3.1",
         "vimeo/psalm": "^4.4.1"
     },
     "minimum-stability": "dev",

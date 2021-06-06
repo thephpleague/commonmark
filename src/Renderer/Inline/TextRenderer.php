@@ -27,7 +27,7 @@ final class TextRenderer implements NodeRendererInterface
     /**
      * @param Text $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

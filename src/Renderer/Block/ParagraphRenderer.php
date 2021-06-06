@@ -28,7 +28,7 @@ final class ParagraphRenderer implements NodeRendererInterface
     /**
      * @param Paragraph $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

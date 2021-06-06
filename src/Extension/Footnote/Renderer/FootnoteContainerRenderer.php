@@ -30,7 +30,7 @@ final class FootnoteContainerRenderer implements NodeRendererInterface, Configur
     /**
      * @param FootnoteContainer $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

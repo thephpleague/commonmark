@@ -25,7 +25,7 @@ final class TableRowRenderer implements NodeRendererInterface
     /**
      * @param TableRow $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

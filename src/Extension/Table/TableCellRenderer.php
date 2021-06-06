@@ -25,7 +25,7 @@ final class TableCellRenderer implements NodeRendererInterface
     /**
      * @param TableCell $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

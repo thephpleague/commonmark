@@ -29,7 +29,7 @@ final class ListItemRenderer implements NodeRendererInterface
     /**
      * @param ListItem $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

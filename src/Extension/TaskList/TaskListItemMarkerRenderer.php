@@ -23,7 +23,7 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface
     /**
      * @param TaskListItemMarker $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

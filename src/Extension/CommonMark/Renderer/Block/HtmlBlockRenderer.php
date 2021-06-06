@@ -36,7 +36,7 @@ final class HtmlBlockRenderer implements NodeRendererInterface, ConfigurationAwa
     /**
      * @param HtmlBlock $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

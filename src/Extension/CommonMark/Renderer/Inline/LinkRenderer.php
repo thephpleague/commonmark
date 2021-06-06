@@ -37,7 +37,7 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
     /**
      * @param Link $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

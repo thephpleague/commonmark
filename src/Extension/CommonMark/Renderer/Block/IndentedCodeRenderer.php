@@ -28,7 +28,7 @@ final class IndentedCodeRenderer implements NodeRendererInterface
     /**
      * @param IndentedCode $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

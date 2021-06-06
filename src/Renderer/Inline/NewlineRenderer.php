@@ -41,7 +41,7 @@ final class NewlineRenderer implements NodeRendererInterface, ConfigurationAware
     /**
      * @param Newline $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

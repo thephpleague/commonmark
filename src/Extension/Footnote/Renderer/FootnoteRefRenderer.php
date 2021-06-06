@@ -30,7 +30,7 @@ final class FootnoteRefRenderer implements NodeRendererInterface, ConfigurationA
     /**
      * @param FootnoteRef $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

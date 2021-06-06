@@ -36,7 +36,7 @@ final class HtmlInlineRenderer implements NodeRendererInterface, ConfigurationAw
     /**
      * @param HtmlInline $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

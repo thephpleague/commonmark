@@ -53,7 +53,7 @@ final class HtmlRenderer implements MarkdownRendererInterface, ChildNodeRenderer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function renderNodes(iterable $nodes): string
     {

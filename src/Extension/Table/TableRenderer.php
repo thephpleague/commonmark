@@ -25,7 +25,7 @@ final class TableRenderer implements NodeRendererInterface
     /**
      * @param Table $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

@@ -42,7 +42,7 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, Configura
     /**
      * @param HeadingPermalink $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

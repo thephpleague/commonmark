@@ -27,7 +27,7 @@ final class ListBlockRenderer implements NodeRendererInterface
     /**
      * @param ListBlock $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

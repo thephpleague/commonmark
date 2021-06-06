@@ -27,7 +27,7 @@ final class BlockQuoteRenderer implements NodeRendererInterface
     /**
      * @param BlockQuote $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

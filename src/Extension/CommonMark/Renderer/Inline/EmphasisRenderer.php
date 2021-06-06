@@ -27,7 +27,7 @@ final class EmphasisRenderer implements NodeRendererInterface
     /**
      * @param Emphasis $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

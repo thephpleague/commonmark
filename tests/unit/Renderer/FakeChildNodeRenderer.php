@@ -29,7 +29,7 @@ final class FakeChildNodeRenderer implements ChildNodeRendererInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function renderNodes(iterable $nodes): string
     {

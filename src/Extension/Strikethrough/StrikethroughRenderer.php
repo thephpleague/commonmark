@@ -23,7 +23,7 @@ final class StrikethroughRenderer implements NodeRendererInterface
     /**
      * @param Strikethrough $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

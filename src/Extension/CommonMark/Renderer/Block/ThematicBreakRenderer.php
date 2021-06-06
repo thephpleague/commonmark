@@ -27,7 +27,7 @@ final class ThematicBreakRenderer implements NodeRendererInterface
     /**
      * @param ThematicBreak $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

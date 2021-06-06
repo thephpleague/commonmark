@@ -27,7 +27,7 @@ final class HeadingRenderer implements NodeRendererInterface
     /**
      * @param Heading $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

@@ -28,7 +28,7 @@ final class FencedCodeRenderer implements NodeRendererInterface
     /**
      * @param FencedCode $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
