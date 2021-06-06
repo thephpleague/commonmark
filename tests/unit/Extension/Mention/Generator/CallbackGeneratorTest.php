@@ -54,7 +54,7 @@ final class CallbackGeneratorTest extends TestCase
 
     public function testWithAbstractInlineReturn(): void
     {
-        $emphasis = new Emphasis();
+        $emphasis = new Emphasis('_');
         $emphasis->appendChild(new Text('[members only]'));
 
         $generator = new CallbackGenerator(static function (Mention $mention) use ($emphasis) {

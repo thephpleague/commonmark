@@ -43,7 +43,7 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
 
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
-        $strikethrough = new Strikethrough();
+        $strikethrough = new Strikethrough(\str_repeat('~', $delimiterUse));
 
         $tmp = $opener->next();
         while ($tmp !== null && $tmp !== $closer) {

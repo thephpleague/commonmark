@@ -65,7 +65,7 @@ class NodeWalkerTest extends TestCase
         $document = new Document();
         $document->appendChild($paragraph = new Paragraph());
         $paragraph->appendChild($text1 = new Text());
-        $paragraph->appendChild($emphasis = new Emphasis());
+        $paragraph->appendChild($emphasis = new Emphasis('*'));
         $emphasis->appendChild($text2 = new Text());
         $walker = $document->walker();
 
