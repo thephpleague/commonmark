@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\CommonMark\Parser\Inline;
 
-use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\AbstractWebResource;
@@ -69,7 +68,14 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         $cursor->advanceBy(1);
 
         // Check to see if we have a link/image
-        if (! ($link = $this->tryParseLink($cursor, $inlineContext->getReferenceMap(), $opener, $startPos))) {
+
+        // Inline link?
+        if ($result = $this->tryParseInlineLinkAndTitle($cursor)) {
+            $link = $result;
+        } elseif ($link = $this->tryParseReference($cursor, $inlineContext->getReferenceMap(), $opener->getIndex(), $startPos)) {
+            $reference = $link;
+            $link      = ['url' => $link->getDestination(), 'title' => $link->getTitle()];
+        } else {
             // No match
             $inlineContext->getDelimiterStack()->removeDelimiter($opener); // Remove this opener from stack
             $cursor->restoreState($previousState);
@@ -79,7 +85,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         $isImage = $opener->getChar() === '!';
 
-        $inline = $this->createInline($link['url'], $link['title'], $isImage);
+        $inline = $this->createInline($link['url'], $link['title'], $isImage, $reference ?? null);
         $opener->getInlineNode()->replaceWith($inline);
         while (($label = $inline->next()) !== null) {
             $inline->appendChild($label);
@@ -106,24 +112,6 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
     public function setEnvironment(EnvironmentInterface $environment): void
     {
         $this->environment = $environment;
-    }
-
-    /**
-     * @return array<string, string>|false
-     */
-    private function tryParseLink(Cursor $cursor, ReferenceMapInterface $referenceMap, DelimiterInterface $opener, int $startPos)
-    {
-        // Check to see if we have a link/image
-        // Inline link?
-        if ($result = $this->tryParseInlineLinkAndTitle($cursor)) {
-            return $result;
-        }
-
-        if ($link = $this->tryParseReference($cursor, $referenceMap, $opener->getIndex(), $startPos)) {
-            return ['url' => $link->getDestination(), 'title' => $link->getTitle()];
-        }
-
-        return false;
     }
 
     /**
@@ -196,12 +184,18 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         return $referenceMap->get($referenceLabel);
     }
 
-    private function createInline(string $url, string $title, bool $isImage): AbstractWebResource
+    private function createInline(string $url, string $title, bool $isImage, ?ReferenceInterface $reference = null): AbstractWebResource
     {
         if ($isImage) {
-            return new Image($url, null, $title);
+            $inline = new Image($url, null, $title);
+        } else {
+            $inline = new Link($url, null, $title);
         }
 
-        return new Link($url, null, $title);
+        if ($reference) {
+            $inline->data->set('reference', $reference);
+        }
+
+        return $inline;
     }
 }
