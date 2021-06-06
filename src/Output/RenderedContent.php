@@ -29,12 +29,12 @@ class RenderedContent implements RenderedContentInterface
      *
      * @psalm-readonly
      */
-    private $html;
+    private $content;
 
-    public function __construct(Document $document, string $html)
+    public function __construct(Document $document, string $content)
     {
         $this->document = $document;
-        $this->html     = $html;
+        $this->content  = $content;
     }
 
     public function getDocument(): Document
@@ -44,7 +44,7 @@ class RenderedContent implements RenderedContentInterface
 
     public function getContent(): string
     {
-        return $this->html;
+        return $this->content;
     }
 
     /**
@@ -52,6 +52,6 @@ class RenderedContent implements RenderedContentInterface
      */
     public function __toString(): string
     {
-        return $this->html;
+        return $this->content;
     }
 }
