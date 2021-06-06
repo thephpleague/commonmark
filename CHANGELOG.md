@@ -168,6 +168,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `AnonymousFootnoteRefParser` and `HeadingPermalinkProcessor` now implement `EnvironmentAwareInterface` instead of `ConfigurationAwareInterface`
  - The second argument to `TextNormalizerInterface::normalize()` must now be an array
  - The `title` attribute for `Link` and `Image` nodes is now stored using a dedicated property instead of stashing it in `$data`
+ - `ListData::$delimiter` now returns either `ListBlock::DELIM_PERIOD` or `ListBlock::DELIM_PAREN` instead of the literal delimiter
 
 ### Fixed
 
