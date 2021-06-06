@@ -18,8 +18,8 @@ namespace League\CommonMark\Node\Inline;
 
 class Text extends AbstractStringContainer
 {
-    public function append(string $character): void
+    public function append(string $literal): void
     {
-        $this->literal .= $character;
+        $this->literal .= $literal;
     }
 }

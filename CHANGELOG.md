@@ -46,6 +46,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `ReferenceableInterface`
    - `RenderedContent`
    - `RenderedContentInterface`
+   - `ReplaceUnpairedQuotesListener`
    - `SpecReader`
    - `UniqueSlugNormalizer`
    - `UniqueSlugNormalizerInterface`
@@ -155,6 +156,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
  - `InvalidOptionException` was removed
  - Anything with a `getReference(): ReferenceInterface` method now implements `ReferencableInterface`
+ - The `SmartPunct` extension now replaces all unpaired `Quote` elements with `Text` elements towards the end of parsing, making the `QuoteRenderer` unnecessary
  - Several changes made to the Footnote extension:
    - Footnote identifiers can no longer contain spaces
    - Anonymous footnotes can now span subsequent lines
@@ -212,6 +214,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `ConverterInterface`
    - `InlineRendererInterface`
    - `PunctuationParser` (was split into two classes: `DashParser` and `EllipsesParser`)
+   - `QuoteRenderer`
    - `UnmatchedBlockCloser`
  - Removed the following methods, properties, and constants:
    - `AbstractBlock::$open`

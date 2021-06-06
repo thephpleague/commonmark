@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\SmartPunct;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
@@ -54,10 +55,10 @@ final class SmartPunctExtension implements ConfigurableExtensionInterface
                 $environment->getConfiguration()->get('smartpunct/single_quote_closer')
             ))
 
+            ->addEventListener(DocumentParsedEvent::class, new ReplaceUnpairedQuotesListener())
+
             ->addRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)
             ->addRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
-
-            ->addRenderer(Quote::class, new QuoteRenderer(), 100)
             ->addRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0);
     }
 }
