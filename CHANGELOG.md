@@ -33,18 +33,20 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `DashParser` (extracted from `PunctuationParser`)
    - `DelimiterParser`
    - `DocumentBlockParser`
+   - `DocumentPreRenderEvent`
    - `DocumentRenderedEvent`
    - `EllipsesParser` (extracted from `PunctuationParser`)
    - `ExpressionInterface`
-   - `HtmlRendererInterface`
    - `InlineParserEngineInterface`
    - `InlineParserMatch`
    - `MarkdownParserState`
    - `MarkdownParserStateInterface`
+   - `MarkdownRendererInterface`
    - `Query`
    - `ReferenceableInterface`
    - `RenderedContent`
    - `RenderedContentInterface`
+   - `ReplaceUnpairedQuotesListener`
    - `SpecReader`
    - `UniqueSlugNormalizer`
    - `UniqueSlugNormalizerInterface`
@@ -63,6 +65,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `InlineParserContext::getSubMatches()`
    - `LinkParserHelper::parsePartialLinkLabel()`
    - `LinkParserHelper::parsePartialLinkTitle()`
+   - `Node::assertInstanceOf()`
    - `RegexHelper::isLetter()`
    - `StringContainerInterface::setLiteral()`
    - `TableCell::getType()`
@@ -132,6 +135,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `EnvironmentInterface::HTML_INPUT_ALLOW` is now `HtmlFilter::ALLOW`
    - `EnvironmentInterface::HTML_INPUT_ESCAPE` is now `HtmlFilter::ESCAPE`
    - `EnvironmentInterface::HTML_INPUT_STRIP` is now `HtmlFilter::STRIP`
+   - `TableCell::TYPE_HEAD` is now `TableCell::TYPE_HEADER`
+   - `TableCell::TYPE_BODY` is now `TableCell::TYPE_DATA`
  - Changed the visibility of the following properties:
    - `TableCell::$align` is now `private`
    - `TableCell::$type` is now `private`
@@ -152,6 +157,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
  - `InvalidOptionException` was removed
  - Anything with a `getReference(): ReferenceInterface` method now implements `ReferencableInterface`
+ - The `SmartPunct` extension now replaces all unpaired `Quote` elements with `Text` elements towards the end of parsing, making the `QuoteRenderer` unnecessary
  - Several changes made to the Footnote extension:
    - Footnote identifiers can no longer contain spaces
    - Anonymous footnotes can now span subsequent lines
@@ -165,6 +171,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Block which can't contain inlines will no longer be asked to render inlines
  - `AnonymousFootnoteRefParser` and `HeadingPermalinkProcessor` now implement `EnvironmentAwareInterface` instead of `ConfigurationAwareInterface`
  - The second argument to `TextNormalizerInterface::normalize()` must now be an array
+ - The `title` attribute for `Link` and `Image` nodes is now stored using a dedicated property instead of stashing it in `$data`
+ - `ListData::$delimiter` now returns either `ListBlock::DELIM_PERIOD` or `ListBlock::DELIM_PAREN` instead of the literal delimiter
 
 ### Fixed
 
@@ -207,6 +215,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `ConverterInterface`
    - `InlineRendererInterface`
    - `PunctuationParser` (was split into two classes: `DashParser` and `EllipsesParser`)
+   - `QuoteRenderer`
    - `UnmatchedBlockCloser`
  - Removed the following methods, properties, and constants:
    - `AbstractBlock::$open`

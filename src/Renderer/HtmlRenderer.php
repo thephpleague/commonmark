@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Renderer;
 
 use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Event\DocumentPreRenderEvent;
 use League\CommonMark\Event\DocumentRenderedEvent;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
@@ -25,7 +26,7 @@ use League\CommonMark\Output\RenderedContent;
 use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Util\HtmlElement;
 
-final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInterface
+final class HtmlRenderer implements MarkdownRendererInterface, ChildNodeRendererInterface
 {
     /**
      * @var EnvironmentInterface
@@ -39,9 +40,11 @@ final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInte
         $this->environment = $environment;
     }
 
-    public function renderDocument(Document $node): RenderedContentInterface
+    public function renderDocument(Document $document): RenderedContentInterface
     {
-        $output = new RenderedContent($node, (string) $this->renderNode($node));
+        $this->environment->dispatch(new DocumentPreRenderEvent($document, 'html'));
+
+        $output = new RenderedContent($document, (string) $this->renderNode($document));
 
         $event = new DocumentRenderedEvent($output);
         $this->environment->dispatch($event);
@@ -50,7 +53,7 @@ final class HtmlRenderer implements HtmlRendererInterface, ChildNodeRendererInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function renderNodes(iterable $nodes): string
     {

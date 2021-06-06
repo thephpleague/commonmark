@@ -37,15 +37,13 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
     /**
      * @param Link $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Link)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Link::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 
@@ -54,8 +52,8 @@ final class LinkRenderer implements NodeRendererInterface, ConfigurationAwareInt
             $attrs['href'] = $node->getUrl();
         }
 
-        if ($node->data->has('title')) {
-            $attrs['title'] = $node->data->get('title');
+        if (($title = $node->getTitle()) !== null) {
+            $attrs['title'] = $title;
         }
 
         if (isset($attrs['target']) && $attrs['target'] === '_blank' && ! isset($attrs['rel'])) {

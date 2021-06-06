@@ -27,15 +27,13 @@ final class ListBlockRenderer implements NodeRendererInterface
     /**
      * @param ListBlock $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof ListBlock)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        ListBlock::assertInstanceOf($node);
 
         $listData = $node->getListData();
 

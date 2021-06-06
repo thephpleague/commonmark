@@ -24,7 +24,7 @@ final class DescriptionTermRenderer implements NodeRendererInterface
     /**
      * @param DescriptionTerm $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

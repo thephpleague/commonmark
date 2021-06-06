@@ -14,7 +14,27 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Strikethrough;
 
 use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Node\Inline\DelimitedInterface;
 
-final class Strikethrough extends AbstractInline
+final class Strikethrough extends AbstractInline implements DelimitedInterface
 {
+    /** @var string */
+    private $delimeter;
+
+    public function __construct(string $delimeter = '~~')
+    {
+        parent::__construct();
+
+        $this->delimeter = $delimeter;
+    }
+
+    public function getOpeningDelimiter(): string
+    {
+        return $this->delimeter;
+    }
+
+    public function getClosingDelimiter(): string
+    {
+        return $this->delimeter;
+    }
 }

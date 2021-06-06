@@ -34,7 +34,7 @@ final class SlugNormalizer implements TextNormalizerInterface, ConfigurationAwar
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-immutable
      */

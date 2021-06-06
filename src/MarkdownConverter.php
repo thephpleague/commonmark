@@ -18,7 +18,7 @@ use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Parser\MarkdownParserInterface;
 use League\CommonMark\Renderer\HtmlRenderer;
-use League\CommonMark\Renderer\HtmlRendererInterface;
+use League\CommonMark\Renderer\MarkdownRendererInterface;
 
 class MarkdownConverter implements MarkdownConverterInterface
 {
@@ -28,7 +28,7 @@ class MarkdownConverter implements MarkdownConverterInterface
     /** @var MarkdownParserInterface */
     protected $markdownParser;
 
-    /** @var HtmlRendererInterface */
+    /** @var MarkdownRendererInterface */
     protected $htmlRenderer;
 
     public function __construct(EnvironmentInterface $environment)

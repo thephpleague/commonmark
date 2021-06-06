@@ -21,9 +21,22 @@ use PHPUnit\Framework\TestCase;
 
 final class TableCellRendererTest extends TestCase
 {
+    public function testRenderWithTableHeader(): void
+    {
+        $tableCell = new TableCell(TableCell::TYPE_HEADER);
+        $tableCell->data->set('attributes/class', 'foo');
+
+        $childRenderer = new FakeChildNodeRenderer();
+        $childRenderer->pretendChildrenExist();
+
+        $renderer = new TableCellRenderer();
+
+        $this->assertSame('<th class="foo">::children::</th>', (string) $renderer->render($tableCell, $childRenderer));
+    }
+
     public function testRenderWithTableCell(): void
     {
-        $tableCell = new TableCell(TableCell::TYPE_BODY);
+        $tableCell = new TableCell(TableCell::TYPE_DATA);
         $tableCell->data->set('attributes/class', 'foo');
 
         $childRenderer = new FakeChildNodeRenderer();
@@ -36,7 +49,7 @@ final class TableCellRendererTest extends TestCase
 
     public function testRenderWithTableCellHavingAlignment(): void
     {
-        $tableCell = new TableCell(TableCell::TYPE_BODY, TableCell::ALIGN_CENTER);
+        $tableCell = new TableCell(TableCell::TYPE_DATA, TableCell::ALIGN_CENTER);
         $tableCell->data->set('attributes/class', 'foo');
 
         $childRenderer = new FakeChildNodeRenderer();

@@ -30,13 +30,15 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, Configurat
     private $config;
 
     /**
+     * @param FootnoteBackref $node
+     *
      * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof FootnoteBackref)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        FootnoteBackref::assertInstanceOf($node);
 
         $attrs = $node->data->getData('attributes');
 

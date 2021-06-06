@@ -25,7 +25,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
     {
         $this->setUpConverter();
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'sample.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'sample') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -38,7 +38,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'weird-as-is.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'weird-as-is') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -51,7 +51,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'weird-relative.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'weird-relative') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -64,7 +64,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'weird-flattened.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'weird-flattened') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -77,7 +77,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'position-top.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'position-top') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -90,7 +90,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'position-before-headings.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'position-before-headings') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -104,7 +104,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'position-placeholder*.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'position-placeholder*') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -117,7 +117,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'custom-class.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'custom-class') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -130,7 +130,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'style-bullet.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'style-bullet') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -143,7 +143,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'style-ordered.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'style-ordered') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -152,7 +152,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
     {
         $this->setUpConverter();
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'no-headings.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'no-headings') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -161,7 +161,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
     {
         $this->setUpConverter();
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'setext-headings.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'setext-headings') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -175,7 +175,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
             ],
         ]);
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'min-max.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'min-max') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }
@@ -184,7 +184,7 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
     {
         $this->setupConverter();
 
-        foreach ($this->loadTests(__DIR__ . '/data', 'headings-with-inlines.md') as [$markdown, $html, $testName]) {
+        foreach ($this->loadTests(__DIR__ . '/data', 'headings-with-inlines') as [$markdown, $html, $testName]) {
             $this->assertMarkdownRendersAs($markdown, $html, $testName);
         }
     }

@@ -51,19 +51,19 @@ abstract class AbstractLocalDataTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    protected function loadTests(string $dir, string $pattern = '*.md'): iterable
+    protected function loadTests(string $dir, string $pattern = '*', string $inputFormat = '.md', string $outputFormat = '.html'): iterable
     {
         $finder = new Finder();
         $finder->files()
             ->in($dir)
             ->depth('== 0')
-            ->name($pattern);
+            ->name($pattern . $inputFormat);
 
         foreach ($finder as $markdownFile) {
             \assert($markdownFile instanceof SplFileInfo);
-            $testName = $markdownFile->getBasename('.md');
+            $testName = $markdownFile->getBasename($inputFormat);
             $markdown = $markdownFile->getContents();
-            $html     = \file_get_contents($dir . '/' . $testName . '.html');
+            $html     = \file_get_contents($dir . '/' . $testName . $outputFormat);
 
             yield [$markdown, $html, $testName];
         }

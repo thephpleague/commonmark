@@ -27,15 +27,13 @@ final class EmphasisRenderer implements NodeRendererInterface
     /**
      * @param Emphasis $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Emphasis)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Emphasis::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

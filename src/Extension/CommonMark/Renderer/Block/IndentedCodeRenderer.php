@@ -28,15 +28,13 @@ final class IndentedCodeRenderer implements NodeRendererInterface
     /**
      * @param IndentedCode $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof IndentedCode)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        IndentedCode::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

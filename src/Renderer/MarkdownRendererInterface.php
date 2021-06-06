@@ -17,12 +17,12 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
 
 /**
- * Renders a parsed Document AST to HTML
+ * Renders a parsed Document AST
  */
-interface HtmlRendererInterface
+interface MarkdownRendererInterface
 {
     /**
      * Render the given Document node (and all of its children)
      */
-    public function renderDocument(Document $node): RenderedContentInterface;
+    public function renderDocument(Document $document): RenderedContentInterface;
 }

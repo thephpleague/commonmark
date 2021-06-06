@@ -104,8 +104,8 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `Block\Element\Document`                                                              | `Node\Block\Document`                                                                    |
 | `DocParser`                                                                           | `Parser\MarkdownParser`                                                                  |
 | `DocParserInterface`                                                                  | `Parser\MarkdownParserInterface`                                                         |
+| `ElementRendererInterface`                                                            | `Renderer\ChildNodeRendererInterface`                                                    |
 | `HtmlRenderer`                                                                        | `Renderer\HtmlRenderer`                                                                  |
-| `ElementRendererInterface`                                                            | `Renderer\HtmlRendererInterface`                                                         |
 
 (This is only a partial list of the clases and interfaces you're likely to work with as a consumer – see the [developer upgrade guide](/2.0/upgrading/developers/) for the complete list.)
 
@@ -120,15 +120,15 @@ The following classes have been removed:
 
 (Several other classes were removed, but these are the only ones you're likely to notice.  See the [developer upgrade guide](/2.0/upgrading/developers/) for the complete list.)
 
-## `EnvironmentInterface::HTML_INPUT_*` constants moved
+## Renamed constants
 
-The following constants have been moved:
+The following constants have been moved/renamed:
 
-| Old Location (1.x)                        | New Location (2.0)   |
-| ----------------------------------------- | -------------------- |
-| `EnvironmentInterface::HTML_INPUT_ALLOW`  | `HtmlFilter::ALLOW`  |
-| `EnvironmentInterface::HTML_INPUT_ESCAPE` | `HtmlFilter::ESCAPE` |
-| `EnvironmentInterface::HTML_INPUT_STRIP`  | `HtmlFilter::STRIP`  |
+| Old Name/Location (1.x)                   | New Name/Location (2.0)  |
+| ----------------------------------------- | ------------------------ |
+| `EnvironmentInterface::HTML_INPUT_ALLOW`  | `HtmlFilter::ALLOW`      |
+| `EnvironmentInterface::HTML_INPUT_ESCAPE` | `HtmlFilter::ESCAPE`     |
+| `EnvironmentInterface::HTML_INPUT_STRIP`  | `HtmlFilter::STRIP`      |
 
 ## Renamed Methods
 

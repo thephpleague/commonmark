@@ -23,7 +23,7 @@ namespace League\CommonMark\Normalizer;
 final class TextNormalizer implements TextNormalizerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-pure
      */

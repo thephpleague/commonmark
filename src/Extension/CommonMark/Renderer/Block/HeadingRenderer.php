@@ -27,15 +27,13 @@ final class HeadingRenderer implements NodeRendererInterface
     /**
      * @param Heading $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Heading)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Heading::assertInstanceOf($node);
 
         $tag = 'h' . $node->getLevel();
 

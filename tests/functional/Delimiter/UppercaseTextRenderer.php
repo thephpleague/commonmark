@@ -24,7 +24,7 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 final class UppercaseTextRenderer implements NodeRendererInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

@@ -186,8 +186,8 @@ _(Note that the base namespace of `League\CommonMark` has been omitted from this
 | `InlineParserEngine`                                                                  | `Parser\InlineParserEngine`                                                              |
 | `Block\Renderer\DocumentRenderer`                                                     | `Renderer\Block\DocumentRenderer`                                                        |
 | `Block\Renderer\ParagraphRenderer`                                                    | `Renderer\Block\ParagraphRenderer`                                                       |
+| `ElementRendererInterface`                                                            | `Renderer\ChildNodeRendererInterface`                                                    |
 | `HtmlRenderer`                                                                        | `Renderer\HtmlRenderer`                                                                  |
-| `ElementRendererInterface`                                                            | `Renderer\HtmlRendererInterface`                                                         |
 | `Inline\Renderer\NewlineRenderer`                                                     | `Renderer\Inline\NewlineRenderer`                                                        |
 | `Inline\Renderer\TextRenderer`                                                        | `Renderer\Inline\TextRenderer`                                                           |
 | `Block\Renderer\BlockRendererInterface` and `Inline\Renderer\InlineRendererInterface` | `Renderer\NodeRendererInterface`                                                         |
@@ -276,15 +276,17 @@ The following classes have been removed:
 | `ConverterInterface`           | Use `MarkdownConverterInterface`.  This interface has the same methods so it should be a drop-in replacement. |
 | `UnmatchedBlockCloser`         | No longer needed 2.x                                                                                          |
 
-## `EnvironmentInterface::HTML_INPUT_*` constants moved
+## Renamed constants
 
-The following constants have been moved:
+The following constants have been moved/renamed:
 
-| Old Location (1.x)                        | New Location (2.0)   |
-| ----------------------------------------- | -------------------- |
-| `EnvironmentInterface::HTML_INPUT_ALLOW`  | `HtmlFilter::ALLOW`  |
-| `EnvironmentInterface::HTML_INPUT_ESCAPE` | `HtmlFilter::ESCAPE` |
-| `EnvironmentInterface::HTML_INPUT_STRIP`  | `HtmlFilter::STRIP`  |
+| Old Name/Location (1.x)                   | New Name/Location (2.0)  |
+| ----------------------------------------- | ------------------------ |
+| `EnvironmentInterface::HTML_INPUT_ALLOW`  | `HtmlFilter::ALLOW`      |
+| `EnvironmentInterface::HTML_INPUT_ESCAPE` | `HtmlFilter::ESCAPE`     |
+| `EnvironmentInterface::HTML_INPUT_STRIP`  | `HtmlFilter::STRIP`      |
+| `TableCell::TYPE_HEAD`                    | `TableCell::TYPE_HEADER` |
+| `TableCell::TYPE_BODY`                    | `TableCell::TYPE_DATA`   |
 
 ## Renamed Methods
 
@@ -373,3 +375,7 @@ Need to generate unique slugs in your extensions? Use the new [Slug Normalizer](
 ## Text Normalizers
 
 The second argument to `TextNormalizerInterface::normalize()` used to allow any arbitrary object. This was changed to an `array` so that multiple things can be passed in at once.
+
+## `title` attribute for `Link` and `Image` nodes
+
+The `title` attribute for `Link` and `Image` nodes is now stored using a dedicated property instead of stashing it in `$data`.  Use `getTitle()` and `setTitle()` to access the value.

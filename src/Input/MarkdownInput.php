@@ -61,7 +61,7 @@ class MarkdownInput implements MarkdownInputInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getLines(): iterable
     {

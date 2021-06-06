@@ -24,10 +24,18 @@ class ListData
     /** @var int */
     public $padding = 0;
 
-    /** @var string */
+    /**
+     * @var string
+     * @psalm-var ListBlock::TYPE_*
+     * @phpstan-var ListBlock::TYPE_*
+     */
     public $type;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     * @psalm-var ListBlock::DELIM_*|null
+     * @phpstan-var ListBlock::DELIM_*|null
+     */
     public $delimiter;
 
     /** @var string|null */

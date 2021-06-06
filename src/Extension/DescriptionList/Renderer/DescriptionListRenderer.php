@@ -24,7 +24,7 @@ final class DescriptionListRenderer implements NodeRendererInterface
     /**
      * @param DescriptionList $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */

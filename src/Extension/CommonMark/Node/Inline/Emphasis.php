@@ -17,7 +17,27 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Node\Inline;
 
 use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Node\Inline\DelimitedInterface;
 
-class Emphasis extends AbstractInline
+class Emphasis extends AbstractInline implements DelimitedInterface
 {
+    /** @var string */
+    protected $delimeter;
+
+    public function __construct(string $delimeter = '_')
+    {
+        parent::__construct();
+
+        $this->delimeter = $delimeter;
+    }
+
+    public function getOpeningDelimiter(): string
+    {
+        return $this->delimeter;
+    }
+
+    public function getClosingDelimiter(): string
+    {
+        return $this->delimeter;
+    }
 }

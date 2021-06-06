@@ -28,13 +28,15 @@ final class FootnoteContainerRenderer implements NodeRendererInterface, Configur
     private $config;
 
     /**
+     * @param FootnoteContainer $node
+     *
      * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof FootnoteContainer)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        FootnoteContainer::assertInstanceOf($node);
 
         $attrs = $node->data->getData('attributes');
 

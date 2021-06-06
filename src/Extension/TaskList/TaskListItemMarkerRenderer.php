@@ -23,15 +23,13 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface
     /**
      * @param TaskListItemMarker $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof TaskListItemMarker)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        TaskListItemMarker::assertInstanceOf($node);
 
         $checkbox = new HtmlElement('input', [], '', true);
 

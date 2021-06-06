@@ -37,15 +37,13 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
     /**
      * @param Image $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Image)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Image::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 
@@ -60,8 +58,8 @@ final class ImageRenderer implements NodeRendererInterface, ConfigurationAwareIn
         $alt          = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
         $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt ?? '');
 
-        if ($node->data->has('title')) {
-            $attrs['title'] = $node->data->get('title');
+        if (($title = $node->getTitle()) !== null) {
+            $attrs['title'] = $title;
         }
 
         return new HtmlElement('img', $attrs, '', true);

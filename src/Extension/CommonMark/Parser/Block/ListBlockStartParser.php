@@ -90,7 +90,7 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
             $data->markerOffset = $indent;
             $data->type         = ListBlock::TYPE_ORDERED;
             $data->start        = (int) $matches[1];
-            $data->delimiter    = $matches[2];
+            $data->delimiter    = $matches[2] === '.' ? ListBlock::DELIM_PERIOD : ListBlock::DELIM_PAREN;
             $data->bulletChar   = null;
             $markerLength       = \strlen($matches[0]);
         } else {

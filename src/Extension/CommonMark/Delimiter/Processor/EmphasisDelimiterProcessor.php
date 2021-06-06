@@ -92,9 +92,9 @@ final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, C
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         if ($delimiterUse === 1) {
-            $emphasis = new Emphasis();
+            $emphasis = new Emphasis($this->char);
         } elseif ($delimiterUse === 2) {
-            $emphasis = new Strong();
+            $emphasis = new Strong($this->char . $this->char);
         } else {
             return;
         }

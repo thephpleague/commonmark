@@ -161,7 +161,7 @@ final class MentionParserTest extends TestCase
     {
         $callable = static function (Mention $mention) {
             // Pretend callback does some access logic to determine visibility.
-            $emphasis = new Emphasis();
+            $emphasis = new Emphasis('*');
             $emphasis->appendChild(new Text('[members only]'));
 
             return $emphasis;

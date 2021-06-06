@@ -24,7 +24,7 @@ final class FakeInjectableRenderer implements NodeRendererInterface, Configurati
     use FakeInjectableTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

@@ -41,7 +41,7 @@ final class DisallowedRawHtmlRenderer implements NodeRendererInterface, Configur
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

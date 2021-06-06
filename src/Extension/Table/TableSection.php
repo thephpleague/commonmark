@@ -19,16 +19,23 @@ use League\CommonMark\Node\Block\AbstractBlock;
 
 final class TableSection extends AbstractBlock
 {
-    public const TYPE_HEAD = 'thead';
-    public const TYPE_BODY = 'tbody';
+    public const TYPE_HEAD = 'head';
+    public const TYPE_BODY = 'body';
 
     /**
      * @var string
+     * @psalm-var self::TYPE_*
+     * @phpstan-var self::TYPE_*
      *
      * @psalm-readonly
      */
     private $type;
 
+    /**
+     * @psalm-param self::TYPE_* $type
+     *
+     * @phpstan-param self::TYPE_* $type
+     */
     public function __construct(string $type = self::TYPE_BODY)
     {
         parent::__construct();
@@ -36,6 +43,11 @@ final class TableSection extends AbstractBlock
         $this->type = $type;
     }
 
+    /**
+     * @psalm-return self::TYPE_*
+     *
+     * @phpstan-return self::TYPE_*
+     */
     public function getType(): string
     {
         return $this->type;

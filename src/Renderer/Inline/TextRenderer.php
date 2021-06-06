@@ -27,15 +27,13 @@ final class TextRenderer implements NodeRendererInterface
     /**
      * @param Text $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Text)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Text::assertInstanceOf($node);
 
         return Xml::escape($node->getLiteral());
     }

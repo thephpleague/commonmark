@@ -78,4 +78,55 @@ class AdjacentTextMergerTest extends TestCase
         $this->assertTrue($children[2] instanceof Text);
         $this->assertEquals('https://gitlab.example.net/group/project/merge_requests/39#note_150630', $children[2]->getLiteral());
     }
+
+    public function testMergeWithDirectlyAdjacentNodes(): void
+    {
+        $paragraph = new Paragraph();
+
+        $paragraph->appendChild($text1 = new Text('commonmark.thephpleague.com'));
+
+        AdjacentTextMerger::mergeWithDirectlyAdjacentNodes($text1);
+
+        $this->assertCount(1, $paragraph->children());
+        $this->assertSame($text1, $paragraph->firstChild());
+        $this->assertSame('commonmark.thephpleague.com', $paragraph->firstChild()->getLiteral());
+
+        $paragraph->appendChild(new Text('/2.0'));
+
+        AdjacentTextMerger::mergeWithDirectlyAdjacentNodes($text1);
+
+        $this->assertCount(1, $paragraph->children());
+        $this->assertSame($text1, $paragraph->firstChild());
+        $this->assertSame('commonmark.thephpleague.com/2.0', $paragraph->firstChild()->getLiteral());
+
+        $paragraph->prependChild($new = new Text('://'));
+
+        $this->assertSame($new, $text1->previous());
+        $this->assertSame($text1, $new->next());
+        $this->assertSame($paragraph, $text1->parent());
+        $this->assertSame($paragraph, $new->parent());
+
+        AdjacentTextMerger::mergeWithDirectlyAdjacentNodes($text1);
+
+        $this->assertCount(1, $paragraph->children());
+        $this->assertSame($new, $paragraph->firstChild());
+        $this->assertSame('://commonmark.thephpleague.com/2.0', $paragraph->firstChild()->getLiteral());
+        $this->assertNull($text1->previous());
+        $this->assertNull($text1->next());
+        $this->assertNull($text1->parent());
+        $this->assertNull($new->previous());
+        $this->assertNull($new->next());
+        $this->assertSame($paragraph, $new->parent());
+
+        $target = $paragraph->firstChild();
+
+        $paragraph->prependChild($new = new Text('https'));
+        $paragraph->appendChild(new Text('/'));
+
+        AdjacentTextMerger::mergeWithDirectlyAdjacentNodes($target);
+
+        $this->assertCount(1, $paragraph->children());
+        $this->assertSame($new, $paragraph->firstChild());
+        $this->assertSame('https://commonmark.thephpleague.com/2.0/', $paragraph->firstChild()->getLiteral());
+    }
 }

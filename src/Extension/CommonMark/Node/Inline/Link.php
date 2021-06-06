@@ -20,6 +20,9 @@ use League\CommonMark\Node\Inline\Text;
 
 class Link extends AbstractWebResource
 {
+    /** @var string|null */
+    protected $title;
+
     public function __construct(string $url, ?string $label = null, ?string $title = null)
     {
         parent::__construct($url);
@@ -28,8 +31,20 @@ class Link extends AbstractWebResource
             $this->appendChild(new Text($label));
         }
 
-        if ($title !== null && $title !== '') {
-            $this->data->set('title', $title);
+        $this->title = $title;
+    }
+
+    public function getTitle(): ?string
+    {
+        if ($this->title === '') {
+            return null;
         }
+
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): void
+    {
+        $this->title = $title;
     }
 }

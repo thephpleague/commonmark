@@ -28,15 +28,13 @@ final class CodeRenderer implements NodeRendererInterface
     /**
      * @param Code $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Code)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Code::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 

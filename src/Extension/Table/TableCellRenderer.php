@@ -25,15 +25,13 @@ final class TableCellRenderer implements NodeRendererInterface
     /**
      * @param TableCell $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! $node instanceof TableCell) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        TableCell::assertInstanceOf($node);
 
         $attrs = $node->data->get('attributes');
 
@@ -41,6 +39,8 @@ final class TableCellRenderer implements NodeRendererInterface
             $attrs['align'] = $node->getAlign();
         }
 
-        return new HtmlElement($node->getType(), $attrs, $childRenderer->renderNodes($node->children()));
+        $tag = $node->getType() === TableCell::TYPE_HEADER ? 'th' : 'td';
+
+        return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()));
     }
 }

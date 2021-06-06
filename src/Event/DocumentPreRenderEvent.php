@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the league/commonmark package.
  *
@@ -9,13 +11,14 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
-namespace League\CommonMark\Output;
+namespace League\CommonMark\Event;
 
 use League\CommonMark\Node\Block\Document;
 
-class RenderedContent implements RenderedContentInterface
+/**
+ * Event dispatched just before rendering begins
+ */
+final class DocumentPreRenderEvent extends AbstractEvent
 {
     /**
      * @var Document
@@ -29,12 +32,12 @@ class RenderedContent implements RenderedContentInterface
      *
      * @psalm-readonly
      */
-    private $content;
+    private $format;
 
-    public function __construct(Document $document, string $content)
+    public function __construct(Document $document, string $format)
     {
         $this->document = $document;
-        $this->content  = $content;
+        $this->format   = $format;
     }
 
     public function getDocument(): Document
@@ -42,16 +45,8 @@ class RenderedContent implements RenderedContentInterface
         return $this->document;
     }
 
-    public function getContent(): string
+    public function getFormat(): string
     {
-        return $this->content;
-    }
-
-    /**
-     * @psalm-mutation-free
-     */
-    public function __toString(): string
-    {
-        return $this->content;
+        return $this->format;
     }
 }

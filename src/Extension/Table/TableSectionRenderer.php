@@ -25,15 +25,13 @@ final class TableSectionRenderer implements NodeRendererInterface
     /**
      * @param TableSection $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! $node instanceof TableSection) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        TableSection::assertInstanceOf($node);
 
         if (! $node->hasChildren()) {
             return '';
@@ -43,6 +41,8 @@ final class TableSectionRenderer implements NodeRendererInterface
 
         $separator = $childRenderer->getInnerSeparator();
 
-        return new HtmlElement($node->getType(), $attrs, $separator . $childRenderer->renderNodes($node->children()) . $separator);
+        $tag = $node->getType() === TableSection::TYPE_HEAD ? 'thead' : 'tbody';
+
+        return new HtmlElement($tag, $attrs, $separator . $childRenderer->renderNodes($node->children()) . $separator);
     }
 }

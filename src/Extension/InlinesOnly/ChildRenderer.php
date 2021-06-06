@@ -24,7 +24,7 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 final class ChildRenderer implements NodeRendererInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {

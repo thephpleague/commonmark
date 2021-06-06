@@ -29,15 +29,13 @@ final class ListItemRenderer implements NodeRendererInterface
     /**
      * @param ListItem $node
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof ListItem)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        ListItem::assertInstanceOf($node);
 
         $contents = $childRenderer->renderNodes($node->children());
         if (\substr($contents, 0, 1) === '<' && ! $this->startsTaskListItem($node)) {

@@ -24,6 +24,9 @@ class ListBlock extends AbstractBlock implements TightBlockInterface
     public const TYPE_BULLET  = 'bullet';
     public const TYPE_ORDERED = 'ordered';
 
+    public const DELIM_PERIOD = 'period';
+    public const DELIM_PAREN  = 'paren';
+
     /** @var bool */
     protected $tight = false;
 
