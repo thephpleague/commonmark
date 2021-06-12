@@ -2,7 +2,6 @@
 layout: default
 title: Installation
 description: Instructions on how to install the league/commonmark library
-redirect_from: /installation/
 ---
 
 # Installation

@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Command Line
+redirect_from: /command-line/
 ---
 
 # Command Line

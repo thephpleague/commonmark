@@ -2,6 +2,7 @@
 layout: default
 title: Changelog
 description: Important changes made in recent releases
+redirect_from: /changelog/
 ---
 
 # Changelog

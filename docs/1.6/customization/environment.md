@@ -2,6 +2,7 @@
 layout: default
 title: The Environment
 description: Configuring the CommonMark environment with custom options and added functionality
+redirect_from: /customization/environment/
 ---
 
 # The Environment

@@ -2,7 +2,6 @@
 layout: default
 title: Smart Punctuation Extension
 description: The SmartPunctExtension intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents
-redirect_from: /extensions/smart-punctuation/
 ---
 
 # Smart Punctuation Extension

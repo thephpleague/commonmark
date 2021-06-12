@@ -2,6 +2,7 @@
 layout: default
 title: Mention Parser
 description: The MentionParser makes it easy to parse shortened references like @colinodell and #123 to custom URLs
+redirect_from: /extensions/mentions/
 ---
 
 # Mention Extension
