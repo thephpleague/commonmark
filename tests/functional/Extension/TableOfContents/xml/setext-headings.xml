@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#this-is-a-top-level" title="">
+                <text>This is a top level</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#this-is-another-level" title="">
+                        <text>This is another level</text>
+                    </link>
+                </item>
+            </list>
+        </item>
+    </table_of_contents>
+    <heading level="1">
+        <heading_permalink slug="this-is-a-top-level" />
+        <text>This is a top level</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="this-is-another-level" />
+        <text>This is another level</text>
+    </heading>
+</document>

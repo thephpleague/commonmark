@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#section-1" title="">
+                <text>Section 1</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#section-11" title="">
+                        <text>Section 1.1</text>
+                    </link>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#section-111" title="">
+                                <text>Section 1.1.1</text>
+                            </link>
+                            <list type="bullet" tight="false">
+                                <item>
+                                    <link destination="#section-1111" title="">
+                                        <text>Section 1.1.1.1</text>
+                                    </link>
+                                    <list type="bullet" tight="false">
+                                        <item>
+                                            <link destination="#section-11111" title="">
+                                                <text>Section 1.1.1.1.1</text>
+                                            </link>
+                                            <list type="bullet" tight="false">
+                                                <item>
+                                                    <link destination="#section-111111" title="">
+                                                        <text>Section 1.1.1.1.1.1</text>
+                                                    </link>
+                                                </item>
+                                            </list>
+                                        </item>
+                                    </list>
+                                </item>
+                            </list>
+                        </item>
+                    </list>
+                </item>
+            </list>
+        </item>
+        <item>
+            <link destination="#section-2" title="">
+                <text>Section 2</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#section-21" title="">
+                        <text>Section 2.1</text>
+                    </link>
+                </item>
+                <item>
+                    <link destination="#section-22" title="">
+                        <text>Section 2.2</text>
+                    </link>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#section-221" title="">
+                                <text>Section 2.2.1</text>
+                            </link>
+                        </item>
+                        <item>
+                            <link destination="#section-222" title="">
+                                <text>Section 2.2.2</text>
+                            </link>
+                            <list type="bullet" tight="false">
+                                <item>
+                                    <link destination="#section-2221" title="">
+                                        <text>Section 2.2.2.1</text>
+                                    </link>
+                                </item>
+                                <item>
+                                    <link destination="#section-2222" title="">
+                                        <text>Section 2.2.2.2</text>
+                                    </link>
+                                    <list type="bullet" tight="false">
+                                        <item>
+                                            <link destination="#section-22221" title="">
+                                                <text>Section 2.2.2.2.1</text>
+                                            </link>
+                                        </item>
+                                        <item>
+                                            <link destination="#section-22222" title="">
+                                                <text>Section 2.2.2.2.2</text>
+                                            </link>
+                                            <list type="bullet" tight="false">
+                                                <item>
+                                                    <link destination="#section-222221" title="">
+                                                        <text>Section 2.2.2.2.2.1</text>
+                                                    </link>
+                                                </item>
+                                                <item>
+                                                    <link destination="#section-222222" title="">
+                                                        <text>Section 2.2.2.2.2.2</text>
+                                                    </link>
+                                                </item>
+                                            </list>
+                                        </item>
+                                    </list>
+                                </item>
+                            </list>
+                        </item>
+                    </list>
+                </item>
+            </list>
+        </item>
+        <item>
+            <link destination="#section-title-with-quotes" title="">
+                <text>Section title with &quot;quotes&quot;</text>
+            </link>
+        </item>
+    </table_of_contents>
+    <paragraph>
+        <text>Here's a sample Markdown document with lots of headings</text>
+    </paragraph>
+    <heading level="1">
+        <heading_permalink slug="section-1" />
+        <text>Section 1</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="section-11" />
+        <text>Section 1.1</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="section-111" />
+        <text>Section 1.1.1</text>
+    </heading>
+    <heading level="4">
+        <heading_permalink slug="section-1111" />
+        <text>Section 1.1.1.1</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="section-11111" />
+        <text>Section 1.1.1.1.1</text>
+    </heading>
+    <heading level="6">
+        <heading_permalink slug="section-111111" />
+        <text>Section 1.1.1.1.1.1</text>
+    </heading>
+    <heading level="1">
+        <heading_permalink slug="section-2" />
+        <text>Section 2</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="section-21" />
+        <text>Section 2.1</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="section-22" />
+        <text>Section 2.2</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="section-221" />
+        <text>Section 2.2.1</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="section-222" />
+        <text>Section 2.2.2</text>
+    </heading>
+    <heading level="4">
+        <heading_permalink slug="section-2221" />
+        <text>Section 2.2.2.1</text>
+    </heading>
+    <heading level="4">
+        <heading_permalink slug="section-2222" />
+        <text>Section 2.2.2.2</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="section-22221" />
+        <text>Section 2.2.2.2.1</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="section-22222" />
+        <text>Section 2.2.2.2.2</text>
+    </heading>
+    <heading level="6">
+        <heading_permalink slug="section-222221" />
+        <text>Section 2.2.2.2.2.1</text>
+    </heading>
+    <heading level="6">
+        <heading_permalink slug="section-222222" />
+        <text>Section 2.2.2.2.2.2</text>
+    </heading>
+    <heading level="1">
+        <heading_permalink slug="section-title-with-quotes" />
+        <text>Section title with &quot;quotes&quot;</text>
+    </heading>
+</document>

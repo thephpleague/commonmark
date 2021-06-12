@@ -21,8 +21,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class EmphasisRenderer implements NodeRendererInterface
+final class EmphasisRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param Emphasis $node
@@ -38,5 +39,18 @@ final class EmphasisRenderer implements NodeRendererInterface
         $attrs = $node->data->get('attributes');
 
         return new HtmlElement('em', $attrs, $childRenderer->renderNodes($node->children()));
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'emph';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

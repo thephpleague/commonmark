@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>You can try emailing </text>
+        <link destination="mailto:foo@example.com" title="">
+            <text>foo@example.com</text>
+        </link>
+        <text> but that inbox doesn't actually exist.</text>
+    </paragraph>
+    <paragraph>
+        <text>Or you can search on </text>
+        <link destination="http://www.google.com" title="">
+            <text>www.google.com</text>
+        </link>
+        <text> for stuff.</text>
+    </paragraph>
+</document>

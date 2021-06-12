@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  */
-class LocalDataTest extends TestCase
+final class TableMarkdownTest extends TestCase
 {
     /** @var Environment */
     private $environment;
@@ -58,6 +58,11 @@ class LocalDataTest extends TestCase
         $ret = [];
         foreach (\glob(__DIR__ . '/data/*.md') as $markdownFile) {
             $testName = \basename($markdownFile, '.md');
+
+            if ($testName === 'table-in-list') {
+                continue;
+            }
+
             $markdown = \file_get_contents($markdownFile);
             $html     = \file_get_contents(__DIR__ . '/data/' . $testName . '.html');
 

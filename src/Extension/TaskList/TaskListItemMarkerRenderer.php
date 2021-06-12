@@ -17,8 +17,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class TaskListItemMarkerRenderer implements NodeRendererInterface
+final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param TaskListItemMarker $node
@@ -41,5 +42,28 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface
         $checkbox->setAttribute('type', 'checkbox');
 
         return $checkbox;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'task_list_item_marker';
+    }
+
+    /**
+     * @param TaskListItemMarker $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        TaskListItemMarker::assertInstanceOf($node);
+
+        if ($node->isChecked()) {
+            return ['checked' => 'checked'];
+        }
+
+        return [];
     }
 }

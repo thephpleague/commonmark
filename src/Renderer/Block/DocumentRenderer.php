@@ -20,8 +20,9 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class DocumentRenderer implements NodeRendererInterface
+final class DocumentRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param Document $node
@@ -37,5 +38,20 @@ final class DocumentRenderer implements NodeRendererInterface
         $wholeDoc = $childRenderer->renderNodes($node->children());
 
         return $wholeDoc === '' ? '' : $wholeDoc . "\n";
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'document';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [
+            'xmlns' => 'http://commonmark.org/xml/1.0',
+        ];
     }
 }

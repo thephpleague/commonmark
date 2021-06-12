@@ -11,6 +11,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Added new `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
  - Added new `DescriptionListExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/description-lists/))
  - Added new `DefaultAttributesExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/default-attributes/))
+ - Added new `XmlRenderer` ([see documentation](https://commonmark.thephpleague.com/xml/)) to simplify AST debugging (#431)
  - Added `Query` class to simplify Node traversal when looking to take action on certain Nodes
  - Added the ability to delegate event dispatching to PSR-14 compliant event dispatcher libraries
  - Added the ability to configure disallowed raw HTML tags (#507)
@@ -37,6 +38,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `DocumentRenderedEvent`
    - `EllipsesParser` (extracted from `PunctuationParser`)
    - `ExpressionInterface`
+   - `FallbackNodeXmlRenderer`
    - `InlineParserEngineInterface`
    - `InlineParserMatch`
    - `MarkdownParserState`
@@ -48,8 +50,11 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `RenderedContentInterface`
    - `ReplaceUnpairedQuotesListener`
    - `SpecReader`
+   - `TableOfContentsRenderer`
    - `UniqueSlugNormalizer`
    - `UniqueSlugNormalizerInterface`
+   - `XmlRenderer`
+   - `XmlNodeRendererInterface`
  - Added several new methods:
    - `Environment::createDefaultConfiguration()`
    - `Environment::setEventDispatcher()`

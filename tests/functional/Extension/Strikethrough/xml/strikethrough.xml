@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <strikethrough>
+            <text>Tickets are now available!</text>
+        </strikethrough>
+        <text> Sorry, we are sold out.</text>
+    </paragraph>
+</document>

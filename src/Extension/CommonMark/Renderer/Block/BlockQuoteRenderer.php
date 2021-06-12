@@ -21,8 +21,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class BlockQuoteRenderer implements NodeRendererInterface
+final class BlockQuoteRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param BlockQuote $node
@@ -48,5 +49,22 @@ final class BlockQuoteRenderer implements NodeRendererInterface
             $attrs,
             $innerSeparator . $filling . $innerSeparator
         );
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'block_quote';
+    }
+
+    /**
+     * @param BlockQuote $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

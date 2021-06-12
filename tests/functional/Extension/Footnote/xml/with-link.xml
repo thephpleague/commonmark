@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>Ils peuvent y avoir </text>
+        <link destination="https://www.gov.uk" title="">
+            <text>gratuitement accès</text>
+        </link>
+        <text> pour une audience devant un tribunal.</text>
+        <footnote_ref reference="matei" />
+    </paragraph>
+    <footnote_container>
+        <footnote reference="matei">
+            <paragraph>
+                <text>Information </text>
+                <strong>
+                    <text>communiquée à </text>
+                    <emph>
+                        <text>Prison Insider</text>
+                    </emph>
+                </strong>
+                <text> par Matei Clej, interprète judiciaire, le 18 avril 2019.</text>
+                <footnote_backref reference="matei" />
+            </paragraph>
+        </footnote>
+    </footnote_container>
+</document>

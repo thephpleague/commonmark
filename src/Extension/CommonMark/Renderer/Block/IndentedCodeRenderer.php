@@ -22,8 +22,9 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Util\Xml;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class IndentedCodeRenderer implements NodeRendererInterface
+final class IndentedCodeRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param IndentedCode $node
@@ -43,5 +44,18 @@ final class IndentedCodeRenderer implements NodeRendererInterface
             [],
             new HtmlElement('code', $attrs, Xml::escape($node->getLiteral()))
         );
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'code_block';
+    }
+
+    /**
+     * @return array<string, scalar>
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

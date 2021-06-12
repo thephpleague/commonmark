@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#a-level-2-heading-to-start" title="">
+                <text>A level 2 heading to start</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#followed-by-a-level-4" title="">
+                        <text>Followed by a level 4</text>
+                    </link>
+                </item>
+            </list>
+        </item>
+        <item>
+            <link destination="#then-a-level-1" title="">
+                <text>Then a level 1</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#and-another-level-2" title="">
+                        <text>And another level 2</text>
+                    </link>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#then-a-level-5" title="">
+                                <text>Then a level 5</text>
+                            </link>
+                            <list type="bullet" tight="false">
+                                <item>
+                                    <link destination="#then-a-level-6" title="">
+                                        <text>Then a level 6</text>
+                                    </link>
+                                </item>
+                            </list>
+                        </item>
+                        <item>
+                            <link destination="#then-a-level-5-1" title="">
+                                <text>Then a level 5</text>
+                            </link>
+                            <list type="bullet" tight="false">
+                                <item>
+                                    <link destination="#then-a-level-6-1" title="">
+                                        <text>Then a level 6</text>
+                                    </link>
+                                </item>
+                            </list>
+                        </item>
+                    </list>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#and-then-a-level-3" title="">
+                                <text>And then a level 3</text>
+                            </link>
+                            <list type="bullet" tight="false">
+                                <item>
+                                    <link destination="#then-a-level-5-2" title="">
+                                        <text>Then a level 5</text>
+                                    </link>
+                                </item>
+                            </list>
+                        </item>
+                    </list>
+                </item>
+                <item>
+                    <link destination="#then-a-level-2" title="">
+                        <text>Then a level 2</text>
+                    </link>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#followed-by-a-level-6" title="">
+                                <text>Followed by a level 6</text>
+                            </link>
+                        </item>
+                    </list>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#then-another-level-3" title="">
+                                <text>Then another level 3</text>
+                            </link>
+                            <list type="bullet" tight="false">
+                                <item>
+                                    <link destination="#then-level-5" title="">
+                                        <text>Then level 5</text>
+                                    </link>
+                                </item>
+                            </list>
+                            <list type="bullet" tight="false">
+                                <item>
+                                    <link destination="#level-4" title="">
+                                        <text>Level 4</text>
+                                    </link>
+                                </item>
+                            </list>
+                        </item>
+                        <item>
+                            <link destination="#level-3" title="">
+                                <text>Level 3</text>
+                            </link>
+                        </item>
+                    </list>
+                </item>
+                <item>
+                    <link destination="#level-2" title="">
+                        <text>Level 2</text>
+                    </link>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#level-4-1" title="">
+                                <text>Level 4</text>
+                            </link>
+                        </item>
+                    </list>
+                </item>
+            </list>
+        </item>
+        <item>
+            <link destination="#now-for-some-normal-headings-to-test-going-up-and-down-the-stack" title="">
+                <text>Now for some &quot;normal&quot; headings to test going up and down the stack</text>
+            </link>
+        </item>
+        <item>
+            <link destination="#section-1" title="">
+                <text>Section 1</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#section-11" title="">
+                        <text>Section 1.1</text>
+                    </link>
+                    <list type="bullet" tight="false">
+                        <item>
+                            <link destination="#section-111" title="">
+                                <text>Section 1.1.1</text>
+                            </link>
+                            <list type="bullet" tight="false">
+                                <item>
+                                    <link destination="#section-1111" title="">
+                                        <text>Section 1.1.1.1</text>
+                                    </link>
+                                    <list type="bullet" tight="false">
+                                        <item>
+                                            <link destination="#section-11111" title="">
+                                                <text>Section 1.1.1.1.1</text>
+                                            </link>
+                                            <list type="bullet" tight="false">
+                                                <item>
+                                                    <link destination="#section-111111" title="">
+                                                        <text>Section 1.1.1.1.1.1</text>
+                                                    </link>
+                                                </item>
+                                            </list>
+                                        </item>
+                                        <item>
+                                            <link destination="#section-11112" title="">
+                                                <text>Section 1.1.1.1.2</text>
+                                            </link>
+                                        </item>
+                                    </list>
+                                </item>
+                                <item>
+                                    <link destination="#section-1112" title="">
+                                        <text>Section 1.1.1.2</text>
+                                    </link>
+                                </item>
+                            </list>
+                        </item>
+                        <item>
+                            <link destination="#section-112" title="">
+                                <text>Section 1.1.2</text>
+                            </link>
+                        </item>
+                    </list>
+                </item>
+                <item>
+                    <link destination="#section-12" title="">
+                        <text>Section 1.2</text>
+                    </link>
+                </item>
+            </list>
+        </item>
+        <item>
+            <link destination="#section-2" title="">
+                <text>Section 2</text>
+            </link>
+        </item>
+    </table_of_contents>
+    <paragraph>
+        <text>Here's a sample Markdown document with weird headings</text>
+    </paragraph>
+    <heading level="2">
+        <heading_permalink slug="a-level-2-heading-to-start" />
+        <text>A level 2 heading to start</text>
+    </heading>
+    <heading level="4">
+        <heading_permalink slug="followed-by-a-level-4" />
+        <text>Followed by a level 4</text>
+    </heading>
+    <heading level="1">
+        <heading_permalink slug="then-a-level-1" />
+        <text>Then a level 1</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="and-another-level-2" />
+        <text>And another level 2</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="then-a-level-5" />
+        <text>Then a level 5</text>
+    </heading>
+    <heading level="6">
+        <heading_permalink slug="then-a-level-6" />
+        <text>Then a level 6</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="then-a-level-5-1" />
+        <text>Then a level 5</text>
+    </heading>
+    <heading level="6">
+        <heading_permalink slug="then-a-level-6-1" />
+        <text>Then a level 6</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="and-then-a-level-3" />
+        <text>And then a level 3</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="then-a-level-5-2" />
+        <text>Then a level 5</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="then-a-level-2" />
+        <text>Then a level 2</text>
+    </heading>
+    <heading level="6">
+        <heading_permalink slug="followed-by-a-level-6" />
+        <text>Followed by a level 6</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="then-another-level-3" />
+        <text>Then another level 3</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="then-level-5" />
+        <text>Then level 5</text>
+    </heading>
+    <heading level="4">
+        <heading_permalink slug="level-4" />
+        <text>Level 4</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="level-3" />
+        <text>Level 3</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="level-2" />
+        <text>Level 2</text>
+    </heading>
+    <heading level="4">
+        <heading_permalink slug="level-4-1" />
+        <text>Level 4</text>
+    </heading>
+    <heading level="1">
+        <heading_permalink slug="now-for-some-normal-headings-to-test-going-up-and-down-the-stack" />
+        <text>Now for some &quot;normal&quot; headings to test going up and down the stack</text>
+    </heading>
+    <heading level="1">
+        <heading_permalink slug="section-1" />
+        <text>Section 1</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="section-11" />
+        <text>Section 1.1</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="section-111" />
+        <text>Section 1.1.1</text>
+    </heading>
+    <heading level="4">
+        <heading_permalink slug="section-1111" />
+        <text>Section 1.1.1.1</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="section-11111" />
+        <text>Section 1.1.1.1.1</text>
+    </heading>
+    <heading level="6">
+        <heading_permalink slug="section-111111" />
+        <text>Section 1.1.1.1.1.1</text>
+    </heading>
+    <heading level="5">
+        <heading_permalink slug="section-11112" />
+        <text>Section 1.1.1.1.2</text>
+    </heading>
+    <heading level="4">
+        <heading_permalink slug="section-1112" />
+        <text>Section 1.1.1.2</text>
+    </heading>
+    <heading level="3">
+        <heading_permalink slug="section-112" />
+        <text>Section 1.1.2</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="section-12" />
+        <text>Section 1.2</text>
+    </heading>
+    <heading level="1">
+        <heading_permalink slug="section-2" />
+        <text>Section 2</text>
+    </heading>
+</document>

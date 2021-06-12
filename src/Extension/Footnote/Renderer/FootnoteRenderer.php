@@ -19,10 +19,11 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
-final class FootnoteRenderer implements NodeRendererInterface, ConfigurationAwareInterface
+final class FootnoteRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
     /** @var ConfigurationInterface */
     private $config;
@@ -55,5 +56,26 @@ final class FootnoteRenderer implements NodeRendererInterface, ConfigurationAwar
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'footnote';
+    }
+
+    /**
+     * @param Footnote $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        Footnote::assertInstanceOf($node);
+
+        return [
+            'reference' => $node->getReference()->getLabel(),
+        ];
     }
 }

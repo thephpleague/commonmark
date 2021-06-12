@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <list type="ordered" start="1" tight="true" delimiter="period">
+        <item>
+            <paragraph>
+                <text>item one</text>
+            </paragraph>
+        </item>
+        <item>
+            <paragraph>
+                <text>item two</text>
+            </paragraph>
+            <list type="bullet" tight="true">
+                <item>
+                    <paragraph>
+                        <text>sublist</text>
+                    </paragraph>
+                </item>
+                <item>
+                    <paragraph>
+                        <text>sublist</text>
+                    </paragraph>
+                    <list type="ordered" start="1" tight="true" delimiter="paren">
+                        <item>
+                            <paragraph>
+                                <text>Nested even deeper</text>
+                            </paragraph>
+                        </item>
+                    </list>
+                </item>
+            </list>
+        </item>
+    </list>
+    <paragraph>
+        <text>Continuing on...</text>
+    </paragraph>
+    <list type="ordered" start="3" tight="true" delimiter="period">
+        <item>
+            <paragraph>
+                <text>item three</text>
+            </paragraph>
+        </item>
+        <item>
+            <paragraph>
+                <text>item four</text>
+            </paragraph>
+            <list type="ordered" start="1" tight="true" delimiter="period">
+                <item>
+                    <paragraph>
+                        <text>too lazy</text>
+                    </paragraph>
+                </item>
+                <item>
+                    <paragraph>
+                        <text>to properly</text>
+                    </paragraph>
+                </item>
+                <item>
+                    <paragraph>
+                        <text>number these</text>
+                    </paragraph>
+                </item>
+            </list>
+        </item>
+    </list>
+    <thematic_break />
+    <list type="bullet" tight="false">
+        <item>
+            <paragraph>
+                <text>Loose</text>
+            </paragraph>
+        </item>
+        <item>
+            <paragraph>
+                <text>List</text>
+            </paragraph>
+        </item>
+        <item>
+            <paragraph>
+                <text>Here</text>
+            </paragraph>
+        </item>
+    </list>
+</document>

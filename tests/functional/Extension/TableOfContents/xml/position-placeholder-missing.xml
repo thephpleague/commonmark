@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>This is my document.</text>
+    </paragraph>
+    <heading level="1">
+        <heading_permalink slug="hello-world" />
+        <text>Hello World!</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="isnt-markdown-great" />
+        <text>Isn't Markdown Great?</text>
+    </heading>
+</document>

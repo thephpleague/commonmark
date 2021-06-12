@@ -21,8 +21,9 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class ListBlockRenderer implements NodeRendererInterface
+final class ListBlockRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
      * @param ListBlock $node
@@ -48,5 +49,38 @@ final class ListBlockRenderer implements NodeRendererInterface
         $innerSeparator = $childRenderer->getInnerSeparator();
 
         return new HtmlElement($tag, $attrs, $innerSeparator . $childRenderer->renderNodes($node->children()) . $innerSeparator);
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'list';
+    }
+
+    /**
+     * @param ListBlock $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        ListBlock::assertInstanceOf($node);
+
+        $data = $node->getListData();
+
+        if ($data->type === ListBlock::TYPE_BULLET) {
+            return [
+                'type' => $data->type,
+                'tight' => $node->isTight() ? 'true' : 'false',
+            ];
+        }
+
+        return [
+            'type' => $data->type,
+            'start' => $data->start ?? 1,
+            'tight' => $node->isTight(),
+            'delimiter' => $data->delimiter ?? ListBlock::DELIM_PERIOD,
+        ];
     }
 }

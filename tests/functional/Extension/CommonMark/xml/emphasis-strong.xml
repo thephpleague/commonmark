@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <strong>
+            <emph>
+                <text>CommonMark</text>
+            </emph>
+            <text> is </text>
+            <strong>
+                <text>awesome</text>
+            </strong>
+            <text>!</text>
+        </strong>
+    </paragraph>
+</document>

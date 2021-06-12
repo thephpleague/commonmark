@@ -21,10 +21,11 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
-final class NewlineRenderer implements NodeRendererInterface, ConfigurationAwareInterface
+final class NewlineRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
     /**
      * @var ConfigurationInterface
@@ -54,5 +55,27 @@ final class NewlineRenderer implements NodeRendererInterface, ConfigurationAware
         }
 
         return $this->config->get('renderer/soft_break');
+    }
+
+    /**
+     * @param Newline $node
+     *
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlTagName(Node $node): string
+    {
+        Newline::assertInstanceOf($node);
+
+        return $node->getType() === Newline::SOFTBREAK ? 'softbreak' : 'linebreak';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

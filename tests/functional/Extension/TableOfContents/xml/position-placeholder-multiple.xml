@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>This is my document.</text>
+    </paragraph>
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#another-copy-of-my-toc-is-here" title="">
+                <text>Another copy of my TOC is here</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#this-contains-something-that-looks-like-a-placeholder-but-actually-isnt" title="">
+                        <text>This contains something that looks like a placeholder but actually isn't</text>
+                    </link>
+                </item>
+                <item>
+                    <link destination="#just-a-link-reference-down-here" title="">
+                        <text>Just a link reference down here</text>
+                    </link>
+                </item>
+            </list>
+        </item>
+    </table_of_contents>
+    <heading level="1">
+        <heading_permalink slug="another-copy-of-my-toc-is-here" />
+        <text>Another copy of my TOC is here</text>
+    </heading>
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#another-copy-of-my-toc-is-here" title="">
+                <text>Another copy of my TOC is here</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#this-contains-something-that-looks-like-a-placeholder-but-actually-isnt" title="">
+                        <text>This contains something that looks like a placeholder but actually isn't</text>
+                    </link>
+                </item>
+                <item>
+                    <link destination="#just-a-link-reference-down-here" title="">
+                        <text>Just a link reference down here</text>
+                    </link>
+                </item>
+            </list>
+        </item>
+    </table_of_contents>
+    <heading level="2">
+        <heading_permalink slug="this-contains-something-that-looks-like-a-placeholder-but-actually-isnt" />
+        <text>This contains something that looks like a placeholder but actually isn't</text>
+    </heading>
+    <paragraph>
+        <text>This is not a placeholder, but a link reference: </text>
+        <link destination="https://www.example.com" title="Link Reference">
+            <text>TOC</text>
+        </link>
+    </paragraph>
+    <paragraph>
+        <link destination="https://www.example.com" title="Link Reference">
+            <text>TOC</text>
+        </link>
+        <text> This should also be handled as a link reference</text>
+    </paragraph>
+    <heading level="2">
+        <heading_permalink slug="just-a-link-reference-down-here" />
+        <text>Just a link reference down here</text>
+    </heading>
+</document>

@@ -17,13 +17,14 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
 /**
  * Renders the HeadingPermalink elements
  */
-final class HeadingPermalinkRenderer implements NodeRendererInterface, ConfigurationAwareInterface
+final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
     public const DEFAULT_SYMBOL = '¶';
 
@@ -69,5 +70,26 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, Configura
         \assert(\is_string($symbol));
 
         return new HtmlElement('a', $attrs->export(), \htmlspecialchars($symbol), false);
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'heading_permalink';
+    }
+
+    /**
+     * @param HeadingPermalink $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        HeadingPermalink::assertInstanceOf($node);
+
+        return [
+            'slug' => $node->getSlug(),
+        ];
     }
 }

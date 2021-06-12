@@ -14,11 +14,14 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Extension\Mention\MentionExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Parser\MarkdownParser;
+use League\CommonMark\Xml\XmlRenderer;
 use League\Config\Exception\InvalidConfigurationException;
 use PHPUnit\Framework\TestCase;
 
@@ -199,5 +202,51 @@ EOT;
         $converter = new MarkdownConverter($environment);
 
         $converter->convertToHtml('foo');
+    }
+
+    public function testXmlRendering(): void
+    {
+        $input = <<<'EOT'
+You can follow the author of this library on GitHub - he's @colinodell!
+EOT;
+
+        $expected = <<<'EOT'
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>You can follow the author of this library on GitHub - he's </text>
+        <link destination="https://github.com/colinodell" title="">
+            <text>@colinodell</text>
+        </link>
+        <text>!</text>
+    </paragraph>
+</document>
+
+EOT;
+
+        $environment = new Environment([
+            'mentions' => [
+                'github_handle' => [
+                    'prefix'    => '@',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'generator' => new class () implements MentionGeneratorInterface {
+                        public function generateMention(Mention $mention): ?AbstractInline
+                        {
+                            $mention->setUrl(\sprintf('https://github.com/%s', $mention->getIdentifier()));
+
+                            return $mention;
+                        }
+                    },
+                ],
+            ],
+        ]);
+
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new MentionExtension());
+
+        $document = (new MarkdownParser($environment))->parse($input);
+        $xml      = (new XmlRenderer($environment))->renderDocument($document)->getContent();
+
+        $this->assertSame($expected, $xml);
     }
 }

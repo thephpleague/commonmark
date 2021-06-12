@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>Hello</text>
+        <text>[^ref]</text>
+        <text> World! </text>
+        <footnote_ref reference="ref2" />
+    </paragraph>
+    <footnote_container>
+        <footnote reference="ref2">
+            <paragraph>
+                <text>Hi!</text>
+                <footnote_backref reference="ref2" />
+            </paragraph>
+        </footnote>
+    </footnote_container>
+</document>

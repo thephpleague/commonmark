@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <list type="bullet" tight="true">
+        <item>
+            <paragraph>
+                <task_list_item_marker checked="checked" />
+                <text> foo</text>
+            </paragraph>
+            <list type="bullet" tight="true">
+                <item>
+                    <paragraph>
+                        <task_list_item_marker />
+                        <text> bar</text>
+                    </paragraph>
+                </item>
+                <item>
+                    <paragraph>
+                        <task_list_item_marker checked="checked" />
+                        <text> baz</text>
+                    </paragraph>
+                </item>
+            </list>
+        </item>
+        <item>
+            <paragraph>
+                <task_list_item_marker />
+                <text> bim</text>
+            </paragraph>
+        </item>
+    </list>
+    <list type="bullet" tight="true">
+        <item>
+            <paragraph>
+                <task_list_item_marker checked="checked" />
+                <text> foo</text>
+            </paragraph>
+        </item>
+        <item>
+            <paragraph>
+                <task_list_item_marker checked="checked" />
+                <text> bar</text>
+            </paragraph>
+        </item>
+        <item>
+            <paragraph>
+                <task_list_item_marker />
+                <text> baz</text>
+            </paragraph>
+        </item>
+    </list>
+    <paragraph>
+        <text>This works for ordered lists too:</text>
+    </paragraph>
+    <list type="ordered" start="1" tight="true" delimiter="period">
+        <item>
+            <paragraph>
+                <task_list_item_marker checked="checked" />
+                <text> foo</text>
+            </paragraph>
+        </item>
+        <item>
+            <paragraph>
+                <task_list_item_marker checked="checked" />
+                <text> bar</text>
+            </paragraph>
+        </item>
+        <item>
+            <paragraph>
+                <task_list_item_marker />
+                <text> baz</text>
+            </paragraph>
+        </item>
+    </list>
+</document>

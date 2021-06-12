@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#this-heading-has-a-link" title="">
+                <text>This heading has a link</text>
+            </link>
+        </item>
+        <item>
+            <link destination="#20-reasons-why-marquee-tags-should-make-a-comeback" title="">
+                <text>20 Reasons Why &lt;marquee&gt; Tags Should Make A Comeback</text>
+            </link>
+        </item>
+        <item>
+            <link destination="#i-love-using--characters-in-markdown" title="">
+                <text>I love using * characters in Markdown!</text>
+            </link>
+        </item>
+    </table_of_contents>
+    <paragraph>
+        <text>My Awesome Blog Post</text>
+    </paragraph>
+    <heading level="2">
+        <heading_permalink slug="this-heading-has-a-link" />
+        <link destination="https://example.com" title="">
+            <text>This heading</text>
+        </link>
+        <text> has a link</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="20-reasons-why-marquee-tags-should-make-a-comeback" />
+        <text>20 Reasons Why </text>
+        <code>&lt;marquee&gt;</code>
+        <text> Tags Should Make A Comeback</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="i-love-using--characters-in-markdown" />
+        <text>I </text>
+        <strong>
+            <text>love</text>
+        </strong>
+        <text> using * characters in Markdown!</text>
+    </heading>
+</document>

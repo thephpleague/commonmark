@@ -111,3 +111,33 @@ Note that thematic breaks should not contain children, which is why the `$childR
 
 - Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
 - Don't forget to render any child elements that your node might contain!
+
+## XML Rendering
+
+The [XML renderer](/2.0/xml/) will automatically attempt to convert any AST nodes to XML by inspecting the name of the block/inline node and its attributes. You can instead control the XML element name and attributes by making your renderer implement `XmlNodeRendererInterface`:
+
+```php
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
+
+class TextDividerRenderer implements NodeRendererInterface, XmlNodeRendererInterface
+{
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    {
+        return new HtmlElement('pre', ['class' => 'divider'], '==============================');
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'text_divider';
+    }
+
+    public function getXmlAttributes(Node $node): array
+    {
+        return ['character' => '='];
+    }
+}
+```
