@@ -5,6 +5,7 @@ version:
             'Installation': '/2.0/installation/'
             'Upgrading from 1.6': '/2.0/upgrading/'
             'Changelog': '/2.0/changelog/'
+            'Support': '/2.0/support/'
         Usage:
             'Basic Usage': '/2.0/basic-usage/'
             'Configuration': '/2.0/configuration/'
@@ -45,6 +46,7 @@ version:
             'Installation': '/1.6/installation/'
             'Upgrading from 1.5': '/1.6/upgrading/'
             'Changelog': '/1.6/changelog/'
+            'Support': '/1.6/support/'
         Usage:
             'Basic Usage': '/1.6/basic-usage/'
             'Configuration': '/1.6/configuration/'
