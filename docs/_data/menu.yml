@@ -9,6 +9,7 @@ version:
             'Basic Usage': '/2.0/basic-usage/'
             'Configuration': '/2.0/configuration/'
             'Security': '/2.0/security/'
+            'XML': '/2.0/xml/'
         Extensions:
             'Overview': '/2.0/extensions/overview/'
             'CommonMark': '/2.0/extensions/commonmark/'
