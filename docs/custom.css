@@ -188,6 +188,10 @@ main article p {
     max-width: 840px;
 }
 
+main article a {
+    color:#1672ce;
+}
+
 main article p code,
 main article li code,
 main article div > code {
