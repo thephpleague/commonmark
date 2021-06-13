@@ -61,6 +61,7 @@ namespace PHPSTORM_META
         'footnote/footnote_id_prefix',
         'heading_permalink',
         'heading_permalink/html_class',
+        'heading_permalink/fragment_prefix',
         'heading_permalink/id_prefix',
         'heading_permalink/inner_contents',
         'heading_permalink/insert',

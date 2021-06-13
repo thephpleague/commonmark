@@ -74,6 +74,15 @@ Table of Contents items are no longer wrapped with `<p>` tags:
 
 See [#613](https://github.com/thephpleague/commonmark/issues/613) for details.
 
+Additionally, the HTML (including URL fragments) for Heading Permalinks have changed:
+
+```diff
+-<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>Hello World!</h1>
++<h1><a id="content-hello-world" href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>Hello World!</h1>
+```
+
+Note that the `href` now targets the `id` attribute instead of the `name`, which is deprecated in HTML 5.  Additionally, the default prefix has changed to `content`.  See the [Heading Permalink extension documentation](/2.0/extensions/heading-permalinks/#configuration) for more details on how to configure the prefixes.
+
 ## Configuration Option Changes
 
 Several configuration options now have new names:
@@ -85,6 +94,7 @@ Several configuration options now have new names:
 | `use_asterisk`                      | `commonmark/use_asterisk`           |                                         |
 | `use_underscore`                    | `commonmark/use_underscore`         |                                         |
 | `unordered_list_markers`            | `commonmark/unordered_list_markers` | Empty arrays no longer allowed          |
+| `heading_permalink/id_prefix`       | (unchanged)                         | Default is now `content`                |
 | `heading_permalink/inner_contents`  | `heading_permalink/symbol`          |                                         |
 | `heading_permalink/slug_normalizer` | `slug_normalizer/instance`          |                                         |
 | `max_nesting_level`                 | (unchanged)                         | Only integer values are supported       |

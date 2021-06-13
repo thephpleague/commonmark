@@ -58,10 +58,14 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
             $idPrefix .= '-';
         }
 
+        $fragmentPrefix = (string) $this->config->get('heading_permalink/fragment_prefix');
+        if ($fragmentPrefix !== '') {
+            $fragmentPrefix .= '-';
+        }
+
         $attrs = $node->data->getData('attributes');
         $attrs->set('id', $idPrefix . $slug);
-        $attrs->set('href', '#' . $slug);
-        $attrs->set('name', $slug);
+        $attrs->set('href', '#' . $fragmentPrefix . $slug);
         $attrs->append('class', $this->config->get('heading_permalink/html_class'));
         $attrs->set('aria-hidden', 'true');
         $attrs->set('title', $this->config->get('heading_permalink/title'));
