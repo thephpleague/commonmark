@@ -49,7 +49,7 @@ final class QuoteParser implements InlineParserInterface
 
         $cursor->advance();
 
-        $charAfter = $cursor->getCharacter();
+        $charAfter = $cursor->getCurrentCharacter();
         if ($charAfter === null) {
             $charAfter = "\n";
         }

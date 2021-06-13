@@ -170,7 +170,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
     {
         $cursor = new Cursor(\trim($line));
 
-        if ($cursor->getCharacter() === '|') {
+        if ($cursor->getCurrentCharacter() === '|') {
             $cursor->advanceBy(1);
         }
 
@@ -178,7 +178,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
         $sb    = '';
 
         while (! $cursor->isAtEnd()) {
-            switch ($c = $cursor->getCharacter()) {
+            switch ($c = $cursor->getCurrentCharacter()) {
                 case '\\':
                     if ($cursor->peek() === '|') {
                         // Pipe is special for table parsing. An escaped pipe doesn't result in a new cell, but is

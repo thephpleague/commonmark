@@ -74,7 +74,7 @@ final class TableStartParser implements BlockStartParserInterface
         $valid   = false;
 
         while (! $cursor->isAtEnd()) {
-            switch ($c = $cursor->getCharacter()) {
+            switch ($c = $cursor->getCurrentCharacter()) {
                 case '|':
                     $cursor->advanceBy(1);
                     $pipes++;
@@ -105,7 +105,7 @@ final class TableStartParser implements BlockStartParserInterface
                         return [];
                     }
 
-                    if ($cursor->getCharacter() === ':') {
+                    if ($cursor->getCurrentCharacter() === ':') {
                         $right = true;
                         $cursor->advanceBy(1);
                     }

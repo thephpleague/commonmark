@@ -57,6 +57,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `XmlRenderer`
    - `XmlNodeRendererInterface`
  - Added several new methods:
+   - `Cursor::getCurrentCharacter()`
    - `Environment::createDefaultConfiguration()`
    - `Environment::setEventDispatcher()`
    - `EnvironmentInterface::getExtensions()`

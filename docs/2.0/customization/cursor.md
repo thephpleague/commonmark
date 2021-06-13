@@ -34,8 +34,8 @@ You can then call any of the following methods to parse the string within that `
 | `getColumn()`                      | Returns the current column (used when handling tabbed indentation)                                                              |
 | `getIndent()`                      | Returns the current amount of indentation                                                                                       |
 | `isIndented()`                     | Returns whether the cursor is indented to `INDENT_LEVEL`                                                                        |
-| `getCharacter()`                   | Returns the character at the current position                                                                                   |
 | `getCharacter(int $index)`         | Returns the character at the given absolute position                                                                            |
+| `getCurrentCharacter()`            | Returns the character at the current position                                                                                   |
 | `peek()`                           | Returns the next character without changing the current `position` of the cursor                                                |
 | `peek(int $offset)`                | Returns the character `$offset` chars away without changing the current `position` of the cursor                                |
 | `getNextNonSpacePosition()`        | Returns the position of the next character which is not a space or tab                                                          |

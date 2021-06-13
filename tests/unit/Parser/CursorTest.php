@@ -119,6 +119,19 @@ class CursorTest extends TestCase
     }
 
     /**
+     * @dataProvider dataForGetCharacterTest
+     */
+    public function testGetCurrentCharacter(string $string, ?int $index, string $expectedValue): void
+    {
+        $cursor = new Cursor($string);
+        if ($index !== null) {
+            $cursor->advanceBy($index);
+        }
+
+        $this->assertEquals($expectedValue, $cursor->getCurrentCharacter());
+    }
+
+    /**
      * @return iterable<array<mixed>>
      */
     public function dataForGetCharacterTest(): iterable

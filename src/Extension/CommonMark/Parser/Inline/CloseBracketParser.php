@@ -119,7 +119,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
      */
     private function tryParseInlineLinkAndTitle(Cursor $cursor)
     {
-        if ($cursor->getCharacter() !== '(') {
+        if ($cursor->getCurrentCharacter() !== '(') {
             return false;
         }
 
@@ -146,7 +146,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         $cursor->advanceToNextNonSpaceOrNewline();
 
-        if ($cursor->getCharacter() !== ')') {
+        if ($cursor->getCurrentCharacter() !== ')') {
             $cursor->restoreState($previousState);
 
             return false;
