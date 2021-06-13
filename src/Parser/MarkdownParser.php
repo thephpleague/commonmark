@@ -137,25 +137,9 @@ final class MarkdownParser implements MarkdownParserInterface
     {
         $this->cursor = new Cursor($line);
 
-        $matches = 1;
-        for ($i = 1; $i < \count($this->activeBlockParsers); $i++) {
-            $blockParser   = $this->activeBlockParsers[$i];
-            $blockContinue = $blockParser->tryContinue(clone $this->cursor, $this->getActiveBlockParser());
-            if ($blockContinue === null) {
-                break;
-            }
-
-            if ($blockContinue->isFinalize()) {
-                $this->closeBlockParsers(\count($this->activeBlockParsers) - $i, $this->lineNumber);
-
-                return;
-            }
-
-            if (($state = $blockContinue->getCursorState()) !== null) {
-                $this->cursor->restoreState($state);
-            }
-
-            $matches++;
+        $matches = $this->parseBlockContinuation();
+        if ($matches === null) {
+            return;
         }
 
         $unmatchedBlocks = \count($this->activeBlockParsers) - $matches;
@@ -227,6 +211,34 @@ final class MarkdownParser implements MarkdownParserInterface
                 $this->getActiveBlockParser()->addLine($this->cursor->getRemainder());
             }
         }
+    }
+
+    private function parseBlockContinuation(): ?int
+    {
+        // For each containing block, try to parse the associated line start.
+        // The document will always match, so we can skip the first block parser and start at 1 matches
+        $matches = 1;
+        for ($i = 1; $i < \count($this->activeBlockParsers); $i++) {
+            $blockParser   = $this->activeBlockParsers[$i];
+            $blockContinue = $blockParser->tryContinue(clone $this->cursor, $this->getActiveBlockParser());
+            if ($blockContinue === null) {
+                break;
+            }
+
+            if ($blockContinue->isFinalize()) {
+                $this->closeBlockParsers(\count($this->activeBlockParsers) - $i, $this->lineNumber);
+
+                return null;
+            }
+
+            if (($state = $blockContinue->getCursorState()) !== null) {
+                $this->cursor->restoreState($state);
+            }
+
+            $matches++;
+        }
+
+        return $matches;
     }
 
     private function findBlockStart(BlockContinueParserInterface $lastMatchedBlockParser): ?BlockStart
