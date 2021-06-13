@@ -24,7 +24,6 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Output\RenderedContent;
 use League\CommonMark\Output\RenderedContentInterface;
-use League\CommonMark\Util\HtmlElement;
 
 final class HtmlRenderer implements MarkdownRendererInterface, ChildNodeRendererInterface
 {
@@ -75,7 +74,7 @@ final class HtmlRenderer implements MarkdownRendererInterface, ChildNodeRenderer
     }
 
     /**
-     * @return HtmlElement|string
+     * @return \Stringable|string
      *
      * @throws \RuntimeException
      */
