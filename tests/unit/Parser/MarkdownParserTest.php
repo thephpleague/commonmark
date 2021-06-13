@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Parser;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\UnexpectedEncodingException;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use PHPUnit\Framework\TestCase;
 
@@ -24,8 +25,9 @@ class MarkdownParserTest extends TestCase
     {
         $this->expectException(UnexpectedEncodingException::class);
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $docParser   = new MarkdownParser($environment);
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $docParser = new MarkdownParser($environment);
 
         $docParser->parse("\x09\xca\xca");
     }

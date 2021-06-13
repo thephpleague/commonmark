@@ -316,7 +316,8 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
      */
     public static function createGFMEnvironment(array $config = []): Environment
     {
-        $environment = self::createCommonMarkEnvironment($config);
+        $environment = new self($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
         return $environment;

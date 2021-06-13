@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Event;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentPreParsedEvent;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Input\MarkdownInput;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Parser\MarkdownParser;
@@ -37,7 +38,8 @@ final class DocumentPreParsedEventTest extends TestCase
     {
         $wasCalled = false;
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addEventListener(DocumentPreParsedEvent::class, static function (DocumentPreParsedEvent $event) use (&$wasCalled): void {
             $wasCalled = true;
         });

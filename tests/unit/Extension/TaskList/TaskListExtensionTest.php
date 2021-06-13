@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Extension\TaskList;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
@@ -115,7 +116,8 @@ EOT;
 
 EOT;
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new TaskListExtension());
 
         $converter = new MarkdownConverter($environment);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\FrontMatterExtension;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\FrontMatter\Exception\InvalidFrontMatterException;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
@@ -21,7 +22,8 @@ final class FrontMatterExtensionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->environment = Environment::createCommonMarkEnvironment();
+        $this->environment = new Environment();
+        $this->environment->addExtension(new CommonMarkCoreExtension());
         $this->environment->addExtension(new FrontMatterExtension());
     }
 

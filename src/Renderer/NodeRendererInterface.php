@@ -14,12 +14,11 @@ declare(strict_types=1);
 namespace League\CommonMark\Renderer;
 
 use League\CommonMark\Node\Node;
-use League\CommonMark\Util\HtmlElement;
 
 interface NodeRendererInterface
 {
     /**
-     * @return HtmlElement|string|null
+     * @return \Stringable|string|null
      *
      * @throws \InvalidArgumentException if the wrong type of Node is provided
      */

@@ -117,7 +117,7 @@ final class MarkdownParser implements MarkdownParserInterface
 
         foreach ($markdownInput->getLines() as $lineNumber => $line) {
             $this->lineNumber = $lineNumber;
-            $this->incorporateLine($line);
+            $this->parseLine($line);
         }
 
         // finalizeAndProcess
@@ -133,36 +133,21 @@ final class MarkdownParser implements MarkdownParserInterface
      * Analyze a line of text and update the document appropriately. We parse markdown text by calling this on each
      * line of input, then finalizing the document.
      */
-    private function incorporateLine(string $line): void
+    private function parseLine(string $line): void
     {
         $this->cursor = new Cursor($line);
 
-        $matches = 1;
-        for ($i = 1; $i < \count($this->activeBlockParsers); $i++) {
-            $blockParser   = $this->activeBlockParsers[$i];
-            $blockContinue = $blockParser->tryContinue(clone $this->cursor, $this->getActiveBlockParser());
-            if ($blockContinue === null) {
-                break;
-            }
-
-            if ($blockContinue->isFinalize()) {
-                $this->closeBlockParsers(\count($this->activeBlockParsers) - $i, $this->lineNumber);
-
-                return;
-            }
-
-            if (($state = $blockContinue->getCursorState()) !== null) {
-                $this->cursor->restoreState($state);
-            }
-
-            $matches++;
+        $matches = $this->parseBlockContinuation();
+        if ($matches === null) {
+            return;
         }
 
         $unmatchedBlocks = \count($this->activeBlockParsers) - $matches;
         $blockParser     = $this->activeBlockParsers[$matches - 1];
         $startedNewBlock = false;
 
-        // Unless last matched container is a code block, try new container starts
+        // Unless last matched container is a code block, try new container starts,
+        // adding children to the last matched container:
         $tryBlockStarts = $blockParser->getBlock() instanceof Paragraph || $blockParser->isContainer();
         while ($tryBlockStarts) {
             // this is a little performance optimization
@@ -208,7 +193,7 @@ final class MarkdownParser implements MarkdownParserInterface
             }
         }
 
-        // What remains ath the offset is a text line. Add the text to the appropriate block.
+        // What remains at the offset is a text line. Add the text to the appropriate block.
 
         // First check for a lazy paragraph continuation:
         if (! $startedNewBlock && ! $this->cursor->isBlank() && $this->getActiveBlockParser()->canHaveLazyContinuationLines()) {
@@ -226,6 +211,34 @@ final class MarkdownParser implements MarkdownParserInterface
                 $this->getActiveBlockParser()->addLine($this->cursor->getRemainder());
             }
         }
+    }
+
+    private function parseBlockContinuation(): ?int
+    {
+        // For each containing block, try to parse the associated line start.
+        // The document will always match, so we can skip the first block parser and start at 1 matches
+        $matches = 1;
+        for ($i = 1; $i < \count($this->activeBlockParsers); $i++) {
+            $blockParser   = $this->activeBlockParsers[$i];
+            $blockContinue = $blockParser->tryContinue(clone $this->cursor, $this->getActiveBlockParser());
+            if ($blockContinue === null) {
+                break;
+            }
+
+            if ($blockContinue->isFinalize()) {
+                $this->closeBlockParsers(\count($this->activeBlockParsers) - $i, $this->lineNumber);
+
+                return null;
+            }
+
+            if (($state = $blockContinue->getCursorState()) !== null) {
+                $this->cursor->restoreState($state);
+            }
+
+            $matches++;
+        }
+
+        return $matches;
     }
 
     private function findBlockStart(BlockContinueParserInterface $lastMatchedBlockParser): ?BlockStart

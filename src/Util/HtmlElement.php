@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Util;
 
-class HtmlElement
+final class HtmlElement implements \Stringable
 {
     /** @var string */
     protected $tagName;

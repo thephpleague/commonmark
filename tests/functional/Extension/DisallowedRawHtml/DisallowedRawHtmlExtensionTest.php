@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\DisallowedRawHtml;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +39,8 @@ MD;
 
 HTML;
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new DisallowedRawHtmlExtension());
         $converter = new MarkdownConverter($environment);
 
@@ -84,7 +86,8 @@ MD;
 
 HTML;
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new DisallowedRawHtmlExtension());
         $converter = new MarkdownConverter($environment);
 

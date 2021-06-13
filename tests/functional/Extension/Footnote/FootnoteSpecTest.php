@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\Footnote;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractSpecTest;
@@ -22,7 +23,8 @@ final class FootnoteSpecTest extends AbstractSpecTest
 {
     protected function setUp(): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new FootnoteExtension());
 
         $this->converter = new MarkdownConverter($environment);

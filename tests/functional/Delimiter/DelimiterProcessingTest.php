@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Delimiter;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +25,8 @@ final class DelimiterProcessingTest extends TestCase
 {
     public function testDelimiterProcessorWithInvalidDelimiterUse(): void
     {
-        $e = Environment::createCommonMarkEnvironment();
+        $e = new Environment();
+        $e->addExtension(new CommonMarkCoreExtension());
         $e->addDelimiterProcessor(new FakeDelimiterProcessor(':', 0));
         $e->addDelimiterProcessor(new FakeDelimiterProcessor(';', -1));
 
@@ -39,7 +41,8 @@ final class DelimiterProcessingTest extends TestCase
      */
     public function testAsymmetricDelimiterProcessing(string $input, string $expected): void
     {
-        $e = Environment::createCommonMarkEnvironment();
+        $e = new Environment();
+        $e->addExtension(new CommonMarkCoreExtension());
         $e->addDelimiterProcessor(new UppercaseDelimiterProcessor());
         $e->addRenderer(UppercaseText::class, new UppercaseTextRenderer());
 
@@ -68,7 +71,8 @@ final class DelimiterProcessingTest extends TestCase
 
     public function testMultipleDelimitersWithDifferentLengths(): void
     {
-        $e = Environment::createCommonMarkEnvironment();
+        $e = new Environment();
+        $e->addExtension(new CommonMarkCoreExtension());
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 2));
 
@@ -82,7 +86,8 @@ final class DelimiterProcessingTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $e = Environment::createCommonMarkEnvironment();
+        $e = new Environment();
+        $e->addExtension(new CommonMarkCoreExtension());
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
         $e->addDelimiterProcessor(new TestDelimiterProcessor('@', 1));
     }

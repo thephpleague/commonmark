@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Event;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentRenderedEvent;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContent;
 use League\CommonMark\Output\RenderedContentInterface;
@@ -41,7 +42,8 @@ final class DocumentRenderedEventTest extends TestCase
     {
         $wasCalled = false;
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addEventListener(DocumentRenderedEvent::class, static function (DocumentRenderedEvent $event) use (&$wasCalled): void {
             $wasCalled = true;
             $event->replaceOutput(new RenderedContent(new Document(), 'foo'));

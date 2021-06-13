@@ -161,6 +161,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `Heading` nodes no longer directly contain a copy of their inner text
  - `StringContainerInterface` can now be used for inlines, not just blocks
  - `ArrayCollection` is now final and only supports integer keys
+ - `HtmlElement` is now `final` and implements `Stringable`
+ - `Text` is now `final`
  - `Cursor::saveState()` and `Cursor::restoreState()` now use `CursorState` objects instead of arrays
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
  - `InvalidOptionException` was removed
@@ -187,6 +189,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Fixed parsing of footnotes without content
  - Fixed rendering of orphaned footnotes and footnote refs
  - Fixed some URL autolinks breaking too early (#492)
+ - Fixed `AbstractStringContainer` not actually being `abstract`
 
 ### Removed
 
@@ -259,7 +262,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 The following things have been deprecated and will not be supported in v3.0:
 
  - `Environment::mergeConfig()` (set configuration before instantiation instead)
- - Instantiating `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` with custom environments (use `MarkdownConverter` instead)
  - `Environment::createCommonMarkEnvironment()` and `Environment::createGFMEnvironment()`
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself

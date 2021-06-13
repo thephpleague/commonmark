@@ -18,6 +18,7 @@ namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
@@ -37,7 +38,9 @@ final class MarkdownConverterTest extends TestCase
         $inputMarkdown = '**Strong**';
         $expectedHtml  = "<p><strong>Strong</strong></p>\n";
 
-        $converter = new MarkdownConverter(Environment::createCommonMarkEnvironment());
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $converter = new MarkdownConverter($environment);
 
         $this->assertSame($expectedHtml, (string) $converter->convertToHtml($inputMarkdown));
         $this->assertSame($expectedHtml, (string) $converter($inputMarkdown));

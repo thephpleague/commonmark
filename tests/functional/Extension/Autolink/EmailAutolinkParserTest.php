@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Functional\Extension\Autolink;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
@@ -25,7 +26,8 @@ final class EmailAutolinkParserTest extends TestCase
      */
     public function testEmailAutolinks(string $input, string $expected): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new AutolinkExtension());
 
         $converter = new MarkdownConverter($environment);

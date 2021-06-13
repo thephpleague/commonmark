@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\Footnote;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
@@ -27,9 +28,9 @@ final class FootnoteExtensionTest extends TestCase
      */
     public function testFootnote(string $string, string $expected, array $config = []): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment(['footnote' => $config]);
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new FootnoteExtension());
-        $environment->mergeConfig(['footnote' => $config]);
 
         $converter = new MarkdownConverter($environment);
 
@@ -63,10 +64,7 @@ final class FootnoteExtensionTest extends TestCase
      */
     public function testFootnotesWithCustomOptions(string $input, string $expected): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new FootnoteExtension());
-
-        $environment->mergeConfig([
+        $environment = new Environment([
             'footnote' => [
                 'backref_class'      => 'custom-backref',
                 // Ensure multiple characters are allowed (including multibyte) and special HTML characters are escaped.
@@ -79,6 +77,8 @@ final class FootnoteExtensionTest extends TestCase
                 'footnote_id_prefix' => 'fn:',
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new FootnoteExtension());
 
         $converter = new MarkdownConverter($environment);
 
@@ -93,14 +93,13 @@ final class FootnoteExtensionTest extends TestCase
 
     public function testFootnotesWithEmptySymbol(): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new FootnoteExtension());
-
-        $environment->mergeConfig([
+        $environment = new Environment([
             'footnote' => [
                 'backref_symbol' => '',
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new FootnoteExtension());
 
         $converter = new MarkdownConverter($environment);
 

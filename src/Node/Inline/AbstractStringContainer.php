@@ -18,7 +18,7 @@ namespace League\CommonMark\Node\Inline;
 
 use League\CommonMark\Node\StringContainerInterface;
 
-class AbstractStringContainer extends AbstractInline implements StringContainerInterface
+abstract class AbstractStringContainer extends AbstractInline implements StringContainerInterface
 {
     /** @var string */
     protected $literal = '';
