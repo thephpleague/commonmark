@@ -17,6 +17,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Added the ability to configure disallowed raw HTML tags (#507)
  - Added the ability for Mentions to use multiple characters for their symbol (#514, #550)
  - Added `heading_permalink/min_heading_level` and `heading_permalink/max_heading_level` options to control which headings get permalinks (#519)
+ - Added `heading_permalink/fragment_prefix` to allow customizing the URL fragment prefix (#602)
  - Added `footnote/backref_symbol` option for customizing backreference link appearance (#522)
  - Added `slug_normalizer/max_length` option to control the maximum length of generated URL slugs
  - Added `slug_normalizer/unique` option to control whether unique slugs should be generated per-document or per-environment
@@ -83,6 +84,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
  - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
  - Table of Contents items are no longer wrapped with `<p>` tags (#613)
+ - Heading Permalinks now link to element IDs instead of using `name` attributes (#602)
+ - Heading Permalink IDs and URL fragments now have a `content` prefix by default (#602)
  - Changes to configuration options:
      - `enable_em` has been renamed to `commonmark/enable_em`
      - `enable_strong` has been renamed to `commonmark/enable_strong`

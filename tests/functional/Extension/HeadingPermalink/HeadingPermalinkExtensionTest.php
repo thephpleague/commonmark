@@ -29,7 +29,8 @@ final class HeadingPermalinkExtensionTest extends TestCase
      */
     public function testHeadingPermalinksWithDefaultOptions(string $input, string $expected): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
 
         $converter = new MarkdownConverter($environment);
@@ -39,11 +40,11 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
     public function dataProviderForTestHeadingPermalinksWithDefaultOptions(): \Generator
     {
-        yield ['# Hello World!', \sprintf('<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
-        yield ['# Hello *World*', \sprintf('<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello <em>World</em></h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
-        yield ['# Hello `World`', \sprintf('<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello <code>World</code></h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
-        yield ["Test\n----", \sprintf('<h2><a id="user-content-test" href="#test" name="test" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Test</h2>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
-        yield ["# Hello World!\n\n# Hello World!", \sprintf("<h1><a id=\"user-content-hello-world\" href=\"#hello-world\" name=\"hello-world\" class=\"heading-permalink\" aria-hidden=\"true\" title=\"Permalink\">%s</a>Hello World!</h1>\n<h1><a id=\"user-content-hello-world-1\" href=\"#hello-world-1\" name=\"hello-world-1\" class=\"heading-permalink\" aria-hidden=\"true\" title=\"Permalink\">%s</a>Hello World!</h1>", HeadingPermalinkRenderer::DEFAULT_SYMBOL, HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
+        yield ['# Hello World!', \sprintf('<h1><a id="content-hello-world" href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
+        yield ['# Hello *World*', \sprintf('<h1><a id="content-hello-world" href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello <em>World</em></h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
+        yield ['# Hello `World`', \sprintf('<h1><a id="content-hello-world" href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello <code>World</code></h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
+        yield ["Test\n----", \sprintf('<h2><a id="content-test" href="#content-test" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Test</h2>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
+        yield ["# Hello World!\n\n# Hello World!", \sprintf("<h1><a id=\"content-hello-world\" href=\"#content-hello-world\" class=\"heading-permalink\" aria-hidden=\"true\" title=\"Permalink\">%s</a>Hello World!</h1>\n<h1><a id=\"content-hello-world-1\" href=\"#content-hello-world-1\" class=\"heading-permalink\" aria-hidden=\"true\" title=\"Permalink\">%s</a>Hello World!</h1>", HeadingPermalinkRenderer::DEFAULT_SYMBOL, HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
     }
 
     /**
@@ -51,19 +52,19 @@ final class HeadingPermalinkExtensionTest extends TestCase
      */
     public function testHeadingPermalinksWithCustomOptions(string $input, string $expected): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new HeadingPermalinkExtension());
-
-        $environment->mergeConfig([
+        $environment = new Environment([
             'heading_permalink' => [
-                'html_class'     => 'custom-class',
-                'id_prefix'      => 'custom-prefix',
+                'html_class'      => 'custom-class',
+                'id_prefix'       => 'custom-id-prefix',
+                'fragment_prefix' => 'custom-fragment-prefix',
                 // Ensure multiple characters are allowed (including multibyte) and special HTML characters are escaped.
-                'symbol'         => '¶ 🦄️ <3 You',
-                'insert'         => 'after',
-                'title'          => 'Link',
+                'symbol'          => '¶ 🦄️ <3 You',
+                'insert'          => 'after',
+                'title'           => 'Link',
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
 
         $converter = new MarkdownConverter($environment);
 
@@ -72,45 +73,46 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
     public function dataProviderForTestHeadingPermalinksWithCustomOptions(): \Generator
     {
-        yield ['# Hello World!', '<h1>Hello World!<a id="custom-prefix-hello-world" href="#hello-world" name="hello-world" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
-        yield ['# Hello *World*', '<h1>Hello <em>World</em><a id="custom-prefix-hello-world" href="#hello-world" name="hello-world" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
-        yield ["Test\n----", '<h2>Test<a id="custom-prefix-test" href="#test" name="test" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h2>'];
+        yield ['# Hello World!', '<h1>Hello World!<a id="custom-id-prefix-hello-world" href="#custom-fragment-prefix-hello-world" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
+        yield ['# Hello *World*', '<h1>Hello <em>World</em><a id="custom-id-prefix-hello-world" href="#custom-fragment-prefix-hello-world" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
+        yield ["Test\n----", '<h2>Test<a id="custom-id-prefix-test" href="#custom-fragment-prefix-test" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h2>'];
     }
 
-    public function testHeadingPermalinksWithEmptyIdPrefix(): void
+    public function testHeadingPermalinksWithEmptyPrefixes(): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new HeadingPermalinkExtension());
-
-        $environment->mergeConfig([
+        $environment = new Environment([
             'heading_permalink' => [
                 'id_prefix' => '',
+                'fragment_prefix' => '',
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
 
         $converter = new MarkdownConverter($environment);
 
         $input    = '# Hello World!';
-        $expected = \sprintf('<h1><a id="hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+        $expected = \sprintf('<h1><a id="hello-world" href="#hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
 
         $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
 
     public function testHeadingPermalinksWithEmptySymbol(): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new HeadingPermalinkExtension());
-
-        $environment->mergeConfig([
+        $environment = new Environment([
             'heading_permalink' => [
                 'symbol' => '',
+                'id_prefix' => '',
+                'fragment_prefix' => '',
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
 
         $converter = new MarkdownConverter($environment);
 
         $input    = '# Hello World!';
-        $expected = '<h1><a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink"></a>Hello World!</h1>';
+        $expected = '<h1><a id="hello-world" href="#hello-world" class="heading-permalink" aria-hidden="true" title="Permalink"></a>Hello World!</h1>';
 
         $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
     }
@@ -119,14 +121,13 @@ final class HeadingPermalinkExtensionTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new HeadingPermalinkExtension());
-
-        $environment->mergeConfig([
+        $environment = new Environment([
             'heading_permalink' => [
                 'insert' => 'invalid value here',
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
 
         $converter = new MarkdownConverter($environment);
         $converter->convertToHtml('# This will fail');
@@ -134,15 +135,14 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
     public function testWithCustomLevels(): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new HeadingPermalinkExtension());
-
-        $environment->mergeConfig([
+        $environment = new Environment([
             'heading_permalink' => [
                 'min_heading_level' => 2,
                 'max_heading_level' => 3,
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
 
         $converter = new MarkdownConverter($environment);
 
@@ -154,8 +154,8 @@ final class HeadingPermalinkExtensionTest extends TestCase
 EOT;
         $expected = <<<EOT
 <h1>1</h1>
-<h2><a id="user-content-2" href="#2" name="2" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>2</h2>
-<h3><a id="user-content-3" href="#3" name="3" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>3</h3>
+<h2><a id="content-2" href="#content-2" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>2</h2>
+<h3><a id="content-3" href="#content-3" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>3</h3>
 <h4>4</h4>
 EOT;
 
@@ -179,7 +179,12 @@ EOT;
 </document>
 XML;
 
-        $environment = new Environment();
+        $environment = new Environment([
+            'heading_permalink' => [
+                'id_prefix' => '',
+                'fragment_prefix' => '',
+            ],
+        ]);
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
 

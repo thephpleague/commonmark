@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\TableOfContents;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\Parser\MarkdownParser;
@@ -208,10 +209,10 @@ final class TableOfContentsXmlTest extends AbstractLocalDataTest
      */
     protected function setUpConverter(array $config = []): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
         $environment->addExtension(new TableOfContentsExtension());
-        $environment->mergeConfig($config);
 
         $this->parser   = new MarkdownParser($environment);
         $this->renderer = new XmlRenderer($environment);

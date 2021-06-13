@@ -30,14 +30,14 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Normalizer\SlugNormalizer;
 
 // Extension defaults are shown below
 // If you're happy with the defaults, feel free to remove them from this array
 $config = [
     'heading_permalink' => [
         'html_class' => 'heading-permalink',
-        'id_prefix' => 'user-content',
+        'id_prefix' => 'content',
+        'fragment_prefix' => 'content',
         'insert' => 'before',
         'min_heading_level' => 1,
         'max_heading_level' => 6,
@@ -69,6 +69,26 @@ The value of this nested configuration option should be a `string` that you want
 ### `id_prefix`
 
 This should be a `string` you want prepended to HTML IDs.  This prevents generating HTML ID attributes which might conflict with others in your stylesheet.  A dash separator (`-`) will be added between the prefix and the ID.  You can instead set this to an empty string (`''`) if you don't want a prefix.
+
+### `fragment_prefix`
+
+This should be a `string` you want prepended to the URL fragment in the link's `href` attribute.  **This should typically be set to the same value as `id_prefix` for links to work properly.** However, you may not want to expose that same prefix in your URLs - in that case, you can set this to something different (even an empty string) and use JavaScript to "rewrite" them.
+
+For example, to emulate how GitHub heading permalinks work, set `id_prefix` to `'user-content'`, set `fragment_prefix` to `''`, and insert some JavaScript into the page like this:
+
+```js
+var scrollToPermalink = function() {
+    var link = document.getElementById('user-content-' + window.location.hash);
+    if (link) {
+        link.scrollIntoView({behavior: 'smooth'});
+    }
+};
+
+window.addEventListener('hashchange', scrollToPermalink);
+if (window.location.hash) {
+    scrollToPermalink();
+}
+```
 
 ### `insert`
 
