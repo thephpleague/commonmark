@@ -188,6 +188,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - Fixed parsing of footnotes without content
  - Fixed rendering of orphaned footnotes and footnote refs
  - Fixed some URL autolinks breaking too early (#492)
+ - Fixed `AbstractStringContainer` not actually being `abstract`
 
 ### Removed
 
