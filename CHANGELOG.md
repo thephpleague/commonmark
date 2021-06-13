@@ -262,7 +262,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 The following things have been deprecated and will not be supported in v3.0:
 
  - `Environment::mergeConfig()` (set configuration before instantiation instead)
- - Instantiating `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` with custom environments (use `MarkdownConverter` instead)
  - `Environment::createCommonMarkEnvironment()` and `Environment::createGFMEnvironment()`
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
