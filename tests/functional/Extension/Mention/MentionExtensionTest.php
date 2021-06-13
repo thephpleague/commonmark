@@ -38,7 +38,8 @@ EOT;
 
 EOT;
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new MentionExtension());
 
         $converter = new MarkdownConverter($environment);
@@ -57,9 +58,7 @@ EOT;
 
 EOT;
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new MentionExtension());
-        $environment->mergeConfig([
+        $environment = new Environment([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -68,6 +67,8 @@ EOT;
                 ],
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new MentionExtension());
 
         $converter = new MarkdownConverter($environment);
 
@@ -85,9 +86,7 @@ EOT;
 
 EOT;
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new MentionExtension());
-        $environment->mergeConfig([
+        $environment = new Environment([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -100,6 +99,8 @@ EOT;
                 ],
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new MentionExtension());
 
         $converter = new MarkdownConverter($environment);
 
@@ -117,9 +118,7 @@ EOT;
 
 EOT;
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new MentionExtension());
-        $environment->mergeConfig([
+        $environment = new Environment([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -135,6 +134,8 @@ EOT;
                 ],
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new MentionExtension());
 
         $converter = new MarkdownConverter($environment);
 
@@ -145,9 +146,7 @@ EOT;
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new MentionExtension());
-        $environment->mergeConfig([
+        $environment = new Environment([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -156,6 +155,8 @@ EOT;
                 ],
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new MentionExtension());
 
         $converter = new MarkdownConverter($environment);
 
@@ -166,9 +167,7 @@ EOT;
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new MentionExtension());
-        $environment->mergeConfig([
+        $environment = new Environment([
             'mentions' => [
                 'github_handle' => [
                     'symbol'    => '@',
@@ -177,6 +176,8 @@ EOT;
                 ],
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new MentionExtension());
 
         $converter = new MarkdownConverter($environment);
 
@@ -187,9 +188,7 @@ EOT;
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new MentionExtension());
-        $environment->mergeConfig([
+        $environment = new Environment([
             'mentions' => [
                 'github_handle' => [
                     'prefix'    => '@',
@@ -198,6 +197,8 @@ EOT;
                 ],
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new MentionExtension());
 
         $converter = new MarkdownConverter($environment);
 

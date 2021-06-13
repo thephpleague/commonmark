@@ -15,7 +15,9 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\Footnote;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
 
@@ -35,14 +37,17 @@ final class FootnoteExtensionMarkdownTest extends AbstractLocalDataTest
         /*
          * Test with minimal extensions
          */
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new FootnoteExtension());
         $this->commonMarkConverter = new MarkdownConverter($environment);
 
         /*
          * Test with other extensions
          */
-        $gfmEnvironment = Environment::createGFMEnvironment();
+        $gfmEnvironment = new Environment();
+        $gfmEnvironment->addExtension(new CommonMarkCoreExtension());
+        $gfmEnvironment->addExtension(new GithubFlavoredMarkdownExtension());
         $gfmEnvironment->addExtension(new FootnoteExtension());
         $this->gfmConverter = new MarkdownConverter($gfmEnvironment);
     }

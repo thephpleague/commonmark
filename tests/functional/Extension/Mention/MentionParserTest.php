@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\Mention;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
 use League\CommonMark\Extension\Mention\Generator\StringTemplateLinkGenerator;
@@ -32,7 +33,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = new MentionParser('test', '#', '\d+', new StringTemplateLinkGenerator('https://www.example.com/%s'));
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -47,7 +49,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = new MentionParser('test', 'u:', '\w+', new StringTemplateLinkGenerator('https://www.example.com/users/%s'));
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -62,7 +65,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = new MentionParser('test', '/r/', '\w+', new StringTemplateLinkGenerator('https://www.reddit.com/r/%s'));
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -77,7 +81,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = new MentionParser('test', '#', '\d+', $this->createMock(MentionGeneratorInterface::class));
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -92,7 +97,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = new MentionParser('test', '@', '\d+', $this->createMock(MentionGeneratorInterface::class));
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -107,7 +113,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = new MentionParser('test', '#', '[a-z]+', $this->createMock(MentionGeneratorInterface::class));
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -125,7 +132,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = new MentionParser('test', '#', '\d+', $returnsNull);
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -149,7 +157,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = MentionParser::createWithCallback('test', '#', '\d+', $callable);
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -172,7 +181,8 @@ final class MentionParserTest extends TestCase
 
         $mentionParser = MentionParser::createWithCallback('test', '#', '\d+', $callable);
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);
@@ -192,7 +202,8 @@ final class MentionParserTest extends TestCase
             new StringTemplateLinkGenerator('https://www.example.com/%s')
         );
 
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addInlineParser($mentionParser);
 
         $converter = new MarkdownConverter($environment);

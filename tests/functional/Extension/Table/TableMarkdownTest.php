@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\Table;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
@@ -35,7 +36,8 @@ final class TableMarkdownTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->environment = Environment::createCommonMarkEnvironment();
+        $this->environment = new Environment();
+        $this->environment->addExtension(new CommonMarkCoreExtension());
         $this->environment->addExtension(new TableExtension());
 
         $this->parser = new MarkdownParser($this->environment);

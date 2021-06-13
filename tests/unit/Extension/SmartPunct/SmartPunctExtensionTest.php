@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Extension\SmartPunct;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
@@ -26,25 +27,20 @@ use PHPUnit\Framework\TestCase;
  */
 final class SmartPunctExtensionTest extends TestCase
 {
-    /** @var Environment */
-    protected $environment;
-
-    protected function setUp(): void
-    {
-        $this->environment = Environment::createCommonMarkEnvironment();
-        $this->environment->addExtension(new SmartPunctExtension());
-    }
-
     public function testDefaultConfiguration(): void
     {
-        $converter    = new MarkdownConverter($this->environment);
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new SmartPunctExtension());
+
+        $converter    = new MarkdownConverter($environment);
         $actualResult = $converter->convertToHtml('"double" \'single\'');
         $this->assertEquals("<p>“double” ‘single’</p>\n", $actualResult);
     }
 
     public function testCustomConfiguration(): void
     {
-        $this->environment->mergeConfig([
+        $environment = new Environment([
             'smartpunct' => [
                 'double_quote_opener' => '«',
                 'double_quote_closer' => '»',
@@ -52,8 +48,10 @@ final class SmartPunctExtensionTest extends TestCase
                 'single_quote_closer' => '›',
             ],
         ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new SmartPunctExtension());
 
-        $converter = new MarkdownConverter($this->environment);
+        $converter = new MarkdownConverter($environment);
 
         $actualResult = $converter->convertToHtml('"double" \'single\'');
         $this->assertEquals("<p>«double» ‹single›</p>\n", $actualResult);

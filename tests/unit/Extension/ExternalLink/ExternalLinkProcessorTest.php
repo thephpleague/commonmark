@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Extension\ExternalLink;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkProcessor;
 use League\CommonMark\MarkdownConverter;
@@ -59,9 +60,9 @@ final class ExternalLinkProcessorTest extends TestCase
      */
     private function parse(string $markdown, array $config = []): string
     {
-        $e = Environment::createCommonMarkEnvironment();
+        $e = new Environment($config);
+        $e->addExtension(new CommonMarkCoreExtension());
         $e->addExtension(new ExternalLinkExtension());
-        $e->mergeConfig($config);
 
         $c = new MarkdownConverter($e);
 

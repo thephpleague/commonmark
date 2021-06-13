@@ -16,9 +16,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit;
 
-use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
@@ -29,12 +29,11 @@ final class GithubFlavoredMarkdownConverterTest extends TestCase
     {
         $converter = new GithubFlavoredMarkdownConverter();
 
-        $expectedEnvironment = Environment::createGFMEnvironment();
-
         $environment = $converter->getEnvironment();
 
         $this->assertCount(2, $environment->getExtensions());
         $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
+        $this->assertInstanceOf(GithubFlavoredMarkdownExtension::class, $environment->getExtensions()[1]);
     }
 
     public function testConfigOnlyConstructor(): void
@@ -44,8 +43,6 @@ final class GithubFlavoredMarkdownConverterTest extends TestCase
         $converter   = new GithubFlavoredMarkdownConverter($config);
         $environment = $converter->getEnvironment();
 
-        $this->assertCount(2, $environment->getExtensions());
-        $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
         $this->assertSame(HtmlFilter::ESCAPE, $environment->getConfiguration()->get('html_input'));
     }
 

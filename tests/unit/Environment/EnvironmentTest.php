@@ -21,8 +21,10 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
@@ -33,6 +35,7 @@ use League\CommonMark\Tests\Unit\Event\FakeEventListener;
 use League\CommonMark\Tests\Unit\Event\FakeEventListenerInvokable;
 use League\CommonMark\Tests\Unit\Event\FakeEventParent;
 use League\CommonMark\Util\ArrayCollection;
+use League\CommonMark\Util\HtmlFilter;
 use League\Config\ConfigurationBuilderInterface;
 use League\Config\ConfigurationInterface;
 use League\Config\MutableConfigurationInterface;
@@ -589,5 +592,26 @@ class EnvironmentTest extends TestCase
         });
 
         return $environment;
+    }
+
+    public function testCreateCommonMarkEnvironment(): void
+    {
+        $environment = Environment::createCommonMarkEnvironment(['html_input' => HtmlFilter::ESCAPE]);
+
+        $this->assertCount(1, $environment->getExtensions());
+        $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
+
+        $this->assertSame(HtmlFilter::ESCAPE, $environment->getConfiguration()->get('html_input'));
+    }
+
+    public function testCreateGFMEnvironment(): void
+    {
+        $environment = Environment::createGFMEnvironment(['html_input' => HtmlFilter::ESCAPE]);
+
+        $this->assertCount(2, $environment->getExtensions());
+        $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
+        $this->assertInstanceOf(GithubFlavoredMarkdownExtension::class, $environment->getExtensions()[1]);
+
+        $this->assertSame(HtmlFilter::ESCAPE, $environment->getConfiguration()->get('html_input'));
     }
 }
