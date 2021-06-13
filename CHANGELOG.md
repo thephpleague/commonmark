@@ -162,6 +162,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `StringContainerInterface` can now be used for inlines, not just blocks
  - `ArrayCollection` is now final and only supports integer keys
  - `HtmlElement` is now `final` and implements `Stringable`
+ - `Text` is now `final`
  - `Cursor::saveState()` and `Cursor::restoreState()` now use `CursorState` objects instead of arrays
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
  - `InvalidOptionException` was removed
