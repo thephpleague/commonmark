@@ -157,7 +157,7 @@ final class ReferenceParser
     private function parseStartDefinition(Cursor $cursor): bool
     {
         $cursor->advanceToNextNonSpaceOrTab();
-        if ($cursor->isAtEnd() || $cursor->getCharacter() !== '[') {
+        if ($cursor->isAtEnd() || $cursor->getCurrentCharacter() !== '[') {
             return false;
         }
 
@@ -191,14 +191,14 @@ final class ReferenceParser
             return true;
         }
 
-        if ($cursor->getCharacter() !== ']') {
+        if ($cursor->getCurrentCharacter() !== ']') {
             return false;
         }
 
         $cursor->advance();
 
         // end of label
-        if ($cursor->getCharacter() !== ':') {
+        if ($cursor->getCurrentCharacter() !== ':') {
             return false;
         }
 
@@ -258,7 +258,7 @@ final class ReferenceParser
         }
 
         $this->titleDelimiter = null;
-        switch ($c = $cursor->getCharacter()) {
+        switch ($c = $cursor->getCurrentCharacter()) {
             case '"':
             case "'":
                 $this->titleDelimiter = $c;

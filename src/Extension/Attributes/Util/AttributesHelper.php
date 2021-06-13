@@ -32,14 +32,14 @@ final class AttributesHelper
     {
         $state = $cursor->saveState();
         $cursor->advanceToNextNonSpaceOrNewline();
-        if ($cursor->getCharacter() !== '{') {
+        if ($cursor->getCurrentCharacter() !== '{') {
             $cursor->restoreState($state);
 
             return [];
         }
 
         $cursor->advanceBy(1);
-        if ($cursor->getCharacter() === ':') {
+        if ($cursor->getCurrentCharacter() === ':') {
             $cursor->advanceBy(1);
         }
 

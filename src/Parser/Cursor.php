@@ -144,7 +144,9 @@ class Cursor
      */
     public function isIndented(): bool
     {
-        return $this->getIndent() >= self::INDENT_LEVEL;
+        $this->getNextNonSpacePosition();
+
+        return $this->indent >= self::INDENT_LEVEL;
     }
 
     public function getCharacter(?int $index = null): ?string
@@ -167,6 +169,26 @@ class Cursor
         }
 
         return $this->line[$index];
+    }
+
+    /**
+     * Slightly-optimized version of getCurrent(null)
+     */
+    public function getCurrentCharacter(): ?string
+    {
+        if ($this->currentPosition >= $this->length) {
+            return null;
+        }
+
+        if ($this->isMultibyte) {
+            if (isset($this->charCache[$this->currentPosition])) {
+                return $this->charCache[$this->currentPosition];
+            }
+
+            return $this->charCache[$this->currentPosition] = \mb_substr($this->line, $this->currentPosition, 1, 'UTF-8');
+        }
+
+        return $this->line[$this->currentPosition];
     }
 
     /**
@@ -201,13 +223,12 @@ class Cursor
      */
     public function advanceBy(int $characters, bool $advanceByColumns = false): void
     {
-        if ($characters === 0) {
-            $this->previousPosition = $this->currentPosition;
+        $this->previousPosition = $this->currentPosition;
 
+        if ($characters === 0) {
             return;
         }
 
-        $this->previousPosition  = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
         // Optimization to avoid tab handling logic if we have no tabs
@@ -221,15 +242,13 @@ class Cursor
             \mb_substr($this->line, $this->currentPosition, $characters, 'UTF-8') :
             \substr($this->line, $this->currentPosition, $characters);
 
-        // Optimization to avoid tab handling logic if we have no tabs
-        if (\strpos($nextFewChars, "\t") === false) {
-            $this->advanceWithoutTabCharacters($characters);
-
+        if ($nextFewChars === '') {
             return;
         }
 
-        if ($nextFewChars === '') {
-            $this->previousPosition = $this->currentPosition;
+        // Optimization to avoid tab handling logic if we have no tabs
+        if (\strpos($nextFewChars, "\t") === false) {
+            $this->advanceWithoutTabCharacters($characters);
 
             return;
         }
@@ -284,7 +303,7 @@ class Cursor
      */
     public function advanceBySpaceOrTab(): bool
     {
-        $character = $this->getCharacter();
+        $character = $this->getCurrentCharacter();
 
         if ($character === ' ' || $character === "\t") {
             $this->advanceBy(1, true);

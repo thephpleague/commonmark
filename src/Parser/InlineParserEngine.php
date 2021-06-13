@@ -99,7 +99,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
             }
 
             // Despite potentially being interested, nothing actually parsed text here, so add the current character and continue onwards
-            $this->addPlainText((string) $cursor->getCharacter(), $block);
+            $this->addPlainText((string) $cursor->getCurrentCharacter(), $block);
             $cursor->advance();
         }
 

@@ -58,7 +58,7 @@ final class DelimiterParser implements InlineParserInterface
 
         $cursor->advanceBy($numDelims);
 
-        $charAfter = $cursor->getCharacter();
+        $charAfter = $cursor->getCurrentCharacter();
         if ($charAfter === null) {
             $charAfter = "\n";
         }

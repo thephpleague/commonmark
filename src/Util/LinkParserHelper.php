@@ -37,7 +37,7 @@ final class LinkParserHelper
             );
         }
 
-        if ($cursor->getCharacter() === '<') {
+        if ($cursor->getCurrentCharacter() === '<') {
             return null;
         }
 
@@ -104,7 +104,7 @@ final class LinkParserHelper
         $oldState    = $cursor->saveState();
 
         $openParens = 0;
-        while (($c = $cursor->getCharacter()) !== null) {
+        while (($c = $cursor->getCurrentCharacter()) !== null) {
             if ($c === '\\' && ($peek = $cursor->peek()) !== null && RegexHelper::isEscapable($peek)) {
                 $cursor->advanceBy(2);
             } elseif ($c === '(') {

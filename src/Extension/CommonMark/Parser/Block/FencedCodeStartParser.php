@@ -26,7 +26,7 @@ final class FencedCodeStartParser implements BlockStartParserInterface
             return BlockStart::none();
         }
 
-        $c = $cursor->getCharacter();
+        $c = $cursor->getCurrentCharacter();
         if ($c !== ' ' && $c !== "\t" && $c !== '`' && $c !== '~') {
             return BlockStart::none();
         }
