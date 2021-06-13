@@ -117,7 +117,7 @@ final class MarkdownParser implements MarkdownParserInterface
 
         foreach ($markdownInput->getLines() as $lineNumber => $line) {
             $this->lineNumber = $lineNumber;
-            $this->incorporateLine($line);
+            $this->parseLine($line);
         }
 
         // finalizeAndProcess
@@ -133,7 +133,7 @@ final class MarkdownParser implements MarkdownParserInterface
      * Analyze a line of text and update the document appropriately. We parse markdown text by calling this on each
      * line of input, then finalizing the document.
      */
-    private function incorporateLine(string $line): void
+    private function parseLine(string $line): void
     {
         $this->cursor = new Cursor($line);
 
@@ -162,7 +162,8 @@ final class MarkdownParser implements MarkdownParserInterface
         $blockParser     = $this->activeBlockParsers[$matches - 1];
         $startedNewBlock = false;
 
-        // Unless last matched container is a code block, try new container starts
+        // Unless last matched container is a code block, try new container starts,
+        // adding children to the last matched container:
         $tryBlockStarts = $blockParser->getBlock() instanceof Paragraph || $blockParser->isContainer();
         while ($tryBlockStarts) {
             // this is a little performance optimization
@@ -208,7 +209,7 @@ final class MarkdownParser implements MarkdownParserInterface
             }
         }
 
-        // What remains ath the offset is a text line. Add the text to the appropriate block.
+        // What remains at the offset is a text line. Add the text to the appropriate block.
 
         // First check for a lazy paragraph continuation:
         if (! $startedNewBlock && ! $this->cursor->isBlank() && $this->getActiveBlockParser()->canHaveLazyContinuationLines()) {
