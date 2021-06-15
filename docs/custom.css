@@ -222,6 +222,10 @@ main article p a img {
     display:inline;
 }
 
+main article hr {
+    border: 1px solid #d9e0e6;
+}
+
 footer {
     border-top:1px solid #cfe4f9;
     background:#fff;
@@ -438,6 +442,20 @@ h2 code {
 .btn-block {
     display: block;
     width: auto;
+}
+
+.btn-sm {
+    padding: .3rem .6rem;
+    font-size: .8rem;
+}
+
+.btn-black {
+    background-color: #222222;
+    color: #ffffff;
+}
+.btn-black:hover {
+    background-color: #333;
+    color: #ffffff;
 }
 
 .btn-pink {

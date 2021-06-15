@@ -38,6 +38,25 @@ module Jekyll
 
         return defaultUrl
     end
+
+    def get_edit_link(currentPath)
+        project = @context.registers[:site].data['project']
+
+        # Extract the version number from the current path
+        version = currentPath.delete_prefix('/').split('/').first()
+        if version == '' or version == 'releases'
+            version = project['default_version']
+        end
+
+        # Edit the page on that version branch if the version is supported;
+        # otherwise, use the default version branch
+        versionType = get_version_type(version)
+        if not (versionType == 'next' or versionType == 'current')
+            version = project['default_version']
+        end
+
+        return 'https://github.com/thephpleague/' + project['repository'] + '/edit/' + version + '/docs/' + currentPath
+    end
   end
 end
 

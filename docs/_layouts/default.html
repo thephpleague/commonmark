@@ -136,6 +136,12 @@
     {% endif %}
 
         {{ content }}
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="{{ page.path | get_edit_link }}" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
     </article>
 
     <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
