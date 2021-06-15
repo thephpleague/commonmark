@@ -61,25 +61,6 @@
     -webkit-box-align: center;
 }
 
-.support-button {
-    width: auto;
-    padding: .5rem 1rem;
-    margin-right: .25rem;
-    text-align: center;
-    display: block;
-    border-radius: .25rem;
-    color: inherit;
-    text-decoration: inherit;
-}
-
-.support-button-sponsor {
-    background-color: #d53f8c;
-}
-
-.support-button-donate {
-    background-color: #38a169;
-}
-
 .support-banner-close {
     width: 1.5rem;
     margin: 0 0 0 0.5rem;

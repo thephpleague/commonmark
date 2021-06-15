@@ -90,6 +90,11 @@ header .versions h2 {
     margin-bottom:.4em;
     padding:.5em .3em;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+header .versions h2:hover {
+    background: #0a64bf;
 }
 
 header .versions ul {
@@ -418,4 +423,33 @@ h2 code {
     padding-top: 100px;
     margin-top: -100px;
     visibility: hidden;
+}
+
+.btn {
+    padding: .5rem 1rem;
+    margin-right: .25rem;
+    text-align: center;
+    border-radius: .25rem;
+    color: inherit;
+    text-decoration: inherit;
+    transition: 0.3s;
+}
+
+.btn-block {
+    display: block;
+    width: auto;
+}
+
+.btn-pink {
+    background-color: #d53f8c;
+}
+.btn-pink:hover {
+    background-color: #d62b83;
+}
+
+.btn-green {
+    background-color: #38a169;
+}
+.btn-green:hover {
+    background-color: #28a160;
 }
