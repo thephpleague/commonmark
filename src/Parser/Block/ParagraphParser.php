@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Parser\Block;
 
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\InlineParserEngineInterface;
@@ -39,10 +38,7 @@ final class ParagraphParser extends AbstractBlockContinueParser implements Block
         return true;
     }
 
-    /**
-     * @return Paragraph
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): Paragraph
     {
         return $this->block;
     }

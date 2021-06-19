@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -35,7 +34,7 @@ final class HeadingParser extends AbstractBlockContinueParser implements BlockCo
         $this->content = $content;
     }
 
-    public function getBlock(): AbstractBlock
+    public function getBlock(): Heading
     {
         return $this->block;
     }

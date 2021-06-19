@@ -36,10 +36,7 @@ final class ListBlockParser extends AbstractBlockContinueParser
         $this->block = new ListBlock($listData);
     }
 
-    /**
-     * @return ListBlock
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): ListBlock
     {
         return $this->block;
     }

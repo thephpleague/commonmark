@@ -31,10 +31,7 @@ final class DocumentBlockParser extends AbstractBlockContinueParser
         $this->document = new Document($referenceMap);
     }
 
-    /**
-     * @return Document
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): Document
     {
         return $this->document;
     }

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -40,10 +39,7 @@ final class HtmlBlockParser extends AbstractBlockContinueParser
         $this->block = new HtmlBlock($blockType);
     }
 
-    /**
-     * @return HtmlBlock
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): HtmlBlock
     {
         return $this->block;
     }

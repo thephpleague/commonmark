@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -76,10 +75,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
         return true;
     }
 
-    /**
-     * @return Table
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): Table
     {
         return $this->block;
     }

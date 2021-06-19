@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\TableOfContents;
 
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsPlaceholder;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -35,7 +34,7 @@ final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
         $this->block = new TableOfContentsPlaceholder();
     }
 
-    public function getBlock(): AbstractBlock
+    public function getBlock(): TableOfContentsPlaceholder
     {
         return $this->block;
     }

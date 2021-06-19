@@ -30,10 +30,7 @@ final class BlockQuoteParser extends AbstractBlockContinueParser
         $this->block = new BlockQuote();
     }
 
-    /**
-     * @return BlockQuote
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): BlockQuote
     {
         return $this->block;
     }

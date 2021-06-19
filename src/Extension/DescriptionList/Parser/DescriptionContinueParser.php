@@ -32,10 +32,7 @@ final class DescriptionContinueParser extends AbstractBlockContinueParser
         $this->indentation = $indentation;
     }
 
-    /**
-     * @return Description
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): Description
     {
         return $this->block;
     }

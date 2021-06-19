@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\DescriptionList\Parser;
 
 use League\CommonMark\Extension\DescriptionList\Node\DescriptionTerm;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -34,7 +33,7 @@ final class DescriptionTermContinueParser extends AbstractBlockContinueParser im
         $this->term  = $term;
     }
 
-    public function getBlock(): AbstractBlock
+    public function getBlock(): DescriptionTerm
     {
         return $this->block;
     }
