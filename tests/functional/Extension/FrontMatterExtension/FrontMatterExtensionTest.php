@@ -74,6 +74,55 @@ EOT;
         $this->assertSame(9, $result->getDocument()->firstChild()->getStartLine());
     }
 
+    public function testWithMultipleYamlDocuments(): void
+    {
+        $markdown     = <<<EOT
+---
+layout: post
+title: Blogging Like a Hacker
+redirect_from:
+  - /blog/my-post
+  - /blog/2020-04/my-post
+---
+
+---
+more_yaml: true
+---
+
+# Hello World!
+EOT;
+        $expectedHtml = <<<EOT
+<hr />
+<h2>more_yaml: true</h2>
+<h1>Hello World!</h1>
+
+EOT;
+
+        $expectedFrontMatter = [
+            'layout' => 'post',
+            'title' => 'Blogging Like a Hacker',
+            'redirect_from' => [
+                '/blog/my-post',
+                '/blog/2020-04/my-post',
+            ],
+        ];
+
+        $converter = new MarkdownConverter($this->environment);
+        $result    = $converter->convertToHtml($markdown);
+
+        $this->assertInstanceOf(RenderedContentWithFrontMatter::class, $result);
+        $this->assertInstanceOf(\Stringable::class, $result);
+
+        \assert($result instanceof RenderedContentWithFrontMatter);
+        $this->assertSame($expectedFrontMatter, $result->getFrontMatter());
+
+        $this->assertSame($expectedHtml, (string) $result->getContent());
+        $this->assertSame($expectedHtml, (string) $result);
+
+        $this->assertSame(1, $result->getDocument()->getStartLine());
+        $this->assertSame(9, $result->getDocument()->firstChild()->getStartLine());
+    }
+
     public function testWithNoFrontMatter(): void
     {
         $markdown  = '# Hello World!';

@@ -26,7 +26,7 @@ final class FrontMatterParser implements FrontMatterParserInterface
      */
     private $frontMatterParser;
 
-    private const REGEX_FRONT_MATTER = '/^---\\n.*\\n---\n/s';
+    private const REGEX_FRONT_MATTER = '/^---\\n.*?\\n---\n/s';
 
     public function __construct(FrontMatterDataParserInterface $frontMatterParser)
     {
