@@ -24,8 +24,7 @@ use PHPUnit\Framework\TestCase;
 
 final class TextRendererTest extends TestCase
 {
-    /** @var TextRenderer */
-    protected $renderer;
+    private TextRenderer $renderer;
 
     protected function setUp(): void
     {

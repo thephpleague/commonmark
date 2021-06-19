@@ -19,19 +19,11 @@ class Cursor
 {
     public const INDENT_LEVEL = 4;
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $line;
+    /** @psalm-readonly */
+    private string $line;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly
-     */
-    private $length;
+    /** @psalm-readonly */
+    private int $length;
 
     /**
      * @var int
@@ -39,39 +31,26 @@ class Cursor
      * It's possible for this to be 1 char past the end, meaning we've parsed all chars and have
      * reached the end.  In this state, any character-returning method MUST return null.
      */
-    private $currentPosition = 0;
+    private int $currentPosition = 0;
 
-    /** @var int */
-    private $column = 0;
+    private int $column = 0;
 
-    /** @var int */
-    private $indent = 0;
+    private int $indent = 0;
 
-    /** @var int */
-    private $previousPosition = 0;
+    private int $previousPosition = 0;
 
-    /** @var int|null */
-    private $nextNonSpaceCache;
+    private ?int $nextNonSpaceCache = null;
 
-    /** @var bool */
-    private $partiallyConsumedTab = false;
+    private bool $partiallyConsumedTab = false;
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly
-     */
-    private $lineContainsTabs;
+    /** @psalm-readonly */
+    private bool $lineContainsTabs;
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly
-     */
-    private $isMultibyte;
+    /** @psalm-readonly */
+    private bool $isMultibyte;
 
     /** @var array<int, string> */
-    private $charCache = [];
+    private array $charCache = [];
 
     /**
      * @param string $line The line being parsed (ASCII or UTF-8)

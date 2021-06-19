@@ -28,8 +28,7 @@ use PHPUnit\Framework\TestCase;
 
 final class LinkRendererTest extends TestCase
 {
-    /** @var LinkRenderer */
-    protected $renderer;
+    private LinkRenderer $renderer;
 
     protected function setUp(): void
     {

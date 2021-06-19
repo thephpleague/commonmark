@@ -20,8 +20,7 @@ use League\CommonMark\Node\Inline\Text;
 
 class Link extends AbstractWebResource
 {
-    /** @var string|null */
-    protected $title;
+    protected ?string $title = null;
 
     public function __construct(string $url, ?string $label = null, ?string $title = null)
     {

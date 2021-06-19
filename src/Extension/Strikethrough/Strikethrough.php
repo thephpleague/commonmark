@@ -18,8 +18,7 @@ use League\CommonMark\Node\Inline\DelimitedInterface;
 
 final class Strikethrough extends AbstractInline implements DelimitedInterface
 {
-    /** @var string */
-    private $delimeter;
+    private string $delimeter;
 
     public function __construct(string $delimeter = '~~')
     {

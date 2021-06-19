@@ -19,8 +19,7 @@ use League\CommonMark\Util\RegexHelper;
  */
 final class DelimiterParser implements InlineParserInterface
 {
-    /** @var DelimiterProcessorCollection */
-    private $collection;
+    private DelimiterProcessorCollection $collection;
 
     public function __construct(DelimiterProcessorCollection $collection)
     {

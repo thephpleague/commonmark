@@ -28,11 +28,9 @@ use PHPUnit\Framework\TestCase;
  */
 final class TableMarkdownTest extends TestCase
 {
-    /** @var Environment */
-    private $environment;
+    private Environment $environment;
 
-    /** @var MarkdownParser */
-    private $parser;
+    private MarkdownParser $parser;
 
     protected function setUp(): void
     {

@@ -23,8 +23,7 @@ use PHPUnit\Framework\TestCase;
 
 final class DescriptionRendererTest extends TestCase
 {
-    /** @var DescriptionRenderer */
-    protected $renderer;
+    private DescriptionRenderer $renderer;
 
     protected function setUp(): void
     {

@@ -25,19 +25,11 @@ use League\Config\ConfigurationInterface;
 
 final class ListBlockStartParser implements BlockStartParserInterface, ConfigurationAwareInterface
 {
-    /**
-     * @var ConfigurationInterface|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $config;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?ConfigurationInterface $config = null;
 
-    /**
-     * @var string|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $listMarkerRegex;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?string $listMarkerRegex = null;
 
     public function setConfiguration(ConfigurationInterface $configuration): void
     {

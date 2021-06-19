@@ -24,15 +24,10 @@ use League\CommonMark\Parser\InlineParserEngineInterface;
 
 final class HeadingParser extends AbstractBlockContinueParser implements BlockContinueParserWithInlinesInterface
 {
-    /**
-     * @var Heading
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private Heading $block;
 
-    /** @var string */
-    private $content;
+    private string $content;
 
     public function __construct(int $level, string $content)
     {

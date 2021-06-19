@@ -34,61 +34,37 @@ final class ReferenceParser
     // End state, no matter what kind of lines we add, they won't be references
     private const PARAGRAPH = 5;
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $paragraph = '';
+    /** @psalm-readonly-allow-private-mutation */
+    private string $paragraph = '';
 
     /**
      * @var array<int, ReferenceInterface>
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $references = [];
+    private array $references = [];
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $state = self::START_DEFINITION;
+    /** @psalm-readonly-allow-private-mutation */
+    private int $state = self::START_DEFINITION;
 
-    /**
-     * @var string|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $label;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?string $label = null;
 
-    /**
-     * @var string|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $destination;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?string $destination = null;
 
     /**
      * @var string string
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $title = '';
+    private string $title = '';
 
-    /**
-     * @var string|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $titleDelimiter;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?string $titleDelimiter = null;
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $referenceValid = false;
+    /** @psalm-readonly-allow-private-mutation */
+    private bool $referenceValid = false;
 
     public function getParagraphContent(): string
     {

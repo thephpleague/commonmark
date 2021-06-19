@@ -30,19 +30,11 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
     public const INSERT_BEFORE = 'before';
     public const INSERT_AFTER  = 'after';
 
-    /**
-     * @var TextNormalizerInterface
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $slugNormalizer;
+    /** @psalm-readonly-allow-private-mutation */
+    private TextNormalizerInterface $slugNormalizer;
 
-    /**
-     * @var ConfigurationInterface
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $config;
+    /** @psalm-readonly-allow-private-mutation */
+    private ConfigurationInterface $config;
 
     public function setEnvironment(EnvironmentInterface $environment): void
     {

@@ -28,8 +28,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ImageRendererTest extends TestCase
 {
-    /** @var ImageRenderer */
-    protected $renderer;
+    private ImageRenderer $renderer;
 
     protected function setUp(): void
     {

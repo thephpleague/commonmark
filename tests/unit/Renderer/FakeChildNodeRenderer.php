@@ -20,8 +20,7 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 
 final class FakeChildNodeRenderer implements ChildNodeRendererInterface
 {
-    /** @var bool */
-    private $alwaysOutputChildren = false;
+    private bool $alwaysOutputChildren = false;
 
     public function pretendChildrenExist(): void
     {

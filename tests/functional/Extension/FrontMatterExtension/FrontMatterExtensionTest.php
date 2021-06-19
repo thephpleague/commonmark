@@ -17,8 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 final class FrontMatterExtensionTest extends TestCase
 {
-    /** @var Environment */
-    private $environment;
+    private Environment $environment;
 
     protected function setUp(): void
     {

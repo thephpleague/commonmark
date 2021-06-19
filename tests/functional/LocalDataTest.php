@@ -23,9 +23,6 @@ use League\CommonMark\CommonMarkConverter;
  */
 final class LocalDataTest extends AbstractLocalDataTest
 {
-    /** @var CommonMarkConverter */
-    protected $converter;
-
     protected function setUp(): void
     {
         $this->converter = new CommonMarkConverter();

@@ -19,12 +19,8 @@ use League\CommonMark\Parser\Cursor;
 
 final class FrontMatterParser implements FrontMatterParserInterface
 {
-    /**
-     * @var FrontMatterDataParserInterface
-     *
-     * @psalm-readonly
-     */
-    private $frontMatterParser;
+    /** @psalm-readonly */
+    private FrontMatterDataParserInterface $frontMatterParser;
 
     private const REGEX_FRONT_MATTER = '/^---\\n.*?\\n---\n/s';
 

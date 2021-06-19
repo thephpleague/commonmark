@@ -28,8 +28,7 @@ use PHPUnit\Framework\TestCase;
 
 final class HtmlInlineRendererTest extends TestCase
 {
-    /** @var HtmlInlineRenderer */
-    protected $renderer;
+    private HtmlInlineRenderer $renderer;
 
     protected function setUp(): void
     {

@@ -39,33 +39,17 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
     public const NORMALIZE_RELATIVE = 'relative';
     public const NORMALIZE_FLAT     = 'flat';
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $style;
+    /** @psalm-readonly */
+    private string $style;
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $normalizationStrategy;
+    /** @psalm-readonly */
+    private string $normalizationStrategy;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly
-     */
-    private $minHeadingLevel;
+    /** @psalm-readonly */
+    private int $minHeadingLevel;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly
-     */
-    private $maxHeadingLevel;
+    /** @psalm-readonly */
+    private int $maxHeadingLevel;
 
     public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel)
     {

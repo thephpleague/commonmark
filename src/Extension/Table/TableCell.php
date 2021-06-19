@@ -27,22 +27,20 @@ final class TableCell extends AbstractBlock
     public const ALIGN_CENTER = 'center';
 
     /**
-     * @var string
      * @psalm-var self::TYPE_*
      * @phpstan-var self::TYPE_*
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $type = self::TYPE_DATA;
+    private string $type = self::TYPE_DATA;
 
     /**
-     * @var string|null
      * @psalm-var self::ALIGN_*|null
      * @phpstan-var self::ALIGN_*|null
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $align;
+    private ?string $align = null;
 
     /**
      * @psalm-param self::TYPE_* $type

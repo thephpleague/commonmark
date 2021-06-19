@@ -24,19 +24,11 @@ use League\CommonMark\Reference\ReferenceInterface;
 
 final class FootnoteParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var Footnote
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private Footnote $block;
 
-    /**
-     * @var int|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $indentation;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?int $indentation = null;
 
     public function __construct(ReferenceInterface $reference)
     {

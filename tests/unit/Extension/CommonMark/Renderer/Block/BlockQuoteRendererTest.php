@@ -25,8 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 final class BlockQuoteRendererTest extends TestCase
 {
-    /** @var BlockQuoteRenderer */
-    protected $renderer;
+    private BlockQuoteRenderer $renderer;
 
     protected function setUp(): void
     {

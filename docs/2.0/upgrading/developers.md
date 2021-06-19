@@ -368,6 +368,23 @@ Several methods were removed from this class - here are the methods along with p
 
 This class is also `final` now, so don't extend it.
 
+## `final` classes
+
+The following classes are now marked `final` and cannot be extended:
+
+- `ArrayCollection`
+- `Emphasis`
+- `FencedCode`
+- `Heading`
+- `HtmlBlock`
+- `HtmlElement`
+- `HtmlInline`
+- `IndentedCode`
+- `Newline`
+- `Strikethrough`
+- `Strong`
+- `Text`
+
 ## Node setter methods return void
 
 All `set*()` methods on all Node types now return `void` (whereas some used to return `$this` in 1.x) for consistency.

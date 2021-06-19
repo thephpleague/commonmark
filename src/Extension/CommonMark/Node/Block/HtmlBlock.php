@@ -16,7 +16,7 @@ namespace League\CommonMark\Extension\CommonMark\Node\Block;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\StringContainerInterface;
 
-class HtmlBlock extends AbstractBlock implements StringContainerInterface
+final class HtmlBlock extends AbstractBlock implements StringContainerInterface
 {
     // Any changes to these constants should be reflected in .phpstorm.meta.php
     public const TYPE_1_CODE_CONTAINER = 1;
@@ -31,10 +31,9 @@ class HtmlBlock extends AbstractBlock implements StringContainerInterface
      * @psalm-var self::TYPE_* $type
      * @phpstan-var self::TYPE_* $type
      */
-    protected $type;
+    private int $type;
 
-    /** @var string */
-    protected $literal = '';
+    private string $literal = '';
 
     /**
      * @psalm-param self::TYPE_* $type

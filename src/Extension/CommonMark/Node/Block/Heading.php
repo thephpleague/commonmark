@@ -18,10 +18,9 @@ namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 
-class Heading extends AbstractBlock
+final class Heading extends AbstractBlock
 {
-    /** @var int */
-    protected $level;
+    private int $level;
 
     public function __construct(int $level)
     {

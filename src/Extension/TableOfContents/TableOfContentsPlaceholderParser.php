@@ -27,12 +27,8 @@ use League\Config\ConfigurationInterface;
 
 final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var TableOfContentsPlaceholder
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private TableOfContentsPlaceholder $block;
 
     public function __construct()
     {
@@ -52,12 +48,8 @@ final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
     public static function blockStartParser(): BlockStartParserInterface
     {
         return new class () implements BlockStartParserInterface, ConfigurationAwareInterface {
-            /**
-             * @var ConfigurationInterface
-             *
-             * @psalm-readonly-allow-private-mutation
-             */
-            private $config;
+            /** @psalm-readonly-allow-private-mutation */
+            private ConfigurationInterface $config;
 
             public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
             {

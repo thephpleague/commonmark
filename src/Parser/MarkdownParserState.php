@@ -21,19 +21,11 @@ use League\CommonMark\Parser\Block\ParagraphParser;
  */
 final class MarkdownParserState implements MarkdownParserStateInterface
 {
-    /**
-     * @var BlockContinueParserInterface
-     *
-     * @psalm-readonly
-     */
-    private $activeBlockParser;
+    /** @psalm-readonly */
+    private BlockContinueParserInterface $activeBlockParser;
 
-    /**
-     * @var BlockContinueParserInterface
-     *
-     * @psalm-readonly
-     */
-    private $lastMatchedBlockParser;
+    /** @psalm-readonly */
+    private BlockContinueParserInterface $lastMatchedBlockParser;
 
     public function __construct(BlockContinueParserInterface $activeBlockParser, BlockContinueParserInterface $lastMatchedBlockParser)
     {

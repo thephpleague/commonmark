@@ -24,8 +24,7 @@ use League\CommonMark\Parser\Cursor;
 
 final class DescriptionListContinueParser extends AbstractBlockContinueParser
 {
-    /** @var DescriptionList */
-    private $block;
+    private DescriptionList $block;
 
     public function __construct()
     {

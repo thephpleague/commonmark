@@ -18,6 +18,6 @@ namespace League\CommonMark\Extension\CommonMark\Node\Inline;
 
 use League\CommonMark\Node\Inline\AbstractStringContainer;
 
-class HtmlInline extends AbstractStringContainer
+final class HtmlInline extends AbstractStringContainer
 {
 }

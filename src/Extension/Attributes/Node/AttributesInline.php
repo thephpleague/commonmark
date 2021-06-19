@@ -19,10 +19,9 @@ use League\CommonMark\Node\Inline\AbstractInline;
 final class AttributesInline extends AbstractInline
 {
     /** @var array<string, mixed> */
-    public $attributes;
+    private array $attributes;
 
-    /** @var bool */
-    public $block;
+    private bool $block;
 
     /**
      * @param array<string, mixed> $attributes

@@ -25,8 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 final class CodeRendererTest extends TestCase
 {
-    /** @var CodeRenderer */
-    protected $renderer;
+    private CodeRenderer $renderer;
 
     protected function setUp(): void
     {

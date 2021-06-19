@@ -23,11 +23,9 @@ use League\CommonMark\Xml\XmlRenderer;
 
 final class FootnoteExtensionXmlTest extends AbstractLocalDataTest
 {
-    /** @var MarkdownParser */
-    private $parser;
+    private MarkdownParser $parser;
 
-    /** @var XmlRenderer */
-    private $renderer;
+    private XmlRenderer $renderer;
 
     protected function setUp(): void
     {

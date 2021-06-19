@@ -19,10 +19,9 @@ namespace League\CommonMark\Extension\CommonMark\Node\Inline;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\DelimitedInterface;
 
-class Strong extends AbstractInline implements DelimitedInterface
+final class Strong extends AbstractInline implements DelimitedInterface
 {
-    /** @var string */
-    protected $delimeter;
+    private string $delimeter;
 
     public function __construct(string $delimeter = '**')
     {

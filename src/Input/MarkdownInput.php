@@ -22,28 +22,16 @@ class MarkdownInput implements MarkdownInputInterface
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $lines;
+    private ?array $lines = null;
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $content;
+    /** @psalm-readonly-allow-private-mutation */
+    private string $content;
 
-    /**
-     * @var int|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $lineCount;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?int $lineCount = null;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly
-     */
-    private $lineOffset;
+    /** @psalm-readonly */
+    private int $lineOffset;
 
     public function __construct(string $content, int $lineOffset = 0)
     {

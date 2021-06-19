@@ -447,8 +447,7 @@ final class EnvironmentTest extends TestCase
         });
 
         $environment->setEventDispatcher(new class ($dispatchersCalled) implements EventDispatcherInterface {
-            /** @var ArrayCollection */
-            private $dispatchersCalled;
+            private ArrayCollection $dispatchersCalled;
 
             public function __construct(ArrayCollection $dispatchersCalled)
             {
@@ -569,7 +568,7 @@ final class EnvironmentTest extends TestCase
         $environment = new Environment();
         $environment->addExtension(new class ($schemas) implements ConfigurableExtensionInterface {
             /** @var array<string, Schema> */
-            private $schemas;
+            private array $schemas;
 
             /**
              * @param array<string, Schema> $schemas

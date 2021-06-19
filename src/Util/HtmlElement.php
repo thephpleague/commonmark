@@ -18,17 +18,17 @@ namespace League\CommonMark\Util;
 
 final class HtmlElement implements \Stringable
 {
-    /** @var string */
-    protected $tagName;
+    /** @psalm-readonly */
+    private string $tagName;
 
     /** @var array<string, string|bool> */
-    protected $attributes = [];
+    private array $attributes = [];
 
     /** @var HtmlElement|HtmlElement[]|string */
-    protected $contents;
+    private $contents;
 
-    /** @var bool */
-    protected $selfClosing = false;
+    /** @psalm-readonly */
+    private bool $selfClosing;
 
     /**
      * @param string                                $tagName     Name of the HTML tag
@@ -48,6 +48,7 @@ final class HtmlElement implements \Stringable
         $this->setContents($contents ?? '');
     }
 
+    /** @psalm-immutable */
     public function getTagName(): string
     {
         return $this->tagName;
@@ -55,6 +56,8 @@ final class HtmlElement implements \Stringable
 
     /**
      * @return array<string, string|bool>
+     *
+     * @psalm-immutable
      */
     public function getAllAttributes(): array
     {
@@ -63,6 +66,8 @@ final class HtmlElement implements \Stringable
 
     /**
      * @return string|bool|null
+     *
+     * @psalm-immutable
      */
     public function getAttribute(string $key)
     {
@@ -89,6 +94,8 @@ final class HtmlElement implements \Stringable
 
     /**
      * @return HtmlElement|HtmlElement[]|string
+     *
+     * @psalm-immutable
      */
     public function getContents(bool $asString = true)
     {
@@ -113,6 +120,7 @@ final class HtmlElement implements \Stringable
         return $this;
     }
 
+    /** @psalm-immutable */
     public function __toString(): string
     {
         $result = '<' . $this->tagName;
@@ -140,6 +148,7 @@ final class HtmlElement implements \Stringable
         return $result;
     }
 
+    /** @psalm-immutable */
     private function getContentsAsString(): string
     {
         if (\is_string($this->contents)) {

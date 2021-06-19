@@ -23,8 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class InlinesOnlyFunctionalTest extends TestCase
 {
-    /** @var MarkdownConverter */
-    protected $converter;
+    private MarkdownConverter $converter;
 
     protected function setUp(): void
     {

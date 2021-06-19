@@ -24,8 +24,7 @@ use PHPUnit\Framework\TestCase;
 
 final class DescriptionListRendererTest extends TestCase
 {
-    /** @var DescriptionListRenderer */
-    protected $renderer;
+    private DescriptionListRenderer $renderer;
 
     protected function setUp(): void
     {

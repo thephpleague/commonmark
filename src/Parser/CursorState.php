@@ -32,7 +32,7 @@ final class CursorState
      *
      * @psalm-readonly
      */
-    private $state;
+    private array $state;
 
     /**
      * @internal

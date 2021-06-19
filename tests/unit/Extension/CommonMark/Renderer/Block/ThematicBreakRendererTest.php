@@ -25,8 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ThematicBreakRendererTest extends TestCase
 {
-    /** @var ThematicBreakRenderer */
-    protected $renderer;
+    private ThematicBreakRenderer $renderer;
 
     protected function setUp(): void
     {

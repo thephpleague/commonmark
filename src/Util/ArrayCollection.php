@@ -30,7 +30,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
      * @var array<int, mixed>
      * @phpstan-var array<int, T>
      */
-    private $elements;
+    private array $elements;
 
     /**
      * Constructor

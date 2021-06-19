@@ -23,11 +23,9 @@ use League\CommonMark\Node\Inline\Text;
 
 final class TestDelimiterProcessor implements DelimiterProcessorInterface
 {
-    /** @var string */
-    private $char;
+    private string $char;
 
-    /** @var int */
-    private $length;
+    private int $length;
 
     public function __construct(string $char, int $length)
     {

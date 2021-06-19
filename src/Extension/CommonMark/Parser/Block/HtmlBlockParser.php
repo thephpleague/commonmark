@@ -23,18 +23,12 @@ use League\CommonMark\Util\RegexHelper;
 
 final class HtmlBlockParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var HtmlBlock
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private HtmlBlock $block;
 
-    /** @var string */
-    private $content = '';
+    private string $content = '';
 
-    /** @var bool */
-    private $finished = false;
+    private bool $finished = false;
 
     /**
      * @psalm-param HtmlBlock::TYPE_* $blockType

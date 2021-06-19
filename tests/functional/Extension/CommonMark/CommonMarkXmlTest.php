@@ -21,16 +21,16 @@ use League\CommonMark\Xml\XmlRenderer;
 
 final class CommonMarkXmlTest extends AbstractLocalDataTest
 {
-    /** @var MarkdownParser */
-    private $parser;
+    private MarkdownParser $parser;
+    private XmlRenderer $renderer;
 
     protected function setUp(): void
     {
         $environment = new Environment();
         $environment->addExtension(new CommonMarkCoreExtension());
 
-        $this->parser    = new MarkdownParser($environment);
-        $this->converter = new XmlRenderer($environment);
+        $this->parser   = new MarkdownParser($environment);
+        $this->renderer = new XmlRenderer($environment);
     }
 
     /**
@@ -40,7 +40,7 @@ final class CommonMarkXmlTest extends AbstractLocalDataTest
     {
         $document = $this->parser->parse($markdown);
 
-        $this->assertSame($expectedXml, $this->converter->renderDocument($document)->getContent(), \sprintf('Unexpected result for "%s" test', $testName));
+        $this->assertSame($expectedXml, $this->renderer->renderDocument($document)->getContent(), \sprintf('Unexpected result for "%s" test', $testName));
     }
 
     /**

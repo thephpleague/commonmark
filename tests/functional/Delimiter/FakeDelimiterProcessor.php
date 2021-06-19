@@ -22,11 +22,9 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class FakeDelimiterProcessor implements DelimiterProcessorInterface
 {
-    /** @var string */
-    private $delimiterChar;
+    private string $delimiterChar;
 
-    /** @var int */
-    private $delimiterUse;
+    private int $delimiterUse;
 
     public function __construct(string $delimiterChar, int $delimiterUse)
     {

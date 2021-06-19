@@ -26,11 +26,9 @@ use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
  */
 final class FootnoteExtensionMarkdownTest extends AbstractLocalDataTest
 {
-    /** @var MarkdownConverter */
-    private $commonMarkConverter;
+    private MarkdownConverter $commonMarkConverter;
 
-    /** @var MarkdownConverter */
-    private $gfmConverter;
+    private MarkdownConverter $gfmConverter;
 
     protected function setUp(): void
     {

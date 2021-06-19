@@ -22,11 +22,9 @@ use League\CommonMark\Parser\Cursor;
 
 final class DescriptionContinueParser extends AbstractBlockContinueParser
 {
-    /** @var Description */
-    private $block;
+    private Description $block;
 
-    /** @var int */
-    private $indentation;
+    private int $indentation;
 
     public function __construct(bool $tight, int $indentation)
     {

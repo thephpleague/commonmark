@@ -24,18 +24,12 @@ use League\CommonMark\Parser\Cursor;
 
 final class ListBlockParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var ListBlock
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private ListBlock $block;
 
-    /** @var bool */
-    private $hadBlankLine = false;
+    private bool $hadBlankLine = false;
 
-    /** @var int */
-    private $linesAfterBlank = 0;
+    private int $linesAfterBlank = 0;
 
     public function __construct(ListData $listData)
     {

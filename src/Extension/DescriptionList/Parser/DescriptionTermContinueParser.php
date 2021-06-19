@@ -24,11 +24,9 @@ use League\CommonMark\Parser\InlineParserEngineInterface;
 
 final class DescriptionTermContinueParser extends AbstractBlockContinueParser implements BlockContinueParserWithInlinesInterface
 {
-    /** @var DescriptionTerm */
-    private $block;
+    private DescriptionTerm $block;
 
-    /** @var string */
-    private $term;
+    private string $term;
 
     public function __construct(string $term)
     {

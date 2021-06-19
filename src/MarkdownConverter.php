@@ -22,14 +22,11 @@ use League\CommonMark\Renderer\MarkdownRendererInterface;
 
 class MarkdownConverter implements MarkdownConverterInterface
 {
-    /** @var EnvironmentInterface */
-    protected $environment;
+    protected EnvironmentInterface $environment;
 
-    /** @var MarkdownParserInterface */
-    protected $markdownParser;
+    protected MarkdownParserInterface $markdownParser;
 
-    /** @var MarkdownRendererInterface */
-    protected $htmlRenderer;
+    protected MarkdownRendererInterface $htmlRenderer;
 
     public function __construct(EnvironmentInterface $environment)
     {

@@ -19,22 +19,17 @@ namespace League\CommonMark\Extension\CommonMark\Node\Block;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\StringContainerInterface;
 
-class FencedCode extends AbstractBlock implements StringContainerInterface
+final class FencedCode extends AbstractBlock implements StringContainerInterface
 {
-    /** @var string|null */
-    protected $info;
+    private ?string $info = null;
 
-    /** @var string */
-    protected $literal = '';
+    private string $literal = '';
 
-    /** @var int */
-    protected $length;
+    private int $length;
 
-    /** @var string */
-    protected $char;
+    private string $char;
 
-    /** @var int */
-    protected $offset;
+    private int $offset;
 
     public function __construct(int $length, string $char, int $offset)
     {

@@ -15,8 +15,7 @@ namespace League\CommonMark\Parser\Inline;
 
 final class InlineParserMatch
 {
-    /** @var string */
-    private $regex;
+    private string $regex;
 
     private function __construct(string $regex)
     {
