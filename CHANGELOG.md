@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed incorrect parsing of tilde-fenced code blocks with leading spaces (#676)
+
 ## [1.6.2] - 2021-05-12
 
 ### Fixed
