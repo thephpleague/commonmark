@@ -16,6 +16,7 @@ namespace League\CommonMark\Extension\Attributes\Parser;
 
 use League\CommonMark\Extension\Attributes\Node\AttributesInline;
 use League\CommonMark\Extension\Attributes\Util\AttributesHelper;
+use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 
@@ -26,24 +27,22 @@ final class AttributesInlineParser implements InlineParserInterface
      */
     public function getCharacters(): array
     {
-        return [' ', '{'];
+        return ['{'];
     }
 
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-        if ($cursor->getNextNonSpaceCharacter() !== '{') {
-            return false;
-        }
 
-        $char = $cursor->getCharacter();
-        if ($char === '{') {
-            $char = (string) $cursor->getCharacter($cursor->getPosition() - 1);
-        }
+        $char = (string) $cursor->peek(-1);
 
         $attributes = AttributesHelper::parseAttributes($cursor);
         if ($attributes === []) {
             return false;
+        }
+
+        if ($char === ' ' && ($previousInline = $inlineContext->getContainer()->lastChild()) instanceof Text) {
+            $previousInline->setContent(\rtrim($previousInline->getContent(), ' '));
         }
 
         if ($char === '') {

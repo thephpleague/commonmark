@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Optimized attribute parsing to avoid inspecting every space character (30% performance boost)
+
 ## [1.6.3] - 2021-06-19
 
 ### Fixed
