@@ -13,17 +13,21 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Attributes\AttributesExtension;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
-use League\CommonMark\Extension\CommonMarkCoreExtension;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension;
+use League\CommonMark\Extension\DescriptionList\DescriptionListExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
+use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\Mention\MentionExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
+use League\CommonMark\Extension\Table\Table;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
@@ -158,6 +162,11 @@ $parsers = [
     },
     'CommonMark All Extensions' => function ($markdown) {
         $environment = new Environment([
+            'default_attributes' => [
+                Table::class => [
+                    'class' => 'table',
+                ],
+            ],
             'external_link' => [
                 'internal_hosts'     => 'www.example.com',
                 'open_in_new_window' => true,
@@ -178,9 +187,12 @@ $parsers = [
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new AttributesExtension());
         $environment->addExtension(new AutolinkExtension());
+        $environment->addExtension(new DefaultAttributesExtension());
+        $environment->addExtension(new DescriptionListExtension());
         $environment->addExtension(new DisallowedRawHtmlExtension());
         $environment->addExtension(new ExternalLinkExtension());
         $environment->addExtension(new FootnoteExtension());
+        $environment->addExtension(new FrontMatterExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
         $environment->addExtension(new MentionExtension());
         $environment->addExtension(new SmartPunctExtension());
