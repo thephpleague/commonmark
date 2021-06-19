@@ -110,7 +110,7 @@ final class ExternalLinkProcessorTest extends TestCase
                 'nofollow'       => $nofollow,
                 'noopener'       => $noopener,
                 'noreferrer'     => $noreferrer,
-                'internal_hosts' => ['commonmark.thephpleague.com'],
+                'internal_hosts' => 'commonmark.thephpleague.com',
             ],
         ];
 

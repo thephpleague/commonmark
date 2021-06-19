@@ -31,7 +31,7 @@ final class ExternalLinkExtension implements ConfigurableExtensionInterface
         ];
 
         $builder->addSchema('external_link', Expect::structure([
-            'internal_hosts' => Expect::arrayOf('string'),
+            'internal_hosts' => Expect::type('string|string[]'),
             'open_in_new_window' => Expect::bool(false),
             'html_class' => Expect::string()->default(''),
             'nofollow' => Expect::anyOf(...$applyOptions)->default(ExternalLinkProcessor::APPLY_NONE),
