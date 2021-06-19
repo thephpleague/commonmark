@@ -18,13 +18,13 @@ use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Reference\ReferenceableInterface;
 
 final class FixOrphanedFootnotesAndRefsListener
 {
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
+        $map      = $this->buildMapOfKnownFootnotesAndRefs($document);
         $walker   = $document->walker();
 
         while ($event = $walker->next()) {
@@ -33,14 +33,14 @@ final class FixOrphanedFootnotesAndRefsListener
             }
 
             $node = $event->getNode();
-            if ($node instanceof FootnoteRef && ! $this->exists($document, Footnote::class, $node->getReference()->getLabel())) {
+            if ($node instanceof FootnoteRef && ! isset($map[Footnote::class][$node->getReference()->getLabel()])) {
                 // Found an orphaned FootnoteRef without a corresponding Footnote
                 // Restore the original footnote ref text
                 $node->replaceWith(new Text(\sprintf('[^%s]', $node->getReference()->getLabel())));
             }
 
             // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-            if ($node instanceof Footnote && ! $this->exists($document, FootnoteRef::class, $node->getReference()->getLabel())) {
+            if ($node instanceof Footnote && ! isset($map[FootnoteRef::class][$node->getReference()->getLabel()])) {
                 // Found an orphaned Footnote without a corresponding FootnoteRef
                 // Remove the footnote
                 $walker->resumeAt($node->next() ?? $node->parent());
@@ -49,8 +49,14 @@ final class FixOrphanedFootnotesAndRefsListener
         }
     }
 
-    private function exists(Document $document, string $type, string $label): bool
+    /** @phpstan-ignore-next-line */
+    private function buildMapOfKnownFootnotesAndRefs(Document $document): array // @phpcs:ignore
     {
+        $map = [
+            Footnote::class => [],
+            FootnoteRef::class => [],
+        ];
+
         $walker = $document->walker();
         while ($event = $walker->next()) {
             if (! $event->isEntering()) {
@@ -58,11 +64,13 @@ final class FixOrphanedFootnotesAndRefsListener
             }
 
             $node = $event->getNode();
-            if ($node instanceof ReferenceableInterface && \get_class($node) === $type && $node->getReference()->getLabel() === $label) {
-                return true;
+            if ($node instanceof Footnote) {
+                $map[Footnote::class][$node->getReference()->getLabel()] = true;
+            } elseif ($node instanceof FootnoteRef) {
+                $map[FootnoteRef::class][$node->getReference()->getLabel()] = true;
             }
         }
 
-        return false;
+        return $map;
     }
 }
