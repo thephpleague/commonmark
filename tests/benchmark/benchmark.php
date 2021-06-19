@@ -13,6 +13,22 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\Attributes\AttributesExtension;
+use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\Extension\CommonMarkCoreExtension;
+use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
+use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\Extension\Mention\MentionExtension;
+use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
+use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
+use League\CommonMark\Extension\TaskList\TaskListExtension;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
+use League\CommonMark\MarkdownConverter;
 use Michelf\Markdown;
 use Michelf\MarkdownExtra;
 
@@ -134,6 +150,46 @@ if ($config['md'] === '-') {
 $parsers = [
     'CommonMark' => function ($markdown) {
         $parser = new CommonMarkConverter();
+        $parser->convertToHtml($markdown);
+    },
+    'CommonMark GFM' => function ($markdown) {
+        $parser = new GithubFlavoredMarkdownConverter();
+        $parser->convertToHtml($markdown);
+    },
+    'CommonMark All Extensions' => function ($markdown) {
+        $environment = new Environment([
+            'external_link' => [
+                'internal_hosts' => 'www.example.com',
+                'open_in_new_window' => true,
+                'html_class' => 'external-link',
+                'nofollow' => '',
+                'noopener' => 'external',
+                'noreferrer' => 'external',
+            ],
+            'mentions' => [
+                'github_handle' => [
+                    'prefix'    => '@',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'generator' => 'https://github.com/%s',
+                ],
+            ],
+        ]);
+
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AttributesExtension());
+        $environment->addExtension(new AutolinkExtension());
+        $environment->addExtension(new DisallowedRawHtmlExtension());
+        $environment->addExtension(new ExternalLinkExtension());
+        $environment->addExtension(new FootnoteExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+        $environment->addExtension(new MentionExtension());
+        $environment->addExtension(new SmartPunctExtension());
+        $environment->addExtension(new StrikethroughExtension());
+        $environment->addExtension(new TableExtension());
+        $environment->addExtension(new TableOfContentsExtension());
+        $environment->addExtension(new TaskListExtension());
+
+        $parser = new MarkdownConverter($environment);
         $parser->convertToHtml($markdown);
     },
     'PHP Markdown' => function ($markdown) {
