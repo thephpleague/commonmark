@@ -17,7 +17,7 @@ use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Parser\Cursor;
 use PHPUnit\Framework\TestCase;
 
-class CursorTest extends TestCase
+final class CursorTest extends TestCase
 {
     public function testConstructor(): void
     {

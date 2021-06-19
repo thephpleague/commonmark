@@ -24,7 +24,7 @@ use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\ReferenceMapInterface;
 use PHPUnit\Framework\TestCase;
 
-class BacktickParserTest extends TestCase
+final class BacktickParserTest extends TestCase
 {
     /**
      * @dataProvider dataForTestParse

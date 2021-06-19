@@ -16,7 +16,7 @@ namespace League\CommonMark\Tests\Unit\Util;
 use League\CommonMark\Util\PrioritizedList;
 use PHPUnit\Framework\TestCase;
 
-class PrioritizedListTest extends TestCase
+final class PrioritizedListTest extends TestCase
 {
     public function testAddSamePriorities(): void
     {

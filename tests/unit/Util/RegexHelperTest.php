@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Tests the different regular expressions
  */
-class RegexHelperTest extends TestCase
+final class RegexHelperTest extends TestCase
 {
     public function testEscapable(): void
     {

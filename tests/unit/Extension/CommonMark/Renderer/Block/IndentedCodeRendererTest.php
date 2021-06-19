@@ -24,7 +24,7 @@ use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class IndentedCodeRendererTest extends TestCase
+final class IndentedCodeRendererTest extends TestCase
 {
     /** @var IndentedCodeRenderer */
     protected $renderer;

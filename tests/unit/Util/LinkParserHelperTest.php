@@ -17,7 +17,7 @@ use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Util\LinkParserHelper;
 use PHPUnit\Framework\TestCase;
 
-class LinkParserHelperTest extends TestCase
+final class LinkParserHelperTest extends TestCase
 {
     /**
      * @dataProvider dataProviderForTestParseLinkDestination

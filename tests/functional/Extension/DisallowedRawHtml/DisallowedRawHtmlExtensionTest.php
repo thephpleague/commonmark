@@ -19,7 +19,7 @@ use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
-class DisallowedRawHtmlExtensionTest extends TestCase
+final class DisallowedRawHtmlExtensionTest extends TestCase
 {
     public function testDisallowedRawHtmlExtensionWithSpecExample(): void
     {

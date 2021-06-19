@@ -24,7 +24,7 @@ use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class ListBlockRendererTest extends TestCase
+final class ListBlockRendererTest extends TestCase
 {
     /** @var ListBlockRenderer */
     protected $renderer;

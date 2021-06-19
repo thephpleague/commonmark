@@ -23,7 +23,7 @@ use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class CodeRendererTest extends TestCase
+final class CodeRendererTest extends TestCase
 {
     /** @var CodeRenderer */
     protected $renderer;

@@ -26,7 +26,7 @@ use League\CommonMark\Util\HtmlElement;
 use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
-class ImageRendererTest extends TestCase
+final class ImageRendererTest extends TestCase
 {
     /** @var ImageRenderer */
     protected $renderer;

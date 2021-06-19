@@ -23,7 +23,7 @@ use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Reference\ReferenceMapInterface;
 use PHPUnit\Framework\TestCase;
 
-class DocumentTest extends TestCase
+final class DocumentTest extends TestCase
 {
     public function testDefaultConstructorAndGetReferenceMap(): void
     {

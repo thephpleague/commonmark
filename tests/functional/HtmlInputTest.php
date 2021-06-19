@@ -20,7 +20,7 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
-class HtmlInputTest extends TestCase
+final class HtmlInputTest extends TestCase
 {
     public function testDefaultConfig(): void
     {

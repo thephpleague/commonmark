@@ -25,7 +25,7 @@ use League\CommonMark\Xml\XmlRenderer;
 use League\Config\Exception\InvalidConfigurationException;
 use PHPUnit\Framework\TestCase;
 
-class MentionExtensionTest extends TestCase
+final class MentionExtensionTest extends TestCase
 {
     public function testNoConfig(): void
     {

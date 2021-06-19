@@ -20,7 +20,7 @@ use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AbstractInline;
 use PHPUnit\Framework\TestCase;
 
-class AbstractBlockTest extends TestCase
+final class AbstractBlockTest extends TestCase
 {
     public function testSetParent(): void
     {

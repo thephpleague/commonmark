@@ -21,7 +21,7 @@ use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class StrikethroughRendererTest extends TestCase
+final class StrikethroughRendererTest extends TestCase
 {
     /** @var CodeRenderer */
     protected $renderer;

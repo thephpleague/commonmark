@@ -19,7 +19,7 @@ use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Inline\Text;
 use PHPUnit\Framework\TestCase;
 
-class AdjacentTextMergerTest extends TestCase
+final class AdjacentTextMergerTest extends TestCase
 {
     public function testMergeTextNodesBetweenExclusive(): void
     {

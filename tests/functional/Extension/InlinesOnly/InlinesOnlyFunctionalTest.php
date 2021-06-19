@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Tests the extension against sample files
  */
-class InlinesOnlyFunctionalTest extends TestCase
+final class InlinesOnlyFunctionalTest extends TestCase
 {
     /** @var MarkdownConverter */
     protected $converter;

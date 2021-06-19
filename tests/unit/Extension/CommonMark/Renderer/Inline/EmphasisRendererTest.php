@@ -23,7 +23,7 @@ use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class EmphasisRendererTest extends TestCase
+final class EmphasisRendererTest extends TestCase
 {
     /** @var EmphasisRenderer */
     protected $renderer;

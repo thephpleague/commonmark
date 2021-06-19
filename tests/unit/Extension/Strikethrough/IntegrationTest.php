@@ -20,7 +20,7 @@ use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
-class IntegrationTest extends TestCase
+final class IntegrationTest extends TestCase
 {
     /**
      * @dataProvider dataForIntegrationTest

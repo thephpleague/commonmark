@@ -13,7 +13,7 @@ use League\CommonMark\Renderer\HtmlRenderer;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use PHPUnit\Framework\TestCase;
 
-class HtmlRendererTest extends TestCase
+final class HtmlRendererTest extends TestCase
 {
     public function testRenderDocumentCallsDocumentRenderer(): void
     {

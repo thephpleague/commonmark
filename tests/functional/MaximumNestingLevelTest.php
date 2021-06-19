@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Functional;
 use League\CommonMark\CommonMarkConverter;
 use PHPUnit\Framework\TestCase;
 
-class MaximumNestingLevelTest extends TestCase
+final class MaximumNestingLevelTest extends TestCase
 {
     public function testThatWeCanHitTheLimit(): void
     {

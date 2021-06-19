@@ -20,7 +20,7 @@ use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Util\UrlEncoder;
 use PHPUnit\Framework\TestCase;
 
-class UrlEncoderTest extends TestCase
+final class UrlEncoderTest extends TestCase
 {
     /**
      * @dataProvider unescapeAndEncodeTestProvider

@@ -22,7 +22,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
-class CommonMarkConverterTest extends TestCase
+final class CommonMarkConverterTest extends TestCase
 {
     public function testEmptyConstructor(): void
     {

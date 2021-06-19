@@ -16,7 +16,7 @@ namespace League\CommonMark\Tests\Functional\Extension;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractSpecTest;
 
-class GithubFlavoredMarkdownExtensionTest extends AbstractSpecTest
+final class GithubFlavoredMarkdownExtensionTest extends AbstractSpecTest
 {
     protected function setUp(): void
     {

@@ -25,7 +25,7 @@ use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
-class NewlineRendererTest extends TestCase
+final class NewlineRendererTest extends TestCase
 {
     /** @var NewlineRenderer */
     protected $renderer;

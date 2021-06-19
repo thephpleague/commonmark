@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Unit\Util;
 use League\CommonMark\Util\Xml;
 use PHPUnit\Framework\TestCase;
 
-class XmlTest extends TestCase
+final class XmlTest extends TestCase
 {
     /**
      * @dataProvider dataProviderForTestEscape

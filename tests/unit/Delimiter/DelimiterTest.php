@@ -17,7 +17,7 @@ use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Node\Inline\AbstractStringContainer;
 use PHPUnit\Framework\TestCase;
 
-class DelimiterTest extends TestCase
+final class DelimiterTest extends TestCase
 {
     public function testConstructorAndGetters(): void
     {

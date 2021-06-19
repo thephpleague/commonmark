@@ -18,7 +18,7 @@ namespace League\CommonMark\Tests\Unit\Node;
 
 use PHPUnit\Framework\TestCase;
 
-class NodeTest extends TestCase
+final class NodeTest extends TestCase
 {
     public function testInsertBeforeElementWhichDoesNotHaveAPreviousOne(): void
     {

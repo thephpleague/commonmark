@@ -19,7 +19,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use PHPUnit\Framework\TestCase;
 
-class MarkdownParserTest extends TestCase
+final class MarkdownParserTest extends TestCase
 {
     public function testParsingWithInvalidUTF8(): void
     {

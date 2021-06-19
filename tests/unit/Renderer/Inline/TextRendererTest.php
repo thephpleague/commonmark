@@ -22,7 +22,7 @@ use League\CommonMark\Renderer\Inline\TextRenderer;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use PHPUnit\Framework\TestCase;
 
-class TextRendererTest extends TestCase
+final class TextRendererTest extends TestCase
 {
     /** @var TextRenderer */
     protected $renderer;

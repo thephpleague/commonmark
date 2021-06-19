@@ -20,7 +20,7 @@ use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
 use PHPUnit\Framework\TestCase;
 
-class ReferenceMapTest extends TestCase
+final class ReferenceMapTest extends TestCase
 {
     public function testAddNewReference(): void
     {

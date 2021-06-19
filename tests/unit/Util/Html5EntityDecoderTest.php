@@ -7,7 +7,7 @@ namespace League\CommonMark\Tests\Unit\Util;
 use League\CommonMark\Util\Html5EntityDecoder;
 use PHPUnit\Framework\TestCase;
 
-class Html5EntityDecoderTest extends TestCase
+final class Html5EntityDecoderTest extends TestCase
 {
     public function testEntityToChar(): void
     {

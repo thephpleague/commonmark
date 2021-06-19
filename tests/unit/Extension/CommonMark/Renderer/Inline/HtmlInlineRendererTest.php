@@ -26,7 +26,7 @@ use League\CommonMark\Util\HtmlFilter;
 use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
-class HtmlInlineRendererTest extends TestCase
+final class HtmlInlineRendererTest extends TestCase
 {
     /** @var HtmlInlineRenderer */
     protected $renderer;

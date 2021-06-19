@@ -44,7 +44,7 @@ use Nette\Schema\Schema;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-class EnvironmentTest extends TestCase
+final class EnvironmentTest extends TestCase
 {
     public function testAddGetExtensions(): void
     {

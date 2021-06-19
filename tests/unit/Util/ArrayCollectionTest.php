@@ -16,7 +16,7 @@ namespace League\CommonMark\Tests\Unit\Util;
 use League\CommonMark\Util\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
-class ArrayCollectionTest extends TestCase
+final class ArrayCollectionTest extends TestCase
 {
     public function testConstructorAndToArray(): void
     {

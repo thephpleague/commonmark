@@ -20,7 +20,7 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class TaskListItemMarkerRendererTest extends TestCase
+final class TaskListItemMarkerRendererTest extends TestCase
 {
     public function testWithCheckedItem(): void
     {

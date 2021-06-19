@@ -20,7 +20,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use PHPUnit\Framework\TestCase;
 
-class ListItemTest extends TestCase
+final class ListItemTest extends TestCase
 {
     public function testConstructorAndGetListData(): void
     {

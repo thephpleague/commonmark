@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Block;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use PHPUnit\Framework\TestCase;
 
-class HeadingTest extends TestCase
+final class HeadingTest extends TestCase
 {
     public function testConstructorAndGetLevel(): void
     {

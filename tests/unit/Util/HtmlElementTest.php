@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Unit\Util;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class HtmlElementTest extends TestCase
+final class HtmlElementTest extends TestCase
 {
     public function testConstructorOneArgument(): void
     {

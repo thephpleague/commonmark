@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Block;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use PHPUnit\Framework\TestCase;
 
-class HtmlBlockTest extends TestCase
+final class HtmlBlockTest extends TestCase
 {
     public function testConstructor(): void
     {

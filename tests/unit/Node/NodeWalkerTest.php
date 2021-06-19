@@ -22,7 +22,7 @@ use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
 use PHPUnit\Framework\TestCase;
 
-class NodeWalkerTest extends TestCase
+final class NodeWalkerTest extends TestCase
 {
     public function testWalkEmptyBlockNode(): void
     {

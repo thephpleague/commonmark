@@ -21,7 +21,7 @@ use League\CommonMark\CommonMarkConverter;
  * This is particularly useful for testing minor variations allowed by the spec
  * or small regressions not tested by the spec.
  */
-class LocalDataTest extends AbstractLocalDataTest
+final class LocalDataTest extends AbstractLocalDataTest
 {
     /** @var CommonMarkConverter */
     protected $converter;

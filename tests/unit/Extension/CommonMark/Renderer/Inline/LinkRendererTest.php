@@ -26,7 +26,7 @@ use League\CommonMark\Util\HtmlElement;
 use League\Config\ConfigurationInterface;
 use PHPUnit\Framework\TestCase;
 
-class LinkRendererTest extends TestCase
+final class LinkRendererTest extends TestCase
 {
     /** @var LinkRenderer */
     protected $renderer;

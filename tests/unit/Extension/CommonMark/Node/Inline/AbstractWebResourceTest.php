@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Inline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\AbstractWebResource;
 use PHPUnit\Framework\TestCase;
 
-class AbstractWebResourceTest extends TestCase
+final class AbstractWebResourceTest extends TestCase
 {
     /**
      * Tests the URL constructor parameter and getUrl() method

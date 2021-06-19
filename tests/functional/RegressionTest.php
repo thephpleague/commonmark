@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Functional;
 /**
  * Tests the parser against the CommonMark spec
  */
-class RegressionTest extends AbstractSpecTest
+final class RegressionTest extends AbstractSpecTest
 {
     protected function getFileName(): string
     {

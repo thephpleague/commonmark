@@ -24,7 +24,7 @@ use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class FencedCodeRendererTest extends TestCase
+final class FencedCodeRendererTest extends TestCase
 {
     /** @var FencedCodeRenderer */
     protected $renderer;

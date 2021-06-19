@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Block;
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 use PHPUnit\Framework\TestCase;
 
-class FencedCodeTest extends TestCase
+final class FencedCodeTest extends TestCase
 {
     public function testConstructorAndGetters(): void
     {

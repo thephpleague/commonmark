@@ -17,7 +17,7 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use PHPUnit\Framework\TestCase;
 
-class DelimiterProcessorCollectionTest extends TestCase
+final class DelimiterProcessorCollectionTest extends TestCase
 {
     public function testAddNewProcessor(): void
     {

@@ -23,7 +23,7 @@ use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use PHPUnit\Framework\TestCase;
 
-class BlockQuoteRendererTest extends TestCase
+final class BlockQuoteRendererTest extends TestCase
 {
     /** @var BlockQuoteRenderer */
     protected $renderer;

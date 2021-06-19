@@ -19,7 +19,7 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Node\Block;
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
 use PHPUnit\Framework\TestCase;
 
-class IndentedCodeTest extends TestCase
+final class IndentedCodeTest extends TestCase
 {
     public function testGetAndSetLiteral(): void
     {
