@@ -4,6 +4,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.6.3] - 2021-06-19
+
+### Fixed
+
+- Fixed incorrect parsing of tilde-fenced code blocks with leading spaces (#676)
+
 ## [1.6.2] - 2021-05-12
 
 ### Fixed
@@ -453,7 +459,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6.2...1.6
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6.3...1.6
+[1.6.3]: https://github.com/thephpleague/commonmark/compare/1.6.2...1.6.3
 [1.6.2]: https://github.com/thephpleague/commonmark/compare/1.6.1...1.6.2
 [1.6.1]: https://github.com/thephpleague/commonmark/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/thephpleague/commonmark/compare/1.5.8...1.6.0
