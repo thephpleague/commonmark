@@ -37,13 +37,13 @@ final class UrlEncoder
             return $uri;
         }
 
-        $result = '';
-
-        $chars = \preg_split('//u', $uri, -1, \PREG_SPLIT_NO_EMPTY);
-
-        if (! \is_array($chars) || ! \mb_check_encoding($uri, 'UTF-8')) {
+        if (! \mb_check_encoding($uri, 'UTF-8')) {
             throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
         }
+
+        $result = '';
+
+        $chars = \mb_str_split($uri, 1, 'UTF-8');
 
         $l = \count($chars);
         for ($i = 0; $i < $l; $i++) {

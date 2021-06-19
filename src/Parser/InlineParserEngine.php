@@ -160,9 +160,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
                 \assert(\is_int($offset));
 
                 // Remove the offsets, keeping only the matched text
-                $m = \array_map(static function (array $s): string {
-                    return (string) $s[0];
-                }, $match);
+                $m = \array_map(static fn (array $s): string => (string) $s[0], $match);
 
                 if ($m === []) {
                     continue;

@@ -47,7 +47,7 @@ final class FootnoteParser extends AbstractBlockContinueParser
         }
 
         if ($cursor->isIndented()) {
-            $this->indentation = $this->indentation ?? $cursor->getIndent();
+            $this->indentation ??= $cursor->getIndent();
             $cursor->advanceBy($this->indentation);
 
             return BlockContinue::at($cursor);

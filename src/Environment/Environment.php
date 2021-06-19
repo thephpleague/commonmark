@@ -211,7 +211,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         }
 
         /** @psalm-suppress TypeDoesNotContainType -- Bug: https://github.com/vimeo/psalm/issues/3332 */
-        while (\class_exists($parent = $parent ?? $nodeClass) && $parent = \get_parent_class($parent)) {
+        while (\class_exists($parent ??= $nodeClass) && $parent = \get_parent_class($parent)) {
             if (! isset($this->renderersByClass[$parent])) {
                 continue;
             }

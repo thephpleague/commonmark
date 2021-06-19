@@ -80,7 +80,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             }
 
             // Keep track of the first heading we see - we might need this later
-            $firstHeading = $firstHeading ?? $heading;
+            $firstHeading ??= $heading;
 
             // Keep track of the start and end lines
             $toc->setStartLine($firstHeading->getStartLine());

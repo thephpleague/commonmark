@@ -149,9 +149,7 @@ final class RegexHelper
         $escaped = \preg_replace($allEscapedChar, '$1', $string);
         \assert(\is_string($escaped));
 
-        return \preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', static function ($e) {
-            return Html5EntityDecoder::decode($e[0]);
-        }, $escaped);
+        return \preg_replace_callback('/' . self::PARTIAL_ENTITY . '/i', static fn ($e) => Html5EntityDecoder::decode($e[0]), $escaped);
     }
 
     /**
