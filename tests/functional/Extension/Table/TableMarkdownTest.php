@@ -58,7 +58,7 @@ final class TableMarkdownTest extends TestCase
     public function dataProvider(): array
     {
         $ret = [];
-        foreach (\glob(__DIR__ . '/data/*.md') as $markdownFile) {
+        foreach (\glob(__DIR__ . '/md/*.md') as $markdownFile) {
             $testName = \basename($markdownFile, '.md');
 
             if ($testName === 'table-in-list') {
@@ -66,7 +66,7 @@ final class TableMarkdownTest extends TestCase
             }
 
             $markdown = \file_get_contents($markdownFile);
-            $html     = \file_get_contents(__DIR__ . '/data/' . $testName . '.html');
+            $html     = \file_get_contents(__DIR__ . '/md/' . $testName . '.html');
 
             $ret[] = [$markdown, $html, $testName];
         }
