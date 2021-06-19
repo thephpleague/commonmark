@@ -17,7 +17,8 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Node\Inline;
 
 use League\CommonMark\Node\Inline\AbstractStringContainer;
+use League\CommonMark\Node\RawMarkupContainerInterface;
 
-final class HtmlInline extends AbstractStringContainer
+final class HtmlInline extends AbstractStringContainer implements RawMarkupContainerInterface
 {
 }

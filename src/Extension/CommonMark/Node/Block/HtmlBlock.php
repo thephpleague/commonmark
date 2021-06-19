@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
-use League\CommonMark\Node\StringContainerInterface;
+use League\CommonMark\Node\RawMarkupContainerInterface;
 
-final class HtmlBlock extends AbstractBlock implements StringContainerInterface
+final class HtmlBlock extends AbstractBlock implements RawMarkupContainerInterface
 {
     // Any changes to these constants should be reflected in .phpstorm.meta.php
     public const TYPE_1_CODE_CONTAINER = 1;

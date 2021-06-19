@@ -46,6 +46,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `MarkdownParserStateInterface`
    - `MarkdownRendererInterface`
    - `Query`
+   - `RawMarkupContainerInterface`
    - `ReferenceableInterface`
    - `RenderedContent`
    - `RenderedContentInterface`

@@ -18,6 +18,7 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\Config\ConfigurationInterface;
@@ -61,7 +62,7 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
 
     private function addHeadingLink(Heading $heading, Document $document, int $slugLength): void
     {
-        $text = StringContainerHelper::getChildText($heading);
+        $text = StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]);
         $slug = $this->slugNormalizer->normalize($text, [
             'node' => $heading,
             'length' => $slugLength,
