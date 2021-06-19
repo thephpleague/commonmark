@@ -194,7 +194,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
 ### Removed
 
- - Removed support for PHP 7.1
+ - Removed support for PHP 7.1, 7.2, and 7.3 (#625, #671)
  - Removed all previously-deprecated functionality:
    - Removed the ability to pass custom `Environment` instances into the `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` constructors
    - Removed the `Converter` class and `ConverterInterface`

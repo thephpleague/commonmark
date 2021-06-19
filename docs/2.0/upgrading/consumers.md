@@ -6,7 +6,7 @@ description: Developer guide to upgrading to newer versions of this library
 
 ## Minimum PHP Version
 
-The minimum supported PHP version was increased from 7.1 to 7.3.
+The minimum supported PHP version was increased from 7.1 to 7.4.
 
 ## `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` constructors
 
