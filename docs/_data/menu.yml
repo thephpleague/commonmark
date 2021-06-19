@@ -17,6 +17,7 @@ version:
             'GitHub-Flavored Markdown': '/2.0/extensions/github-flavored-markdown/'
             'Attributes': '/2.0/extensions/attributes/'
             'Autolinks': '/2.0/extensions/autolinks/'
+            'Default Attributes': '/2.0/extensions/default-attributes/'
             'Disallowed Raw HTML': '/2.0/extensions/disallowed-raw-html/'
             'External Links': '/2.0/extensions/external-links/'
             'Footnotes': '/2.0/extensions/footnotes/'
