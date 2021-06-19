@@ -159,12 +159,12 @@ $parsers = [
     'CommonMark All Extensions' => function ($markdown) {
         $environment = new Environment([
             'external_link' => [
-                'internal_hosts' => 'www.example.com',
+                'internal_hosts'     => 'www.example.com',
                 'open_in_new_window' => true,
-                'html_class' => 'external-link',
-                'nofollow' => '',
-                'noopener' => 'external',
-                'noreferrer' => 'external',
+                'html_class'         => 'external-link',
+                'nofollow'           => '',
+                'noopener'           => 'external',
+                'noreferrer'         => 'external',
             ],
             'mentions' => [
                 'github_handle' => [
