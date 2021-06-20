@@ -30,9 +30,7 @@ final class DescriptionRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof Description)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Description::assertInstanceOf($node);
 
         return new HtmlElement('dd', [], $childRenderer->renderNodes($node->children()));
     }

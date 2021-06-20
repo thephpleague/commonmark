@@ -30,9 +30,7 @@ final class DescriptionListRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
-        if (! ($node instanceof DescriptionList)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        DescriptionList::assertInstanceOf($node);
 
         $separator = $childRenderer->getBlockSeparator();
 
