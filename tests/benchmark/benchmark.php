@@ -359,7 +359,7 @@ $display = function (array $config, string $title, array $fmt, array $results, s
 };
 
 if (extension_loaded('xdebug')) {
-    fwrite(STDERR, 'The xdebug extension is loaded, this can significantly skew benchmarks. Disable it for accurate results.' . PHP_EOL . PHP_EOL);
+    fwrite(STDERR, 'The xdebug extension is loaded, this can significantly skew benchmarks. Disable it for accurate results. For xdebug 3, prefix your command with "XDEBUG_MODE=off"' . PHP_EOL . PHP_EOL);
 }
 
 printf(
