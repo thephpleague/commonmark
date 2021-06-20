@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed information on upgrading to version 2.0.
 
+## [2.0.0-beta1]
+
 ### Added
 
  - Added new `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
@@ -282,4 +284,5 @@ The following things have been deprecated and will not be supported in v3.0:
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.0.0-beta1...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6...2.0.0-beta1
