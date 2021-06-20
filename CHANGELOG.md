@@ -10,6 +10,10 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
 - Made compatible with CommonMark spec 0.30.0
 
+### Fixed
+
+- Fixed processing instructions with EOLs
+
 ## [2.0.0-beta1]
 
 ### Added
