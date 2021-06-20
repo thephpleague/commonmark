@@ -24,11 +24,9 @@ class FakeEventListener implements ConfigurationAwareInterface, EnvironmentAware
     /** @var callable */
     private $callback;
 
-    /** @var ConfigurationInterface */
-    private $configuration;
+    private ConfigurationInterface $configuration;
 
-    /** @var EnvironmentInterface */
-    private $environment;
+    private EnvironmentInterface $environment;
 
     public function __construct(callable $callback)
     {

@@ -20,8 +20,7 @@ use League\CommonMark\Node\Inline\AbstractInline;
 
 abstract class AbstractWebResource extends AbstractInline
 {
-    /** @var string */
-    protected $url;
+    protected string $url;
 
     public function __construct(string $url)
     {

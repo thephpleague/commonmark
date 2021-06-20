@@ -26,21 +26,13 @@ final class BlockStart
      *
      * @psalm-readonly
      */
-    private $blockParsers;
+    private array $blockParsers;
 
-    /**
-     * @var CursorState|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $cursorState = null;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?CursorState $cursorState = null;
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $replaceActiveBlockParser = false;
+    /** @psalm-readonly-allow-private-mutation */
+    private bool $replaceActiveBlockParser = false;
 
     private function __construct(BlockContinueParserInterface ...$blockParsers)
     {

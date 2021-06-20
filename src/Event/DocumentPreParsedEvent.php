@@ -21,15 +21,10 @@ use League\CommonMark\Node\Block\Document;
  */
 final class DocumentPreParsedEvent extends AbstractEvent
 {
-    /**
-     * @var Document
-     *
-     * @psalm-readonly
-     */
-    private $document;
+    /** @psalm-readonly */
+    private Document $document;
 
-    /** @var MarkdownInputInterface */
-    private $markdown;
+    private MarkdownInputInterface $markdown;
 
     public function __construct(Document $document, MarkdownInputInterface $markdown)
     {

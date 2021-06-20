@@ -27,15 +27,10 @@ class ListBlock extends AbstractBlock implements TightBlockInterface
     public const DELIM_PERIOD = 'period';
     public const DELIM_PAREN  = 'paren';
 
-    /** @var bool */
-    protected $tight = false;
+    protected bool $tight = false;
 
-    /**
-     * @var ListData
-     *
-     * @psalm-readonly
-     */
-    protected $listData;
+    /** @psalm-readonly */
+    protected ListData $listData;
 
     public function __construct(ListData $listData)
     {

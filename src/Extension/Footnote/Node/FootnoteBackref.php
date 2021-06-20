@@ -23,12 +23,8 @@ use League\CommonMark\Reference\ReferenceableInterface;
  */
 final class FootnoteBackref extends AbstractInline implements ReferenceableInterface
 {
-    /**
-     * @var ReferenceInterface
-     *
-     * @psalm-readonly
-     */
-    private $reference;
+    /** @psalm-readonly */
+    private ReferenceInterface $reference;
 
     public function __construct(ReferenceInterface $reference)
     {

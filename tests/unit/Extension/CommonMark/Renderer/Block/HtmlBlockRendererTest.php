@@ -28,8 +28,7 @@ use PHPUnit\Framework\TestCase;
 
 final class HtmlBlockRendererTest extends TestCase
 {
-    /** @var HtmlBlockRenderer */
-    protected $renderer;
+    private HtmlBlockRenderer $renderer;
 
     protected function setUp(): void
     {

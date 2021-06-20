@@ -23,11 +23,9 @@ use League\CommonMark\Xml\XmlRenderer;
 
 final class TableOfContentsXmlTest extends AbstractLocalDataTest
 {
-    /** @var MarkdownParser */
-    private $parser;
+    private MarkdownParser $parser;
 
-    /** @var XmlRenderer */
-    private $renderer;
+    private XmlRenderer $renderer;
 
     public function testWithSampleData(): void
     {

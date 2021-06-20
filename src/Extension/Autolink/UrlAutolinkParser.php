@@ -50,14 +50,10 @@ final class UrlAutolinkParser implements InlineParserInterface
      *
      * @psalm-readonly
      */
-    private $prefixes = ['www'];
+    private array $prefixes = ['www'];
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $finalRegex;
+    /** @psalm-readonly */
+    private string $finalRegex;
 
     /**
      * @param array<int, string> $allowedProtocols

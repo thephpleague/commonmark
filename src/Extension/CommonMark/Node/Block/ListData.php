@@ -18,31 +18,25 @@ namespace League\CommonMark\Extension\CommonMark\Node\Block;
 
 class ListData
 {
-    /** @var int|null */
-    public $start;
+    public ?int $start = null;
 
-    /** @var int */
-    public $padding = 0;
+    public int $padding = 0;
 
     /**
-     * @var string
      * @psalm-var ListBlock::TYPE_*
      * @phpstan-var ListBlock::TYPE_*
      */
-    public $type;
+    public string $type;
 
     /**
-     * @var string|null
      * @psalm-var ListBlock::DELIM_*|null
      * @phpstan-var ListBlock::DELIM_*|null
      */
-    public $delimiter;
+    public ?string $delimiter = null;
 
-    /** @var string|null */
-    public $bulletChar;
+    public ?string $bulletChar = null;
 
-    /** @var int */
-    public $markerOffset;
+    public int $markerOffset;
 
     public function equals(ListData $data): bool
     {

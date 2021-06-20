@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -22,22 +21,15 @@ use League\CommonMark\Parser\Cursor;
 
 final class ThematicBreakParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var ThematicBreak
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private ThematicBreak $block;
 
     public function __construct()
     {
         $this->block = new ThematicBreak();
     }
 
-    /**
-     * @return ThematicBreak
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): ThematicBreak
     {
         return $this->block;
     }

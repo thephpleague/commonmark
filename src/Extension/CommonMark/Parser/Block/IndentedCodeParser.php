@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -23,15 +22,11 @@ use League\CommonMark\Util\ArrayCollection;
 
 final class IndentedCodeParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var IndentedCode
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private IndentedCode $block;
 
     /** @var ArrayCollection<string> */
-    protected $strings;
+    private ArrayCollection $strings;
 
     public function __construct()
     {
@@ -39,10 +34,7 @@ final class IndentedCodeParser extends AbstractBlockContinueParser
         $this->strings = new ArrayCollection();
     }
 
-    /**
-     * @return IndentedCode
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): IndentedCode
     {
         return $this->block;
     }

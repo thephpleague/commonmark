@@ -25,8 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 final class StrongRendererTest extends TestCase
 {
-    /** @var StrongRenderer */
-    protected $renderer;
+    private StrongRenderer $renderer;
 
     protected function setUp(): void
     {

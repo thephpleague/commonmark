@@ -23,22 +23,15 @@ use League\CommonMark\Reference\ReferenceMapInterface;
  */
 final class DocumentBlockParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var Document
-     *
-     * @psalm-readonly
-     */
-    private $document;
+    /** @psalm-readonly */
+    private Document $document;
 
     public function __construct(ReferenceMapInterface $referenceMap)
     {
         $this->document = new Document($referenceMap);
     }
 
-    /**
-     * @return Document
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): Document
     {
         return $this->document;
     }

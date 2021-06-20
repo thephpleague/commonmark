@@ -20,15 +20,10 @@ use League\CommonMark\Reference\ReferenceableInterface;
 
 final class FootnoteRef extends AbstractInline implements ReferenceableInterface
 {
-    /** @var ReferenceInterface */
-    private $reference;
+    private ReferenceInterface $reference;
 
-    /**
-     * @var string|null
-     *
-     * @psalm-readonly
-     */
-    private $content;
+    /** @psalm-readonly */
+    private ?string $content = null;
 
     /**
      * @param array<mixed> $data

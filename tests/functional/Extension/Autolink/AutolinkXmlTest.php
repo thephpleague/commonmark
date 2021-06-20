@@ -22,8 +22,8 @@ use League\CommonMark\Xml\XmlRenderer;
 
 final class AutolinkXmlTest extends AbstractLocalDataTest
 {
-    /** @var MarkdownParser */
-    private $parser;
+    private MarkdownParser $parser;
+    private XmlRenderer $renderer;
 
     protected function setUp(): void
     {
@@ -31,8 +31,8 @@ final class AutolinkXmlTest extends AbstractLocalDataTest
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new AutolinkExtension());
 
-        $this->parser    = new MarkdownParser($environment);
-        $this->converter = new XmlRenderer($environment);
+        $this->parser   = new MarkdownParser($environment);
+        $this->renderer = new XmlRenderer($environment);
     }
 
     /**
@@ -42,7 +42,7 @@ final class AutolinkXmlTest extends AbstractLocalDataTest
     {
         $document = $this->parser->parse($markdown);
 
-        $this->assertSame($expectedXml, $this->converter->renderDocument($document)->getContent(), \sprintf('Unexpected result for "%s" test', $testName));
+        $this->assertSame($expectedXml, $this->renderer->renderDocument($document)->getContent(), \sprintf('Unexpected result for "%s" test', $testName));
     }
 
     /**

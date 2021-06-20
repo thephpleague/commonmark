@@ -23,13 +23,12 @@ final class TableSection extends AbstractBlock
     public const TYPE_BODY = 'body';
 
     /**
-     * @var string
      * @psalm-var self::TYPE_*
      * @phpstan-var self::TYPE_*
      *
      * @psalm-readonly
      */
-    private $type;
+    private string $type;
 
     /**
      * @psalm-param self::TYPE_* $type

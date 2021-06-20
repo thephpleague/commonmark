@@ -20,54 +20,26 @@ use Dflydev\DotAccessData\Data;
 
 abstract class Node
 {
-    /**
-     * @var Data
-     *
-     * @psalm-readonly
-     */
-    public $data;
+    /** @psalm-readonly */
+    public Data $data;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    protected $depth = 0;
+    /** @psalm-readonly-allow-private-mutation */
+    protected int $depth = 0;
 
-    /**
-     * @var Node|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    protected $parent;
+    /** @psalm-readonly-allow-private-mutation */
+    protected ?Node $parent = null;
 
-    /**
-     * @var Node|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    protected $previous;
+    /** @psalm-readonly-allow-private-mutation */
+    protected ?Node $previous = null;
 
-    /**
-     * @var Node|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    protected $next;
+    /** @psalm-readonly-allow-private-mutation */
+    protected ?Node $next = null;
 
-    /**
-     * @var Node|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    protected $firstChild;
+    /** @psalm-readonly-allow-private-mutation */
+    protected ?Node $firstChild = null;
 
-    /**
-     * @var Node|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    protected $lastChild;
+    /** @psalm-readonly-allow-private-mutation */
+    protected ?Node $lastChild = null;
 
     public function __construct()
     {

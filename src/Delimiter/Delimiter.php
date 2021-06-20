@@ -20,75 +20,35 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class Delimiter implements DelimiterInterface
 {
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $char;
+    /** @psalm-readonly */
+    private string $char;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $length;
+    /** @psalm-readonly-allow-private-mutation */
+    private int $length;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly
-     */
-    private $originalLength;
+    /** @psalm-readonly */
+    private int $originalLength;
 
-    /**
-     * @var AbstractStringContainer
-     *
-     * @psalm-readonly
-     */
-    private $inlineNode;
+    /** @psalm-readonly */
+    private AbstractStringContainer $inlineNode;
 
-    /**
-     * @var DelimiterInterface|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $previous;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?DelimiterInterface $previous = null;
 
-    /**
-     * @var DelimiterInterface|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $next;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?DelimiterInterface $next = null;
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly
-     */
-    private $canOpen;
+    /** @psalm-readonly */
+    private bool $canOpen;
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly
-     */
-    private $canClose;
+    /** @psalm-readonly */
+    private bool $canClose;
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $active;
+    /** @psalm-readonly-allow-private-mutation */
+    private bool $active;
 
-    /**
-     * @var int|null
-     *
-     * @psalm-readonly
-     */
-    private $index;
+    /** @psalm-readonly */
+    private ?int $index = null;
 
     public function __construct(string $char, int $numDelims, AbstractStringContainer $node, bool $canOpen, bool $canClose, ?int $index = null)
     {

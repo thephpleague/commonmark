@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Parser\Block;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -24,15 +23,11 @@ use League\CommonMark\Util\RegexHelper;
 
 final class FencedCodeParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var FencedCode
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private FencedCode $block;
 
     /** @var ArrayCollection<string> */
-    protected $strings;
+    private ArrayCollection $strings;
 
     public function __construct(int $fenceLength, string $fenceChar, int $fenceOffset)
     {
@@ -40,10 +35,7 @@ final class FencedCodeParser extends AbstractBlockContinueParser
         $this->strings = new ArrayCollection();
     }
 
-    /**
-     * @return FencedCode
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): FencedCode
     {
         return $this->block;
     }

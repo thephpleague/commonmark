@@ -20,8 +20,7 @@ namespace League\CommonMark\Event;
  */
 final class ListenerData
 {
-    /** @var string */
-    private $event;
+    private string $event;
 
     /** @var callable */
     private $listener;

@@ -23,19 +23,11 @@ use League\CommonMark\Parser\CursorState;
  */
 final class BlockContinue
 {
-    /**
-     * @var CursorState|null
-     *
-     * @psalm-readonly
-     */
-    private $cursorState;
+    /** @psalm-readonly */
+    private ?CursorState $cursorState = null;
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly
-     */
-    private $finalize;
+    /** @psalm-readonly */
+    private bool $finalize;
 
     private function __construct(?CursorState $cursorState = null, bool $finalize = false)
     {

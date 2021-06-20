@@ -6,7 +6,7 @@ description: Upgrade guide for those who develop custom extensions and more usin
 
 ## Minimum PHP Version
 
-The minimum supported PHP version was increased from 7.1 to 7.3.
+The minimum supported PHP version was increased from 7.1 to 7.4.
 
 ## `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` constructors
 
@@ -367,6 +367,23 @@ Several methods were removed from this class - here are the methods along with p
 | `removeGaps()`      | (none provided)                                      |
 
 This class is also `final` now, so don't extend it.
+
+## `final` classes
+
+The following classes are now marked `final` and cannot be extended:
+
+- `ArrayCollection`
+- `Emphasis`
+- `FencedCode`
+- `Heading`
+- `HtmlBlock`
+- `HtmlElement`
+- `HtmlInline`
+- `IndentedCode`
+- `Newline`
+- `Strikethrough`
+- `Strong`
+- `Text`
 
 ## Node setter methods return void
 

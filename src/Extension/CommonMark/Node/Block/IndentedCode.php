@@ -16,10 +16,9 @@ namespace League\CommonMark\Extension\CommonMark\Node\Block;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\StringContainerInterface;
 
-class IndentedCode extends AbstractBlock implements StringContainerInterface
+final class IndentedCode extends AbstractBlock implements StringContainerInterface
 {
-    /** @var string */
-    protected $literal = '';
+    private string $literal = '';
 
     public function getLiteral(): string
     {

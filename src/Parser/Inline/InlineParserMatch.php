@@ -15,8 +15,7 @@ namespace League\CommonMark\Parser\Inline;
 
 final class InlineParserMatch
 {
-    /** @var string */
-    private $regex;
+    private string $regex;
 
     private function __construct(string $regex)
     {
@@ -44,9 +43,7 @@ final class InlineParserMatch
      */
     public static function oneOf(string ...$str): self
     {
-        return new self(\implode('|', \array_map(static function (string $str): string {
-            return \preg_quote($str, '/');
-        }, $str)));
+        return new self(\implode('|', \array_map(static fn (string $str): string => \preg_quote($str, '/'), $str)));
     }
 
     /**

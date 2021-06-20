@@ -37,54 +37,34 @@ use League\CommonMark\Util\RegexHelper;
 
 final class MarkdownParser implements MarkdownParserInterface
 {
-    /**
-     * @var EnvironmentInterface
-     *
-     * @psalm-readonly
-     */
-    private $environment;
+    /** @psalm-readonly */
+    private EnvironmentInterface $environment;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $maxNestingLevel;
+    /** @psalm-readonly-allow-private-mutation */
+    private int $maxNestingLevel;
 
-    /**
-     * @var ReferenceMap
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $referenceMap;
+    /** @psalm-readonly-allow-private-mutation */
+    private ReferenceMap $referenceMap;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $lineNumber = 0;
+    /** @psalm-readonly-allow-private-mutation */
+    private int $lineNumber = 0;
 
-    /**
-     * @var Cursor
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $cursor;
+    /** @psalm-readonly-allow-private-mutation */
+    private Cursor $cursor;
 
     /**
      * @var array<int, BlockContinueParserInterface>
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $activeBlockParsers = [];
+    private array $activeBlockParsers = [];
 
     /**
      * @var array<int, BlockContinueParserInterface>
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $closedBlockParsers = [];
+    private array $closedBlockParsers = [];
 
     public function __construct(EnvironmentInterface $environment)
     {

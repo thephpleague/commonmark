@@ -25,8 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 final class EmphasisRendererTest extends TestCase
 {
-    /** @var EmphasisRenderer */
-    protected $renderer;
+    private EmphasisRenderer $renderer;
 
     protected function setUp(): void
     {

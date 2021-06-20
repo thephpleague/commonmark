@@ -17,19 +17,11 @@ use League\CommonMark\Node\Block\Document;
 
 class RenderedContent implements RenderedContentInterface
 {
-    /**
-     * @var Document
-     *
-     * @psalm-readonly
-     */
-    private $document;
+    /** @psalm-readonly */
+    private Document $document;
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $content;
+    /** @psalm-readonly */
+    private string $content;
 
     public function __construct(Document $document, string $content)
     {

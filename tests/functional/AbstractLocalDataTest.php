@@ -26,8 +26,7 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 abstract class AbstractLocalDataTest extends TestCase
 {
-    /** @var MarkdownConverterInterface */
-    protected $converter;
+    protected MarkdownConverterInterface $converter;
 
     /**
      * @dataProvider dataProvider

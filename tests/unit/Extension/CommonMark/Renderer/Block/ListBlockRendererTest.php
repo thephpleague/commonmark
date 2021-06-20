@@ -26,8 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ListBlockRendererTest extends TestCase
 {
-    /** @var ListBlockRenderer */
-    protected $renderer;
+    private ListBlockRenderer $renderer;
 
     protected function setUp(): void
     {

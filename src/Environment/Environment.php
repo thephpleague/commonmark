@@ -49,69 +49,55 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $extensions = [];
+    private array $extensions = [];
 
     /**
      * @var ExtensionInterface[]
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $uninitializedExtensions = [];
+    private array $uninitializedExtensions = [];
 
-    /**
-     * @var bool
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $extensionsInitialized = false;
+    /** @psalm-readonly-allow-private-mutation */
+    private bool $extensionsInitialized = false;
 
     /**
      * @var PrioritizedList<BlockStartParserInterface>
      *
      * @psalm-readonly
      */
-    private $blockStartParsers;
+    private PrioritizedList $blockStartParsers;
 
     /**
      * @var PrioritizedList<InlineParserInterface>
      *
      * @psalm-readonly
      */
-    private $inlineParsers;
+    private PrioritizedList $inlineParsers;
 
-    /**
-     * @var DelimiterProcessorCollection
-     *
-     * @psalm-readonly
-     */
-    private $delimiterProcessors;
+    /** @psalm-readonly */
+    private DelimiterProcessorCollection $delimiterProcessors;
 
     /**
      * @var array<string, PrioritizedList<NodeRendererInterface>>
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $renderersByClass = [];
+    private array $renderersByClass = [];
 
     /**
      * @var PrioritizedList<ListenerData>
      *
      * @psalm-readonly-allow-private-mutation
      */
-    private $listenerData;
+    private PrioritizedList $listenerData;
 
-    /** @var EventDispatcherInterface|null */
-    private $eventDispatcher;
+    private ?EventDispatcherInterface $eventDispatcher = null;
 
-    /**
-     * @var Configuration
-     *
-     * @psalm-readonly
-     */
-    private $config;
+    /** @psalm-readonly */
+    private Configuration $config;
 
-    /** @var TextNormalizerInterface|null */
-    private $slugNormalizer = null;
+    private ?TextNormalizerInterface $slugNormalizer = null;
 
     /**
      * @param array<string, mixed> $config
@@ -225,7 +211,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         }
 
         /** @psalm-suppress TypeDoesNotContainType -- Bug: https://github.com/vimeo/psalm/issues/3332 */
-        while (\class_exists($parent = $parent ?? $nodeClass) && $parent = \get_parent_class($parent)) {
+        while (\class_exists($parent ??= $nodeClass) && $parent = \get_parent_class($parent)) {
             if (! isset($this->renderersByClass[$parent])) {
                 continue;
             }

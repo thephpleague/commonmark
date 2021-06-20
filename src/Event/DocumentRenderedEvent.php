@@ -17,8 +17,7 @@ use League\CommonMark\Output\RenderedContentInterface;
 
 final class DocumentRenderedEvent extends AbstractEvent
 {
-    /** @var RenderedContentInterface */
-    private $output;
+    private RenderedContentInterface $output;
 
     public function __construct(RenderedContentInterface $output)
     {

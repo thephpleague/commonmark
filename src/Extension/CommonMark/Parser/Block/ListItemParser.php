@@ -25,25 +25,17 @@ use League\CommonMark\Parser\Cursor;
 
 final class ListItemParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var ListItem
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private ListItem $block;
 
-    /** @var bool */
-    private $hadBlankLine = false;
+    private bool $hadBlankLine = false;
 
     public function __construct(ListData $listData)
     {
         $this->block = new ListItem($listData);
     }
 
-    /**
-     * @return ListItem
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): ListItem
     {
         return $this->block;
     }

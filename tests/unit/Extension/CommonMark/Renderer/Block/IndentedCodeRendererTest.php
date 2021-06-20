@@ -26,8 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 final class IndentedCodeRendererTest extends TestCase
 {
-    /** @var IndentedCodeRenderer */
-    protected $renderer;
+    private IndentedCodeRenderer $renderer;
 
     protected function setUp(): void
     {

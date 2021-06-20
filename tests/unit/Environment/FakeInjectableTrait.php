@@ -18,11 +18,9 @@ use League\Config\ConfigurationInterface;
 
 trait FakeInjectableTrait
 {
-    /** @var bool */
-    protected $configInjected = false;
+    protected bool $configInjected = false;
 
-    /** @var bool */
-    protected $environmentInjected = false;
+    protected bool $environmentInjected = false;
 
     public function setConfiguration(ConfigurationInterface $configuration): void
     {

@@ -46,6 +46,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `MarkdownParserStateInterface`
    - `MarkdownRendererInterface`
    - `Query`
+   - `RawMarkupContainerInterface`
    - `ReferenceableInterface`
    - `RenderedContent`
    - `RenderedContentInterface`
@@ -147,6 +148,8 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `TableCell::TYPE_HEAD` is now `TableCell::TYPE_HEADER`
    - `TableCell::TYPE_BODY` is now `TableCell::TYPE_DATA`
  - Changed the visibility of the following properties:
+   - `AttributesInline::$attributes` is now `private`
+   - `AttributesInline::$block` is now `private`
    - `TableCell::$align` is now `private`
    - `TableCell::$type` is now `private`
    - `TableSection::$type` is now `private`
@@ -159,11 +162,23 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `Context::setBlocksParsed()`
    - `AbstractStringContainer::setContent()`
    - `AbstractWebResource::setUrl()`
+ - Several classes are now marked `final`:
+   - `ArrayCollection`
+   - `Emphasis`
+   - `FencedCode`
+   - `Heading`
+   - `HtmlBlock`
+   - `HtmlElement`
+   - `HtmlInline`
+   - `IndentedCode`
+   - `Newline`
+   - `Strikethrough`
+   - `Strong`
+   - `Text`
  - `Heading` nodes no longer directly contain a copy of their inner text
  - `StringContainerInterface` can now be used for inlines, not just blocks
- - `ArrayCollection` is now final and only supports integer keys
- - `HtmlElement` is now `final` and implements `Stringable`
- - `Text` is now `final`
+ - `ArrayCollection` only supports integer keys
+ - `HtmlElement` now implements `Stringable`
  - `Cursor::saveState()` and `Cursor::restoreState()` now use `CursorState` objects instead of arrays
  - `NodeWalker::next()` now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as "containers".
  - `InvalidOptionException` was removed
@@ -194,7 +209,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
 ### Removed
 
- - Removed support for PHP 7.1
+ - Removed support for PHP 7.1, 7.2, and 7.3 (#625, #671)
  - Removed all previously-deprecated functionality:
    - Removed the ability to pass custom `Environment` instances into the `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` constructors
    - Removed the `Converter` class and `ConverterInterface`

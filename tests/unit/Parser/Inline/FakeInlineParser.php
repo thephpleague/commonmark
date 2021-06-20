@@ -21,10 +21,9 @@ use League\CommonMark\Parser\InlineParserContext;
 final class FakeInlineParser implements InlineParserInterface
 {
     /** @var string[] */
-    private $matches = [];
+    private array $matches = [];
 
-    /** @var InlineParserMatch */
-    private $start;
+    private InlineParserMatch $start;
 
     public function __construct(InlineParserMatch $start)
     {

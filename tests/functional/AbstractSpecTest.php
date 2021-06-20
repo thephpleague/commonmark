@@ -23,8 +23,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractSpecTest extends TestCase
 {
-    /** @var MarkdownConverter */
-    protected $converter;
+    protected MarkdownConverter $converter;
 
     protected function setUp(): void
     {

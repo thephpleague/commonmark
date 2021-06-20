@@ -20,8 +20,7 @@ use League\Config\ConfigurationInterface;
 
 final class ApplyDefaultAttributesProcessor implements ConfigurationAwareInterface
 {
-    /** @var ConfigurationInterface */
-    private $config;
+    private ConfigurationInterface $config;
 
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {

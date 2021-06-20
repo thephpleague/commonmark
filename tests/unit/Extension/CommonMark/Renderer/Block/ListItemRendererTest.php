@@ -26,8 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ListItemRendererTest extends TestCase
 {
-    /** @var ListItemRenderer */
-    protected $renderer;
+    private ListItemRenderer $renderer;
 
     protected function setUp(): void
     {

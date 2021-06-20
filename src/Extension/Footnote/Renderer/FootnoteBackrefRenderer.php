@@ -27,8 +27,7 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, XmlNodeRen
 {
     public const DEFAULT_SYMBOL = '↩';
 
-    /** @var ConfigurationInterface */
-    private $config;
+    private ConfigurationInterface $config;
 
     /**
      * @param FootnoteBackref $node

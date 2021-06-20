@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\Strikethrough;
 
-use League\CommonMark\Extension\CommonMark\Renderer\Inline\CodeRenderer;
 use League\CommonMark\Extension\Strikethrough\Strikethrough;
 use League\CommonMark\Extension\Strikethrough\StrikethroughRenderer;
 use League\CommonMark\Node\Inline\Text;
@@ -23,8 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 final class StrikethroughRendererTest extends TestCase
 {
-    /** @var CodeRenderer */
-    protected $renderer;
+    private StrikethroughRenderer $renderer;
 
     protected function setUp(): void
     {

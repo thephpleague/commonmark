@@ -29,19 +29,11 @@ use League\Config\ConfigurationInterface;
 
 final class EmphasisDelimiterProcessor implements DelimiterProcessorInterface, ConfigurationAwareInterface
 {
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $char;
+    /** @psalm-readonly */
+    private string $char;
 
-    /**
-     * @var ConfigurationInterface
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $config;
+    /** @psalm-readonly-allow-private-mutation */
+    private ConfigurationInterface $config;
 
     /**
      * @param string $char The emphasis character to use (typically '*' or '_')

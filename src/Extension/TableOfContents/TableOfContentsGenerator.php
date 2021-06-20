@@ -14,11 +14,9 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\TableOfContents;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
-use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
-use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
@@ -27,6 +25,7 @@ use League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrateg
 use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;
 use League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
 use League\Config\Exception\InvalidConfigurationException;
 
@@ -39,33 +38,17 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
     public const NORMALIZE_RELATIVE = 'relative';
     public const NORMALIZE_FLAT     = 'flat';
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $style;
+    /** @psalm-readonly */
+    private string $style;
 
-    /**
-     * @var string
-     *
-     * @psalm-readonly
-     */
-    private $normalizationStrategy;
+    /** @psalm-readonly */
+    private string $normalizationStrategy;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly
-     */
-    private $minHeadingLevel;
+    /** @psalm-readonly */
+    private int $minHeadingLevel;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly
-     */
-    private $maxHeadingLevel;
+    /** @psalm-readonly */
+    private int $maxHeadingLevel;
 
     public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel)
     {
@@ -96,14 +79,14 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             }
 
             // Keep track of the first heading we see - we might need this later
-            $firstHeading = $firstHeading ?? $heading;
+            $firstHeading ??= $heading;
 
             // Keep track of the start and end lines
             $toc->setStartLine($firstHeading->getStartLine());
             $toc->setEndLine($heading->getEndLine());
 
             // Create the new link
-            $link = new Link('#' . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [HtmlBlock::class, HtmlInline::class]));
+            $link = new Link('#' . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]));
 
             $listItem = new ListItem($toc->getListData());
             $listItem->setStartLine($heading->getStartLine());

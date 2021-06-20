@@ -27,12 +27,8 @@ use League\CommonMark\Output\RenderedContentInterface;
 
 final class HtmlRenderer implements MarkdownRendererInterface, ChildNodeRendererInterface
 {
-    /**
-     * @var EnvironmentInterface
-     *
-     * @psalm-readonly
-     */
-    private $environment;
+    /** @psalm-readonly */
+    private EnvironmentInterface $environment;
 
     public function __construct(EnvironmentInterface $environment)
     {

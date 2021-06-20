@@ -28,12 +28,8 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
 {
     public const DEFAULT_SYMBOL = '¶';
 
-    /**
-     * @var ConfigurationInterface
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $config;
+    /** @psalm-readonly-allow-private-mutation */
+    private ConfigurationInterface $config;
 
     public function setConfiguration(ConfigurationInterface $configuration): void
     {

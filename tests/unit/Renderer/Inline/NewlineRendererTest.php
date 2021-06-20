@@ -27,8 +27,7 @@ use PHPUnit\Framework\TestCase;
 
 final class NewlineRendererTest extends TestCase
 {
-    /** @var NewlineRenderer */
-    protected $renderer;
+    private NewlineRenderer $renderer;
 
     protected function setUp(): void
     {

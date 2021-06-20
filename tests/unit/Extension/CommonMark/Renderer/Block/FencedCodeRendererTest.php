@@ -26,8 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 final class FencedCodeRendererTest extends TestCase
 {
-    /** @var FencedCodeRenderer */
-    protected $renderer;
+    private FencedCodeRenderer $renderer;
 
     protected function setUp(): void
     {

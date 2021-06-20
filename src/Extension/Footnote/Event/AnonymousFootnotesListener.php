@@ -26,8 +26,7 @@ use League\Config\ConfigurationInterface;
 
 final class AnonymousFootnotesListener implements ConfigurationAwareInterface
 {
-    /** @var ConfigurationInterface */
-    private $config;
+    private ConfigurationInterface $config;
 
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {

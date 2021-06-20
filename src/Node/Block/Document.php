@@ -22,12 +22,8 @@ use League\CommonMark\Reference\ReferenceMapInterface;
 
 class Document extends AbstractBlock
 {
-    /**
-     * @var ReferenceMapInterface
-     *
-     * @psalm-readonly
-     */
-    protected $referenceMap;
+    /** @psalm-readonly */
+    protected ReferenceMapInterface $referenceMap;
 
     public function __construct(?ReferenceMapInterface $referenceMap = null)
     {

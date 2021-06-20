@@ -29,12 +29,8 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
     public const POSITION_BEFORE_HEADINGS = 'before-headings';
     public const POSITION_PLACEHOLDER     = 'placeholder';
 
-    /**
-     * @var ConfigurationInterface
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $config;
+    /** @psalm-readonly-allow-private-mutation */
+    private ConfigurationInterface $config;
 
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {

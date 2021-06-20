@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\TableOfContents;
 
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsPlaceholder;
-use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -27,19 +26,15 @@ use League\Config\ConfigurationInterface;
 
 final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var TableOfContentsPlaceholder
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private TableOfContentsPlaceholder $block;
 
     public function __construct()
     {
         $this->block = new TableOfContentsPlaceholder();
     }
 
-    public function getBlock(): AbstractBlock
+    public function getBlock(): TableOfContentsPlaceholder
     {
         return $this->block;
     }
@@ -52,12 +47,8 @@ final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
     public static function blockStartParser(): BlockStartParserInterface
     {
         return new class () implements BlockStartParserInterface, ConfigurationAwareInterface {
-            /**
-             * @var ConfigurationInterface
-             *
-             * @psalm-readonly-allow-private-mutation
-             */
-            private $config;
+            /** @psalm-readonly-allow-private-mutation */
+            private ConfigurationInterface $config;
 
             public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
             {

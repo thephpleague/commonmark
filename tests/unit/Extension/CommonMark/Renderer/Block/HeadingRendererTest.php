@@ -25,8 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 final class HeadingRendererTest extends TestCase
 {
-    /** @var HeadingRenderer */
-    protected $renderer;
+    private HeadingRenderer $renderer;
 
     protected function setUp(): void
     {

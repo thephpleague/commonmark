@@ -26,15 +26,10 @@ use League\Config\ConfigurationInterface;
 
 final class AnonymousFootnoteRefParser implements InlineParserInterface, EnvironmentAwareInterface
 {
-    /** @var ConfigurationInterface */
-    private $config;
+    private ConfigurationInterface $config;
 
-    /**
-     * @var TextNormalizerInterface
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $slugNormalizer;
+    /** @psalm-readonly-allow-private-mutation */
+    private TextNormalizerInterface $slugNormalizer;
 
     public function getMatchDefinition(): InlineParserMatch
     {

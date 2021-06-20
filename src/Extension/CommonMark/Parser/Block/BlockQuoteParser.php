@@ -22,22 +22,15 @@ use League\CommonMark\Parser\Cursor;
 
 final class BlockQuoteParser extends AbstractBlockContinueParser
 {
-    /**
-     * @var BlockQuote
-     *
-     * @psalm-readonly
-     */
-    private $block;
+    /** @psalm-readonly */
+    private BlockQuote $block;
 
     public function __construct()
     {
         $this->block = new BlockQuote();
     }
 
-    /**
-     * @return BlockQuote
-     */
-    public function getBlock(): AbstractBlock
+    public function getBlock(): BlockQuote
     {
         return $this->block;
     }

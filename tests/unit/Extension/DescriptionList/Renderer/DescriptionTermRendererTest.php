@@ -23,8 +23,7 @@ use PHPUnit\Framework\TestCase;
 
 final class DescriptionTermRendererTest extends TestCase
 {
-    /** @var DescriptionTermRenderer */
-    protected $renderer;
+    private DescriptionTermRenderer $renderer;
 
     protected function setUp(): void
     {

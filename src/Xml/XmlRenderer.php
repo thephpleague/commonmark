@@ -18,14 +18,12 @@ final class XmlRenderer implements MarkdownRendererInterface
 {
     private const INDENTATION = '    ';
 
-    /** @var EnvironmentInterface */
-    private $environment;
+    private EnvironmentInterface $environment;
 
-    /** @var XmlNodeRendererInterface */
-    private $fallbackRenderer;
+    private XmlNodeRendererInterface $fallbackRenderer;
 
     /** @var array<class-string, XmlNodeRendererInterface> */
-    private $rendererCache = [];
+    private array $rendererCache = [];
 
     public function __construct(EnvironmentInterface $environment)
     {

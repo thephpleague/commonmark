@@ -24,12 +24,8 @@ use League\CommonMark\Node\Inline\AdjacentTextMerger;
 
 final class DelimiterStack
 {
-    /**
-     * @var DelimiterInterface|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $top;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?DelimiterInterface $top = null;
 
     public function push(DelimiterInterface $newDelimiter): void
     {

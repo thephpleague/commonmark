@@ -25,8 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ParagraphRendererTest extends TestCase
 {
-    /** @var ParagraphRenderer */
-    protected $renderer;
+    private ParagraphRenderer $renderer;
 
     protected function setUp(): void
     {

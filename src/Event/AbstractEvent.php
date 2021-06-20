@@ -29,12 +29,8 @@ use Psr\EventDispatcher\StoppableEventInterface;
  */
 abstract class AbstractEvent implements StoppableEventInterface
 {
-    /**
-     * @var bool
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $propagationStopped = false;
+    /** @psalm-readonly-allow-private-mutation */
+    private bool $propagationStopped = false;
 
     /**
      * Returns whether further event listeners should be triggered.

@@ -19,26 +19,14 @@ use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 
 final class AsIsNormalizerStrategy implements NormalizerStrategyInterface
 {
-    /**
-     * @var ListBlock
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $parentListBlock;
+    /** @psalm-readonly-allow-private-mutation */
+    private ListBlock $parentListBlock;
 
-    /**
-     * @var int
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $parentLevel = 1;
+    /** @psalm-readonly-allow-private-mutation */
+    private int $parentLevel = 1;
 
-    /**
-     * @var ListItem|null
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private $lastListItem;
+    /** @psalm-readonly-allow-private-mutation */
+    private ?ListItem $lastListItem = null;
 
     public function __construct(TableOfContents $toc)
     {
@@ -66,9 +54,10 @@ final class AsIsNormalizerStrategy implements NormalizerStrategyInterface
 
         while ($level < $this->parentLevel) {
             // Search upwards for the previous parent list block
-            while (true) {
-                $this->parentListBlock = $this->parentListBlock->parent();
-                if ($this->parentListBlock instanceof ListBlock) {
+            $search = $this->parentListBlock;
+            while ($search = $search->parent()) {
+                if ($search instanceof ListBlock) {
+                    $this->parentListBlock = $search;
                     break;
                 }
             }
