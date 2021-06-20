@@ -10,19 +10,22 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
 ### Added
 
- - Added new `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
- - Added new `DescriptionListExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/description-lists/))
- - Added new `DefaultAttributesExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/default-attributes/))
- - Added new `XmlRenderer` ([see documentation](https://commonmark.thephpleague.com/xml/)) to simplify AST debugging (#431)
+ - **Added three new extensions:**
+   - `FrontMatterExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/front-matter/))
+   - `DescriptionListExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/description-lists/))
+   - `DefaultAttributesExtension` ([see documentation](https://commonmark.thephpleague.com/extensions/default-attributes/))
+ - **Added new `XmlRenderer` to simplify AST debugging** ([see documentation](https://commonmark.thephpleague.com/xml/)) (#431)
+ - **Added the ability to configure disallowed raw HTML tags** (#507)
+ - **Added the ability for Mentions to use multiple characters for their symbol** (#514, #550)
+ - **Added the ability to delegate event dispatching to PSR-14 compliant event dispatcher libraries**
+ - **Added new configuration options:**
+   - Added `heading_permalink/min_heading_level` and `heading_permalink/max_heading_level` options to control which headings get permalinks (#519)
+   - Added `heading_permalink/fragment_prefix` to allow customizing the URL fragment prefix (#602)
+   - Added `footnote/backref_symbol` option for customizing backreference link appearance (#522)
+   - Added `slug_normalizer/max_length` option to control the maximum length of generated URL slugs
+   - Added `slug_normalizer/unique` option to control whether unique slugs should be generated per-document or per-environment
+ - **Added purity markers throughout the codebase** (verified with Psalm)
  - Added `Query` class to simplify Node traversal when looking to take action on certain Nodes
- - Added the ability to delegate event dispatching to PSR-14 compliant event dispatcher libraries
- - Added the ability to configure disallowed raw HTML tags (#507)
- - Added the ability for Mentions to use multiple characters for their symbol (#514, #550)
- - Added `heading_permalink/min_heading_level` and `heading_permalink/max_heading_level` options to control which headings get permalinks (#519)
- - Added `heading_permalink/fragment_prefix` to allow customizing the URL fragment prefix (#602)
- - Added `footnote/backref_symbol` option for customizing backreference link appearance (#522)
- - Added `slug_normalizer/max_length` option to control the maximum length of generated URL slugs
- - Added `slug_normalizer/unique` option to control whether unique slugs should be generated per-document or per-environment
  - Added new `HtmlFilter` and `StringContainerHelper` utility classes
  - Added new `AbstractBlockContinueParser` class to simplify the creation of custom block parsers
  - Added several new classes and interfaces:
@@ -82,15 +85,15 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `TableCell::setType()`
    - `TableCell::getAlign()`
    - `TableCell::setAlign()`
- - Added purity markers throughout the codebase (verified with Psalm)
 
 ### Changed
 
- - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
- - Table of Contents items are no longer wrapped with `<p>` tags (#613)
- - Heading Permalinks now link to element IDs instead of using `name` attributes (#602)
- - Heading Permalink IDs and URL fragments now have a `content` prefix by default (#602)
- - Changes to configuration options:
+ - **Changed the converter return type**
+   - `CommonMarkConverter::convertToHtml()` now returns an instance of `RenderedContentInterface`. This can be cast to a string for backward compatibility with 1.x.
+ - **Table of Contents items are no longer wrapped with `<p>` tags** (#613)
+ - **Heading Permalinks now link to element IDs instead of using `name` attributes** (#602)
+ - **Heading Permalink IDs and URL fragments now have a `content` prefix by default** (#602)
+ - **Changes to configuration options:**
      - `enable_em` has been renamed to `commonmark/enable_em`
      - `enable_strong` has been renamed to `commonmark/enable_strong`
      - `use_asterisk` has been renamed to `commonmark/use_asterisk`
@@ -100,31 +103,32 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
      - `mentions/*/regex` has been renamed to `mentions/*/pattern` and requires partial regular expressions (without delimiters or flags)
      - `max_nesting_level` now defaults to `PHP_INT_MAX` and no longer supports floats
      - `heading_permalink/slug_normalizer` has been renamed to `slug_normalizer/instance`
- - Event dispatching is now fully PSR-14 compliant
+ - **Event dispatching is now fully PSR-14 compliant**
+ - **Moved and renamed several classes** - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
  - The `HeadingPermalinkExtension` and `FootnoteExtension` were modified to ensure they never produce a slug which conflicts with slugs created by the other extension
  - `SlugNormalizer::normalizer()` now supports optional prefixes and max length options passed in via the `$context` argument
  - The `AbstractBlock::$data` and `AbstractInline::$data` arrays were replaced with a `Data` array-like object on the base `Node` class
- - Moved and renamed several classes - [see the full list here](https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed)
- - Implemented a new approach to block parsing. This was a massive change, so here are the highlights:
+ - **Implemented a new approach to block parsing.** This was a massive change, so here are the highlights:
    - Functionality previously found in block parsers and node elements has moved to block parser factories and block parsers, respectively ([more details](https://commonmark.thephpleague.com/2.0/upgrading/#new-block-parsing-approach))
    - `ConfigurableEnvironmentInterface::addBlockParser()` is now `EnvironmentBuilderInterface::addBlockParserFactory()`
    - `ReferenceParser` was re-implemented and works completely different than before
    - The paragraph parser no longer needs to be added manually to the environment
- - Implemented a new approach to inline parsing where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
+ - **Implemented a new approach to inline parsing** where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
    - `InlineParserInterface::getCharacters()` is now `getMatchDefinition()` and returns an instance of `InlineParserMatch`
    - `InlineParserContext::__construct()` now requires the contents to be provided as a `Cursor` instead of a `string`
- - Implemented delimiter parsing as a special type of inline parser (via the new `DelimiterParser` class)
- - Changed block and inline rendering to use common methods and interfaces
+ - **Implemented delimiter parsing as a special type of inline parser** (via the new `DelimiterParser` class)
+ - **Changed block and inline rendering to use common methods and interfaces**
    - `BlockRendererInterface` and `InlineRendererInterface` were replaced by `NodeRendererInterface` with slightly different parameters. All core renderers now implement this interface.
    - `ConfigurableEnvironmentInterface::addBlockRenderer()` and `addInlineRenderer()` were combined into `EnvironmentBuilderInterface::addRenderer()`
    - `EnvironmentInterface::getBlockRenderersForClass()` and `getInlineRenderersForClass()` are now just `getRenderersForClass()`
- - Completely refactored the Configuration implementation
+ - **Completely refactored the Configuration implementation**
    - All configuration-specific classes have been moved into a new `league/config` package with a new namespace
    - `Configuration` objects must now be configured with a schema and all options must match that schema - arbitrary keys are no longer permitted
    - `Configuration::__construct()` no longer accepts the default configuration values - use `Configuration::merge()` instead
    - `ConfigurationInterface` now only contains a `get(string $key)`; this method no longer allows arbitrary default values to be returned if the option is missing
    - `ConfigurableEnvironmentInterface` was renamed to `EnvironmentBuilderInterface`
    - `ExtensionInterface::register()` now requires an `EnvironmentBuilderInterface` param instead of `ConfigurableEnvironmentInterface`
+ - **Added missing return types to virtually every class and interface method**
  - Re-implemented the GFM Autolink extension using the new inline parser approach instead of document processors
    - `EmailAutolinkProcessor` is now `EmailAutolinkParser`
    - `UrlAutolinkProcessor` is now `UrlAutolinkParser`
@@ -155,7 +159,6 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - `TableCell::$align` is now `private`
    - `TableCell::$type` is now `private`
    - `TableSection::$type` is now `private`
- - Added missing return types to virtually every class and interface method
  - Several methods which previously returned `$this` now return `void`
    - `Delimiter::setPrevious()`
    - `Node::replaceChildren()`
@@ -196,7 +199,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
  - `DelimiterProcessorCollectionInterface` now extends `Countable`
  - `RegexHelper::PARTIAL_` constants must always be used in case-insensitive contexts
  - `HeadingPermalinkProcessor` no longer accepts text normalizers via the constructor - these must be provided via configuration instead
- - Block which can't contain inlines will no longer be asked to render inlines
+ - Blocks which can't contain inlines will no longer be asked to render inlines
  - `AnonymousFootnoteRefParser` and `HeadingPermalinkProcessor` now implement `EnvironmentAwareInterface` instead of `ConfigurationAwareInterface`
  - The second argument to `TextNormalizerInterface::normalize()` must now be an array
  - The `title` attribute for `Link` and `Image` nodes is now stored using a dedicated property instead of stashing it in `$data`
@@ -204,15 +207,15 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
 ### Fixed
 
- - Fixed parsing of footnotes without content
- - Fixed rendering of orphaned footnotes and footnote refs
- - Fixed some URL autolinks breaking too early (#492)
+ - **Fixed parsing of footnotes without content**
+ - **Fixed rendering of orphaned footnotes and footnote refs**
+ - **Fixed some URL autolinks breaking too early** (#492)
  - Fixed `AbstractStringContainer` not actually being `abstract`
 
 ### Removed
 
- - Removed support for PHP 7.1, 7.2, and 7.3 (#625, #671)
- - Removed all previously-deprecated functionality:
+ - **Removed support for PHP 7.1, 7.2, and 7.3** (#625, #671)
+ - **Removed all previously-deprecated functionality:**
    - Removed the ability to pass custom `Environment` instances into the `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` constructors
    - Removed the `Converter` class and `ConverterInterface`
    - Removed the `bin/commonmark` script
@@ -235,7 +238,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
    - Removed the `CommonMarkConverter::VERSION` constant
    - Removed the `HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS` constant
    - Removed the `heading_permalink/inner_contents` configuration option
- - Removed now-unused classes:
+ - **Removed now-unused classes:**
    - `AbstractStringContainerBlock`
    - `BlockRendererInterface`
    - `Context`
@@ -277,7 +280,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 
 ### Deprecated
 
-The following things have been deprecated and will not be supported in v3.0:
+**The following things have been deprecated and will not be supported in v3.0:**
 
  - `Environment::mergeConfig()` (set configuration before instantiation instead)
  - `Environment::createCommonMarkEnvironment()` and `Environment::createGFMEnvironment()`
