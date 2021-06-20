@@ -33,7 +33,7 @@ final class IndentedCodeRenderer implements NodeRendererInterface, XmlNodeRender
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
         IndentedCode::assertInstanceOf($node);
 

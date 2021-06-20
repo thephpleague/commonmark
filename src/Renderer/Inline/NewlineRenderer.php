@@ -20,7 +20,6 @@ use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
-use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Xml\XmlNodeRendererInterface;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
@@ -42,12 +41,12 @@ final class NewlineRenderer implements NodeRendererInterface, XmlNodeRendererInt
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {
         Newline::assertInstanceOf($node);
 
         if ($node->getType() === Newline::HARDBREAK) {
-            return new HtmlElement('br', [], '', true) . "\n";
+            return "<br />\n";
         }
 
         return $this->config->get('renderer/soft_break');

@@ -34,7 +34,7 @@ final class FootnoteRefRenderer implements NodeRendererInterface, XmlNodeRendere
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
         FootnoteRef::assertInstanceOf($node);
 

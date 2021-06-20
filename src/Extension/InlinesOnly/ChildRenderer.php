@@ -23,10 +23,7 @@ use League\CommonMark\Renderer\NodeRendererInterface;
  */
 final class ChildRenderer implements NodeRendererInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {
         $out = $childRenderer->renderNodes($node->children());
         if (! $node instanceof Document) {

@@ -23,10 +23,7 @@ final class FakeInjectableRenderer implements NodeRendererInterface, Configurati
 {
     use FakeInjectableTrait;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {
         return '';
     }

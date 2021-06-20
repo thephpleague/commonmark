@@ -28,7 +28,7 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNode
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
         TaskListItemMarker::assertInstanceOf($node);
 

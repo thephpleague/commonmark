@@ -37,7 +37,7 @@ interface EnvironmentBuilderInterface extends ConfigurationProviderInterface
      * @param BlockStartParserInterface $parser   Block parser instance
      * @param int                       $priority Priority (a higher number will be executed earlier)
      *
-     * @return self
+     * @return $this
      */
     public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0): EnvironmentBuilderInterface;
 
@@ -47,7 +47,7 @@ interface EnvironmentBuilderInterface extends ConfigurationProviderInterface
      * @param InlineParserInterface $parser   Inline parser instance
      * @param int                   $priority Priority (a higher number will be executed earlier)
      *
-     * @return self
+     * @return $this
      */
     public function addInlineParser(InlineParserInterface $parser, int $priority = 0): EnvironmentBuilderInterface;
 
@@ -67,7 +67,7 @@ interface EnvironmentBuilderInterface extends ConfigurationProviderInterface
      *
      * @psalm-param class-string<Node> $nodeClass
      *
-     * @return self
+     * @return $this
      */
     public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0): EnvironmentBuilderInterface;
 
@@ -78,7 +78,7 @@ interface EnvironmentBuilderInterface extends ConfigurationProviderInterface
      * @param callable $listener   Listener to be executed
      * @param int      $priority   Priority (a higher number will be executed earlier)
      *
-     * @return self
+     * @return $this
      */
     public function addEventListener(string $eventClass, callable $listener, int $priority = 0): EnvironmentBuilderInterface;
 }

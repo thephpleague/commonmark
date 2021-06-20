@@ -28,7 +28,7 @@ final class StrikethroughRenderer implements NodeRendererInterface, XmlNodeRende
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
         Strikethrough::assertInstanceOf($node);
 

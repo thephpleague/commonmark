@@ -32,7 +32,7 @@ final class BlockQuoteRenderer implements NodeRendererInterface, XmlNodeRenderer
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
         BlockQuote::assertInstanceOf($node);
 

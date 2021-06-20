@@ -20,10 +20,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 
 final class TableOfContentsPlaceholderRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {
         return '<!-- table of contents -->';
     }

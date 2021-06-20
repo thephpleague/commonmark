@@ -32,7 +32,7 @@ final class ListBlockRenderer implements NodeRendererInterface, XmlNodeRendererI
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
         ListBlock::assertInstanceOf($node);
 

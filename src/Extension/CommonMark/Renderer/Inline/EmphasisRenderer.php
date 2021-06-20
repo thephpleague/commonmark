@@ -32,7 +32,7 @@ final class EmphasisRenderer implements NodeRendererInterface, XmlNodeRendererIn
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
         Emphasis::assertInstanceOf($node);
 

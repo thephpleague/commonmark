@@ -33,7 +33,7 @@ final class FencedCodeRenderer implements NodeRendererInterface, XmlNodeRenderer
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
         FencedCode::assertInstanceOf($node);
 

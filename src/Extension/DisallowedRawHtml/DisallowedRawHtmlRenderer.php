@@ -32,10 +32,7 @@ final class DisallowedRawHtmlRenderer implements NodeRendererInterface, Configur
         $this->innerRenderer = $innerRenderer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): ?string
     {
         $rendered = (string) $this->innerRenderer->render($node, $childRenderer);
 

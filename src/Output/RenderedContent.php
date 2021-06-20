@@ -15,7 +15,7 @@ namespace League\CommonMark\Output;
 
 use League\CommonMark\Node\Block\Document;
 
-class RenderedContent implements RenderedContentInterface
+class RenderedContent implements RenderedContentInterface, \Stringable
 {
     /** @psalm-readonly */
     private Document $document;
