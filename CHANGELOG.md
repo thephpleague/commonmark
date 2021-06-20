@@ -288,4 +288,4 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
 [unreleased]: https://github.com/thephpleague/commonmark/compare/2.0.0-beta1...main
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6...2.0.0-beta1
+[2.0.0-beta1]: https://github.com/thephpleague/commonmark/compare/1.6...2.0.0-beta1
