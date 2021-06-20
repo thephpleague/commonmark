@@ -17,7 +17,6 @@ use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
-use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
@@ -55,12 +54,12 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
         while ($event = $walker->next()) {
             $node = $event->getNode();
             if ($node instanceof Heading && $event->isEntering() && $node->getLevel() >= $min && $node->getLevel() <= $max) {
-                $this->addHeadingLink($node, $e->getDocument(), $slugLength);
+                $this->addHeadingLink($node, $slugLength);
             }
         }
     }
 
-    private function addHeadingLink(Heading $heading, Document $document, int $slugLength): void
+    private function addHeadingLink(Heading $heading, int $slugLength): void
     {
         $text = StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]);
         $slug = $this->slugNormalizer->normalize($text, [
