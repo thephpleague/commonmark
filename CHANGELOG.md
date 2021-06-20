@@ -13,6 +13,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 ### Fixed
 
 - Fixed processing instructions with EOLs
+- Fixed case-insensitive matching for HTML tag types
 
 ## [2.0.0-beta1]
 

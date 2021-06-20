@@ -17,9 +17,19 @@ final class InlineParserMatch
 {
     private string $regex;
 
-    private function __construct(string $regex)
+    private bool $caseSensitive;
+
+    private function __construct(string $regex, bool $caseSensitive = false)
     {
-        $this->regex = $regex;
+        $this->regex         = $regex;
+        $this->caseSensitive = $caseSensitive;
+    }
+
+    public function caseSensitive(): self
+    {
+        $this->caseSensitive = true;
+
+        return $this;
     }
 
     /**
@@ -27,7 +37,7 @@ final class InlineParserMatch
      */
     public function getRegex(): string
     {
-        return '/' . $this->regex . '/i';
+        return '/' . $this->regex . '/' . ($this->caseSensitive ? '' : 'i');
     }
 
     /**
@@ -56,11 +66,18 @@ final class InlineParserMatch
 
     public static function join(self ...$definitions): self
     {
-        $regex = '';
+        $regex         = '';
+        $caseSensitive = null;
         foreach ($definitions as $definition) {
             $regex .= '(' . $definition->regex . ')';
+
+            if ($caseSensitive === null) {
+                $caseSensitive = $definition->caseSensitive;
+            } elseif ($caseSensitive !== $definition->caseSensitive) {
+                throw new \LogicException('Case-sensitive and case-insensitive defintions cannot be comined');
+            }
         }
 
-        return new self($regex);
+        return new self($regex, $caseSensitive ?? false);
     }
 }
