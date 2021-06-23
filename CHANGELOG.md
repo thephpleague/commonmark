@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed ExternalLinkProcessor not handling autolinks by adjusting its priority to -50 (#681)
+
 ## [1.6.4] - 2021-06-19
 
 ### Changed
