@@ -6,6 +6,19 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed information on upgrading to version 2.0.
 
+### Changed
+
+- Made compatible with CommonMark spec 0.30.0
+- Optimized link label parsing
+
+### Fixed
+
+- Fixed processing instructions with EOLs
+- Fixed case-insensitive matching for HTML tag types
+- Fixed type 7 HTML blocks incorrectly interupting lazy paragraphs
+- Fixed newlines in reference labels not collapsing into spaces
+- Fixed link label normalization with escaped newlines
+
 ## [2.0.0-beta1]
 
 ### Added

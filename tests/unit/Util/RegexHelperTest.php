@@ -251,6 +251,7 @@ final class RegexHelperTest extends TestCase
         $this->assertRegexMatches($regex, '<?xml-stylesheet type="text/xsl" href="style.xsl"?>');
         $this->assertRegexMatches($regex, '<!DOCTYPE html>');
         $this->assertRegexMatches($regex, '<![CDATA[<sender>John Smith</sender>]]>');
+        $this->assertRegexDoesNotMatch($regex, '<![cdata[<sender>John Smith</sender>]]>');
     }
 
     public function testHtmlBlockOpen(): void

@@ -26,7 +26,7 @@ final class HtmlInlineParser implements InlineParserInterface
 {
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::regex(RegexHelper::PARTIAL_HTMLTAG);
+        return InlineParserMatch::regex(RegexHelper::PARTIAL_HTMLTAG)->caseSensitive();
     }
 
     public function parse(InlineParserContext $inlineContext): bool
