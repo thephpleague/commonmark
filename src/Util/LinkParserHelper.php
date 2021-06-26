@@ -69,7 +69,7 @@ final class LinkParserHelper
 
     public static function parsePartialLinkLabel(Cursor $cursor): ?string
     {
-        return $cursor->match('/^(?:[^\\\\\[\]]|\\\\.){0,1000}/');
+        return $cursor->match('/^(?:[^\\\\\[\]]|\\\\.?){0,1000}/');
     }
 
     /**

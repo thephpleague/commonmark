@@ -16,6 +16,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 - Fixed case-insensitive matching for HTML tag types
 - Fixed type 7 HTML blocks incorrectly interupting lazy paragraphs
 - Fixed newlines in reference labels not collapsing into spaces
+- Fixed link label normalization with escaped newlines
 
 ## [2.0.0-beta1]
 
