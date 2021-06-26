@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Simplified checks for thematic breaks
+
 ### Fixed
 
  - Fixed ExternalLinkProcessor not handling autolinks by adjusting its priority to -50 (#681)
