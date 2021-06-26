@@ -4,6 +4,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [1.6.5] - 2021-06-26
+
 ### Changed
 
  - Simplified checks for thematic breaks
@@ -473,7 +475,8 @@ No changes were made since 1.0.0-rc1.
    - Removed `DelimiterStack::iterateByCharacters()` (use the new `processDelimiters()` method instead)
    - Removed the protected `DelimiterStack::findMatchingOpener()` method
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6.4...1.6
+[unreleased]: https://github.com/thephpleague/commonmark/compare/1.6.5...1.6
+[1.6.5]: https://github.com/thephpleague/commonmark/compare/1.6.4...1.6.5
 [1.6.4]: https://github.com/thephpleague/commonmark/compare/1.6.3...1.6.4
 [1.6.3]: https://github.com/thephpleague/commonmark/compare/1.6.2...1.6.3
 [1.6.2]: https://github.com/thephpleague/commonmark/compare/1.6.1...1.6.2
