@@ -2,9 +2,9 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [Unreleased][unreleased]
+**Upgrading from 1.x?** See <https://commonmark.thephpleague.com/2.0/upgrading/> for additional information.
 
-See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed information on upgrading to version 2.0.
+## [Unreleased][unreleased]
 
 ### Changed
 
