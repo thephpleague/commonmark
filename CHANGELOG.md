@@ -9,6 +9,7 @@ See <https://commonmark.thephpleague.com/2.0/upgrading/> for detailed informatio
 ### Changed
 
 - Made compatible with CommonMark spec 0.30.0
+- Optimized link label parsing
 
 ### Fixed
 
