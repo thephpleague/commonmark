@@ -31,7 +31,7 @@ final class TextNormalizer implements TextNormalizerInterface
     {
         // Collapse internal whitespace to single space and remove
         // leading/trailing whitespace
-        $text = \preg_replace('/\s+/', ' ', \trim($text));
+        $text = \preg_replace('/[ \t\r\n]+/', ' ', \trim($text));
         \assert(\is_string($text));
 
         return \mb_convert_case($text, \MB_CASE_FOLD, 'UTF-8');
