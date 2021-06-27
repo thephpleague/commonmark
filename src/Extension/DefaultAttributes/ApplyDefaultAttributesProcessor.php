@@ -27,6 +27,11 @@ final class ApplyDefaultAttributesProcessor implements ConfigurationAwareInterfa
         /** @var array<string, array<string, mixed>> $map */
         $map = $this->config->get('default_attributes');
 
+        // Don't bother iterating if no default attributes are configured
+        if (! $map) {
+            return;
+        }
+
         foreach ($event->getDocument()->iterator() as $node) {
             // Check to see if any default attributes were defined
             if (($attributesToApply = $map[\get_class($node)] ?? []) === []) {

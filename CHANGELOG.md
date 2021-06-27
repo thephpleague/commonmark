@@ -23,6 +23,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed type 7 HTML blocks incorrectly interupting lazy paragraphs
 - Fixed newlines in reference labels not collapsing into spaces
 - Fixed link label normalization with escaped newlines
+- Fixed unnecessary AST iteration when no default attributes are configured
 
 ## [2.0.0-beta1]
 
