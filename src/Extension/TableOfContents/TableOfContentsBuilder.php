@@ -19,6 +19,7 @@ use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsPlaceholder;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\NodeIterator;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 use League\Config\Exception\InvalidConfigurationException;
@@ -81,18 +82,13 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
 
     private function replacePlaceholders(Document $document, TableOfContents $toc): void
     {
-        $walker = $document->walker();
-        while ($event = $walker->next()) {
+        foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             // Add the block once we find a placeholder (and we're about to leave it)
-            if (! $event->getNode() instanceof TableOfContentsPlaceholder) {
+            if (! $node instanceof TableOfContentsPlaceholder) {
                 continue;
             }
 
-            if ($event->isEntering()) {
-                continue;
-            }
-
-            $event->getNode()->replaceWith(clone $toc);
+            $node->replaceWith(clone $toc);
         }
     }
 
