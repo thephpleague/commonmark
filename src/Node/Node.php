@@ -226,6 +226,11 @@ abstract class Node
         return new NodeWalker($this);
     }
 
+    public function iterator(): NodeIterator
+    {
+        return new NodeIterator($this);
+    }
+
     /**
      * Clone the current node and its children
      *

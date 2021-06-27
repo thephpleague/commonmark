@@ -21,12 +21,13 @@ Even with an interactive debugger it can be tricky to view an entire tree at onc
 
 ## Node Traversal
 
-There are three different ways to traverse/iterate the Nodes within the AST:
+There are four different ways to traverse/iterate the Nodes within the AST:
 
 | Method | Pros | Cons |
 | --- | --- | --- |
 | Manual Traversal | Best way to access/check direct relatives of nodes | Not useful for iteration |
-| Walking the Tree | Fast and efficient | Adding/removing nodes while iterating them can lead to weird behaviors |
+| Iterating the Tree | Fast and efficient | Possible unexpected behavior when adding/removing sibling nodes while iterating |
+| Walking the Tree | Full control over iteration | Up to twice as slow as iteration; adding/removing nodes while iterating can lead to weird behaviors |
 | Querying Nodes | Easier to write and understand; no weird behaviors | Not memory efficient |
 
 Each is described in more detail below
@@ -44,9 +45,53 @@ The following methods can be used to manually traverse from one `Node` to any of
 
 This is best suited for situations when you need to know information about those relatives.
 
+### Iterating the Tree
+
+If you'd like to iterate through all the nodes, use the `iterator()` method to obtain an iterator that will loop through each node in the tree (using pre-order traversal):
+
+```php
+foreach ($document->iterator() as $node) {
+    echo 'Current node: ' . get_class($node) . "\n";
+}
+```
+
+Given an AST like this (XML representation):
+
+```xml
+<document>
+  <heading level="1">
+    <text>Hello World!</text>
+  </heading>
+  <paragraph>
+    <text>This is an example of </text>
+    <strong>
+      <text>CommonMark</text>
+    </strong>
+    <text>.</text>
+  </paragraph>
+</document>
+```
+
+The code above will output:
+
+```text
+Current node: League\CommonMark\Node\Block\Document
+Current node: League\CommonMark\Extension\CommonMark\Node\Block\Heading
+Current node: League\CommonMark\Node\Inline\Text
+Current node: League\CommonMark\Node\Block\Paragraph
+Current node: League\CommonMark\Node\Inline\Text
+Current node: League\CommonMark\Extension\CommonMark\Node\Inline\Strong
+Current node: League\CommonMark\Node\Inline\Text
+Current node: League\CommonMark\Node\Inline\Text
+```
+
+This iterator doesn't use recursion, so you won't blow the stack when working with deeply-nested nodes.  It's also very CPU and memory-efficient.
+
+Be careful when modifying nodes while iterating the tree as some of those changes may affect the current iteration process, especially for sibling nodes that come after the current one.  For example, if you remove the current node's `next()` sibling, the next loop of that iteration will still include the removed sibling even though it was successfully removed from the AST.  Similarly, any new siblings that are added won't be visited on the next loop.
+
 ### Walking the Tree
 
-If you'd like to iterate through all the nodes, use the `walker()` method to obtain an instance of `NodeWalker`.  This will walk through the entire tree, emitting `NodeWalkerEvent`s along the way.
+If you'd like to walk through all the nodes, visiting each one as you enter and leave it, use the `walker()` method to obtain an instance of `NodeWalker`.  This also uses pre-order traversal but emitting `NodeWalkerEvent`s along the way:
 
 ```php
 use League\CommonMark\Node\NodeWalker;
@@ -54,13 +99,34 @@ use League\CommonMark\Node\NodeWalker;
 /** @var NodeWalker $walker */
 $walker = $document->walker();
 while ($event = $walker->next()) {
-    echo 'I am ' . ($event->isEntering() ? 'entering' : 'leaving') . ' a ' . get_class($event->getNode()) . ' node' . "\n";
+    echo 'Now ' . ($event->isEntering() ? 'entering' : 'leaving') . ' a ' . get_class($event->getNode()) . ' node' . "\n";
 }
 ```
 
-This walker doesn't use recursion, so you won't blow the stack when working with deeply-nested nodes.  It's also very memory-efficient.
+Using the same example AST in the previous section, this code will output:
 
-However, if you add/remove nodes while walking the tree, this can lead to the walker losing track of where it was, which may result in some nodes being visited multiple times or not at all.
+```text
+Now entering a League\CommonMark\Node\Block\Document node
+Now entering a League\CommonMark\Extension\CommonMark\Node\Block\Heading node
+Now entering a League\CommonMark\Node\Inline\Text node
+Now leaving a League\CommonMark\Extension\CommonMark\Node\Block\Heading node
+Now entering a League\CommonMark\Node\Block\Paragraph node
+Now entering a League\CommonMark\Node\Inline\Text node
+Now entering a League\CommonMark\Extension\CommonMark\Node\Inline\Strong node
+Now entering a League\CommonMark\Node\Inline\Text node
+Now leaving a League\CommonMark\Extension\CommonMark\Node\Inline\Strong node
+Now entering a League\CommonMark\Node\Inline\Text node
+Now leaving a League\CommonMark\Node\Block\Paragraph node
+Now leaving a League\CommonMark\Node\Block\Document node
+```
+
+This approach offers many of the same benefits as the simple iteration shown in the previous section such as memory efficiency and no recursion.  The key differences come from how you enter and leave nodes:
+
+1. Iteration can potentially take twice as long - not ideal for performance
+2. Provides you with more control over exactly when an action is taken on a node which is sometimes needed for certain AST manipulations
+3. Also provides a `resumeAt()` method to override where it should iterate next
+
+But like with the iterator, be careful when adding/removing nodes while walking the tree, as there are even more subtle cases where the walker could even lose track of where it was, which may result in some nodes being visited multiple times or not at all.
 
 ### Querying Nodes
 

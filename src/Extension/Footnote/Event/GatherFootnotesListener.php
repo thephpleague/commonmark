@@ -29,16 +29,10 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
 
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
-        $document = $event->getDocument();
-        $walker   = $document->walker();
-
+        $document  = $event->getDocument();
         $footnotes = [];
-        while ($event = $walker->next()) {
-            if (! $event->isEntering()) {
-                continue;
-            }
 
-            $node = $event->getNode();
+        foreach ($document->iterator() as $node) {
             if (! $node instanceof Footnote) {
                 continue;
             }

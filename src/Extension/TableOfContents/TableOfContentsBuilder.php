@@ -70,9 +70,8 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
 
     private function insertBeforeFirstLinkedHeading(Document $document, TableOfContents $toc): void
     {
-        $walker = $document->walker();
-        while ($event = $walker->next()) {
-            if ($event->isEntering() && ($node = $event->getNode()) instanceof HeadingPermalink && ($parent = $node->parent()) instanceof Heading) {
+        foreach ($document->iterator() as $node) {
+            if ($node instanceof HeadingPermalink && ($parent = $node->parent()) instanceof Heading) {
                 $parent->insertBefore($toc);
 
                 return;

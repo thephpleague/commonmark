@@ -38,13 +38,7 @@ final class ExternalLinkProcessor
         $openInNewWindow = $this->config->get('external_link/open_in_new_window');
         $classes         = $this->config->get('external_link/html_class');
 
-        $walker = $e->getDocument()->walker();
-        while ($event = $walker->next()) {
-            if (! $event->isEntering()) {
-                continue;
-            }
-
-            $link = $event->getNode();
+        foreach ($e->getDocument()->iterator() as $link) {
             if (! ($link instanceof Link)) {
                 continue;
             }

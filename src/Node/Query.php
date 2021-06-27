@@ -59,14 +59,9 @@ final class Query
 
     public function findOne(Node $node): ?Node
     {
-        $walker = $node->walker();
-        while ($event = $walker->next()) {
-            if (! $event->isEntering()) {
-                continue;
-            }
-
-            if (\call_user_func($this->condition, $node = $event->getNode())) {
-                return $node;
+        foreach ($node->iterator() as $n) {
+            if (\call_user_func($this->condition, $n)) {
+                return $n;
             }
         }
 
@@ -78,27 +73,21 @@ final class Query
      */
     public function findAll(Node $node, ?int $limit = PHP_INT_MAX): iterable
     {
-        /** @var Node[] $results */
-        $results     = [];
         $resultCount = 0;
 
-        $walker = $node->walker();
-        while ($event = $walker->next()) {
-            if (! $event->isEntering()) {
-                continue;
-            }
-
-            if (\call_user_func($this->condition, $event->getNode())) {
-                $results[] = $event->getNode();
-                ++$resultCount;
-            }
-
+        foreach ($node->iterator() as $n) {
             if ($resultCount >= $limit) {
                 break;
             }
-        }
 
-        return $results;
+            if (! \call_user_func($this->condition, $n)) {
+                continue;
+            }
+
+            ++$resultCount;
+
+            yield $n;
+        }
     }
 
     /**

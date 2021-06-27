@@ -49,11 +49,8 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
 
         $slugLength = (int) $this->config->get('slug_normalizer/max_length');
 
-        $walker = $e->getDocument()->walker();
-
-        while ($event = $walker->next()) {
-            $node = $event->getNode();
-            if ($node instanceof Heading && $event->isEntering() && $node->getLevel() >= $min && $node->getLevel() <= $max) {
+        foreach ($e->getDocument()->iterator() as $node) {
+            if ($node instanceof Heading && $node->getLevel() >= $min && $node->getLevel() <= $max) {
                 $this->addHeadingLink($node, $slugLength);
             }
         }

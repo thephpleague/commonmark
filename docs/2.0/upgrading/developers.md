@@ -406,3 +406,7 @@ The second argument to `TextNormalizerInterface::normalize()` used to allow any 
 ## `title` attribute for `Link` and `Image` nodes
 
 The `title` attribute for `Link` and `Image` nodes is now stored using a dedicated property instead of stashing it in `$data`.  Use `getTitle()` and `setTitle()` to access the value.
+
+## Node Iteration
+
+In 1.x, most custom code used `$node->walker()` to iterate the AST.  Although this still exists, consider whether your code could use `$node->iterator()` instead which can be up to twice as fast!

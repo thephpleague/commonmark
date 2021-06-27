@@ -27,16 +27,7 @@ final class ApplyDefaultAttributesProcessor implements ConfigurationAwareInterfa
         /** @var array<string, array<string, mixed>> $map */
         $map = $this->config->get('default_attributes');
 
-        $document = $event->getDocument();
-        $walker   = $document->walker();
-        while ($event = $walker->next()) {
-            $node = $event->getNode();
-
-            // Only modify nodes when we first encounter them
-            if (! $event->isEntering()) {
-                continue;
-            }
-
+        foreach ($event->getDocument()->iterator() as $node) {
             // Check to see if any default attributes were defined
             if (($attributesToApply = $map[\get_class($node)] ?? []) === []) {
                 continue;

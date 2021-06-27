@@ -6,10 +6,15 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Added new `Node::iterator()` method and `NodeIterator` class for faster AST iteration (#683, #684)
+
 ### Changed
 
 - Made compatible with CommonMark spec 0.30.0
 - Optimized link label parsing
+- Optimized AST iteration for a 50% performance boost in some event listeners (#683, #684)
 
 ### Fixed
 

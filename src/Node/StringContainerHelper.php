@@ -27,9 +27,8 @@ final class StringContainerHelper
     {
         $text = '';
 
-        $walker = $node->walker();
-        while ($event = $walker->next()) {
-            if ($event->isEntering() && ($child = $event->getNode()) instanceof StringContainerInterface && ! self::isOneOf($child, $excludeTypes)) {
+        foreach ($node->iterator() as $child) {
+            if ($child instanceof StringContainerInterface && ! self::isOneOf($child, $excludeTypes)) {
                 $text .= $child->getLiteral();
             }
         }

@@ -25,14 +25,8 @@ final class FixOrphanedFootnotesAndRefsListener
     {
         $document = $event->getDocument();
         $map      = $this->buildMapOfKnownFootnotesAndRefs($document);
-        $walker   = $document->walker();
 
-        while ($event = $walker->next()) {
-            if (! $event->isEntering()) {
-                continue;
-            }
-
-            $node = $event->getNode();
+        foreach ($document->iterator() as $node) {
             if ($node instanceof FootnoteRef && ! isset($map[Footnote::class][$node->getReference()->getLabel()])) {
                 // Found an orphaned FootnoteRef without a corresponding Footnote
                 // Restore the original footnote ref text
@@ -43,7 +37,6 @@ final class FixOrphanedFootnotesAndRefsListener
             if ($node instanceof Footnote && ! isset($map[FootnoteRef::class][$node->getReference()->getLabel()])) {
                 // Found an orphaned Footnote without a corresponding FootnoteRef
                 // Remove the footnote
-                $walker->resumeAt($node->next() ?? $node->parent());
                 $node->detach();
             }
         }
@@ -57,13 +50,7 @@ final class FixOrphanedFootnotesAndRefsListener
             FootnoteRef::class => [],
         ];
 
-        $walker = $document->walker();
-        while ($event = $walker->next()) {
-            if (! $event->isEntering()) {
-                continue;
-            }
-
-            $node = $event->getNode();
+        foreach ($document->iterator() as $node) {
             if ($node instanceof Footnote) {
                 $map[Footnote::class][$node->getReference()->getLabel()] = true;
             } elseif ($node instanceof FootnoteRef) {
