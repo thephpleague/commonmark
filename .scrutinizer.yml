@@ -27,7 +27,7 @@ checks:
 tools:
     external_code_coverage:
         timeout: 1800
-        runs: 3
+        runs: 2
     php_analyzer: true
     php_code_coverage: false
     php_code_sniffer:
