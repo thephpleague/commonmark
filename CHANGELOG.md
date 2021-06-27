@@ -6,10 +6,15 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Added new `Node::iterator()` method and `NodeIterator` class for faster AST iteration (#683, #684)
+
 ### Changed
 
 - Made compatible with CommonMark spec 0.30.0
 - Optimized link label parsing
+- Optimized AST iteration for a 50% performance boost in some event listeners (#683, #684)
 
 ### Fixed
 
@@ -18,6 +23,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed type 7 HTML blocks incorrectly interupting lazy paragraphs
 - Fixed newlines in reference labels not collapsing into spaces
 - Fixed link label normalization with escaped newlines
+- Fixed unnecessary AST iteration when no default attributes are configured
 
 ## [2.0.0-beta1]
 

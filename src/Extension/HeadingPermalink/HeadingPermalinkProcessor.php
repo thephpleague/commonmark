@@ -17,6 +17,7 @@ use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
+use League\CommonMark\Node\NodeIterator;
 use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
@@ -49,11 +50,8 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
 
         $slugLength = (int) $this->config->get('slug_normalizer/max_length');
 
-        $walker = $e->getDocument()->walker();
-
-        while ($event = $walker->next()) {
-            $node = $event->getNode();
-            if ($node instanceof Heading && $event->isEntering() && $node->getLevel() >= $min && $node->getLevel() <= $max) {
+        foreach ($e->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
+            if ($node instanceof Heading && $node->getLevel() >= $min && $node->getLevel() <= $max) {
                 $this->addHeadingLink($node, $slugLength);
             }
         }

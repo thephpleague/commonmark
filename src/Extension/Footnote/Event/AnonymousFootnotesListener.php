@@ -31,14 +31,7 @@ final class AnonymousFootnotesListener implements ConfigurationAwareInterface
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
-        $walker   = $document->walker();
-
-        while ($event = $walker->next()) {
-            if (! $event->isEntering()) {
-                continue;
-            }
-
-            $node = $event->getNode();
+        foreach ($document->iterator() as $node) {
             if (! $node instanceof FootnoteRef || ($text = $node->getContent()) === null) {
                 continue;
             }

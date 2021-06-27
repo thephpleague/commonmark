@@ -23,17 +23,11 @@ final class NumberFootnotesListener
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document     = $event->getDocument();
-        $walker       = $document->walker();
         $nextCounter  = 1;
         $usedLabels   = [];
         $usedCounters = [];
 
-        while ($event = $walker->next()) {
-            if (! $event->isEntering()) {
-                continue;
-            }
-
-            $node = $event->getNode();
+        foreach ($document->iterator() as $node) {
             if (! $node instanceof FootnoteRef) {
                 continue;
             }

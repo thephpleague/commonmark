@@ -130,9 +130,8 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
      */
     private function getHeadingLinks(Document $document): iterable
     {
-        $walker = $document->walker();
-        while ($event = $walker->next()) {
-            if ($event->isEntering() && ($node = $event->getNode()) instanceof HeadingPermalink) {
+        foreach ($document->iterator() as $node) {
+            if ($node instanceof HeadingPermalink) {
                 yield $node;
             }
         }

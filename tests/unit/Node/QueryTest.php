@@ -55,6 +55,8 @@ final class QueryTest extends TestCase
             ->where(Query::hasParent())
             ->findAll($this->createAST());
 
+        $result = \iterator_to_array($result);
+
         $this->assertCount(6, $result);
 
         // The order is based on node walking
@@ -71,6 +73,8 @@ final class QueryTest extends TestCase
         $result = (new Query())
             ->where(Query::hasParent())
             ->findAll($this->createAST(), 3);
+
+        $result = \iterator_to_array($result);
 
         $this->assertCount(3, $result);
 
@@ -165,6 +169,8 @@ final class QueryTest extends TestCase
             ->orWhere($isNumberFive)
             ->andWhere($greaterThanThree)
             ->findAll($this->createAST());
+
+        $result = \iterator_to_array($result);
 
         $this->assertCount(3, $result);
         $this->assertSame(6, $result[0]->data->get('number'));

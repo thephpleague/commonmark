@@ -31,10 +31,8 @@ final class AttributesListener
 
     public function processDocument(DocumentParsedEvent $event): void
     {
-        $walker = $event->getDocument()->walker();
-        while ($event = $walker->next()) {
-            $node = $event->getNode();
-            if (! $node instanceof AttributesInline && ($event->isEntering() || ! $node instanceof Attributes)) {
+        foreach ($event->getDocument()->iterator() as $node) {
+            if (! ($node instanceof Attributes || $node instanceof AttributesInline)) {
                 continue;
             }
 
