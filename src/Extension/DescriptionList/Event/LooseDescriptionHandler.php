@@ -19,19 +19,13 @@ use League\CommonMark\Extension\DescriptionList\Node\DescriptionList;
 use League\CommonMark\Extension\DescriptionList\Node\DescriptionTerm;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Newline;
+use League\CommonMark\Node\NodeIterator;
 
 final class LooseDescriptionHandler
 {
     public function __invoke(DocumentParsedEvent $event): void
     {
-        $walker = $event->getDocument()->walker();
-        while ($e = $walker->next()) {
-            // Wait until we're exiting a node
-            if ($e->isEntering()) {
-                continue;
-            }
-
-            $description = $e->getNode();
+        foreach ($event->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $description) {
             if (! $description instanceof Description) {
                 continue;
             }

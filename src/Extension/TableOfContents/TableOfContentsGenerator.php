@@ -25,6 +25,7 @@ use League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrateg
 use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;
 use League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\NodeIterator;
 use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
 use League\Config\Exception\InvalidConfigurationException;
@@ -130,9 +131,15 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
      */
     private function getHeadingLinks(Document $document): iterable
     {
-        foreach ($document->iterator() as $node) {
-            if ($node instanceof HeadingPermalink) {
-                yield $node;
+        foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
+            if (! $node instanceof Heading) {
+                continue;
+            }
+
+            foreach ($node->children() as $child) {
+                if ($child instanceof HeadingPermalink) {
+                    yield $child;
+                }
             }
         }
     }

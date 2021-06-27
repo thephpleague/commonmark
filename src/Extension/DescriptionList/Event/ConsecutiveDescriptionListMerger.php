@@ -15,35 +15,27 @@ namespace League\CommonMark\Extension\DescriptionList\Event;
 
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\DescriptionList\Node\DescriptionList;
+use League\CommonMark\Node\NodeIterator;
 
 final class ConsecutiveDescriptionListMerger
 {
     public function __invoke(DocumentParsedEvent $event): void
     {
-        $walker = $event->getDocument()->walker();
-        while ($e = $walker->next()) {
-            // Wait until we're exiting a description list node
-            if ($e->isEntering()) {
-                continue;
-            }
-
-            $node = $e->getNode();
+        foreach ($event->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             if (! $node instanceof DescriptionList) {
                 continue;
             }
 
-            if (! ($next = $node->next()) instanceof DescriptionList) {
+            if (! ($prev = $node->previous()) instanceof DescriptionList) {
                 continue;
             }
 
-            // There's another description list next; merge it into the current one
-            foreach ($next->children() as $child) {
-                $node->appendChild($child);
+            // There's another description list behind this one; merge the current one into that
+            foreach ($node->children() as $child) {
+                $prev->appendChild($child);
             }
 
-            $next->detach();
-
-            $walker->resumeAt($node, false);
+            $node->detach();
         }
     }
 }

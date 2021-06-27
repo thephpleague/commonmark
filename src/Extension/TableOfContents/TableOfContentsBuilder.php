@@ -71,11 +71,17 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
 
     private function insertBeforeFirstLinkedHeading(Document $document, TableOfContents $toc): void
     {
-        foreach ($document->iterator() as $node) {
-            if ($node instanceof HeadingPermalink && ($parent = $node->parent()) instanceof Heading) {
-                $parent->insertBefore($toc);
+        foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
+            if (! $node instanceof Heading) {
+                continue;
+            }
 
-                return;
+            foreach ($node->children() as $child) {
+                if ($child instanceof HeadingPermalink) {
+                    $node->insertBefore($toc);
+
+                    return;
+                }
             }
         }
     }
@@ -83,7 +89,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
     private function replacePlaceholders(Document $document, TableOfContents $toc): void
     {
         foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
-            // Add the block once we find a placeholder (and we're about to leave it)
+            // Add the block once we find a placeholder
             if (! $node instanceof TableOfContentsPlaceholder) {
                 continue;
             }
