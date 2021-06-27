@@ -19,6 +19,7 @@ use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
 use League\CommonMark\Extension\Footnote\Node\FootnoteContainer;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\NodeIterator;
 use League\CommonMark\Reference\Reference;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
@@ -32,7 +33,7 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
         $document  = $event->getDocument();
         $footnotes = [];
 
-        foreach ($document->iterator() as $node) {
+        foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             if (! $node instanceof Footnote) {
                 continue;
             }

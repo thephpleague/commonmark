@@ -226,9 +226,9 @@ abstract class Node
         return new NodeWalker($this);
     }
 
-    public function iterator(): NodeIterator
+    public function iterator(int $flags = 0): NodeIterator
     {
-        return new NodeIterator($this);
+        return new NodeIterator($this, $flags);
     }
 
     /**
