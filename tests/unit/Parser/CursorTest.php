@@ -308,6 +308,9 @@ final class CursorTest extends TestCase
         $cursor->advanceBy($startPos);
 
         $this->assertEquals($expectedResult, $cursor->advanceToNextNonSpaceOrTab());
+
+        $this->assertSame($cursor->getPosition(), $cursor->getNextNonSpacePosition());
+        $this->assertSame(0, $cursor->getIndent());
     }
 
     /**

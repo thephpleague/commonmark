@@ -123,7 +123,9 @@ class Cursor
      */
     public function isIndented(): bool
     {
-        $this->getNextNonSpacePosition();
+        if ($this->nextNonSpaceCache === null) {
+            $this->getNextNonSpacePosition();
+        }
 
         return $this->indent >= self::INDENT_LEVEL;
     }
@@ -203,10 +205,6 @@ class Cursor
     public function advanceBy(int $characters, bool $advanceByColumns = false): void
     {
         $this->previousPosition = $this->currentPosition;
-
-        if ($characters === 0) {
-            return;
-        }
 
         $this->nextNonSpaceCache = null;
 
@@ -300,9 +298,19 @@ class Cursor
      */
     public function advanceToNextNonSpaceOrTab(): int
     {
-        $newPosition = $this->getNextNonSpacePosition();
+        $newPosition = $this->nextNonSpaceCache ?? $this->getNextNonSpacePosition();
+        if ($newPosition === $this->currentPosition) {
+            return 0;
+        }
+
         $this->advanceBy($newPosition - $this->currentPosition);
         $this->partiallyConsumedTab = false;
+
+        // We've just advanced to where that non-space is,
+        // so any subsequent calls to find the next one will
+        // always return the current position.
+        $this->nextNonSpaceCache = $this->currentPosition;
+        $this->indent            = 0;
 
         return $this->currentPosition - $this->previousPosition;
     }
