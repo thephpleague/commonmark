@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit;
 
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
@@ -52,5 +53,12 @@ final class GithubFlavoredMarkdownConverterTest extends TestCase
 
         $converter = new GithubFlavoredMarkdownConverter();
         $converter->convertToHtml("\x09\xca\xca");
+    }
+
+    public function testGetEnvironmentReturnsMainEnvironmentClass(): void
+    {
+        $converter = new GithubFlavoredMarkdownConverter();
+
+        $this->assertInstanceOf(Environment::class, $converter->getEnvironment());
     }
 }

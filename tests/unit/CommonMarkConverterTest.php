@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit;
 
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Util\HtmlFilter;
@@ -61,5 +62,12 @@ final class CommonMarkConverterTest extends TestCase
         $converter = new CommonMarkConverter();
 
         $this->assertEquals($converter->convertToHtml($inputMarkdown), $converter($inputMarkdown));
+    }
+
+    public function testGetEnvironmentReturnsMainEnvironmentClass(): void
+    {
+        $converter = new CommonMarkConverter();
+
+        $this->assertInstanceOf(Environment::class, $converter->getEnvironment());
     }
 }
