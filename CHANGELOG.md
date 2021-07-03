@@ -9,11 +9,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 
  - Any leading UTF-8 BOM will be stripped from the input
- - Mark the `getEnvironment()` method of `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` as always returning the concrete, configurable `Environment` for upgrading convenience
+ - The `getEnvironment()` method of `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` will always return the concrete, configurable `Environment` for upgrading convenience
  - Optimized AST iteration
  - Lots of small micro-optimizations
 
-## [2.0.0-beta2]
+## [2.0.0-beta2] - 2021-06-27
 
 ### Added
 
@@ -34,7 +34,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed link label normalization with escaped newlines
 - Fixed unnecessary AST iteration when no default attributes are configured
 
-## [2.0.0-beta1]
+## [2.0.0-beta1] - 2021-06-20
 
 ### Added
 
