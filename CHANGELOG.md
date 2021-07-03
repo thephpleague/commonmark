@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.0.0-beta3] - 2021-07-03
+
 ### Changed
 
  - Any leading UTF-8 BOM will be stripped from the input
@@ -315,6 +317,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.0.0-beta2...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.0.0-beta3...main
+[2.0.0-beta3]: https://github.com/thephpleague/commonmark/compare/2.0.0-beta2...2.0.0-beta3
 [2.0.0-beta2]: https://github.com/thephpleague/commonmark/compare/2.0.0-beta1...2.0.0-beta2
 [2.0.0-beta1]: https://github.com/thephpleague/commonmark/compare/1.6...2.0.0-beta1
