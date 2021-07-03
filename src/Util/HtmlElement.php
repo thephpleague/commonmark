@@ -71,11 +71,7 @@ final class HtmlElement implements \Stringable
      */
     public function getAttribute(string $key)
     {
-        if (! isset($this->attributes[$key])) {
-            return null;
-        }
-
-        return $this->attributes[$key];
+        return $this->attributes[$key] ?? null;
     }
 
     /**

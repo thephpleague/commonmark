@@ -84,6 +84,7 @@ final class ListItemParser extends AbstractBlockContinueParser
             return BlockContinue::at($cursor);
         }
 
+        // Note: We'll hit this case for lazy continuation lines, they will get added later.
         return BlockContinue::none();
     }
 }

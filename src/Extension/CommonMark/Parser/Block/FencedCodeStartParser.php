@@ -22,12 +22,7 @@ final class FencedCodeStartParser implements BlockStartParserInterface
 {
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
-        if ($cursor->isIndented()) {
-            return BlockStart::none();
-        }
-
-        $c = $cursor->getCurrentCharacter();
-        if ($c !== ' ' && $c !== "\t" && $c !== '`' && $c !== '~') {
+        if ($cursor->isIndented() || ! \in_array($cursor->getNextNonSpaceCharacter(), ['`', '~'], true)) {
             return BlockStart::none();
         }
 
@@ -38,9 +33,8 @@ final class FencedCodeStartParser implements BlockStartParserInterface
         }
 
         // fenced code block
-        $fence       = \ltrim($fence, " \t");
-        $fenceLength = \strlen($fence);
+        $fence = \ltrim($fence, " \t");
 
-        return BlockStart::of(new FencedCodeParser($fenceLength, $fence[0], $indent))->at($cursor);
+        return BlockStart::of(new FencedCodeParser(\strlen($fence), $fence[0], $indent))->at($cursor);
     }
 }

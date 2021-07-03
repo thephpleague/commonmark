@@ -57,11 +57,7 @@ final class ReferenceMap implements ReferenceMapInterface
     {
         $label = $this->normalizer->normalize($label);
 
-        if (! isset($this->references[$label])) {
-            return null;
-        }
-
-        return $this->references[$label];
+        return $this->references[$label] ?? null;
     }
 
     /**

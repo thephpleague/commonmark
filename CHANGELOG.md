@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Any leading UTF-8 BOM will be stripped from the input
  - Mark the `getEnvironment()` method of `CommonMarkConverter` and `GithubFlavoredMarkdownConverter` as always returning the concrete, configurable `Environment` for upgrading convenience
  - Optimized AST iteration
+ - Lots of small micro-optimizations
 
 ## [2.0.0-beta2]
 

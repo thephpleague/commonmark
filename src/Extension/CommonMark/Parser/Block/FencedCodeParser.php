@@ -52,7 +52,10 @@ final class FencedCodeParser extends AbstractBlockContinueParser
         }
 
         // Skip optional spaces of fence offset
-        $cursor->match('/^ {0,' . $this->block->getOffset() . '}/');
+        // Optimization: don't attempt to match if we're at a non-space position
+        if ($cursor->getNextNonSpacePosition() > $cursor->getPosition()) {
+            $cursor->match('/^ {0,' . $this->block->getOffset() . '}/');
+        }
 
         return BlockContinue::at($cursor);
     }

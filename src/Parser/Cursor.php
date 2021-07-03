@@ -142,11 +142,7 @@ class Cursor
         }
 
         if ($this->isMultibyte) {
-            if (isset($this->charCache[$index])) {
-                return $this->charCache[$index];
-            }
-
-            return $this->charCache[$index] = \mb_substr($this->line, $index, 1, 'UTF-8');
+            return $this->charCache[$index] ??= \mb_substr($this->line, $index, 1, 'UTF-8');
         }
 
         return $this->line[$index];
@@ -162,11 +158,7 @@ class Cursor
         }
 
         if ($this->isMultibyte) {
-            if (isset($this->charCache[$this->currentPosition])) {
-                return $this->charCache[$this->currentPosition];
-            }
-
-            return $this->charCache[$this->currentPosition] = \mb_substr($this->line, $this->currentPosition, 1, 'UTF-8');
+            return $this->charCache[$this->currentPosition] ??= \mb_substr($this->line, $this->currentPosition, 1, 'UTF-8');
         }
 
         return $this->line[$this->currentPosition];
