@@ -48,7 +48,7 @@ final class NodeIterator implements \IteratorAggregate
             $child = $node->lastChild();
             while ($child !== null) {
                 if (! $this->blocksOnly || $child instanceof AbstractBlock) {
-                    \array_push($stack, $child);
+                    $stack[] = $child;
                 }
 
                 $child = $child->previous();
