@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+ - Any leading UTF-8 BOM will be stripped from the input
+
 ## [2.0.0-beta2]
 
 ### Added

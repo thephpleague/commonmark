@@ -39,6 +39,11 @@ class MarkdownInput implements MarkdownInputInterface
             throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
         }
 
+        // Strip any leading UTF-8 BOM
+        if (\substr($content, 0, 3) === "\xEF\xBB\xBF") {
+            $content = \substr($content, 3);
+        }
+
         $this->content    = $content;
         $this->lineOffset = $lineOffset;
     }
