@@ -57,6 +57,6 @@ final class HtmlBlockStartParser implements BlockStartParserInterface
         }
 
         // Even lazy ones
-        return $cursor->isBlank() || ! $parserState->getActiveBlockParser()->canHaveLazyContinuationLines();
+        return ! $parserState->getActiveBlockParser()->canHaveLazyContinuationLines();
     }
 }
