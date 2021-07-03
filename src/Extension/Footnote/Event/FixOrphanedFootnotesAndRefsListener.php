@@ -26,7 +26,7 @@ final class FixOrphanedFootnotesAndRefsListener
         $document = $event->getDocument();
         $map      = $this->buildMapOfKnownFootnotesAndRefs($document);
 
-        foreach ($document->iterator() as $node) {
+        foreach ($map['_flat'] as $node) {
             if ($node instanceof FootnoteRef && ! isset($map[Footnote::class][$node->getReference()->getLabel()])) {
                 // Found an orphaned FootnoteRef without a corresponding Footnote
                 // Restore the original footnote ref text
@@ -48,13 +48,18 @@ final class FixOrphanedFootnotesAndRefsListener
         $map = [
             Footnote::class => [],
             FootnoteRef::class => [],
+            '_flat' => [],
         ];
 
         foreach ($document->iterator() as $node) {
             if ($node instanceof Footnote) {
                 $map[Footnote::class][$node->getReference()->getLabel()] = true;
+
+                $map['_flat'][] = $node;
             } elseif ($node instanceof FootnoteRef) {
                 $map[FootnoteRef::class][$node->getReference()->getLabel()] = true;
+
+                $map['_flat'][] = $node;
             }
         }
 
