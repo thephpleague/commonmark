@@ -60,7 +60,7 @@ final class MarkdownParser implements MarkdownParserInterface
     private array $activeBlockParsers = [];
 
     /**
-     * @var array<int, BlockContinueParserInterface>
+     * @var array<int, BlockContinueParserWithInlinesInterface>
      *
      * @psalm-readonly-allow-private-mutation
      */
@@ -240,8 +240,12 @@ final class MarkdownParser implements MarkdownParserInterface
         for ($i = 0; $i < $count; $i++) {
             $blockParser = $this->deactivateBlockParser();
             $this->finalize($blockParser, $endLineNumber);
-            // Remember for inline parsing
-            $this->closedBlockParsers[] = $blockParser;
+
+            // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
+            if ($blockParser instanceof BlockContinueParserWithInlinesInterface) {
+                // Remember for inline parsing
+                $this->closedBlockParsers[] = $blockParser;
+            }
         }
     }
 
@@ -268,9 +272,7 @@ final class MarkdownParser implements MarkdownParserInterface
         $p = new InlineParserEngine($this->environment, $this->referenceMap);
 
         foreach ($this->closedBlockParsers as $blockParser) {
-            if ($blockParser instanceof BlockContinueParserWithInlinesInterface) {
-                $blockParser->parseInlines($p);
-            }
+            $blockParser->parseInlines($p);
         }
     }
 
