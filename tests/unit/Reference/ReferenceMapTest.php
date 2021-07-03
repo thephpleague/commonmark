@@ -33,17 +33,31 @@ final class ReferenceMapTest extends TestCase
         $this->assertSame($reference, $map->get('foo'));
     }
 
-    public function testUnicodeCaseFolding(): void
+    /**
+     * @dataProvider provideLabelsForCaseFoldingTest
+     */
+    public function testUnicodeCaseFolding(string $label): void
     {
         $map = new ReferenceMap();
 
-        $reference = new Reference('ẞ', 'bar', 'baz');
+        $reference = new Reference($label, 'bar', 'baz');
         $map->add($reference);
 
         $this->assertTrue($map->contains('ẞ'));
         $this->assertTrue($map->contains('ß'));
         $this->assertTrue($map->contains('SS'));
         $this->assertTrue($map->contains('ss'));
+    }
+
+    /**
+     * @return iterable<array<string>>
+     */
+    public function provideLabelsForCaseFoldingTest(): iterable
+    {
+        yield ['ẞ'];
+        yield ['ß'];
+        yield ['SS'];
+        yield ['ss'];
     }
 
     public function testOverwriteReference(): void
