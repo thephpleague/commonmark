@@ -1,0 +1,415 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="PHP Markdown parser featuring support for CommonMark, GFM, and custom extensions">
+    
+    <meta name="docsearch:version" content="0.19">
+    
+        <title>Changelog - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/0.19/changelog/" />
+    
+        <meta property="og:title" content="Changelog - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="PHP Markdown parser featuring support for CommonMark, GFM, and custom extensions" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?4b7060e5b7aad24c34e72581cbb9728997394765">
+    <link rel="stylesheet" href="/custom.css?4b7060e5b7aad24c34e72581cbb9728997394765">
+    <link rel="stylesheet" href="/global.css?4b7060e5b7aad24c34e72581cbb9728997394765">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?4b7060e5b7aad24c34e72581cbb9728997394765">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v0.19 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.0/changelog/">v2.0</a></li>
+            
+                <li ><a href="/1.6/changelog/">v1.6</a></li>
+            
+                <li ><a href="/1.5/changelog/">v1.5</a></li>
+            
+                <li ><a href="/1.4/changelog/">v1.4</a></li>
+            
+                <li ><a href="/1.3/changelog/">v1.3</a></li>
+            
+                <li ><a href="/1.0/changelog/">v1.0</a></li>
+            
+                <li class="selected"><a href="/0.19/changelog/">v0.19</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/0.19/">0.19</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/0.19/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/upgrading/">Upgrading from 0.18</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/0.19/changelog/">Changelog</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/0.19/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/command-line/">Command Line</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/0.19/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/block-parsing/">Block parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/inline-parsing/">Inline parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/document-processing/">Document Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/block-rendering/">Block rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/0.19/customization/inline-rendering/">Inline rendering</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 0.19</code>. Please consider upgrading your code to <a href="/1.6/">the latest stable version</a></p>
+    
+
+        <h1 id="changelog">Changelog</h1>
+
+<p>All notable changes made in <code class="language-plaintext highlighter-rouge">0.19.x</code> releases are shown below. See the <a href="/releases">full list of releases</a> for the complete changelog.</p>
+
+<h2 id="0193---2019-06-18"><a href="https://github.com/thephpleague/commonmark/releases/tag/0.19.3">0.19.3</a> - 2019-06-18</h2>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed bug where elements with content of <code class="language-plaintext highlighter-rouge">"0"</code> wouldn’t be rendered (#376)</li>
+</ul>
+
+<h2 id="0192---2019-05-19"><a href="https://github.com/thephpleague/commonmark/releases/tag/0.19.2">0.19.2</a> - 2019-05-19</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed bug where default values for nested configuration paths were inadvertently cast to strings</li>
+</ul>
+
+<h2 id="0191---2019-04-11"><a href="https://github.com/thephpleague/commonmark/releases/tag/0.19.1">0.19.1</a> - 2019-04-11</h2>
+
+<p>0.19.1 is an immediate follow-up to 0.19.0 which fixes issues with extensions that register other extensions.</p>
+
+<p>(While this technically introduces a BC-break, it’s allowed under SemVer’s rules for 0.x releases and is necessary for 0.19.x code to work as expected.)</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added the missing <code class="language-plaintext highlighter-rouge">addExtension()</code> method to the new <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code></li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed extensions not being able to register other extensions</li>
+</ul>
+
+<h2 id="0190---2019-04-11"><a href="https://github.com/thephpleague/commonmark/releases/tag/0.19.0">0.19.0</a> - 2019-04-11</h2>
+
+<p><strong>The 50th release of <code class="language-plaintext highlighter-rouge">league/commonmark</code> is here!</strong> :tada:</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">Environment</code> and extension framework underwent some major changes in this release.  Be sure to read the <a href="https://commonmark.thephpleague.com/0.19/upgrading/">upgrade notes</a> if you maintain any community extensions or have written custom functionality on top of this library.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>The priority of parsers, processors, and renderers can now be set when <code class="language-plaintext highlighter-rouge">add()</code>ing them; you no longer need to rely on the order in which they are added</li>
+  <li>Added support for trying multiple parsers per block/inline</li>
+  <li>Extracted two new base interfaces from <code class="language-plaintext highlighter-rouge">Environment</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code></li>
+    </ul>
+  </li>
+  <li>Extracted a new <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code> base class and corresponding <code class="language-plaintext highlighter-rouge">StringContainerInterface</code> from <code class="language-plaintext highlighter-rouge">AbstractBlock</code></li>
+  <li>Added <code class="language-plaintext highlighter-rouge">Cursor::getEncoding()</code> method</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">.phpstorm.meta.php</code> file for better IDE code completion</li>
+  <li>Made some minor optimizations here and there</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Pretty much everything now has parameter and return types (#346)</li>
+  <li>Attributes passed to <code class="language-plaintext highlighter-rouge">HtmlElement</code> will now be escaped by default</li>
+  <li><code class="language-plaintext highlighter-rouge">Environment</code> is now a <code class="language-plaintext highlighter-rouge">final</code> class</li>
+  <li><code class="language-plaintext highlighter-rouge">Environment::getBlockRendererForClass()</code> was replaced with <code class="language-plaintext highlighter-rouge">Environment::getBlockRenderersForClass()</code> (note the added <code class="language-plaintext highlighter-rouge">s</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">Environment::getInlineRendererForClass()</code> was replaced with <code class="language-plaintext highlighter-rouge">Environment::getInlineRenderersForClass()</code> (note the added <code class="language-plaintext highlighter-rouge">s</code>)</li>
+  <li>The <code class="language-plaintext highlighter-rouge">Environment::get____()</code> methods now return an iterator instead of an array</li>
+  <li><code class="language-plaintext highlighter-rouge">Context::addBlock()</code> no longer returns the same block instance you passed into the method, as this served no useful purpose</li>
+  <li><code class="language-plaintext highlighter-rouge">RegexHelper::isEscapable()</code> no longer accepts <code class="language-plaintext highlighter-rouge">null</code> values</li>
+  <li><code class="language-plaintext highlighter-rouge">Node::replaceChildren()</code> now accepts any type of <code class="language-plaintext highlighter-rouge">iterable</code>, not just <code class="language-plaintext highlighter-rouge">array</code>s</li>
+  <li>Some block elements now extend <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code> instead of <code class="language-plaintext highlighter-rouge">AbstractBlock</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">InlineContainerInterface</code> now extends the new <code class="language-plaintext highlighter-rouge">StringContainerInterface</code></li>
+      <li>The <code class="language-plaintext highlighter-rouge">handleRemainingContents()</code> method (formerly on <code class="language-plaintext highlighter-rouge">AbstractBlock</code>, now on <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code>) is now an `abstract method</li>
+      <li>The <code class="language-plaintext highlighter-rouge">InlineParserContext</code> constructor now requires an <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code> instead of an <code class="language-plaintext highlighter-rouge">AbstractBlock</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed support for PHP 5.6 and 7.0 (#346)</li>
+  <li>Removed support for <code class="language-plaintext highlighter-rouge">add()</code>ing parsers with just the target block/inline class name - you need to include the full namespace now</li>
+  <li>Removed the following unused methods from <code class="language-plaintext highlighter-rouge">Environment</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">getInlineParser($name)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">getInlineParsers()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">createInlineParserEngine()</code></li>
+    </ul>
+  </li>
+  <li>Removed the unused <code class="language-plaintext highlighter-rouge">getName()</code> methods:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlockParser::getName()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractInlineParser::getName()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">BlockParserInterface::getName()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlinerParserInterface::getName()</code></li>
+    </ul>
+  </li>
+  <li>Removed the now-useless classes:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlockParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractInlinerParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineContainer</code></li>
+    </ul>
+  </li>
+  <li>Removed the <code class="language-plaintext highlighter-rouge">AbstractBlock::acceptsLines()</code> method</li>
+  <li>Removed the now-useless constructor from <code class="language-plaintext highlighter-rouge">AbstractBlock</code></li>
+  <li>Removed previously-deprecated functionality:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">InlineContainer</code> class</li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::$instance</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getInstance()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getPartialRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getHtmlTagRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getLinkTitleRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getLinkDestinationBracesRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getThematicBreakRegex()</code></li>
+    </ul>
+  </li>
+  <li>Removed the second <code class="language-plaintext highlighter-rouge">$preserveEntities</code> parameter from <code class="language-plaintext highlighter-rouge">Xml:escape()</code></li>
+</ul>
+
+<h2 id="older-versions">Older Versions</h2>
+
+<p>See the <a href="/releases">full list of releases</a> for the complete changelog.</p>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/1.6/docs/0.19/changelog.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?4b7060e5b7aad24c34e72581cbb9728997394765"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: '8f6d6eb939fe0df83616a0bb240332c8',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:0.19"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>
