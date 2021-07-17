@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed Mentions inside of links creating nested links against the spec's rules (#688)
+
 ## [2.0.0-rc1] - 2021-07-10
 
 No changes were introduced since the previous release.

@@ -21,7 +21,9 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\CommonMark\Node\Inline\AbstractWebResource;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Extension\Mention\Mention;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
+use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
@@ -84,6 +86,13 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         $inline = $this->createInline($link['url'], $link['title'], $isImage, $reference ?? null);
         $opener->getInlineNode()->replaceWith($inline);
         while (($label = $inline->next()) !== null) {
+            // Is there a Mention contained within this link?
+            // CommonMark does not allow nested links, so we'll restore the original text.
+            if ($label instanceof Mention) {
+                $label->replaceWith($replacement = new Text($label->getPrefix() . $label->getIdentifier()));
+                $label = $replacement;
+            }
+
             $inline->appendChild($label);
         }
 

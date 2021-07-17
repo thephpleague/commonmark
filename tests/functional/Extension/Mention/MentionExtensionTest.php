@@ -250,4 +250,32 @@ EOT;
 
         $this->assertSame($expected, $xml);
     }
+
+    public function testMentionLikeLabelInExistingLinks(): void
+    {
+        $input = <<<'EOT'
+Try [asking **@driesvints**](https://github.com/driesvints).
+EOT;
+
+        $expected = <<<'EOT'
+<p>Try <a href="https://github.com/driesvints">asking <strong>@driesvints</strong></a>.</p>
+
+EOT;
+
+        $environment = new Environment([
+            'mentions' => [
+                'username' => [
+                    'prefix'    => '@',
+                    'pattern'   => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'generator' => 'https://github.com/user/%s',
+                ],
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new MentionExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $this->assertSame($expected, $converter->convertToHtml($input)->getContent());
+    }
 }
