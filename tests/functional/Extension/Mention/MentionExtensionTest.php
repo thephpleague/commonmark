@@ -205,4 +205,32 @@ EOT;
 
         $converter->convertToHtml($input);
     }
+
+    public function testMentionLikeLabelInExistingLinks(): void
+    {
+        $input = <<<'EOT'
+Try [asking **@driesvints**](https://github.com/driesvints).
+EOT;
+
+        $expected = <<<'EOT'
+<p>Try <a href="https://github.com/driesvints">asking <strong>@driesvints</strong></a>.</p>
+
+EOT;
+
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new MentionExtension());
+        $environment->mergeConfig([
+            'mentions' => [
+                'username' => [
+                    'prefix' => '@',
+                    'pattern' => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'generator' => 'https://github.com/user/%s',
+                ],
+            ],
+        ]);
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        $this->assertEquals($expected, $converter->convertToHtml($input));
+    }
 }

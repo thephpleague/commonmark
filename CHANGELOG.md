@@ -4,6 +4,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+ - Fixed Mentions inside of links creating nested links against the spec's rules (#688)
+
 ## [1.6.5] - 2021-06-26
 
 ### Changed
