@@ -2,6 +2,7 @@
 layout: default
 title: Table of Contents Extension
 description: The Table of Contents extension automatically inserts links to the headings in your document.
+redirect_from: /extensions/table-of-contents/
 ---
 
 # Table of Contents Extension

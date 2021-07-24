@@ -2,6 +2,7 @@
 layout: default
 title: Disallowed Raw HTML Extension
 description: The DisallowedRawHtmlExtension automatically escapes certain HTML tags when rendering raw HTML
+redirect_from: /extensions/disallowed-raw-html/
 ---
 
 # Disallowed Raw HTML Extension

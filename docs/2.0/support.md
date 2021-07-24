@@ -2,6 +2,7 @@
 layout: default
 title: Support
 description: Get help with the league/commonmark library
+redirect_from: /support/
 ---
 
 # Support

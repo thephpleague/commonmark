@@ -2,7 +2,6 @@
 layout: default
 title: Block Parsing
 description: How to parse block-level elements
-redirect_from: /customization/block-parsing/
 ---
 
 # Block Parsing
