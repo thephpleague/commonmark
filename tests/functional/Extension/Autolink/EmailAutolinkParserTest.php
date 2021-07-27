@@ -54,5 +54,7 @@ final class EmailAutolinkParserTest extends TestCase
 
         // Regression: CommonMark autolinks should not be double-linked
         yield ['<foo@example.com>', '<p><a href="mailto:foo@example.com">foo@example.com</a></p>'];
+        yield ['[me@mydomain.com](mailto:me@mydomain.com)', '<p><a href="mailto:me@mydomain.com">me@mydomain.com</a></p>'];
+        yield ['[email **me@mydomain.com**](mailto:me@mydomain.com)', '<p><a href="mailto:me@mydomain.com">email <strong>me@mydomain.com</strong></a></p>'];
     }
 }

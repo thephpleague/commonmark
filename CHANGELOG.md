@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed nested autolinks (#689)
+
 ## [2.0.0] - 2021-07-24
 
 No changes were introduced since the previous RC2 release.
