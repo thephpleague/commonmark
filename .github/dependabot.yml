@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/docs"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "colinodell"
+
+- package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "colinodell"
+
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "colinodell"
