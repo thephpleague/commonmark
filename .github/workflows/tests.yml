@@ -26,15 +26,22 @@ jobs:
     phpunit:
         name: PHPUnit on ${{ matrix.php }} ${{ matrix.composer-flags }}
         runs-on: ubuntu-latest
+        continue-on-error: ${{ !matrix.stable }}
         strategy:
             matrix:
                 php: ['7.4', '8.0']
+                stable: [true]
                 coverage: [true]
                 composer-flags: ['']
                 include:
                     - php: '7.4'
+                      stable: true
                       coverage: false
                       composer-flags: '--prefer-lowest'
+                    - php: '8.1'
+                      stable: false
+                      coverage: false
+                      composer-flags: '--ignore-platform-reqs'
 
         steps:
             - uses: actions/checkout@v2
