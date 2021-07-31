@@ -27,6 +27,7 @@ version:
             'Mentions': '/2.0/extensions/mentions/'
             'Smart Punctuation': '/2.0/extensions/smart-punctuation/'
             'Strikethrough': '/2.0/extensions/strikethrough/'
+            'Table of Contents': '/2.0/extensions/table-of-contents/'
             'Tables': '/2.0/extensions/tables/'
             'Task Lists': '/2.0/extensions/task-lists/'
         Customization:
