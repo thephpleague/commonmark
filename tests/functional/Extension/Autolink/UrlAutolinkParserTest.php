@@ -82,6 +82,8 @@ final class UrlAutolinkParserTest extends TestCase
 
         // Regression: CommonMark autolinks should not be double-linked
         yield ['<https://www.google.com>', '<p><a href="https://www.google.com">https://www.google.com</a></p>'];
+        yield ['[www.google.com](https://www.google.com)', '<p><a href="https://www.google.com">www.google.com</a></p>'];
+        yield ['[search on **www.google.com**](https://www.google.com)', '<p><a href="https://www.google.com">search on <strong>www.google.com</strong></a></p>'];
 
         // Issue 492: underscores in URLs (see https://github.com/thephpleague/commonmark/issues/492)
         yield ['http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)', '<p><a href="http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)">http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)</a></p>'];
