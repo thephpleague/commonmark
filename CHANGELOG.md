@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Fixed
 
 - Fixed nested autolinks (#689)
+- Fixed description lists being parsed incorrectly (#692)
 
 ## [2.0.0] - 2021-07-24
 

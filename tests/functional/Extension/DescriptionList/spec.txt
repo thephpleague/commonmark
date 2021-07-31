@@ -170,6 +170,16 @@ Four Spaces
 </dl>
 ````````````````````````````````
 
+Description markers must be the first non-space character on a line:
+
+```````````````````````````````` example
+Not Valid
+Because: there are other characters before the `:` on this line
+.
+<p>Not Valid
+Because: there are other characters before the <code>:</code> on this line</p>
+````````````````````````````````
+
 Description markers must be followed by one or more spaces or a tab:
 
 ```````````````````````````````` example
