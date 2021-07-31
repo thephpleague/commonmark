@@ -5,12 +5,12 @@
     </paragraph>
     <table_of_contents type="bullet" tight="false">
         <item>
-            <link destination="#hello-world" title="">
+            <link destination="#content-hello-world" title="">
                 <text>Hello World!</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#isnt-markdown-great" title="">
+                    <link destination="#content-isnt-markdown-great" title="">
                         <text>Isn't Markdown Great?</text>
                     </link>
                 </item>

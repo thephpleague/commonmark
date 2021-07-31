@@ -2,46 +2,46 @@
 <document xmlns="http://commonmark.org/xml/1.0">
     <table_of_contents type="bullet" tight="false">
         <item>
-            <link destination="#a-level-2-heading-to-start" title="">
+            <link destination="#content-a-level-2-heading-to-start" title="">
                 <text>A level 2 heading to start</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#followed-by-a-level-4" title="">
+                    <link destination="#content-followed-by-a-level-4" title="">
                         <text>Followed by a level 4</text>
                     </link>
                 </item>
             </list>
         </item>
         <item>
-            <link destination="#then-a-level-1" title="">
+            <link destination="#content-then-a-level-1" title="">
                 <text>Then a level 1</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#and-another-level-2" title="">
+                    <link destination="#content-and-another-level-2" title="">
                         <text>And another level 2</text>
                     </link>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#then-a-level-5" title="">
+                            <link destination="#content-then-a-level-5" title="">
                                 <text>Then a level 5</text>
                             </link>
                             <list type="bullet" tight="false">
                                 <item>
-                                    <link destination="#then-a-level-6" title="">
+                                    <link destination="#content-then-a-level-6" title="">
                                         <text>Then a level 6</text>
                                     </link>
                                 </item>
                             </list>
                         </item>
                         <item>
-                            <link destination="#then-a-level-5-1" title="">
+                            <link destination="#content-then-a-level-5-1" title="">
                                 <text>Then a level 5</text>
                             </link>
                             <list type="bullet" tight="false">
                                 <item>
-                                    <link destination="#then-a-level-6-1" title="">
+                                    <link destination="#content-then-a-level-6-1" title="">
                                         <text>Then a level 6</text>
                                     </link>
                                 </item>
@@ -50,12 +50,12 @@
                     </list>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#and-then-a-level-3" title="">
+                            <link destination="#content-and-then-a-level-3" title="">
                                 <text>And then a level 3</text>
                             </link>
                             <list type="bullet" tight="false">
                                 <item>
-                                    <link destination="#then-a-level-5-2" title="">
+                                    <link destination="#content-then-a-level-5-2" title="">
                                         <text>Then a level 5</text>
                                     </link>
                                 </item>
@@ -64,50 +64,50 @@
                     </list>
                 </item>
                 <item>
-                    <link destination="#then-a-level-2" title="">
+                    <link destination="#content-then-a-level-2" title="">
                         <text>Then a level 2</text>
                     </link>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#followed-by-a-level-6" title="">
+                            <link destination="#content-followed-by-a-level-6" title="">
                                 <text>Followed by a level 6</text>
                             </link>
                         </item>
                     </list>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#then-another-level-3" title="">
+                            <link destination="#content-then-another-level-3" title="">
                                 <text>Then another level 3</text>
                             </link>
                             <list type="bullet" tight="false">
                                 <item>
-                                    <link destination="#then-level-5" title="">
+                                    <link destination="#content-then-level-5" title="">
                                         <text>Then level 5</text>
                                     </link>
                                 </item>
                             </list>
                             <list type="bullet" tight="false">
                                 <item>
-                                    <link destination="#level-4" title="">
+                                    <link destination="#content-level-4" title="">
                                         <text>Level 4</text>
                                     </link>
                                 </item>
                             </list>
                         </item>
                         <item>
-                            <link destination="#level-3" title="">
+                            <link destination="#content-level-3" title="">
                                 <text>Level 3</text>
                             </link>
                         </item>
                     </list>
                 </item>
                 <item>
-                    <link destination="#level-2" title="">
+                    <link destination="#content-level-2" title="">
                         <text>Level 2</text>
                     </link>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#level-4-1" title="">
+                            <link destination="#content-level-4-1" title="">
                                 <text>Level 4</text>
                             </link>
                         </item>
@@ -116,72 +116,72 @@
             </list>
         </item>
         <item>
-            <link destination="#now-for-some-normal-headings-to-test-going-up-and-down-the-stack" title="">
+            <link destination="#content-now-for-some-normal-headings-to-test-going-up-and-down-the-stack" title="">
                 <text>Now for some &quot;normal&quot; headings to test going up and down the stack</text>
             </link>
         </item>
         <item>
-            <link destination="#section-1" title="">
+            <link destination="#content-section-1" title="">
                 <text>Section 1</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#section-11" title="">
+                    <link destination="#content-section-11" title="">
                         <text>Section 1.1</text>
                     </link>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#section-111" title="">
+                            <link destination="#content-section-111" title="">
                                 <text>Section 1.1.1</text>
                             </link>
                             <list type="bullet" tight="false">
                                 <item>
-                                    <link destination="#section-1111" title="">
+                                    <link destination="#content-section-1111" title="">
                                         <text>Section 1.1.1.1</text>
                                     </link>
                                     <list type="bullet" tight="false">
                                         <item>
-                                            <link destination="#section-11111" title="">
+                                            <link destination="#content-section-11111" title="">
                                                 <text>Section 1.1.1.1.1</text>
                                             </link>
                                             <list type="bullet" tight="false">
                                                 <item>
-                                                    <link destination="#section-111111" title="">
+                                                    <link destination="#content-section-111111" title="">
                                                         <text>Section 1.1.1.1.1.1</text>
                                                     </link>
                                                 </item>
                                             </list>
                                         </item>
                                         <item>
-                                            <link destination="#section-11112" title="">
+                                            <link destination="#content-section-11112" title="">
                                                 <text>Section 1.1.1.1.2</text>
                                             </link>
                                         </item>
                                     </list>
                                 </item>
                                 <item>
-                                    <link destination="#section-1112" title="">
+                                    <link destination="#content-section-1112" title="">
                                         <text>Section 1.1.1.2</text>
                                     </link>
                                 </item>
                             </list>
                         </item>
                         <item>
-                            <link destination="#section-112" title="">
+                            <link destination="#content-section-112" title="">
                                 <text>Section 1.1.2</text>
                             </link>
                         </item>
                     </list>
                 </item>
                 <item>
-                    <link destination="#section-12" title="">
+                    <link destination="#content-section-12" title="">
                         <text>Section 1.2</text>
                     </link>
                 </item>
             </list>
         </item>
         <item>
-            <link destination="#section-2" title="">
+            <link destination="#content-section-2" title="">
                 <text>Section 2</text>
             </link>
         </item>

@@ -51,12 +51,20 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
     /** @psalm-readonly */
     private int $maxHeadingLevel;
 
-    public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel)
+    /** @psalm-readonly */
+    private string $fragmentPrefix;
+
+    public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel, string $fragmentPrefix)
     {
         $this->style                 = $style;
         $this->normalizationStrategy = $normalizationStrategy;
         $this->minHeadingLevel       = $minHeadingLevel;
         $this->maxHeadingLevel       = $maxHeadingLevel;
+        $this->fragmentPrefix        = $fragmentPrefix;
+
+        if ($fragmentPrefix !== '') {
+            $this->fragmentPrefix .= '-';
+        }
     }
 
     public function generate(Document $document): ?TableOfContents
@@ -87,7 +95,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             $toc->setEndLine($heading->getEndLine());
 
             // Create the new link
-            $link = new Link('#' . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]));
+            $link = new Link('#' . $this->fragmentPrefix . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]));
 
             $listItem = new ListItem($toc->getListData());
             $listItem->setStartLine($heading->getStartLine());

@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 - Fixed nested autolinks (#689)
 - Fixed description lists being parsed incorrectly (#692)
+- Fixed Table of Contents not respecting Heading Permalink prefixes (#690)
 
 ## [2.0.0] - 2021-07-24
 

@@ -2,32 +2,32 @@
 <document xmlns="http://commonmark.org/xml/1.0">
     <table_of_contents type="bullet" tight="false">
         <item>
-            <link destination="#section-1" title="">
+            <link destination="#content-section-1" title="">
                 <text>Section 1</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#section-11" title="">
+                    <link destination="#content-section-11" title="">
                         <text>Section 1.1</text>
                     </link>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#section-111" title="">
+                            <link destination="#content-section-111" title="">
                                 <text>Section 1.1.1</text>
                             </link>
                             <list type="bullet" tight="false">
                                 <item>
-                                    <link destination="#section-1111" title="">
+                                    <link destination="#content-section-1111" title="">
                                         <text>Section 1.1.1.1</text>
                                     </link>
                                     <list type="bullet" tight="false">
                                         <item>
-                                            <link destination="#section-11111" title="">
+                                            <link destination="#content-section-11111" title="">
                                                 <text>Section 1.1.1.1.1</text>
                                             </link>
                                             <list type="bullet" tight="false">
                                                 <item>
-                                                    <link destination="#section-111111" title="">
+                                                    <link destination="#content-section-111111" title="">
                                                         <text>Section 1.1.1.1.1.1</text>
                                                     </link>
                                                 </item>
@@ -42,57 +42,57 @@
             </list>
         </item>
         <item>
-            <link destination="#section-2" title="">
+            <link destination="#content-section-2" title="">
                 <text>Section 2</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#section-21" title="">
+                    <link destination="#content-section-21" title="">
                         <text>Section 2.1</text>
                     </link>
                 </item>
                 <item>
-                    <link destination="#section-22" title="">
+                    <link destination="#content-section-22" title="">
                         <text>Section 2.2</text>
                     </link>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#section-221" title="">
+                            <link destination="#content-section-221" title="">
                                 <text>Section 2.2.1</text>
                             </link>
                         </item>
                         <item>
-                            <link destination="#section-222" title="">
+                            <link destination="#content-section-222" title="">
                                 <text>Section 2.2.2</text>
                             </link>
                             <list type="bullet" tight="false">
                                 <item>
-                                    <link destination="#section-2221" title="">
+                                    <link destination="#content-section-2221" title="">
                                         <text>Section 2.2.2.1</text>
                                     </link>
                                 </item>
                                 <item>
-                                    <link destination="#section-2222" title="">
+                                    <link destination="#content-section-2222" title="">
                                         <text>Section 2.2.2.2</text>
                                     </link>
                                     <list type="bullet" tight="false">
                                         <item>
-                                            <link destination="#section-22221" title="">
+                                            <link destination="#content-section-22221" title="">
                                                 <text>Section 2.2.2.2.1</text>
                                             </link>
                                         </item>
                                         <item>
-                                            <link destination="#section-22222" title="">
+                                            <link destination="#content-section-22222" title="">
                                                 <text>Section 2.2.2.2.2</text>
                                             </link>
                                             <list type="bullet" tight="false">
                                                 <item>
-                                                    <link destination="#section-222221" title="">
+                                                    <link destination="#content-section-222221" title="">
                                                         <text>Section 2.2.2.2.2.1</text>
                                                     </link>
                                                 </item>
                                                 <item>
-                                                    <link destination="#section-222222" title="">
+                                                    <link destination="#content-section-222222" title="">
                                                         <text>Section 2.2.2.2.2.2</text>
                                                     </link>
                                                 </item>
@@ -107,7 +107,7 @@
             </list>
         </item>
         <item>
-            <link destination="#section-title-with-quotes" title="">
+            <link destination="#content-section-title-with-quotes" title="">
                 <text>Section title with &quot;quotes&quot;</text>
             </link>
         </item>

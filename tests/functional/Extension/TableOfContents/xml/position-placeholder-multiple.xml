@@ -5,17 +5,17 @@
     </paragraph>
     <table_of_contents type="bullet" tight="false">
         <item>
-            <link destination="#another-copy-of-my-toc-is-here" title="">
+            <link destination="#content-another-copy-of-my-toc-is-here" title="">
                 <text>Another copy of my TOC is here</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#this-contains-something-that-looks-like-a-placeholder-but-actually-isnt" title="">
+                    <link destination="#content-this-contains-something-that-looks-like-a-placeholder-but-actually-isnt" title="">
                         <text>This contains something that looks like a placeholder but actually isn't</text>
                     </link>
                 </item>
                 <item>
-                    <link destination="#just-a-link-reference-down-here" title="">
+                    <link destination="#content-just-a-link-reference-down-here" title="">
                         <text>Just a link reference down here</text>
                     </link>
                 </item>
@@ -28,17 +28,17 @@
     </heading>
     <table_of_contents type="bullet" tight="false">
         <item>
-            <link destination="#another-copy-of-my-toc-is-here" title="">
+            <link destination="#content-another-copy-of-my-toc-is-here" title="">
                 <text>Another copy of my TOC is here</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#this-contains-something-that-looks-like-a-placeholder-but-actually-isnt" title="">
+                    <link destination="#content-this-contains-something-that-looks-like-a-placeholder-but-actually-isnt" title="">
                         <text>This contains something that looks like a placeholder but actually isn't</text>
                     </link>
                 </item>
                 <item>
-                    <link destination="#just-a-link-reference-down-here" title="">
+                    <link destination="#content-just-a-link-reference-down-here" title="">
                         <text>Just a link reference down here</text>
                     </link>
                 </item>

@@ -2,12 +2,12 @@
 <document xmlns="http://commonmark.org/xml/1.0">
     <table_of_contents type="bullet" tight="false">
         <item>
-            <link destination="#this-is-a-top-level" title="">
+            <link destination="#content-this-is-a-top-level" title="">
                 <text>This is a top level</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#this-is-another-level" title="">
+                    <link destination="#content-this-is-another-level" title="">
                         <text>This is another level</text>
                     </link>
                 </item>

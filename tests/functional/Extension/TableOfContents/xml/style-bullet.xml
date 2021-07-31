@@ -2,41 +2,41 @@
 <document xmlns="http://commonmark.org/xml/1.0">
     <table_of_contents type="bullet" tight="false">
         <item>
-            <link destination="#these" title="">
+            <link destination="#content-these" title="">
                 <text>These</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#should" title="">
+                    <link destination="#content-should" title="">
                         <text>Should</text>
                     </link>
                     <list type="bullet" tight="false">
                         <item>
-                            <link destination="#be" title="">
+                            <link destination="#content-be" title="">
                                 <text>Be</text>
                             </link>
                         </item>
                     </list>
                 </item>
                 <item>
-                    <link destination="#in" title="">
+                    <link destination="#content-in" title="">
                         <text>In</text>
                     </link>
                 </item>
             </list>
         </item>
         <item>
-            <link destination="#an" title="">
+            <link destination="#content-an" title="">
                 <text>An</text>
             </link>
         </item>
         <item>
-            <link destination="#unordered" title="">
+            <link destination="#content-unordered" title="">
                 <text>Unordered</text>
             </link>
             <list type="bullet" tight="false">
                 <item>
-                    <link destination="#list" title="">
+                    <link destination="#content-list" title="">
                         <text>List</text>
                     </link>
                 </item>
