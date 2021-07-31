@@ -6,6 +6,9 @@ updates:
       interval: "daily"
     assignees:
       - "colinodell"
+    labels:
+      - "documentation"
+      - "dependencies"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -13,6 +16,8 @@ updates:
       interval: "daily"
     assignees:
       - "colinodell"
+    labels:
+      - "dependencies"
 
   - package-ecosystem: "composer"
     directory: "/"
@@ -20,3 +25,5 @@ updates:
       interval: "daily"
     assignees:
       - "colinodell"
+    labels:
+      - "dependencies"
