@@ -174,6 +174,10 @@ want to parse `@username` into custom user profile links for your application, b
 create a class like the following which integrates with the framework your application is built on:
 
 ```php
+use League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface;
+use League\CommonMark\Extension\Mention\Mention;
+use League\CommonMark\Inline\Element\AbstractInline;
+
 class UserMentionGenerator implements MentionGeneratorInterface
 {
     private $currentUser;
