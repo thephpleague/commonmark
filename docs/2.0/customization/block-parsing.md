@@ -44,6 +44,8 @@ return BlockStart::of(new MyCustomParser())->at($cursor);
 
 Unlike in 1.x, the `Cursor` state is no longer shared between parsers.  You must therefore explicitly provide the `BlockStart` object with a copy of your cursor at the correct, post-parsing position.
 
+**NOTE:** If your custom block starts with a [letter character](http://unicode.org/reports/tr18/#General_Category_Property) you'll need to [add your parser to the environment](/2.0/customization/environment/#addblockstartparser) with a priority of `250` or higher.  This is due to a performance optimization where such lines are usually skipped.
+
 ## `BlockContinueParserInterface`
 
 The previous interface only helps the engine identify where a block starts.  Additional information about the block, as well as the ability to parse additional lines of input, is all handled by the `BlockContinueParserInterface`.

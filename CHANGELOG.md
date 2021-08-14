@@ -10,6 +10,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 - Bumped minimum version of league/config to support PHP 8.1
 
+### Fixed
+
+- Fixed ability to register block parsers that identify lines starting with letters (#706)
+
 ## [2.0.1] - 2021-07-31
 
 ### Fixed

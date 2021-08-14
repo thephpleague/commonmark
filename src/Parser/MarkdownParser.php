@@ -33,7 +33,6 @@ use League\CommonMark\Parser\Block\DocumentBlockParser;
 use League\CommonMark\Parser\Block\ParagraphParser;
 use League\CommonMark\Reference\ReferenceInterface;
 use League\CommonMark\Reference\ReferenceMap;
-use League\CommonMark\Util\RegexHelper;
 
 final class MarkdownParser implements MarkdownParserInterface
 {
@@ -136,17 +135,12 @@ final class MarkdownParser implements MarkdownParserInterface
                 break;
             }
 
-            if (! $this->cursor->isIndented() && RegexHelper::isLetter($this->cursor->getNextNonSpaceCharacter())) {
-                $this->cursor->advanceToNextNonSpaceOrTab();
-                break;
-            }
-
             if ($blockParser->getBlock()->getDepth() >= $this->maxNestingLevel) {
                 break;
             }
 
             $blockStart = $this->findBlockStart($blockParser);
-            if ($blockStart === null) {
+            if ($blockStart === null || $blockStart->isAborting()) {
                 $this->cursor->advanceToNextNonSpaceOrTab();
                 break;
             }

@@ -28,6 +28,7 @@ use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
+use League\CommonMark\Parser\Block\SkipLinesStartingWithLettersParser;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Tests\Unit\Event\FakeEvent;
@@ -330,6 +331,16 @@ final class EnvironmentTest extends TestCase
         $this->assertNotNull($listener2->getConfiguration());
     }
 
+    public function testSkipLinesParserIncludedByDefault(): void
+    {
+        $environment = new Environment();
+
+        $parsers = \iterator_to_array($environment->getBlockStartParsers());
+
+        $this->assertCount(1, $parsers);
+        $this->assertInstanceOf(SkipLinesStartingWithLettersParser::class, $parsers[0]);
+    }
+
     public function testBlockParserPrioritization(): void
     {
         $environment = new Environment();
@@ -339,14 +350,15 @@ final class EnvironmentTest extends TestCase
         $parser3 = $this->createMock(BlockStartParserInterface::class);
 
         $environment->addBlockStartParser($parser1);
-        $environment->addBlockStartParser($parser2, 50);
+        $environment->addBlockStartParser($parser2, 500);
         $environment->addBlockStartParser($parser3);
 
         $parsers = \iterator_to_array($environment->getBlockStartParsers());
 
         $this->assertSame($parser2, $parsers[0]);
-        $this->assertSame($parser1, $parsers[1]);
-        $this->assertSame($parser3, $parsers[2]);
+        $this->assertInstanceOf(SkipLinesStartingWithLettersParser::class, $parsers[1]);
+        $this->assertSame($parser1, $parsers[2]);
+        $this->assertSame($parser3, $parsers[3]);
     }
 
     public function testGetInlineParsersWithPrioritization(): void

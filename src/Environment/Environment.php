@@ -30,6 +30,7 @@ use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Normalizer\UniqueSlugNormalizer;
 use League\CommonMark\Normalizer\UniqueSlugNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
+use League\CommonMark\Parser\Block\SkipLinesStartingWithLettersParser;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
@@ -111,6 +112,10 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         $this->inlineParsers       = new PrioritizedList();
         $this->listenerData        = new PrioritizedList();
         $this->delimiterProcessors = new DelimiterProcessorCollection();
+
+        // Performance optimization: always include a block "parser" that aborts parsing if a line starts with a letter
+        // and is therefore unlikely to match any lines as a block start.
+        $this->addBlockStartParser(new SkipLinesStartingWithLettersParser(), 249);
     }
 
     public function getConfiguration(): ConfigurationInterface
