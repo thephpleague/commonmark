@@ -23,7 +23,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-mbstring": "*",
-        "league/config": "^1.1",
+        "league/config": "^1.1.1",
         "psr/event-dispatcher": "^1.0",
         "symfony/polyfill-php80": "^1.15"
     },
