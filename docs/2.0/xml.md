@@ -7,7 +7,7 @@ redirect_from: /xml/
 
 # XML Rendering
 
-Version 2.0 introduced the ability to render Markdown `Document` objects in XML. This is particularly useful for debugging [custom extensions](/2.0/customization/).
+Version 2.0 introduced the ability to render Markdown `Document` objects in XML. This is particularly useful for debugging [custom extensions](/2.0/customization/overview/).
 
 To convert Markdown to XML, you would instantiate an [`Environment`](/2.0/customization/environment/), parse the Markdown into an [AST](/2.0/customization/abstract-syntax-tree/), and render it using the new `XmlRenderer`:
 
