@@ -157,8 +157,6 @@ final class InlineParserEngine implements InlineParserEngineInterface
                     $offset = $match[0][1];
                 }
 
-                \assert(\is_int($offset));
-
                 // Remove the offsets, keeping only the matched text
                 $m = \array_column($match, 0);
 
