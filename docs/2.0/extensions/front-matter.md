@@ -19,7 +19,7 @@ composer require league/commonmark
 
 See the [installation](/2.0/installation/) section for more details.
 
-You will also need to install `symfony/yaml` to use this extension:
+You will also need to install `symfony/yaml` or the [YAML extension for PHP](https://www.php.net/manual/book.yaml.php) to use this extension. For `symfony/yaml`:
 
 ```bash
 composer require symfony/yaml
@@ -118,12 +118,16 @@ echo $result->getContent();
 You don't have to parse the entire file (including all the Markdown) if you only want the front matter.  You can either instantiate the front matter parser yourself and call it directly, like this:
 
 ```php
+use League\CommonMark\Extension\FrontMatter\Data\LibYamlFrontMatterParser;
 use League\CommonMark\Extension\FrontMatter\Data\SymfonyYamlFrontMatterParser;
 use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
 
 $markdown = '...'; // TODO: Load some Markdown content somehow
 
+// For `symfony/yaml`
 $frontMatterParser = new FrontMatterParser(new SymfonyYamlFrontMatterParser());
+// For YAML extension
+$frontMatterParser = new FrontMatterParser(new LibYamlFrontMatterParser());
 $result = $frontMatterParser->parse($markdown);
 
 var_dump($result->getFrontMatter()); // The parsed front matter

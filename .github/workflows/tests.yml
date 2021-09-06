@@ -15,7 +15,7 @@ jobs:
             - uses: shivammathur/setup-php@v2
               with:
                   php-version: 7.4
-                  extensions: curl, mbstring
+                  extensions: curl, mbstring, yaml
                   coverage: none
                   tools: composer:v2, cs2pr
 
@@ -51,7 +51,7 @@ jobs:
             - uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-                  extensions: curl, mbstring
+                  extensions: curl, mbstring, yaml
                   coverage: pcov
                   tools: composer:v2
 
@@ -83,7 +83,7 @@ jobs:
             - uses: shivammathur/setup-php@v2
               with:
                   php-version: 7.4
-                  extensions: curl, mbstring
+                  extensions: curl, mbstring, yaml
                   coverage: none
                   tools: composer:v2
 
@@ -101,7 +101,7 @@ jobs:
             - uses: shivammathur/setup-php@v2
               with:
                   php-version: 7.4
-                  extensions: curl, mbstring
+                  extensions: curl, mbstring, yaml
                   coverage: none
                   tools: composer:v2
 

@@ -18,6 +18,7 @@ use League\CommonMark\Event\DocumentPreParsedEvent;
 use League\CommonMark\Event\DocumentRenderedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\FrontMatter\Data\FrontMatterDataParserInterface;
+use League\CommonMark\Extension\FrontMatter\Data\LibYamlFrontMatterParser;
 use League\CommonMark\Extension\FrontMatter\Data\SymfonyYamlFrontMatterParser;
 use League\CommonMark\Extension\FrontMatter\Listener\FrontMatterPostRenderListener;
 use League\CommonMark\Extension\FrontMatter\Listener\FrontMatterPreParser;
@@ -29,7 +30,7 @@ final class FrontMatterExtension implements ExtensionInterface
 
     public function __construct(?FrontMatterDataParserInterface $dataParser = null)
     {
-        $this->frontMatterParser = new FrontMatterParser($dataParser ?? new SymfonyYamlFrontMatterParser());
+        $this->frontMatterParser = new FrontMatterParser($dataParser ?? LibYamlFrontMatterParser::capable() ?? new SymfonyYamlFrontMatterParser());
     }
 
     public function getFrontMatterParser(): FrontMatterParserInterface

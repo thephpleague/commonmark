@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Added support for ext-yaml in FrontMatterExtension (#715)
+
 ## [2.0.2] - 2021-08-14
 
 ### Changed
