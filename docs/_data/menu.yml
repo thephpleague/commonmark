@@ -219,28 +219,6 @@ version:
             'Abstract Syntax Tree': '/1.0/customization/abstract-syntax-tree/'
             'Block Rendering': '/1.0/customization/block-rendering/'
             'Inline Rendering': '/1.0/customization/inline-rendering/'
-    '0.19':
-        Getting Started:
-            'Overview': '/0.19/'
-            'Installation': '/0.19/installation/'
-            'Upgrading from 0.18': '/0.19/upgrading/'
-            'Changelog': '/0.19/changelog/'
-        Usage:
-            'Basic Usage': '/0.19/basic-usage/'
-            'Configuration': '/0.19/configuration/'
-            'Security': '/0.19/security/'
-            'Command Line': '/0.19/command-line/'
-        Customization:
-            'Overview': '/0.19/customization/overview/'
-            'Environment': '/0.19/customization/environment/'
-            'Extensions': '/0.19/customization/extensions/'
-            'Cursor': '/0.19/customization/cursor/'
-            'Block parsing': '/0.19/customization/block-parsing/'
-            'Inline parsing': '/0.19/customization/inline-parsing/'
-            'Abstract Syntax Tree': '/0.19/customization/abstract-syntax-tree/'
-            'Document Processing': '/0.19/customization/document-processing/'
-            'Block rendering': '/0.19/customization/block-rendering/'
-            'Inline rendering': '/0.19/customization/inline-rendering/'
 upgrading:
     Upgrading Guide:
         Release Notes: '/releases/'
@@ -250,4 +228,3 @@ upgrading:
         From 1.3 to 1.4: '/1.4/upgrading'
         From 1.x to 1.3: '/1.3/upgrading'
         From 0.19 to 1.0: '/1.0/upgrading'
-        From 0.18 to 0.19: '/0.19/upgrading'
