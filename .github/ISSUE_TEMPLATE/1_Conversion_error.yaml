@@ -1,0 +1,29 @@
+name: "📃 Bug Report (Incorrect HTML)"
+description: I'm not getting the HTML I expect
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Before submitting an issue, please use https://babelmark.github.io/ to compare how your Markdown input renders in other parsers. If all the CommonMark ones (including this one) show the same results then it's probably not a bug
+    - type: input
+      id: affected-versions
+      attributes:
+          label: Version(s) affected
+          placeholder: x.y.z
+      validations:
+          required: true
+    - type: textarea
+      id: description
+      attributes:
+          label: Description
+          description: A clear and concise description of the problem.
+      validations:
+          required: true
+    - type: textarea
+      id: how-to-reproduce
+      attributes:
+          label: How to reproduce
+          description: |
+              Provide the Markdown input, your configuration, and/or installed extensions to help us reproduce the problem.
+      validations:
+          required: true
