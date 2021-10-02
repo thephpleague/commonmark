@@ -304,7 +304,7 @@ main div > code {
 
 @media screen and (max-width: 549px) {
     .homepage header h1 {
-        font-size:48px;
+        font-size:42px;
     }
 
     .homepage .composer span {
@@ -315,7 +315,7 @@ main div > code {
 @media screen and (min-width: 549px) {
     .homepage header h1 {
         margin:0 auto;
-        font-size:54px;
+        font-size:6.0vw;
     }
 
     .inner-content {
@@ -371,7 +371,7 @@ main div > code {
 
     .homepage header h1 {
         margin:0 auto;
-        font-size:96px;
+        font-size:6.0vw;
     }
 }
 
