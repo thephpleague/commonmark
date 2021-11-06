@@ -61,6 +61,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
                 'symbol'          => '¶ 🦄️ <3 You',
                 'insert'          => 'after',
                 'title'           => 'Link',
+                'aria_hidden'     => false
             ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
@@ -73,9 +74,9 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
     public function dataProviderForTestHeadingPermalinksWithCustomOptions(): \Generator
     {
-        yield ['# Hello World!', '<h1>Hello World!<a id="custom-id-prefix-hello-world" href="#custom-fragment-prefix-hello-world" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
-        yield ['# Hello *World*', '<h1>Hello <em>World</em><a id="custom-id-prefix-hello-world" href="#custom-fragment-prefix-hello-world" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
-        yield ["Test\n----", '<h2>Test<a id="custom-id-prefix-test" href="#custom-fragment-prefix-test" class="custom-class" aria-hidden="true" title="Link">¶ 🦄️ &lt;3 You</a></h2>'];
+        yield ['# Hello World!', '<h1>Hello World!<a id="custom-id-prefix-hello-world" href="#custom-fragment-prefix-hello-world" class="custom-class" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
+        yield ['# Hello *World*', '<h1>Hello <em>World</em><a id="custom-id-prefix-hello-world" href="#custom-fragment-prefix-hello-world" class="custom-class" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
+        yield ["Test\n----", '<h2>Test<a id="custom-id-prefix-test" href="#custom-fragment-prefix-test" class="custom-class" title="Link">¶ 🦄️ &lt;3 You</a></h2>'];
     }
 
     public function testHeadingPermalinksWithEmptyPrefixes(): void
