@@ -44,6 +44,7 @@ $config = [
         'max_heading_level' => 6,
         'title' => 'Permalink',
         'symbol' => HeadingPermalinkRenderer::DEFAULT_SYMBOL,
+        'aria_hidden' => true
     ],
 ];
 
@@ -110,6 +111,12 @@ If you want to use a custom icon, then set this to an empty string `''` and chec
 ### `title`
 
 This option sets the `title` attribute on the `<a>` tag.  This defaults to `'Permalink'`.
+
+### `aria_hidden`
+
+This option sets the `aria-hidden` attribute on the `<a>` tag. This defaults to `aria-hidden=true`.
+
+Setting this option to false would render the `<a>` tag excluding the `aria-hidden` entirely.
 
 ## Example
 
