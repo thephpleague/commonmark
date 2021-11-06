@@ -71,7 +71,6 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
 
         $attrs->set('title', $this->config->get('heading_permalink/title'));
 
-
         $symbol = $this->config->get('heading_permalink/symbol');
         \assert(\is_string($symbol));
 
