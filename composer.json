@@ -36,7 +36,7 @@
         "erusev/parsedown": "^1.0",
         "github/gfm": "0.29.0",
         "michelf/php-markdown": "^1.4",
-        "phpstan/phpstan": "^0.12.88",
+        "phpstan/phpstan": "^0.12.88 || ^1.0.0",
         "phpunit/phpunit": "^9.5.5",
         "scrutinizer/ocular": "^1.8.1",
         "symfony/finder": "^5.3",
