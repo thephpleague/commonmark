@@ -114,7 +114,7 @@ This option sets the `title` attribute on the `<a>` tag.  This defaults to `'Per
 
 ### `aria_hidden`
 
-This option sets the `aria-hidden` attribute on the `<a>` tag. This defaults to `aria-hidden=true`.
+This option sets the `aria-hidden` attribute on the `<a>` tag. This defaults to `aria-hidden="true"`.
 
 Setting this option to false would render the `<a>` tag excluding the `aria-hidden` entirely.
 
