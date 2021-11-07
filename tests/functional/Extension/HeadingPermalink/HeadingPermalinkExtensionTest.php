@@ -61,7 +61,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
                 'symbol'          => '¶ 🦄️ <3 You',
                 'insert'          => 'after',
                 'title'           => 'Link',
-                'aria_hidden'     => false
+                'aria_hidden'     => false,
             ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
