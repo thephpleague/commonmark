@@ -99,7 +99,7 @@
         "phpcs": "phpcs",
         "phpstan": "phpstan analyse",
         "phpunit": "phpunit --no-coverage",
-        "psalm": "psalm",
+        "psalm": "psalm --stats",
         "test": [
             "@phpcs",
             "@phpstan",

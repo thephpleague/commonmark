@@ -28,6 +28,7 @@ jobs:
         runs-on: ubuntu-latest
         continue-on-error: ${{ !matrix.stable }}
         strategy:
+            fail-fast: false
             matrix:
                 php: ['7.4', '8.0']
                 stable: [true]
@@ -107,4 +108,28 @@ jobs:
 
             - run: composer update --no-progress
 
-            - run: vendor/bin/psalm --no-progress --output-format=github
+            - run: vendor/bin/psalm --no-progress --stats --threads=$(nproc) --output-format=github --shepherd
+
+    bc_check:
+        name: Backward Compatibility
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Roave BC Check
+              uses: docker://nyholm/roave-bc-check-ga
+
+    docs-lint:
+        name: Markdownlint
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: github/super-linter/slim@v4.8.1
+              env:
+                  DEFAULT_BRANCH: main
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  LINTER_RULES_PATH: '.' # From https://github.com/github/super-linter/pull/859#issuecomment-709625090
+                  VALIDATE_MARKDOWN: true
+                  MARKDOWN_CONFIG_FILE: docs/.markdownlint.yml
+                  FILTER_REGEX_INCLUDE: '/docs/.*'
