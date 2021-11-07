@@ -110,6 +110,14 @@ jobs:
 
             - run: vendor/bin/psalm --no-progress --stats --threads=$(nproc) --output-format=github --shepherd
 
+    bc_check:
+        name: Backward Compatibility
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Roave BC Check
+              uses: docker://nyholm/roave-bc-check-ga
+
     docs-lint:
         name: Markdownlint
         runs-on: ubuntu-latest

@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+        - '#\[BC\] CHANGED: The number of required arguments for League\\CommonMark\\Extension\\TableOfContents\\TableOfContentsGenerator\#__construct\(\) increased from 4 to 5#'
