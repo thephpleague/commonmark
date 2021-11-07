@@ -28,6 +28,7 @@ jobs:
         runs-on: ubuntu-latest
         continue-on-error: ${{ !matrix.stable }}
         strategy:
+            fail-fast: false
             matrix:
                 php: ['7.4', '8.0']
                 stable: [true]
