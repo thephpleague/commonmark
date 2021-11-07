@@ -108,7 +108,7 @@ jobs:
 
             - run: composer update --no-progress
 
-            - run: vendor/bin/psalm --no-progress --output-format=github
+            - run: vendor/bin/psalm --no-progress --stats --threads=$(nproc) --output-format=github --shepherd
 
     docs-lint:
         name: Markdownlint
