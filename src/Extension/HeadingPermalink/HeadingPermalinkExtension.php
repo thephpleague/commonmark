@@ -36,7 +36,6 @@ final class HeadingPermalinkExtension implements ConfigurableExtensionInterface
             'title' => Expect::string()->default('Permalink'),
             'symbol' => Expect::string()->default(HeadingPermalinkRenderer::DEFAULT_SYMBOL),
             'aria_hidden' => Expect::bool()->default(true),
-
         ]));
     }
 
