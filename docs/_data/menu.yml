@@ -3,7 +3,7 @@ version:
         Getting Started:
             'Overview': '/2.1/'
             'Installation': '/2.1/installation/'
-            'Upgrading from 1.6': '/2.1/upgrading/'
+            'Upgrading from 2.0': '/2.1/upgrading/'
             'Changelog': '/2.1/changelog/'
             'Support': '/2.1/support/'
         Usage:
@@ -266,6 +266,7 @@ version:
 upgrading:
     Upgrading Guide:
         Release Notes: '/releases/'
+        From 2.0 to 2.1: '/2.1/upgrading'
         From 1.6 to 2.0: '/2.0/upgrading'
         From 1.5 to 1.6: '/1.6/upgrading'
         From 1.4 to 1.5: '/1.5/upgrading'
