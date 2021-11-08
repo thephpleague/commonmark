@@ -44,7 +44,7 @@ $config = [
         'max_heading_level' => 6,
         'title' => 'Permalink',
         'symbol' => HeadingPermalinkRenderer::DEFAULT_SYMBOL,
-        'aria_hidden' => true
+        'aria_hidden' => true,
     ],
 ];
 
