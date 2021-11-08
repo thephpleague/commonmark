@@ -40,12 +40,11 @@
         "phpunit/phpunit": "^9.5.5",
         "scrutinizer/ocular": "^1.8.1",
         "symfony/finder": "^5.3",
-        "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0",
+        "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0 | ^6.0",
         "unleashedtech/php-coding-standard": "^3.1",
         "vimeo/psalm": "^4.7.3"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "minimum-stability": "beta",
     "suggest": {
         "symfony/yaml": "v2.3+ required if using the Front Matter extension"
     },
