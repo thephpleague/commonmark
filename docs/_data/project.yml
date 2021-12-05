@@ -6,6 +6,9 @@ google_analytics_tracking_id: UA-137970568-1
 repository: commonmark
 default_version: '2.1'
 releases:
+  next:
+    '2.2':
+      documentation_link: '/2.2/'
   current:
     '2.1':
       documentation_link: '/2.1/'
