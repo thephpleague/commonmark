@@ -2,9 +2,6 @@
 layout: default
 title: Extensions Overview
 description: An overview of the extensions included with this library
-redirect_from:
-- /extensions/
-- /extensions/overview/
 ---
 
 # Extensions Overview

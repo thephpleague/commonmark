@@ -2,7 +2,6 @@
 layout: default
 title: Default Attributes Extension
 description: The DefaultAttributesExtension allows you to apply default HTML classes and other attributes using configuration options.
-redirect_from: /extensions/default-attributes/
 ---
 
 # Default Attributes

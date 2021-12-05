@@ -2,7 +2,6 @@
 layout: default
 title: Table Extension
 description: The TableExtension adds the ability to create tables in CommonMark documents
-redirect_from: /extensions/tables/
 ---
 
 # Table Extension

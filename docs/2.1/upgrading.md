@@ -6,3 +6,5 @@ redirect_from: /upgrading/
 ---
 
 # Upgrading from 2.0 to 2.1
+
+No changes or deprecations were made that require changes to upgrade to the new version.
