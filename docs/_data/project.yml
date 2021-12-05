@@ -4,15 +4,14 @@ description: PHP Markdown parser featuring support for CommonMark, GFM, and cust
 site_title: CommonMark for PHP
 google_analytics_tracking_id: UA-137970568-1
 repository: commonmark
-default_version: '2.0'
+default_version: '2.1'
 releases:
-  next:
+  current:
     '2.1':
       documentation_link: '/2.1/'
-  current:
+  previous:
     '2.0':
       documentation_link: '/2.0/'
-  previous:
     '1.6':
       documentation_link: '/1.6/'
     '1.5':
