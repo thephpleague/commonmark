@@ -28,7 +28,7 @@ final class MentionExtension implements ExtensionInterface
             }
 
             if (\array_key_exists('pattern', $mention)) {
-                // v2.0 does not allow full regex patterns passeed into the configuration
+                // v2.0 does not allow full regex patterns passed into the configuration
                 if (!self::isAValidPartialRegex($mention['pattern'])) {
                     throw new InvalidOptionException(\sprintf('Option "mentions/%s/pattern" must not include starting/ending delimiters (like "/")', $name));
                 }
