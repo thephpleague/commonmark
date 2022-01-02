@@ -6,6 +6,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.1.1] - 2022-01-02
+
+### Added
+
+ - Added missing return type to `Environment::dispatch()` to fix deprecation warning (#778)
+
 ## [2.1.0] - 2021-12-05
 
 ### Added
@@ -362,7 +368,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.1.0...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.1.1...main
+[2.1.1]: https://github.com/thephpleague/commonmark/compare/2.0.2...2.1.1
 [2.1.0]: https://github.com/thephpleague/commonmark/compare/2.0.2...2.1.0
 [2.0.2]: https://github.com/thephpleague/commonmark/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/thephpleague/commonmark/compare/2.0.0...2.0.1
