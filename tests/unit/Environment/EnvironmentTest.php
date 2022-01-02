@@ -466,9 +466,11 @@ final class EnvironmentTest extends TestCase
                 $this->dispatchersCalled = $dispatchersCalled;
             }
 
-            public function dispatch(object $event): void
+            public function dispatch(object $event): object
             {
                 $this->dispatchersCalled[] = 'external';
+
+                return $event;
             }
         });
 
