@@ -52,6 +52,7 @@ final class PrioritizedList implements \IteratorAggregate
      *
      * @phpstan-return \Traversable<int, T>
      */
+    #[\ReturnTypeWillChange]
     public function getIterator(): \Traversable
     {
         if ($this->optimized === null) {
