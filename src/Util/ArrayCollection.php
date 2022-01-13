@@ -72,6 +72,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @return \ArrayIterator<int|string, mixed>
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->elements);
@@ -251,6 +252,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @phpstan-return TValue|null
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->elements[$offset] ?? null;
@@ -267,6 +269,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @phpstan-param TKey|null $offset
      * @phpstan-param TValue    $value
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if ($offset === null) {
@@ -285,6 +288,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @phpstan-param TKey $offset
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         if (!\array_key_exists($offset, $this->elements)) {
