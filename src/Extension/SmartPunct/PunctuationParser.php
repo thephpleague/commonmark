@@ -59,7 +59,7 @@ final class PunctuationParser implements InlineParserInterface
                 $en_count = 2;
             }
             $inlineContext->getContainer()->appendChild(new Text(
-                str_repeat($em_dash, $em_count) . str_repeat($en_dash, $en_count)
+                str_repeat($em_dash, (int) $em_count) . str_repeat($en_dash, (int) $en_count)
             ));
 
             return true;
