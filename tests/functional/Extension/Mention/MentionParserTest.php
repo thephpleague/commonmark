@@ -39,7 +39,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserWithMultiCharacterPrefix(): void
@@ -55,7 +55,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserWithMultiCharacterPrefixContainingSpecialRegexCharsThatShouldBeEscaped(): void
@@ -71,7 +71,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserWithoutSpaceInFront(): void
@@ -87,7 +87,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserWithNonMatchingPrefix(): void
@@ -103,7 +103,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserWithNonMatchingRegex(): void
@@ -119,7 +119,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserWithNullUrl(): void
@@ -138,7 +138,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserUsingCallback(): void
@@ -163,7 +163,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserUsingCallbackReturnsAbstractInline(): void
@@ -187,7 +187,7 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 
     public function testMentionParserWithNonWordCharacterBefore(): void
@@ -208,6 +208,6 @@ final class MentionParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \rtrim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \rtrim((string) $converter->convert($input)));
     }
 }

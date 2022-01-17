@@ -34,7 +34,7 @@ final class SmartPunctExtensionTest extends TestCase
         $environment->addExtension(new SmartPunctExtension());
 
         $converter    = new MarkdownConverter($environment);
-        $actualResult = $converter->convertToHtml('"double" \'single\'');
+        $actualResult = $converter->convert('"double" \'single\'');
         $this->assertEquals("<p>“double” ‘single’</p>\n", $actualResult);
     }
 
@@ -53,7 +53,7 @@ final class SmartPunctExtensionTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $actualResult = $converter->convertToHtml('"double" \'single\'');
+        $actualResult = $converter->convert('"double" \'single\'');
         $this->assertEquals("<p>«double» ‹single›</p>\n", $actualResult);
     }
 }

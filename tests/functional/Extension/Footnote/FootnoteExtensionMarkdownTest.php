@@ -14,67 +14,35 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Footnote;
 
+use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
 
 /**
- * @internal
+ * Test with minimal extensions
  */
 final class FootnoteExtensionMarkdownTest extends AbstractLocalDataTest
 {
-    private MarkdownConverter $commonMarkConverter;
-
-    private MarkdownConverter $gfmConverter;
-
-    protected function setUp(): void
+    /**
+     * @param array<string, mixed> $config
+     */
+    protected function createConverter(array $config = []): ConverterInterface
     {
-        /*
-         * Test with minimal extensions
-         */
-        $environment = new Environment();
+        $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new FootnoteExtension());
-        $this->commonMarkConverter = new MarkdownConverter($environment);
 
-        /*
-         * Test with other extensions
-         */
-        $gfmEnvironment = new Environment();
-        $gfmEnvironment->addExtension(new CommonMarkCoreExtension());
-        $gfmEnvironment->addExtension(new GithubFlavoredMarkdownExtension());
-        $gfmEnvironment->addExtension(new FootnoteExtension());
-        $this->gfmConverter = new MarkdownConverter($gfmEnvironment);
+        return new MarkdownConverter($environment);
     }
 
     /**
-     * @dataProvider dataProvider
-     */
-    public function testRenderer(string $markdown, string $html, string $testName): void
-    {
-        $this->converter = $this->commonMarkConverter;
-        $this->assertMarkdownRendersAs($markdown, $html, $testName);
-    }
-
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testExtraRenderer(string $markdown, string $html, string $testName): void
-    {
-        $this->converter = $this->gfmConverter;
-        $this->assertMarkdownRendersAs($markdown, $html, $testName);
-    }
-
-    /**
-     * @return iterable<string, string, string>
+     * {@inheritDoc}
      */
     public function dataProvider(): iterable
     {
-        foreach ($this->loadTests(__DIR__ . '/md') as $test) {
-            yield $test;
-        }
+        yield from $this->loadTests(__DIR__ . '/md');
     }
 }

@@ -23,7 +23,7 @@ $environment->addExtension(new CommonMarkCoreExtension());
 $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Hello GFM!');
+echo $converter->convert('Hello GFM!');
 ```
 
 This will automatically include all of these sub-extensions/features for you:
@@ -61,7 +61,7 @@ $environment->addExtension(new TableExtension());
 $environment->addExtension(new TaskListExtension());
 
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Hello GFM!');
+echo $converter->convert('Hello GFM!');
 ```
 
 This extension relies on the `CommonMarkCoreExtension` being enabled, so [don't forget to include that](/2.2/extensions/commonmark/) too.

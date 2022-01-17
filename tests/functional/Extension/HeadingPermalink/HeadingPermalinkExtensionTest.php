@@ -35,7 +35,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
     public function dataProviderForTestHeadingPermalinksWithDefaultOptions(): \Generator
@@ -69,7 +69,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
     public function dataProviderForTestHeadingPermalinksWithCustomOptions(): \Generator
@@ -95,7 +95,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $input    = '# Hello World!';
         $expected = \sprintf('<h1><a id="hello-world" href="#hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
 
-        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
     public function testHeadingPermalinksWithEmptySymbol(): void
@@ -115,7 +115,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $input    = '# Hello World!';
         $expected = '<h1><a id="hello-world" href="#hello-world" class="heading-permalink" aria-hidden="true" title="Permalink"></a>Hello World!</h1>';
 
-        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
     public function testHeadingPermalinksWithInvalidInsertConfigurationValue(): void
@@ -131,7 +131,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $environment->addExtension(new HeadingPermalinkExtension());
 
         $converter = new MarkdownConverter($environment);
-        $converter->convertToHtml('# This will fail');
+        $converter->convert('# This will fail');
     }
 
     public function testWithCustomLevels(): void
@@ -160,7 +160,7 @@ EOT;
 <h4>4</h4>
 EOT;
 
-        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
     public function testXml(): void

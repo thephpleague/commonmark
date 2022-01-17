@@ -97,7 +97,7 @@ tags:
 # Hello World!
 MD;
 
-$result = $converter->convertToHtml($markdown);
+$result = $converter->convert($markdown);
 
 // Grab the front matter:
 if ($result instanceof RenderedContentWithFrontMatter) {

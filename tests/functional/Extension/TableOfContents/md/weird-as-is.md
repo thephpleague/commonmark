@@ -1,3 +1,8 @@
+---
+table_of_contents:
+    normalize: as-is
+---
+
 Here's a sample Markdown document with weird headings
 
 ## A level 2 heading to start

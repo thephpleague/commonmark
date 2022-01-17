@@ -56,7 +56,7 @@ $environment->addExtension(new HeadingPermalinkExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello World!');
 ```
 
 ## Configuration

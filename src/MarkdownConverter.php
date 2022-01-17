@@ -20,7 +20,7 @@ use League\CommonMark\Parser\MarkdownParserInterface;
 use League\CommonMark\Renderer\HtmlRenderer;
 use League\CommonMark\Renderer\MarkdownRendererInterface;
 
-class MarkdownConverter implements MarkdownConverterInterface
+class MarkdownConverter implements ConverterInterface, MarkdownConverterInterface
 {
     /** @psalm-readonly */
     protected EnvironmentInterface $environment;
@@ -47,6 +47,24 @@ class MarkdownConverter implements MarkdownConverterInterface
     /**
      * Converts Markdown to HTML.
      *
+     * @param string $input The Markdown to convert
+     *
+     * @return RenderedContentInterface Rendered HTML
+     *
+     * @throws \RuntimeException
+     */
+    public function convert(string $input): RenderedContentInterface
+    {
+        $documentAST = $this->markdownParser->parse($input);
+
+        return $this->htmlRenderer->renderDocument($documentAST);
+    }
+
+    /**
+     * Converts Markdown to HTML.
+     *
+     * @deprecated since 2.2; use {@link convert()} instead
+     *
      * @param string $markdown The Markdown to convert
      *
      * @return RenderedContentInterface Rendered HTML
@@ -55,20 +73,20 @@ class MarkdownConverter implements MarkdownConverterInterface
      */
     public function convertToHtml(string $markdown): RenderedContentInterface
     {
-        $documentAST = $this->markdownParser->parse($markdown);
+        \trigger_deprecation('league/commonmark', '2.2.0', 'Calling "convertToHtml()" on a %s class is deprecated, use "convert()" instead.', self::class);
 
-        return $this->htmlRenderer->renderDocument($documentAST);
+        return $this->convert($markdown);
     }
 
     /**
      * Converts CommonMark to HTML.
      *
-     * @see Converter::convertToHtml
+     * @see MarkdownConverter::convert()
      *
      * @throws \RuntimeException
      */
     public function __invoke(string $markdown): RenderedContentInterface
     {
-        return $this->convertToHtml($markdown);
+        return $this->convert($markdown);
     }
 }

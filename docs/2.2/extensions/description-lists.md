@@ -40,7 +40,7 @@ $environment->addExtension(new DescriptionListExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Some markdown goes here');
+echo $converter->convert('Some markdown goes here');
 ```
 
 ## Syntax

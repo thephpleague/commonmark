@@ -33,7 +33,7 @@ final class MarkdownConverterTest extends TestCase
         $this->assertSame($environment, $converter->getEnvironment());
     }
 
-    public function testInvokeReturnsSameOutputAsConvertToHtml(): void
+    public function testInvokeReturnsSameOutputAsConvert(): void
     {
         $inputMarkdown = '**Strong**';
         $expectedHtml  = "<p><strong>Strong</strong></p>\n";
@@ -42,7 +42,7 @@ final class MarkdownConverterTest extends TestCase
         $environment->addExtension(new CommonMarkCoreExtension());
         $converter = new MarkdownConverter($environment);
 
-        $this->assertSame($expectedHtml, (string) $converter->convertToHtml($inputMarkdown));
+        $this->assertSame($expectedHtml, (string) $converter->convert($inputMarkdown));
         $this->assertSame($expectedHtml, (string) $converter($inputMarkdown));
     }
 }

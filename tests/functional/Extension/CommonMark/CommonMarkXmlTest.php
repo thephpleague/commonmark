@@ -13,43 +13,30 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\CommonMark;
 
+use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
-use League\CommonMark\Xml\XmlRenderer;
+use League\CommonMark\Xml\MarkdownToXmlConverter;
 
 final class CommonMarkXmlTest extends AbstractLocalDataTest
 {
-    private MarkdownParser $parser;
-    private XmlRenderer $renderer;
-
-    protected function setUp(): void
+    /**
+     * @param array<string, mixed> $config
+     */
+    protected function createConverter(array $config = []): ConverterInterface
     {
-        $environment = new Environment();
+        $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension());
 
-        $this->parser   = new MarkdownParser($environment);
-        $this->renderer = new XmlRenderer($environment);
+        return new MarkdownToXmlConverter($environment);
     }
 
     /**
-     * @dataProvider dataProvider
-     */
-    public function testRenderer(string $markdown, string $expectedXml, string $testName): void
-    {
-        $document = $this->parser->parse($markdown);
-
-        $this->assertSame($expectedXml, $this->renderer->renderDocument($document)->getContent(), \sprintf('Unexpected result for "%s" test', $testName));
-    }
-
-    /**
-     * @return iterable<string, string, string>
+     * {@inheritDoc}
      */
     public function dataProvider(): iterable
     {
-        foreach ($this->loadTests(__DIR__ . '/xml', '*', '.md', '.xml') as $test) {
-            yield $test;
-        }
+        yield from $this->loadTests(__DIR__ . '/xml', '*', '.md', '.xml');
     }
 }

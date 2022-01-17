@@ -44,7 +44,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convertToHtml($input));
+        $this->assertEquals($expected, $converter->convert($input));
     }
 
     public function testConfigStringGenerator(): void
@@ -72,7 +72,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convertToHtml($input));
+        $this->assertEquals($expected, $converter->convert($input));
     }
 
     public function testConfigCallableGenerator(): void
@@ -104,7 +104,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convertToHtml($input));
+        $this->assertEquals($expected, $converter->convert($input));
     }
 
     public function testConfigObjectImplementingMentionGeneratorInterface(): void
@@ -139,7 +139,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convertToHtml($input));
+        $this->assertEquals($expected, $converter->convert($input));
     }
 
     public function testConfigUnknownGenerator(): void
@@ -160,7 +160,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $converter->convertToHtml('');
+        $converter->convert('');
     }
 
     public function testLegacySymbolOption(): void
@@ -181,7 +181,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $converter->convertToHtml('foo');
+        $converter->convert('foo');
     }
 
     public function testWithFullRegexOption(): void
@@ -202,7 +202,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $converter->convertToHtml('foo');
+        $converter->convert('foo');
     }
 
     public function testXmlRendering(): void
@@ -276,6 +276,6 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertSame($expected, $converter->convertToHtml($input)->getContent());
+        $this->assertSame($expected, $converter->convert($input)->getContent());
     }
 }

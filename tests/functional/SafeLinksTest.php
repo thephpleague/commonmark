@@ -27,7 +27,7 @@ final class SafeLinksTest extends TestCase
         $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/safe_links/unsafe_output.html'));
 
         $converter    = new CommonMarkConverter();
-        $actualOutput = \trim((string) $converter->convertToHtml($input));
+        $actualOutput = \trim((string) $converter->convert($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
@@ -38,7 +38,7 @@ final class SafeLinksTest extends TestCase
         $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/safe_links/safe_output.html'));
 
         $converter    = new CommonMarkConverter(['allow_unsafe_links' => false]);
-        $actualOutput = \trim((string) $converter->convertToHtml($input));
+        $actualOutput = \trim((string) $converter->convert($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }

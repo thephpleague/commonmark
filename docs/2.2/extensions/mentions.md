@@ -66,7 +66,7 @@ $environment->addExtension(new MentionExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Follow me on GitHub: @colinodell');
+echo $converter->convert('Follow me on GitHub: @colinodell');
 // Output:
 // <p>Follow me on GitHub: <a href="https://www.github.com/colinodell">@colinodell</a></p>
 ```
@@ -157,7 +157,7 @@ $environment->addExtension(new MentionExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Follow me on Twitter: @colinodell');
+echo $converter->convert('Follow me on Twitter: @colinodell');
 // Output:
 // <p>Follow me on Twitter: <a href="https://www.github.com/colinodell">@colinodell</a></p>
 ```
@@ -251,7 +251,7 @@ $environment->addExtension(new MentionExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('You should ask @colinodell about that');
+echo $converter->convert('You should ask @colinodell about that');
 
 // Output (if current user has permission to view profiles):
 // <p>You should ask <a href="/user/123/profile">Colin O'Dell</a> about that</p>

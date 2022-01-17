@@ -13,7 +13,7 @@ layout: homepage
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello World!');
 
 // <h1>Hello World!</h1>
 ```
@@ -26,7 +26,7 @@ All CommonMark features are supported by default, including raw HTML and unsafe 
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false]);
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello World!');
 
 // <h1>Hello World!</h1>
 ```

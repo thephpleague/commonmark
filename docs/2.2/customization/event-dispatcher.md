@@ -162,7 +162,7 @@ $converter = new CommonMarkConverter(['host' => 'commonmark.thephpleague.com'], 
 
 $input = 'My two favorite sites are <https://google.com> and <https://commonmark.thephpleague.com>';
 
-echo $converter->convertToHtml($input);
+echo $converter->convert($input);
 ```
 
 Output (formatted for readability):

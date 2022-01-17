@@ -52,7 +52,7 @@ final class GithubFlavoredMarkdownConverterTest extends TestCase
         $this->expectException(UnexpectedEncodingException::class);
 
         $converter = new GithubFlavoredMarkdownConverter();
-        $converter->convertToHtml("\x09\xca\xca");
+        $converter->convert("\x09\xca\xca");
     }
 
     public function testGetEnvironmentReturnsMainEnvironmentClass(): void

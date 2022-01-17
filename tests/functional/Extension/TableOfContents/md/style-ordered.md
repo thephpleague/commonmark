@@ -1,3 +1,8 @@
+---
+table_of_contents:
+    style: ordered
+---
+
 # These
 ## Should
 ### Be

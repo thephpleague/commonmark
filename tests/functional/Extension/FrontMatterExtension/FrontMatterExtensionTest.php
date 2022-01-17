@@ -85,7 +85,7 @@ EOT;
         ];
 
         $converter = new MarkdownConverter($this->getEnvironment($parser));
-        $result    = $converter->convertToHtml($markdown);
+        $result    = $converter->convert($markdown);
 
         $this->assertInstanceOf(RenderedContentWithFrontMatter::class, $result);
         $this->assertInstanceOf(\Stringable::class, $result);
@@ -139,7 +139,7 @@ EOT;
         ];
 
         $converter = new MarkdownConverter($this->getEnvironment($parser));
-        $result    = $converter->convertToHtml($markdown);
+        $result    = $converter->convert($markdown);
 
         $this->assertInstanceOf(RenderedContentWithFrontMatter::class, $result);
         $this->assertInstanceOf(\Stringable::class, $result);
@@ -163,7 +163,7 @@ EOT;
 
         $markdown  = '# Hello World!';
         $converter = new MarkdownConverter($this->getEnvironment($parser));
-        $result    = $converter->convertToHtml($markdown);
+        $result    = $converter->convert($markdown);
 
         $this->assertInstanceOf(RenderedContentInterface::class, $result);
         $this->assertNotInstanceOf(RenderedContentWithFrontMatter::class, $result);
@@ -198,7 +198,7 @@ EOT;
 
 EOT;
         $converter = new MarkdownConverter($this->getEnvironment($parser));
-        $converter->convertToHtml($markdown);
+        $converter->convert($markdown);
     }
 
     /**

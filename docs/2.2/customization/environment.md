@@ -27,7 +27,7 @@ use League\CommonMark\MarkdownConverter;
 // Using $environment from the previous code sample
 $converter = new MarkdownConverter($environment);
 
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello World!');
 ```
 
 ## addExtension()

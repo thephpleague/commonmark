@@ -6,6 +6,15 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added new `ConverterInterface`
+ - Added new `MarkdownToXmlConverter` class
+
+### Deprecated
+
+ - Deprecated `MarkdownConverterInterface` and its `convertToHtml()` method; use `ConverterInterface` and `convert()` instead
+
 ## [2.1.1] - 2022-01-02
 
 ### Added

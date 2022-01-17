@@ -42,7 +42,7 @@ $environment->addExtension(new AutolinkExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('I successfully installed the https://github.com/thephpleague/commonmark project with the Autolink extension!');
+echo $converter->convert('I successfully installed the https://github.com/thephpleague/commonmark project with the Autolink extension!');
 ```
 
 ## `@mention`-style Autolinking

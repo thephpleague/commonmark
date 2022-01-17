@@ -122,6 +122,6 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convertToHtml($input));
+        $this->assertEquals($expected, $converter->convert($input));
     }
 }

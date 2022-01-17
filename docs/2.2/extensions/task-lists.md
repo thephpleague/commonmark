@@ -49,7 +49,7 @@ $markdown = <<<EOT
  - [ ] Profit!
 EOT;
 
-echo $converter->convertToHtml($markdown);
+echo $converter->convert($markdown);
 ```
 
 Please note that this extension doesn't provide any JavaScript functionality to handle people checking and unchecking boxes - you'll need to implement that yourself if needed.
