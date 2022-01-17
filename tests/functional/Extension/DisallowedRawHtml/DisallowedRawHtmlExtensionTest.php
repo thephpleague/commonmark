@@ -44,7 +44,7 @@ HTML;
         $environment->addExtension(new DisallowedRawHtmlExtension());
         $converter = new MarkdownConverter($environment);
 
-        $this->assertSame($expected, (string) $converter->convertToHtml($input));
+        $this->assertSame($expected, (string) $converter->convert($input));
     }
 
     public function testIndividualHtmlTagsAsBlocks(): void
@@ -91,6 +91,6 @@ HTML;
         $environment->addExtension(new DisallowedRawHtmlExtension());
         $converter = new MarkdownConverter($environment);
 
-        $this->assertSame($expected, (string) $converter->convertToHtml($input));
+        $this->assertSame($expected, (string) $converter->convert($input));
     }
 }

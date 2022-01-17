@@ -58,7 +58,7 @@ $environment->addExtension(new CommonMarkCoreExtension());
 $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Hello World!');
+echo $converter->convert('Hello World!');
 ```
 
 Or maybe you only want a subset of GFM extensions, plus the [Smart Punctuation extension](/2.2/extensions/smart-punctuation/):
@@ -88,7 +88,7 @@ $environment->addExtension(new StrikethroughExtension());
 $environment->addExtension(new TableExtension());
 
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Hello World!');
+echo $converter->convert('Hello World!');
 ```
 
 The extension system makes it easy to mix-and-match extensions to fit your needs.

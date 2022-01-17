@@ -26,7 +26,7 @@ If you're developing an application which renders user-provided Markdown from po
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter(['html_input' => 'escape']);
-echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
+echo $converter->convert('<script>alert("Hello XSS!");</script>');
 
 // &lt;script&gt;alert("Hello XSS!");&lt;/script&gt;
 ```
@@ -37,7 +37,7 @@ echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter(['html_input' => 'strip']);
-echo $converter->convertToHtml('<script>alert("Hello XSS!");</script>');
+echo $converter->convert('<script>alert("Hello XSS!");</script>');
 
 // (empty output)
 ```
@@ -71,7 +71,7 @@ use League\CommonMark\CommonMarkConverter;
 $markdown = str_repeat('> ', 10000) . ' Foo';
 
 $converter = new CommonMarkConverter(['max_nesting_level' => 5]);
-echo $converter->convertToHtml($markdown);
+echo $converter->convert($markdown);
 
 // <blockquote>
 //   <blockquote>

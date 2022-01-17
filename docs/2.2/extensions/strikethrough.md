@@ -42,5 +42,5 @@ $environment->addExtension(new StrikethroughExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('This extension is ~~really good~~ great!');
+echo $converter->convert('This extension is ~~really good~~ great!');
 ```

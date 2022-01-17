@@ -32,7 +32,7 @@ final class EmailAutolinkParserTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, \trim((string) $converter->convertToHtml($input)));
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
     /**

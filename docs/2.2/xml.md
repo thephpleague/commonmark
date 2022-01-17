@@ -43,7 +43,7 @@ This will display XML output like this:
 
 ## Return Value
 
-Like with `CommonMarkConverter::convertToHtml()`, the `renderDocument()` actually returns an instance of `League\CommonMark\Output\RenderedContentInterface`.  You can cast this (implicitly, as shown above, or explicitly) to a `string` or call `getContent()` to get the final XML output.
+Like with `CommonMarkConverter::convert()`, the `renderDocument()` actually returns an instance of `League\CommonMark\Output\RenderedContentInterface`.  You can cast this (implicitly, as shown above, or explicitly) to a `string` or call `getContent()` to get the final XML output.
 
 ## Customizing the XML Output
 

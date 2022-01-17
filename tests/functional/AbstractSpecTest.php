@@ -38,7 +38,7 @@ abstract class AbstractSpecTest extends TestCase
      */
     public function testSpecExample(string $markdown, string $html): void
     {
-        $actualResult = (string) $this->converter->convertToHtml($markdown);
+        $actualResult = (string) $this->converter->convert($markdown);
 
         $failureMessage  = 'Unexpected result:';
         $failureMessage .= "\n=== markdown ===============\n" . $this->showSpaces($markdown);

@@ -32,8 +32,8 @@ final class DelimiterProcessingTest extends TestCase
 
         $c = new MarkdownConverter($e);
 
-        $this->assertEquals("<p>:test:</p>\n", $c->convertToHtml(':test:'));
-        $this->assertEquals("<p>;test;</p>\n", $c->convertToHtml(';test;'));
+        $this->assertEquals("<p>:test:</p>\n", $c->convert(':test:'));
+        $this->assertEquals("<p>;test;</p>\n", $c->convert(';test;'));
     }
 
     /**
@@ -48,7 +48,7 @@ final class DelimiterProcessingTest extends TestCase
 
         $converter = new MarkdownConverter($e);
 
-        $this->assertEquals($expected, $converter->convertToHtml($input));
+        $this->assertEquals($expected, $converter->convert($input));
     }
 
     /**
@@ -78,8 +78,8 @@ final class DelimiterProcessingTest extends TestCase
 
         $c = new MarkdownConverter($e);
 
-        $this->assertEquals("<p>(1)one(/1) (2)two(/2)</p>\n", $c->convertToHtml('@one@ @@two@@'));
-        $this->assertEquals("<p>(1)(2)both(/2)(/1)</p>\n", $c->convertToHtml('@@@both@@@'));
+        $this->assertEquals("<p>(1)one(/1) (2)two(/2)</p>\n", $c->convert('@one@ @@two@@'));
+        $this->assertEquals("<p>(1)(2)both(/2)(/1)</p>\n", $c->convert('@@@both@@@'));
     }
 
     public function testMultipleDelimitersWithSameLength(): void

@@ -39,5 +39,5 @@ $environment->addExtension(new CommonMarkCoreExtension());
 $environment->addExtension(new EmojiExtension());
 
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Hello! :wave:');
+echo $converter->convert('Hello! :wave:');
 ```

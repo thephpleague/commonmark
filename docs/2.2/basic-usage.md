@@ -17,7 +17,7 @@ require __DIR__ . '/vendor/autoload.php';
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello World!');
 
 // <h1>Hello World!</h1>
 ```
@@ -30,7 +30,7 @@ require __DIR__ . '/vendor/autoload.php';
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 $converter = new GithubFlavoredMarkdownConverter();
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello World!');
 
 // <h1>Hello World!</h1>
 ```
@@ -55,7 +55,7 @@ $environment->addExtension(new SmartPunctExtension());
 $environment->addExtension(new StrikethroughExtension());
 
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('**Hello World!**');
+echo $converter->convert('**Hello World!**');
 
 // <p><strong>Hello World!</strong></p>
 ```
@@ -98,4 +98,4 @@ Please note that only UTF-8 and ASCII encodings are supported.  If your Markdown
 
 ## Return Value
 
-The `convertToHtml()` method actually returns an instance of `League\CommonMark\Output\RenderedContentInterface`.  You can cast this (implicitly, as shown above, or explicitly) to a `string` or call `getContent()` to get the final HTML output.
+The `convert()` method actually returns an instance of `League\CommonMark\Output\RenderedContentInterface`.  You can cast this (implicitly, as shown above, or explicitly) to a `string` or call `getContent()` to get the final HTML output.

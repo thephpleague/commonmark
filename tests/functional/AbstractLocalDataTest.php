@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional;
 
-use League\CommonMark\MarkdownConverterInterface;
+use League\CommonMark\ConverterInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -26,7 +26,7 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 abstract class AbstractLocalDataTest extends TestCase
 {
-    protected MarkdownConverterInterface $converter;
+    protected ConverterInterface $converter;
 
     /**
      * @dataProvider dataProvider
@@ -37,7 +37,7 @@ abstract class AbstractLocalDataTest extends TestCase
      */
     protected function assertMarkdownRendersAs(string $markdown, string $html, string $testName): void
     {
-        $actualResult = (string) $this->converter->convertToHtml($markdown);
+        $actualResult = (string) $this->converter->convert($markdown);
 
         $failureMessage  = \sprintf('Unexpected result for "%s" test', $testName);
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;

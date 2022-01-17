@@ -28,7 +28,7 @@ final class HtmlInputTest extends TestCase
         $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/html_input/unsafe_output.html'));
 
         $converter    = new CommonMarkConverter();
-        $actualOutput = \trim((string) $converter->convertToHtml($input));
+        $actualOutput = \trim((string) $converter->convert($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
@@ -39,7 +39,7 @@ final class HtmlInputTest extends TestCase
         $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/html_input/unsafe_output.html'));
 
         $converter    = new CommonMarkConverter(['html_input' => HtmlFilter::ALLOW]);
-        $actualOutput = \trim((string) $converter->convertToHtml($input));
+        $actualOutput = \trim((string) $converter->convert($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
@@ -50,7 +50,7 @@ final class HtmlInputTest extends TestCase
         $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/html_input/escaped_output.html'));
 
         $converter    = new CommonMarkConverter(['html_input' => HtmlFilter::ESCAPE]);
-        $actualOutput = \trim((string) $converter->convertToHtml($input));
+        $actualOutput = \trim((string) $converter->convert($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
@@ -61,7 +61,7 @@ final class HtmlInputTest extends TestCase
         $expectedOutput = \trim(\file_get_contents(__DIR__ . '/data/html_input/safe_output.html'));
 
         $converter    = new CommonMarkConverter(['html_input' => HtmlFilter::STRIP]);
-        $actualOutput = \trim((string) $converter->convertToHtml($input));
+        $actualOutput = \trim((string) $converter->convert($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }

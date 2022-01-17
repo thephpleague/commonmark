@@ -66,7 +66,7 @@ final class ExternalLinkProcessorTest extends TestCase
 
         $c = new MarkdownConverter($e);
 
-        return \rtrim((string) $c->convertToHtml($markdown));
+        return \rtrim((string) $c->convert($markdown));
     }
 
     /**

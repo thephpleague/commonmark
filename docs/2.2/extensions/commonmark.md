@@ -26,7 +26,7 @@ This extension is automatically installed for you (behind-the-scenes) whenever y
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello World!');
 ```
 
 ## Manual Usage
@@ -47,7 +47,7 @@ $environment->addExtension(new CommonMarkCoreExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello World!');
 ```
 
 Alternatively, if you don't want all of the core Markdown syntax, avoid using `CommonMarkCoreExtension`.  You can always add just the individual parsers, renderers, etc. you actually want with the [`Environment`](/2.2/customization/environment/).  (This is actually how the [Inlines Only Extension](/2.2/extensions/inlines-only/) works - it only includes a subset of things that `CommonMarkCoreExtension` does!)

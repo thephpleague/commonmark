@@ -64,7 +64,7 @@ $environment->addExtension(new DisallowedRawHtmlExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('I cannot change the page <title>anymore</title>');
+echo $converter->convert('I cannot change the page <title>anymore</title>');
 ```
 
 ## Configuration

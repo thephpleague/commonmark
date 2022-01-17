@@ -53,6 +53,6 @@ at nisi et lectus lobortis rutrum.</p>
 
 HTML;
 
-        $this->assertSame($expected, $converter->convertToHtml($input)->getContent());
+        $this->assertSame($expected, $converter->convert($input)->getContent());
     }
 }

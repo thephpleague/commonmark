@@ -40,7 +40,7 @@ final class DefaultAttributesExtensionTest extends TestCase
         $environment->addExtension(new DefaultAttributesExtension());
         $converter = new MarkdownConverter($environment);
 
-        $this->assertSame($expectedHtml, \rtrim($converter->convertToHtml($markdown)->getContent()));
+        $this->assertSame($expectedHtml, \rtrim($converter->convert($markdown)->getContent()));
     }
 
     /**

@@ -52,16 +52,16 @@ final class CommonMarkConverterTest extends TestCase
         $this->expectException(UnexpectedEncodingException::class);
 
         $converter = new CommonMarkConverter();
-        $converter->convertToHtml("\x09\xca\xca");
+        $converter->convert("\x09\xca\xca");
     }
 
-    public function testInvokeReturnsSameOutputAsConvertToHtml(): void
+    public function testInvokeReturnsSameOutputAsConvert(): void
     {
         $inputMarkdown = '**Strong**';
 
         $converter = new CommonMarkConverter();
 
-        $this->assertEquals($converter->convertToHtml($inputMarkdown), $converter($inputMarkdown));
+        $this->assertEquals($converter->convert($inputMarkdown), $converter($inputMarkdown));
     }
 
     public function testGetEnvironmentReturnsMainEnvironmentClass(): void

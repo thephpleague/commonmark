@@ -27,7 +27,7 @@ final class CommonMarkCoreExtensionTest extends TestCase
     {
         $converter = new CommonMarkConverter($config);
 
-        $this->assertSame($expected, (string) $converter->convertToHtml($markdown));
+        $this->assertSame($expected, (string) $converter->convert($markdown));
     }
 
     /**

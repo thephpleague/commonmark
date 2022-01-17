@@ -40,7 +40,7 @@ final class InlinesOnlyFunctionalTest extends TestCase
      */
     public function testExample(string $markdown, string $html): void
     {
-        $actualResult = $this->converter->convertToHtml($markdown);
+        $actualResult = $this->converter->convert($markdown);
 
         $failureMessage  = 'Unexpected result';
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;

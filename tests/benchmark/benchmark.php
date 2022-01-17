@@ -154,11 +154,11 @@ if ($config['md'] === '-') {
 $parsers = [
     'CommonMark' => function ($markdown) {
         $parser = new CommonMarkConverter();
-        $parser->convertToHtml($markdown);
+        $parser->convert($markdown);
     },
     'CommonMark GFM' => function ($markdown) {
         $parser = new GithubFlavoredMarkdownConverter();
-        $parser->convertToHtml($markdown);
+        $parser->convert($markdown);
     },
     'CommonMark All Extensions' => function ($markdown) {
         $environment = new Environment([
@@ -202,7 +202,7 @@ $parsers = [
         $environment->addExtension(new TaskListExtension());
 
         $parser = new MarkdownConverter($environment);
-        $parser->convertToHtml($markdown);
+        $parser->convert($markdown);
     },
     'PHP Markdown' => function ($markdown) {
         Markdown::defaultTransform($markdown);

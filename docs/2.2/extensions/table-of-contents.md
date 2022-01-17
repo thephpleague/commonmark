@@ -56,7 +56,7 @@ $environment->addExtension(new TableOfContentsExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('# Awesome!');
+echo $converter->convert('# Awesome!');
 ```
 
 ## Configuration

@@ -33,7 +33,7 @@ final class MaximumNestingLevelTest extends TestCase
 </blockquote>
 ';
 
-        $this->assertEquals($expected, $converter->convertToHtml($markdown));
+        $this->assertEquals($expected, $converter->convert($markdown));
     }
 
     public function testThatWeCannotExceedTheLimit(): void
@@ -48,6 +48,6 @@ final class MaximumNestingLevelTest extends TestCase
 </blockquote>
 ';
 
-        $this->assertEquals($expected, $converter->convertToHtml($markdown));
+        $this->assertEquals($expected, $converter->convert($markdown));
     }
 }

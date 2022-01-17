@@ -42,7 +42,7 @@ $environment->addExtension(new TableExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convertToHtml('Some Markdown with a table in it');
+echo $converter->convert('Some Markdown with a table in it');
 ```
 
 ## Syntax

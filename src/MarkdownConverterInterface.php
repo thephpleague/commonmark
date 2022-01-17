@@ -15,13 +15,19 @@ namespace League\CommonMark;
 
 use League\CommonMark\Output\RenderedContentInterface;
 
+\trigger_deprecation('league/commonmark', '2.2.0', 'The "%s" class is deprecated, use "%s" instead.', MarkdownConverterInterface::class, MarkdownConverter::class);
+
 /**
  * Interface for a service which converts Markdown to HTML.
+ *
+ * @deprecated since 2.2; use {@link ConverterInterface} instead
  */
 interface MarkdownConverterInterface
 {
     /**
      * Converts Markdown to HTML.
+     *
+     * @deprecated since 2.2; use {@link ConverterInterface::convert()} instead
      *
      * @throws \RuntimeException
      */
