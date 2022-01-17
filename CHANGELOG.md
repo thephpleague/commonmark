@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Added new `ConverterInterface`
  - Added new `MarkdownToXmlConverter` class
+ - Added new `HtmlDecorator` class which can wrap existing renderers with additional HTML tags
 
 ### Deprecated
 
