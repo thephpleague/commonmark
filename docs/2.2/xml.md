@@ -6,25 +6,21 @@ description: Rendering Markdown documents in XML
 
 # XML Rendering
 
-Version 2.0 introduced the ability to render Markdown `Document` objects in XML. This is particularly useful for debugging [custom extensions](/2.0/customization/overview/).
+Version 2.0 introduced the ability to render Markdown `Document` objects in XML. This is particularly useful for debugging [custom extensions](/2.2/customization/overview/) as you can see the XML representation of the [Abstract Syntax Tree](/2.2/customization/abstract-syntax-tree/).
 
-To convert Markdown to XML, you would instantiate an [`Environment`](/2.0/customization/environment/), parse the Markdown into an [AST](/2.0/customization/abstract-syntax-tree/), and render it using the new `XmlRenderer`:
+To convert Markdown to XML, you would instantiate a `MarkdownToXmlConverter` with an [`Environment`](/2.2/customization/environment/) and then call `convert()` on any Markdown.
 
 ```php
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Parser\MarkdownParser;
-use League\CommonMark\Xml\XmlRenderer;
+use League\CommonMark\Xml\MarkdownToXmlConverter;
 
 $environment = new Environment();
 $environment->addExtension(new CommonMarkCoreExtension());
 
-$parser = new MarkdownParser($environment);
-$renderer = new XmlRenderer($environment);
+$converter = new MarkdownToXmlConverter($environment);
 
-$document = $parser->parse('# **Hello** World!');
-
-echo $renderer->renderDocument($document);
+echo $converter->convert('# **Hello** World!');
 ```
 
 This will display XML output like this:
@@ -41,10 +37,12 @@ This will display XML output like this:
 </document>
 ```
 
+Alternatively, if you already have a `Document` object you want to visualize in XML, you can use the`XmlRenderer` class to convert it to XML.
+
 ## Return Value
 
 Like with `CommonMarkConverter::convert()`, the `renderDocument()` actually returns an instance of `League\CommonMark\Output\RenderedContentInterface`.  You can cast this (implicitly, as shown above, or explicitly) to a `string` or call `getContent()` to get the final XML output.
 
 ## Customizing the XML Output
 
-See the [rendering documentation](/2.0/customization/rendering/#xml-rendering) for information on customizing the XML output.
+See the [rendering documentation](/2.2/customization/rendering/#xml-rendering) for information on customizing the XML output.

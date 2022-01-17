@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Added
 
  - Added new `ConverterInterface`
+ - Added new `MarkdownToXmlConverter` class
 
 ### Deprecated
 
