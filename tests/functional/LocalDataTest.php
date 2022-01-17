@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\ConverterInterface;
 
 /**
  * Tests the parser against locally-stored examples
@@ -23,25 +24,16 @@ use League\CommonMark\CommonMarkConverter;
  */
 final class LocalDataTest extends AbstractLocalDataTest
 {
-    protected function setUp(): void
-    {
-        $this->converter = new CommonMarkConverter();
-    }
-
     /**
-     * @dataProvider dataProvider
-     *
-     * @param string $markdown Markdown to parse
-     * @param string $html     Expected result
-     * @param string $testName Name of the test
+     * @param array<string, mixed> $config
      */
-    public function testExample(string $markdown, string $html, string $testName): void
+    protected function createConverter(array $config = []): ConverterInterface
     {
-        $this->assertMarkdownRendersAs($markdown, $html, $testName);
+        return new CommonMarkConverter($config);
     }
 
     /**
-     * @return iterable<array<string>>
+     * {@inheritDoc}
      */
     public function dataProvider(): iterable
     {

@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\ConverterInterface;
+use League\CommonMark\Extension\FrontMatter\Data\SymfonyYamlFrontMatterParser;
+use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -26,18 +28,27 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 abstract class AbstractLocalDataTest extends TestCase
 {
-    protected ConverterInterface $converter;
+    /**
+     * @param array<string, mixed> $config
+     */
+    abstract protected function createConverter(array $config = []): ConverterInterface;
+
+    /**
+     * @return iterable<array{string, string, array<string, mixed>, string}>
+     */
+    abstract protected function dataProvider(): iterable;
 
     /**
      * @dataProvider dataProvider
      *
-     * @param string $markdown Markdown to parse
-     * @param string $html     Expected result
-     * @param string $testName Name of the test
+     * @param string               $markdown Markdown to parse
+     * @param string               $html     Expected result
+     * @param array<string, mixed> $config   Configuration loaded from front matter
+     * @param string               $testName Name of the test
      */
-    protected function assertMarkdownRendersAs(string $markdown, string $html, string $testName): void
+    public function testWithLocalData(string $markdown, string $html, array $config, string $testName): void
     {
-        $actualResult = (string) $this->converter->convert($markdown);
+        $actualResult = (string) $this->createConverter($config)->convert($markdown);
 
         $failureMessage  = \sprintf('Unexpected result for "%s" test', $testName);
         $failureMessage .= "\n=== markdown ===============\n" . $markdown;
@@ -48,7 +59,7 @@ abstract class AbstractLocalDataTest extends TestCase
     }
 
     /**
-     * @return iterable<array<string>>
+     * @return iterable<array{string, string, array<string, mixed>, string}>
      */
     protected function loadTests(string $dir, string $pattern = '*', string $inputFormat = '.md', string $outputFormat = '.html'): iterable
     {
@@ -61,10 +72,11 @@ abstract class AbstractLocalDataTest extends TestCase
         foreach ($finder as $markdownFile) {
             \assert($markdownFile instanceof SplFileInfo);
             $testName = $markdownFile->getBasename($inputFormat);
-            $markdown = $markdownFile->getContents();
+            $input    = $markdownFile->getContents();
+            $parsed   = (new FrontMatterParser(new SymfonyYamlFrontMatterParser()))->parse($input);
             $html     = \file_get_contents($dir . '/' . $testName . $outputFormat);
 
-            yield [$markdown, $html, $testName];
+            yield [$parsed->getContent(), $html, (array) $parsed->getFrontMatter(), $testName];
         }
     }
 }

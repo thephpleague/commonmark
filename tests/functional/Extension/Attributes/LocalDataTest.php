@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Attributes;
 
+use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Attributes\AttributesExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
@@ -26,30 +27,24 @@ use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
  */
 final class LocalDataTest extends AbstractLocalDataTest
 {
-    protected function setUp(): void
+    /**
+     * @param array<string, mixed> $config
+     */
+    protected function createConverter(array $config = []): ConverterInterface
     {
-        $environment = new Environment();
+        $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
         $environment->addExtension(new AttributesExtension());
-        $this->converter = new MarkdownConverter($environment);
+
+        return new MarkdownConverter($environment);
     }
 
     /**
-     * @dataProvider dataProvider
-     */
-    public function testRenderer(string $markdown, string $html, string $testName): void
-    {
-        $this->assertMarkdownRendersAs($markdown, $html, $testName);
-    }
-
-    /**
-     * @return iterable<string, string, string>
+     * {@inheritDoc}
      */
     public function dataProvider(): iterable
     {
-        foreach ($this->loadTests(__DIR__ . '/data') as $test) {
-            yield $test;
-        }
+        yield from $this->loadTests(__DIR__ . '/data');
     }
 }

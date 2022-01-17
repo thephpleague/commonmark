@@ -1,3 +1,9 @@
+---
+table_of_contents:
+    position: placeholder
+    placeholder: '[TOC]'
+---
+
 This is my document.
 
 [TOC]
