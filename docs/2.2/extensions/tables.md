@@ -31,7 +31,15 @@ use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 
 // Define your configuration, if needed
-$config = [];
+$config = [
+    'table' => [
+        'wrap' => [
+            'enabled' => false,
+            'tag' => 'div',
+            'attributes' => [],
+        ],
+    ],
+];
 
 // Configure the Environment with all the CommonMark parsers/renderers
 $environment = new Environment($config);
@@ -87,6 +95,30 @@ Result:
 | :------- | :------: | -------: |
 | cell 1.1 | cell 1.2 | cell 1.3 |
 | cell 2.1 | cell 2.2 | cell 2.3 |
+```
+
+## Configuration
+
+### Wrapping Container
+
+You can "wrap" the table with a container element by configuring the following options:
+
+- `enabled`: (`boolean`) Whether to wrap the table with a container element. Defaults to `false`.
+- `tag`: (`string`) The tag name of the container element. Defaults to `div`.
+- `attributes`: (`array`) An array of attributes to apply to the container element. Defaults to `[]`.
+
+For example, to wrap all tables within a `<div class="table-responsive">` container element:
+
+```php
+$config = [
+    'table' => [
+        'wrap' => [
+            'enabled' => true,
+            'tag' => 'div',
+            'attributes' => ['class' => 'table-responsive'],
+        ],
+    ],
+];
 ```
 
 ## Credits
