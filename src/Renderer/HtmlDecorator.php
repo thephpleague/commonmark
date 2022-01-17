@@ -40,6 +40,6 @@ final class HtmlDecorator implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        return new HtmlElement($this->tag, $this->attributes, (string) $this->inner->render($node, $childRenderer), $this->selfClosing);
+        return new HtmlElement($this->tag, $this->attributes, $this->inner->render($node, $childRenderer), $this->selfClosing);
     }
 }

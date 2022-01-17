@@ -12,6 +12,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
  - Added new `MarkdownToXmlConverter` class
  - Added new `HtmlDecorator` class which can wrap existing renderers with additional HTML tags
 
+### Changed
+
+ - `HtmlElement` contents can now consist of any `Stringable`, not just `HtmlElement` and `string`
+
 ### Deprecated
 
  - Deprecated `MarkdownConverterInterface` and its `convertToHtml()` method; use `ConverterInterface` and `convert()` instead
