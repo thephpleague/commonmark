@@ -7,7 +7,7 @@ repository: commonmark
 default_version: '2.2'
 releases:
   next:
-    '2.3:
+    '2.3':
       documentation_link: '/2.3/'
   current:
     '2.2':
