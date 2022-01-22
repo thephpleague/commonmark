@@ -15,69 +15,35 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\Table;
 
+use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Table\TableExtension;
-use League\CommonMark\Parser\MarkdownParser;
-use League\CommonMark\Renderer\HtmlRenderer;
-use League\CommonMark\Renderer\MarkdownRendererInterface;
-use PHPUnit\Framework\TestCase;
+use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
 
 /**
  * @internal
  */
-final class TableMarkdownTest extends TestCase
+final class TableMarkdownTest extends AbstractLocalDataTest
 {
-    private Environment $environment;
-
-    private MarkdownParser $parser;
-
-    protected function setUp(): void
+    /**
+     * @param array<string, mixed> $config
+     */
+    protected function createConverter(array $config = []): ConverterInterface
     {
-        $this->environment = new Environment();
-        $this->environment->addExtension(new CommonMarkCoreExtension());
-        $this->environment->addExtension(new TableExtension());
+        $environment = new Environment($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new TableExtension());
 
-        $this->parser = new MarkdownParser($this->environment);
+        return new MarkdownConverter($environment);
     }
 
     /**
-     * @dataProvider dataProvider
+     * {@inheritDoc}
      */
-    public function testRenderer(string $markdown, string $html, string $testName): void
+    public function dataProvider(): iterable
     {
-        $renderer = new HtmlRenderer($this->environment);
-        $this->assertCommonMark($renderer, $markdown, $html, $testName);
-    }
-
-    /**
-     * @return array<array<string>>
-     */
-    public function dataProvider(): array
-    {
-        $ret = [];
-        foreach (\glob(__DIR__ . '/md/*.md') as $markdownFile) {
-            $testName = \basename($markdownFile, '.md');
-
-            $markdown = \file_get_contents($markdownFile);
-            $html     = \file_get_contents(__DIR__ . '/md/' . $testName . '.html');
-
-            $ret[] = [$markdown, $html, $testName];
-        }
-
-        return $ret;
-    }
-
-    protected function assertCommonMark(MarkdownRendererInterface $renderer, string $markdown, string $html, string $testName): void
-    {
-        $documentAST  = $this->parser->parse($markdown);
-        $actualResult = $renderer->renderDocument($documentAST);
-
-        $failureMessage  = \sprintf('Unexpected result for "%s" test', $testName);
-        $failureMessage .= "\n=== markdown ===============\n" . $markdown;
-        $failureMessage .= "\n=== expected ===============\n" . $html;
-        $failureMessage .= "\n=== got ====================\n" . $actualResult;
-
-        $this->assertEquals($html, $actualResult, $failureMessage);
+        yield from $this->loadTests(__DIR__ . '/md');
     }
 }

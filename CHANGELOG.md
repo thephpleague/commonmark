@@ -10,6 +10,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
  - Added new `ConverterInterface`
  - Added new `MarkdownToXmlConverter` class
+ - Added new `HtmlDecorator` class which can wrap existing renderers with additional HTML tags
+ - Added new `table/wrap` config to apply an optional wrapping/container element around a table (#780)
+
+### Changed
+
+ - `HtmlElement` contents can now consist of any `Stringable`, not just `HtmlElement` and `string`
 
 ### Deprecated
 
