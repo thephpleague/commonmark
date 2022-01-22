@@ -1,4 +1,48 @@
 version:
+    '2.3':
+        Getting Started:
+            'Overview': '/2.3/'
+            'Installation': '/2.3/installation/'
+            'Upgrading from 2.0': '/2.3/upgrading/'
+            'Changelog': '/2.3/changelog/'
+            'Support': '/2.3/support/'
+        Usage:
+            'Basic Usage': '/2.3/basic-usage/'
+            'Configuration': '/2.3/configuration/'
+            'Security': '/2.3/security/'
+            'XML': '/2.3/xml/'
+        Extensions:
+            'Overview': '/2.3/extensions/overview/'
+            'CommonMark': '/2.3/extensions/commonmark/'
+            'GitHub-Flavored Markdown': '/2.3/extensions/github-flavored-markdown/'
+            'Attributes': '/2.3/extensions/attributes/'
+            'Autolinks': '/2.3/extensions/autolinks/'
+            'Default Attributes': '/2.3/extensions/default-attributes/'
+            'Description Lists': '/2.3/extensions/description-lists/'
+            'Disallowed Raw HTML': '/2.3/extensions/disallowed-raw-html/'
+            'External Links': '/2.3/extensions/external-links/'
+            'Footnotes': '/2.3/extensions/footnotes/'
+            'Heading Permalinks': '/2.3/extensions/heading-permalinks/'
+            'Inlines Only': '/2.3/extensions/inlines-only/'
+            'Mentions': '/2.3/extensions/mentions/'
+            'Smart Punctuation': '/2.3/extensions/smart-punctuation/'
+            'Strikethrough': '/2.3/extensions/strikethrough/'
+            'Table of Contents': '/2.3/extensions/table-of-contents/'
+            'Tables': '/2.3/extensions/tables/'
+            'Task Lists': '/2.3/extensions/task-lists/'
+        Customization:
+            'Overview': '/2.3/customization/overview/'
+            'Environment': '/2.3/customization/environment/'
+            'Extensions': '/2.3/customization/extensions/'
+            'Configuration': '/2.3/customization/configuration/'
+            'Event Dispatcher': '/2.3/customization/event-dispatcher/'
+            'Cursor': '/2.3/customization/cursor/'
+            'Block Parsing': '/2.3/customization/block-parsing/'
+            'Inline Parsing': '/2.3/customization/inline-parsing/'
+            'Delimiter Processing': '/2.3/customization/delimiter-processing/'
+            'Abstract Syntax Tree': '/2.3/customization/abstract-syntax-tree/'
+            'Rendering': '/2.3/customization/rendering/'
+            'Slug Normalizer': '/2.3/customization/slug-normalizer/'
     '2.2':
         Getting Started:
             'Overview': '/2.2/'
