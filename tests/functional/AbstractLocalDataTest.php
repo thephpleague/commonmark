@@ -36,7 +36,7 @@ abstract class AbstractLocalDataTest extends TestCase
     /**
      * @return iterable<array{string, string, array<string, mixed>, string}>
      */
-    abstract protected function dataProvider(): iterable;
+    abstract public function dataProvider(): iterable;
 
     /**
      * @dataProvider dataProvider
