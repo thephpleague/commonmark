@@ -20,6 +20,7 @@ version:
             'Default Attributes': '/2.3/extensions/default-attributes/'
             'Description Lists': '/2.3/extensions/description-lists/'
             'Disallowed Raw HTML': '/2.3/extensions/disallowed-raw-html/'
+            'Embed': '/2.3/extensions/embed/'
             'External Links': '/2.3/extensions/external-links/'
             'Footnotes': '/2.3/extensions/footnotes/'
             'Heading Permalinks': '/2.3/extensions/heading-permalinks/'

@@ -22,6 +22,7 @@ to enhance your experience out-of-the-box depending on your specific use-cases.
 | [Default Attributes] | Easily apply default HTML classes using configuration options to match your site's styles  | `2.0.0` | |
 | [Description Lists] | Create `<dl>` description lists using Markdown Extra's syntax | `2.0.0` | |
 | [Disallowed Raw HTML] | Disables certain kinds of HTML tags that could affect page rendering | `1.3.0`  | <i class="fab fa-github"></i> |
+| [Embed] | Embed rich content (like videos, tweets, and more) from other websites | `2.3.0` | |
 | [External Links] | Tags external links with additional markup | `1.3.0` | |
 | [Footnotes] | Add footnote references throughout the document and show a listing of them at the bottom | `1.5.0` | |
 | [Front Matter] | Parses YAML front matter from your Markdown input |  `2.0.0` | |
@@ -102,6 +103,7 @@ See the [Custom Extensions](/2.3/customization/extensions/) page for details on 
 [Default Attributes]: /2.3/extensions/default-attributes/
 [Description Lists]: /2.3/extensions/description-lists/
 [Disallowed Raw HTML]: /2.3/extensions/disallowed-raw-html/
+[Embed]: /2.3/extensions/embed/
 [External Links]: /2.3/extensions/external-links/
 [Footnotes]: /2.3/extensions/footnotes/
 [Front Matter]: /2.3/extensions/front-matter/

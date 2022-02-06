@@ -1,0 +1,27 @@
+<p>This is an embed:</p>
+<iframe class="embed" src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></iframe>
+<p>So is this, with only three spaces of indentation:</p>
+<iframe class="embed" src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></iframe>
+<p>This is not, because it's fully indented:</p>
+<pre><code>https://www.youtube.com/watch?v=dQw4w9WgXcQ
+</code></pre>
+<p>This is not, because it has extra bits after the URL:</p>
+<p>https://www.youtube.com/watch?v=dQw4w9WgXcQ &lt;-- you gotta watch this!</p>
+<p>This is not, because it's in a fenced code block:</p>
+<pre><code class="language-md">
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+</code></pre>
+<p>And this isn't either because it's inline: <img src="https://www.youtube.com/watch?v=dQw4w9WgXcQ" alt="" /></p>
+<p>Embeds can't be nested in other blocks:</p>
+<ul>
+<li>https://www.youtube.com/watch?v=dQw4w9WgXcQ
+<ul>
+<li>https://www.youtube.com/watch?v=dQw4w9WgXcQ</li>
+</ul>
+</li>
+</ul>
+<p>This isn't valid because it's a lazy paragraph continuation:
+https://www.youtube.com/watch?v=dQw4w9WgXcQ</p>
+<iframe class="embed" src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></iframe>
+<p>^ This is fine, though</p>
