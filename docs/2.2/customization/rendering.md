@@ -112,6 +112,26 @@ Note that thematic breaks should not contain children, which is why the `$childR
 - Return an `HtmlElement` if possible. This makes it easier to extend and modify the results later.
 - Don't forget to render any child elements that your node might contain!
 
+## Wrapping Elements with `HtmlDecorator`
+
+A utility class called `HtmlDecorator` is provided to make it easier to wrap the output of any renderer within an additional HTML tag with custom attributes and/or classes.
+
+To use it, you register it as a renderer for whatever AST node type you want to wrap:
+
+```php
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Table\Table;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\Table\TableRenderer;
+use League\CommonMark\Renderer\HtmlDecorator;
+
+$environment = new Environment();
+$environment->addExtension(new CommonMarkCoreExtension());
+$environment->addExtension(new TableExtension());
+$environment->addRenderer(Table::class, new HtmlDecorator(new TableRenderer(), 'div', ['class' => 'table-responsive']));
+```
+
 ## XML Rendering
 
 The [XML renderer](/2.2/xml/) will automatically attempt to convert any AST nodes to XML by inspecting the name of the block/inline node and its attributes. You can instead control the XML element name and attributes by making your renderer implement `XmlNodeRendererInterface`:
