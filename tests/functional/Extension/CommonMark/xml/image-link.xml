@@ -16,19 +16,15 @@
         </link>
     </paragraph>
     <paragraph>
-        <image destination="foo.jpg" title="" />
+        <image destination="foo.jpg" title="" label="" />
     </paragraph>
     <paragraph>
-        <image destination="foo.jpg" title="">
-            <text>alt text</text>
-        </image>
+        <image destination="foo.jpg" title="" label="alt text" />
     </paragraph>
     <paragraph>
-        <image destination="foo.jpg" title="title">
-            <text>alt text</text>
-        </image>
+        <image destination="foo.jpg" title="title" label="alt text" />
     </paragraph>
     <paragraph>
-        <image destination="foo.jpg" title="title" />
+        <image destination="foo.jpg" title="title" label="" />
     </paragraph>
 </document>

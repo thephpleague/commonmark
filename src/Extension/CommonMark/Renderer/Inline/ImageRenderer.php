@@ -51,9 +51,9 @@ final class ImageRenderer implements NodeRendererInterface, XmlNodeRendererInter
             $attrs['src'] = $node->getUrl();
         }
 
-        $alt          = $childRenderer->renderNodes($node->children());
-        $alt          = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
-        $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt ?? '');
+        if (($label = $node->getLabel()) !== null) {
+            $attrs['alt'] = $label;
+        }
 
         if (($title = $node->getTitle()) !== null) {
             $attrs['title'] = $title;
@@ -86,6 +86,7 @@ final class ImageRenderer implements NodeRendererInterface, XmlNodeRendererInter
         return [
             'destination' => $node->getUrl(),
             'title' => $node->getTitle() ?? '',
+            'label' => $node->getLabel() ?? '',
         ];
     }
 }

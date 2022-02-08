@@ -97,7 +97,28 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
                 }
 
                 $label->detach();
-            } else {
+            } elseif ($isImage) {
+                // Per CommonMark spec, labels (alt text) for images have
+                // inline elements as its contents, but of course it will only
+                // display as plain text per certain rules.
+                if ($label instanceof Link) {
+                    $inline->setLabel($inline->getLabel() . $label->getTitle());
+                } elseif ($label instanceof Image) {
+                    $inline->setLabel($inline->getLabel() . $label->getLabel());
+                }
+                else {
+                    $literal = $label->getLiteral();
+                    // Special handling for [ as "link syntax" is valid here.
+                    // In particular see CommonMark example 519:
+                    // input: ![[[foo](uri1)](uri2)](uri3)
+                    // output: <p><img src="uri3" alt="[foo](uri2)" /></p>
+                    if (! $label->data->get('delim', false) || $literal === '[') {
+                        $inline->setLabel($inline->getLabel() . $literal);
+                    }
+                }
+                $label->detach();
+            }
+            else {
                 $inline->appendChild($label);
             }
         }

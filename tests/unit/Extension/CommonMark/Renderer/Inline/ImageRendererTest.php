@@ -48,7 +48,7 @@ final class ImageRendererTest extends TestCase
         $this->assertEquals('img', $result->getTagName());
         $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
         $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
-        $this->assertStringContainsString('::children::', $result->getAttribute('alt'));
+        $this->assertStringContainsString('::label::', $result->getAttribute('alt'));
         $this->assertStringContainsString('::title::', $result->getAttribute('title'));
         $this->assertStringContainsString('::id::', $result->getAttribute('id'));
     }
@@ -64,7 +64,7 @@ final class ImageRendererTest extends TestCase
         $this->assertEquals('img', $result->getTagName());
         $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
         $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
-        $this->assertStringContainsString('::children::', $result->getAttribute('alt'));
+        $this->assertStringContainsString('::label::', $result->getAttribute('alt'));
         $this->assertNull($result->getAttribute('title'));
     }
 

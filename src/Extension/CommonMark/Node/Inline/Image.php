@@ -20,17 +20,25 @@ use League\CommonMark\Node\Inline\Text;
 
 class Image extends AbstractWebResource
 {
+    protected string $label;
     protected ?string $title = null;
 
-    public function __construct(string $url, ?string $label = null, ?string $title = null)
+    public function __construct(string $url, ?string $label = '', ?string $title = null)
     {
         parent::__construct($url);
 
-        if ($label !== null && $label !== '') {
-            $this->appendChild(new Text($label));
-        }
-
+        $this->label = $label ?? '';
         $this->title = $title;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    public function setLabel(?string $label): void
+    {
+        $this->label = $label;
     }
 
     public function getTitle(): ?string
