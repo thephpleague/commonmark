@@ -51,9 +51,7 @@ final class ImageRenderer implements NodeRendererInterface, XmlNodeRendererInter
             $attrs['src'] = $node->getUrl();
         }
 
-        $alt          = $childRenderer->renderNodes($node->children());
-        $alt          = \preg_replace('/\<[^>]*alt="([^"]*)"[^>]*\>/', '$1', $alt);
-        $attrs['alt'] = \preg_replace('/\<[^>]*\>/', '', $alt ?? '');
+        $attrs['alt'] = $node->getLabel();
 
         if (($title = $node->getTitle()) !== null) {
             $attrs['title'] = $title;
