@@ -105,8 +105,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
                     $inline->setLabel($inline->getLabel() . $label->getTitle());
                 } elseif ($label instanceof Image) {
                     $inline->setLabel($inline->getLabel() . $label->getLabel());
-                }
-                else {
+                } else {
                     $literal = $label->getLiteral();
                     // Special handling for [ as "link syntax" is valid here.
                     // In particular see CommonMark example 519:
@@ -116,9 +115,9 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
                         $inline->setLabel($inline->getLabel() . $literal);
                     }
                 }
+
                 $label->detach();
-            }
-            else {
+            } else {
                 $inline->appendChild($label);
             }
         }

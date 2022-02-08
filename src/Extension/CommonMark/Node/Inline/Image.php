@@ -16,8 +16,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\CommonMark\Node\Inline;
 
-use League\CommonMark\Node\Inline\Text;
-
 class Image extends AbstractWebResource
 {
     protected string $label;
