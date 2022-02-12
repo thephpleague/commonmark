@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+ - Added new `EmbedExtension` (#805)
+
 ## [2.2.1] - 2022-01-25
 
 ### Fixed
