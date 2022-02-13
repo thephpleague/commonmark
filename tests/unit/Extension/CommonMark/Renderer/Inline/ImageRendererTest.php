@@ -18,9 +18,11 @@ namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\ImageRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
+use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
 use League\Config\ConfigurationInterface;
@@ -48,7 +50,7 @@ final class ImageRendererTest extends TestCase
         $this->assertEquals('img', $result->getTagName());
         $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
         $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
-        $this->assertStringContainsString('::children::', $result->getAttribute('alt'));
+        $this->assertStringContainsString('::label::', $result->getAttribute('alt'));
         $this->assertStringContainsString('::title::', $result->getAttribute('title'));
         $this->assertStringContainsString('::id::', $result->getAttribute('id'));
     }
@@ -64,8 +66,27 @@ final class ImageRendererTest extends TestCase
         $this->assertEquals('img', $result->getTagName());
         $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
         $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
-        $this->assertStringContainsString('::children::', $result->getAttribute('alt'));
+        $this->assertStringContainsString('::label::', $result->getAttribute('alt'));
         $this->assertNull($result->getAttribute('title'));
+    }
+
+    public function testRenderWithInlineChildrenForAltText(): void
+    {
+        $inline = new Image('http://example.com/foo.jpg');
+        $inline->appendChild(new Text('an "image" with '));
+        $inline->appendChild(new HtmlInline('<escapable characters>'));
+        $inline->appendChild(new Text(' in the & title'));
+
+        $result = $this->renderer->render($inline, new FakeChildNodeRenderer());
+
+        $this->assertTrue($result instanceof HtmlElement);
+        $this->assertEquals('img', $result->getTagName());
+        $this->assertStringContainsString('http://example.com/foo.jpg', $result->getAttribute('src'));
+        $this->assertStringContainsString('foo.jpg', $result->getAttribute('src'));
+        $this->assertStringContainsString('an "image" with <escapable characters> in the & title', $result->getAttribute('alt'));
+        $this->assertNull($result->getAttribute('title'));
+
+        $this->assertSame('<img src="http://example.com/foo.jpg" alt="an &quot;image&quot; with &lt;escapable characters&gt; in the &amp; title" />', (string) $result);
     }
 
     public function testRenderAllowUnsafeLink(): void

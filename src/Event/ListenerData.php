@@ -20,17 +20,24 @@ namespace League\CommonMark\Event;
  */
 final class ListenerData
 {
+    /** @var class-string */
     private string $event;
 
     /** @var callable */
     private $listener;
 
+    /**
+     * @param class-string $event
+     */
     public function __construct(string $event, callable $listener)
     {
         $this->event    = $event;
         $this->listener = $listener;
     }
 
+    /**
+     * @return class-string
+     */
     public function getEvent(): string
     {
         return $this->event;
