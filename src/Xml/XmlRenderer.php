@@ -62,7 +62,7 @@ final class XmlRenderer implements MarkdownRendererInterface
                     $xml .= self::tag('/' . $tagName);
                 }
 
-                if (! $closeImmediately && ! $selfClosing) {
+                if (! $closeImmediately) {
                     $indent++;
                 }
             } elseif (! $closeImmediately) {
