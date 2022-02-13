@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed double-escaping of image alt text (#806, #810)
+
 ## [2.0.2] - 2021-08-14
 
 ### Changed
