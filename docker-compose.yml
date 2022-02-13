@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+    php:
+        build: ./docker
+        volumes:
+            - .:/app:rw
+    bc-check:
+        image: nyholm/roave-bc-check
+        volumes:
+            - .:/app:ro

@@ -10,6 +10,8 @@
 /.nojekyll            export-ignore
 /.scrutinizer.yml     export-ignore
 /.styleci.yml         export-ignore
+/docker               export-ignore
+/docker-compose.yml   export-ignore
 /docs                 export-ignore
 /phpcs.xml.dist       export-ignore
 /phpstan.neon.dist    export-ignore
