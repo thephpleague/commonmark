@@ -17,7 +17,10 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\CommonMark\Renderer\Inline;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
+use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Node;
+use League\CommonMark\Node\NodeIterator;
+use League\CommonMark\Node\StringContainerInterface;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
@@ -51,7 +54,7 @@ final class ImageRenderer implements NodeRendererInterface, XmlNodeRendererInter
             $attrs['src'] = $node->getUrl();
         }
 
-        $attrs['alt'] = $node->getLabel();
+        $attrs['alt'] = $this->getAltText($node);
 
         if (($title = $node->getTitle()) !== null) {
             $attrs['title'] = $title;
@@ -85,5 +88,20 @@ final class ImageRenderer implements NodeRendererInterface, XmlNodeRendererInter
             'destination' => $node->getUrl(),
             'title' => $node->getTitle() ?? '',
         ];
+    }
+
+    private function getAltText(Image $node): string
+    {
+        $altText = '';
+
+        foreach ((new NodeIterator($node)) as $n) {
+            if ($n instanceof StringContainerInterface) {
+                $altText .= $n->getLiteral();
+            } elseif ($n instanceof Newline) {
+                $altText .= "\n";
+            }
+        }
+
+        return $altText;
     }
 }
