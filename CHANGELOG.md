@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Fixed
 
 - Fixed double-escaping of image alt text (#806, #810)
+- Fixed Psalm typehints for event class names
 
 ## [2.0.2] - 2021-08-14
 
