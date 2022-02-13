@@ -18,4 +18,5 @@
 /phpunit.xml.dist     export-ignore
 /psalm.xml            export-ignore
 /RELEASE_CHECKLIST.md export-ignore
+/roave-bc-check.yaml  export-ignore
 /tests                export-ignore
