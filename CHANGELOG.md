@@ -8,7 +8,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
- - Added new `EmbedExtension` (#805)
+- Added new `EmbedExtension` (#805)
+- Added `DocumentRendererInterface` as a replacement for the now-deprecated `MarkdownRendererInterface`
+
+### Deprecated
+
+- Deprecated `MarkdownRendererInterface`; use `DocumentRendererInterface` instead
 
 ## [2.2.3] - 2022-02-26
 
