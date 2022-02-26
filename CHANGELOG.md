@@ -6,6 +6,18 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.1.3] - 2022-02-26
+
+### Fixed
+
+- Fixed front matter parsing with Windows line endings (#821)
+
+## [2.0.4] - 2022-02-26
+
+### Fixed
+
+- Fixed front matter parsing with Windows line endings (#821)
+
 ## [2.2.2] - 2022-02-13
 
 ### Fixed
@@ -420,9 +432,11 @@ No changes were introduced since the previous release.
 [2.2.2]: https://github.com/thephpleague/commonmark/compare/2.2.1...2.2.2
 [2.2.1]: https://github.com/thephpleague/commonmark/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/thephpleague/commonmark/compare/2.1.1...2.2.0
+[2.1.3]: https://github.com/thephpleague/commonmark/compare/2.1.2...2.1.3
 [2.1.2]: https://github.com/thephpleague/commonmark/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/thephpleague/commonmark/compare/2.0.2...2.1.1
 [2.1.0]: https://github.com/thephpleague/commonmark/compare/2.0.2...2.1.0
+[2.0.4]: https://github.com/thephpleague/commonmark/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/thephpleague/commonmark/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/thephpleague/commonmark/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/thephpleague/commonmark/compare/2.0.0...2.0.1
