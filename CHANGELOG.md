@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.0.4] - 2022-02-26
+
 ### Fixed
 
 - Fixed front matter parsing with Windows line endings (#821)
@@ -361,7 +363,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.0.3...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.0.4...main
+[2.0.4]: https://github.com/thephpleague/commonmark/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/thephpleague/commonmark/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/thephpleague/commonmark/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/thephpleague/commonmark/compare/2.0.0...2.0.1
