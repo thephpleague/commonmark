@@ -395,7 +395,7 @@ No changes were introduced since the previous release.
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
 [unreleased]: https://github.com/thephpleague/commonmark/compare/2.1.3...main
-[2.1.3]: https://github.com/thephpleague/commonmark/compare/2.1.2...2.1.2
+[2.1.3]: https://github.com/thephpleague/commonmark/compare/2.1.2...2.1.3
 [2.1.2]: https://github.com/thephpleague/commonmark/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/thephpleague/commonmark/compare/2.0.2...2.1.1
 [2.1.0]: https://github.com/thephpleague/commonmark/compare/2.0.2...2.1.0
