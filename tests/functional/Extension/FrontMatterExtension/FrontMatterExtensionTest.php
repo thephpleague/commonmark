@@ -126,7 +126,7 @@ EOT;
     {
         $markdown = "---\r\nfoo: bar\r\n---\r\n\r\n# Test";
 
-        $expectedHtml = "<h1>Test</h1>\n";
+        $expectedHtml        = "<h1>Test</h1>\n";
         $expectedFrontMatter = ['foo' => 'bar'];
 
         $converter = new MarkdownConverter($this->environment);
