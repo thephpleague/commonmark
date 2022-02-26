@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed front matter parsing with Windows line endings (#821)
+
 ## [2.0.3] - 2022-02-13
 
 ### Fixed

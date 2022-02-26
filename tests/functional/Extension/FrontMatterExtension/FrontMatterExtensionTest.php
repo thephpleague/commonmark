@@ -122,6 +122,29 @@ EOT;
         $this->assertSame(9, $result->getDocument()->firstChild()->getStartLine());
     }
 
+    public function testWithWindowsLineEndings(): void
+    {
+        $markdown = "---\r\nfoo: bar\r\n---\r\n\r\n# Test";
+
+        $expectedHtml = "<h1>Test</h1>\n";
+        $expectedFrontMatter = ['foo' => 'bar'];
+
+        $converter = new MarkdownConverter($this->environment);
+        $result    = $converter->convertToHtml($markdown);
+
+        $this->assertInstanceOf(RenderedContentWithFrontMatter::class, $result);
+        $this->assertInstanceOf(\Stringable::class, $result);
+
+        \assert($result instanceof RenderedContentWithFrontMatter);
+        $this->assertSame($expectedFrontMatter, $result->getFrontMatter());
+
+        $this->assertSame($expectedHtml, (string) $result->getContent());
+        $this->assertSame($expectedHtml, (string) $result);
+
+        $this->assertSame(1, $result->getDocument()->getStartLine());
+        $this->assertSame(5, $result->getDocument()->firstChild()->getStartLine());
+    }
+
     public function testWithNoFrontMatter(): void
     {
         $markdown  = '# Hello World!';
