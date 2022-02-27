@@ -18,7 +18,7 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Parser\MarkdownParserInterface;
-use League\CommonMark\Renderer\MarkdownRendererInterface;
+use League\CommonMark\Renderer\DocumentRendererInterface;
 
 final class MarkdownToXmlConverter implements ConverterInterface
 {
@@ -26,7 +26,7 @@ final class MarkdownToXmlConverter implements ConverterInterface
     private MarkdownParserInterface $parser;
 
     /** @psalm-readonly */
-    private MarkdownRendererInterface $renderer;
+    private DocumentRendererInterface $renderer;
 
     public function __construct(EnvironmentInterface $environment)
     {
