@@ -10,10 +10,13 @@
 /.nojekyll            export-ignore
 /.scrutinizer.yml     export-ignore
 /.styleci.yml         export-ignore
+/CHANGELOG-0.x.md     export-ignore
+/CHANGELOG-1.x.md     export-ignore
 /docs                 export-ignore
 /phpcs.xml.dist       export-ignore
 /phpstan.neon.dist    export-ignore
 /phpunit.xml.dist     export-ignore
 /psalm.xml            export-ignore
 /RELEASE_CHECKLIST.md export-ignore
+/roave-bc-check.yaml  export-ignore
 /tests                export-ignore
