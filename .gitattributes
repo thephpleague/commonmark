@@ -17,3 +17,7 @@
 /psalm.xml            export-ignore
 /RELEASE_CHECKLIST.md export-ignore
 /tests                export-ignore
+/CHANGELOG.md         export-ignore
+/CHANGELOG-0.x.md     export-ignore
+/CHANGELOG-1.x.md     export-ignore
+/roave-bc-check.yaml  export-ignore
