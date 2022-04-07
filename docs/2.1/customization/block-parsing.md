@@ -98,9 +98,9 @@ If `canHaveLazyContinuationLines()` returned `true`, this method will be called 
 public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue;
 ```
 
-### `closeBlock()`
-
 This method allows you to try and parse an additional line of Markdown.
+
+### `closeBlock()`
 
 ```php
 public function closeBlock(): void;
