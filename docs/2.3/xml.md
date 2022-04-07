@@ -2,6 +2,7 @@
 layout: default
 title: XML Rendering
 description: Rendering Markdown documents in XML
+redirect_from: /xml/
 ---
 
 # XML Rendering

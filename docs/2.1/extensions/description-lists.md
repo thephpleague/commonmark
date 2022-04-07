@@ -2,7 +2,6 @@
 layout: default
 title: Description List Extension
 description: The Description List extension adds support for Markdown Extra-style <dl> lists
-redirect_from: /extensions/description-lists/
 ---
 
 # Description List Extension

@@ -2,6 +2,7 @@
 layout: default
 title: Front Matter Extension
 description: The Front Matter extension automatically parses YAML front matter from your Markdown.
+redirect_from: /extensions/front-matter/
 ---
 
 # Front Matter Extension

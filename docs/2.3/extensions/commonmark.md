@@ -2,6 +2,7 @@
 layout: default
 title: CommonMark Core Extension
 description: The CommonMarkCoreExtension class includes all core Markdown syntax
+redirect_from: /extensions/commonmark/
 ---
 
 # CommonMark Core Extension
