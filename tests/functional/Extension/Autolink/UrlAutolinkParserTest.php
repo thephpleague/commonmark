@@ -16,6 +16,7 @@ namespace League\CommonMark\Tests\Functional\Extension\Autolink;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 
@@ -87,5 +88,23 @@ final class UrlAutolinkParserTest extends TestCase
 
         // Issue 492: underscores in URLs (see https://github.com/thephpleague/commonmark/issues/492)
         yield ['http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)', '<p><a href="http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)">http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)</a></p>'];
+    }
+
+    public function testUrlAutolinksWithStrikethrough(): void
+    {
+        $markdown = '~~Prefix i link: https://aws.amazon.com/emr/features/hadoop/~~';
+
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AutolinkExtension());
+        $environment->addExtension(new StrikethroughExtension());
+
+        $converter = new MarkdownConverter($environment);
+        $html      = $converter->convert($markdown)->getContent();
+
+        $this->assertSame(
+            '<p><del>Prefix i link: <a href="https://aws.amazon.com/emr/features/hadoop/">https://aws.amazon.com/emr/features/hadoop/</a></del></p>' . "\n",
+            $html
+        );
     }
 }

@@ -6,6 +6,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.2.4] - 2022-05-14
+
+### Fixed
+
+- Fixed AutolinkExtension not ignoring trailing strikethrough syntax (#867)
+
 ## [2.3.0] - 2022-04-07
 
 ### Added
@@ -447,6 +453,7 @@ No changes were introduced since the previous release.
 
 [unreleased]: https://github.com/thephpleague/commonmark/compare/2.3.0...main
 [2.3.0]: https://github.com/thephpleague/commonmark/compare/2.2.3...2.3.0
+[2.2.4]: https://github.com/thephpleague/commonmark/compare/2.2.3...2.2.4
 [2.2.3]: https://github.com/thephpleague/commonmark/compare/2.2.2...2.2.3
 [2.2.2]: https://github.com/thephpleague/commonmark/compare/2.2.1...2.2.2
 [2.2.1]: https://github.com/thephpleague/commonmark/compare/2.2.0...2.2.1
