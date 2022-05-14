@@ -90,7 +90,7 @@ final class UrlAutolinkParser implements InlineParserInterface
         $url = $matches[0];
 
         // Does the URL end with punctuation that should be stripped?
-        if (\preg_match('/(.+)([?!.,:*_~]+)$/', $url, $matches)) {
+        if (\preg_match('/(.+?)([?!.,:*_~]+)$/', $url, $matches)) {
             // Add the punctuation later
             $url = $matches[1];
         }

@@ -90,4 +90,4 @@ See the [configuration](/2.3/configuration/) section for more information.
 
 ## Additional Filtering
 
-Although this library does offer these security features out-of-the-box, some users may opt to also run the HTML output through additional filtering layers (like HTMLPurifier).  If you do this, make sure you **thoroughly** test your additional post-processing steps and configure them to work properly with the types of HTML elements and attributes that converted Markdown might produce, otherwise, you may end up with weird behavior like missing images, broken links, mismatched HTML tags, etc.
+Although this library does offer these security features out-of-the-box, some users may opt to also run the HTML output through additional filtering layers (like [html-sanitizer](https://github.com/tgalopin/html-sanitizer)).  If you do this, make sure you **thoroughly** test your additional post-processing steps and configure them to work properly with the types of HTML elements and attributes that converted Markdown might produce, otherwise, you may end up with weird behavior like missing images, broken links, mismatched HTML tags, etc.
