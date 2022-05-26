@@ -4,6 +4,9 @@ on:
     push: ~
     pull_request: ~
 
+permissions:
+  contents: read
+
 jobs:
     phpcs:
         name: PHPCS
@@ -103,6 +106,9 @@ jobs:
             - run: vendor/bin/psalm --no-progress --stats --threads=$(nproc) --output-format=github --shepherd
 
     docs-lint:
+        permissions:
+          contents: read  # for actions/checkout to fetch code
+          statuses: write  # for github/super-linter/slim to mark status of each linter run
         name: Markdownlint
         runs-on: ubuntu-latest
 

@@ -3,6 +3,9 @@ name: "Backwards compatibility"
 on:
     pull_request:
 
+permissions:
+  contents: read
+
 jobs:
     bc-check:
         name: "Backwards compatibility check"
