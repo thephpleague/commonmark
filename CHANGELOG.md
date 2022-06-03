@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed FootnoteExtension stripping extra characters from tab-indented footnotes (#881)
+
 ## [2.2.4] - 2022-05-14
 
 ### Fixed
