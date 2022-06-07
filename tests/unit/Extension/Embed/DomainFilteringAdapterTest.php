@@ -22,38 +22,28 @@ final class DomainFilteringAdapterTest extends TestCase
 {
     public function testUpdateEmbeds(): void
     {
-        $inner = new class implements EmbedAdapterInterface {
-            /**
-             * {@inheritDoc}
-             */
-            public function updateEmbeds(array $embeds): void
-            {
-                foreach ($embeds as $embed) {
-                    $embed->setEmbedCode('some html');
-                }
-            }
-        };
-
-        $adapter = new DomainFilteringAdapter($inner, ['example.com', 'foo.bar.com']);
-
         $embeds = [
-            new Embed('example.com'),
-            new Embed('foo.example.com'),
-            new Embed('http://foo.bar.com'),
-            new Embed('https://foo.bar.com/baz'),
-            new Embed('https://bar.com'),
+            new Embed('google.com'),
+            $embed1 = new Embed('example.com'),
+            $embed2 = new Embed('foo.example.com'),
             new Embed('www.bar.com'),
             new Embed('badexample.com'),
+            $embed3 = new Embed('http://foo.bar.com'),
+            $embed4 = new Embed('https://foo.bar.com/baz'),
+            new Embed('https://bar.com'),
         ];
 
-        $adapter->updateEmbeds($embeds);
+        $inner = $this->createMock(EmbedAdapterInterface::class);
+        $inner->expects($this->once())->method('updateEmbeds')->with([
+            // It is critical that the filtered values have their keys re-indexed
+            // See https://github.com/thephpleague/commonmark/issues/884
+            0 => $embed1,
+            1 => $embed2,
+            2 => $embed3,
+            3 => $embed4,
+        ]);
 
-        $this->assertSame('some html', $embeds[0]->getEmbedCode());
-        $this->assertSame('some html', $embeds[1]->getEmbedCode());
-        $this->assertSame('some html', $embeds[2]->getEmbedCode());
-        $this->assertSame('some html', $embeds[3]->getEmbedCode());
-        $this->assertNull($embeds[4]->getEmbedCode());
-        $this->assertNull($embeds[5]->getEmbedCode());
-        $this->assertNull($embeds[6]->getEmbedCode());
+        $adapter = new DomainFilteringAdapter($inner, ['example.com', 'foo.bar.com']);
+        $adapter->updateEmbeds($embeds);
     }
 }
