@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Functional\Extension\Embed;
 
 use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Embed\EmbedExtension;
 use League\CommonMark\MarkdownConverter;
@@ -30,9 +31,16 @@ final class EmbedExtensionTest extends AbstractLocalDataTest
     {
         $config['embed']['adapter'] = new FakeAdapter();
 
+        $enableAutolinkExtension = $config['enable_autolinks'] ?? false;
+        unset($config['enable_autolinks']);
+
         $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new EmbedExtension());
+
+        if ($enableAutolinkExtension) {
+            $environment->addExtension(new AutolinkExtension());
+        }
 
         return new MarkdownConverter($environment);
     }
