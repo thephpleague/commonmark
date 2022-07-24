@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Node\Block;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AbstractInline;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +37,7 @@ final class AbstractBlockTest extends TestCase
 
     public function testSetParentWithInvalidNode(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $block = $this->getMockForAbstractClass(AbstractBlock::class);
 

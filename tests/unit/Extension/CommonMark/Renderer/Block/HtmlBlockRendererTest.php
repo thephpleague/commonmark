@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\HtmlBlockRenderer;
@@ -102,7 +103,7 @@ final class HtmlBlockRendererTest extends TestCase
 
     public function testRenderWithInvalidType(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();

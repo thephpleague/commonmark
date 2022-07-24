@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Parser\Inline;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 use PHPUnit\Framework\TestCase;
 
@@ -70,7 +71,7 @@ final class InlineParserMatchTest extends TestCase
 
     public function testCannotMixCaseSensitivity(): void
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         InlineParserMatch::join(
             InlineParserMatch::string('foo')->caseSensitive(),

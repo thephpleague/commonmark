@@ -14,12 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Parser;
 
 use League\CommonMark\Exception\CommonMarkExceptionInterface;
-use League\CommonMark\Node\Block\Document;
 
-interface MarkdownParserInterface
+class ParserLogicException extends \LogicException implements CommonMarkExceptionInterface
 {
-    /**
-     * @throws CommonMarkExceptionInterface
-     */
-    public function parse(string $input): Document;
 }

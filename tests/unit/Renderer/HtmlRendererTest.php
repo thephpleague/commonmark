@@ -10,6 +10,7 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Renderer\HtmlRenderer;
+use League\CommonMark\Renderer\NoMatchingRendererException;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -85,7 +86,7 @@ final class HtmlRendererTest extends TestCase
 
     public function testRenderNodesWithMissingRenderer(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(NoMatchingRendererException::class);
 
         $environment = $this->createMock(EnvironmentInterface::class);
         $environment->method('getRenderersForClass')->willReturn([]);

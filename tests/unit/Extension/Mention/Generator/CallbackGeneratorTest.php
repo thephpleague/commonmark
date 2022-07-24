@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\Mention\Generator;
 
+use League\CommonMark\Exception\LogicException;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use League\CommonMark\Extension\Mention\Generator\CallbackGenerator;
 use League\CommonMark\Extension\Mention\Mention;
@@ -73,7 +74,7 @@ final class CallbackGeneratorTest extends TestCase
 
     public function testWithNoUrlMentionReturn(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(LogicException::class);
 
         $generator = new CallbackGenerator(static function (Mention $mention) {
             // This ensures that if the URL is not set, but the mention is
@@ -87,7 +88,7 @@ final class CallbackGeneratorTest extends TestCase
 
     public function testWithNewMentionButNoUrlReturn(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(LogicException::class);
 
         $generator = new CallbackGenerator(static function (Mention $mention) {
             // Test what happens when returning a new mention without a URL
@@ -99,7 +100,7 @@ final class CallbackGeneratorTest extends TestCase
 
     public function testWithInvalidReturn(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(LogicException::class);
 
         $generator = new CallbackGenerator(static function () {
             return new \stdClass(); // something that is not a string or null

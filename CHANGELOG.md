@@ -9,6 +9,28 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Added
 
 - Added generic `CommonMarkExceptionInterface` marker interface.
+- Added several new specific exception types:
+    - `AlreadyInitializedException`
+    - `InvalidArgumentException`
+    - `IOException`
+    - `LogicException`
+    - `MissingDependencyException`
+    - `NoMatchingRendererException`
+    - `ParserLogicException`
+
+### Changed
+
+- Change several thrown exceptions from `RuntimeException` to `LogicException` (or something extending it), including:
+    - `CallbackGenerator`s that fail to set a URL or return an expected value
+    - `MarkdownParser` when deactivating the last block parser or attempting to get an active block parser when they've all been closed
+    - Adding items to an already-initialized `Environment`
+    - Rendering a `Node` when no renderer has been registered for it
+- `HeadingPermalinkProcessor` now throws `InvalidConfigurationException` instead of `RuntimeException` when invalid config values are given.
+
+### Fixed
+
+- Fixed inaccurate `@throws` docblocks throughout the codebase, including `ConverterInterface`, `MarkdownConverter`, and `MarkdownConverterInterface`.
+    - These previously suggested that only `\RuntimeException`s were thrown, which was inaccurate as `\LogicException`s were also possible.
 
 ## [2.3.4] - 2022-07-17
 

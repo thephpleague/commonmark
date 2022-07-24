@@ -7,3 +7,20 @@ parameters:
      message: '#Parameter .+ of class .+Reference constructor expects string, string\|null given#'
    - path: src/Util/RegexHelper.php
      message: '#Method .+RegexHelper::unescape\(\) should return string but returns string\|null#'
+  exceptions:
+    uncheckedExceptionClasses:
+      # Exceptions caused by bad developer logic that should always bubble up:
+      - 'League\CommonMark\Exception\AlreadyInitializedException'
+      - 'League\CommonMark\Exception\InvalidArgumentException'
+      - 'League\CommonMark\Exception\MissingDependencyException'
+      - 'League\CommonMark\Exception\UnexpectedEncodingException'
+      - 'League\CommonMark\Parser\ParserLogicException'
+      - 'League\CommonMark\Renderer\NoMatchingRendererException'
+      - 'League\Config\Exception\InvalidConfigurationException'
+      - 'League\Config\Exception\UnknownOptionException'
+      - 'League\Config\Exception\ValidationException'
+      # Should never be thrown by our code:
+      - 'Dflydev\DotAccessData\Exception\DataException'
+      - 'Dflydev\DotAccessData\Exception\InvalidPathException'
+    check:
+      missingCheckedExceptionInThrows: true

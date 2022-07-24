@@ -18,6 +18,7 @@ namespace League\CommonMark\Tests\Functional\Extension\Embed\Bridge;
 
 use Embed\Http\CurlClient;
 use Embed\Http\FactoryDiscovery;
+use League\CommonMark\Exception\IOException;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -71,7 +72,7 @@ final class LocalFileClient implements ClientInterface
     {
         $file = \file_get_contents($filename);
         if ($file === false) {
-            throw new \InvalidArgumentException(\sprintf('Unable to read file "%s"', $filename));
+            throw new IOException(\sprintf('Unable to read file "%s"', $filename));
         }
 
         $message  = \json_decode($file, true, JSON_THROW_ON_ERROR);

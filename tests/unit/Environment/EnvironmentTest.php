@@ -21,6 +21,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\AbstractEvent;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Exception\AlreadyInitializedException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
@@ -122,7 +123,7 @@ final class EnvironmentTest extends TestCase
 
     public function testMergeConfigAfterInit(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(AlreadyInitializedException::class);
 
         $environment = new Environment();
         // This triggers the initialization
@@ -142,7 +143,7 @@ final class EnvironmentTest extends TestCase
 
     public function testAddBlockStartParserFailsAfterInitialization(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(AlreadyInitializedException::class);
 
         $environment = new Environment();
 
@@ -165,7 +166,7 @@ final class EnvironmentTest extends TestCase
 
     public function testAddRendererFailsAfterInitialization(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(AlreadyInitializedException::class);
 
         $environment = new Environment();
 
@@ -178,7 +179,7 @@ final class EnvironmentTest extends TestCase
 
     public function testAddInlineParserFailsAfterInitialization(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(AlreadyInitializedException::class);
 
         $environment = new Environment();
 
@@ -202,7 +203,7 @@ final class EnvironmentTest extends TestCase
 
     public function testAddDelimiterProcessorFailsAfterInitialization(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(AlreadyInitializedException::class);
 
         $environment = new Environment();
 
@@ -246,7 +247,7 @@ final class EnvironmentTest extends TestCase
 
     public function testAddExtensionFailsAfterInitialization(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(AlreadyInitializedException::class);
 
         $environment = new Environment();
 
@@ -437,7 +438,7 @@ final class EnvironmentTest extends TestCase
 
     public function testAddEventListenerFailsAfterInitialization(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(AlreadyInitializedException::class);
 
         $environment = new Environment();
 

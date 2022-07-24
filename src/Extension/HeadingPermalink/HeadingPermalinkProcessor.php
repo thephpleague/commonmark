@@ -22,6 +22,7 @@ use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\Config\ConfigurationInterface;
+use League\Config\Exception\InvalidConfigurationException;
 
 /**
  * Searches the Document for Heading elements and adds HeadingPermalinks to each one
@@ -77,7 +78,7 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
 
                 return;
             default:
-                throw new \RuntimeException("Invalid configuration value for heading_permalink/insert; expected 'before' or 'after'");
+                throw new InvalidConfigurationException("Invalid configuration value for heading_permalink/insert; expected 'before' or 'after'");
         }
     }
 }

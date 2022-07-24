@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\DescriptionList\Renderer;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\DescriptionList\Node\DescriptionTerm;
 use League\CommonMark\Extension\DescriptionList\Renderer\DescriptionTermRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
@@ -44,7 +45,7 @@ final class DescriptionTermRendererTest extends TestCase
 
     public function testRenderWithInvalidType(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $block = $this->getMockForAbstractClass(AbstractBlock::class);
 

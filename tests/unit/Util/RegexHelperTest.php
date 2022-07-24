@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Util;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Util\RegexHelper;
 use PHPUnit\Framework\TestCase;
@@ -341,7 +342,7 @@ final class RegexHelperTest extends TestCase
 
     public function testInvalidHtmlBlockOpenRegex(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         RegexHelper::getHtmlBlockOpenRegex(8);
     }
@@ -371,7 +372,7 @@ final class RegexHelperTest extends TestCase
      */
     public function testInvalidHtmlBlockCloseRegex(int $type): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         RegexHelper::getHtmlBlockCloseRegex($type);
     }
