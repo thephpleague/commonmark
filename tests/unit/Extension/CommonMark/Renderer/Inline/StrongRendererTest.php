@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Inline;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 use League\CommonMark\Extension\CommonMark\Renderer\Inline\StrongRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
@@ -49,7 +50,7 @@ final class StrongRendererTest extends TestCase
 
     public function testRenderWithInvalidType(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $inline       = $this->getMockForAbstractClass(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Delimiter;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
@@ -84,7 +85,7 @@ final class DelimiterProcessingTest extends TestCase
 
     public function testMultipleDelimitersWithSameLength(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $e = new Environment();
         $e->addExtension(new CommonMarkCoreExtension());

@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\ListBlockRenderer;
@@ -83,7 +84,7 @@ final class ListBlockRendererTest extends TestCase
 
     public function testRenderWithInvalidType(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();

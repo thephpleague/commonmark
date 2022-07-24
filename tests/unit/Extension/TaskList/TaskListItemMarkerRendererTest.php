@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\TaskList;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\TaskList\TaskListItemMarker;
 use League\CommonMark\Extension\TaskList\TaskListItemMarkerRenderer;
 use League\CommonMark\Node\Inline\AbstractInline;
@@ -54,7 +55,7 @@ final class TaskListItemMarkerRendererTest extends TestCase
 
     public function testWithInvalidInlineElement(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $renderer     = new TaskListItemMarkerRenderer();
         $htmlRenderer = $this->getMockForAbstractClass(ChildNodeRendererInterface::class);

@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Exception;
 
-final class UnexpectedEncodingException extends \RuntimeException implements CommonMarkExceptionInterface
+/**
+ * Marker interface for all exceptions thrown by this library.
+ */
+interface CommonMarkExceptionInterface extends \Throwable
 {
 }

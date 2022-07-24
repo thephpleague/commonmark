@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\Strikethrough;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\Strikethrough\Strikethrough;
 use League\CommonMark\Extension\Strikethrough\StrikethroughRenderer;
 use League\CommonMark\Node\Inline\Text;
@@ -46,7 +47,7 @@ final class StrikethroughRendererTest extends TestCase
 
     public function testRenderWithInvalidNodeType(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $inline       = new Text('ruh roh');
         $fakeRenderer = new FakeChildNodeRenderer();

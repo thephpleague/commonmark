@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\CommonMark\Renderer\Block;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
 use League\CommonMark\Extension\CommonMark\Renderer\Block\ThematicBreakRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
@@ -45,7 +46,7 @@ final class ThematicBreakRendererTest extends TestCase
 
     public function testRenderWithInvalidType(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();

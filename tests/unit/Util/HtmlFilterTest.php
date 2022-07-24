@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Util;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -44,7 +45,7 @@ final class HtmlFilterTest extends TestCase
 
     public function testInvalidFilter(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         HtmlFilter::filter('', 'some-made-up-option');
     }

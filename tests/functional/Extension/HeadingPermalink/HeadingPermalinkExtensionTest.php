@@ -20,6 +20,7 @@ use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Xml\XmlRenderer;
+use League\Config\Exception\InvalidConfigurationException;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingPermalinkExtensionTest extends TestCase
@@ -120,7 +121,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
 
     public function testHeadingPermalinksWithInvalidInsertConfigurationValue(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(InvalidConfigurationException::class);
 
         $environment = new Environment([
             'heading_permalink' => [

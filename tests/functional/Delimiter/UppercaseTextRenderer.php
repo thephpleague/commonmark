@@ -28,9 +28,7 @@ final class UppercaseTextRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (! ($node instanceof UppercaseText)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        UppercaseText::assertInstanceOf($node);
 
         foreach ($node->children() as $child) {
             if ($child instanceof Text) {

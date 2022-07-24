@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Extension\Table;
 
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\Table\TableCell;
 use League\CommonMark\Extension\Table\TableRow;
 use League\CommonMark\Extension\Table\TableSection;
@@ -48,7 +49,7 @@ final class TableSectionRendererTest extends TestCase
 
     public function testRenderWithWrongType(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         (new TableSectionRenderer())->render(new TableCell(), new FakeChildNodeRenderer());
     }
