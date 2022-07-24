@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Added generic `CommonMarkExceptionInterface` marker interface.
+
 ## [2.3.4] - 2022-07-17
 
 ### Changed
