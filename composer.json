@@ -39,13 +39,13 @@
         "github/gfm": "0.29.0",
         "michelf/php-markdown": "^1.4",
         "nyholm/psr7": "^1.5",
-        "phpstan/phpstan": "^0.12.88 || ^1.0.0",
-        "phpunit/phpunit": "^9.5.5",
+        "phpstan/phpstan": "^1.8.2",
+        "phpunit/phpunit": "^9.5.21",
         "scrutinizer/ocular": "^1.8.1",
-        "symfony/finder": "^5.3",
+        "symfony/finder": "^5.3 | ^6.0",
         "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0 | ^6.0",
-        "unleashedtech/php-coding-standard": "^3.1",
-        "vimeo/psalm": "^4.7.3"
+        "unleashedtech/php-coding-standard": "^3.1.1",
+        "vimeo/psalm": "^4.24.0"
     },
     "minimum-stability": "beta",
     "suggest": {
