@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Parser;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserEngine;
 use League\CommonMark\Reference\ReferenceMap;
@@ -61,5 +62,18 @@ final class InlineParserEngineTest extends TestCase
         $this->assertSame(['brown'], $colorParser->getMatches());
         $this->assertSame(['lazy'], $adjectiveParser->getMatches());
         $this->assertSame(['quick', 'jumps'], $fiveLetterParser->getMatches());
+    }
+
+    public function testParseWithNoInlineParsers(): void
+    {
+        $environment = new Environment();
+        $engine      = new InlineParserEngine($environment, new ReferenceMap());
+        $paragraph   = new Paragraph();
+        $engine->parse('The quick brown fox jumps over the lazy dog', $paragraph);
+
+        $this->assertCount(1, $paragraph->children());
+        $child = $paragraph->firstChild();
+        $this->assertTrue($child instanceof Text);
+        $this->assertSame('The quick brown fox jumps over the lazy dog', $child->getLiteral());
     }
 }
