@@ -39,7 +39,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
      * @psalm-var list<array{0: InlineParserInterface, 1: string, 2: bool}>
      * @phpstan-var array<int, array{0: InlineParserInterface, 1: string, 2: bool}>
      */
-    private array $parsers;
+    private array $parsers = [];
 
     public function __construct(EnvironmentInterface $environment, ReferenceMapInterface $referenceMap)
     {
