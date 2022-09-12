@@ -43,6 +43,7 @@ final class AttributesHelper
             $cursor->advanceBy(1);
         }
 
+        /** @var array<string, mixed> $attributes */
         $attributes = [];
         while ($attribute = \trim((string) $cursor->match(self::REGEX))) {
             if ($attribute[0] === '#') {

@@ -89,5 +89,4 @@ When creating your own, you can provide two parameters to the constructor:
 
 Note that `@mention`-style linking doesn't actually require you to add the extension - just the `InlineParser` of your choice.
 
-[link-league-commonmark]: https://github.com/thephpleague/commonmark
 [link-gfm-spec-autolinking]: https://github.github.com/gfm/#autolinks-extension-
