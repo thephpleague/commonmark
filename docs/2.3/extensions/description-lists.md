@@ -72,6 +72,5 @@ Orange
 
 See the [Markdown Extra documentation][link-markdown-extra-dl] or [our own spec][link-commonmark-description-list-spec] for additional examples.
 
-[link-league-commonmark]: https://github.com/thephpleague/commonmark
 [link-markdown-extra-dl]: https://michelf.ca/projects/php-markdown/extra/#def-list
 [link-commonmark-description-list-spec]: https://github.com/thephpleague/commonmark/blob/2.0/tests/functional/Extension/DescriptionList/spec.txt
