@@ -42,7 +42,7 @@ final class TableCellRenderer implements NodeRendererInterface, XmlNodeRendererI
 
         $tag = $node->getType() === TableCell::TYPE_HEADER ? 'th' : 'td';
 
-        return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()));
+        return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()), false, HtmlElement::TRIM_BOTH);
     }
 
     public function getXmlTagName(Node $node): string

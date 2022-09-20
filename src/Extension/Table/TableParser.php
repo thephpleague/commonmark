@@ -144,7 +144,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
             $tableCell->setAlign($this->columns[$column]);
         }
 
-        $inlineParser->parse(\trim($cell), $tableCell);
+        $inlineParser->parse($cell, $tableCell);
 
         return $tableCell;
     }

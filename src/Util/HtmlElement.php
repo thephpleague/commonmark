@@ -18,6 +18,11 @@ namespace League\CommonMark\Util;
 
 final class HtmlElement implements \Stringable
 {
+    public const TRIM_NONE  = false;
+    public const TRIM_LEFT  = 'left';
+    public const TRIM_RIGHT = 'right';
+    public const TRIM_BOTH  = 'both';
+
     /** @psalm-readonly */
     private string $tagName;
 
@@ -31,15 +36,24 @@ final class HtmlElement implements \Stringable
     private bool $selfClosing;
 
     /**
-     * @param string                                $tagName     Name of the HTML tag
-     * @param array<string, string|string[]|bool>   $attributes  Array of attributes (values should be unescaped)
-     * @param \Stringable|\Stringable[]|string|null $contents    Inner contents, pre-escaped if needed
-     * @param bool                                  $selfClosing Whether the tag is self-closing
+     * @var bool|string
+     *
+     * @psalm-readonly
      */
-    public function __construct(string $tagName, array $attributes = [], $contents = '', bool $selfClosing = false)
+    private $trimContents;
+
+    /**
+     * @param string                                $tagName      Name of the HTML tag
+     * @param array<string, string|string[]|bool>   $attributes   Array of attributes (values should be unescaped)
+     * @param \Stringable|\Stringable[]|string|null $contents     Inner contents, pre-escaped if needed
+     * @param bool                                  $selfClosing  Whether the tag is self-closing
+     * @param bool|string                           $trimContents Trim the content of this HTML element
+     */
+    public function __construct(string $tagName, array $attributes = [], $contents = '', bool $selfClosing = false, $trimContents = self::TRIM_NONE)
     {
-        $this->tagName     = $tagName;
-        $this->selfClosing = $selfClosing;
+        $this->tagName      = $tagName;
+        $this->selfClosing  = $selfClosing;
+        $this->trimContents = $trimContents;
 
         foreach ($attributes as $name => $value) {
             $this->setAttribute($name, $value);
@@ -92,6 +106,7 @@ final class HtmlElement implements \Stringable
      * @return \Stringable|\Stringable[]|string
      *
      * @psalm-immutable
+     * @psalm-return ($asString is true ? string:\Stringable|\Stringable[]|string)
      */
     public function getContents(bool $asString = true)
     {
@@ -99,7 +114,19 @@ final class HtmlElement implements \Stringable
             return $this->contents;
         }
 
-        return $this->getContentsAsString();
+        $content = $this->getContentsAsString();
+
+        // PHP 8.0: replace with "match"
+        switch ($this->trimContents) {
+            case self::TRIM_LEFT:
+                return \ltrim($content);
+            case self::TRIM_RIGHT:
+                return \rtrim($content);
+            case self::TRIM_BOTH:
+                return \trim($content);
+            default:
+                return $content;
+        }
     }
 
     /**
@@ -132,7 +159,7 @@ final class HtmlElement implements \Stringable
         }
 
         if ($this->contents !== '') {
-            $result .= '>' . $this->getContentsAsString() . '</' . $this->tagName . '>';
+            $result .= '>' . $this->getContents() . '</' . $this->tagName . '>';
         } elseif ($this->selfClosing && $this->tagName === 'input') {
             $result .= '>';
         } elseif ($this->selfClosing) {

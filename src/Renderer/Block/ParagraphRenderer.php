@@ -43,7 +43,7 @@ final class ParagraphRenderer implements NodeRendererInterface, XmlNodeRendererI
 
         $attrs = $node->data->get('attributes');
 
-        return new HtmlElement('p', $attrs, $childRenderer->renderNodes($node->children()));
+        return new HtmlElement('p', $attrs, $childRenderer->renderNodes($node->children()), false, HtmlElement::TRIM_BOTH);
     }
 
     public function getXmlTagName(Node $node): string

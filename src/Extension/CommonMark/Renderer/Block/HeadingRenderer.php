@@ -40,7 +40,7 @@ final class HeadingRenderer implements NodeRendererInterface, XmlNodeRendererInt
 
         $attrs = $node->data->get('attributes');
 
-        return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()));
+        return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()), false, HtmlElement::TRIM_BOTH);
     }
 
     public function getXmlTagName(Node $node): string

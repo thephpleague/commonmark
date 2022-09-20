@@ -56,8 +56,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
     public function parse(string $contents, AbstractBlock $block): void
     {
-        $contents = \trim($contents);
-        $cursor   = new Cursor($contents);
+        $cursor = new Cursor($contents);
 
         $inlineParserContext = new InlineParserContext($cursor, $block, $this->referenceMap);
 
@@ -133,7 +132,6 @@ final class InlineParserEngine implements InlineParserEngineInterface
      */
     private function matchParsers(string $contents): array
     {
-        $contents    = \trim($contents);
         $isMultibyte = \mb_strlen($contents) !== \strlen($contents);
 
         $ret = [];
