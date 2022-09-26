@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Marker;
 
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Node\Inline\DelimiterInterface;
+use League\CommonMark\Node\Inline\DelimitedInterface;
 
-final class Marker extends AbstractInline implements DelimiterInterface
+final class Marker extends AbstractInline implements DelimitedInterface
 {
     private string $delimiter;
 
