@@ -15,7 +15,7 @@ final class MarkerRenderer implements NodeRendererInterface, XmlNodeRendererInte
     /**
      * @param Marker $node
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
         Marker::assertInstanceOf($node);
 

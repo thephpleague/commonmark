@@ -11,9 +11,9 @@ final class Marker extends AbstractInline implements DelimitedInterface
 {
     private string $delimiter;
 
-    public function __constructor(string $delimiter = '==')
+    public function __construct(string $delimiter = '==')
     {
-        parent::__constructor();
+        parent::__construct();
 
         $this->delimiter = $delimiter;
     }
