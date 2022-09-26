@@ -37,7 +37,7 @@
         "embed/embed": "^4.4",
         "erusev/parsedown": "^1.0",
         "github/gfm": "0.29.0",
-        "michelf/php-markdown": "^1.4",
+        "michelf/php-markdown": "^1.4 || ^2.0",
         "nyholm/psr7": "^1.5",
         "phpstan/phpstan": "^1.8.2",
         "phpunit/phpunit": "^9.5.21",
