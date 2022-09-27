@@ -102,6 +102,7 @@ Custom parsers/renderers can be bundled into extensions which extend CommonMark.
  - [Sup Sub extensions](https://github.com/OWS/commonmark-sup-sub-extensions) - Adds support of superscript and subscript (`<sup>` and `<sub>` HTML tags)
  - [YouTube iframe extension](https://github.com/zoonru/commonmark-ext-youtube-iframe) - Replaces youtube link with iframe.
  - [Lazy Image extension](https://github.com/simonvomeyser/commonmark-ext-lazy-image) - Adds various options for lazy loading of images.
+ - [Marker Extension](https://github.com/noah1400/commonmark-marker-extension) - Adds support of highlighted text (`<mark>` HTML tag)
 
 Others can be found on [Packagist under the `commonmark-extension` package type](https://packagist.org/packages/league/commonmark?type=commonmark-extension).
 
