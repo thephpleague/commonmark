@@ -3,6 +3,7 @@
     "extends": [
         "config:base"
     ],
+    "enabledManagers": ["bundler", "github-actions", "composer"],
     "packageRules": [
         {
             "matchManagers": ["bundler", "github-actions"],
