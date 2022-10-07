@@ -5,7 +5,7 @@
     ],
     "packageRules": [
         {
-            "matchManagers": ["bundler", "docker-compose", "dockerfile", "github-actions", "html"],
+            "matchManagers": ["bundler", "github-actions"],
             "schedule": ["before 3am on Monday"]
         }
     ]
