@@ -12,6 +12,12 @@
         },
         {
             "matchManagers": ["composer"],
+            "matchDepTypes": ["devDependencies"],
+            "rangeStrategy": "wide",
+            "automerge": true
+        },
+        {
+            "matchManagers": ["composer"],
             "rangeStrategy": "wide"
         }
     ]
