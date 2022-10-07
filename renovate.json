@@ -9,6 +9,10 @@
             "matchManagers": ["bundler", "github-actions"],
             "extends": ["schedule:weekly"],
             "automerge": true
+        },
+        {
+            "matchManagers": ["composer"],
+            "rangeStrategy": "wide"
         }
     ]
 }
