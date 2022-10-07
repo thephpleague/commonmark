@@ -6,7 +6,7 @@
     "packageRules": [
         {
             "matchManagers": ["bundler", "github-actions"],
-            "schedule": ["before 3am on Monday"]
+            "extends": ["schedule:weekly"]
         }
     ]
 }
