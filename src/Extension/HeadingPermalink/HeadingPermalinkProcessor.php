@@ -46,15 +46,16 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
 
     public function __invoke(DocumentParsedEvent $e): void
     {
-        $min = (int) $this->config->get('heading_permalink/min_heading_level');
-        $max = (int) $this->config->get('heading_permalink/max_heading_level');
+        $min           = (int) $this->config->get('heading_permalink/min_heading_level');
+        $max           = (int) $this->config->get('heading_permalink/max_heading_level');
         $attachHeading = (bool) $this->config->get('heading_permalink/attach_heading');
-        $idPrefix = (string) $this->config->get('heading_permalink/id_prefix');
+        $idPrefix      = (string) $this->config->get('heading_permalink/id_prefix');
+        $slugLength    = (int) $this->config->get('slug_normalizer/max_length');
+        $headingClass  = $this->config->get('heading_permalink/heading_class');
+
         if ($idPrefix !== '') {
             $idPrefix .= '-';
         }
-        $slugLength = (int) $this->config->get('slug_normalizer/max_length');
-        $headingClass = $this->config->get('heading_permalink/heading_class');
 
         foreach ($e->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             if ($node instanceof Heading && $node->getLevel() >= $min && $node->getLevel() <= $max) {
@@ -73,12 +74,12 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
 
         if ($attachHeading) {
             $heading->data->set('attributes/id', $idPrefix . $slug);
-            if ('' !== $headingClass) {
+            if ($headingClass !== '') {
                 $heading->data->append('attributes/class', $this->config->get('heading_permalink/heading_class'));
             }
         }
 
-        $headingLinkAnchor = new HeadingPermalink($slug, $idPrefix, $attachHeading);
+        $headingLinkAnchor = new HeadingPermalink($slug, $attachHeading);
 
         switch ($this->config->get('heading_permalink/insert')) {
             case self::INSERT_BEFORE:

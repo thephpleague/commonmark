@@ -48,7 +48,6 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
         HeadingPermalink::assertInstanceOf($node);
 
         $slug = $node->getSlug();
-        $idPrefix = $node->getIdPrefix();
 
         $fragmentPrefix = (string) $this->config->get('heading_permalink/fragment_prefix');
         if ($fragmentPrefix !== '') {
@@ -57,7 +56,13 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
 
         $attrs = $node->data->getData('attributes');
 
-        if (!$node->isAttachedHeading()) {
+        if (! $node->isAttachedHeading()) {
+            $idPrefix = (string) $this->config->get('heading_permalink/id_prefix');
+
+            if ($idPrefix !== '') {
+                $idPrefix .= '-';
+            }
+
             $attrs->set('id', $idPrefix . $slug);
         }
 

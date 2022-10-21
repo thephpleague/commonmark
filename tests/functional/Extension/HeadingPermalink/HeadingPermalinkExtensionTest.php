@@ -187,7 +187,7 @@ EOT;
         $environment = new Environment([
             'heading_permalink' => [
                 'attach_heading' => true,
-                'heading_class' => ''
+                'heading_class' => '',
             ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
