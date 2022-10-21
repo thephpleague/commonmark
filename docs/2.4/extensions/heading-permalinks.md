@@ -38,6 +38,8 @@ $config = [
     'heading_permalink' => [
         'html_class' => 'heading-permalink',
         'id_prefix' => 'content',
+        'apply_id_to_heading' => false,
+        'heading_class' => ''
         'fragment_prefix' => 'content',
         'insert' => 'before',
         'min_heading_level' => 1,
@@ -72,6 +74,14 @@ The value of this nested configuration option should be a `string` that you want
 
 This should be a `string` you want prepended to HTML IDs.  This prevents generating HTML ID attributes which might conflict with others in your stylesheet.  A dash separator (`-`) will be added between the prefix and the ID.  You can instead set this to an empty string (`''`) if you don't want a prefix.
 
+### `apply_id_to_heading`
+
+If this value is `true`, the `id` attributes will be written to the `<h>` tag instead of the `<a>`.
+
+### `heading_class`
+
+The class will be added to the `<h>` tag (no matter if `apply_id_to_heading` is set true or false)
+
 ### `fragment_prefix`
 
 This should be a `string` you want prepended to the URL fragment in the link's `href` attribute.  **This should typically be set to the same value as `id_prefix` for links to work properly.** However, you may not want to expose that same prefix in your URLs - in that case, you can set this to something different (even an empty string) and use JavaScript to "rewrite" them.
@@ -94,7 +104,7 @@ if (window.location.hash) {
 
 ### `insert`
 
-This controls whether the anchor is added to the beginning of the `<h1>`, `<h2>` etc. tag or to the end.  Can be set to either `'before'` or `'after'`.
+This controls whether the anchor is added to the beginning of the heading tag (`before`), the end of the tag (`after`), or not added at all (`none`).
 
 ### `min_heading_level` and `max_heading_level`
 

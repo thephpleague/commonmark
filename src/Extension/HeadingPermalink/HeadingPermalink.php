@@ -23,24 +23,15 @@ final class HeadingPermalink extends AbstractInline
     /** @psalm-readonly */
     private string $slug;
 
-    /** @psalm-readonly */
-    private bool $attachedHeading;
-
-    public function __construct(string $slug, bool $attachedHeading = false)
+    public function __construct(string $slug)
     {
         parent::__construct();
 
-        $this->slug            = $slug;
-        $this->attachedHeading = $attachedHeading;
+        $this->slug = $slug;
     }
 
     public function getSlug(): string
     {
         return $this->slug;
-    }
-
-    public function isAttachedHeading(): bool
-    {
-        return $this->attachedHeading;
     }
 }

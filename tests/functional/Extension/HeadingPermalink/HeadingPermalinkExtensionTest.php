@@ -16,6 +16,7 @@ namespace League\CommonMark\Tests\Functional\Extension\HeadingPermalink;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Parser\MarkdownParser;
@@ -60,7 +61,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
                 'fragment_prefix' => 'custom-fragment-prefix',
                 // Ensure multiple characters are allowed (including multibyte) and special HTML characters are escaped.
                 'symbol'          => '¶ 🦄️ <3 You',
-                'insert'          => 'after',
+                'insert'          => HeadingPermalinkProcessor::INSERT_AFTER,
                 'title'           => 'Link',
                 'aria_hidden'     => false,
             ],
@@ -164,11 +165,30 @@ EOT;
         $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
-    public function testHeadingPermalinksWithAttachHeading(): void
+    public function testHeadingPermalinksWithApplyIdToHeading(): void
     {
         $environment = new Environment([
             'heading_permalink' => [
-                'attach_heading' => true,
+                'apply_id_to_heading' => true,
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $input    = '# Hello World!';
+        $expected = \sprintf('<h1 id="content-hello-world"><a href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
+    public function testHeadingPermalinksWithApplyIdToHeadingAndClass(): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'apply_id_to_heading' => true,
+                'heading_class' => 'heading-anchor',
             ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
@@ -182,12 +202,13 @@ EOT;
         $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
-    public function testHeadingPermalinksWithAttachHeadingAndEmptyClass(): void
+    public function testHeadingPermalinksWithApplyIdToHeadingWithoutLink(): void
     {
         $environment = new Environment([
             'heading_permalink' => [
-                'attach_heading' => true,
-                'heading_class' => '',
+                'insert' => HeadingPermalinkProcessor::INSERT_NONE,
+                'apply_id_to_heading' => true,
+                'heading_class' => 'heading-anchor',
             ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
@@ -196,7 +217,7 @@ EOT;
         $converter = new MarkdownConverter($environment);
 
         $input    = '# Hello World!';
-        $expected = \sprintf('<h1 id="content-hello-world"><a href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+        $expected = '<h1 id="content-hello-world" class="heading-anchor">Hello World!</h1>';
 
         $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
