@@ -164,6 +164,43 @@ EOT;
         $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
+    public function testHeadingPermalinksWithAttachHeading(): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'attach_heading' => true,
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $input    = '# Hello World!';
+        $expected = \sprintf('<h1 id="content-hello-world" class="heading-anchor"><a href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
+    public function testHeadingPermalinksWithAttachHeadingAndEmptyClass(): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'attach_heading' => true,
+                'heading_class' => ''
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $input    = '# Hello World!';
+        $expected = \sprintf('<h1 id="content-hello-world"><a href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
     public function testXml(): void
     {
         $md = '# Hello *World*';

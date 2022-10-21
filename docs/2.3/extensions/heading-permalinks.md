@@ -38,6 +38,8 @@ $config = [
     'heading_permalink' => [
         'html_class' => 'heading-permalink',
         'id_prefix' => 'content',
+        'attach_heading' => false,
+        'heading_class' => 'heading-anchor'
         'fragment_prefix' => 'content',
         'insert' => 'before',
         'min_heading_level' => 1,
@@ -71,6 +73,14 @@ The value of this nested configuration option should be a `string` that you want
 ### `id_prefix`
 
 This should be a `string` you want prepended to HTML IDs.  This prevents generating HTML ID attributes which might conflict with others in your stylesheet.  A dash separator (`-`) will be added between the prefix and the ID.  You can instead set this to an empty string (`''`) if you don't want a prefix.
+
+### `attach_heading` (since 2.3.6)
+
+If this value is `true`, the `id` attributes will be written to the <h> tag instead of the <a>.
+
+### `heading_class` (since 2.3.6)
+
+If attach_heading is `true`, this class is added to the <h> tag.
 
 ### `fragment_prefix`
 

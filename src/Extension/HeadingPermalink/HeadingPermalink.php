@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
+use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Inline\AbstractInline;
 
 /**
@@ -23,15 +24,33 @@ final class HeadingPermalink extends AbstractInline
     /** @psalm-readonly */
     private string $slug;
 
-    public function __construct(string $slug)
+    /** @psalm-readonly */
+    private bool $attachedHeading;
+
+    /** @psalm-readonly */
+    private string $idPrefix;
+
+    public function __construct(string $slug, string $idPrefix, bool $attachedHeading)
     {
         parent::__construct();
 
-        $this->slug = $slug;
+        $this->slug            = $slug;
+        $this->idPrefix        = $idPrefix;
+        $this->attachedHeading = $attachedHeading;
     }
 
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function getIdPrefix(): string
+    {
+        return $this->idPrefix;
+    }
+
+    public function isAttachedHeading(): bool
+    {
+        return $this->attachedHeading;
     }
 }

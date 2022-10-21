@@ -48,17 +48,22 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
     {
         $min = (int) $this->config->get('heading_permalink/min_heading_level');
         $max = (int) $this->config->get('heading_permalink/max_heading_level');
-
+        $attachHeading = (bool) $this->config->get('heading_permalink/attach_heading');
+        $idPrefix = (string) $this->config->get('heading_permalink/id_prefix');
+        if ($idPrefix !== '') {
+            $idPrefix .= '-';
+        }
         $slugLength = (int) $this->config->get('slug_normalizer/max_length');
+        $headingClass = $this->config->get('heading_permalink/heading_class');
 
         foreach ($e->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             if ($node instanceof Heading && $node->getLevel() >= $min && $node->getLevel() <= $max) {
-                $this->addHeadingLink($node, $slugLength);
+                $this->addHeadingLink($node, $slugLength, $idPrefix, $attachHeading, $headingClass);
             }
         }
     }
 
-    private function addHeadingLink(Heading $heading, int $slugLength): void
+    private function addHeadingLink(Heading $heading, int $slugLength, string $idPrefix, bool $attachHeading, string $headingClass): void
     {
         $text = StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]);
         $slug = $this->slugNormalizer->normalize($text, [
@@ -66,7 +71,14 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
             'length' => $slugLength,
         ]);
 
-        $headingLinkAnchor = new HeadingPermalink($slug);
+        if ($attachHeading) {
+            $heading->data->set('attributes/id', $idPrefix . $slug);
+            if ('' !== $headingClass) {
+                $heading->data->append('attributes/class', $this->config->get('heading_permalink/heading_class'));
+            }
+        }
+
+        $headingLinkAnchor = new HeadingPermalink($slug, $idPrefix, $attachHeading);
 
         switch ($this->config->get('heading_permalink/insert')) {
             case self::INSERT_BEFORE:
