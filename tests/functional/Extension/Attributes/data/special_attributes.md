@@ -1,7 +1,7 @@
 Header 1            {#header1}
 ========
 
-## Header 2 ##      
+## Header 2 ##
 {#header2}
 
 ## The Site    {.main}
@@ -22,3 +22,7 @@ some } brackets
 some { } brackets
 
 A link inside of an emphasis tag: *[link](http://url.com){target="_blank"}*.
+
+Attributes without quote and non-whitespace char [link](http://url.com){target=_blank}
+
+Attributes without quote and non-whitespace char and a dot [link](http://url.com){target=_blank}.

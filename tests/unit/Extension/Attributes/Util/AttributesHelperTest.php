@@ -53,6 +53,10 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{: #custom-id #another-id }'), ['id' => 'another-id']];
         yield [new Cursor('{: .class1 .class2 }'), ['class' => 'class1 class2']];
         yield [new Cursor('{: #custom-id .class1 .class2 title="My Title" }'), ['id' => 'custom-id', 'class' => 'class1 class2', 'title' => 'My Title']];
+        yield [new Cursor('{:target=_blank}'), ['target' => '_blank']];
+        yield [new Cursor('{: target=_blank}'), ['target' => '_blank']];
+        yield [new Cursor('{: target=_blank }'), ['target' => '_blank']];
+        yield [new Cursor('{:   target=_blank   }'), ['target' => '_blank']];
 
         // Examples without colons
         yield [new Cursor('{title="My Title"}'), ['title' => 'My Title']];
@@ -64,6 +68,10 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{ #custom-id #another-id }'), ['id' => 'another-id']];
         yield [new Cursor('{ .class1 .class2 }'), ['class' => 'class1 class2']];
         yield [new Cursor('{ #custom-id .class1 .class2 title="My Title" }'), ['id' => 'custom-id', 'class' => 'class1 class2', 'title' => 'My Title']];
+        yield [new Cursor('{target=_blank}'), ['target' => '_blank']];
+        yield [new Cursor('{ target=_blank}'), ['target' => '_blank']];
+        yield [new Cursor('{target=_blank }'), ['target' => '_blank']];
+        yield [new Cursor('{   target=_blank   }'), ['target' => '_blank']];
 
         // Stuff at the beginning
         yield [new Cursor(' {: #custom-id }'), ['id' => 'custom-id']];
