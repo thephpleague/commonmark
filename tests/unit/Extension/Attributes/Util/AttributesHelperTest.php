@@ -29,9 +29,10 @@ final class AttributesHelperTest extends TestCase
      *
      * @param array<string, mixed> $expectedResult
      */
-    public function testParseAttributes(Cursor $input, array $expectedResult): void
+    public function testParseAttributes(Cursor $input, array $expectedResult, string $expectedRemainder = ''): void
     {
         $this->assertSame($expectedResult, AttributesHelper::parseAttributes($input));
+        $this->assertSame($expectedRemainder, $input->getRemainder());
     }
 
     /**
@@ -39,9 +40,9 @@ final class AttributesHelperTest extends TestCase
      */
     public function dataForTestParseAttributes(): iterable
     {
-        yield [new Cursor(''), []];
-        yield [new Cursor('{}'), []];
-        yield [new Cursor('{ }'), []];
+        yield [new Cursor(''), [], ''];
+        yield [new Cursor('{}'), [], '{}'];
+        yield [new Cursor('{ }'), [], '{ }'];
 
         // Examples with colons
         yield [new Cursor('{:title="My Title"}'), ['title' => 'My Title']];
@@ -53,6 +54,10 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{: #custom-id #another-id }'), ['id' => 'another-id']];
         yield [new Cursor('{: .class1 .class2 }'), ['class' => 'class1 class2']];
         yield [new Cursor('{: #custom-id .class1 .class2 title="My Title" }'), ['id' => 'custom-id', 'class' => 'class1 class2', 'title' => 'My Title']];
+        yield [new Cursor('{:target=_blank}'), ['target' => '_blank']];
+        yield [new Cursor('{: target=_blank}'), ['target' => '_blank']];
+        yield [new Cursor('{: target=_blank }'), ['target' => '_blank']];
+        yield [new Cursor('{:   target=_blank   }'), ['target' => '_blank']];
 
         // Examples without colons
         yield [new Cursor('{title="My Title"}'), ['title' => 'My Title']];
@@ -64,6 +69,10 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{ #custom-id #another-id }'), ['id' => 'another-id']];
         yield [new Cursor('{ .class1 .class2 }'), ['class' => 'class1 class2']];
         yield [new Cursor('{ #custom-id .class1 .class2 title="My Title" }'), ['id' => 'custom-id', 'class' => 'class1 class2', 'title' => 'My Title']];
+        yield [new Cursor('{target=_blank}'), ['target' => '_blank']];
+        yield [new Cursor('{ target=_blank}'), ['target' => '_blank']];
+        yield [new Cursor('{target=_blank }'), ['target' => '_blank']];
+        yield [new Cursor('{   target=_blank   }'), ['target' => '_blank']];
 
         // Stuff at the beginning
         yield [new Cursor(' {: #custom-id }'), ['id' => 'custom-id']];
@@ -75,19 +84,21 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('      {: #custom-id }'), ['id' => 'custom-id']];
 
         // Stuff on the end
-        yield [new Cursor('{: #custom-id } '), ['id' => 'custom-id']];
+        yield [new Cursor('{: #custom-id } '), ['id' => 'custom-id'], ' '];
 
         // Note that this method doesn't abort if non-attribute things are found at the end - that should be checked elsewhere
-        yield [new Cursor('{: #custom-id } foo'), ['id' => 'custom-id']];
+        yield [new Cursor('{: #custom-id } foo'), ['id' => 'custom-id'], ' foo'];
+        yield [new Cursor('{: #custom-id }.'), ['id' => 'custom-id'], '.'];
 
         // Missing curly brace on end
-        yield [new Cursor('{: #custom-id'), []];
+        yield [new Cursor('{: #custom-id'), [], '{: #custom-id'];
 
         // Two sets of attributes in one string - we stop after the first one
-        yield [new Cursor('{: #id1 } {: #id2 }'), ['id' => 'id1']];
+        yield [new Cursor('{: #id1 } {: #id2 }'), ['id' => 'id1'], ' {: #id2 }'];
 
         // Curly braces inside of values
         yield [new Cursor('{: data-json="{1,2,3}" }'), ['data-json' => '{1,2,3}']];
+        yield [new Cursor('{data-json={1,2,3}} test'), ['data-json' => '{1,2,3}'], ' test'];
     }
 
     /**
