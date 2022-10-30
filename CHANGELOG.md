@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.3.6] - 2022-10-30
+
 ### Fixed
 
 - Fixed unquoted attribute parsing when closing curly brace is followed by certain characters (like a `.`) (#943)
@@ -498,7 +500,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.3.5...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.3.6...main
+[2.3.6]: https://github.com/thephpleague/commonmark/compare/2.3.5...2.3.6
 [2.3.5]: https://github.com/thephpleague/commonmark/compare/2.3.4...2.3.5
 [2.3.4]: https://github.com/thephpleague/commonmark/compare/2.3.3...2.3.4
 [2.3.3]: https://github.com/thephpleague/commonmark/compare/2.3.2...2.3.3
