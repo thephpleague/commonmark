@@ -76,7 +76,7 @@ abstract class AbstractLocalDataTest extends TestCase
             $parsed   = (new FrontMatterParser(new SymfonyYamlFrontMatterParser()))->parse($input);
             $html     = \file_get_contents($dir . '/' . $testName . $outputFormat);
 
-            yield [$parsed->getContent(), $html, (array) $parsed->getFrontMatter(), $testName];
+            yield $testName => [$parsed->getContent(), $html, (array) $parsed->getFrontMatter(), $testName];
         }
     }
 }
