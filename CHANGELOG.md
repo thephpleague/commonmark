@@ -17,6 +17,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - `MissingDependencyException`
     - `NoMatchingRendererException`
     - `ParserLogicException`
+- Added more configuration options to the Heading Permalinks extension (#939):
+    - `heading_permalink/apply_id_to_heading` - When `true`, the `id` attribute will be applied to the heading element itself instead of the `<a>` tag
+    - `heading_permalink/heading_class` - class to apply to the heading element
+    - `heading_permalink/insert` - now accepts `none` to prevent the creation of the `<a>` link
 
 ### Changed
 
