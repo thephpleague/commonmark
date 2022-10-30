@@ -66,6 +66,8 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
 
     /**
      * Adds the given processor to this staggered delimiter processor
+     *
+     * @throws InvalidArgumentException if attempting to add another processors for the same character and minimum length
      */
     public function add(DelimiterProcessorInterface $processor): void
     {
