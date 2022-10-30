@@ -26,3 +26,5 @@ A link inside of an emphasis tag: *[link](http://url.com){target="_blank"}*.
 Attributes without quote and non-whitespace char [link](http://url.com){target=_blank}
 
 Attributes without quote and non-whitespace char and a dot [link](http://url.com){target=_blank}.
+
+Multiple attributes without quote and non-whitespace char and a dot [link](http://url.com){#id .class target=_blank}.
