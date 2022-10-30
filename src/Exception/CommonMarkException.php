@@ -16,6 +16,6 @@ namespace League\CommonMark\Exception;
 /**
  * Marker interface for all exceptions thrown by this library.
  */
-interface CommonMarkExceptionInterface extends \Throwable
+interface CommonMarkException extends \Throwable
 {
 }

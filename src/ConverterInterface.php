@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark;
 
-use League\CommonMark\Exception\CommonMarkExceptionInterface;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Output\RenderedContentInterface;
 use League\Config\Exception\ConfigurationExceptionInterface;
 
@@ -23,7 +23,7 @@ use League\Config\Exception\ConfigurationExceptionInterface;
 interface ConverterInterface
 {
     /**
-     * @throws CommonMarkExceptionInterface
+     * @throws CommonMarkException
      * @throws ConfigurationExceptionInterface
      */
     public function convert(string $input): RenderedContentInterface;

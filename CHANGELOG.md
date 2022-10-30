@@ -8,8 +8,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
-- Added generic `CommonMarkExceptionInterface` marker interface.
-- Added several new specific exception types:
+- Added generic `CommonMarkException` marker interface for all exceptions thrown by the library
+- Added several new specific exception types implementing that marker interface:
     - `AlreadyInitializedException`
     - `InvalidArgumentException`
     - `IOException`

@@ -13,6 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Exception;
 
-class InvalidArgumentException extends \InvalidArgumentException implements CommonMarkExceptionInterface
+class InvalidArgumentException extends \InvalidArgumentException implements CommonMarkException
 {
 }

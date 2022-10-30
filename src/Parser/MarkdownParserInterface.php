@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Parser;
 
-use League\CommonMark\Exception\CommonMarkExceptionInterface;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Node\Block\Document;
 
 interface MarkdownParserInterface
 {
     /**
-     * @throws CommonMarkExceptionInterface
+     * @throws CommonMarkException
      */
     public function parse(string $input): Document;
 }

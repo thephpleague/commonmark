@@ -22,7 +22,7 @@ namespace League\CommonMark\Parser;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Event\DocumentPreParsedEvent;
-use League\CommonMark\Exception\CommonMarkExceptionInterface;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Input\MarkdownInput;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
@@ -82,7 +82,7 @@ final class MarkdownParser implements MarkdownParserInterface
     }
 
     /**
-     * @throws CommonMarkExceptionInterface
+     * @throws CommonMarkException
      */
     public function parse(string $input): Document
     {

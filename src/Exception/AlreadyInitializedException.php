@@ -13,6 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Exception;
 
-class AlreadyInitializedException extends LogicException implements CommonMarkExceptionInterface
+class AlreadyInitializedException extends LogicException implements CommonMarkException
 {
 }

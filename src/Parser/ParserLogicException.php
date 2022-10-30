@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Parser;
 
-use League\CommonMark\Exception\CommonMarkExceptionInterface;
+use League\CommonMark\Exception\CommonMarkException;
 
-class ParserLogicException extends \LogicException implements CommonMarkExceptionInterface
+class ParserLogicException extends \LogicException implements CommonMarkException
 {
 }
