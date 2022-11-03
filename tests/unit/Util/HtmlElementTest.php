@@ -127,6 +127,9 @@ final class HtmlElementTest extends TestCase
 
         $checkbox->setAttribute('checked', true);
         $this->assertSame('<input type="checkbox" checked>', $checkbox->__toString());
+
+        $checkbox->setAttribute('disabled'); // implicitly true
+        $this->assertSame('<input type="checkbox" checked disabled>', $checkbox->__toString());
     }
 
     public function testToString(): void

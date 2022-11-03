@@ -30,6 +30,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - Adding items to an already-initialized `Environment`
     - Rendering a `Node` when no renderer has been registered for it
 - `HeadingPermalinkProcessor` now throws `InvalidConfigurationException` instead of `RuntimeException` when invalid config values are given.
+- `HtmlElement::setAttribute()` no longer requires the second parameter for boolean attributes
 
 ### Fixed
 
