@@ -9,15 +9,15 @@ redirect_from: /customization/extensions/
 
 Extensions provide a way to group related parsers, renderers, etc. together with pre-defined priorities, configuration settings, etc.  They are perfect for distributing your customizations as reusable, open-source packages that others can plug into their own projects!
 
-To create an extension, simply create a new class implementing `ExtensionInterface`.  This has a single method where you're given a `ConfigurableEnvironmentInterface` to register whatever things you need to. For example:
+To create an extension, simply create a new class implementing `ExtensionInterface`.  This has a single method where you're given a `EnvironmentBuilderInterface` to register whatever things you need to. For example:
 
 ```php
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 
 final class EmojiExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
             // TODO: Create the EmojiParser, Emoji, and EmojiRenderer classes
