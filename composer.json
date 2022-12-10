@@ -94,7 +94,8 @@
     "autoload-dev": {
         "psr-4": {
             "League\\CommonMark\\Tests\\Unit\\": "tests/unit",
-            "League\\CommonMark\\Tests\\Functional\\": "tests/functional"
+            "League\\CommonMark\\Tests\\Functional\\": "tests/functional",
+            "League\\CommonMark\\Tests\\PHPStan\\": "tests/phpstan"
         }
     },
     "scripts": {
