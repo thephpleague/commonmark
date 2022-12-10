@@ -50,7 +50,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
             \assert($parser instanceof InlineParserInterface);
             $regex = $parser->getMatchDefinition()->getRegex();
 
-            $this->parsers[] = [$parser, $regex, \strlen($regex) !== \mb_strlen($regex)];
+            $this->parsers[] = [$parser, $regex, \strlen($regex) !== \mb_strlen($regex, 'UTF-8')];
         }
     }
 
@@ -134,7 +134,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
     private function matchParsers(string $contents): array
     {
         $contents    = \trim($contents);
-        $isMultibyte = \mb_strlen($contents) !== \strlen($contents);
+        $isMultibyte = \mb_strlen($contents, 'UTF-8') !== \strlen($contents);
 
         $ret = [];
 
