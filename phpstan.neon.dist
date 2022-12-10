@@ -24,3 +24,5 @@ parameters:
       - 'Dflydev\DotAccessData\Exception\InvalidPathException'
     check:
       missingCheckedExceptionInThrows: true
+rules:
+  - 'League\CommonMark\Tests\PHPStan\MbstringFunctionCallRule'

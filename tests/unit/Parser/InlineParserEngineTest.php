@@ -14,6 +14,9 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Parser;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Extension\CommonMark\Parser\Inline\CloseBracketParser;
+use League\CommonMark\Extension\CommonMark\Parser\Inline\OpenBracketParser;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
@@ -75,5 +78,34 @@ final class InlineParserEngineTest extends TestCase
         $child = $paragraph->firstChild();
         $this->assertTrue($child instanceof Text);
         $this->assertSame('The quick brown fox jumps over the lazy dog', $child->getLiteral());
+    }
+
+    /**
+     * @see https://github.com/thephpleague/commonmark/issues/951
+     *
+     * @runInSeparateProcess to avoid polluting the global environment
+     */
+    public function testMultibyteDetectionRegressionFromIssue951(): void
+    {
+        \mb_internal_encoding('iso-8859-1'); // @phpstan-ignore-line
+
+        $environment = new Environment();
+        $environment->addInlineParser(new CloseBracketParser(), 30);
+        $environment->addInlineParser(new OpenBracketParser(), 20);
+
+        $engine    = new InlineParserEngine($environment, new ReferenceMap());
+        $paragraph = new Paragraph();
+        $engine->parse('AAA ÀÀ [label](https://url)', $paragraph);
+
+        $this->assertCount(2, $paragraph->children());
+
+        $text = $paragraph->firstChild();
+        $this->assertTrue($text instanceof Text);
+        $this->assertSame('AAA ÀÀ ', $text->getLiteral());
+
+        $link = $paragraph->lastChild();
+        $this->assertTrue($link instanceof Link);
+        $this->assertSame('label', $link->firstChild()->getLiteral());
+        $this->assertSame('https://url', $link->getUrl());
     }
 }

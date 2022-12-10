@@ -45,7 +45,7 @@
         "symfony/finder": "^5.3 | ^6.0",
         "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0 | ^6.0",
         "unleashedtech/php-coding-standard": "^3.1.1",
-        "vimeo/psalm": "^4.24.0"
+        "vimeo/psalm": "^4.24.0 || ^5.0.0"
     },
     "minimum-stability": "beta",
     "suggest": {
@@ -94,7 +94,8 @@
     "autoload-dev": {
         "psr-4": {
             "League\\CommonMark\\Tests\\Unit\\": "tests/unit",
-            "League\\CommonMark\\Tests\\Functional\\": "tests/functional"
+            "League\\CommonMark\\Tests\\Functional\\": "tests/functional",
+            "League\\CommonMark\\Tests\\PHPStan\\": "tests/phpstan"
         }
     },
     "scripts": {
