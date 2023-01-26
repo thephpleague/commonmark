@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed autolink extension not detecting some URIs with underscores (#956)
+
 ## [2.3.8] - 2022-12-10
 
 ### Fixed
