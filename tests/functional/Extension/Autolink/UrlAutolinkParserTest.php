@@ -44,6 +44,7 @@ final class UrlAutolinkParserTest extends TestCase
         // Basic examples
         yield ['You can search on http://google.com for stuff.', '<p>You can search on <a href="http://google.com">http://google.com</a> for stuff.</p>'];
         yield ['https://google.com', '<p><a href="https://google.com">https://google.com</a></p>'];
+        yield ['https://sub_domain.example.com', '<p><a href="https://sub_domain.example.com">https://sub_domain.example.com</a></p>'];
         yield ['ftp://example.com', '<p><a href="ftp://example.com">ftp://example.com</a></p>'];
         yield ['www.google.com', '<p><a href="http://www.google.com">www.google.com</a></p>'];
         yield [' http://leadingwhitespace.example.com', '<p><a href="http://leadingwhitespace.example.com">http://leadingwhitespace.example.com</a></p>'];
