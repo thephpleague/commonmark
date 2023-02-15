@@ -65,16 +65,16 @@ Result:
 <table>
 <thead>
 <tr>
-<th style="text-align: left">th</th>
-<th style="text-align: center">th(center)</th>
-<th style="text-align: right">th(right)/th>
+<th align="left">th</th>
+<th align="center">th(center)</th>
+<th align="right">th(right)/th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left">td</td>
-<td style="text-align: center">td</td>
-<td style="text-align: right">td</td>
+<td align="left">td</td>
+<td align="center">td</td>
+<td align="right">td</td>
 </tr>
 </tbody>
 </table>
