@@ -46,7 +46,7 @@ final class DefaultAttributesExtensionTest extends TestCase
     /**
      * @return iterable<mixed>
      */
-    public function provideTestCases(): iterable
+    public static function provideTestCases(): iterable
     {
         $markdown = <<<MD
 # Hello World

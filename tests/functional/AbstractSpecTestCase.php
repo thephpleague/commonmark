@@ -18,10 +18,9 @@ namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Util\SpecReader;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractSpecTest extends TestCase
+abstract class AbstractSpecTestCase extends TestCase
 {
     protected MarkdownConverter $converter;
 
@@ -48,20 +47,10 @@ abstract class AbstractSpecTest extends TestCase
         $this->assertEquals($html, $actualResult, $failureMessage);
     }
 
-    public function dataProvider(): \Generator
-    {
-        yield from $this->loadSpecExamples();
-    }
-
-    protected function loadSpecExamples(): \Generator
-    {
-        yield from SpecReader::readFile($this->getFileName());
-    }
+    abstract public static function dataProvider(): \Generator;
 
     private function showSpaces(string $str): string
     {
         return \strtr($str, ["\t" => '→', ' ' => '␣']);
     }
-
-    abstract protected function getFileName(): string;
 }

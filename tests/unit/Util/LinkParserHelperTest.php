@@ -31,7 +31,7 @@ final class LinkParserHelperTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function dataProviderForTestParseLinkDestination(): iterable
+    public static function dataProviderForTestParseLinkDestination(): iterable
     {
         yield ['www.google.com', 'www.google.com'];
         yield ['<www.google.com>', 'www.google.com'];
@@ -51,7 +51,7 @@ final class LinkParserHelperTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function dataProviderForTestParseLinkLabel(): iterable
+    public static function dataProviderForTestParseLinkLabel(): iterable
     {
         yield ['[link](http://example.com)', 6];
         yield ['[\\]: test', 0];

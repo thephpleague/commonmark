@@ -55,7 +55,7 @@ final class DelimiterProcessingTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function asymmetricDelimiterDataProvider(): iterable
+    public static function asymmetricDelimiterDataProvider(): iterable
     {
         yield ['{foo} bar', "<p>FOO bar</p>\n"];
         yield ['f{oo ba}r', "<p>fOO BAr</p>\n"];

@@ -19,12 +19,12 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
+use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 
 /**
  * Test with minimal extensions
  */
-final class FootnoteExtensionMarkdownTest extends AbstractLocalDataTest
+final class FootnoteExtensionMarkdownTest extends AbstractLocalDataTestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -41,8 +41,8 @@ final class FootnoteExtensionMarkdownTest extends AbstractLocalDataTest
     /**
      * {@inheritDoc}
      */
-    public function dataProvider(): iterable
+    public static function dataProvider(): iterable
     {
-        yield from $this->loadTests(__DIR__ . '/md');
+        yield from self::loadTests(__DIR__ . '/md');
     }
 }

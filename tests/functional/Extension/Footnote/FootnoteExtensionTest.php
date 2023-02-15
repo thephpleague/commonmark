@@ -42,7 +42,7 @@ final class FootnoteExtensionTest extends TestCase
     /**
      * @return array<array<string>>
      */
-    public function dataForIntegrationTest(): array
+    public static function dataForIntegrationTest(): array
     {
         return [
             [
@@ -85,7 +85,7 @@ final class FootnoteExtensionTest extends TestCase
         $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
-    public function dataProviderForTestFootnotesWithCustomOptions(): \Generator
+    public static function dataProviderForTestFootnotesWithCustomOptions(): \Generator
     {
         yield ["Here[^note1]\n\n[^note1]: There", '<p>Here<sup id="fnref:note1"><a class="custom-ref" href="#fn:note1" role="doc-noteref">1</a></sup></p>' . "\n" . '<div class="custom-notes" role="doc-endnotes"><ol><li class="custom-footnote" id="fn:note1" role="doc-endnote"><p>There&nbsp;<a class="custom-backref" rev="footnote" href="#fnref:note1" role="doc-backlink">↩ 🦄️ &lt;3 You</a></p></li></ol></div>'];
         yield ["_Here_[^note1]\n\n[^note1]: **There**", '<p><em>Here</em><sup id="fnref:note1"><a class="custom-ref" href="#fn:note1" role="doc-noteref">1</a></sup></p>' . "\n" . '<div class="custom-notes" role="doc-endnotes"><ol><li class="custom-footnote" id="fn:note1" role="doc-endnote"><p><strong>There</strong>&nbsp;<a class="custom-backref" rev="footnote" href="#fnref:note1" role="doc-backlink">↩ 🦄️ &lt;3 You</a></p></li></ol></div>'];

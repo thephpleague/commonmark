@@ -26,7 +26,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * This is particularly useful for testing minor variations allowed by the spec
  * or small regressions not tested by the spec.
  */
-abstract class AbstractLocalDataTest extends TestCase
+abstract class AbstractLocalDataTestCase extends TestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -36,7 +36,7 @@ abstract class AbstractLocalDataTest extends TestCase
     /**
      * @return iterable<array{string, string, array<string, mixed>, string}>
      */
-    abstract public function dataProvider(): iterable;
+    abstract public static function dataProvider(): iterable;
 
     /**
      * @dataProvider dataProvider
@@ -61,7 +61,7 @@ abstract class AbstractLocalDataTest extends TestCase
     /**
      * @return iterable<array{string, string, array<string, mixed>, string}>
      */
-    protected function loadTests(string $dir, string $pattern = '*', string $inputFormat = '.md', string $outputFormat = '.html'): iterable
+    final protected static function loadTests(string $dir, string $pattern = '*', string $inputFormat = '.md', string $outputFormat = '.html'): iterable
     {
         $finder = new Finder();
         $finder->files()

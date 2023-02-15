@@ -53,7 +53,7 @@ final class InlinesOnlyFunctionalTest extends TestCase
     /**
      * @return array<array<string>>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         $markdown = \file_get_contents(__DIR__ . '/inlines.md');
         $html     = \file_get_contents(__DIR__ . '/inlines.html');

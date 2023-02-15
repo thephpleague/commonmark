@@ -22,7 +22,7 @@ use League\CommonMark\ConverterInterface;
  * This is particularly useful for testing minor variations allowed by the spec
  * or small regressions not tested by the spec.
  */
-final class LocalDataTest extends AbstractLocalDataTest
+final class LocalDataTest extends AbstractLocalDataTestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -35,8 +35,8 @@ final class LocalDataTest extends AbstractLocalDataTest
     /**
      * {@inheritDoc}
      */
-    public function dataProvider(): iterable
+    public static function dataProvider(): iterable
     {
-        yield from $this->loadTests(__DIR__ . '/data');
+        yield from self::loadTests(__DIR__ . '/data');
     }
 }

@@ -20,12 +20,13 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Tests\Functional\AbstractSpecTest;
+use League\CommonMark\Tests\Functional\AbstractSpecTestCase;
+use League\CommonMark\Util\SpecReader;
 
 /**
  * Tests the parser against the CommonMark spec
  */
-final class SmartPunctFunctionalTest extends AbstractSpecTest
+final class SmartPunctFunctionalTest extends AbstractSpecTestCase
 {
     protected function setUp(): void
     {
@@ -36,8 +37,8 @@ final class SmartPunctFunctionalTest extends AbstractSpecTest
         $this->converter = new MarkdownConverter($environment);
     }
 
-    protected function getFileName(): string
+    public static function dataProvider(): \Generator
     {
-        return __DIR__ . '/../../../../vendor/commonmark/commonmark.js/test/smart_punct.txt';
+        yield from SpecReader::readFile(__DIR__ . '/../../../../vendor/commonmark/commonmark.js/test/smart_punct.txt');
     }
 }

@@ -39,7 +39,7 @@ final class UrlAutolinkParserTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function dataProviderForAutolinkTests(): iterable
+    public static function dataProviderForAutolinkTests(): iterable
     {
         // Basic examples
         yield ['You can search on http://google.com for stuff.', '<p>You can search on <a href="http://google.com">http://google.com</a> for stuff.</p>'];

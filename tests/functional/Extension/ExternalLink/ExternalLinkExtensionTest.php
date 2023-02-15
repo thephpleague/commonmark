@@ -42,7 +42,7 @@ final class ExternalLinkExtensionTest extends TestCase
     /**
      * @return iterable<mixed>
      */
-    public function provideEnvironmentForTestingExtensionWithAutolinks(): iterable
+    public static function provideEnvironmentForTestingExtensionWithAutolinks(): iterable
     {
         $environment1 = new Environment([
             'external_link' => [
