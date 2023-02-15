@@ -36,10 +36,10 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNode
         $checkbox = new HtmlElement('input', $attrs, '', true);
 
         if ($node->isChecked()) {
-            $checkbox->setAttribute('checked');
+            $checkbox->setAttribute('checked', '');
         }
 
-        $checkbox->setAttribute('disabled');
+        $checkbox->setAttribute('disabled', '');
         $checkbox->setAttribute('type', 'checkbox');
 
         return $checkbox;
