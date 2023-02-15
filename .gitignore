@@ -1,6 +1,7 @@
 /.idea/
 /.phpcs-cache
 /.phpunit.result.cache
+/.phpunit.cache
 /build/
 /docs/_site/
 composer.lock
