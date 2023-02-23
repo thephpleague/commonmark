@@ -43,8 +43,12 @@ class Cursor
 
     private bool $partiallyConsumedTab = false;
 
-    /** @psalm-readonly */
-    private bool $lineContainsTabs;
+    /**
+     * @var int|false
+     *
+     * @psalm-readonly
+     */
+    private $lastTabPosition;
 
     /** @psalm-readonly */
     private bool $isMultibyte;
@@ -61,10 +65,10 @@ class Cursor
             throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
         }
 
-        $this->line             = $line;
-        $this->length           = \mb_strlen($line, 'UTF-8') ?: 0;
-        $this->isMultibyte      = $this->length !== \strlen($line);
-        $this->lineContainsTabs = \strpos($line, "\t") !== false;
+        $this->line            = $line;
+        $this->length          = \mb_strlen($line, 'UTF-8') ?: 0;
+        $this->isMultibyte     = $this->length !== \strlen($line);
+        $this->lastTabPosition = $this->isMultibyte ? \mb_strrpos($line, "\t", 0, 'UTF-8') : \strrpos($line, "\t");
     }
 
     /**
@@ -196,12 +200,15 @@ class Cursor
      */
     public function advanceBy(int $characters, bool $advanceByColumns = false): void
     {
-        $this->previousPosition = $this->currentPosition;
-
+        $this->previousPosition  = $this->currentPosition;
         $this->nextNonSpaceCache = null;
 
+        if ($this->currentPosition >= $this->length || $characters === 0) {
+            return;
+        }
+
         // Optimization to avoid tab handling logic if we have no tabs
-        if (! $this->lineContainsTabs) {
+        if ($this->lastTabPosition === false || $this->currentPosition > $this->lastTabPosition) {
             $this->advanceWithoutTabCharacters($characters);
 
             return;
@@ -210,17 +217,6 @@ class Cursor
         $nextFewChars = $this->isMultibyte ?
             \mb_substr($this->line, $this->currentPosition, $characters, 'UTF-8') :
             \substr($this->line, $this->currentPosition, $characters);
-
-        if ($nextFewChars === '') {
-            return;
-        }
-
-        // Optimization to avoid tab handling logic if we have no tabs
-        if (\strpos($nextFewChars, "\t") === false) {
-            $this->advanceWithoutTabCharacters($characters);
-
-            return;
-        }
 
         if ($characters === 1) {
             $asArray = [$nextFewChars];
