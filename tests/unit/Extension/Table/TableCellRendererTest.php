@@ -61,6 +61,23 @@ final class TableCellRendererTest extends TestCase
         $this->assertSame('<td class="foo" align="center">::children::</td>', (string) $renderer->render($tableCell, $childRenderer));
     }
 
+    public function testRenderWithTableCellWithCustomAttributes(): void
+    {
+        $tableCell = new TableCell(TableCell::TYPE_DATA, TableCell::ALIGN_CENTER);
+        $tableCell->data->set('attributes/class', 'foo');
+
+        $childRenderer = new FakeChildNodeRenderer();
+        $childRenderer->pretendChildrenExist();
+
+        $renderer = new TableCellRenderer([
+            'left' => ['class' => 'foo', 'style' => 'text-align: left'],
+            'center' => ['class' => 'bar', 'style' => 'text-align: center'],
+            'right' => ['class' => 'baz', 'style' => 'text-align: right'],
+        ]);
+
+        $this->assertSame('<td class="foo bar" style="text-align: center">::children::</td>', (string) $renderer->render($tableCell, $childRenderer));
+    }
+
     public function testRenderWithWrongType(): void
     {
         $this->expectException(InvalidArgumentException::class);
