@@ -80,26 +80,32 @@ class Cursor
             return $this->nextNonSpaceCache;
         }
 
-        $c    = null;
-        $i    = $this->currentPosition;
+        if ($this->currentPosition >= $this->length) {
+            return $this->length;
+        }
+
         $cols = $this->column;
 
-        while (($c = $this->getCharacter($i)) !== null) {
+        for ($i = $this->currentPosition; $i < $this->length; $i++) {
+            // This if-else was copied out of getCharacter() for performance reasons
+            if ($this->isMultibyte) {
+                $c = $this->charCache[$i] ??= \mb_substr($this->line, $i, 1, 'UTF-8');
+            } else {
+                $c = $this->line[$i];
+            }
+
             if ($c === ' ') {
-                $i++;
                 $cols++;
             } elseif ($c === "\t") {
-                $i++;
                 $cols += 4 - ($cols % 4);
             } else {
                 break;
             }
         }
 
-        $nextNonSpace = $c === null ? $this->length : $i;
         $this->indent = $cols - $this->column;
 
-        return $this->nextNonSpaceCache = $nextNonSpace;
+        return $this->nextNonSpaceCache = $i;
     }
 
     /**
