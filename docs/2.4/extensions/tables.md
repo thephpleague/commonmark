@@ -39,6 +39,11 @@ $config = [
             'tag' => 'div',
             'attributes' => [],
         ],
+        'alignment_attributes' => [
+            'left'   => ['align' => 'left'],
+            'center' => ['align' => 'center'],
+            'right'  => ['align' => 'right'],
+        ],
     ],
 ];
 
@@ -121,6 +126,38 @@ $config = [
     ],
 ];
 ```
+
+### Alignment
+
+You can configure the HTML attributes used for alignment via the `alignment_attributes` option. For example, if you wanted Bootstrap classes to be applied, you could do so like this:
+
+```php
+$config = [
+    'table' => [
+        'alignment_attributes' => [
+            'left' => ['class' => 'text-start'],
+            'center' => ['class' => 'text-center'],
+            'right' => ['class' => 'text-end'],
+        ],
+    ],
+];
+```
+
+Or you could use inline styles:
+
+```php
+$config = [
+    'table' => [
+        'alignment_attributes' => [
+            'left' => ['style' => 'text-align:left'],
+            'center' => ['style' => 'text-align:center'],
+            'right' => ['style' => 'text-align:right'],
+        ],
+    ],
+];
+```
+
+Or any other HTML attributes you'd like!
 
 ## Credits
 
