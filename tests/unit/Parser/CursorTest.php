@@ -40,6 +40,7 @@ final class CursorTest extends TestCase
         $cursor = new Cursor($string);
 
         $this->assertEquals($expectedPosition, $cursor->getNextNonSpacePosition());
+        $this->assertEquals($expectedPosition, $cursor->getNextNonSpacePosition());
     }
 
     /**
@@ -49,6 +50,7 @@ final class CursorTest extends TestCase
     {
         $cursor = new Cursor($string);
 
+        $this->assertEquals($expectedCharacter, $cursor->getNextNonSpaceCharacter());
         $this->assertEquals($expectedCharacter, $cursor->getNextNonSpaceCharacter());
     }
 

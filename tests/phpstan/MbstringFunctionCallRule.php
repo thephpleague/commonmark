@@ -77,8 +77,8 @@ final class MbstringFunctionCallRule implements Rule
             return [\sprintf('%s() must define the $encoding as "UTF-8"', $functionName)];
         }
 
-        if ($encodingArg->value !== 'UTF-8') {
-            return [\sprintf('%s() must define the $encoding as "UTF-8", not "%s"', $functionName, $encodingArg->value)];
+        if (! \in_array($encodingArg->value, ['UTF-8', 'ASCII'], true)) {
+            return [\sprintf('%s() must define the $encoding as "UTF-8" or "ASCII", not "%s"', $functionName, $encodingArg->value)];
         }
 
         return [];
