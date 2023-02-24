@@ -113,7 +113,16 @@ class Cursor
      */
     public function getNextNonSpaceCharacter(): ?string
     {
-        return $this->getCharacter($this->getNextNonSpacePosition());
+        $index = $this->getNextNonSpacePosition();
+        if ($index >= $this->length) {
+            return null;
+        }
+
+        if ($this->isMultibyte) {
+            return $this->charCache[$index] ??= \mb_substr($this->line, $index, 1, 'UTF-8');
+        }
+
+        return $this->line[$index];
     }
 
     /**
