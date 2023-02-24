@@ -28,7 +28,7 @@ final class TableExtension implements ConfigurableExtensionInterface
         $attributeArraySchema = Expect::arrayOf(
             Expect::type('string|string[]|bool'), // attribute value(s)
             'string' // attribute name
-        );
+        )->mergeDefaults(false);
 
         $builder->addSchema('table', Expect::structure([
             'wrap' => Expect::structure([
