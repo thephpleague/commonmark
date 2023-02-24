@@ -215,7 +215,10 @@ class Cursor
 
         // Optimization to avoid tab handling logic if we have no tabs
         if ($this->lastTabPosition === false || $this->currentPosition > $this->lastTabPosition) {
-            $this->advanceWithoutTabCharacters($characters);
+            $length                     = \min($characters, $this->length - $this->currentPosition);
+            $this->partiallyConsumedTab = false;
+            $this->currentPosition     += $length;
+            $this->column              += $length;
 
             return;
         }
@@ -259,14 +262,6 @@ class Cursor
                 break;
             }
         }
-    }
-
-    private function advanceWithoutTabCharacters(int $characters): void
-    {
-        $length                     = \min($characters, $this->length - $this->currentPosition);
-        $this->partiallyConsumedTab = false;
-        $this->currentPosition     += $length;
-        $this->column              += $length;
     }
 
     /**
