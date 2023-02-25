@@ -33,6 +33,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - `HeadingPermalinkProcessor` now throws `InvalidConfigurationException` instead of `RuntimeException` when invalid config values are given.
 - `HtmlElement::setAttribute()` no longer requires the second parameter for boolean attributes
 - Several small micro-optimizations
+- Changed Strikethrough to only allow 1 or 2 tildes per the updated GFM spec
 
 ### Fixed
 
