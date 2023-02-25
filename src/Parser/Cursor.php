@@ -464,7 +464,11 @@ class Cursor
 
     public function getPreviousText(): string
     {
-        return \mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, 'UTF-8');
+        if ($this->isMultibyte) {
+            return \mb_substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition, 'UTF-8');
+        }
+
+        return \substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition);
     }
 
     public function getSubstring(int $start, ?int $length = null): string
