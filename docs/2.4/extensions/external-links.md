@@ -120,9 +120,7 @@ class MyCustomLinkRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof Link)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
-        }
+        Link::assertInstanceOf($node);
 
         if ($node->data->get('external')) {
             // This is an external link - render it accordingly
