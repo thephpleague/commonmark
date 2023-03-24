@@ -15,12 +15,11 @@ other exceptions like `LogicException` or `InvalidArgumentException` could be th
 
 This inconsistent behavior and inaccurate documentation has been fixed in 2.4.0 by:
 
- - Adding a new `CommonMarkException` interface implemented by all exceptions thrown by this library
- - Adding several new exception types that implement that interface while also extending from the same base exception
-   type as that would have been previously thrown.
- - Fixing incorrect docblocks about the exception types being thrown
+- Adding a new `CommonMarkException` interface implemented by all exceptions thrown by this library
+- Adding several new exception types that implement that interface while also extending from the same base exception
+  type as that would have been previously thrown.
+- Fixing incorrect docblocks about the exception types being thrown
 
 If you were previously catching exceptions thrown by this library in your code, you should consider changing your
 `catch` blocks to either catch `CommonMarkException` (for all exceptions) or one of the exception types under the
 `League\CommonMark\Exception` namespace.
-
