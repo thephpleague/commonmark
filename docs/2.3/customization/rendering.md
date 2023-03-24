@@ -2,9 +2,6 @@
 layout: default
 title: Rendering
 description: How to customize the rendering of block and inline elements
-redirect_from:
-- /customization/block-rendering/
-- /customization/inline-rendering/
 ---
 
 # Custom Rendering

@@ -2,7 +2,6 @@
 layout: default
 title: External Links Extension
 description: The ExternalLinksExtension detects external links and adjusts their HTML markup
-redirect_from: /extensions/external-links/
 ---
 
 # External Links Extension

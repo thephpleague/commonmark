@@ -2,7 +2,6 @@
 layout: default
 title: Inline Parsing
 description: Parsing inline elements with a custom parser
-redirect_from: /customization/inline-parsing/
 ---
 
 # Inline Parsing
