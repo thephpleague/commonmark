@@ -60,6 +60,8 @@ namespace PHPSTORM_META
         'footnote/footnote_class',
         'footnote/footnote_id_prefix',
         'heading_permalink',
+        'heading_permalink/apply_id_to_heading',
+        'heading_permalink/heading_class',
         'heading_permalink/html_class',
         'heading_permalink/fragment_prefix',
         'heading_permalink/id_prefix',
