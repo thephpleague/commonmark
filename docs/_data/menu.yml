@@ -3,7 +3,7 @@ version:
         Getting Started:
             'Overview': '/2.4/'
             'Installation': '/2.4/installation/'
-            'Upgrading from 2.0': '/2.4/upgrading/'
+            'Upgrading from 2.3': '/2.4/upgrading/'
             'Changelog': '/2.4/changelog/'
             'Support': '/2.4/support/'
         Usage:
@@ -48,7 +48,7 @@ version:
         Getting Started:
             'Overview': '/2.3/'
             'Installation': '/2.3/installation/'
-            'Upgrading from 2.0': '/2.3/upgrading/'
+            'Upgrading from 2.2': '/2.3/upgrading/'
             'Changelog': '/2.3/changelog/'
             'Support': '/2.3/support/'
         Usage:
@@ -94,7 +94,7 @@ version:
         Getting Started:
             'Overview': '/2.2/'
             'Installation': '/2.2/installation/'
-            'Upgrading from 2.0': '/2.2/upgrading/'
+            'Upgrading from 2.1': '/2.2/upgrading/'
             'Changelog': '/2.2/changelog/'
             'Support': '/2.2/support/'
         Usage:
