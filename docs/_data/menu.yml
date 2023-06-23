@@ -91,6 +91,7 @@ version:
             'Abstract Syntax Tree': '/2.4/customization/abstract-syntax-tree/'
             'Rendering': '/2.4/customization/rendering/'
             'Slug Normalizer': '/2.4/customization/slug-normalizer/'
+            'Disabling Features': '/2.4/customization/disabling-features/'
     '2.3':
         Getting Started:
             'Overview': '/2.3/'

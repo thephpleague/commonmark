@@ -35,9 +35,9 @@ Simply instantiate the converter and start converting some Markdown to HTML!
 use League\CommonMark\CommonMarkConverter;
 
 $converter = new CommonMarkConverter();
-echo $converter->convertToHtml('# Hello World!');
+echo $converter->convert('# Hello, World!')->getContent();
 
-// <h1>Hello World!</h1>
+// <h1>Hello, World!</h1>
 ```
 
 <i class="fa fa-exclamation-triangle"></i>
