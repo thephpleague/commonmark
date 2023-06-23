@@ -45,6 +45,7 @@ version:
             'Abstract Syntax Tree': '/2.5/customization/abstract-syntax-tree/'
             'Rendering': '/2.5/customization/rendering/'
             'Slug Normalizer': '/2.5/customization/slug-normalizer/'
+            'Disabling Features': '/2.5/customization/disabling-features/'
     '2.4':
         Getting Started:
             'Overview': '/2.4/'
