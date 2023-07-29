@@ -47,7 +47,7 @@ final class RegexHelper
     public const PARTIAL_SINGLEQUOTEDVALUE     = '\'[^\']*\'';
     public const PARTIAL_DOUBLEQUOTEDVALUE     = '"[^"]*"';
     public const PARTIAL_ATTRIBUTEVALUE        = '(?:' . self::PARTIAL_UNQUOTEDVALUE . '|' . self::PARTIAL_SINGLEQUOTEDVALUE . '|' . self::PARTIAL_DOUBLEQUOTEDVALUE . ')';
-    public const PARTIAL_ATTRIBUTEVALUESPEC    = '(?:' . '\s*=' . '\s*' . self::PARTIAL_ATTRIBUTEVALUE . ')';
+    public const PARTIAL_ATTRIBUTEVALUESPEC    = '(?:' . '\s*=?' . '\s*' . self::PARTIAL_ATTRIBUTEVALUE . '?)';
     public const PARTIAL_ATTRIBUTE             = '(?:' . '\s+' . self::PARTIAL_ATTRIBUTENAME . self::PARTIAL_ATTRIBUTEVALUESPEC . '?)';
     public const PARTIAL_OPENTAG               = '<' . self::PARTIAL_TAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
     public const PARTIAL_CLOSETAG              = '<\/' . self::PARTIAL_TAGNAME . '\s*[>]';

@@ -72,6 +72,10 @@ final class AttributesHelper
                 continue;
             }
 
+            if (\strpos($attribute, '=') === false) {
+                $attribute .= '=""';
+            }
+
             /** @psalm-suppress PossiblyUndefinedArrayOffset */
             [$name, $value] = \explode('=', $attribute, 2);
 

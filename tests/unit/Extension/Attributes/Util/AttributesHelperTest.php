@@ -58,6 +58,7 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{: target=_blank}'), ['target' => '_blank']];
         yield [new Cursor('{: target=_blank }'), ['target' => '_blank']];
         yield [new Cursor('{:   target=_blank   }'), ['target' => '_blank']];
+        yield [new Cursor('{: disabled}'), ['disabled' => '']];
 
         // Examples without colons
         yield [new Cursor('{title="My Title"}'), ['title' => 'My Title']];
@@ -73,6 +74,7 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{ target=_blank}'), ['target' => '_blank']];
         yield [new Cursor('{target=_blank }'), ['target' => '_blank']];
         yield [new Cursor('{   target=_blank   }'), ['target' => '_blank']];
+        yield [new Cursor('{disabled}'), ['disabled' => '']];
 
         // Stuff at the beginning
         yield [new Cursor(' {: #custom-id }'), ['id' => 'custom-id']];
