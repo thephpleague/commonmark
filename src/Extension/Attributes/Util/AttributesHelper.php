@@ -72,12 +72,14 @@ final class AttributesHelper
                 continue;
             }
 
-            if (\strpos($attribute, '=') === false) {
-                $attribute .= '=""';
+            $parts = \explode('=', $attribute, 2);
+            if (\count($parts) === 1) {
+                $attributes[$attribute] = true;
+                continue;
             }
 
             /** @psalm-suppress PossiblyUndefinedArrayOffset */
-            [$name, $value] = \explode('=', $attribute, 2);
+            [$name, $value] = $parts;
 
             $first = $value[0];
             $last  = \substr($value, -1);
