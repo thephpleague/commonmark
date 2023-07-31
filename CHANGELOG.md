@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- The `AttributesExtension` now supports attributes without values (#985, #986)
+
 ## [2.4.0] - 2023-03-24
 
 ### Added
