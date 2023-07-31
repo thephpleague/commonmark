@@ -65,10 +65,12 @@ final class UrlAutolinkParser implements InlineParserInterface
      */
     private string $finalRegex;
 
+    private string $defaultProtocol;
+
     /**
      * @param array<int, string> $allowedProtocols
      */
-    public function __construct(array $allowedProtocols = ['http', 'https', 'ftp'])
+    public function __construct(array $allowedProtocols = ['http', 'https', 'ftp'], string $defaultProtocol = 'http')
     {
         /**
          * @psalm-suppress PropertyTypeCoercion
@@ -78,6 +80,8 @@ final class UrlAutolinkParser implements InlineParserInterface
         foreach ($allowedProtocols as $protocol) {
             $this->prefixes[] = $protocol . '://';
         }
+
+        $this->defaultProtocol = $defaultProtocol;
     }
 
     public function getMatchDefinition(): InlineParserMatch
@@ -120,9 +124,9 @@ final class UrlAutolinkParser implements InlineParserInterface
 
         $cursor->advanceBy(\mb_strlen($url, 'UTF-8'));
 
-        // Auto-prefix 'http://' onto 'www' URLs
+        // Auto-prefix 'http(s)://' onto 'www' URLs
         if (\substr($url, 0, 4) === 'www.') {
-            $inlineContext->getContainer()->appendChild(new Link('http://' . $url, $url));
+            $inlineContext->getContainer()->appendChild(new Link($this->defaultProtocol . '://' . $url, $url));
 
             return true;
         }

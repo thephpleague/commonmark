@@ -108,4 +108,54 @@ final class UrlAutolinkParserTest extends TestCase
             $html
         );
     }
+
+    public function testDisallowedProtocols(): void
+    {
+        $environment = new Environment([
+            'autolink' => [
+                'allowed_protocols' => ['https'],
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AutolinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+        $html      = $converter->convert('http://insecure.example.com')->getContent();
+
+        $this->assertSame("<p>http://insecure.example.com</p>\n", $html);
+    }
+
+    /**
+     * @dataProvider dataProviderForSchemes
+     */
+    public function testUrlAutolinksWithConfigurableSchemes(string $scheme): void
+    {
+        $markdown = 'www.example.com';
+
+        $environment = new Environment([
+            'autolink' => [
+                'default_protocol' => $scheme,
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AutolinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+        $html      = $converter->convert($markdown)->getContent();
+
+        $this->assertSame(
+            '<p><a href="' . $scheme . '://www.example.com">www.example.com</a></p>' . "\n",
+            $html
+        );
+    }
+
+    /**
+     * @return iterable<array<string>>
+     */
+    public function dataProviderForSchemes(): iterable
+    {
+        yield ['http'];
+        yield ['https'];
+        yield ['ftp'];
+    }
 }
