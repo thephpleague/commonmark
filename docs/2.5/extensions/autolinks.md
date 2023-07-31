@@ -32,7 +32,12 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 
 // Define your configuration, if needed
-$config = [];
+$config = [
+    'autolink' => [
+        'allowed_protocols' => ['https'], // defaults to ['https', 'http', 'ftp']
+        'default_protocols' => 'https', // defaults to 'http'
+    ],
+];
 
 // Configure the Environment with all the CommonMark parsers/renderers
 $environment = new Environment($config);
@@ -45,6 +50,18 @@ $environment->addExtension(new AutolinkExtension());
 $converter = new MarkdownConverter($environment);
 echo $converter->convert('I successfully installed the https://github.com/thephpleague/commonmark project with the Autolink extension!');
 ```
+
+## Configuration
+
+As of version 2.5.0, this extension supports the following configuration options under the `autolink` configuration:
+
+### `allowed_protocols` option
+
+This option defines which types of URLs will be autolinked. The default value of `['https', 'http', 'ftp']` means that only URLs using those protocols will be autolinked. Setting this to just `['https']` means that only HTTPS URLs will be autolinked.
+
+### `default_protocol` option
+
+This option defines the default protocol for URLs that start with `www.` and don't have an explicit protocol set. For example, setting this to `https` would convert `www.example.com` to `https://www.example.com`.
 
 ## `@mention`-style Autolinking
 
