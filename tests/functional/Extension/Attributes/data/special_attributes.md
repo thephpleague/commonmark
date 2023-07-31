@@ -28,3 +28,5 @@ Attributes without quote and non-whitespace char [link](http://url.com){target=_
 Attributes without quote and non-whitespace char and a dot [link](http://url.com){target=_blank}.
 
 Multiple attributes without quote and non-whitespace char and a dot [link](http://url.com){#id .class target=_blank}.
+
+![image](/assets/image.jpg){valueless-attribute}
