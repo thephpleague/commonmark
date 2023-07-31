@@ -36,8 +36,8 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
     /**
      * @var array<int, InlineParserInterface|string|bool>
-     * @psalm-var list<array{0: InlineParserInterface, 1: string, 2: bool}>
-     * @phpstan-var array<int, array{0: InlineParserInterface, 1: string, 2: bool}>
+     * @psalm-var list<array{0: InlineParserInterface, 1: non-empty-string, 2: bool}>
+     * @phpstan-var array<int, array{0: InlineParserInterface, 1: non-empty-string, 2: bool}>
      */
     private array $parsers = [];
 

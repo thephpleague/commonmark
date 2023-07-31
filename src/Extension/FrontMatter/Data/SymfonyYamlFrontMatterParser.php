@@ -30,6 +30,7 @@ final class SymfonyYamlFrontMatterParser implements FrontMatterDataParserInterfa
         }
 
         try {
+            /** @psalm-suppress ReservedWord */
             return Yaml::parse($frontMatter);
         } catch (ParseException $ex) {
             throw InvalidFrontMatterException::wrap($ex);

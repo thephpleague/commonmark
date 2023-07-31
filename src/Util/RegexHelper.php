@@ -98,6 +98,8 @@ final class RegexHelper
     /**
      * Attempt to match a regex in string s at offset offset
      *
+     * @psalm-param non-empty-string $regex
+     *
      * @return int|null Index of match, or null
      *
      * @psalm-pure
@@ -118,6 +120,8 @@ final class RegexHelper
 
     /**
      * Functional wrapper around preg_match_all which only returns the first set of matches
+     *
+     * @psalm-param non-empty-string $pattern
      *
      * @return string[]|null
      *
@@ -162,6 +166,8 @@ final class RegexHelper
      *
      * @phpstan-param HtmlBlock::TYPE_* $type
      *
+     * @psalm-return non-empty-string
+     *
      * @throws InvalidArgumentException if an invalid type is given
      *
      * @psalm-pure
@@ -196,6 +202,8 @@ final class RegexHelper
      * @psalm-param HtmlBlock::TYPE_* $type
      *
      * @phpstan-param HtmlBlock::TYPE_* $type
+     *
+     * @psalm-return non-empty-string
      *
      * @throws InvalidArgumentException if an invalid type is given
      *
