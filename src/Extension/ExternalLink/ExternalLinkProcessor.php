@@ -90,6 +90,11 @@ final class ExternalLinkProcessor
                     $link->data->append('attributes/rel', $type);
             }
         }
+
+        // No rel attributes? Mark the attribute as 'false' so LinkRenderer doesn't add defaults
+        if (! $link->data->has('attributes/rel')) {
+            $link->data->set('attributes/rel', false);
+        }
     }
 
     /**

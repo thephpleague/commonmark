@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional\Extension\ExternalLink;
 
+use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
@@ -64,5 +65,26 @@ final class ExternalLinkExtensionTest extends TestCase
         $environment2->addExtension(new ExternalLinkExtension());
 
         yield 'Register Autolink extension first' => [$environment2];
+    }
+
+    public function testExtensionWithRelAttrsDisabled(): void
+    {
+        $config = [
+            'external_link' => [
+                'internal_hosts' => ['my-internal-domain.com'],
+                'open_in_new_window' => true,
+                'nofollow' => '',
+                'noopener' => '',
+                'noreferrer' => '',
+            ],
+        ];
+
+        $converter = new CommonMarkConverter($config);
+        $converter->getEnvironment()->addExtension(new ExternalLinkExtension());
+
+        $input        = 'This is an external link [Google](https://google.com/).';
+        $expectedHtml = '<p>This is an external link <a target="_blank" href="https://google.com/">Google</a>.</p>';
+
+        $this->assertSame($expectedHtml, \rtrim($converter->convert($input)->getContent()));
     }
 }
