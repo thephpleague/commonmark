@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.4.1] - 2023-08-30
+
 ### Fixed
 
 - Fixed `ExternalLinkProcessor` not fully disabling the `rel` attribute when configured to do so (#992)
@@ -558,7 +560,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.4.0...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.4.1...main
+[2.4.1]: https://github.com/thephpleague/commonmark/compare/2.4.0...2.4.1
 [2.4.0]: https://github.com/thephpleague/commonmark/compare/2.3.9...2.4.0
 [2.3.9]: https://github.com/thephpleague/commonmark/compare/2.3.8...2.3.9
 [2.3.8]: https://github.com/thephpleague/commonmark/compare/2.3.7...2.3.8
