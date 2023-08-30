@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed `ExternalLinkProcessor` not fully disabling the `rel` attribute when configured to do so (#992)
+
 ## [2.4.0] - 2023-03-24
 
 ### Added
