@@ -33,7 +33,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ['7.4', '8.0', '8.1']
+                php: ['7.4', '8.0', '8.1', '8.2', '8.3']
                 stable: [true]
                 coverage: [true]
                 composer-flags: ['']
@@ -42,10 +42,6 @@ jobs:
                       stable: true
                       coverage: false
                       composer-flags: '--prefer-lowest'
-                    - php: '8.2'
-                      stable: false
-                      coverage: false
-                      composer-flags: '--ignore-platform-req=php'
 
         steps:
             - uses: actions/checkout@v4
