@@ -130,13 +130,13 @@ This `string` option defines the prefix prepended to footnote elements.
 
 ## Adding Icons
 
-You can use CSS to add a custom icon instead of providing a `symbol`:
+You can use CSS to add a custom icon instead of providing a `backref_symbol`:
 
 ```php
 $config = [
     'footnote' => [
         'backref_class' => 'footnote-backref',
-        'symbol' => '',
+        'backref_symbol' => '',
     ],
 ];
 ```
