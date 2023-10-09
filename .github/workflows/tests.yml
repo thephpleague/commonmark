@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - uses: shivammathur/setup-php@v2
               with:
@@ -33,7 +33,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ['7.4', '8.0', '8.1']
+                php: ['7.4', '8.0', '8.1', '8.2', '8.3']
                 stable: [true]
                 coverage: [true]
                 composer-flags: ['']
@@ -42,13 +42,9 @@ jobs:
                       stable: true
                       coverage: false
                       composer-flags: '--prefer-lowest'
-                    - php: '8.2'
-                      stable: false
-                      coverage: false
-                      composer-flags: '--ignore-platform-req=php'
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                 fetch-depth: 0
 
@@ -78,7 +74,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - uses: shivammathur/setup-php@v2
               with:
@@ -96,7 +92,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - uses: shivammathur/setup-php@v2
               with:
@@ -117,7 +113,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - uses: github/super-linter/slim@v5.0.0
               env:
