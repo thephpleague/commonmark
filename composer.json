@@ -31,7 +31,7 @@
     "require-dev": {
         "ext-json": "*",
         "cebe/markdown": "^1.0",
-        "commonmark/cmark": "0.30.0",
+        "commonmark/cmark": "0.30.3",
         "commonmark/commonmark.js": "0.30.0",
         "composer/package-versions-deprecated": "^1.8",
         "embed/embed": "^4.4",
@@ -67,9 +67,9 @@
             "type": "package",
             "package": {
                 "name": "commonmark/cmark",
-                "version": "0.30.0",
+                "version": "0.30.3",
                 "dist": {
-                    "url": "https://github.com/commonmark/cmark/archive/0.30.0.zip",
+                    "url": "https://github.com/commonmark/cmark/archive/0.30.3.zip",
                     "type": "zip"
                 }
             }

@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed declaration parser being too strict
+
 ## [2.4.1] - 2023-08-30
 
 ### Fixed
