@@ -80,7 +80,7 @@
                 "name": "github/gfm",
                 "version": "0.29.0",
                 "dist": {
-                    "url": "https://github.com/github/cmark-gfm/archive/0.29.0.gfm.9.zip",
+                    "url": "https://github.com/github/cmark-gfm/archive/0.29.0.gfm.13.zip",
                     "type": "zip"
                 }
             }
