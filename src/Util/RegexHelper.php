@@ -53,7 +53,7 @@ final class RegexHelper
     public const PARTIAL_CLOSETAG              = '<\/' . self::PARTIAL_TAGNAME . '\s*[>]';
     public const PARTIAL_OPENBLOCKTAG          = '<' . self::PARTIAL_BLOCKTAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
     public const PARTIAL_CLOSEBLOCKTAG         = '<\/' . self::PARTIAL_BLOCKTAGNAME . '\s*[>]';
-    public const PARTIAL_HTMLCOMMENT           = '<!---->|<!--(?:-?[^>-])(?:-?[^-])*-->';
+    public const PARTIAL_HTMLCOMMENT           = '<!-->|<!--->|<!--(?:[^-]|-[^-]|--[^>])*-->';
     public const PARTIAL_PROCESSINGINSTRUCTION = '[<][?][\s\S]*?[?][>]';
     public const PARTIAL_DECLARATION           = '<![A-Z]+' . '[^>]*>';
     public const PARTIAL_CDATA                 = '<!\[CDATA\[[\s\S]*?]\]>';
