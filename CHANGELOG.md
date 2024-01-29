@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Made compatible with CommonMark spec 0.31.0, including:
     - Allow closing fence to be followed by tabs
     - Remove restrictive limitation on inline comments
+    - Unicode symbols now treated like punctuation (for purposes of flankingness)
 
 ## [2.4.4] - 2024-07-22
 
