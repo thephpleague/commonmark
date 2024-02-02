@@ -176,7 +176,7 @@ final class MarkdownParser implements MarkdownParserInterface
         } else {
             // finalize any blocks not matched
             if ($unmatchedBlocks > 0) {
-                $this->closeBlockParsers($unmatchedBlocks, $this->lineNumber);
+                $this->closeBlockParsers($unmatchedBlocks, $this->lineNumber - 1);
             }
 
             if (! $blockParser->isContainer()) {

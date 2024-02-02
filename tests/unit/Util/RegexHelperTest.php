@@ -215,9 +215,9 @@ final class RegexHelperTest extends TestCase
         $this->assertRegexMatches($regex, '<!---->');
         $this->assertRegexMatches($regex, '<!-- -->');
         $this->assertRegexMatches($regex, '<!-- HELLO WORLD -->');
+        $this->assertRegexMatches($regex, '<!-->');
+        $this->assertRegexMatches($regex, '<!--->');
         $this->assertRegexDoesNotMatch($regex, '<!->');
-        $this->assertRegexDoesNotMatch($regex, '<!-->');
-        $this->assertRegexDoesNotMatch($regex, '<!--->');
         $this->assertRegexDoesNotMatch($regex, '<!- ->');
     }
 
