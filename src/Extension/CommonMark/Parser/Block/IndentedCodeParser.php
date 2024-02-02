@@ -71,5 +71,6 @@ final class IndentedCodeParser extends AbstractBlockContinueParser
         }
 
         $this->block->setLiteral(\implode("\n", $lines) . "\n");
+        $this->block->setEndLine($this->block->getStartLine() + \count($lines) - 1);
     }
 }
