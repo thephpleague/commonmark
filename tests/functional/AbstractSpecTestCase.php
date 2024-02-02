@@ -32,19 +32,19 @@ abstract class AbstractSpecTestCase extends TestCase
     /**
      * @dataProvider dataProvider
      *
-     * @param string $markdown Markdown to parse
-     * @param string $html     Expected result
+     * @param string $input  Markdown to parse
+     * @param string $output Expected result
      */
-    public function testSpecExample(string $markdown, string $html): void
+    public function testSpecExample(string $input, string $output, string $type = '', string $section = '', int $number = -1): void
     {
-        $actualResult = (string) $this->converter->convert($markdown);
+        $actualResult = (string) $this->converter->convert($input);
 
         $failureMessage  = 'Unexpected result:';
-        $failureMessage .= "\n=== markdown ===============\n" . $this->showSpaces($markdown);
-        $failureMessage .= "\n=== expected ===============\n" . $this->showSpaces($html);
+        $failureMessage .= "\n=== markdown ===============\n" . $this->showSpaces($input);
+        $failureMessage .= "\n=== expected ===============\n" . $this->showSpaces($output);
         $failureMessage .= "\n=== got ====================\n" . $this->showSpaces($actualResult);
 
-        $this->assertEquals($html, $actualResult, $failureMessage);
+        $this->assertEquals($output, $actualResult, $failureMessage);
     }
 
     abstract public static function dataProvider(): \Generator;
