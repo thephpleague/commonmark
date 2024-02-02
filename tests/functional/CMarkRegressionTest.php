@@ -30,10 +30,10 @@ final class CMarkRegressionTest extends AbstractSpecTestCase
             // We can't currently render spec example 13 exactly how the upstream library does. We'll likely need to overhaul
             // our rendering approach in order to fix that, so we'll use this temporary workaround for now.
             if ($example['number'] === 13) {
-                yield \str_replace('</script></li>', "</script>\n</li>", $example);
-            } else {
-                yield $example;
+                $example['output'] = \str_replace('</script></li>', "</script>\n</li>", $example['output']);
             }
+
+            yield $example;
         }
     }
 }
