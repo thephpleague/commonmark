@@ -19,9 +19,9 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
+use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 
-final class TableOfContentsExtensionTest extends AbstractLocalDataTest
+final class TableOfContentsExtensionTest extends AbstractLocalDataTestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -39,8 +39,8 @@ final class TableOfContentsExtensionTest extends AbstractLocalDataTest
     /**
      * {@inheritDoc}
      */
-    public function dataProvider(): iterable
+    public static function dataProvider(): iterable
     {
-        yield from $this->loadTests(__DIR__ . '/md');
+        yield from self::loadTests(__DIR__ . '/md');
     }
 }

@@ -21,9 +21,9 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Embed\Bridge\OscaroteroEmbedAdapter;
 use League\CommonMark\Extension\Embed\EmbedExtension;
 use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
+use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 
-final class OscaroteroEmbedAdapterTest extends AbstractLocalDataTest
+final class OscaroteroEmbedAdapterTest extends AbstractLocalDataTestCase
 {
     /**
      * {@inheritDoc}
@@ -42,8 +42,8 @@ final class OscaroteroEmbedAdapterTest extends AbstractLocalDataTest
     /**
      * {@inheritDoc}
      */
-    public function dataProvider(): iterable
+    public static function dataProvider(): iterable
     {
-        yield from $this->loadTests(__DIR__ . '/data');
+        yield from self::loadTests(__DIR__ . '/data');
     }
 }

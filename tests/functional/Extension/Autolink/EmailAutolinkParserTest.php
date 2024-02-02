@@ -38,7 +38,7 @@ final class EmailAutolinkParserTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function dataProviderForEmailAutolinks(): iterable
+    public static function dataProviderForEmailAutolinks(): iterable
     {
         yield ['You can try emailing foo@example.com but that inbox doesn\'t actually exist.', '<p>You can try emailing <a href="mailto:foo@example.com">foo@example.com</a> but that inbox doesn\'t actually exist.</p>'];
         yield ['> This processor can even handle email addresses like foo@example.com inside of blockquotes!', "<blockquote>\n<p>This processor can even handle email addresses like <a href=\"mailto:foo@example.com\">foo@example.com</a> inside of blockquotes!</p>\n</blockquote>"];

@@ -30,7 +30,7 @@ final class SlugNormalizerTest extends TestCase
     /**
      * @return iterable<string[]>
      */
-    public function dataProviderForTestNormalize(): iterable
+    public static function dataProviderForTestNormalize(): iterable
     {
         yield ['', ''];
         yield ['hello world', 'hello-world'];
@@ -81,7 +81,7 @@ final class SlugNormalizerTest extends TestCase
     /**
      * @return iterable<mixed>
      */
-    public function dataProviderForTestNormalizeWithMaxLength(): iterable
+    public static function dataProviderForTestNormalizeWithMaxLength(): iterable
     {
         yield ['Hello World', 8, 'hello-wo'];
         yield ['Hello World', 999, 'hello-world'];

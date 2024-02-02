@@ -29,7 +29,7 @@ final class TextNormalizerTest extends TestCase
     /**
      * @return iterable<string[]>
      */
-    public function dataProviderForTestNormalize(): iterable
+    public static function dataProviderForTestNormalize(): iterable
     {
         yield ['', ''];
         yield ['hello world', 'hello world'];

@@ -52,7 +52,7 @@ final class DisallowedRawHtmlRendererTest extends TestCase
     /**
      * @return iterable<mixed>
      */
-    public function dataProviderForTestWithDefaultSettings(): iterable
+    public static function dataProviderForTestWithDefaultSettings(): iterable
     {
         // Different tag variants
         yield ['<title>', '&lt;title>'];
@@ -98,7 +98,7 @@ final class DisallowedRawHtmlRendererTest extends TestCase
     /**
      * @return iterable<mixed>
      */
-    public function dataProviderForTestWithCustomSettings(): iterable
+    public static function dataProviderForTestWithCustomSettings(): iterable
     {
         // Tags that I've configured to escape
         yield ['<strong>', '&lt;strong>'];

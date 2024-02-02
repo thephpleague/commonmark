@@ -40,7 +40,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
-    public function dataProviderForTestHeadingPermalinksWithDefaultOptions(): \Generator
+    public static function dataProviderForTestHeadingPermalinksWithDefaultOptions(): \Generator
     {
         yield ['# Hello World!', \sprintf('<h1><a id="content-hello-world" href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World!</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
         yield ['# Hello *World*', \sprintf('<h1><a id="content-hello-world" href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello <em>World</em></h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
@@ -74,7 +74,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
         $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
-    public function dataProviderForTestHeadingPermalinksWithCustomOptions(): \Generator
+    public static function dataProviderForTestHeadingPermalinksWithCustomOptions(): \Generator
     {
         yield ['# Hello World!', '<h1>Hello World!<a id="custom-id-prefix-hello-world" href="#custom-fragment-prefix-hello-world" class="custom-class" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];
         yield ['# Hello *World*', '<h1>Hello <em>World</em><a id="custom-id-prefix-hello-world" href="#custom-fragment-prefix-hello-world" class="custom-class" title="Link">¶ 🦄️ &lt;3 You</a></h1>'];

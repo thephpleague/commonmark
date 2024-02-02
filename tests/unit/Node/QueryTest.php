@@ -57,7 +57,7 @@ final class QueryTest extends TestCase
 
         $result = \iterator_to_array($result);
 
-        $this->assertCount(6, $result);
+        $this->assertNodeCount(6, $result);
 
         // The order is based on node walking
         $this->assertSame(2, $result[0]->data->get('number'));
@@ -76,7 +76,7 @@ final class QueryTest extends TestCase
 
         $result = \iterator_to_array($result);
 
-        $this->assertCount(3, $result);
+        $this->assertNodeCount(3, $result);
 
         $this->assertSame(2, $result[0]->data->get('number'));
         $this->assertSame(3, $result[1]->data->get('number'));
@@ -90,14 +90,14 @@ final class QueryTest extends TestCase
         // "class is SimpleNode AND has parent"
         $query = (new Query())->where(Query::type(SimpleNode::class), Query::hasParent());
 
-        $this->assertCount(6, $query->findAll($ast));
+        $this->assertNodeCount(6, $query->findAll($ast));
 
         // "class is SimpleNode AND has parent AND number > 2"
         $query->andWhere(static function (Node $node): bool {
             return $node->data->get('number') > 2;
         });
 
-        $this->assertCount(5, $query->findAll($ast));
+        $this->assertNodeCount(5, $query->findAll($ast));
 
         // "class is SimpleNode AND has parent AND number > 2 AND number > 3 AND number > 7"
         $query->andWhere(
@@ -109,24 +109,24 @@ final class QueryTest extends TestCase
             }
         );
 
-        $this->assertCount(3, $query->findAll($ast));
+        $this->assertNodeCount(3, $query->findAll($ast));
 
         // "has child OR (class is SimpleNode AND has parent AND number > 2 AND number > 3 AND number > 7)"
         $query->orWhere(Query::hasChild());
 
-        $this->assertCount(5, $query->findAll($ast));
+        $this->assertNodeCount(5, $query->findAll($ast));
 
         // "has child OR (class is SimpleNode AND has parent AND number > 2 AND number > 3 AND number > 7) OR has parent OR class is SimpleNode"
         $query->orWhere(Query::hasParent(), Query::type(SimpleNode::class));
 
-        $this->assertCount(7, $query->findAll($ast));
+        $this->assertNodeCount(7, $query->findAll($ast));
 
         // "number > 4 AND (has child OR (class is SimpleNode AND has parent AND number > 2 AND number > 3 AND number > 7) OR has parent OR class is SimpleNode)"
         $query->andWhere(static function (Node $node): bool {
             return $node->data->get('number') > 4;
         });
 
-        $this->assertCount(3, $query->findAll($ast));
+        $this->assertNodeCount(3, $query->findAll($ast));
     }
 
     public function testWhereUsingExpressionInterface(): void
@@ -138,7 +138,7 @@ final class QueryTest extends TestCase
             }
         });
 
-        $this->assertCount(3, $query->findAll($this->createAST()));
+        $this->assertNodeCount(3, $query->findAll($this->createAST()));
     }
 
     public function testWhereClausesUsingExpressionInterface(): void
@@ -172,7 +172,7 @@ final class QueryTest extends TestCase
 
         $result = \iterator_to_array($result);
 
-        $this->assertCount(3, $result);
+        $this->assertNodeCount(3, $result);
         $this->assertSame(6, $result[0]->data->get('number'));
         $this->assertSame(4, $result[1]->data->get('number'));
         $this->assertSame(5, $result[2]->data->get('number'));
@@ -191,7 +191,7 @@ final class QueryTest extends TestCase
                 }
             );
 
-        $this->assertCount(5, $query->findAll($this->createAST()));
+        $this->assertNodeCount(5, $query->findAll($this->createAST()));
     }
 
     public function testFindAllWhenNothingMatches(): void
@@ -202,14 +202,14 @@ final class QueryTest extends TestCase
             })
             ->findAll($this->createAST());
 
-        $this->assertCount(0, $result);
+        $this->assertNodeCount(0, $result);
     }
 
     public function testFindAllWithNoCriteria(): void
     {
         $result = (new Query())->findAll($this->createAST());
 
-        $this->assertCount(7, $result);
+        $this->assertNodeCount(7, $result);
     }
 
     public function testType(): void
@@ -311,5 +311,17 @@ final class QueryTest extends TestCase
         $child3->appendChild($grandchild2);
 
         return $parent;
+    }
+
+    /**
+     * @param iterable<mixed> $astIterator
+     */
+    private function assertNodeCount(int $expectedCount, iterable $astIterator): void
+    {
+        if (\is_array($astIterator) || $astIterator instanceof \Countable) {
+            $this->assertCount($expectedCount, $astIterator);
+        } else {
+            $this->assertCount($expectedCount, \iterator_to_array($astIterator));
+        }
     }
 }

@@ -52,7 +52,7 @@ final class BacktickParserTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function dataForTestParse(): iterable
+    public static function dataForTestParse(): iterable
     {
         return [
             ['This is `just` a test', 'just'],

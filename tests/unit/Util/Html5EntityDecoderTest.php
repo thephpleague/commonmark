@@ -30,7 +30,7 @@ final class Html5EntityDecoderTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function htmlEntityDataProvider(): iterable
+    public static function htmlEntityDataProvider(): iterable
     {
         // Test data from https://html.spec.whatwg.org/multipage/entities.json
         $data = \json_decode(\file_get_contents(__DIR__ . '/entities.json'), true);

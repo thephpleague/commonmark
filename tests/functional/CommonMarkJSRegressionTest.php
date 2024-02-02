@@ -16,30 +16,24 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional;
 
+use League\CommonMark\Util\SpecReader;
+
 /**
  * Tests the parser against the CommonMark spec
  */
-final class CommonMarkJSRegressionTest extends AbstractSpecTest
+final class CommonMarkJSRegressionTest extends AbstractSpecTestCase
 {
-    protected function getFileName(): string
+    public static function dataProvider(): \Generator
     {
-        return __DIR__ . '/../../vendor/commonmark/commonmark.js/test/regression.txt';
-    }
-
-    /**
-     * @deprecated
-     *
-     * We can't currently render spec example 18 exactly how the upstream library does. We'll likely need to overhaul
-     * our rendering approach in order to fix that, so we'll use this temporary workaround for now.
-     */
-    public function dataProvider(): \Generator
-    {
-        foreach (parent::dataProvider() as $example) {
+        $tests = SpecReader::readFile(__DIR__ . '/../../vendor/commonmark/commonmark.js/test/regression.txt');
+        foreach ($tests as $example) {
+            // We can't currently render spec example 18 exactly how the upstream library does. We'll likely need to overhaul
+            // our rendering approach in order to fix that, so we'll use this temporary workaround for now.
             if ($example['number'] === 18) {
-                yield \str_replace('</script></li>', "</script>\n</li>", $example);
-            } else {
-                yield $example;
+                $example['output'] = \str_replace('</script></li>', "</script>\n</li>", $example['output']);
             }
+
+            yield $example;
         }
     }
 }

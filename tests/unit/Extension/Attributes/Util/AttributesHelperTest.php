@@ -38,7 +38,7 @@ final class AttributesHelperTest extends TestCase
     /**
      * @return iterable<Cursor|array<string, mixed>>
      */
-    public function dataForTestParseAttributes(): iterable
+    public static function dataForTestParseAttributes(): iterable
     {
         yield [new Cursor(''), [], ''];
         yield [new Cursor('{}'), [], '{}'];
@@ -116,7 +116,7 @@ final class AttributesHelperTest extends TestCase
     /**
      * @return iterable<AbstractBlock|AbstractInline|array<string, mixed>>
      */
-    public function dataForTestMergeAttributes(): iterable
+    public static function dataForTestMergeAttributes(): iterable
     {
         yield [
             [],

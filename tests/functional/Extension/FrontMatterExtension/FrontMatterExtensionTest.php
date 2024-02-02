@@ -24,7 +24,7 @@ final class FrontMatterExtensionTest extends TestCase
     /**
      * @return array{array{FrontMatterDataParserInterface, bool}}
      */
-    public function parserProvider(): array
+    public static function parserProvider(): array
     {
         return [
             [new SymfonyYamlFrontMatterParser(), true],

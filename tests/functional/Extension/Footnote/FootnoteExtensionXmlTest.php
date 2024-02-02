@@ -18,10 +18,10 @@ use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
-use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
+use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 use League\CommonMark\Xml\MarkdownToXmlConverter;
 
-final class FootnoteExtensionXmlTest extends AbstractLocalDataTest
+final class FootnoteExtensionXmlTest extends AbstractLocalDataTestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -38,8 +38,8 @@ final class FootnoteExtensionXmlTest extends AbstractLocalDataTest
     /**
      * {@inheritDoc}
      */
-    public function dataProvider(): iterable
+    public static function dataProvider(): iterable
     {
-        yield from $this->loadTests(__DIR__ . '/xml', '*', '.md', '.xml');
+        yield from self::loadTests(__DIR__ . '/xml', '*', '.md', '.xml');
     }
 }

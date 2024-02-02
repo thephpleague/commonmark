@@ -296,7 +296,7 @@ final class RegexHelperTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function dataForTestMatchAt(): iterable
+    public static function dataForTestMatchAt(): iterable
     {
         return [
             ['/ /', 'foo bar', null, 3],
@@ -329,7 +329,7 @@ final class RegexHelperTest extends TestCase
     /**
      * @return iterable<int>
      */
-    public function blockTypesWithValidOpenerRegexes(): iterable
+    public static function blockTypesWithValidOpenerRegexes(): iterable
     {
         yield [HtmlBlock::TYPE_1_CODE_CONTAINER];
         yield [HtmlBlock::TYPE_2_COMMENT];
@@ -358,7 +358,7 @@ final class RegexHelperTest extends TestCase
     /**
      * @return iterable<int>
      */
-    public function blockTypesWithValidCloserRegexes(): iterable
+    public static function blockTypesWithValidCloserRegexes(): iterable
     {
         yield [HtmlBlock::TYPE_1_CODE_CONTAINER];
         yield [HtmlBlock::TYPE_2_COMMENT];
@@ -380,7 +380,7 @@ final class RegexHelperTest extends TestCase
     /**
      * @return iterable<int>
      */
-    public function blockTypesWithInvalidCloserRegexes(): iterable
+    public static function blockTypesWithInvalidCloserRegexes(): iterable
     {
         yield [HtmlBlock::TYPE_6_BLOCK_ELEMENT];
         yield [HtmlBlock::TYPE_7_MISC_ELEMENT];
