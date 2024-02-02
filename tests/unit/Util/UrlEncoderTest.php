@@ -33,7 +33,7 @@ final class UrlEncoderTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function unescapeAndEncodeTestProvider(): iterable
+    public static function unescapeAndEncodeTestProvider(): iterable
     {
         return [
             ['(foo)', '(foo)'],

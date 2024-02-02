@@ -16,13 +16,15 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Functional;
 
+use League\CommonMark\Util\SpecReader;
+
 /**
  * Tests the parser against the CommonMark spec
  */
-final class SpecTest extends AbstractSpecTest
+final class SpecTest extends AbstractSpecTestCase
 {
-    protected function getFileName(): string
+    public static function dataProvider(): \Generator
     {
-        return __DIR__ . '/../../vendor/commonmark/commonmark.js/test/spec.txt';
+        yield from SpecReader::readFile(__DIR__ . '/../../vendor/commonmark/commonmark.js/test/spec.txt');
     }
 }

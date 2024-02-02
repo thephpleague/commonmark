@@ -17,9 +17,10 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Tests\Functional\AbstractSpecTest;
+use League\CommonMark\Tests\Functional\AbstractSpecTestCase;
+use League\CommonMark\Util\SpecReader;
 
-final class FootnoteSpecTest extends AbstractSpecTest
+final class FootnoteSpecTest extends AbstractSpecTestCase
 {
     protected function setUp(): void
     {
@@ -30,8 +31,8 @@ final class FootnoteSpecTest extends AbstractSpecTest
         $this->converter = new MarkdownConverter($environment);
     }
 
-    protected function getFileName(): string
+    public static function dataProvider(): \Generator
     {
-        return __DIR__ . '/spec.txt';
+        yield from SpecReader::readFile(__DIR__ . '/spec.txt');
     }
 }

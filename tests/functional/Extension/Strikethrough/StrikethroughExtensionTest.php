@@ -44,7 +44,7 @@ final class StrikethroughExtensionTest extends TestCase
     /**
      * @return array<array<string>>
      */
-    public function dataForIntegrationTest(): array
+    public static function dataForIntegrationTest(): array
     {
         return [
             ['~~Hi~~ Hello, ~there~ world!', "<p><del>Hi</del> Hello, <del>there</del> world!</p>\n"],

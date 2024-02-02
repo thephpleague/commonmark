@@ -98,7 +98,7 @@ See [our extension documentation](https://commonmark.thephpleague.com/extensions
 
 Custom parsers/renderers can be bundled into extensions which extend CommonMark.  Here are some that you may find interesting:
 
- - [Alt Three Emoji](https://github.com/AltThree/Emoji) An emoji parser for CommonMark.
+ - [Emoji extension](https://github.com/ElGigi/CommonMarkEmoji) - UTF-8 emoji extension with Github tag.
  - [Sup Sub extensions](https://github.com/OWS/commonmark-sup-sub-extensions) - Adds support of superscript and subscript (`<sup>` and `<sub>` HTML tags)
  - [YouTube iframe extension](https://github.com/zoonru/commonmark-ext-youtube-iframe) - Replaces youtube link with iframe.
  - [Lazy Image extension](https://github.com/simonvomeyser/commonmark-ext-lazy-image) - Adds various options for lazy loading of images.

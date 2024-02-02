@@ -57,7 +57,7 @@ final class ListBlockRendererTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function dataForTestOrderedListStartingNumber(): iterable
+    public static function dataForTestOrderedListStartingNumber(): iterable
     {
         return [
             [null, null],

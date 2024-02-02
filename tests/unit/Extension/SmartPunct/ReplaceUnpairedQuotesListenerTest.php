@@ -46,7 +46,7 @@ final class ReplaceUnpairedQuotesListenerTest extends TestCase
     /**
      * @return iterable<mixed>
      */
-    public function provideTestData(): iterable
+    public static function provideTestData(): iterable
     {
         yield [
             [

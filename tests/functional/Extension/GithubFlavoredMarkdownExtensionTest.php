@@ -14,23 +14,21 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension;
 
 use League\CommonMark\GithubFlavoredMarkdownConverter;
-use League\CommonMark\Tests\Functional\AbstractSpecTest;
+use League\CommonMark\Tests\Functional\AbstractSpecTestCase;
+use League\CommonMark\Util\SpecReader;
 
-final class GithubFlavoredMarkdownExtensionTest extends AbstractSpecTest
+final class GithubFlavoredMarkdownExtensionTest extends AbstractSpecTestCase
 {
     protected function setUp(): void
     {
         $this->converter = new GithubFlavoredMarkdownConverter();
     }
 
-    protected function getFileName(): string
+    public static function dataProvider(): \Generator
     {
-        return __DIR__ . '/../../../vendor/github/gfm/test/spec.txt';
-    }
+        $tests = SpecReader::readFile(__DIR__ . '/../../../vendor/github/gfm/test/spec.txt');
 
-    public function dataProvider(): \Generator
-    {
-        foreach ($this->loadSpecExamples() as $title => $data) {
+        foreach ($tests as $title => $data) {
             // In the GFM spec, standard CommonMark tests are tagged 'example'
             // and we don't want to test those (because we test those against the
             // official CommonMark spec), but we DO want to test the GFM-specific ones

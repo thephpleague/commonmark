@@ -82,7 +82,7 @@ final class ExternalLinkProcessorTest extends TestCase
     /**
      * @return iterable<array<string|bool>>
      */
-    public function dataProviderForTestHostMatches(): iterable
+    public static function dataProviderForTestHostMatches(): iterable
     {
         // String-to-string comparison must match exactly
         yield ['colinodell.com', 'commonmark.thephpleague.com', false];
@@ -120,7 +120,7 @@ final class ExternalLinkProcessorTest extends TestCase
     /**
      * @return iterable<string[]>
      */
-    public function dataProviderForTestRelOptions(): iterable
+    public static function dataProviderForTestRelOptions(): iterable
     {
         // phpcs:disable SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace.SpaceAfterComma
         yield ['',         '',         '',         '<p>My favorite sites are <a href="https://www.colinodell.com">https://www.colinodell.com</a> and <a href="https://commonmark.thephpleague.com">https://commonmark.thephpleague.com</a></p>'];

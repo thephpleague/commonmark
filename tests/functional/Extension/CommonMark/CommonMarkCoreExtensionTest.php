@@ -33,7 +33,7 @@ final class CommonMarkCoreExtensionTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function getTestData(): iterable
+    public static function getTestData(): iterable
     {
         yield ['*Emphasis*', [], "<p><em>Emphasis</em></p>\n"];
         yield ['**Strong**', [], "<p><strong>Strong</strong></p>\n"];

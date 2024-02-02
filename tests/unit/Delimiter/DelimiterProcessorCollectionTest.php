@@ -41,7 +41,7 @@ final class DelimiterProcessorCollectionTest extends TestCase
     public function testAddProcessorForCharacterAlreadyRegistered(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Delim processor for character "*" already exists');
+        $this->expectExceptionMessage('Delim processor for character "*" already exists');
 
         $collection = new DelimiterProcessorCollection();
 

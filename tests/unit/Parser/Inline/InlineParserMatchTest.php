@@ -30,7 +30,7 @@ final class InlineParserMatchTest extends TestCase
     /**
      * @return iterable<array{0: InlineParserMatch, 1: string}>
      */
-    public function provideDataForTesting(): iterable
+    public static function provideDataForTesting(): iterable
     {
         yield [InlineParserMatch::string('.'), '/\./i'];
         yield [InlineParserMatch::string('...'), '/\.\.\./i'];

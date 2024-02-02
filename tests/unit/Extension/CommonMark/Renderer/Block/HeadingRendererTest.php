@@ -54,7 +54,7 @@ final class HeadingRendererTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function dataForTestRender(): iterable
+    public static function dataForTestRender(): iterable
     {
         return [
             [1, 'h1'],

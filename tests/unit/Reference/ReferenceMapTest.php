@@ -52,7 +52,7 @@ final class ReferenceMapTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function provideLabelsForCaseFoldingTest(): iterable
+    public static function provideLabelsForCaseFoldingTest(): iterable
     {
         yield ['ẞ'];
         yield ['ß'];

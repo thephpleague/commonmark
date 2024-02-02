@@ -35,7 +35,7 @@ final class SymfonyYamlFrontMatterParserTest extends TestCase
     /**
      * @return iterable<mixed>
      */
-    public function provideValidYamlExamples(): iterable
+    public static function provideValidYamlExamples(): iterable
     {
         yield ['Hello, World!', 'Hello, World!'];
         yield ["- 1\n- 2\n- 3", [1, 2, 3]];
@@ -57,7 +57,7 @@ final class SymfonyYamlFrontMatterParserTest extends TestCase
     /**
      * @return iterable<string>
      */
-    public function provideInvalidYamlExamples(): iterable
+    public static function provideInvalidYamlExamples(): iterable
     {
         yield ["this:\n    is:invalid\n        yaml: data"];
 

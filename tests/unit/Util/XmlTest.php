@@ -32,7 +32,7 @@ final class XmlTest extends TestCase
     /**
      * @return iterable<string[]>
      */
-    public function dataProviderForTestEscape(): iterable
+    public static function dataProviderForTestEscape(): iterable
     {
         yield ['foo', 'foo'];
         yield ['&copy;', '&amp;copy;'];

@@ -20,12 +20,12 @@ use League\CommonMark\Extension\Attributes\AttributesExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
+use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 
 /**
  * @internal
  */
-final class LocalDataTest extends AbstractLocalDataTest
+final class LocalDataTest extends AbstractLocalDataTestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -43,8 +43,8 @@ final class LocalDataTest extends AbstractLocalDataTest
     /**
      * {@inheritDoc}
      */
-    public function dataProvider(): iterable
+    public static function dataProvider(): iterable
     {
-        yield from $this->loadTests(__DIR__ . '/data');
+        yield from self::loadTests(__DIR__ . '/data');
     }
 }

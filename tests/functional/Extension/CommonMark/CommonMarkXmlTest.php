@@ -16,10 +16,10 @@ namespace League\CommonMark\Tests\Functional\Extension\CommonMark;
 use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Tests\Functional\AbstractLocalDataTest;
+use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 use League\CommonMark\Xml\MarkdownToXmlConverter;
 
-final class CommonMarkXmlTest extends AbstractLocalDataTest
+final class CommonMarkXmlTest extends AbstractLocalDataTestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -35,8 +35,8 @@ final class CommonMarkXmlTest extends AbstractLocalDataTest
     /**
      * {@inheritDoc}
      */
-    public function dataProvider(): iterable
+    public static function dataProvider(): iterable
     {
-        yield from $this->loadTests(__DIR__ . '/xml', '*', '.md', '.xml');
+        yield from self::loadTests(__DIR__ . '/xml', '*', '.md', '.xml');
     }
 }
