@@ -107,7 +107,7 @@ We do provide an adapter for the popular [`embed/embed`](https://github.com/osca
 because it supports fetching multiple URLs in parallel, which is ideal for performance, and it supports a wide range
 of embeddable content.
 
-To use that library, you'll need to `composer install embed/embed` and then pass `new OscaroteroEmbedAdapter()` as the `adapter`
+To use that library, you'll need to `composer require embed/embed` and then pass `new OscaroteroEmbedAdapter()` as the `adapter`
 configuration option, as shown in the [**Usage**](#usage) section above.
 
 Need to customize the maximum width/height of the embedded content? You can do that by instantiating the service provided by
