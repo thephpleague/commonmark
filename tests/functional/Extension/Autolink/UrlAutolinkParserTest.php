@@ -71,6 +71,7 @@ final class UrlAutolinkParserTest extends TestCase
         yield ['(www.google.com/search?q=Markup+(business)', '<p>(<a href="http://www.google.com/search?q=Markup+(business)">www.google.com/search?q=Markup+(business)</a></p>'];
         yield ['www.google.com/search?q=(business))+ok', '<p><a href="http://www.google.com/search?q=(business))+ok">www.google.com/search?q=(business))+ok</a></p>'];
         yield ['(https://www.example.com/test).', '<p>(<a href="https://www.example.com/test">https://www.example.com/test</a>).</p>'];
+        yield ['WWW text followed by [link](https://example.com/)', '<p>WWW text followed by <a href="https://example.com/">link</a></p>'];
 
         // Tests involving semi-colon endings
         yield ['www.google.com/search?q=commonmark&hl=en', '<p><a href="http://www.google.com/search?q=commonmark&amp;hl=en">www.google.com/search?q=commonmark&amp;hl=en</a></p>'];
