@@ -30,3 +30,10 @@ Attributes without quote and non-whitespace char and a dot [link](http://url.com
 Multiple attributes without quote and non-whitespace char and a dot [link](http://url.com){#id .class target=_blank}.
 
 ![image](/assets/image.jpg){valueless-attribute}
+
+A paragraph containing {{ mustache }} templating
+
+A paragraph ending with {{ mustache }} templating
+
+{{ mustache }} A paragraph starting with mustache templating
+
