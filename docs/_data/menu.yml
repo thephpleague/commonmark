@@ -453,6 +453,9 @@ version:
 upgrading:
     Upgrading Guide:
         Release Notes: '/releases/'
+        From 2.4 to 2.5: '/2.5/upgrading'
+        From 2.3 to 2.4: '/2.4/upgrading'
+        From 2.2 to 2.3: '/2.3/upgrading'
         From 2.1 to 2.2: '/2.2/upgrading'
         From 2.0 to 2.1: '/2.1/upgrading'
         From 1.6 to 2.0: '/2.0/upgrading'
