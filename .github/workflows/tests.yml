@@ -45,7 +45,7 @@ jobs:
                     - php: '8.4'
                       stable: false
                       coverage: false
-                      composer-flags: ''
+                      composer-flags: '--ignore-platform-req=php'
 
         steps:
             - uses: actions/checkout@v4
