@@ -21,6 +21,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 - Fixed list tightness not being determined properly in some edge cases
 - Fixed incorrect ending line numbers for several block types in various scenarios
+- Fixed lowercase inline HTML declarations not being accepted
 
 ## [2.4.4] - 2024-07-22
 
