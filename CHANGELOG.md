@@ -13,6 +13,37 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - `autolink/allowed_protocols` - an array of protocols to allow autolinking for
     - `autolink/default_protocol` - the default protocol to use when none is specified
 
+### Changed
+
+- Made compatible with CommonMark spec 0.31.0, including:
+    - Allow closing fence to be followed by tabs
+    - Remove restrictive limitation on inline comments
+    - Unicode symbols now treated like punctuation (for purposes of flankingness)
+    - Trailing tabs on the last line of indented code blocks will be excluded
+    - Improved HTML comment matching
+- `Paragraph`s only containing link reference definitions will be kept in the AST until the `Document` is finalized
+    - (These were previously removed immediately after parsing the `Paragraph`)
+
+### Fixed
+
+- Fixed list tightness not being determined properly in some edge cases
+- Fixed incorrect ending line numbers for several block types in various scenarios
+- Fixed lowercase inline HTML declarations not being accepted
+
+## [2.4.4] - 2024-07-22
+
+### Fixed
+
+- Fixed SmartPunct extension changing already-formatted quotation marks (#1030)
+
+## [2.4.3] - 2024-07-22
+
+### Fixed
+
+- Fixed the Attributes extension not supporting CSS level 3 selectors (#1013)
+- Fixed `UrlAutolinkParser` incorrectly parsing text containing `www` anywhere before an autolink (#1025)
+
+
 ## [2.4.2] - 2024-02-02
 
 ### Fixed
@@ -574,7 +605,9 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.4.2...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.4.4...main
+[2.4.4]: https://github.com/thephpleague/commonmark/compare/2.4.3...2.4.4
+[2.4.3]: https://github.com/thephpleague/commonmark/compare/2.4.2...2.4.3
 [2.4.2]: https://github.com/thephpleague/commonmark/compare/2.4.1...2.4.2
 [2.4.1]: https://github.com/thephpleague/commonmark/compare/2.4.0...2.4.1
 [2.4.0]: https://github.com/thephpleague/commonmark/compare/2.3.9...2.4.0
