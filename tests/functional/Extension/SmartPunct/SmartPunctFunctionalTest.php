@@ -40,5 +40,15 @@ final class SmartPunctFunctionalTest extends AbstractSpecTestCase
     public static function dataProvider(): \Generator
     {
         yield from SpecReader::readFile(__DIR__ . '/../../../../vendor/commonmark/commonmark.js/test/smart_punct.txt');
+
+        yield 'Existing formatted quotes should be preserved (issue #1030)' => [
+            'input'   => 'In the middle to late ’90s, it was chaos. "We couldn\'t get out of that rut."',
+            'output'  => "<p>In the middle to late ’90s, it was chaos. “We couldn’t get out of that rut.”</p>\n",
+        ];
+
+        yield 'already-formatted quotes are kept as-is' => [
+            'input'   => '"Plain quotes", “normal quotes”, and ”backwards quotes“',
+            'output'  => "<p>“Plain quotes”, “normal quotes”, and ”backwards quotes“</p>\n",
+        ];
     }
 }
