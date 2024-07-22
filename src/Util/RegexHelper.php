@@ -53,9 +53,9 @@ final class RegexHelper
     public const PARTIAL_CLOSETAG              = '<\/' . self::PARTIAL_TAGNAME . '\s*[>]';
     public const PARTIAL_OPENBLOCKTAG          = '<' . self::PARTIAL_BLOCKTAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
     public const PARTIAL_CLOSEBLOCKTAG         = '<\/' . self::PARTIAL_BLOCKTAGNAME . '\s*[>]';
-    public const PARTIAL_HTMLCOMMENT           = '<!---->|<!--(?:-?[^>-])(?:-?[^-])*-->';
+    public const PARTIAL_HTMLCOMMENT           = '<!-->|<!--->|<!--[\s\S]*?-->';
     public const PARTIAL_PROCESSINGINSTRUCTION = '[<][?][\s\S]*?[?][>]';
-    public const PARTIAL_DECLARATION           = '<![A-Z]+' . '[^>]*>';
+    public const PARTIAL_DECLARATION           = '<![A-Za-z]+' . '[^>]*>';
     public const PARTIAL_CDATA                 = '<!\[CDATA\[[\s\S]*?]\]>';
     public const PARTIAL_HTMLTAG               = '(?:' . self::PARTIAL_OPENTAG . '|' . self::PARTIAL_CLOSETAG . '|' . self::PARTIAL_HTMLCOMMENT . '|' .
         self::PARTIAL_PROCESSINGINSTRUCTION . '|' . self::PARTIAL_DECLARATION . '|' . self::PARTIAL_CDATA . ')';
@@ -65,7 +65,7 @@ final class RegexHelper
         '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*\'' .
         '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*\))';
 
-    public const REGEX_PUNCTUATION        = '/^[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\p{Pc}\p{Pd}\p{Pe}\p{Pf}\p{Pi}\p{Po}\p{Ps}\\\\\'!"#\$%&\(\)\*\+,\-\.\\/:;<=>\?@\[\]\^_`\{\|\}~]/u';
+    public const REGEX_PUNCTUATION        = '/^[!"#$%&\'()*+,\-.\\/:;<=>?@\\[\\]\\\\^_`{|}~\p{P}\p{S}]/u';
     public const REGEX_UNSAFE_PROTOCOL    = '/^javascript:|vbscript:|file:|data:/i';
     public const REGEX_SAFE_DATA_PROTOCOL = '/^data:image\/(?:png|gif|jpeg|webp)/i';
     public const REGEX_NON_SPACE          = '/[^ \t\f\v\r\n]/';

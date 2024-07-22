@@ -6,6 +6,23 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+- Made compatible with CommonMark spec 0.31.0, including:
+    - Allow closing fence to be followed by tabs
+    - Remove restrictive limitation on inline comments
+    - Unicode symbols now treated like punctuation (for purposes of flankingness)
+    - Trailing tabs on the last line of indented code blocks will be excluded
+    - Improved HTML comment matching
+- `Paragraph`s only containing link reference definitions will be kept in the AST until the `Document` is finalized
+    - (These were previously removed immediately after parsing the `Paragraph`)
+
+### Fixed
+
+- Fixed list tightness not being determined properly in some edge cases
+- Fixed incorrect ending line numbers for several block types in various scenarios
+- Fixed lowercase inline HTML declarations not being accepted
+
 ## [2.4.4] - 2024-07-22
 
 ### Fixed
