@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed SmartPunct extension changing already-formatted quotation marks (#1030)
+
 ## [2.4.3] - 2024-07-22
 
 ### Fixed
