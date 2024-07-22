@@ -13,6 +13,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - Remove restrictive limitation on inline comments
     - Unicode symbols now treated like punctuation (for purposes of flankingness)
     - Trailing tabs on the last line of indented code blocks will be excluded
+    - Improved HTML comment matching
 - `Paragraph`s only containing link reference definitions will be kept in the AST until the `Document` is finalized
     - (These were previously removed immediately after parsing the `Paragraph`)
 
