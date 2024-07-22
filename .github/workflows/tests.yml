@@ -42,6 +42,10 @@ jobs:
                       stable: true
                       coverage: false
                       composer-flags: '--prefer-lowest'
+                    - php: '8.4'
+                      stable: false
+                      coverage: false
+                      composer-flags: ''
 
         steps:
             - uses: actions/checkout@v4
