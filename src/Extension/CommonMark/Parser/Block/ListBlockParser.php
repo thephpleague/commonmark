@@ -57,7 +57,7 @@ final class ListBlockParser extends AbstractBlockContinueParser
     public function closeBlock(): void
     {
         $item = $this->block->firstChild();
-        while ($item) {
+        while ($item instanceof AbstractBlock) {
             // check for non-final list item ending with blank line:
             if ($item->next() !== null && self::endsWithBlankLine($item)) {
                 $this->block->setTight(false);
@@ -66,7 +66,7 @@ final class ListBlockParser extends AbstractBlockContinueParser
 
             // recurse into children of list item, to see if there are spaces between any of them
             $subitem = $item->firstChild();
-            while ($subitem) {
+            while ($subitem instanceof AbstractBlock) {
                 if ($subitem->next() && self::endsWithBlankLine($subitem)) {
                     $this->block->setTight(false);
                     break 2;
@@ -78,11 +78,16 @@ final class ListBlockParser extends AbstractBlockContinueParser
             $item = $item->next();
         }
 
-        $this->block->setEndLine($this->block->lastChild()->getEndLine());
+        $lastChild = $this->block->lastChild();
+        if ($lastChild instanceof AbstractBlock) {
+            $this->block->setEndLine($lastChild->getEndLine());
+        }
     }
 
     private static function endsWithBlankLine(AbstractBlock $block): bool
     {
-        return $block->next() !== null && $block->getEndLine() !== $block->next()->getStartLine() - 1;
+        $next = $block->next();
+
+        return $next instanceof AbstractBlock && $block->getEndLine() !== $next->getStartLine() - 1;
     }
 }

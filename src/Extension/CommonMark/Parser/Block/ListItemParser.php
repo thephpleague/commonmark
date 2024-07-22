@@ -72,8 +72,8 @@ final class ListItemParser extends AbstractBlockContinueParser
 
     public function closeBlock(): void
     {
-        if ($this->block->lastChild() !== null) {
-            $this->block->setEndLine($this->block->lastChild()->getEndLine());
+        if (($lastChild = $this->block->lastChild()) instanceof AbstractBlock) {
+            $this->block->setEndLine($lastChild->getEndLine());
         } else {
             // Empty list item
             $this->block->setEndLine($this->block->getStartLine());
