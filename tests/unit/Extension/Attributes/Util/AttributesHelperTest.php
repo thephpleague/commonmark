@@ -105,6 +105,7 @@ final class AttributesHelperTest extends TestCase
         // Avoid mustache style templating language being parsed as attributes
         yield [new Cursor('{{ foo }}'), [], '{{ foo }}'];
         yield [new Cursor(' {{ foo }}'), [], ' {{ foo }}'];
+        yield [new Cursor('{ foo }}'), [], '{ foo }}'];
     }
 
     /**
