@@ -167,8 +167,6 @@ final class MarkdownParser implements MarkdownParserInterface
                 $blockParser    = $this->addChild($newBlockParser, $oldBlockLineStart);
                 $tryBlockStarts = $newBlockParser->isContainer();
             }
-
-            unset($oldBlockLineStart);
         }
 
         // What remains at the offset is a text line. Add the text to the appropriate block.
