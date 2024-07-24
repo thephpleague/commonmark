@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed attribute parsing incorrectly parsing mustache-like syntax (#1035)
+
 ## [2.5.0] - 2024-07-22
 
 ### Added
