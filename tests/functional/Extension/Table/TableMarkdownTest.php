@@ -18,8 +18,10 @@ namespace League\CommonMark\Tests\Functional\Extension\Table;
 use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Table\Table;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 
 /**
@@ -45,5 +47,30 @@ final class TableMarkdownTest extends AbstractLocalDataTestCase
     public static function dataProvider(): iterable
     {
         yield from self::loadTests(__DIR__ . '/md');
+    }
+
+    public function testStartEndLinesProperlySet(): void
+    {
+        $markdown = <<<MD
+
+## Tabelle
+
+| Datum | Programm | Ort |
+| --- | --- | --- |
+| 22. Mai | Anreise | Eichberg |
+| 23. Mai | Programm | Eichberg |
+MD;
+
+        $environment = new Environment([]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new TableExtension());
+
+        $parser = new MarkdownParser($environment);
+        $doc    = $parser->parse($markdown);
+
+        $table = $doc->lastChild();
+        $this->assertInstanceOf(Table::class, $table);
+        $this->assertSame(4, $table->getStartLine());
+        $this->assertSame(7, $table->getEndLine());
     }
 }
