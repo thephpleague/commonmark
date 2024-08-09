@@ -1,0 +1,1348 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Upgrade guide for those who develop custom extensions and more using this library">
+    
+    <meta name="docsearch:version" content="2.0">
+    
+        <title>Upgrading from 1.6 to 2.0 (for developers) - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/2.0/upgrading/developers/" />
+    
+        <meta property="og:title" content="Upgrading from 1.6 to 2.0 (for developers) - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="Upgrade guide for those who develop custom extensions and more using this library" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v2.0 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/">v2.5</a></li>
+            
+                <li ><a href="/2.4/">v2.4</a></li>
+            
+                <li ><a href="/2.3/">v2.3</a></li>
+            
+                <li ><a href="/2.2/">v2.2</a></li>
+            
+                <li ><a href="/2.1/">v2.1</a></li>
+            
+                <li class="selected"><a href="/2.0/">v2.0</a></li>
+            
+                <li ><a href="/1.6/">v1.6</a></li>
+            
+                <li ><a href="/1.5/">v1.5</a></li>
+            
+                <li ><a href="/1.4/">v1.4</a></li>
+            
+                <li ><a href="/1.3/">v1.3</a></li>
+            
+                <li ><a href="/1.0/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/upgrading/">Upgrading from 1.6</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/changelog/">Changelog</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/support/">Support</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/xml/">XML</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/default-attributes/">Default Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/description-lists/">Description Lists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/front-matter/">Front Matter</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/rendering/">Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/slug-normalizer/">Slug Normalizer</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 2.0</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h2 id="minimum-php-version">Minimum PHP Version</h2>
+
+<p>The minimum supported PHP version was increased from 7.1 to 7.4.</p>
+
+<h2 id="commonmarkconverter-and-githubflavoredmarkdownconverter-constructors"><code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> and <code class="language-plaintext highlighter-rouge">GithubFlavoredMarkdownConverter</code> constructors</h2>
+
+<p>The constructor methods for both <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> and <code class="language-plaintext highlighter-rouge">GithubFlavoredMarkdownConverter</code> no longer accept passing in a customized <code class="language-plaintext highlighter-rouge">Environment</code>.  If you want to customize the extensions used in your converter you should switch to using <code class="language-plaintext highlighter-rouge">MarkdownConverter</code>. See the <a href="/2.0/basic-usage/">Basic Usage</a> documentation for an example.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">-use League\CommonMark\CommonMarkConverter;
+</span> use League\CommonMark\Environment\Environment;
+ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+ use League\CommonMark\Extension\Table\TableExtension;
+<span class="gi">+use League\CommonMark\MarkdownConverter;
+</span> 
+ $config = [
+     'html_input' =&gt; 'escape',
+     'allow_unsafe_links' =&gt; false,
+     'max_nesting_level' =&gt; 100,
+ ];
+ 
+<span class="gd">-$environment = new Environment();
+</span><span class="gi">+$environment = new Environment($config);
+</span> $environment-&gt;addExtension(new CommonMarkCoreExtension());
+ $environment-&gt;addExtension(new TableExtension());
+ 
+<span class="gd">-$converter = new CommonMarkConverter($config, $environment); // or GithubFlavoredMarkdownConverter
+</span><span class="gi">+$converter = new MarkdownConverter($environment);
+</span> 
+ echo $converter-&gt;convertToHtml('Hello World!');
+</code></pre></div></div>
+
+<h2 id="commonmarkconverter-return-type"><code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> Return Type</h2>
+
+<p>In 1.x, calling <code class="language-plaintext highlighter-rouge">convertToHtml()</code> would return a <code class="language-plaintext highlighter-rouge">string</code>. In 2.x this changed to return a <code class="language-plaintext highlighter-rouge">RenderedContentInterface</code>.  To get the resulting HTML, either cast the return value to a <code class="language-plaintext highlighter-rouge">string</code> or call <code class="language-plaintext highlighter-rouge">-&gt;getContent()</code>.  (This new interface extends from <code class="language-plaintext highlighter-rouge">Stringable</code> so you can type hint against that instead, if needed.)</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> use League\CommonMark\CommonMarkConverter;
+
+ $converter = new CommonMarkConverter();
+<span class="gd">-echo $converter-&gt;convertToHtml('# Hello World!');
+</span><span class="gi">+echo $converter-&gt;convertToHtml('# Hello World!')-&gt;getContent();
++// or
++echo (string) $converter-&gt;convertToHtml('# Hello World!');
+</span></code></pre></div></div>
+
+<h2 id="html-changes">HTML Changes</h2>
+
+<p>Table of Contents items are no longer wrapped with <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code> tags:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;ul class="table-of-contents"&gt;
+     &lt;li&gt;
+<span class="gd">-        &lt;p&gt;&lt;a href="#level-2-heading"&gt;Level 2 Heading&lt;/a&gt;&lt;/p&gt;
+</span><span class="gi">+        &lt;a href="#level-2-heading"&gt;Level 2 Heading&lt;/a&gt;
+</span>     &lt;/li&gt;
+     &lt;li&gt;
+<span class="gd">-        &lt;p&gt;&lt;a href="#level-4-heading"&gt;Level 4 Heading&lt;/a&gt;&lt;/p&gt;
+</span><span class="gi">+        &lt;a href="#level-4-heading"&gt;Level 4 Heading&lt;/a&gt;
+</span>     &lt;/li&gt;
+     &lt;li&gt;
+<span class="gd">-        &lt;p&gt;&lt;a href="#level-3-heading"&gt;Level 3 Heading&lt;/a&gt;&lt;/p&gt;
+</span><span class="gi">+        &lt;a href="#level-3-heading"&gt;Level 3 Heading&lt;/a&gt;
+</span>     &lt;/li&gt;
+ &lt;/ul&gt;
+</code></pre></div></div>
+
+<p>See <a href="https://github.com/thephpleague/commonmark/issues/613">#613</a> for details.</p>
+
+<p>Additionally, the HTML (including URL fragments) for Heading Permalinks have changed:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">-&lt;h1&gt;&lt;a id="user-content-hello-world" href="#hello-world" name="hello-world" class="heading-permalink" aria-hidden="true" title="Permalink"&gt;¶&lt;/a&gt;Hello World!&lt;/h1&gt;
+</span><span class="gi">+&lt;h1&gt;&lt;a id="content-hello-world" href="#content-hello-world" class="heading-permalink" aria-hidden="true" title="Permalink"&gt;¶&lt;/a&gt;Hello World!&lt;/h1&gt;
+</span></code></pre></div></div>
+
+<p>Note that the <code class="language-plaintext highlighter-rouge">href</code> now targets the <code class="language-plaintext highlighter-rouge">id</code> attribute instead of the <code class="language-plaintext highlighter-rouge">name</code>, which is deprecated in HTML 5.  Additionally, the default prefix has changed to <code class="language-plaintext highlighter-rouge">content</code>.  See the <a href="/2.0/extensions/heading-permalinks/#configuration">Heading Permalink extension documentation</a> for more details on how to configure the prefixes.</p>
+
+<h2 id="configuration-option-changes">Configuration Option Changes</h2>
+
+<p>Several configuration options now have new names:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Old Key/Path</th>
+      <th>New Key/Path</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">enable_em</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/enable_em</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">enable_strong</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/enable_strong</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">use_asterisk</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/use_asterisk</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">use_underscore</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/use_underscore</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">unordered_list_markers</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/unordered_list_markers</code></td>
+      <td>Empty arrays no longer allowed</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">heading_permalink/id_prefix</code></td>
+      <td>(unchanged)</td>
+      <td>Default is now <code class="language-plaintext highlighter-rouge">content</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">heading_permalink/inner_contents</code></td>
+      <td><code class="language-plaintext highlighter-rouge">heading_permalink/symbol</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">heading_permalink/slug_normalizer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">slug_normalizer/instance</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">max_nesting_level</code></td>
+      <td>(unchanged)</td>
+      <td>Only integer values are supported</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mentions/*/symbol</code></td>
+      <td><code class="language-plaintext highlighter-rouge">mentions/*/prefix</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mentions/*/regex</code></td>
+      <td><code class="language-plaintext highlighter-rouge">mentions/*/pattern</code></td>
+      <td>Cannot contain start/end <code class="language-plaintext highlighter-rouge">/</code> delimiters</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="method-return-types">Method Return Types</h2>
+
+<p>Return types have been added to virtually all class and interface methods.  If you implement or extend anything from this library, ensure you also have the proper return types added.</p>
+
+<h2 id="configuration-classes-relocated">Configuration Classes Relocated</h2>
+
+<p>The following classes have been moved to the <code class="language-plaintext highlighter-rouge">league/config</code> package:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Old Class Namespace/Name (1.x)</th>
+      <th>Moved To</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">League\CommonMark\Util\ConfigurationAwareInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">League\Config\ConfigurationAwareInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">League\CommonMark\Util\ConfigurationInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">League\Config\ConfigurationInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">League\CommonMark\Util\Configuration</code></td>
+      <td><code class="language-plaintext highlighter-rouge">League\Config\Configuration</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="classesnamespaces-renamed">Classes/Namespaces Renamed</h2>
+
+<p>Many classes now live in different namespaces, and some have also been renamed.  Here’s a quick guide showing their new locations:</p>
+
+<p><em>(Note that the base namespace of <code class="language-plaintext highlighter-rouge">League\CommonMark</code> has been omitted from this table for brevity.)</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Old Class Namespace/Name (1.x)</th>
+      <th>New Class Namespace/Name (2.0)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Environment\ConfigurableEnvironmentInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentAwareInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Environment\EnvironmentAwareInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Environment</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Environment\Environment</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Environment\EnvironmentInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMarkCoreExtension</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\CommonMarkCoreExtension</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Delimiter\Processor\EmphasisDelimiterProcessor</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\BlockQuote</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\BlockQuote</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\FencedCode</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\FencedCode</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\Heading</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\Heading</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\HtmlBlock</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\HtmlBlock</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\IndentedCode</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\IndentedCode</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\ListBlock</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\ListBlock</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\ListData</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\ListData</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\ListItem</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\ListItem</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\ThematicBreak</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Block\ThematicBreak</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\AbstractWebResource</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Inline\AbstractWebResource</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\Code</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Inline\Code</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\Emphasis</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Inline\Emphasis</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\HtmlInline</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Inline\HtmlInline</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\Image</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Inline\Image</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\Link</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Inline\Link</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\Strong</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Node\Inline\Strong</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\BlockQuoteParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Block\BlockQuoteParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\FencedCodeParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Block\FencedCodeParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\ATXHeadingParser</code> and <code class="language-plaintext highlighter-rouge">Block\Parser\SetExtHeadingParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Block\HeadingParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\HtmlBlockParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Block\HtmlBlockParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\IndentedCodeParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Block\IndentedCodeParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\ListParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Block\ListParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\ThematicBreakParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Block\ThematicBreakParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\AutolinkParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Inline\AutolinkParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\BacktickParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Inline\BacktickParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\BangParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Inline\BangParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\CloseBracketParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Inline\CloseBracketParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\EntityParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Inline\EntityParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\EscapableParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Inline\EscapableParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\HtmlInlineParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Inline\HtmlInlineParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\OpenBracketParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Parser\Inline\OpenBracketParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\BlockQuoteRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Block\BlockQuoteRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\FencedCodeRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Block\FencedCodeRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\HeadingRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Block\HeadingRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\HtmlBlockRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Block\HtmlBlockRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\IndentedCodeRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Block\IndentedCodeRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\ListBlockRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Block\ListBlockRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\ListItemRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Block\ListItemRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\ThematicBreakRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Block\ThematicBreakRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Renderer\CodeRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Inline\CodeRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Renderer\EmphasisRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Inline\EmphasisRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Renderer\HtmlInlineRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Inline\HtmlInlineRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Renderer\ImageRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Inline\ImageRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Renderer\LinkRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Inline\LinkRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Renderer\StrongRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\CommonMark\Renderer\Inline\StrongRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Extension\SmartPunct\PunctuationParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\SmartPunct\DashParser</code> and <code class="language-plaintext highlighter-rouge">Extension\SmartPunct\EllipsesParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Extension\TableOfContents\TableOfContents</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Extension\TableOfContents\Node\TableOfContents</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\AbstractBlock</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Block\AbstractBlock</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\Document</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Block\Document</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\InlineContainerInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Block\InlineContainerInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\Paragraph</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Block\Paragraph</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Element\StringContainerInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\StringContainerInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\AbstractInline</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Inline\AbstractInline</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\AbstractStringContainer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Inline\AbstractStringContainer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\AdjacentTextMerger</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Inline\AdjacentTextMerger</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\Newline</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Inline\Newline</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Element\Text</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Node\Inline\Text</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\BlockParserInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\Block\BlockContinueParserInterface</code> and <code class="language-plaintext highlighter-rouge">Parser\Block\BlockStartParserInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Parser\LazyParagraphParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\Block\ParagraphParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Cursor</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\Cursor</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">DocParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\MarkdownParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">DocParserInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\MarkdownParserInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\InlineParserInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\Inline\InlineParserInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Parser\NewlineParser</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\Inline\NewlineParser</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">InlineParserContext</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\InlineParserContext</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">InlineParserEngine</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Parser\InlineParserEngine</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\DocumentRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Renderer\Block\DocumentRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\ParagraphRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Renderer\Block\ParagraphRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ElementRendererInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Renderer\ChildNodeRendererInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">HtmlRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Renderer\HtmlRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Renderer\NewlineRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Renderer\Inline\NewlineRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Inline\Renderer\TextRenderer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Renderer\Inline\TextRenderer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Block\Renderer\BlockRendererInterface</code> and <code class="language-plaintext highlighter-rouge">Inline\Renderer\InlineRendererInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Renderer\NodeRendererInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">HtmlElement</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Util\HtmlElement</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="new-block-parsing-approach">New Block Parsing Approach</h2>
+
+<p>We’ve completely changed how block parsing works in 2.0.  In a nutshell, 1.x had parsing responsibilities split between
+the parser and the node. But nodes should be “dumb” and not know anything about how they are parsed - they should only
+know the bare minimum needed for rendering.</p>
+
+<p>As a result, 2.x has delegated the parsing responsibilities to two different interfaces:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Responsibility</th>
+      <th>Old Method (1.x)</th>
+      <th>New Method (2.0)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Identifying the start of a block</td>
+      <td><code class="language-plaintext highlighter-rouge">BlockParserInterface::parse()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BlockStartParserInterface::tryStart()</code></td>
+    </tr>
+    <tr>
+      <td>Instantiating and configuring the new block</td>
+      <td><code class="language-plaintext highlighter-rouge">BlockParserInterface::parse()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BlockContinueParserInterface::__construct()</code></td>
+    </tr>
+    <tr>
+      <td>Determining if the block acts as a container</td>
+      <td><code class="language-plaintext highlighter-rouge">AbstractBlock::isContainer()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BlockContinueParserInterface::isContainer()</code></td>
+    </tr>
+    <tr>
+      <td>Determining if the block can have lazy continuation lines</td>
+      <td><code class="language-plaintext highlighter-rouge">AbstractBlock::isCode()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BlockContinueParserInterface::canHaveLazyContinuationLines()</code></td>
+    </tr>
+    <tr>
+      <td>Determining if the block can contain certain child blocks</td>
+      <td><code class="language-plaintext highlighter-rouge">AbstractBlock::canContain()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BlockContinueParserInterface::canContain()</code></td>
+    </tr>
+    <tr>
+      <td>Determining if the block continues on the next line</td>
+      <td><code class="language-plaintext highlighter-rouge">AbstractBlock::matchesNextLine()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BlockContinueParserInterface::tryContinue()</code></td>
+    </tr>
+    <tr>
+      <td>Adding the next line to the block</td>
+      <td><code class="language-plaintext highlighter-rouge">AbstractBlock::handleRemainingContents()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BlockContinueParserInterface::addLine()</code></td>
+    </tr>
+    <tr>
+      <td>Finalizing the block and its contents</td>
+      <td><code class="language-plaintext highlighter-rouge">AbstractBlock::finalize()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">BlockContinueParserInterface::closeBlock()</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As a result of making this change, the <code class="language-plaintext highlighter-rouge">addBlockParser()</code> method on <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code> has changed to <code class="language-plaintext highlighter-rouge">addBlockStartParser()</code>.</p>
+
+<p>See <a href="/2.0/customization/block-parsing/">the block parsing documentation</a> for more information on this new approach.</p>
+
+<h2 id="new-inline-parsing-approach">New Inline Parsing Approach</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">getCharacters()</code> method on <code class="language-plaintext highlighter-rouge">InlineParserInterface</code> has been replaced with a more-robust <code class="language-plaintext highlighter-rouge">getMatchDefinition()</code> method which allows your parser to match against more than just single characters.  All custom inline parsers will need to change to this new approach.</p>
+
+<p>Additionally, when the <code class="language-plaintext highlighter-rouge">parse()</code> method is called, the Cursor is no longer proactively advanced past the matching character/start position for you.  You’ll need to advance this yourself.  However, the <code class="language-plaintext highlighter-rouge">InlineParserContext</code> now provides the fully-matched text and its length, allowing you to easily <code class="language-plaintext highlighter-rouge">advanceBy()</code> the cursor without having to do an expensive <code class="language-plaintext highlighter-rouge">$cursor-&gt;match()</code> yourself which is a nice performance optimization.</p>
+
+<p>See <a href="/2.0/customization/inline-parsing/">the inline parsing documentation</a> for more information on this new approach.</p>
+
+<h2 id="rendering-changes">Rendering Changes</h2>
+
+<p>This library no longer differentiates between block renderers and inline renderers - everything now uses “node renderers” which allow us to have a unified approach to rendering!  As a result, the following changes were made, which you may need to change in your custom extensions:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Old Method/Interface (1.x)</th>
+      <th>New Method/Interface (2.0)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">BlockRendererInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">NodeRendererInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">InlineRendererInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">NodeRendererInterface</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getBlockRenderersForClass()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getRenderersForClass()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getInlineRenderersForClass()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getRenderersForClass()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::addBlockRenderer()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::addRenderer()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::addInlineRenderer()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::addRenderer()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ElementRendererInterface::renderBlock()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ChildNodeRendererInterface::renderNodes()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ElementRendererInterface::renderBlocks()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ChildNodeRendererInterface::renderNodes()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ElementRendererInterface::renderInline()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ChildNodeRendererInterface::renderNodes()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ElementRendererInterface::renderInlines()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ChildNodeRendererInterface::renderNodes()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">HtmlRenderer::renderBlock($document)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HtmlRenderer::renderDocument()</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Renderers now implement the unified <code class="language-plaintext highlighter-rouge">NodeRendererInterface</code> which has a similar (but slightly different) signature from
+the old <code class="language-plaintext highlighter-rouge">BlockRendererInterface</code> and <code class="language-plaintext highlighter-rouge">InlineRendererInterface</code> interfaces:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/**
+ * @param Node                       $node
+ * @param ChildNodeRendererInterface $childRenderer
+ *
+ * @return HtmlElement|string|null
+ */</span>
+<span class="k">public</span> <span class="k">function</span> <span class="n">render</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">,</span> <span class="kt">ChildNodeRendererInterface</span> <span class="nv">$childRenderer</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The element being rendered is still passed in the first argument, and the object that helps you render children is still
+passed in the second argument.  Note that blocks are no longer told whether they’re being rendered in a tight list - if you
+need to know about this, traverse up the <code class="language-plaintext highlighter-rouge">$node</code> AST yourself and check any <code class="language-plaintext highlighter-rouge">ListBlock</code> ancestor for tightness.</p>
+
+<h2 id="ast-node-changes">AST Node Changes</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">AbstractBlock::$data</code> and <code class="language-plaintext highlighter-rouge">AbstractInline::$data</code> arrays were replaced with a <code class="language-plaintext highlighter-rouge">Data</code> array-like object on the base <code class="language-plaintext highlighter-rouge">Node</code> class.</p>
+
+<h2 id="removed-classes">Removed Classes</h2>
+
+<p>The following classes have been removed:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class name in 1.x</th>
+      <th>Replacement / Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">extends AbstractBlock implements StringContainerInterface</code> instead. Note the new method names.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Context</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">MarkdownParserState</code> instead (has different methods but serves a similar purpose)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ContextInterface</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">MarkdownParserStateInterface</code> instead (has different methods but serves a similar purpose)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Converter</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">MarkdownConverter</code> instead.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ConverterInterface</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">MarkdownConverterInterface</code>.  This interface has the same methods so it should be a drop-in replacement.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">UnmatchedBlockCloser</code></td>
+      <td>No longer needed 2.x</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="renamed-constants">Renamed constants</h2>
+
+<p>The following constants have been moved/renamed:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Old Name/Location (1.x)</th>
+      <th>New Name/Location (2.0)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentInterface::HTML_INPUT_ALLOW</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HtmlFilter::ALLOW</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentInterface::HTML_INPUT_ESCAPE</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HtmlFilter::ESCAPE</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">EnvironmentInterface::HTML_INPUT_STRIP</code></td>
+      <td><code class="language-plaintext highlighter-rouge">HtmlFilter::STRIP</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TableCell::TYPE_HEAD</code></td>
+      <td><code class="language-plaintext highlighter-rouge">TableCell::TYPE_HEADER</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TableCell::TYPE_BODY</code></td>
+      <td><code class="language-plaintext highlighter-rouge">TableCell::TYPE_DATA</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="renamed-methods">Renamed Methods</h2>
+
+<p>The following methods have been renamed:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Old Name (1.x)</th>
+      <th>New Name (2.0)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Environment</code> / <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addBlockParser()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addBlockStartParser()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ReferenceMap</code> / <code class="language-plaintext highlighter-rouge">ReferenceMapInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">addReference()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">add()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ReferenceMap</code> / <code class="language-plaintext highlighter-rouge">ReferenceMapInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">getReference()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">get()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ReferenceMap</code> / <code class="language-plaintext highlighter-rouge">ReferenceMapInterface</code></td>
+      <td><code class="language-plaintext highlighter-rouge">listReferences()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">getIterator()</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="visibility-changes">Visibility Changes</h2>
+
+<p>The following properties have had their visibility changed:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Was (1.x)</th>
+      <th>Is Now (2.0)</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TableCell::$align</code></td>
+      <td><code class="language-plaintext highlighter-rouge">public</code></td>
+      <td><code class="language-plaintext highlighter-rouge">private</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">getAlign()</code> and <code class="language-plaintext highlighter-rouge">setAlign()</code> instead</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TableCell::$type</code></td>
+      <td><code class="language-plaintext highlighter-rouge">public</code></td>
+      <td><code class="language-plaintext highlighter-rouge">private</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">getType()</code> and <code class="language-plaintext highlighter-rouge">setType()</code> instead</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TableSection::$type</code></td>
+      <td><code class="language-plaintext highlighter-rouge">public</code></td>
+      <td><code class="language-plaintext highlighter-rouge">private</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">getType()</code> instead</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="configuration-method-changes">Configuration Method Changes</h2>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">EnvironmentInterface::getConfig()</code> without any parameters is no longer supported.</p>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::mergeConfig()</code> without any parameters is no longer supported.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::setConfig()</code> method has been removed.  Use <code class="language-plaintext highlighter-rouge">getConfig()</code> instead.</p>
+
+<h2 id="new-approach-to-the-referenceparser">New approach to the <code class="language-plaintext highlighter-rouge">ReferenceParser</code></h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ReferenceParser</code> class in 1.x worked on complete paragraphs of text.  This has been changed in 2.x to work in a more-gradual fashion, where parsing is done on-the-fly as new lines are added.
+Whereas you may have previously called <code class="language-plaintext highlighter-rouge">parse()</code> on a <code class="language-plaintext highlighter-rouge">Cursor</code> once on something containing multiple lines, you should now call <code class="language-plaintext highlighter-rouge">parse()</code> on each line of text and then later call <code class="language-plaintext highlighter-rouge">getReferences()</code>
+to check what has been parsed.</p>
+
+<h2 id="html5entities-utility-class-removed"><code class="language-plaintext highlighter-rouge">Html5Entities</code> utility class removed</h2>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">Html5EntityDecoder</code> utility class instead.</p>
+
+<h2 id="bincommonmark-command"><code class="language-plaintext highlighter-rouge">bin/commonmark</code> command</h2>
+
+<p>This command was buggy to test and was relatively unpopular, so it has been removed. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.</p>
+
+<h2 id="commonmarkconverterversion-constant"><code class="language-plaintext highlighter-rouge">CommonMarkConverter::VERSION</code> constant</h2>
+
+<p>This previously-deprecated constant was removed in 2.0 Use <code class="language-plaintext highlighter-rouge">\Composer\InstalledVersions</code> provided by composer-runtime-api instead.</p>
+
+<h2 id="headingpermalinkrendererdefault_inner_contents-constant"><code class="language-plaintext highlighter-rouge">HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS</code> constant</h2>
+
+<p>This previously-deprecated constant was removed in 2.0. Use <code class="language-plaintext highlighter-rouge">HeadingPermalinkRenderer::DEFAULT_SYMBOL</code> instead.</p>
+
+<h2 id="arraycollection-changes"><code class="language-plaintext highlighter-rouge">ArrayCollection</code> changes</h2>
+
+<p>Several methods were removed from this class - here are the methods along with possible alternatives you can switch to:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Removed Method Name</th>
+      <th>Alternative</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">add($value)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">$collection[] = $value</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">set($key, $value)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">$collection[$key] = $value</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">get($key)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">$collection[$key]</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">remove($key)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">unset($collection[$key])</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">isEmpty()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">count($collection) === 0</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">contains($value)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">in_array($value, $collection-&gt;toArray(), true)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">indexOf($value)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">array_search($value, $collection-&gt;toArray(), true)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">containsKey($key)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">isset($collection[$key])</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">replaceWith()</code></td>
+      <td>(none provided)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">removeGaps()</code></td>
+      <td>(none provided)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This class is also <code class="language-plaintext highlighter-rouge">final</code> now, so don’t extend it.</p>
+
+<h2 id="final-classes"><code class="language-plaintext highlighter-rouge">final</code> classes</h2>
+
+<p>The following classes are now marked <code class="language-plaintext highlighter-rouge">final</code> and cannot be extended:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ArrayCollection</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Emphasis</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FencedCode</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Heading</code></li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlBlock</code></li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlElement</code></li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlInline</code></li>
+  <li><code class="language-plaintext highlighter-rouge">IndentedCode</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Newline</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Strikethrough</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Strong</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Text</code></li>
+</ul>
+
+<h2 id="node-setter-methods-return-void">Node setter methods return void</h2>
+
+<p>All <code class="language-plaintext highlighter-rouge">set*()</code> methods on all Node types now return <code class="language-plaintext highlighter-rouge">void</code> (whereas some used to return <code class="language-plaintext highlighter-rouge">$this</code> in 1.x) for consistency.</p>
+
+<h2 id="unused-methods">Unused methods</h2>
+
+<p>The following unused methods have been removed:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Delimiter::setCanClose()</code></li>
+</ul>
+
+<h2 id="slug-normalizer">Slug Normalizer</h2>
+
+<p>Need to generate unique slugs in your extensions? Use the new <a href="/2.0/customization/slug-normalizer/">Slug Normalizer</a> provided by the <code class="language-plaintext highlighter-rouge">Environment</code>.</p>
+
+<h2 id="text-normalizers">Text Normalizers</h2>
+
+<p>The second argument to <code class="language-plaintext highlighter-rouge">TextNormalizerInterface::normalize()</code> used to allow any arbitrary object. This was changed to an <code class="language-plaintext highlighter-rouge">array</code> so that multiple things can be passed in at once.</p>
+
+<h2 id="title-attribute-for-link-and-image-nodes"><code class="language-plaintext highlighter-rouge">title</code> attribute for <code class="language-plaintext highlighter-rouge">Link</code> and <code class="language-plaintext highlighter-rouge">Image</code> nodes</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">title</code> attribute for <code class="language-plaintext highlighter-rouge">Link</code> and <code class="language-plaintext highlighter-rouge">Image</code> nodes is now stored using a dedicated property instead of stashing it in <code class="language-plaintext highlighter-rouge">$data</code>.  Use <code class="language-plaintext highlighter-rouge">getTitle()</code> and <code class="language-plaintext highlighter-rouge">setTitle()</code> to access the value.</p>
+
+<h2 id="node-iteration">Node Iteration</h2>
+
+<p>In 1.x, most custom code used <code class="language-plaintext highlighter-rouge">$node-&gt;walker()</code> to iterate the AST.  Although this still exists, consider whether your code could use <code class="language-plaintext highlighter-rouge">$node-&gt;iterator()</code> instead which can be up to twice as fast!</p>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/2.0/upgrading/developers.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v2.0"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

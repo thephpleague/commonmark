@@ -1,0 +1,513 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="The ExternalLinksExtension detects external links and adjusts their HTML markup">
+    
+    <meta name="docsearch:version" content="1.4">
+    
+        <title>External Links Extension - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/1.4/extensions/external-links/" />
+    
+        <meta property="og:title" content="External Links Extension - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="The ExternalLinksExtension detects external links and adjusts their HTML markup" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v1.4 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/extensions/external-links/">v2.5</a></li>
+            
+                <li ><a href="/2.4/extensions/external-links/">v2.4</a></li>
+            
+                <li ><a href="/2.3/extensions/external-links/">v2.3</a></li>
+            
+                <li ><a href="/2.2/extensions/external-links/">v2.2</a></li>
+            
+                <li ><a href="/2.1/extensions/external-links/">v2.1</a></li>
+            
+                <li ><a href="/2.0/extensions/external-links/">v2.0</a></li>
+            
+                <li ><a href="/1.6/extensions/external-links/">v1.6</a></li>
+            
+                <li ><a href="/1.5/extensions/external-links/">v1.5</a></li>
+            
+                <li class="selected"><a href="/1.4/extensions/external-links/">v1.4</a></li>
+            
+                <li ><a href="/1.3/extensions/external-links/">v1.3</a></li>
+            
+                <li ><a href="/1.0/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.4/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/upgrading/">Upgrading from 1.3</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/changelog/">Changelog</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.4/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/command-line/">Command Line</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.4/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/1.4/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.4/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/block-rendering/">Block Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/inline-rendering/">Inline Rendering</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 1.4</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="external-links-extension">External Links Extension</h1>
+
+<p>This extension can detect links to external sites and adjust the markup accordingly:</p>
+
+<ul>
+  <li>Adds a <code class="language-plaintext highlighter-rouge">rel="noopener noreferrer"</code> attribute</li>
+  <li>Optionally adds any custom HTML classes</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<p>This extension is bundled with <code class="language-plaintext highlighter-rouge">league/commonmark</code>. This library can be installed via Composer:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>composer require league/commonmark
+</code></pre></div></div>
+
+<p>See the <a href="/1.4/installation/">installation</a> section for more details.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>Configure your <code class="language-plaintext highlighter-rouge">Environment</code> as usual and simply add the <code class="language-plaintext highlighter-rouge">ExternalLinkExtension</code> provided by this package:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\CommonMarkConverter</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\ExternalLink\ExternalLinkExtension</span><span class="p">;</span>
+
+<span class="c1">// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go</span>
+<span class="nv">$environment</span> <span class="o">=</span> <span class="nc">Environment</span><span class="o">::</span><span class="nf">createCommonMarkEnvironment</span><span class="p">();</span>
+
+<span class="c1">// Add this extension</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">ExternalLinkExtension</span><span class="p">());</span>
+
+<span class="c1">// Set your configuration</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'external_link'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'internal_hosts'</span> <span class="o">=&gt;</span> <span class="s1">'www.example.com'</span><span class="p">,</span> <span class="c1">// Don't forget to set this!</span>
+        <span class="s1">'open_in_new_window'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">'html_class'</span> <span class="o">=&gt;</span> <span class="s1">'external-link'</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="c1">// Instantiate the converter engine and start converting some Markdown!</span>
+<span class="nv">$converter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CommonMarkConverter</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="nv">$environment</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$converter</span><span class="o">-&gt;</span><span class="nf">convertToHtml</span><span class="p">(</span><span class="s1">'I successfully installed the &lt;https://github.com/thephpleague/commonmark&gt; project!'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>This extension supports three configuration options under the <code class="language-plaintext highlighter-rouge">external_link</code> configuration:</p>
+
+<h3 id="internal_hosts"><code class="language-plaintext highlighter-rouge">internal_hosts</code></h3>
+
+<p>This option defines a list of hosts which are considered non-external and should not receive the external link treatment.</p>
+
+<p>This can be a single host name, like <code class="language-plaintext highlighter-rouge">'example.com'</code>, which must match <strong>exactly</strong>.</p>
+
+<p>Wildcard matching is also supported using regular expression like <code class="language-plaintext highlighter-rouge">'/(^|\.)example\.com$/'</code>.  Note that you must use <code class="language-plaintext highlighter-rouge">/</code> characters to delimit your regex.</p>
+
+<p>This configuration option also accepts an array of multiple strings and/or regexes:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'external_link'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'internal_hosts'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'foo.example.com'</span><span class="p">,</span> <span class="s1">'bar.example.com'</span><span class="p">,</span> <span class="err">'</span><span class="o">/</span><span class="p">(</span><span class="o">^|</span><span class="err">\</span><span class="mf">.</span><span class="p">)</span><span class="n">google</span><span class="err">\</span><span class="mf">.</span><span class="n">com</span><span class="err">$</span><span class="o">/</span><span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</code></pre></div></div>
+
+<p>By default, if this option is not provided, all links will be considered external.</p>
+
+<h3 id="open_in_new_window"><code class="language-plaintext highlighter-rouge">open_in_new_window</code></h3>
+
+<p>This option (which defaults to <code class="language-plaintext highlighter-rouge">false</code>) determines whether any external links should open in a new tab/window.</p>
+
+<h3 id="html_class"><code class="language-plaintext highlighter-rouge">html_class</code></h3>
+
+<p>This option allows you to provide a <code class="language-plaintext highlighter-rouge">string</code> containing one or more HTML classes that should be added to the external link <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> tags:  No classes are added by default.</p>
+
+<h2 id="advanced-rendering">Advanced Rendering</h2>
+
+<p>When an external link is detected, the <code class="language-plaintext highlighter-rouge">ExternalLinkProcessor</code> will set the <code class="language-plaintext highlighter-rouge">external</code> data option on the <code class="language-plaintext highlighter-rouge">Link</code> node to either <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code>.  You can therefore create a <a href="/1.4/customization/inline-rendering/">custom link renderer</a> which checks this value and behaves accordingly:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\ElementRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\HtmlElement</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Inline\Element\AbstractInline</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Inline\Element\Link</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Inline\Renderer\InlineRendererInterface</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">MyCustomLinkRenderer</span> <span class="kd">implements</span> <span class="nc">InlineRendererInterface</span>
+<span class="p">{</span>
+
+    <span class="cd">/**
+     * @param Link                     $inline
+     * @param ElementRendererInterface $htmlRenderer
+     *
+     * @return HtmlElement
+     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">render</span><span class="p">(</span><span class="kt">AbstractInline</span> <span class="nv">$inline</span><span class="p">,</span> <span class="kt">ElementRendererInterface</span> <span class="nv">$htmlRenderer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nv">$inline</span> <span class="k">instanceof</span> <span class="nc">Link</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="err">\</span><span class="nf">InvalidArgumentException</span><span class="p">(</span><span class="s1">'Incompatible inline type: '</span> <span class="mf">.</span> <span class="err">\</span><span class="nb">get_class</span><span class="p">(</span><span class="nv">$inline</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$inline</span><span class="o">-&gt;</span><span class="nf">getData</span><span class="p">(</span><span class="s1">'external'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// This is an external link - render it accordingly</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// This is an internal link</span>
+        <span class="p">}</span>
+
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="adding-icons">Adding Icons</h2>
+
+<p>You can also use CSS to add a custom icon by targeting the <code class="language-plaintext highlighter-rouge">html_class</code> given in the configuration:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'external_link'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'html_class'</span> <span class="o">=&gt;</span> <span class="s1">'external'</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</code></pre></div></div>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/**
+ * Custom SVG Icon.
+ */</span>
+<span class="nt">a</span><span class="o">[</span><span class="nt">target</span><span class="o">=</span><span class="s1">"_blank"</span><span class="o">]</span><span class="nd">::after</span><span class="o">,</span>
+<span class="nt">a</span><span class="nc">.external</span><span class="nd">::after</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">inline-block</span><span class="p">;</span>
+  <span class="nl">content</span><span class="p">:</span> <span class="s1">""</span><span class="p">;</span>
+  <span class="c">/**
+   * Octicon Link External (https://iconify.design/icon-sets/octicon/link-external.html)
+   * [Pro Tip] Use an SVG URL encoder (https://yoksel.github.io/url-encoder).
+   */</span>
+  <span class="nl">background-image</span><span class="p">:</span> <span class="sx">url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' style='-ms-transform:rotate(360deg)</span><span class="p">;</span><span class="nl">-webkit-transform</span><span class="p">:</span><span class="n">rotate</span><span class="p">(</span><span class="m">360deg</span><span class="p">)</span><span class="s2">' viewBox='</span><span class="m">0</span> <span class="m">0</span> <span class="m">12</span> <span class="m">16</span><span class="s2">' transform='</span><span class="n">rotate</span><span class="p">(</span><span class="m">360</span><span class="p">)</span><span class="s2">'%3E%3Cpath fill-rule='</span><span class="n">evenodd</span><span class="s2">' d='</span><span class="n">M11</span> <span class="m">10</span><span class="n">h1v3c0</span> <span class="m">.55-.45</span> <span class="m">1-1</span> <span class="m">1</span><span class="n">H1c-</span><span class="m">.55</span> <span class="m">0-1-.45-1-1</span><span class="n">V3c0-</span><span class="m">.55.45-1</span> <span class="m">1-1</span><span class="n">h3v1H1v10h10v-3zM6</span> <span class="m">2</span><span class="n">l2</span><span class="m">.25</span> <span class="m">2.25</span><span class="n">L5</span> <span class="m">7.5</span> <span class="m">6.5</span> <span class="m">9</span><span class="n">l3</span><span class="m">.25-3.25</span><span class="n">L12</span> <span class="m">8</span><span class="n">V2H6z</span><span class="s2">' fill='</span><span class="err">%</span><span class="m">23626262</span><span class="err">'</span><span class="p">/</span><span class="err">%</span><span class="m">3</span><span class="n">E</span><span class="err">%</span><span class="m">3</span><span class="n">C</span><span class="p">/</span><span class="n">svg</span><span class="err">%</span><span class="m">3</span><span class="n">E</span><span class="err">"</span><span class="p">);</span>
+  <span class="nl">background-repeat</span><span class="p">:</span> <span class="nb">no-repeat</span><span class="p">;</span>
+  <span class="nl">background-size</span><span class="p">:</span> <span class="m">1em</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/1.4/extensions/external-links.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v1.4"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

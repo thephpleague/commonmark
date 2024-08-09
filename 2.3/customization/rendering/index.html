@@ -1,0 +1,560 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="How to customize the rendering of block and inline elements">
+    
+    <meta name="docsearch:version" content="2.3">
+    
+        <title>Rendering - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/2.3/customization/rendering/" />
+    
+        <meta property="og:title" content="Rendering - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="How to customize the rendering of block and inline elements" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v2.3 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/customization/rendering/">v2.5</a></li>
+            
+                <li ><a href="/2.4/customization/rendering/">v2.4</a></li>
+            
+                <li class="selected"><a href="/2.3/customization/rendering/">v2.3</a></li>
+            
+                <li ><a href="/2.2/customization/rendering/">v2.2</a></li>
+            
+                <li ><a href="/2.1/customization/rendering/">v2.1</a></li>
+            
+                <li ><a href="/2.0/customization/rendering/">v2.0</a></li>
+            
+                <li ><a href="/1.6/">v1.6</a></li>
+            
+                <li ><a href="/1.5/">v1.5</a></li>
+            
+                <li ><a href="/1.4/">v1.4</a></li>
+            
+                <li ><a href="/1.3/">v1.3</a></li>
+            
+                <li ><a href="/1.0/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.3/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/upgrading/">Upgrading from 2.2</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/changelog/">Changelog</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/support/">Support</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.3/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/xml/">XML</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.3/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/default-attributes/">Default Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/description-lists/">Description Lists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/embed/">Embed</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/front-matter/">Front Matter</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.3/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/2.3/customization/rendering/">Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/slug-normalizer/">Slug Normalizer</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 2.3</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="custom-rendering">Custom Rendering</h1>
+
+<p>Renderers are responsible for converting the parsed AST elements into their HTML representation.</p>
+
+<p>All block renderers should implement <code class="language-plaintext highlighter-rouge">NodeRendererInterface</code> and its <code class="language-plaintext highlighter-rouge">render()</code> method.  Note that in v2.0, both
+block renderers and inline renderers share the same interface and method:</p>
+
+<h2 id="render">render()</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">function</span> <span class="n">render</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">,</span> <span class="kt">ChildNodeRendererInterface</span> <span class="nv">$childRenderer</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">HtmlRenderer</code> will call this method during the rendering process whenever a supported element is encountered.</p>
+
+<p>If your renderer can only handle certain block types, be sure to verify that you’ve been passed the correct type.</p>
+
+<h3 id="parameters">Parameters</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Node $node</code> - The encountered block or inline element that needs to be rendered</li>
+  <li><code class="language-plaintext highlighter-rouge">ChildNodeRendererInterface $childRenderer</code> - If the given $node has children, use this to render those child elements</li>
+</ul>
+
+<h3 id="return-value">Return value</h3>
+
+<p>The method must return the final HTML representation of the node and its contents, including any children. This can be an <code class="language-plaintext highlighter-rouge">HtmlElement</code> object (preferred; castable to a string), a string of raw HTML, or <code class="language-plaintext highlighter-rouge">null</code> if it could not render (and perhaps another renderer should give it a try).</p>
+
+<p>If you choose to return an HTML <code class="language-plaintext highlighter-rouge">string</code> you are responsible for handling any escaping that may be necessary.</p>
+
+<h4 id="htmlelement"><code class="language-plaintext highlighter-rouge">HtmlElement</code></h4>
+
+<p>Instead of manually building the HTML output yourself, you can leverage the <code class="language-plaintext highlighter-rouge">HtmlElement</code> to generate that for you.  For example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Util\HtmlElement</span><span class="p">;</span>
+
+<span class="nv">$link</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HtmlElement</span><span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://github.com'</span><span class="p">],</span> <span class="s1">'GitHub'</span><span class="p">);</span>
+<span class="nv">$img</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HtmlElement</span><span class="p">(</span><span class="s1">'img'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'src'</span> <span class="o">=&gt;</span> <span class="s1">'logo.jpg'</span><span class="p">],</span> <span class="s1">''</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="designating-renderers">Designating Renderers</h2>
+
+<p>When registering your renderer, you must tell the <code class="language-plaintext highlighter-rouge">Environment</code> which node element class your renderer should handle. For example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\FencedCode</span><span class="p">;</span>
+
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">();</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+
+<span class="c1">// First param - the node class type that should use our renderer</span>
+<span class="c1">// Second param - instance of the renderer</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">FencedCode</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">MyCustomCodeRenderer</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>A single renderer could even be used for multiple types:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\FencedCode</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode</span><span class="p">;</span>
+
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">();</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+
+<span class="nv">$myRenderer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyCustomCodeRenderer</span><span class="p">();</span>
+
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">FencedCode</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="nv">$myRenderer</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">IndentedCode</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="nv">$myRenderer</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Multiple renderers can be added per element type - when this happens, we use the result from the highest-priority renderer that returns a non-<code class="language-plaintext highlighter-rouge">null</code> result.</p>
+
+<h2 id="example">Example</h2>
+
+<p>Here’s a custom renderer which renders thematic breaks as text (instead of <code class="language-plaintext highlighter-rouge">&lt;hr&gt;</code>):</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Node\Node</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\ChildNodeRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\NodeRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Util\HtmlElement</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">TextDividerRenderer</span> <span class="kd">implements</span> <span class="nc">NodeRendererInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">render</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">,</span> <span class="kt">ChildNodeRendererInterface</span> <span class="nv">$childRenderer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">HtmlElement</span><span class="p">(</span><span class="s1">'pre'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'divider'</span><span class="p">],</span> <span class="s1">'=============================='</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">();</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">ThematicBreak</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">TextDividerRenderer</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>Note that thematic breaks should not contain children, which is why the <code class="language-plaintext highlighter-rouge">$childRenderer</code> is unused in this example.  Otherwise we’d have to call code like this and return the result as part of the rendered HTML we’re generating here: <code class="language-plaintext highlighter-rouge">$innerHtml = $childRenderer-&gt;renderNodes($node-&gt;children());</code></p>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+  <li>Return an <code class="language-plaintext highlighter-rouge">HtmlElement</code> if possible. This makes it easier to extend and modify the results later.</li>
+  <li>Don’t forget to render any child elements that your node might contain!</li>
+</ul>
+
+<h2 id="wrapping-elements-with-htmldecorator">Wrapping Elements with <code class="language-plaintext highlighter-rouge">HtmlDecorator</code></h2>
+
+<p>A utility class called <code class="language-plaintext highlighter-rouge">HtmlDecorator</code> is provided to make it easier to wrap the output of any renderer within an additional HTML tag with custom attributes and/or classes. To use it:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\HtmlDecorator</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Table\Table</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Table\TableRenderer</span><span class="p">;</span>
+
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">();</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">Table</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">HtmlDecorator</span><span class="p">(</span><span class="k">new</span> <span class="nc">TableRenderer</span><span class="p">(),</span> <span class="s1">'div'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'table-responsive'</span><span class="p">]));</span>
+</code></pre></div></div>
+
+<h2 id="xml-rendering">XML Rendering</h2>
+
+<p>The <a href="/2.3/xml/">XML renderer</a> will automatically attempt to convert any AST nodes to XML by inspecting the name of the block/inline node and its attributes. You can instead control the XML element name and attributes by making your renderer implement <code class="language-plaintext highlighter-rouge">XmlNodeRendererInterface</code>:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Node\Node</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\ChildNodeRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\NodeRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Util\HtmlElement</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Xml\XmlNodeRendererInterface</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">TextDividerRenderer</span> <span class="kd">implements</span> <span class="nc">NodeRendererInterface</span><span class="p">,</span> <span class="nc">XmlNodeRendererInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">render</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">,</span> <span class="kt">ChildNodeRendererInterface</span> <span class="nv">$childRenderer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">HtmlElement</span><span class="p">(</span><span class="s1">'pre'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'divider'</span><span class="p">],</span> <span class="s1">'=============================='</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getXmlTagName</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">):</span> <span class="kt">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">'text_divider'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getXmlAttributes</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">):</span> <span class="kt">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">'character'</span> <span class="o">=&gt;</span> <span class="s1">'='</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/2.3/customization/rendering.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v2.3"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

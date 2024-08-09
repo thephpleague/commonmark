@@ -1,0 +1,426 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="How to parse block-level elements">
+    
+    <meta name="docsearch:version" content="1.0">
+    
+        <title>Block Parsing - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/1.0/customization/block-parsing/" />
+    
+        <meta property="og:title" content="Block Parsing - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="How to parse block-level elements" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v1.0 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/customization/block-parsing/">v2.5</a></li>
+            
+                <li ><a href="/2.4/customization/block-parsing/">v2.4</a></li>
+            
+                <li ><a href="/2.3/customization/block-parsing/">v2.3</a></li>
+            
+                <li ><a href="/2.2/customization/block-parsing/">v2.2</a></li>
+            
+                <li ><a href="/2.1/customization/block-parsing/">v2.1</a></li>
+            
+                <li ><a href="/2.0/customization/block-parsing/">v2.0</a></li>
+            
+                <li ><a href="/1.6/customization/block-parsing/">v1.6</a></li>
+            
+                <li ><a href="/1.5/customization/block-parsing/">v1.5</a></li>
+            
+                <li ><a href="/1.4/customization/block-parsing/">v1.4</a></li>
+            
+                <li ><a href="/1.3/customization/block-parsing/">v1.3</a></li>
+            
+                <li class="selected"><a href="/1.0/customization/block-parsing/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.0/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/upgrading/">Upgrading from 0.19</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/changelog/">Changelog</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.0/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/command-line/">Command Line</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.0/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/1.0/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/block-rendering/">Block Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/customization/inline-rendering/">Inline Rendering</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 1.0</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="block-parsing">Block Parsing</h1>
+
+<p>Block parsers should implement <code class="language-plaintext highlighter-rouge">BlockParserInterface</code> and implement the following method:</p>
+
+<h2 id="parse">parse()</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">function</span> <span class="n">parse</span><span class="p">(</span><span class="kt">ContextInterface</span> <span class="nv">$context</span><span class="p">,</span> <span class="kt">Cursor</span> <span class="nv">$cursor</span><span class="p">):</span> <span class="kt">bool</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>When parsing a new line, the <code class="language-plaintext highlighter-rouge">DocParser</code> iterates through all registered block parsers and calls their <code class="language-plaintext highlighter-rouge">parse()</code> method.  Each parser must determine whether it can handle the given line; if so, it should parse the given block and return <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h3 id="parameters">Parameters</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ContextInterface $context</code> - Provides information about the current context of the DocParser. Includes access to things like the document, current block container, and more.</li>
+  <li><code class="language-plaintext highlighter-rouge">Cursor $cursor</code> - The <a href="/1.0/customization/cursor/"><code class="language-plaintext highlighter-rouge">Cursor</code></a> encapsulates the current state of the line being parsed and provides helpers for looking around the current position.</li>
+</ul>
+
+<h3 id="return-value">Return value</h3>
+
+<p><code class="language-plaintext highlighter-rouge">parse()</code> should return <code class="language-plaintext highlighter-rouge">false</code> if it’s unable to handle the current line for any reason.  (The <a href="/1.0/customization/cursor/"><code class="language-plaintext highlighter-rouge">Cursor</code></a> state should be restored before returning false if modified). Other parsers will then have a chance to try parsing the line.  If all registered parsers return false, the line will be parsed as text.</p>
+
+<p>Returning <code class="language-plaintext highlighter-rouge">true</code> tells the engine that you’ve successfully parsed the block at the given position.  It is your responsibility to:</p>
+
+<ol>
+  <li>Advance the cursor to the end of syntax indicating the block start</li>
+  <li>Add the parsed block via <code class="language-plaintext highlighter-rouge">$context-&gt;addBlock()</code></li>
+</ol>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+  <li>For best performance, <code class="language-plaintext highlighter-rouge">return false</code> as soon as possible</li>
+  <li>Your <code class="language-plaintext highlighter-rouge">parse()</code> method may be called thousands of times so be sure your code is optimized</li>
+</ul>
+
+<h2 id="block-elements">Block Elements</h2>
+
+<p>In addition to creating a block parser, you may also want to have it return a custom “block element” - this is a class that extends from <code class="language-plaintext highlighter-rouge">AbstractBlock</code> and represents that particular block within the AST.</p>
+
+<p>Block elements also play a role during the parsing process as they tell the underlying engine how to handle subsequent blocks that are found.</p>
+
+<h3 id="abstractblockelement-methods"><code class="language-plaintext highlighter-rouge">AbstractBlockElement</code> Methods</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">canContain(...)</code></td>
+      <td>Tell the engine whether a subsequent block can be added as a child of yours</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">isCode()</code></td>
+      <td>Returns whether this block represents an extra-greedy <code class="language-plaintext highlighter-rouge">&lt;code&gt;</code> block</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">matchesNextLine(...)</code></td>
+      <td>Returns whether this block continues onto the next line (some blocks are multi-line)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">shouldLastLineBeBlank()</code></td>
+      <td>Returns whether the last line should be blank (primarily used by <code class="language-plaintext highlighter-rouge">ListItem</code> elements)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">finalize(...)</code></td>
+      <td>Finalizes the block after all child items have been added, thus marking it as closed for modification</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For examples on how these methods are used, see the core block element classes included with this library.</p>
+
+<h3 id="abstractstringcontainerblock"><code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code></h3>
+
+<p>If your element can contain strings of text, you should extend <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code> instead of <code class="language-plaintext highlighter-rouge">AbstractBlock</code>.  This provides some additional methods needed to manage that inner text:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">handleRemainingContents(...)</code></td>
+      <td>This is called when a block has been created but some other text still exists on that line</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">addLine(...)</code></td>
+      <td>Adds the given line of text to the block element</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getStringContent()</code></td>
+      <td>Returns the strings contained with that block element</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="inlinecontainerinterface"><code class="language-plaintext highlighter-rouge">InlineContainerInterface</code></h4>
+
+<p>If the text contained by your block should be parsed for inline elements, you should also implement the <code class="language-plaintext highlighter-rouge">InlineContainerInterface</code>. This doesn’t add any new methods but does signal to the engine that inline parsing is required.</p>
+
+<h3 id="multi-line-code-blocks">Multi-line Code Blocks</h3>
+
+<p>If you have a block which spans multiple lines and doesn’t contain any child blocks, consider having <code class="language-plaintext highlighter-rouge">isCode()</code> return <code class="language-plaintext highlighter-rouge">true</code>.  Code blocks have a special feature which enables “greedy parsing” - once it first parses your block, the engine will assume that most of the subsequent lines of Markdown belong to your block - it won’t try using any other parsers until your parser’s <code class="language-plaintext highlighter-rouge">matchesNextLine()</code> method returns <code class="language-plaintext highlighter-rouge">false</code>, indicating that we’ve reached the end of that code block.</p>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/1.0/customization/block-parsing.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v1.0"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

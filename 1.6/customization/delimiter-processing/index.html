@@ -1,0 +1,477 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Processing CommonMark delimiter runs with a custom processor">
+    
+    <meta name="docsearch:version" content="1.6">
+    
+        <title>Delimiter Processing - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/1.6/customization/delimiter-processing/" />
+    
+        <meta property="og:title" content="Delimiter Processing - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="Processing CommonMark delimiter runs with a custom processor" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v1.6 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/customization/delimiter-processing/">v2.5</a></li>
+            
+                <li ><a href="/2.4/customization/delimiter-processing/">v2.4</a></li>
+            
+                <li ><a href="/2.3/customization/delimiter-processing/">v2.3</a></li>
+            
+                <li ><a href="/2.2/customization/delimiter-processing/">v2.2</a></li>
+            
+                <li ><a href="/2.1/customization/delimiter-processing/">v2.1</a></li>
+            
+                <li ><a href="/2.0/customization/delimiter-processing/">v2.0</a></li>
+            
+                <li class="selected"><a href="/1.6/customization/delimiter-processing/">v1.6</a></li>
+            
+                <li ><a href="/1.5/customization/delimiter-processing/">v1.5</a></li>
+            
+                <li ><a href="/1.4/customization/delimiter-processing/">v1.4</a></li>
+            
+                <li ><a href="/1.3/customization/delimiter-processing/">v1.3</a></li>
+            
+                <li ><a href="/1.0/customization/delimiter-processing/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.6/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/upgrading/">Upgrading from 1.5</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/changelog/">Changelog</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/support/">Support</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.6/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/command-line/">Command Line</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.6/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.6/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/1.6/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/block-rendering/">Block Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/inline-rendering/">Inline Rendering</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 1.6</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="delimiter-processing">Delimiter Processing</h1>
+
+<p>Delimiter processors allow you to implement <a href="https://spec.commonmark.org/0.29/#delimiter-run">delimiter runs</a> the same way the core library implements emphasis.</p>
+
+<p>Delimiter runs are a special type of inline:</p>
+
+<ul>
+  <li>They are denoted by “wrapping” text with one or more characters before <strong>and</strong> after those inner contents</li>
+  <li>They can contain other delimiter runs or inlines inside of them</li>
+</ul>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is an example of <span class="gs">**emphasis**</span>. Note how the text is <span class="ge">*wrapped*</span> with the same character(s) before and after.
+</code></pre></div></div>
+
+<p>When implementing something with these characteristics you should consider leveraging delimiter runs; otherwise, a basic <a href="/1.6/inline-parsing/">inline parser</a> should be sufficient.</p>
+
+<h2 id="delimiter-priority">Delimiter Priority</h2>
+
+<p>Delimiter processors have a lower priority than inline parsers - if an <a href="/1.6/inline-parsing/">inline parser</a> successfully handles the same special character you’re interested in then your delimiter processor will not be called.</p>
+
+<h2 id="implementing-standalone-delimiter-processors">Implementing Standalone Delimiter Processors</h2>
+
+<p>Implement the <code class="language-plaintext highlighter-rouge">DelimiterProcessorInterface</code> and add it to your environment:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addDelimiterProcessor</span><span class="p">(</span><span class="k">new</span> <span class="nc">MyCustomDelimiterProcessor</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h3 id="getopeningcharacter-and-getclosingcharacter"><code class="language-plaintext highlighter-rouge">getOpeningCharacter()</code> and <code class="language-plaintext highlighter-rouge">getClosingCharacter()</code></h3>
+
+<p>These two methods tell the engine which characters are used to delineate your custom syntax.  Generally these will be the same, such as when using <code class="language-plaintext highlighter-rouge">*emphasis*</code>, but they can be different; for example, maybe you want to use <code class="language-plaintext highlighter-rouge">{this syntax}</code>.  Simply tell the engine which characters you’d like to use.</p>
+
+<h3 id="getminimumlength"><code class="language-plaintext highlighter-rouge">getMinimumLength()</code></h3>
+
+<p>This method tells the engine the minimum number of characters needed to match or “activate” your processor. For example, if you want to match <code class="language-plaintext highlighter-rouge">{{example}}</code> and not <code class="language-plaintext highlighter-rouge">{example}</code>, set this to <code class="language-plaintext highlighter-rouge">2</code>.</p>
+
+<h3 id="getdelimiteruse"><code class="language-plaintext highlighter-rouge">getDelimiterUse()</code></h3>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">function</span> <span class="n">getDelimiterUse</span><span class="p">(</span><span class="kt">DelimiterInterface</span> <span class="nv">$opener</span><span class="p">,</span> <span class="kt">DelimiterInterface</span> <span class="nv">$closer</span><span class="p">):</span> <span class="kt">int</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>This method is used to tell the engine how many characters from the matching delimiters should be consumed.  For simple processors you’ll likely return <code class="language-plaintext highlighter-rouge">1</code> (or whatever your minimum length is).  In more advanced cases, you can examine the opening and closing delimiters and perform additional logic to determine whether they should be fully or partially consumed.  You can also return <code class="language-plaintext highlighter-rouge">0</code> if you’d like.</p>
+
+<h3 id="process"><code class="language-plaintext highlighter-rouge">process()</code></h3>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">function</span> <span class="n">process</span><span class="p">(</span><span class="kt">AbstractStringContainer</span> <span class="nv">$opener</span><span class="p">,</span> <span class="kt">AbstractStringContainer</span> <span class="nv">$closer</span><span class="p">,</span> <span class="kt">int</span> <span class="nv">$delimiterUse</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>This is where the magic happens.  Once the engine determines it can use the delimiter it found (by looking at all the other methods above) it’ll call this method.  Your job is to take everything between the <code class="language-plaintext highlighter-rouge">$opener</code> and <code class="language-plaintext highlighter-rouge">$closer</code> and wrap that in whatever custom inline element you’d like.  Here’s a basic example of wrapping the inner contents inside a new <code class="language-plaintext highlighter-rouge">Emphasis</code> element:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create the outer element</span>
+<span class="nv">$emphasis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Emphasis</span><span class="p">();</span>
+
+<span class="c1">// Add everything between $opener and $closer (exclusive) to the new outer element</span>
+<span class="nv">$tmp</span> <span class="o">=</span> <span class="nv">$opener</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">();</span>
+<span class="k">while</span> <span class="p">(</span><span class="nv">$tmp</span> <span class="o">!==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nv">$tmp</span> <span class="o">!==</span> <span class="nv">$closer</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$next</span> <span class="o">=</span> <span class="nv">$tmp</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">();</span>
+    <span class="nv">$emphasis</span><span class="o">-&gt;</span><span class="nf">appendChild</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">);</span>
+    <span class="nv">$tmp</span> <span class="o">=</span> <span class="nv">$next</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Place the outer element into the AST</span>
+<span class="nv">$opener</span><span class="o">-&gt;</span><span class="nf">insertAfter</span><span class="p">(</span><span class="nv">$emphasis</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Note that <code class="language-plaintext highlighter-rouge">$opener</code> and <code class="language-plaintext highlighter-rouge">$closer</code> will be automatically removed for you after this function returns - no need to do that yourself.</p>
+
+<h2 id="combining-inline-parsers-with-delimiter-processors">Combining Inline Parsers with Delimiter Processors</h2>
+
+<p>Basic delimiter processors, as covered above, do not require any custom inline parsers - they’ll “just work”.  But in some rare cases you may want to pair it with a custom <a href="/1.6/customization/inline-parsing/">inline parser</a>: the inline parser will identify the delimiter, adding an entry to the delimiter stack for the processor to process later.  Note that this is an advanced use case and you probably don’t need this.  But if you do then read on.</p>
+
+<h3 id="inline-parsers-and-the-delimiter-stack">Inline Parsers and the Delimiter Stack</h3>
+
+<p>As your identifies potential delimiter-based inlines, it should create a new <code class="language-plaintext highlighter-rouge">AbstractStringContainer</code> node (either <code class="language-plaintext highlighter-rouge">Text</code> or something custom) with the inner contents and also push a new <code class="language-plaintext highlighter-rouge">DelimiterInterface</code> onto the <code class="language-plaintext highlighter-rouge">DelimiterStack</code>:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$node</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="p">(</span><span class="nv">$cursor</span><span class="o">-&gt;</span><span class="nf">getPreviousText</span><span class="p">(),</span> <span class="p">[</span>
+    <span class="s1">'delim'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">]);</span>
+<span class="nv">$inlineContext</span><span class="o">-&gt;</span><span class="nf">getContainer</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">appendChild</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+
+<span class="c1">// Add entry to stack to this opener</span>
+<span class="nv">$delimiter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Delimiter</span><span class="p">(</span><span class="nv">$character</span><span class="p">,</span> <span class="nv">$numDelims</span><span class="p">,</span> <span class="nv">$node</span><span class="p">,</span> <span class="nv">$canOpen</span><span class="p">,</span> <span class="nv">$canClose</span><span class="p">);</span>
+<span class="nv">$inlineContext</span><span class="o">-&gt;</span><span class="nf">getDelimiterStack</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">push</span><span class="p">(</span><span class="nv">$delimiter</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>This basically tells the engine that text was found which <em>might</em> be emphasis, but due to the delimiter run rules we can’t make that determination just yet.  That final determination is later on by a “delimiter processor”.</p>
+
+<p>Your implementation of the delimiter processor won’t look any different in this approach - you’ll still need to implement all of the same methods especially <code class="language-plaintext highlighter-rouge">process()</code>.  The difference is that <strong>you’ve identified where the delimiter is, instead of relying on the engine to do this for you.</strong></p>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/1.6/customization/delimiter-processing.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v1.6"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>
