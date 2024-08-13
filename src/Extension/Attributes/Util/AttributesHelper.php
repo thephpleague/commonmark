@@ -75,7 +75,7 @@ final class AttributesHelper
             /** @psalm-suppress PossiblyUndefinedArrayOffset */
             [$name, $value] = \explode('=', $attribute, 2);
 
-            if ('true' === $value) {
+            if ($value === 'true') {
                 $attributes[$name] = true;
                 continue;
             }
