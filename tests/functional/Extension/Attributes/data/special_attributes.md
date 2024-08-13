@@ -29,7 +29,9 @@ Attributes without quote and non-whitespace char and a dot [link](http://url.com
 
 Multiple attributes without quote and non-whitespace char and a dot [link](http://url.com){#id .class target=_blank}.
 
-![image](/assets/image.jpg){valueless-attribute}
+![image](/assets/image.jpg){some-text}
+
+![image](/assets/image.jpg){boolean-attribute="boolean-attribute"}
 
 A paragraph containing {{ mustache }} templating
 
@@ -37,3 +39,26 @@ A paragraph ending with {{ mustache }} templating
 
 {{ mustache }} A paragraph starting with mustache templating
 
+a. [Some{text}](https://example.com).
+
+b. [Some{.text}](https://example.com).
+
+c. [Some](https://example.com){.text}.
+
+d. [Some{text}](https://example.com).
+
+e. [Some](https://example.com){text="text"}.
+
+f. [Some{{text}}](https://example.com).
+
+{hello="hello"}
+some
+
+{.test hello="hello"}
+some
+
+{hello="hello" .test}
+some
+
+{hello="hello" goodbye="goodbye"}
+some
