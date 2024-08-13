@@ -75,6 +75,11 @@ final class AttributesHelper
             /** @psalm-suppress PossiblyUndefinedArrayOffset */
             [$name, $value] = \explode('=', $attribute, 2);
 
+            if ('true' === $value) {
+                $attributes[$name] = true;
+                continue;
+            }
+
             $first = $value[0];
             $last  = \substr($value, -1);
             if (($first === '"' && $last === '"') || ($first === "'" && $last === "'") && \strlen($value) > 1) {

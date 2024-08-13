@@ -49,7 +49,9 @@ d. [Some{text}](https://example.com).
 
 e. [Some](https://example.com){text="text"}.
 
-f. [Some{{text}}](https://example.com).
+f. [Some](https://example.com){text=true}.
+
+g. [Some{{text}}](https://example.com).
 
 {hello="hello"}
 some
