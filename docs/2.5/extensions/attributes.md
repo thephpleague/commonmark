@@ -55,6 +55,21 @@ Output:
 <p>This is <em style="color: red">red</em>.</p>
 ```
 
+### Empty-Value Attributes
+
+Attributes can be rendered in HTML without a value by using `true` value in the markdown document:
+
+```markdown
+{itemscope=true}
+## Header
+```
+
+Output:
+
+```html
+<h2 itemscope>Header</h2>
+```
+
 ## Installation
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:

@@ -12,7 +12,19 @@
 <p>Attributes without quote and non-whitespace char <a target="_blank" href="http://url.com" rel="noopener noreferrer">link</a></p>
 <p>Attributes without quote and non-whitespace char and a dot <a target="_blank" href="http://url.com" rel="noopener noreferrer">link</a>.</p>
 <p>Multiple attributes without quote and non-whitespace char and a dot <a class="class" id="id" target="_blank" href="http://url.com" rel="noopener noreferrer">link</a>.</p>
-<p><img valueless-attribute src="/assets/image.jpg" alt="image" /></p>
+<p><img src="/assets/image.jpg" alt="image" />{some-text}</p>
+<p><img boolean-attribute="boolean-attribute" src="/assets/image.jpg" alt="image" /></p>
 <p>A paragraph containing {{ mustache }} templating</p>
 <p>A paragraph ending with {{ mustache }} templating</p>
 <p>{{ mustache }} A paragraph starting with mustache templating</p>
+<p>a. <a href="https://example.com">Some{text}</a>.</p>
+<p>b. <a href="https://example.com">Some</a>.</p>
+<p>c. <a class="text" href="https://example.com">Some</a>.</p>
+<p>d. <a href="https://example.com">Some{text}</a>.</p>
+<p>e. <a text="text" href="https://example.com">Some</a>.</p>
+<p>f. <a text href="https://example.com">Some</a>.</p>
+<p>g. <a href="https://example.com">Some{{text}}</a>.</p>
+<p hello="hello">some</p>
+<p class="test" hello="hello">some</p>
+<p class="test" hello="hello">some</p>
+<p hello="hello" goodbye="goodbye">some</p>
