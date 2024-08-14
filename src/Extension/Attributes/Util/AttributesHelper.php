@@ -24,7 +24,7 @@ use League\CommonMark\Util\RegexHelper;
 final class AttributesHelper
 {
     private const SINGLE_ATTRIBUTE = '\s*([.]-?[_a-z][^\s}]*|[#][^\s}]+|' . RegexHelper::PARTIAL_ATTRIBUTENAME . RegexHelper::PARTIAL_ATTRIBUTEVALUESPEC . '?)\s*';
-    private const ATTRIBUTE_LIST   = '/^{:?(' . self::SINGLE_ATTRIBUTE . ')+}/i';
+    private const ATTRIBUTE_LIST   = '/^{:?(' . self::SINGLE_ATTRIBUTE . ')+}(?!})/i';
 
     /**
      * @return array<string, mixed>

@@ -101,6 +101,11 @@ final class AttributesHelperTest extends TestCase
         // Curly braces inside of values
         yield [new Cursor('{: data-json="{1,2,3}" }'), ['data-json' => '{1,2,3}']];
         yield [new Cursor('{data-json={1,2,3}} test'), ['data-json' => '{1,2,3}'], ' test'];
+
+        // Avoid mustache style templating language being parsed as attributes
+        yield [new Cursor('{{ foo }}'), [], '{{ foo }}'];
+        yield [new Cursor(' {{ foo }}'), [], ' {{ foo }}'];
+        yield [new Cursor('{ foo }}'), [], '{ foo }}'];
     }
 
     /**

@@ -6,6 +6,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.5.1] - 2024-07-24
+
+### Fixed
+
+- Fixed attribute parsing incorrectly parsing mustache-like syntax (#1035)
+- Fixed incorrect `Table` start line numbers (#1037)
+
 ## [2.5.0] - 2024-07-22
 
 ### Added
@@ -607,7 +614,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.5.0....main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.5.1....main
+[2.5.1]: https://github.com/thephpleague/commonmark/compare/2.5.0....2.5.1
 [2.5.0]: https://github.com/thephpleague/commonmark/compare/2.4.4...2.5.0
 [2.4.4]: https://github.com/thephpleague/commonmark/compare/2.4.3...2.4.4
 [2.4.3]: https://github.com/thephpleague/commonmark/compare/2.4.2...2.4.3
