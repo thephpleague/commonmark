@@ -6,6 +6,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+- Made compatible with CommonMark spec 0.31.1, including:
+  - Remove `source`, add `search` to list of recognized block tags
+
 ## [2.5.2] - 2024-08-14
 
 ### Changed
