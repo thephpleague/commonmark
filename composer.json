@@ -31,8 +31,8 @@
     "require-dev": {
         "ext-json": "*",
         "cebe/markdown": "^1.0",
-        "commonmark/cmark": "0.31.0",
-        "commonmark/commonmark.js": "0.31.0",
+        "commonmark/cmark": "0.31.1",
+        "commonmark/commonmark.js": "0.31.1",
         "composer/package-versions-deprecated": "^1.8",
         "embed/embed": "^4.4",
         "erusev/parsedown": "^1.0",
@@ -56,9 +56,9 @@
             "type": "package",
             "package": {
                 "name": "commonmark/commonmark.js",
-                "version": "0.31.0",
+                "version": "0.31.1",
                 "dist": {
-                    "url": "https://github.com/commonmark/commonmark.js/archive/0.31.0.zip",
+                    "url": "https://github.com/commonmark/commonmark.js/archive/0.31.1.zip",
                     "type": "zip"
                 }
             }
@@ -67,9 +67,9 @@
             "type": "package",
             "package": {
                 "name": "commonmark/cmark",
-                "version": "0.31.0",
+                "version": "0.31.1",
                 "dist": {
-                    "url": "https://github.com/commonmark/cmark/archive/0.31.0.zip",
+                    "url": "https://github.com/commonmark/cmark/archive/0.31.1.zip",
                     "type": "zip"
                 }
             }
