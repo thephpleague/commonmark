@@ -336,6 +336,7 @@ class Cursor
 
         // [0][0] contains the matched text
         // [0][1] contains the index of that match
+        \assert(isset($matches[0]));
         $increment = $matches[0][1] + \strlen($matches[0][0]);
 
         $this->advanceBy($increment);
