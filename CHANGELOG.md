@@ -6,6 +6,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.5.3] - 2024-08-16
+
+### Changed
+
+- Made compatible with CommonMark spec 0.31.1, including:
+  - Remove `source`, add `search` to list of recognized block tags
+
 ## [2.5.2] - 2024-08-14
 
 ### Changed
@@ -624,7 +631,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.5.2...main
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.5.3...main
+[2.5.3]: https://github.com/thephpleague/commonmark/compare/2.5.2...2.5.3
 [2.5.2]: https://github.com/thephpleague/commonmark/compare/2.5.1...2.5.2
 [2.5.1]: https://github.com/thephpleague/commonmark/compare/2.5.0...2.5.1
 [2.5.0]: https://github.com/thephpleague/commonmark/compare/2.4.4...2.5.0

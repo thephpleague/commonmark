@@ -33,6 +33,12 @@ final class CMarkRegressionTest extends AbstractSpecTestCase
                 $example['output'] = \str_replace('</script></li>', "</script>\n</li>", $example['output']);
             }
 
+            // The case-fold test from example 21 fails on PHP 8.0.* and below due to the behavior of mb_convert_case().
+            // See https://3v4l.org/7TeXJ.
+            if (\PHP_VERSION_ID < 81000 && $example['number'] === 21) {
+                continue;
+            }
+
             yield $example;
         }
     }

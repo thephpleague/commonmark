@@ -35,7 +35,7 @@ use League\CommonMark\MarkdownConverter;
 $config = [
     'autolink' => [
         'allowed_protocols' => ['https'], // defaults to ['https', 'http', 'ftp']
-        'default_protocols' => 'https', // defaults to 'http'
+        'default_protocol' => 'https', // defaults to 'http'
     ],
 ];
 
