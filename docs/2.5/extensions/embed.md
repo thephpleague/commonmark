@@ -110,6 +110,12 @@ of embeddable content.
 To use that library, you'll need to `composer install embed/embed` and then pass `new OscaroteroEmbedAdapter()` as the `adapter`
 configuration option, as shown in the [**Usage**](#usage) section above.
 
+Note: `embed/embed` *requires* a PSR-17 implementation to be installed.  If you do not have one installed, the library will not work.  By default these libraries are detected automatically:
+  * [laminas/laminas-diactoros](https://github.com/laminas/laminas-diactoros)
+  * [guzzle/psr7](https://github.com/guzzle/psr7)
+  * [nyholm/psr7](https://github.com/Nyholm/psr7)
+  * [sunrise/http-message](https://github.com/sunrise-php/http-message)
+
 Need to customize the maximum width/height of the embedded content? You can do that by instantiating the service provided by
 `embed/embed`, [configuring it as needed](https://github.com/oscarotero/Embed#settings), and passing that customized instance into the adapter:
 
