@@ -18,6 +18,7 @@ namespace League\CommonMark;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\ExtensionInterface;
 
 /**
  * Converts CommonMark-compatible Markdown to HTML.
@@ -42,5 +43,10 @@ final class CommonMarkConverter extends MarkdownConverter
         \assert($this->environment instanceof Environment);
 
         return $this->environment;
+    }
+
+    public function addExtension(ExtensionInterface $extension): void
+    {
+        $this->environment->addExtension($extension);
     }
 }

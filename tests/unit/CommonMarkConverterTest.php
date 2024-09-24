@@ -20,6 +20,7 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Util\HtmlFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -69,5 +70,19 @@ final class CommonMarkConverterTest extends TestCase
         $converter = new CommonMarkConverter();
 
         $this->assertInstanceOf(Environment::class, $converter->getEnvironment());
+    }
+
+    public function testAddExtensionToEnvironment(): void
+    {
+        $converter = new CommonMarkConverter();
+
+        $environment = $converter->getEnvironment();
+
+        $this->assertCount(1, $environment->getExtensions());
+        $this->assertInstanceOf(CommonMarkCoreExtension::class, $environment->getExtensions()[0]);
+
+        $environment->addExtension(new TableExtension());
+        $this->assertCount(2, $environment->getExtensions());
+        $this->assertInstanceOf(TableExtension::class, $environment->getExtensions()[1]);
     }
 }
