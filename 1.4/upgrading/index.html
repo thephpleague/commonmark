@@ -1,0 +1,477 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Guide to upgrading to newer versions of this library">
+    
+    <meta name="docsearch:version" content="1.4">
+    
+        <title>Upgrading from 1.3 - 1.4 - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/1.4/upgrading/" />
+    
+        <meta property="og:title" content="Upgrading from 1.3 - 1.4 - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="Guide to upgrading to newer versions of this library" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v1.4 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/upgrading/">v2.5</a></li>
+            
+                <li ><a href="/2.4/upgrading/">v2.4</a></li>
+            
+                <li ><a href="/2.3/upgrading/">v2.3</a></li>
+            
+                <li ><a href="/2.2/upgrading/">v2.2</a></li>
+            
+                <li ><a href="/2.1/upgrading/">v2.1</a></li>
+            
+                <li ><a href="/2.0/upgrading/">v2.0</a></li>
+            
+                <li ><a href="/1.6/upgrading/">v1.6</a></li>
+            
+                <li ><a href="/1.5/upgrading/">v1.5</a></li>
+            
+                <li class="selected"><a href="/1.4/upgrading/">v1.4</a></li>
+            
+                <li ><a href="/1.3/upgrading/">v1.3</a></li>
+            
+                <li ><a href="/1.0/upgrading/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.4/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/installation/">Installation</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/1.4/upgrading/">Upgrading from 1.3</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/changelog/">Changelog</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.4/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/command-line/">Command Line</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.4/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.4/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/block-rendering/">Block Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/customization/inline-rendering/">Inline Rendering</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 1.4</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="upgrading-from-13-to-14">Upgrading from 1.3 to 1.4</h1>
+
+<h2 id="changes">Changes</h2>
+
+<h3 id="rendering-blockinline-subclasses">Rendering block/inline subclasses</h3>
+
+<p>Imagine you have the following inline elements:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Link</span> <span class="kd">extends</span> <span class="nc">AbstractWebResource</span> <span class="p">{</span> <span class="p">}</span> <span class="c1">// This is the is the standard CommonMark "Link" element</span>
+
+<span class="kd">class</span> <span class="nc">ShortLink</span> <span class="kd">extends</span> <span class="nc">Link</span> <span class="p">{</span> <span class="p">}</span> <span class="c1">// A custom inline node type you created which extends "Link"</span>
+
+<span class="kd">class</span> <span class="nc">BitlyLink</span> <span class="kd">extends</span> <span class="nc">ShortLink</span> <span class="p">{</span> <span class="p">}</span> <span class="c1">// Another custom inline node type you created</span>
+</code></pre></div></div>
+
+<p>Prior to 1.4, you’d have to manually register corresponding inline renderers for each one:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/** @var \League\CommonMark\Environment $environment */</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addInlineRenderer</span><span class="p">(</span><span class="nc">Link</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">LinkRenderer</span><span class="p">());</span> <span class="c1">// this line is usually automatically done for you</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addInlineRenderer</span><span class="p">(</span><span class="nc">ShortLink</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">LinkRenderer</span><span class="p">());</span> <span class="c1">// register for custom node type; required before 1.4</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addInlineRenderer</span><span class="p">(</span><span class="nc">BitlyLink</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">LinkRenderer</span><span class="p">());</span> <span class="c1">// register for custom node type; required before 1.4</span>
+</code></pre></div></div>
+
+<p>But in 1.4 onwards, you no longer need to manually register that <code class="language-plaintext highlighter-rouge">LinkRenderer</code> for subclasses (like <code class="language-plaintext highlighter-rouge">ShortLink</code> and <code class="language-plaintext highlighter-rouge">BitlyLink</code> in the example above) - if the <code class="language-plaintext highlighter-rouge">Environment</code> can’t find a registered renderer for that specific block/inline node type, we’ll automatically check if the node’s parent classes have a registered renderer and use that instead.</p>
+
+<p>Previously, if you forgot to register those renderers, the rendering process would fail with a <code class="language-plaintext highlighter-rouge">RuntimeException</code> like “Unable to find corresponding renderer”.</p>
+
+<h2 id="listblocktype_-constant-values"><code class="language-plaintext highlighter-rouge">ListBlock::TYPE_</code> constant values</h2>
+
+<p>The two constants in the <code class="language-plaintext highlighter-rouge">ListBlock</code> class no longer contain title-cased values - the first character is now lowercased.  Ideally, you should be referencing the constants, but if you were instead hard-coding these values in your application, you may need to adjust those hard-coded strings.</p>
+
+<h2 id="deprecations">Deprecations</h2>
+
+<p>Several things have been deprecated in 1.4 - they’ll continue to work, but consider using alternatives to make your code easier to upgrade to 2.0 when these deprecated things are removed.</p>
+
+<h3 id="listblocktype_unordered-constant"><code class="language-plaintext highlighter-rouge">ListBlock::TYPE_UNORDERED</code> constant</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">ListBlock::TYPE_UNORDERED</code> constant has been deprecated, use <code class="language-plaintext highlighter-rouge">ListBlock::TYPE_BULLET</code> instead.</p>
+
+<h3 id="bincommonmark-command"><code class="language-plaintext highlighter-rouge">bin/commonmark</code> command</h3>
+
+<p>This command has been buggy to test and is relatively unpopular, so this will be removed in 2.0. If you need this type of functionality, consider writing your own script with a Converter/Environment configured exactly how you want it.</p>
+
+<h3 id="arraycollection-methods"><code class="language-plaintext highlighter-rouge">ArrayCollection</code> methods</h3>
+
+<p>This class has several unused methods, or methods with an existing alternative:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method Name</th>
+      <th>Alternative</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">add($value)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">$collection[] = $value</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">set($key, $value)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">$collection[$key] = $value</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">get($key)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">$collection[$key]</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">remove($key)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">unset($collection[$key])</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">isEmpty()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">count($collection) === 0</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">contains($value)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">in_array($value, $collection-&gt;toArray(), true)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">indexOf($value)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">array_search($value, $collection-&gt;toArray(), true)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">containsKey($key)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">isset($collection[$key])</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">replaceWith()</code></td>
+      <td>(none provided)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">removeGaps()</code></td>
+      <td>(none provided)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="converter-and-converterinterface"><code class="language-plaintext highlighter-rouge">Converter</code> and <code class="language-plaintext highlighter-rouge">ConverterInterface</code></h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Converter</code> class has been deprecated - switch to using <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> instead.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">ConverterInterface</code> has been deprecated - switch to using <code class="language-plaintext highlighter-rouge">MarkdownConverterInterface</code> instead.</p>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/1.4/upgrading.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v1.4"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

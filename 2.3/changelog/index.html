@@ -1,0 +1,722 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Important changes made in recent releases">
+    
+    <meta name="docsearch:version" content="2.3">
+    
+        <title>Changelog - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/2.3/changelog/" />
+    
+        <meta property="og:title" content="Changelog - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="Important changes made in recent releases" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v2.3 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/changelog/">v2.5</a></li>
+            
+                <li ><a href="/2.4/changelog/">v2.4</a></li>
+            
+                <li class="selected"><a href="/2.3/changelog/">v2.3</a></li>
+            
+                <li ><a href="/2.2/changelog/">v2.2</a></li>
+            
+                <li ><a href="/2.1/changelog/">v2.1</a></li>
+            
+                <li ><a href="/2.0/changelog/">v2.0</a></li>
+            
+                <li ><a href="/1.6/changelog/">v1.6</a></li>
+            
+                <li ><a href="/1.5/changelog/">v1.5</a></li>
+            
+                <li ><a href="/1.4/changelog/">v1.4</a></li>
+            
+                <li ><a href="/1.3/changelog/">v1.3</a></li>
+            
+                <li ><a href="/1.0/changelog/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.3/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/upgrading/">Upgrading from 2.2</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/2.3/changelog/">Changelog</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/support/">Support</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.3/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/xml/">XML</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.3/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/default-attributes/">Default Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/description-lists/">Description Lists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/embed/">Embed</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/front-matter/">Front Matter</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.3/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/rendering/">Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/customization/slug-normalizer/">Slug Normalizer</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 2.3</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="changelog">Changelog</h1>
+
+<p>All notable changes made in <code class="language-plaintext highlighter-rouge">2.x</code> releases are shown below. See the <a href="/releases">full list of releases</a> for the complete changelog.</p>
+
+<h2 id="253---2024-08-16"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.5.3">2.5.3</a> - 2024-08-16</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Made compatible with CommonMark spec 0.31.1, including:
+    <ul>
+      <li>Remove <code class="language-plaintext highlighter-rouge">source</code>, add <code class="language-plaintext highlighter-rouge">search</code> to list of recognized block tags</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.5.2…2.5.3</p>
+
+<h2 id="252---2024-08-14"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.5.2">2.5.2</a> - 2024-08-14</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Boolean attributes now require an explicit <code class="language-plaintext highlighter-rouge">true</code> value (#1040)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed regression where text could be misinterpreted as an attribute (#1040)</li>
+</ul>
+
+<hr />
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.5.1…2.5.2</p>
+
+<h2 id="251---2024-07-24"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.5.1">2.5.1</a> - 2024-07-24</h2>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed attribute parsing incorrectly parsing mustache-like syntax (#1035)</li>
+  <li>Fixed incorrect <code class="language-plaintext highlighter-rouge">Table</code> start line numbers (#1037)</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@jasonvarga made their first contribution in https://github.com/thephpleague/commonmark/pull/1035</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.5.0…2.5.1</p>
+
+<h2 id="250---2024-07-22"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.5.0">2.5.0</a> - 2024-07-22</h2>
+
+<h2 id="added">Added</h2>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">AttributesExtension</code> now supports attributes without values (#985, #986)</li>
+  <li>The <code class="language-plaintext highlighter-rouge">AutolinkExtension</code> exposes two new configuration options to override the default behavior (#969, #987):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">autolink/allowed_protocols</code> - an array of protocols to allow autolinking for</li>
+      <li><code class="language-plaintext highlighter-rouge">autolink/default_protocol</code> - the default protocol to use when none is specified</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="changed">Changed</h2>
+
+<ul>
+  <li>Made compatible with CommonMark spec 0.31.0, including:
+    <ul>
+      <li>Allow closing fence to be followed by tabs</li>
+      <li>Remove restrictive limitation on inline comments</li>
+      <li>Unicode symbols now treated like punctuation (for purposes of flankingness)</li>
+      <li>Trailing tabs on the last line of indented code blocks will be excluded</li>
+      <li>Improved HTML comment matching</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Paragraph</code>s only containing link reference definitions will be kept in the AST until the <code class="language-plaintext highlighter-rouge">Document</code> is finalized
+    <ul>
+      <li>(These were previously removed immediately after parsing the <code class="language-plaintext highlighter-rouge">Paragraph</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed list tightness not being determined properly in some edge cases</li>
+  <li>Fixed incorrect ending line numbers for several block types in various scenarios</li>
+  <li>Fixed lowercase inline HTML declarations not being accepted</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@svenluijten made their first contribution in https://github.com/thephpleague/commonmark/pull/986</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.4.4…2.5.0</p>
+
+<h2 id="244---2024-07-22"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.4.4">2.4.4</a> - 2024-07-22</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed SmartPunct extension changing already-formatted quotation marks (#1030)</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.4.3…2.4.4</p>
+
+<h2 id="243---2024-07-22"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.4.3">2.4.3</a> - 2024-07-22</h2>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed the Attributes extension not supporting CSS level 3 selectors (#1013)</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">UrlAutolinkParser</code> incorrectly parsing text containing <code class="language-plaintext highlighter-rouge">www</code> anywhere before an autolink (#1025)</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@nfreader made their first contribution in https://github.com/thephpleague/commonmark/pull/1016</li>
+  <li>@macbookandrew made their first contribution in https://github.com/thephpleague/commonmark/pull/1025</li>
+  <li>@xavierlacot made their first contribution in https://github.com/thephpleague/commonmark/pull/1013</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.4.2…2.4.3</p>
+
+<h2 id="242---2024-02-02"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.4.2">2.4.2</a> - 2024-02-02</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed declaration parser being too strict</li>
+  <li><code class="language-plaintext highlighter-rouge">FencedCodeRenderer</code>: don’t add <code class="language-plaintext highlighter-rouge">language-</code> to class if already prefixed</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@sergiy-petrov made their first contribution in https://github.com/thephpleague/commonmark/pull/997</li>
+  <li>@clustermin made their first contribution in https://github.com/thephpleague/commonmark/pull/988</li>
+  <li>@peter279k made their first contribution in https://github.com/thephpleague/commonmark/pull/996</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.4.1…2.4.2</p>
+
+<h2 id="241---2023-08-30"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.4.1">2.4.1</a> - 2023-08-30</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">ExternalLinkProcessor</code> not fully disabling the <code class="language-plaintext highlighter-rouge">rel</code> attribute when configured to do so (#992)</li>
+</ul>
+
+<h2 id="240---2023-03-24"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.4.0">2.4.0</a> - 2023-03-24</h2>
+
+<p>See <a href="https://commonmark.thephpleague.com/2.4/upgrading/">the upgrading guide</a> for more information about the exception-related changes</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added generic <code class="language-plaintext highlighter-rouge">CommonMarkException</code> marker interface for all exceptions thrown by the library</li>
+  <li>Added several new specific exception types implementing that marker interface:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AlreadyInitializedException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InvalidArgumentException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">IOException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">LogicException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">MissingDependencyException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">NoMatchingRendererException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ParserLogicException</code></li>
+    </ul>
+  </li>
+  <li>Added more configuration options to the Heading Permalinks extension (#939):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">heading_permalink/apply_id_to_heading</code> - When <code class="language-plaintext highlighter-rouge">true</code>, the <code class="language-plaintext highlighter-rouge">id</code> attribute will be applied to the heading element itself instead of the <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> tag</li>
+      <li><code class="language-plaintext highlighter-rouge">heading_permalink/heading_class</code> - class to apply to the heading element</li>
+      <li><code class="language-plaintext highlighter-rouge">heading_permalink/insert</code> - now accepts <code class="language-plaintext highlighter-rouge">none</code> to prevent the creation of the <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> link</li>
+    </ul>
+  </li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">table/alignment_attributes</code> configuration option to control how table cell alignment is rendered (#959)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Change several thrown exceptions from <code class="language-plaintext highlighter-rouge">RuntimeException</code> to <code class="language-plaintext highlighter-rouge">LogicException</code> (or something extending it), including:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">CallbackGenerator</code>s that fail to set a URL or return an expected value</li>
+      <li><code class="language-plaintext highlighter-rouge">MarkdownParser</code> when deactivating the last block parser or attempting to get an active block parser when they’ve all been closed</li>
+      <li>Adding items to an already-initialized <code class="language-plaintext highlighter-rouge">Environment</code></li>
+      <li>Rendering a <code class="language-plaintext highlighter-rouge">Node</code> when no renderer has been registered for it</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">HeadingPermalinkProcessor</code> now throws <code class="language-plaintext highlighter-rouge">InvalidConfigurationException</code> instead of <code class="language-plaintext highlighter-rouge">RuntimeException</code> when invalid config values are given.</li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlElement::setAttribute()</code> no longer requires the second parameter for boolean attributes</li>
+  <li>Several small micro-optimizations</li>
+  <li>Changed Strikethrough to only allow 1 or 2 tildes per the updated GFM spec</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed inaccurate <code class="language-plaintext highlighter-rouge">@throws</code> docblocks throughout the codebase, including <code class="language-plaintext highlighter-rouge">ConverterInterface</code>, <code class="language-plaintext highlighter-rouge">MarkdownConverter</code>, and <code class="language-plaintext highlighter-rouge">MarkdownConverterInterface</code>.
+    <ul>
+      <li>These previously suggested that only <code class="language-plaintext highlighter-rouge">\RuntimeException</code>s were thrown, which was inaccurate as <code class="language-plaintext highlighter-rouge">\LogicException</code>s were also possible.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="239---2023-02-15"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.9">2.3.9</a> - 2023-02-15</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed autolink extension not detecting some URIs with underscores (#956)</li>
+</ul>
+
+<h2 id="238---2022-12-10"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.8">2.3.8</a> - 2022-12-10</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed parsing issues when <code class="language-plaintext highlighter-rouge">mb_internal_encoding()</code> is set to something other than <code class="language-plaintext highlighter-rouge">UTF-8</code> (#951)</li>
+</ul>
+
+<h2 id="237---2022-11-17"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.7">2.3.7</a> - 2022-11-17</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">TaskListItemMarkerRenderer</code> not including HTML attributes set on the node by other extensions (#947)</li>
+</ul>
+
+<h2 id="236---2022-10-30"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.6">2.3.6</a> - 2022-10-30</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed unquoted attribute parsing when closing curly brace is followed by certain characters (like a <code class="language-plaintext highlighter-rouge">.</code>) (#943)</li>
+</ul>
+
+<h2 id="235---2022-07-29"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.5">2.3.5</a> - 2022-07-29</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed error using <code class="language-plaintext highlighter-rouge">InlineParserEngine</code> when no inline parsers are registered in the <code class="language-plaintext highlighter-rouge">Environment</code> (#908)</li>
+</ul>
+
+<h2 id="234---2022-07-17"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.4">2.3.4</a> - 2022-07-17</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Made a number of small tweaks to the embed extension’s parsing behavior to fix #898:
+    <ul>
+      <li>Changed <code class="language-plaintext highlighter-rouge">EmbedStartParser</code> to always capture embed-like lines in container blocks, regardless of parent block type</li>
+      <li>Changed <code class="language-plaintext highlighter-rouge">EmbedProcessor</code> to also remove <code class="language-plaintext highlighter-rouge">Embed</code> blocks that aren’t direct children of the <code class="language-plaintext highlighter-rouge">Document</code></li>
+      <li>Increased the priority of <code class="language-plaintext highlighter-rouge">EmbedProcessor</code> to <code class="language-plaintext highlighter-rouge">1010</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">EmbedExtension</code> not parsing embeds following a list block (#898)</li>
+</ul>
+
+<h2 id="233---2022-06-07"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.3">2.3.3</a> - 2022-06-07</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">DomainFilteringAdapter</code> not reindexing the embed list (#884, #885)</li>
+</ul>
+
+<h2 id="232---2022-06-03"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.2">2.3.2</a> - 2022-06-03</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed FootnoteExtension stripping extra characters from tab-indented footnotes (#881)</li>
+</ul>
+
+<h2 id="231---2022-05-14"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.1">2.3.1</a> - 2022-05-14</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed AutolinkExtension not ignoring trailing strikethrough syntax (#867)</li>
+</ul>
+
+<h2 id="230---2022-04-07"><a href="https://github.com/thephpleague/commonmark/releases/tag/2.3.0">2.3.0</a> - 2022-04-07</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">EmbedExtension</code> (#805)</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">DocumentRendererInterface</code> as a replacement for the now-deprecated <code class="language-plaintext highlighter-rouge">MarkdownRendererInterface</code></li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">MarkdownRendererInterface</code>; use <code class="language-plaintext highlighter-rouge">DocumentRendererInterface</code> instead</li>
+</ul>
+
+<h2 id="older-versions">Older Versions</h2>
+
+<p>Please see the <a href="/releases">full list of releases</a> for the complete changelog.</p>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/2.3/changelog.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v2.3"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

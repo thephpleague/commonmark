@@ -1,0 +1,547 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Using the Cursor object to parse Markdown content">
+    
+    <meta name="docsearch:version" content="2.4">
+    
+        <title>Cursor - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/2.4/customization/cursor/" />
+    
+        <meta property="og:title" content="Cursor - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="Using the Cursor object to parse Markdown content" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v2.4 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/customization/cursor/">v2.5</a></li>
+            
+                <li class="selected"><a href="/2.4/customization/cursor/">v2.4</a></li>
+            
+                <li ><a href="/2.3/customization/cursor/">v2.3</a></li>
+            
+                <li ><a href="/2.2/customization/cursor/">v2.2</a></li>
+            
+                <li ><a href="/2.1/customization/cursor/">v2.1</a></li>
+            
+                <li ><a href="/2.0/customization/cursor/">v2.0</a></li>
+            
+                <li ><a href="/1.6/customization/cursor/">v1.6</a></li>
+            
+                <li ><a href="/1.5/customization/cursor/">v1.5</a></li>
+            
+                <li ><a href="/1.4/customization/cursor/">v1.4</a></li>
+            
+                <li ><a href="/1.3/customization/cursor/">v1.3</a></li>
+            
+                <li ><a href="/1.0/customization/cursor/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.4/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/upgrading/">Upgrading from 2.3</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/changelog/">Changelog</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/support/">Support</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.4/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/xml/">XML</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.4/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/default-attributes/">Default Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/description-lists/">Description Lists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/embed/">Embed</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/front-matter/">Front Matter</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.4/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/2.4/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/rendering/">Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/slug-normalizer/">Slug Normalizer</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/customization/disabling-features/">Disabling Features</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+        <p class="message-notice">This is the documentation for <code>version 2.4</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+    
+
+        <h1 id="cursor">Cursor</h1>
+
+<p>A <code class="language-plaintext highlighter-rouge">Cursor</code> is essentially a fancy string wrapper that remembers your current position as you parse it.  It contains a set of highly-optimized methods making it easy to parse characters, match regular expressions, and more.</p>
+
+<h2 id="supported-encodings">Supported Encodings</h2>
+
+<p>As of now, only UTF-8 (and, by extension, ASCII) encoding is supported.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>Instantiating a new <code class="language-plaintext highlighter-rouge">Cursor</code> is as simple as:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Parser\Cursor</span><span class="p">;</span>
+
+<span class="nv">$cursor</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cursor</span><span class="p">(</span><span class="s1">'Hello World!'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Or, if you’re creating a custom <a href="/2.4/customization/block-parsing/">block parser</a> or <a href="/2.4/customization/inline-parsing/">inline parser</a>, a pre-configured <code class="language-plaintext highlighter-rouge">Cursor</code> will be provided to you with (with the <code class="language-plaintext highlighter-rouge">Cursor</code> already set to the current <code class="language-plaintext highlighter-rouge">position</code> trying to be parsed).</p>
+
+<h2 id="methods">Methods</h2>
+
+<p>You can then call any of the following methods to parse the string within that <code class="language-plaintext highlighter-rouge">Cursor</code>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getPosition()</code></td>
+      <td>Returns the current position/index of the <code class="language-plaintext highlighter-rouge">Cursor</code> within the string</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getColumn()</code></td>
+      <td>Returns the current column (used when handling tabbed indentation)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getIndent()</code></td>
+      <td>Returns the current amount of indentation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">isIndented()</code></td>
+      <td>Returns whether the cursor is indented to <code class="language-plaintext highlighter-rouge">INDENT_LEVEL</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getCharacter(int $index)</code></td>
+      <td>Returns the character at the given absolute position</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getCurrentCharacter()</code></td>
+      <td>Returns the character at the current position</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">peek()</code></td>
+      <td>Returns the next character without changing the current <code class="language-plaintext highlighter-rouge">position</code> of the cursor</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">peek(int $offset)</code></td>
+      <td>Returns the character <code class="language-plaintext highlighter-rouge">$offset</code> chars away without changing the current <code class="language-plaintext highlighter-rouge">position</code> of the cursor</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getNextNonSpacePosition()</code></td>
+      <td>Returns the position of the next character which is not a space or tab</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getNextNonSpaceCharacter()</code></td>
+      <td>Returns the next character which isn’t a space (or tab)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">advance()</code></td>
+      <td>Moves the cursor forward by 1 character</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">advanceBy(int $characters)</code></td>
+      <td>Moves the cursor forward by <code class="language-plaintext highlighter-rouge">$characters</code> characters</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">advanceBy(int $characters, true)</code></td>
+      <td>Moves the cursor forward by <code class="language-plaintext highlighter-rouge">$characters</code> characters, handling tabs as columns</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">advanceBySpaceOrTab()</code></td>
+      <td>Advances forward one character (and returns <code class="language-plaintext highlighter-rouge">true</code>) if it’s a space or tab; returns false otherwise</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">advanceToNextNonSpaceOrTab()</code></td>
+      <td>Advances forward past all spaces and tabs found, returning the number of such characters found</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">advanceToNextNonSpaceOrNewline()</code></td>
+      <td>Advances forward past all spaces and newlines found, returning the number of such characters found</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">advanceToEnd()</code></td>
+      <td>Advances the position to the very end of the string, returning the number of such characters passed</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">match(string $regex)</code></td>
+      <td>Attempts to match the given <code class="language-plaintext highlighter-rouge">$regex</code>; returns <code class="language-plaintext highlighter-rouge">null</code> if matching fails, otherwise it advances past and returns the matched text</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getPreviousText()</code></td>
+      <td>Returns the text that was just advanced through during the last <code class="language-plaintext highlighter-rouge">advance__()</code> or <code class="language-plaintext highlighter-rouge">match()</code> operation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getRemainder()</code></td>
+      <td>Returns the contents of the string from the current position through the end of the string</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">isBlank()</code></td>
+      <td>Returns whether the remainder is blank (we’re at the end or only space characters remain)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">isAtEnd()</code></td>
+      <td>Returns whether the cursor has reached the end of the string</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">saveState()</code></td>
+      <td>Encapsulates the current state of the cursor into an <code class="language-plaintext highlighter-rouge">array</code> in case you need to <code class="language-plaintext highlighter-rouge">restoreState()</code> later</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">restoreState($state)</code></td>
+      <td>Pass the result of <code class="language-plaintext highlighter-rouge">saveState()</code> back into here to restore the original state of the <code class="language-plaintext highlighter-rouge">Cursor</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">getLine()</code></td>
+      <td>Returns the entire string (not taking the position into account)</td>
+    </tr>
+  </tbody>
+</table>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/2.4/customization/cursor.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v2.4"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

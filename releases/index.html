@@ -1,0 +1,2902 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="PHP Markdown parser featuring support for CommonMark, GFM, and custom extensions">
+    
+    <meta name="docsearch:version" content="2.5">
+    
+        <title>Release Notes - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/releases/" />
+    
+        <meta property="og:title" content="Release Notes - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="PHP Markdown parser featuring support for CommonMark, GFM, and custom extensions" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>Notes &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/">v2.5</a></li>
+            
+                <li ><a href="/2.4/">v2.4</a></li>
+            
+                <li ><a href="/2.3/">v2.3</a></li>
+            
+                <li ><a href="/2.2/">v2.2</a></li>
+            
+                <li ><a href="/2.1/">v2.1</a></li>
+            
+                <li ><a href="/2.0/">v2.0</a></li>
+            
+                <li ><a href="/1.6/">v1.6</a></li>
+            
+                <li ><a href="/1.5/">v1.5</a></li>
+            
+                <li ><a href="/1.4/">v1.4</a></li>
+            
+                <li ><a href="/1.3/">v1.3</a></li>
+            
+                <li ><a href="/1.0/">v1.0</a></li>
+            
+                <li class="selected"><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li class="selected"><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+                <h2>Upgrading Guide</h2>
+                <ul>
+                    
+                        <li class="selected">
+                            <a href="/releases/">Release Notes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.5/upgrading">From 2.4 to 2.5</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.4/upgrading">From 2.3 to 2.4</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.3/upgrading">From 2.2 to 2.3</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.2/upgrading">From 2.1 to 2.2</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.1/upgrading">From 2.0 to 2.1</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/upgrading">From 1.6 to 2.0</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/upgrading">From 1.5 to 1.6</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/upgrading">From 1.4 to 1.5</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.4/upgrading">From 1.3 to 1.4</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.3/upgrading">From 1.x to 1.3</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.0/upgrading">From 0.19 to 1.0</a>
+                        </li>
+                    
+                </ul>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+
+        <h1 id="release-notes">Release Notes</h1>
+
+<h2 id="253---2024-08-16">2.5.3 - 2024-08-16</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Made compatible with CommonMark spec 0.31.1, including:
+    <ul>
+      <li>Remove <code class="language-plaintext highlighter-rouge">source</code>, add <code class="language-plaintext highlighter-rouge">search</code> to list of recognized block tags</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.5.2…2.5.3</p>
+
+<h2 id="252---2024-08-14">2.5.2 - 2024-08-14</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Boolean attributes now require an explicit <code class="language-plaintext highlighter-rouge">true</code> value (#1040)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed regression where text could be misinterpreted as an attribute (#1040)</li>
+</ul>
+
+<hr />
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.5.1…2.5.2</p>
+
+<h2 id="251---2024-07-24">2.5.1 - 2024-07-24</h2>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed attribute parsing incorrectly parsing mustache-like syntax (#1035)</li>
+  <li>Fixed incorrect <code class="language-plaintext highlighter-rouge">Table</code> start line numbers (#1037)</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@jasonvarga made their first contribution in https://github.com/thephpleague/commonmark/pull/1035</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.5.0…2.5.1</p>
+
+<h2 id="250---2024-07-22">2.5.0 - 2024-07-22</h2>
+
+<h2 id="added">Added</h2>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">AttributesExtension</code> now supports attributes without values (#985, #986)</li>
+  <li>The <code class="language-plaintext highlighter-rouge">AutolinkExtension</code> exposes two new configuration options to override the default behavior (#969, #987):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">autolink/allowed_protocols</code> - an array of protocols to allow autolinking for</li>
+      <li><code class="language-plaintext highlighter-rouge">autolink/default_protocol</code> - the default protocol to use when none is specified</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="changed">Changed</h2>
+
+<ul>
+  <li>Made compatible with CommonMark spec 0.31.0, including:
+    <ul>
+      <li>Allow closing fence to be followed by tabs</li>
+      <li>Remove restrictive limitation on inline comments</li>
+      <li>Unicode symbols now treated like punctuation (for purposes of flankingness)</li>
+      <li>Trailing tabs on the last line of indented code blocks will be excluded</li>
+      <li>Improved HTML comment matching</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Paragraph</code>s only containing link reference definitions will be kept in the AST until the <code class="language-plaintext highlighter-rouge">Document</code> is finalized
+    <ul>
+      <li>(These were previously removed immediately after parsing the <code class="language-plaintext highlighter-rouge">Paragraph</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed list tightness not being determined properly in some edge cases</li>
+  <li>Fixed incorrect ending line numbers for several block types in various scenarios</li>
+  <li>Fixed lowercase inline HTML declarations not being accepted</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@svenluijten made their first contribution in https://github.com/thephpleague/commonmark/pull/986</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.4.4…2.5.0</p>
+
+<h2 id="244---2024-07-22">2.4.4 - 2024-07-22</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed SmartPunct extension changing already-formatted quotation marks (#1030)</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.4.3…2.4.4</p>
+
+<h2 id="243---2024-07-22">2.4.3 - 2024-07-22</h2>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed the Attributes extension not supporting CSS level 3 selectors (#1013)</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">UrlAutolinkParser</code> incorrectly parsing text containing <code class="language-plaintext highlighter-rouge">www</code> anywhere before an autolink (#1025)</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@nfreader made their first contribution in https://github.com/thephpleague/commonmark/pull/1016</li>
+  <li>@macbookandrew made their first contribution in https://github.com/thephpleague/commonmark/pull/1025</li>
+  <li>@xavierlacot made their first contribution in https://github.com/thephpleague/commonmark/pull/1013</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.4.2…2.4.3</p>
+
+<h2 id="242---2024-02-02">2.4.2 - 2024-02-02</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed declaration parser being too strict</li>
+  <li><code class="language-plaintext highlighter-rouge">FencedCodeRenderer</code>: don’t add <code class="language-plaintext highlighter-rouge">language-</code> to class if already prefixed</li>
+</ul>
+
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+  <li>@sergiy-petrov made their first contribution in https://github.com/thephpleague/commonmark/pull/997</li>
+  <li>@clustermin made their first contribution in https://github.com/thephpleague/commonmark/pull/988</li>
+  <li>@peter279k made their first contribution in https://github.com/thephpleague/commonmark/pull/996</li>
+</ul>
+
+<p><strong>Full Changelog</strong>: https://github.com/thephpleague/commonmark/compare/2.4.1…2.4.2</p>
+
+<h2 id="241---2023-08-30">2.4.1 - 2023-08-30</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">ExternalLinkProcessor</code> not fully disabling the <code class="language-plaintext highlighter-rouge">rel</code> attribute when configured to do so (#992)</li>
+</ul>
+
+<h2 id="240---2023-03-24">2.4.0 - 2023-03-24</h2>
+
+<p>See <a href="https://commonmark.thephpleague.com/2.4/upgrading/">the upgrading guide</a> for more information about the exception-related changes</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added generic <code class="language-plaintext highlighter-rouge">CommonMarkException</code> marker interface for all exceptions thrown by the library</li>
+  <li>Added several new specific exception types implementing that marker interface:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AlreadyInitializedException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InvalidArgumentException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">IOException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">LogicException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">MissingDependencyException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">NoMatchingRendererException</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ParserLogicException</code></li>
+    </ul>
+  </li>
+  <li>Added more configuration options to the Heading Permalinks extension (#939):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">heading_permalink/apply_id_to_heading</code> - When <code class="language-plaintext highlighter-rouge">true</code>, the <code class="language-plaintext highlighter-rouge">id</code> attribute will be applied to the heading element itself instead of the <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> tag</li>
+      <li><code class="language-plaintext highlighter-rouge">heading_permalink/heading_class</code> - class to apply to the heading element</li>
+      <li><code class="language-plaintext highlighter-rouge">heading_permalink/insert</code> - now accepts <code class="language-plaintext highlighter-rouge">none</code> to prevent the creation of the <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> link</li>
+    </ul>
+  </li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">table/alignment_attributes</code> configuration option to control how table cell alignment is rendered (#959)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Change several thrown exceptions from <code class="language-plaintext highlighter-rouge">RuntimeException</code> to <code class="language-plaintext highlighter-rouge">LogicException</code> (or something extending it), including:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">CallbackGenerator</code>s that fail to set a URL or return an expected value</li>
+      <li><code class="language-plaintext highlighter-rouge">MarkdownParser</code> when deactivating the last block parser or attempting to get an active block parser when they’ve all been closed</li>
+      <li>Adding items to an already-initialized <code class="language-plaintext highlighter-rouge">Environment</code></li>
+      <li>Rendering a <code class="language-plaintext highlighter-rouge">Node</code> when no renderer has been registered for it</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">HeadingPermalinkProcessor</code> now throws <code class="language-plaintext highlighter-rouge">InvalidConfigurationException</code> instead of <code class="language-plaintext highlighter-rouge">RuntimeException</code> when invalid config values are given.</li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlElement::setAttribute()</code> no longer requires the second parameter for boolean attributes</li>
+  <li>Several small micro-optimizations</li>
+  <li>Changed Strikethrough to only allow 1 or 2 tildes per the updated GFM spec</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed inaccurate <code class="language-plaintext highlighter-rouge">@throws</code> docblocks throughout the codebase, including <code class="language-plaintext highlighter-rouge">ConverterInterface</code>, <code class="language-plaintext highlighter-rouge">MarkdownConverter</code>, and <code class="language-plaintext highlighter-rouge">MarkdownConverterInterface</code>.
+    <ul>
+      <li>These previously suggested that only <code class="language-plaintext highlighter-rouge">\RuntimeException</code>s were thrown, which was inaccurate as <code class="language-plaintext highlighter-rouge">\LogicException</code>s were also possible.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="239---2023-02-15">2.3.9 - 2023-02-15</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed autolink extension not detecting some URIs with underscores (#956)</li>
+</ul>
+
+<h2 id="238---2022-12-10">2.3.8 - 2022-12-10</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed parsing issues when <code class="language-plaintext highlighter-rouge">mb_internal_encoding()</code> is set to something other than <code class="language-plaintext highlighter-rouge">UTF-8</code> (#951)</li>
+</ul>
+
+<h2 id="237---2022-11-17">2.3.7 - 2022-11-17</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">TaskListItemMarkerRenderer</code> not including HTML attributes set on the node by other extensions (#947)</li>
+</ul>
+
+<h2 id="236---2022-10-30">2.3.6 - 2022-10-30</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed unquoted attribute parsing when closing curly brace is followed by certain characters (like a <code class="language-plaintext highlighter-rouge">.</code>) (#943)</li>
+</ul>
+
+<h2 id="235---2022-07-29">2.3.5 - 2022-07-29</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed error using <code class="language-plaintext highlighter-rouge">InlineParserEngine</code> when no inline parsers are registered in the <code class="language-plaintext highlighter-rouge">Environment</code> (#908)</li>
+</ul>
+
+<h2 id="234---2022-07-17">2.3.4 - 2022-07-17</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Made a number of small tweaks to the embed extension’s parsing behavior to fix #898:
+    <ul>
+      <li>Changed <code class="language-plaintext highlighter-rouge">EmbedStartParser</code> to always capture embed-like lines in container blocks, regardless of parent block type</li>
+      <li>Changed <code class="language-plaintext highlighter-rouge">EmbedProcessor</code> to also remove <code class="language-plaintext highlighter-rouge">Embed</code> blocks that aren’t direct children of the <code class="language-plaintext highlighter-rouge">Document</code></li>
+      <li>Increased the priority of <code class="language-plaintext highlighter-rouge">EmbedProcessor</code> to <code class="language-plaintext highlighter-rouge">1010</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">EmbedExtension</code> not parsing embeds following a list block (#898)</li>
+</ul>
+
+<h2 id="233---2022-06-07">2.3.3 - 2022-06-07</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">DomainFilteringAdapter</code> not reindexing the embed list (#884, #885)</li>
+</ul>
+
+<h2 id="232---2022-06-03">2.3.2 - 2022-06-03</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed FootnoteExtension stripping extra characters from tab-indented footnotes (#881)</li>
+</ul>
+
+<h2 id="225---2022-06-03">2.2.5 - 2022-06-03</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed FootnoteExtension stripping extra characters from tab-indented footnotes (#881)</li>
+</ul>
+
+<h2 id="231---2022-05-14">2.3.1 - 2022-05-14</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed AutolinkExtension not ignoring trailing strikethrough syntax (#867)</li>
+</ul>
+
+<h2 id="224---2022-05-14">2.2.4 - 2022-05-14</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed AutolinkExtension not ignoring trailing strikethrough syntax (#867)</li>
+</ul>
+
+<h2 id="230---2022-04-07">2.3.0 - 2022-04-07</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">EmbedExtension</code> (#805)</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">DocumentRendererInterface</code> as a replacement for the now-deprecated <code class="language-plaintext highlighter-rouge">MarkdownRendererInterface</code></li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">MarkdownRendererInterface</code>; use <code class="language-plaintext highlighter-rouge">DocumentRendererInterface</code> instead</li>
+</ul>
+
+<h2 id="223---2022-02-26">2.2.3 - 2022-02-26</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed front matter parsing with Windows line endings (#821)</li>
+</ul>
+
+<h2 id="213---2022-02-26">2.1.3 - 2022-02-26</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed front matter parsing with Windows line endings (#821)</li>
+</ul>
+
+<h2 id="204---2022-02-26">2.0.4 - 2022-02-26</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed front matter parsing with Windows line endings (#821)</li>
+</ul>
+
+<h2 id="222---2022-02-13">2.2.2 - 2022-02-13</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed double-escaping of image alt text (#806, #810)</li>
+  <li>Fixed Psalm typehints for event class names</li>
+</ul>
+
+<h2 id="212---2022-02-13">2.1.2 - 2022-02-13</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed double-escaping of image alt text (#806, #810)</li>
+  <li>Fixed Psalm typehints for event class names</li>
+</ul>
+
+<h2 id="203---2022-02-13">2.0.3 - 2022-02-13</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed double-escaping of image alt text (#806, #810)</li>
+  <li>Fixed Psalm typehints for event class names</li>
+</ul>
+
+<h2 id="221---2022-01-25">2.2.1 - 2022-01-25</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">symfony/deprecation-contracts</code> constraint</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed deprecation trigger from <code class="language-plaintext highlighter-rouge">MarkdownConverterInterface</code> to reduce noise</li>
+</ul>
+
+<h2 id="220---2022-01-22">2.2.0 - 2022-01-22</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">ConverterInterface</code></li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">MarkdownToXmlConverter</code> class</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">HtmlDecorator</code> class which can wrap existing renderers with additional HTML tags</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">table/wrap</code> config to apply an optional wrapping/container element around a table (#780)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">HtmlElement</code> contents can now consist of any <code class="language-plaintext highlighter-rouge">Stringable</code>, not just <code class="language-plaintext highlighter-rouge">HtmlElement</code> and <code class="language-plaintext highlighter-rouge">string</code></li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">MarkdownConverterInterface</code> and its <code class="language-plaintext highlighter-rouge">convertToHtml()</code> method; use <code class="language-plaintext highlighter-rouge">ConverterInterface</code> and <code class="language-plaintext highlighter-rouge">convert()</code> instead</li>
+</ul>
+
+<h2 id="167---2022-01-13">1.6.7 - 2022-01-13</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">ReturnTypeWillChange</code> attribute to prevent PHP 8.1 deprecation warnings (#785)</li>
+  <li>Coerced punctuation counts to integers to ensure floats are never used</li>
+</ul>
+
+<h2 id="211---2022-01-02">2.1.1 - 2022-01-02</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added missing return type to <code class="language-plaintext highlighter-rouge">Environment::dispatch()</code> to fix deprecation warning (#778)</li>
+</ul>
+
+<h2 id="210---2021-12-05">2.1.0 - 2021-12-05</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added support for ext-yaml in FrontMatterExtension (#715)</li>
+  <li>Added support for symfony/yaml v6.0 in FrontMatterExtension (#739)</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">heading_permalink/aria_hidden</code> config option (#741)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed PHP 8.1 deprecation warning (#759, #762)</li>
+</ul>
+
+<h2 id="202---2021-08-14">2.0.2 - 2021-08-14</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Bumped minimum version of league/config to support PHP 8.1</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed ability to register block parsers that identify lines starting with letters (#706)</li>
+</ul>
+
+<h2 id="201---2021-07-31">2.0.1 - 2021-07-31</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed nested autolinks (#689)</li>
+  <li>Fixed description lists being parsed incorrectly (#692)</li>
+  <li>Fixed Table of Contents not respecting Heading Permalink prefixes (#690)</li>
+</ul>
+
+<h2 id="200---2021-07-24">2.0.0 - 2021-07-24</h2>
+
+<p>No changes were introduced since the previous <a href="https://github.com/thephpleague/commonmark/releases/tag/2.0.0-rc2">2.0.0-rc2</a> release.</p>
+
+<p>Please refer to the <a href="https://commonmark.thephpleague.com/2.0/changelog/#200-rc2---2021-07-17">full Changelog</a> for a list of all changes between 1.x and 2.0.  An <a href="https://commonmark.thephpleague.com/2.0/upgrading/">upgrading guide</a> is also available.</p>
+
+<h2 id="200-rc2---2021-07-17">2.0.0-rc2 - 2021-07-17</h2>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed Mentions inside of links creating nested links against the spec’s rules (#688)</li>
+</ul>
+
+<h2 id="166---2021-07-17">1.6.6 - 2021-07-17</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed Mentions inside of links creating nested links against the spec’s rules (#688)</li>
+</ul>
+
+<h2 id="200-rc1---2021-07-10">2.0.0-rc1 - 2021-07-10</h2>
+
+<p>No changes were introduced since the previous release.</p>
+
+<h2 id="200-beta3---2021-07-03">2.0.0-beta3 - 2021-07-03</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Any leading UTF-8 BOM will be stripped from the input</li>
+  <li>The <code class="language-plaintext highlighter-rouge">getEnvironment()</code> method of <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> and <code class="language-plaintext highlighter-rouge">GithubFlavoredMarkdownConverter</code> will always return the concrete, configurable <code class="language-plaintext highlighter-rouge">Environment</code> for upgrading convenience</li>
+  <li>Optimized AST iteration</li>
+  <li>Lots of small micro-optimizations</li>
+</ul>
+
+<h2 id="200-beta2---2021-06-27">2.0.0-beta2 - 2021-06-27</h2>
+
+<p>See https://commonmark.thephpleague.com/2.0/upgrading/ for detailed information on upgrading to version 2.0.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">Node::iterator()</code> method and <code class="language-plaintext highlighter-rouge">NodeIterator</code> class for faster AST iteration (#683, #684)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Made compatible with CommonMark spec 0.30.0</li>
+  <li>Optimized link label parsing</li>
+  <li>Optimized AST iteration for a 50% performance boost in some event listeners (#683, #684)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed processing instructions with EOLs</li>
+  <li>Fixed case-insensitive matching for HTML tag types</li>
+  <li>Fixed type 7 HTML blocks incorrectly interrupting lazy paragraphs</li>
+  <li>Fixed newlines in reference labels not collapsing into spaces</li>
+  <li>Fixed link label normalization with escaped newlines</li>
+  <li>Fixed unnecessary AST iteration when no default attributes are configured</li>
+</ul>
+
+<h2 id="165---2021-06-26">1.6.5 - 2021-06-26</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Simplified checks for thematic breaks</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed ExternalLinkProcessor not handling autolinks by adjusting its priority to -50 (#681)</li>
+</ul>
+
+<h2 id="200-beta1---2021-06-20">2.0.0-beta1 - 2021-06-20</h2>
+
+<p>See <a href="https://commonmark.thephpleague.com/2.0/upgrading/">https://commonmark.thephpleague.com/2.0/upgrading/</a> for detailed information on upgrading to version 2.0.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li><strong>Added three new extensions:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">FrontMatterExtension</code> (<a href="https://commonmark.thephpleague.com/extensions/front-matter/">see documentation</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">DescriptionListExtension</code> (<a href="https://commonmark.thephpleague.com/extensions/description-lists/">see documentation</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">DefaultAttributesExtension</code> (<a href="https://commonmark.thephpleague.com/extensions/default-attributes/">see documentation</a>)</li>
+    </ul>
+  </li>
+  <li><strong>Added new <code class="language-plaintext highlighter-rouge">XmlRenderer</code> to simplify AST debugging</strong> (<a href="https://commonmark.thephpleague.com/xml/">see documentation</a>) (#431)</li>
+  <li><strong>Added the ability to configure disallowed raw HTML tags</strong> (#507)</li>
+  <li><strong>Added the ability for Mentions to use multiple characters for their symbol</strong> (#514, #550)</li>
+  <li><strong>Added the ability to delegate event dispatching to PSR-14 compliant event dispatcher libraries</strong></li>
+  <li><strong>Added new configuration options:</strong>
+    <ul>
+      <li>Added <code class="language-plaintext highlighter-rouge">heading_permalink/min_heading_level</code> and <code class="language-plaintext highlighter-rouge">heading_permalink/max_heading_level</code> options to control which headings get permalinks (#519)</li>
+      <li>Added <code class="language-plaintext highlighter-rouge">heading_permalink/fragment_prefix</code> to allow customizing the URL fragment prefix (#602)</li>
+      <li>Added <code class="language-plaintext highlighter-rouge">footnote/backref_symbol</code> option for customizing backreference link appearance (#522)</li>
+      <li>Added <code class="language-plaintext highlighter-rouge">slug_normalizer/max_length</code> option to control the maximum length of generated URL slugs</li>
+      <li>Added <code class="language-plaintext highlighter-rouge">slug_normalizer/unique</code> option to control whether unique slugs should be generated per-document or per-environment</li>
+    </ul>
+  </li>
+  <li><strong>Added purity markers throughout the codebase</strong> (verified with Psalm)</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">Query</code> class to simplify Node traversal when looking to take action on certain Nodes</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">HtmlFilter</code> and <code class="language-plaintext highlighter-rouge">StringContainerHelper</code> utility classes</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">AbstractBlockContinueParser</code> class to simplify the creation of custom block parsers</li>
+  <li>Added several new classes and interfaces:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">BlockContinue</code></li>
+      <li><code class="language-plaintext highlighter-rouge">BlockContinueParserInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">BlockContinueParserWithInlinesInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">BlockStart</code></li>
+      <li><code class="language-plaintext highlighter-rouge">BlockStartParserInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ChildNodeRendererInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurableExtensionInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">CursorState</code></li>
+      <li><code class="language-plaintext highlighter-rouge">DashParser</code> (extracted from <code class="language-plaintext highlighter-rouge">PunctuationParser</code>)</li>
+      <li><code class="language-plaintext highlighter-rouge">DelimiterParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">DocumentBlockParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">DocumentPreRenderEvent</code></li>
+      <li><code class="language-plaintext highlighter-rouge">DocumentRenderedEvent</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EllipsesParser</code> (extracted from <code class="language-plaintext highlighter-rouge">PunctuationParser</code>)</li>
+      <li><code class="language-plaintext highlighter-rouge">ExpressionInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">FallbackNodeXmlRenderer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserEngineInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserMatch</code></li>
+      <li><code class="language-plaintext highlighter-rouge">MarkdownParserState</code></li>
+      <li><code class="language-plaintext highlighter-rouge">MarkdownParserStateInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">MarkdownRendererInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Query</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RawMarkupContainerInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ReferenceableInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RenderedContent</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RenderedContentInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ReplaceUnpairedQuotesListener</code></li>
+      <li><code class="language-plaintext highlighter-rouge">SpecReader</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableOfContentsRenderer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">UniqueSlugNormalizer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">UniqueSlugNormalizerInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">XmlRenderer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">XmlNodeRendererInterface</code></li>
+    </ul>
+  </li>
+  <li>Added several new methods:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Cursor::getCurrentCharacter()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Environment::createDefaultConfiguration()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Environment::setEventDispatcher()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getExtensions()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getInlineParsers()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getSlugNormalizer()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">FencedCode::setInfo()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Heading::setLevel()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlRenderer::renderDocument()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserContext::getFullMatch()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserContext::getFullMatchLength()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserContext::getMatches()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserContext::getSubMatches()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">LinkParserHelper::parsePartialLinkLabel()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">LinkParserHelper::parsePartialLinkTitle()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Node::assertInstanceOf()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::isLetter()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">StringContainerInterface::setLiteral()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableCell::getType()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableCell::setType()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableCell::getAlign()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableCell::setAlign()</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li><strong>Changed the converter return type</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">CommonMarkConverter::convertToHtml()</code> now returns an instance of <code class="language-plaintext highlighter-rouge">RenderedContentInterface</code>. This can be cast to a string for backward compatibility with 1.x.</li>
+    </ul>
+  </li>
+  <li><strong>Table of Contents items are no longer wrapped with <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code> tags</strong> (#613)</li>
+  <li><strong>Heading Permalinks now link to element IDs instead of using <code class="language-plaintext highlighter-rouge">name</code> attributes</strong> (#602)</li>
+  <li><strong>Heading Permalink IDs and URL fragments now have a <code class="language-plaintext highlighter-rouge">content</code> prefix by default</strong> (#602)</li>
+  <li><strong>Changes to configuration options:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">enable_em</code> has been renamed to <code class="language-plaintext highlighter-rouge">commonmark/enable_em</code></li>
+      <li><code class="language-plaintext highlighter-rouge">enable_strong</code> has been renamed to <code class="language-plaintext highlighter-rouge">commonmark/enable_strong</code></li>
+      <li><code class="language-plaintext highlighter-rouge">use_asterisk</code> has been renamed to <code class="language-plaintext highlighter-rouge">commonmark/use_asterisk</code></li>
+      <li><code class="language-plaintext highlighter-rouge">use_underscore</code> has been renamed to <code class="language-plaintext highlighter-rouge">commonmark/use_underscore</code></li>
+      <li><code class="language-plaintext highlighter-rouge">unordered_list_markers</code> has been renamed to <code class="language-plaintext highlighter-rouge">commonmark/unordered_list_markers</code></li>
+      <li><code class="language-plaintext highlighter-rouge">mentions/*/symbol</code> has been renamed to <code class="language-plaintext highlighter-rouge">mentions/*/prefix</code></li>
+      <li><code class="language-plaintext highlighter-rouge">mentions/*/regex</code> has been renamed to <code class="language-plaintext highlighter-rouge">mentions/*/pattern</code> and requires partial regular expressions (without delimiters or flags)</li>
+      <li><code class="language-plaintext highlighter-rouge">max_nesting_level</code> now defaults to <code class="language-plaintext highlighter-rouge">PHP_INT_MAX</code> and no longer supports floats</li>
+      <li><code class="language-plaintext highlighter-rouge">heading_permalink/slug_normalizer</code> has been renamed to <code class="language-plaintext highlighter-rouge">slug_normalizer/instance</code></li>
+    </ul>
+  </li>
+  <li><strong>Event dispatching is now fully PSR-14 compliant</strong></li>
+  <li><strong>Moved and renamed several classes</strong> - <a href="https://commonmark.thephpleague.com/2.0/upgrading/#classesnamespaces-renamed">see the full list here</a></li>
+  <li>The <code class="language-plaintext highlighter-rouge">HeadingPermalinkExtension</code> and <code class="language-plaintext highlighter-rouge">FootnoteExtension</code> were modified to ensure they never produce a slug which conflicts with slugs created by the other extension</li>
+  <li><code class="language-plaintext highlighter-rouge">SlugNormalizer::normalizer()</code> now supports optional prefixes and max length options passed in via the <code class="language-plaintext highlighter-rouge">$context</code> argument</li>
+  <li>The <code class="language-plaintext highlighter-rouge">AbstractBlock::$data</code> and <code class="language-plaintext highlighter-rouge">AbstractInline::$data</code> arrays were replaced with a <code class="language-plaintext highlighter-rouge">Data</code> array-like object on the base <code class="language-plaintext highlighter-rouge">Node</code> class</li>
+  <li><strong>Implemented a new approach to block parsing.</strong> This was a massive change, so here are the highlights:
+    <ul>
+      <li>Functionality previously found in block parsers and node elements has moved to block parser factories and block parsers, respectively (<a href="https://commonmark.thephpleague.com/2.0/upgrading/#new-block-parsing-approach">more details</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::addBlockParser()</code> is now <code class="language-plaintext highlighter-rouge">EnvironmentBuilderInterface::addBlockParserFactory()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ReferenceParser</code> was re-implemented and works completely different than before</li>
+      <li>The paragraph parser no longer needs to be added manually to the environment</li>
+    </ul>
+  </li>
+  <li><strong>Implemented a new approach to inline parsing</strong> where parsers can now specify longer strings or regular expressions they want to parse (instead of just single characters):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserInterface::getCharacters()</code> is now <code class="language-plaintext highlighter-rouge">getMatchDefinition()</code> and returns an instance of <code class="language-plaintext highlighter-rouge">InlineParserMatch</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserContext::__construct()</code> now requires the contents to be provided as a <code class="language-plaintext highlighter-rouge">Cursor</code> instead of a <code class="language-plaintext highlighter-rouge">string</code></li>
+    </ul>
+  </li>
+  <li><strong>Implemented delimiter parsing as a special type of inline parser</strong> (via the new <code class="language-plaintext highlighter-rouge">DelimiterParser</code> class)</li>
+  <li><strong>Changed block and inline rendering to use common methods and interfaces</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">BlockRendererInterface</code> and <code class="language-plaintext highlighter-rouge">InlineRendererInterface</code> were replaced by <code class="language-plaintext highlighter-rouge">NodeRendererInterface</code> with slightly different parameters. All core renderers now implement this interface.</li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::addBlockRenderer()</code> and <code class="language-plaintext highlighter-rouge">addInlineRenderer()</code> were combined into <code class="language-plaintext highlighter-rouge">EnvironmentBuilderInterface::addRenderer()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getBlockRenderersForClass()</code> and <code class="language-plaintext highlighter-rouge">getInlineRenderersForClass()</code> are now just <code class="language-plaintext highlighter-rouge">getRenderersForClass()</code></li>
+    </ul>
+  </li>
+  <li><strong>Completely refactored the Configuration implementation</strong>
+    <ul>
+      <li>All configuration-specific classes have been moved into a new <code class="language-plaintext highlighter-rouge">league/config</code> package with a new namespace</li>
+      <li><code class="language-plaintext highlighter-rouge">Configuration</code> objects must now be configured with a schema and all options must match that schema - arbitrary keys are no longer permitted</li>
+      <li><code class="language-plaintext highlighter-rouge">Configuration::__construct()</code> no longer accepts the default configuration values - use <code class="language-plaintext highlighter-rouge">Configuration::merge()</code> instead</li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurationInterface</code> now only contains a <code class="language-plaintext highlighter-rouge">get(string $key)</code>; this method no longer allows arbitrary default values to be returned if the option is missing</li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code> was renamed to <code class="language-plaintext highlighter-rouge">EnvironmentBuilderInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ExtensionInterface::register()</code> now requires an <code class="language-plaintext highlighter-rouge">EnvironmentBuilderInterface</code> param instead of <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code></li>
+    </ul>
+  </li>
+  <li><strong>Added missing return types to virtually every class and interface method</strong></li>
+  <li>Re-implemented the GFM Autolink extension using the new inline parser approach instead of document processors
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">EmailAutolinkProcessor</code> is now <code class="language-plaintext highlighter-rouge">EmailAutolinkParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">UrlAutolinkProcessor</code> is now <code class="language-plaintext highlighter-rouge">UrlAutolinkParser</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlElement</code> can now properly handle array (i.e. <code class="language-plaintext highlighter-rouge">class</code>) and boolean (i.e. <code class="language-plaintext highlighter-rouge">checked</code>) attribute values</li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlElement</code> automatically flattens any attributes with array values into space-separated strings, removing duplicate entries</li>
+  <li>Combined separate classes/interfaces into one:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">DisallowedRawHtmlRenderer</code> replaces <code class="language-plaintext highlighter-rouge">DisallowedRawHtmlBlockRenderer</code> and <code class="language-plaintext highlighter-rouge">DisallowedRawHtmlInlineRenderer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">NodeRendererInterface</code> replaces <code class="language-plaintext highlighter-rouge">BlockRendererInterface</code> and <code class="language-plaintext highlighter-rouge">InlineRendererInterface</code></li>
+    </ul>
+  </li>
+  <li>Renamed the following methods:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Environment</code> and <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code>:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">addBlockParser()</code> is now <code class="language-plaintext highlighter-rouge">addBlockStartParser()</code></li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">ReferenceMap</code> and <code class="language-plaintext highlighter-rouge">ReferenceMapInterface</code>:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">addReference()</code> is now <code class="language-plaintext highlighter-rouge">add()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">getReference()</code> is now <code class="language-plaintext highlighter-rouge">get()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">listReferences()</code> is now <code class="language-plaintext highlighter-rouge">getIterator()</code></li>
+        </ul>
+      </li>
+      <li>Various node (block/inline) classes:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">getContent()</code> is now <code class="language-plaintext highlighter-rouge">getLiteral()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">setContent()</code> is now <code class="language-plaintext highlighter-rouge">setLiteral()</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Moved and renamed the following constants:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::HTML_INPUT_ALLOW</code> is now <code class="language-plaintext highlighter-rouge">HtmlFilter::ALLOW</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::HTML_INPUT_ESCAPE</code> is now <code class="language-plaintext highlighter-rouge">HtmlFilter::ESCAPE</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::HTML_INPUT_STRIP</code> is now <code class="language-plaintext highlighter-rouge">HtmlFilter::STRIP</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableCell::TYPE_HEAD</code> is now <code class="language-plaintext highlighter-rouge">TableCell::TYPE_HEADER</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableCell::TYPE_BODY</code> is now <code class="language-plaintext highlighter-rouge">TableCell::TYPE_DATA</code></li>
+    </ul>
+  </li>
+  <li>Changed the visibility of the following properties:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AttributesInline::$attributes</code> is now <code class="language-plaintext highlighter-rouge">private</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AttributesInline::$block</code> is now <code class="language-plaintext highlighter-rouge">private</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableCell::$align</code> is now <code class="language-plaintext highlighter-rouge">private</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableCell::$type</code> is now <code class="language-plaintext highlighter-rouge">private</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableSection::$type</code> is now <code class="language-plaintext highlighter-rouge">private</code></li>
+    </ul>
+  </li>
+  <li>Several methods which previously returned <code class="language-plaintext highlighter-rouge">$this</code> now return <code class="language-plaintext highlighter-rouge">void</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Delimiter::setPrevious()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Node::replaceChildren()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Context::setTip()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Context::setContainer()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Context::setBlocksParsed()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractStringContainer::setContent()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractWebResource::setUrl()</code></li>
+    </ul>
+  </li>
+  <li>Several classes are now marked <code class="language-plaintext highlighter-rouge">final</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ArrayCollection</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Emphasis</code></li>
+      <li><code class="language-plaintext highlighter-rouge">FencedCode</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Heading</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlBlock</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlElement</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlInline</code></li>
+      <li><code class="language-plaintext highlighter-rouge">IndentedCode</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Newline</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Strikethrough</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Strong</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Text</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Heading</code> nodes no longer directly contain a copy of their inner text</li>
+  <li><code class="language-plaintext highlighter-rouge">StringContainerInterface</code> can now be used for inlines, not just blocks</li>
+  <li><code class="language-plaintext highlighter-rouge">ArrayCollection</code> only supports integer keys</li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlElement</code> now implements <code class="language-plaintext highlighter-rouge">Stringable</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Cursor::saveState()</code> and <code class="language-plaintext highlighter-rouge">Cursor::restoreState()</code> now use <code class="language-plaintext highlighter-rouge">CursorState</code> objects instead of arrays</li>
+  <li><code class="language-plaintext highlighter-rouge">NodeWalker::next()</code> now enters, traverses any children, and leaves all elements which may have children (basically all blocks plus any inlines with children). Previously, it only did this for elements explicitly marked as “containers”.</li>
+  <li><code class="language-plaintext highlighter-rouge">InvalidOptionException</code> was removed</li>
+  <li>Anything with a <code class="language-plaintext highlighter-rouge">getReference(): ReferenceInterface</code> method now implements <code class="language-plaintext highlighter-rouge">ReferencableInterface</code></li>
+  <li>The <code class="language-plaintext highlighter-rouge">SmartPunct</code> extension now replaces all unpaired <code class="language-plaintext highlighter-rouge">Quote</code> elements with <code class="language-plaintext highlighter-rouge">Text</code> elements towards the end of parsing, making the <code class="language-plaintext highlighter-rouge">QuoteRenderer</code> unnecessary</li>
+  <li>Several changes made to the Footnote extension:
+    <ul>
+      <li>Footnote identifiers can no longer contain spaces</li>
+      <li>Anonymous footnotes can now span subsequent lines</li>
+      <li>Footnotes can now contain multiple lines of content, including sub-blocks, by indenting them</li>
+      <li>Footnote event listeners now have numbered priorities (but still execute in the same order)</li>
+      <li>Footnotes must now be separated from previous content by a blank line</li>
+    </ul>
+  </li>
+  <li>The line numbers (keys) returned via <code class="language-plaintext highlighter-rouge">MarkdownInput::getLines()</code> now start at 1 instead of 0</li>
+  <li><code class="language-plaintext highlighter-rouge">DelimiterProcessorCollectionInterface</code> now extends <code class="language-plaintext highlighter-rouge">Countable</code></li>
+  <li><code class="language-plaintext highlighter-rouge">RegexHelper::PARTIAL_</code> constants must always be used in case-insensitive contexts</li>
+  <li><code class="language-plaintext highlighter-rouge">HeadingPermalinkProcessor</code> no longer accepts text normalizers via the constructor - these must be provided via configuration instead</li>
+  <li>Blocks which can’t contain inlines will no longer be asked to render inlines</li>
+  <li><code class="language-plaintext highlighter-rouge">AnonymousFootnoteRefParser</code> and <code class="language-plaintext highlighter-rouge">HeadingPermalinkProcessor</code> now implement <code class="language-plaintext highlighter-rouge">EnvironmentAwareInterface</code> instead of <code class="language-plaintext highlighter-rouge">ConfigurationAwareInterface</code></li>
+  <li>The second argument to <code class="language-plaintext highlighter-rouge">TextNormalizerInterface::normalize()</code> must now be an array</li>
+  <li>The <code class="language-plaintext highlighter-rouge">title</code> attribute for <code class="language-plaintext highlighter-rouge">Link</code> and <code class="language-plaintext highlighter-rouge">Image</code> nodes is now stored using a dedicated property instead of stashing it in <code class="language-plaintext highlighter-rouge">$data</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ListData::$delimiter</code> now returns either <code class="language-plaintext highlighter-rouge">ListBlock::DELIM_PERIOD</code> or <code class="language-plaintext highlighter-rouge">ListBlock::DELIM_PAREN</code> instead of the literal delimiter</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li><strong>Fixed parsing of footnotes without content</strong></li>
+  <li><strong>Fixed rendering of orphaned footnotes and footnote refs</strong></li>
+  <li><strong>Fixed some URL autolinks breaking too early</strong> (#492)</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">AbstractStringContainer</code> not actually being <code class="language-plaintext highlighter-rouge">abstract</code></li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li><strong>Removed support for PHP 7.1, 7.2, and 7.3</strong> (#625, #671)</li>
+  <li><strong>Removed all previously-deprecated functionality:</strong>
+    <ul>
+      <li>Removed the ability to pass custom <code class="language-plaintext highlighter-rouge">Environment</code> instances into the <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> and <code class="language-plaintext highlighter-rouge">GithubFlavoredMarkdownConverter</code> constructors</li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">Converter</code> class and <code class="language-plaintext highlighter-rouge">ConverterInterface</code></li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">bin/commonmark</code> script</li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">Html5Entities</code> utility class</li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">InlineMentionParser</code> (use <code class="language-plaintext highlighter-rouge">MentionParser</code> instead)</li>
+      <li>Removed <code class="language-plaintext highlighter-rouge">DefaultSlugGenerator</code> and <code class="language-plaintext highlighter-rouge">SlugGeneratorInterface</code> from the <code class="language-plaintext highlighter-rouge">Extension/HeadingPermalink/Slug</code> sub-namespace (use the new ones under <code class="language-plaintext highlighter-rouge">./SlugGenerator</code> instead)</li>
+      <li>Removed the following <code class="language-plaintext highlighter-rouge">ArrayCollection</code> methods:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">add()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">set()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">get()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">remove()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">isEmpty()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">contains()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">indexOf()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">containsKey()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">replaceWith()</code></li>
+          <li><code class="language-plaintext highlighter-rouge">removeGaps()</code></li>
+        </ul>
+      </li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::setConfig()</code> method</li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">ListBlock::TYPE_UNORDERED</code> constant</li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">CommonMarkConverter::VERSION</code> constant</li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS</code> constant</li>
+      <li>Removed the <code class="language-plaintext highlighter-rouge">heading_permalink/inner_contents</code> configuration option</li>
+    </ul>
+  </li>
+  <li><strong>Removed now-unused classes:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code></li>
+      <li><code class="language-plaintext highlighter-rouge">BlockRendererInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Context</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ContextInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Converter</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ConverterInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineRendererInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">PunctuationParser</code> (was split into two classes: <code class="language-plaintext highlighter-rouge">DashParser</code> and <code class="language-plaintext highlighter-rouge">EllipsesParser</code>)</li>
+      <li><code class="language-plaintext highlighter-rouge">QuoteRenderer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">UnmatchedBlockCloser</code></li>
+    </ul>
+  </li>
+  <li>Removed the following methods, properties, and constants:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::$open</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::$lastLineBlank</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::isContainer()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::canContain()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::isCode()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::matchesNextLine()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::endsWithBlankLine()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::setLastLineBlank()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::shouldLastLineBeBlank()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::isOpen()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::finalize()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::getData()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractInline::getData()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::addBlockParser()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::mergeConfig()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Delimiter::setCanClose()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getConfig()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getInlineParsersForCharacter()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface::getInlineParserCharacterRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlRenderer::renderBlock()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlRenderer::renderBlocks()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlRenderer::renderInline()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlRenderer::renderInlines()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Node::isContainer()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::matchAll()</code> (use the new <code class="language-plaintext highlighter-rouge">matchFirst()</code> method instead)</li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::REGEX_WHITESPACE</code></li>
+    </ul>
+  </li>
+  <li>Removed the second <code class="language-plaintext highlighter-rouge">$contents</code> argument from the <code class="language-plaintext highlighter-rouge">Heading</code> constructor</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<p><strong>The following things have been deprecated and will not be supported in v3.0:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Environment::mergeConfig()</code> (set configuration before instantiation instead)</li>
+  <li><code class="language-plaintext highlighter-rouge">Environment::createCommonMarkEnvironment()</code> and <code class="language-plaintext highlighter-rouge">Environment::createGFMEnvironment()</code>
+    <ul>
+      <li>Alternative 1: Use <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> or <code class="language-plaintext highlighter-rouge">GithubFlavoredMarkdownConverter</code> if you don’t need to customize the environment</li>
+      <li>Alternative 2: Instantiate a new <code class="language-plaintext highlighter-rouge">Environment</code> and add the necessary extensions yourself</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="164---2021-06-19">1.6.4 - 2021-06-19</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Optimized attribute parsing to avoid inspecting every space character (30% performance boost)</li>
+</ul>
+
+<h2 id="163---2021-06-19">1.6.3 - 2021-06-19</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed incorrect parsing of tilde-fenced code blocks with leading spaces (#676)</li>
+</ul>
+
+<h2 id="162---2021-05-12">1.6.2 - 2021-05-12</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed incorrect error level for deprecation notices</li>
+</ul>
+
+<h2 id="161---2021-05-08">1.6.1 - 2021-05-08</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">HeadingPermalinkProcessor</code> skipping text contents from certain nodes (#615)</li>
+</ul>
+
+<h2 id="160---2021-05-01">1.6.0 - 2021-05-01</h2>
+
+<p>Please see https://commonmark.thephpleague.com/1.6/upgrading/ for important information about this release and the upcoming 2.0.0 version.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added forward-compatibility for <a href="https://commonmark.thephpleague.com/1.6/upgrading/">configuration options which will be changing in 2.0</a>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">commonmark/enable_em</code> (currently <code class="language-plaintext highlighter-rouge">enable_em</code> in 1.x)</li>
+      <li><code class="language-plaintext highlighter-rouge">commonmark/enable_strong</code> (currently <code class="language-plaintext highlighter-rouge">enable_strong</code> in 1.x)</li>
+      <li><code class="language-plaintext highlighter-rouge">commonmark/use_asterisk</code> (currently <code class="language-plaintext highlighter-rouge">use_asterisk</code> in 1.x)</li>
+      <li><code class="language-plaintext highlighter-rouge">commonmark/use_underscore</code> (currently <code class="language-plaintext highlighter-rouge">use_underscore</code> in 1.x)</li>
+      <li><code class="language-plaintext highlighter-rouge">commonmark/unordered_list_markers</code> (currently <code class="language-plaintext highlighter-rouge">unordered_list_markers</code> in 1.x)</li>
+      <li><code class="language-plaintext highlighter-rouge">mentions/*/prefix</code> (currently <code class="language-plaintext highlighter-rouge">mentions/*/symbol</code> in 1.x)</li>
+      <li><code class="language-plaintext highlighter-rouge">mentions/*/pattern</code> (currently <code class="language-plaintext highlighter-rouge">mentions/*/regex</code> in 1.x)</li>
+      <li><code class="language-plaintext highlighter-rouge">max_nesting_level</code> (currently supports <code class="language-plaintext highlighter-rouge">int</code> and <code class="language-plaintext highlighter-rouge">float</code> values in 1.x; will only support <code class="language-plaintext highlighter-rouge">int</code> in 2.0)</li>
+    </ul>
+  </li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">MarkdownConverter</code> class for creating converters with custom environments; this replaces the previously-deprecated <code class="language-plaintext highlighter-rouge">Converter</code> class</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">RegexHelper::matchFirst()</code> method</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">Configuration::exists()</code> method</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">max_nesting_level</code> option now defaults to <code class="language-plaintext highlighter-rouge">PHP_INT_MAX</code> instead of <code class="language-plaintext highlighter-rouge">INF</code></li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated the <a href="https://commonmark.thephpleague.com/1.6/upgrading/">configuration options shown above</a></li>
+  <li>Deprecated the ability to pass a custom <code class="language-plaintext highlighter-rouge">Environment</code> into the constructors of <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> and <code class="language-plaintext highlighter-rouge">GithubFlavoredMarkdownConverter</code>; use <code class="language-plaintext highlighter-rouge">MarkdownConverter</code> instead</li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::setConfig()</code>; use <code class="language-plaintext highlighter-rouge">mergeConfig()</code> instead</li>
+  <li>Deprecated calling <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::mergeConfig()</code> without any parameters</li>
+  <li>Deprecated calling <code class="language-plaintext highlighter-rouge">Configuration::get()</code> and <code class="language-plaintext highlighter-rouge">EnvironmentInterface::getConfig()</code> without any parameters</li>
+  <li>Deprecated calling <code class="language-plaintext highlighter-rouge">Configuration::set()</code> without the second <code class="language-plaintext highlighter-rouge">$value</code> parameter</li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">RegexHelper::matchAll()</code>; use <code class="language-plaintext highlighter-rouge">RegexHelper::matchFirst()</code> instead</li>
+  <li>Deprecated extending the <code class="language-plaintext highlighter-rouge">ArrayCollection</code> class; will be marked <code class="language-plaintext highlighter-rouge">final</code> in 2.0</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed missing check for empty arrays being passed into the <code class="language-plaintext highlighter-rouge">unordered_list_markers</code> configuration option</li>
+</ul>
+
+<h2 id="158---2021-03-28">1.5.8 - 2021-03-28</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed Table of Contents not rendering heading inlines properly (#587, #588)</li>
+  <li>Fixed parsing of tables within list items (#590)</li>
+</ul>
+
+<h2 id="157---2020-10-31">1.5.7 - 2020-10-31</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed mentions not being parsed when appearing after non-word characters (#582)</li>
+</ul>
+
+<h2 id="156---2020-10-17">1.5.6 - 2020-10-17</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Blocks added outside of the parsing context now have their start/end line numbers defaulted to 0 to avoid type errors (#579)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed replacement blocks not inheriting the start line number of the container they’re replacing (#579)</li>
+  <li>Fixed Table of Contents blocks not having correct start/end line numbers (#579)</li>
+</ul>
+
+<h2 id="155---2020-09-13">1.5.5 - 2020-09-13</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Bumped CommonMark spec compliance to 0.28.2</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">textarea</code> elements not being treated as a type 1 HTML block (like <code class="language-plaintext highlighter-rouge">script</code>, <code class="language-plaintext highlighter-rouge">style</code>, or <code class="language-plaintext highlighter-rouge">pre</code>)</li>
+  <li>Fixed autolink processor not handling other unmatched trailing parentheses</li>
+</ul>
+
+<h2 id="154---2020-08-18">1.5.4 - 2020-08-18</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed footnote ID configuration not taking effect (#524, #530)</li>
+  <li>Fixed heading permalink slugs not being unique (#531, #534)</li>
+</ul>
+
+<h2 id="153---2020-07-19">1.5.3 - 2020-07-19</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed regression of multi-byte inline parser characters not being matched</li>
+</ul>
+
+<h2 id="152---2020-07-19">1.5.2 - 2020-07-19</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Significantly improved performance of the inline parser regex</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed parent class lookups for non-existent classes on PHP 8 (#517)</li>
+</ul>
+
+<h2 id="151---2020-06-27">1.5.1 - 2020-06-27</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed UTF-8 encoding not being checked in the <code class="language-plaintext highlighter-rouge">UrlEncoder</code> utility (#509) or the <code class="language-plaintext highlighter-rouge">Cursor</code></li>
+</ul>
+
+<h2 id="150---2020-06-21">1.5.0 - 2020-06-21</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">AttributesExtension</code> based on <a href="https://github.com/webuni/commonmark-attributes-extension">https://github.com/webuni/commonmark-attributes-extension</a> (#474)</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">FootnoteExtension</code> based on <a href="https://github.com/rezozero/commonmark-ext-footnotes">https://github.com/rezozero/commonmark-ext-footnotes</a> (#474)</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">MentionExtension</code> to replace <code class="language-plaintext highlighter-rouge">InlineMentionParser</code> with more flexibility and customization</li>
+  <li>Added the ability to render <code class="language-plaintext highlighter-rouge">TableOfContents</code> nodes anywhere in a document (given by a placeholder)</li>
+  <li>Added the ability to properly clone <code class="language-plaintext highlighter-rouge">Node</code> objects</li>
+  <li>Added options to customize the value of <code class="language-plaintext highlighter-rouge">rel</code> attributes set via the <code class="language-plaintext highlighter-rouge">ExternalLink</code> extension (#476)</li>
+  <li>Added a new <code class="language-plaintext highlighter-rouge">heading_permalink/slug_normalizer</code> configuration option to allow custom slug generation (#460)</li>
+  <li>Added a new <code class="language-plaintext highlighter-rouge">heading_permalink/symbol</code> configuration option to replace the now deprecated <code class="language-plaintext highlighter-rouge">heading_permalink/inner_contents</code> configuration option (#505)</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">SlugNormalizer</code> and <code class="language-plaintext highlighter-rouge">TextNormalizer</code> classes to make normalization reusable by extensions (#485)</li>
+  <li>Added new classes:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">TableOfContentsGenerator</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableOfContentsGeneratorInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableOfContentsPlaceholder</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableOfContentsPlaceholderParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">TableOfContentsPlaceholderRenderer</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>“Moved” the <code class="language-plaintext highlighter-rouge">TableOfContents</code> class into a new <code class="language-plaintext highlighter-rouge">Node</code> sub-namespace (with backward-compatibility)</li>
+  <li>Reference labels are now generated and stored in lower-case instead of upper-case</li>
+  <li>Reference labels are no longer normalized inside the <code class="language-plaintext highlighter-rouge">Reference</code>, only the <code class="language-plaintext highlighter-rouge">ReferenceMap</code></li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed reference label case folding polyfill not being consistent between different PHP versions</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated the <code class="language-plaintext highlighter-rouge">CommonMarkConverter::VERSION</code> constant (#496)</li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">League\CommonMark\Extension\Autolink\InlineMentionParser</code> (use <code class="language-plaintext highlighter-rouge">League\CommonMark\Extension\Mention\MentionParser</code> instead)</li>
+  <li>Deprecated everything under <code class="language-plaintext highlighter-rouge">League\CommonMark\Extension\HeadingPermalink\Slug</code> (use the classes under <code class="language-plaintext highlighter-rouge">League\CommonMark\Normalizer</code> instead)</li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">League\CommonMark\Extension\TableOfContents\TableOfContents</code> (use the one in the new <code class="language-plaintext highlighter-rouge">Node</code> sub-namespace instead)</li>
+  <li>Deprecated the <code class="language-plaintext highlighter-rouge">STYLE_</code> and <code class="language-plaintext highlighter-rouge">NORMALIZE_</code> constants in <code class="language-plaintext highlighter-rouge">TableOfContentsBuilder</code> (use the ones in <code class="language-plaintext highlighter-rouge">TableOfContentsGenerator</code> instead)</li>
+  <li>Deprecated the <code class="language-plaintext highlighter-rouge">\League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer::DEFAULT_INNER_CONTENTS</code> constant (#505)</li>
+  <li>Deprecated the <code class="language-plaintext highlighter-rouge">heading_permalink/inner_contents</code> configuration option in the <code class="language-plaintext highlighter-rouge">HeadingPermalink</code> extension (use the new <code class="language-plaintext highlighter-rouge">heading_permalink/symbol</code> configuration option instead) (#505)</li>
+</ul>
+
+<h2 id="143---2020-05-04">1.4.3 - 2020-05-04</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed certain Unicode letters, numbers, and marks not being preserved when generating URL slugs (#467)</li>
+</ul>
+
+<h2 id="142---2020-04-24">1.4.2 - 2020-04-24</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed inline code blocks not be included within heading permalinks (#457)</li>
+</ul>
+
+<h2 id="141---2020-04-20">1.4.1 - 2020-04-20</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed BC break caused by ConverterInterface alias not being used by some DI containers (#454)</li>
+</ul>
+
+<h2 id="140---2020-04-18">1.4.0 - 2020-04-18</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <a href="https://commonmark.thephpleague.com/extensions/heading-permalinks/">Heading Permalink extension</a> (#420)</li>
+  <li>Added new <a href="https://commonmark.thephpleague.com/extensions/table-of-contents/">Table of Contents extension</a> (#441)</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">MarkdownConverterInterface</code> as a long-term replacement for <code class="language-plaintext highlighter-rouge">ConverterInterface</code> (#439)</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">DocumentPreParsedEvent</code> event (#427, #359, #399)</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">ListBlock::TYPE_BULLET</code> constant as a replacement for <code class="language-plaintext highlighter-rouge">ListBlock::TYPE_UNORDERED</code></li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">MarkdownInput</code> class and <code class="language-plaintext highlighter-rouge">MarkdownInputInterface</code> to handle pre-parsing and allow listeners to replace Markdown contents</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Block &amp; inline renderers will now render child classes automatically (#222, #209)</li>
+  <li>The <code class="language-plaintext highlighter-rouge">ListBlock</code> constants now use fully-lowercased values instead of titlecased values</li>
+  <li>Significantly improved typing</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed loose comparison when checking for table alignment</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">StaggeredDelimiterProcessor</code> returning from a <code class="language-plaintext highlighter-rouge">void</code> function</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">Converter</code> class has been deprecated; use <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> instead (#438, #439)</li>
+  <li>The <code class="language-plaintext highlighter-rouge">ConverterInterface</code> has been deprecated; use <code class="language-plaintext highlighter-rouge">MarkdownConverterInterface</code> instead (#438, #439)</li>
+  <li>The <code class="language-plaintext highlighter-rouge">bin/commonmark</code> script has been deprecated</li>
+  <li>The following methods of <code class="language-plaintext highlighter-rouge">ArrayCollection</code> have been deprecated:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">add()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">set()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">get()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">remove()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">isEmpty()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">contains()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">indexOf()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">containsKey()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">replaceWith()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">removeGaps()</code></li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">ListBlock::TYPE_UNORDERED</code> constant has been deprecated, use <code class="language-plaintext highlighter-rouge">ListBlock::TYPE_BULLET</code> instead</li>
+</ul>
+
+<h2 id="134---2020-04-13">1.3.4 - 2020-04-13</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed configuration/environment not being injected into event listeners when adding them via <code class="language-plaintext highlighter-rouge">[$instance, 'method']</code> callable syntax (#440)</li>
+</ul>
+
+<h2 id="133---2020-04-05">1.3.3 - 2020-04-05</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed event listeners not having the environment or configuration injected if they implemented the <code class="language-plaintext highlighter-rouge">EnvironmentAwareInterface</code> or <code class="language-plaintext highlighter-rouge">ConfigurationAwareInterface</code> (#423)</li>
+</ul>
+
+<h2 id="132---2020-03-25">1.3.2 - 2020-03-25</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Optimized URL normalization in cases where URLs don’t contain special characters (#417, #418)</li>
+</ul>
+
+<h2 id="131---2020-02-28">1.3.1 - 2020-02-28</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed return types of <code class="language-plaintext highlighter-rouge">Environment::createCommonMarkEnvironment()</code> and <code class="language-plaintext highlighter-rouge">Environment::createGFMEnvironment()</code></li>
+</ul>
+
+<h2 id="130---2020-02-09">1.3.0 - 2020-02-09</h2>
+
+<p>ℹ️ <strong>Do you use <code class="language-plaintext highlighter-rouge">league/commonmark-ext*</code> packages?</strong> Those features are now included directly in this library! See #409 for details on making the switch.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added (optional) <strong>full GFM support!</strong> 🎉🎉🎉 (#409)</li>
+  <li>Added check to ensure Markdown input is valid UTF-8 (#401, #405)</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">unordered_list_markers</code> configuration option (#408, #411)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Introduced several micro-optimizations for a 5-10% performance boost</li>
+</ul>
+
+<h2 id="122---2020-01-16">1.2.2 - 2020-01-16</h2>
+
+<p>This release contains the same changes as 1.1.3:</p>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed link parsing edge case (#403)</li>
+</ul>
+
+<h2 id="113---2020-01-16">1.1.3 - 2020-01-16</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed link parsing edge case (#403)</li>
+</ul>
+
+<h2 id="121---2020-01-15">1.2.1 - 2020-01-15</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Introduced several micro-optimizations, reducing the parse time by 8%</li>
+</ul>
+
+<h2 id="120---2020-01-09">1.2.0 - 2020-01-09</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Removed URL decoding step before encoding (more performant and better matches the JS library)</li>
+  <li>Removed redundant token from HTML tag regex</li>
+</ul>
+
+<h2 id="112---2019-12-10">1.1.2 - 2019-12-10</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed URL normalization not handling non-UTF-8 sequences properly (#395, #396)</li>
+</ul>
+
+<h2 id="111---2019-11-11">1.1.1 - 2019-11-11</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed handling of link destinations with unbalanced unescaped parens</li>
+  <li>Fixed adding delimiters to stack which can neither open nor close a run</li>
+</ul>
+
+<h2 id="110---2019-10-31">1.1.0 - 2019-10-31</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added a new <code class="language-plaintext highlighter-rouge">Html5EntityDecoder</code> class (#387)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Improved performance by 10% (#389)</li>
+  <li>Made entity decoding less memory-intensive (#386, #387)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed PHP 7.4 compatibility issues</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated the <code class="language-plaintext highlighter-rouge">Html5Entities</code> class - use <code class="language-plaintext highlighter-rouge">Html5EntityDecoder</code> instead (#387)</li>
+</ul>
+
+<h2 id="100---2019-06-29">1.0.0 - 2019-06-29</h2>
+
+<p>First stable release! 🎉</p>
+
+<p>No code changes have been introduced since 1.0.0-rc1</p>
+
+<h2 id="100-rc1---2019-06-20">1.0.0-rc1 - 2019-06-20</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Extracted a <code class="language-plaintext highlighter-rouge">ReferenceMapInterface</code> from the <code class="language-plaintext highlighter-rouge">ReferenceMap</code> class</li>
+  <li>Added optional <code class="language-plaintext highlighter-rouge">ReferenceMapInterface</code> parameter to the <code class="language-plaintext highlighter-rouge">Document</code> constructor</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Replaced all references to <code class="language-plaintext highlighter-rouge">ReferenceMap</code> with <code class="language-plaintext highlighter-rouge">ReferenceMapInterface</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ReferenceMap::addReference()</code> no longer returns <code class="language-plaintext highlighter-rouge">$this</code></li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed bug where elements with content of <code class="language-plaintext highlighter-rouge">"0"</code> wouldn’t be rendered (#376)</li>
+</ul>
+
+<h2 id="0193---2019-06-18">0.19.3 - 2019-06-18</h2>
+
+<h2 id="fixed">Fixed</h2>
+
+<ul>
+  <li>Fixed bug where elements with content of <code class="language-plaintext highlighter-rouge">"0"</code> wouldn’t be rendered (#376)</li>
+</ul>
+
+<h2 id="100-beta4---2019-06-05">1.0.0-beta4 - 2019-06-05</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added event dispatcher functionality (#359, #372)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed <code class="language-plaintext highlighter-rouge">DocumentProcessorInterface</code> functionality in favor of event dispatching (#373)</li>
+</ul>
+
+<h2 id="100-beta3---2019-05-28">1.0.0-beta3 - 2019-05-28</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Made the <code class="language-plaintext highlighter-rouge">Delimiter</code> class final and extracted a new <code class="language-plaintext highlighter-rouge">DelimiterInterface</code>
+    <ul>
+      <li>Modified most external usages to use this new interface</li>
+    </ul>
+  </li>
+  <li>Renamed three <code class="language-plaintext highlighter-rouge">Delimiter</code> methods:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">getOrigDelims()</code> renamed to <code class="language-plaintext highlighter-rouge">getOriginalLength()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">getNumDelims()</code> renamed to <code class="language-plaintext highlighter-rouge">getLength()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">setNumDelims()</code> renamed to <code class="language-plaintext highlighter-rouge">setLength()</code></li>
+    </ul>
+  </li>
+  <li>Made additional classes final:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">DelimiterStack</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ReferenceMap</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ReferenceParser</code></li>
+    </ul>
+  </li>
+  <li>Moved <code class="language-plaintext highlighter-rouge">ReferenceParser</code> into the <code class="language-plaintext highlighter-rouge">Reference</code> sub-namespace</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed unused <code class="language-plaintext highlighter-rouge">Delimiter</code> methods:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">setCanOpen()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">setCanClose()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">setChar()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">setIndex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">setInlineNode()</code></li>
+    </ul>
+  </li>
+  <li>Removed fluent interface from <code class="language-plaintext highlighter-rouge">Delimiter</code> (setter methods now have no return values)</li>
+</ul>
+
+<h2 id="100-beta2---2019-05-27">1.0.0-beta2 - 2019-05-27</h2>
+
+<p>This beta release fixes a couple of items that were not addressed in the previous beta.</p>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">DelimiterProcessorInterface::process()</code> will accept any type of <code class="language-plaintext highlighter-rouge">AbstractStringContainer</code> now, not just <code class="language-plaintext highlighter-rouge">Text</code> nodes</li>
+  <li>The <code class="language-plaintext highlighter-rouge">Delimiter</code> constructor, <code class="language-plaintext highlighter-rouge">getInlineNode()</code>, and <code class="language-plaintext highlighter-rouge">setInlineNode()</code> no longer accept generic <code class="language-plaintext highlighter-rouge">Node</code> elements - only <code class="language-plaintext highlighter-rouge">AbstractStringContainer</code>s</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed all deprecated functionality:
+    <ul>
+      <li>The <code class="language-plaintext highlighter-rouge">safe</code> option (use <code class="language-plaintext highlighter-rouge">html_input</code> and <code class="language-plaintext highlighter-rouge">allow_unsafe_links</code> options instead)</li>
+      <li>All deprecated <code class="language-plaintext highlighter-rouge">RegexHelper</code> constants</li>
+      <li><code class="language-plaintext highlighter-rouge">DocParser::getEnvironment()</code> (you should obtain it some other way)</li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractInlineContainer</code> (use <code class="language-plaintext highlighter-rouge">AbstractInline</code> instead and make <code class="language-plaintext highlighter-rouge">isContainer()</code> return <code class="language-plaintext highlighter-rouge">true</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="100-beta1---2019-05-26">1.0.0-beta1 - 2019-05-26</h2>
+
+<p>See the <a href="https://commonmark.thephpleague.com/1.0/upgrading/">upgrading guide</a> for additional information.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added proper support for delimiters, including custom delimiters
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">addDelimiterProcessor()</code> added to <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code> and <code class="language-plaintext highlighter-rouge">Environment</code></li>
+    </ul>
+  </li>
+  <li>Basic delimiters no longer need custom parsers - they’ll be parsed automatically</li>
+  <li>Added new methods:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AdjacentTextMerger::mergeTextNodesBetweenExclusive()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">CommonMarkConveter::getEnvironment()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Configuration::set()</code></li>
+    </ul>
+  </li>
+  <li>Extracted some new interfaces from base classes:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">DocParserInterface</code> created from <code class="language-plaintext highlighter-rouge">DocParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurationInterface</code> created from <code class="language-plaintext highlighter-rouge">Configuration</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ReferenceInterface</code> created from <code class="language-plaintext highlighter-rouge">Reference</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Renamed several methods of the <code class="language-plaintext highlighter-rouge">Configuration</code> class:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">getConfig()</code> renamed to <code class="language-plaintext highlighter-rouge">get()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">mergeConfig()</code> renamed to <code class="language-plaintext highlighter-rouge">merge()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">setConfig()</code> renamed to <code class="language-plaintext highlighter-rouge">replace()</code></li>
+    </ul>
+  </li>
+  <li>Changed <code class="language-plaintext highlighter-rouge">ConfigurationAwareInterface::setConfiguration()</code> to accept the new <code class="language-plaintext highlighter-rouge">ConfigurationInterface</code> instead of the concrete class</li>
+  <li>Renamed the <code class="language-plaintext highlighter-rouge">AdjoiningTextCollapser</code> class to <code class="language-plaintext highlighter-rouge">AdjacentTextMerger</code>
+    <ul>
+      <li>Replaced its <code class="language-plaintext highlighter-rouge">collapseTextNodes()</code> method with the new <code class="language-plaintext highlighter-rouge">mergeChildNodes()</code> method</li>
+    </ul>
+  </li>
+  <li>Made several classes <code class="language-plaintext highlighter-rouge">final</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Configuration</code></li>
+      <li><code class="language-plaintext highlighter-rouge">DocParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlRenderer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineParserEngine</code></li>
+      <li><code class="language-plaintext highlighter-rouge">NodeWalker</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Reference</code></li>
+      <li>All of the block/inline parsers and renderers</li>
+    </ul>
+  </li>
+  <li>Reduced visibility of several internal methods to <code class="language-plaintext highlighter-rouge">private</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">DelimiterStack::findEarliest()</code></li>
+      <li>All <code class="language-plaintext highlighter-rouge">protected</code> methods in <code class="language-plaintext highlighter-rouge">InlineParserEngine</code></li>
+    </ul>
+  </li>
+  <li>Marked some classes and methods as <code class="language-plaintext highlighter-rouge">@internal</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ElementRendererInterface</code> now requires a public <code class="language-plaintext highlighter-rouge">renderInline()</code> method; added this to <code class="language-plaintext highlighter-rouge">HtmlRenderer</code></li>
+  <li>Changed <code class="language-plaintext highlighter-rouge">InlineParserEngine::parse()</code> to require an <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code> instead of the generic <code class="language-plaintext highlighter-rouge">Node</code> class</li>
+  <li>Un-deprecated the <code class="language-plaintext highlighter-rouge">CommonmarkConverter::VERSION</code> constant</li>
+  <li>The <code class="language-plaintext highlighter-rouge">Converter</code> constructor now requires an instance of <code class="language-plaintext highlighter-rouge">DocParserInterface</code> instead of the concrete <code class="language-plaintext highlighter-rouge">DocParser</code></li>
+  <li>Changed <code class="language-plaintext highlighter-rouge">Emphasis</code>, <code class="language-plaintext highlighter-rouge">Strong</code>, and <code class="language-plaintext highlighter-rouge">AbstractWebResource</code> to directly extend <code class="language-plaintext highlighter-rouge">AbstractInline</code> instead of the (now-deprecated) intermediary <code class="language-plaintext highlighter-rouge">AbstractInlineContainer</code> class</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed null errors when inserting sibling <code class="language-plaintext highlighter-rouge">Node</code>s without parents</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">NodeWalkerEvent</code> not requiring a <code class="language-plaintext highlighter-rouge">Node</code> via its constructor</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">Reference::normalizeReference()</code> improperly converting to uppercase instead of performing proper Unicode case-folding</li>
+  <li>Fixed strong emphasis delimiters not being preserved when <code class="language-plaintext highlighter-rouge">enable_strong</code> is set to <code class="language-plaintext highlighter-rouge">false</code> (it now works identically to <code class="language-plaintext highlighter-rouge">enable_em</code>)</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">DocParser::getEnvironment()</code> (you should obtain it some other way)</li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">AbstractInlineContainer</code> (use <code class="language-plaintext highlighter-rouge">AbstractInline</code> instead and make <code class="language-plaintext highlighter-rouge">isContainer()</code> return <code class="language-plaintext highlighter-rouge">true</code>)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed inline processor functionality now that we have proper delimiter support:
+    <ul>
+      <li>Removed <code class="language-plaintext highlighter-rouge">addInlineProcessor()</code> from <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code> and <code class="language-plaintext highlighter-rouge">Environment</code></li>
+      <li>Removed <code class="language-plaintext highlighter-rouge">getInlineProcessors()</code> from <code class="language-plaintext highlighter-rouge">EnvironmentInterface</code> and <code class="language-plaintext highlighter-rouge">Environment</code></li>
+      <li>Removed <code class="language-plaintext highlighter-rouge">EmphasisProcessor</code></li>
+      <li>Removed <code class="language-plaintext highlighter-rouge">InlineProcessorInterface</code></li>
+    </ul>
+  </li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">EmphasisParser</code> now that we have proper delimiter support</li>
+  <li>Removed support for non-UTF-8-compatible encodings
+    <ul>
+      <li>Removed <code class="language-plaintext highlighter-rouge">getEncoding()</code> from <code class="language-plaintext highlighter-rouge">ContextInterface</code></li>
+      <li>Removed <code class="language-plaintext highlighter-rouge">getEncoding()</code>, <code class="language-plaintext highlighter-rouge">setEncoding()</code>, and <code class="language-plaintext highlighter-rouge">$encoding</code> from <code class="language-plaintext highlighter-rouge">Context</code></li>
+      <li>Removed <code class="language-plaintext highlighter-rouge">getEncoding()</code> and the second <code class="language-plaintext highlighter-rouge">$encoding</code> constructor param from <code class="language-plaintext highlighter-rouge">Cursor</code></li>
+    </ul>
+  </li>
+  <li>Removed now-unused methods
+    <ul>
+      <li>Removed <code class="language-plaintext highlighter-rouge">DelimiterStack::getTop()</code> (no replacement)</li>
+      <li>Removed <code class="language-plaintext highlighter-rouge">DelimiterStack::iterateByCharacters()</code> (use the new <code class="language-plaintext highlighter-rouge">processDelimiters()</code> method instead)</li>
+      <li>Removed the protected <code class="language-plaintext highlighter-rouge">DelimiterStack::findMatchingOpener()</code> method</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="0192---2019-05-19">0.19.2 - 2019-05-19</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed bug where default values for nested configuration paths were inadvertently cast to strings</li>
+</ul>
+
+<h2 id="0191---2019-04-11">0.19.1 - 2019-04-11</h2>
+
+<p>0.19.1 is an immediate follow-up to 0.19.0 which fixes issues with extensions that register other extensions.</p>
+
+<p>(While this technically introduces a BC-break, it’s allowed under SemVer’s rules for 0.x releases and is necessary for 0.19.x code to work as expected.)</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added the missing <code class="language-plaintext highlighter-rouge">addExtension()</code> method to the new <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code></li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed extensions not being able to register other extensions</li>
+</ul>
+
+<h2 id="0190---2019-04-11">0.19.0 - 2019-04-11</h2>
+
+<p><strong>The 50th release of <code class="language-plaintext highlighter-rouge">league/commonmark</code> is here!</strong> :tada:</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">Environment</code> and extension framework underwent some major changes in this release.  Be sure to read the <a href="https://commonmark.thephpleague.com/0.19/upgrading/">upgrade notes</a> if you maintain any community extensions or have written custom functionality on top of this library.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>The priority of parsers, processors, and renderers can now be set when <code class="language-plaintext highlighter-rouge">add()</code>ing them; you no longer need to rely on the order in which they are added</li>
+  <li>Added support for trying multiple parsers per block/inline</li>
+  <li>Extracted two new base interfaces from <code class="language-plaintext highlighter-rouge">Environment</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">EnvironmentInterface</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface</code></li>
+    </ul>
+  </li>
+  <li>Extracted a new <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code> base class and corresponding <code class="language-plaintext highlighter-rouge">StringContainerInterface</code> from <code class="language-plaintext highlighter-rouge">AbstractBlock</code></li>
+  <li>Added <code class="language-plaintext highlighter-rouge">Cursor::getEncoding()</code> method</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">.phpstorm.meta.php</code> file for better IDE code completion</li>
+  <li>Made some minor optimizations here and there</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Pretty much everything now has parameter and return types (#346)</li>
+  <li>Attributes passed to <code class="language-plaintext highlighter-rouge">HtmlElement</code> will now be escaped by default</li>
+  <li><code class="language-plaintext highlighter-rouge">Environment</code> is now a <code class="language-plaintext highlighter-rouge">final</code> class</li>
+  <li><code class="language-plaintext highlighter-rouge">Environment::getBlockRendererForClass()</code> was replaced with <code class="language-plaintext highlighter-rouge">Environment::getBlockRenderersForClass()</code> (note the added <code class="language-plaintext highlighter-rouge">s</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">Environment::getInlineRendererForClass()</code> was replaced with <code class="language-plaintext highlighter-rouge">Environment::getInlineRenderersForClass()</code> (note the added <code class="language-plaintext highlighter-rouge">s</code>)</li>
+  <li>The <code class="language-plaintext highlighter-rouge">Environment::get____()</code> methods now return an iterator instead of an array</li>
+  <li><code class="language-plaintext highlighter-rouge">Context::addBlock()</code> no longer returns the same block instance you passed into the method, as this served no useful purpose</li>
+  <li><code class="language-plaintext highlighter-rouge">RegexHelper::isEscapable()</code> no longer accepts <code class="language-plaintext highlighter-rouge">null</code> values</li>
+  <li><code class="language-plaintext highlighter-rouge">Node::replaceChildren()</code> now accepts any type of <code class="language-plaintext highlighter-rouge">iterable</code>, not just <code class="language-plaintext highlighter-rouge">array</code>s</li>
+  <li>Some block elements now extend <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code> instead of <code class="language-plaintext highlighter-rouge">AbstractBlock</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">InlineContainerInterface</code> now extends the new <code class="language-plaintext highlighter-rouge">StringContainerInterface</code></li>
+      <li>The <code class="language-plaintext highlighter-rouge">handleRemainingContents()</code> method (formerly on <code class="language-plaintext highlighter-rouge">AbstractBlock</code>, now on <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code>) is now an `abstract method</li>
+      <li>The <code class="language-plaintext highlighter-rouge">InlineParserContext</code> constructor now requires an <code class="language-plaintext highlighter-rouge">AbstractStringContainerBlock</code> instead of an <code class="language-plaintext highlighter-rouge">AbstractBlock</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed support for PHP 5.6 and 7.0 (#346)</li>
+  <li>Removed support for <code class="language-plaintext highlighter-rouge">add()</code>ing parsers with just the target block/inline class name - you need to include the full namespace now</li>
+  <li>Removed the following unused methods from <code class="language-plaintext highlighter-rouge">Environment</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">getInlineParser($name)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">getInlineParsers()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">createInlineParserEngine()</code></li>
+    </ul>
+  </li>
+  <li>Removed the unused <code class="language-plaintext highlighter-rouge">getName()</code> methods:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlockParser::getName()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractInlineParser::getName()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">BlockParserInterface::getName()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlinerParserInterface::getName()</code></li>
+    </ul>
+  </li>
+  <li>Removed the now-useless classes:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlockParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractInlinerParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">InlineContainer</code></li>
+    </ul>
+  </li>
+  <li>Removed the <code class="language-plaintext highlighter-rouge">AbstractBlock::acceptsLines()</code> method</li>
+  <li>Removed the now-useless constructor from <code class="language-plaintext highlighter-rouge">AbstractBlock</code></li>
+  <li>Removed previously-deprecated functionality:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">InlineContainer</code> class</li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::$instance</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getInstance()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getPartialRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getHtmlTagRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getLinkTitleRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getLinkDestinationBracesRegex()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getThematicBreakRegex()</code></li>
+    </ul>
+  </li>
+  <li>Removed the second <code class="language-plaintext highlighter-rouge">$preserveEntities</code> parameter from <code class="language-plaintext highlighter-rouge">Xml:escape()</code></li>
+</ul>
+
+<h2 id="0185---2019-04-09">0.18.5 - 2019-04-09</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed the adjoining <code class="language-plaintext highlighter-rouge">Text</code> collapser not handling the full tree (thephpleague/commonmark-ext-autolink#10)</li>
+</ul>
+
+<h2 id="0184---2019-03-24">0.18.4 - 2019-03-24</h2>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Modified how URL normalization decodes certain characters in order to align with the JS library’s output</li>
+  <li>Disallowed unescaped <code class="language-plaintext highlighter-rouge">(</code> in parenthesized link title</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed two exponential backtracking issues</li>
+</ul>
+
+<h2 id="0183---2019-03-21">0.18.3 - 2019-03-21</h2>
+
+<p>This is a <strong>security update</strong> release.</p>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>XML/HTML entities in attributes will no longer be preserved when rendering (#353)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fix XSS vulnerability caused by improper preservation of entities when rendering (#353)</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated the <code class="language-plaintext highlighter-rouge">$preserveEntites</code> argument of <code class="language-plaintext highlighter-rouge">Xml::escape()</code> for removal in the next release (#353)</li>
+</ul>
+
+<h2 id="0182---2019-03-17">0.18.2 - 2019-03-17</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed adjoining <code class="language-plaintext highlighter-rouge">Text</code> elements not being collapsed after delimiter processing</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li>Deprecated the <code class="language-plaintext highlighter-rouge">CommonmarkConverter::VERSION</code> constant for removal in 1.0.0</li>
+</ul>
+
+<h2 id="0181---2018-12-30">0.18.1 - 2018-12-30</h2>
+
+<p>This release contains an important <strong>security update</strong> for <a href="https://nvd.nist.gov/vuln/detail/CVE-2018-20583">CVE-2018-20583</a>.</p>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fix XSS vulnerability caused by URL normalization not handling/encoding newlines properly (#337, CVE-2018-20583)</li>
+</ul>
+
+<h2 id="0180---2018-09-18">0.18.0 - 2018-09-18</h2>
+
+<p>No breaking changes were introduced, but we did add a new interface: <code class="language-plaintext highlighter-rouge">ConverterInterface</code>. Consider depending on this interface in your code instead of the concrete implementation. (See #330)</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">ConverterInterface</code> to <code class="language-plaintext highlighter-rouge">Converter</code> and <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> (#330)</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">ListItem::getListData()</code> method (#329)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Links with <code class="language-plaintext highlighter-rouge">target="_blank"</code> will also get <code class="language-plaintext highlighter-rouge">rel="noopener noreferrer"</code> by default (#331)</li>
+  <li>Implemented several performance optimizations (#324)</li>
+</ul>
+
+<h2 id="0175---2018-03-29">0.17.5 - 2018-03-29</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed incorrect version constant value (again)</li>
+  <li>Fixed release checklist to prevent the above from happening</li>
+  <li>Fixed incorrect dates in CHANGELOG</li>
+</ul>
+
+<h2 id="0174---2018-03-29">0.17.4 - 2018-03-29</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">ListBlock::setTight()</code> method</li>
+</ul>
+
+<h2 id="0173---2018-03-26">0.17.3 - 2018-03-26</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed incorrect version constant value (#322)</li>
+</ul>
+
+<h2 id="0172---2018-03-26">0.17.2 - 2018-03-26</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">RegexHelper::isEscapable()</code> method</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed spec compliance bug where escaped spaces should not be allowed in link destinations</li>
+</ul>
+
+<h2 id="0171---2018-03-18">0.17.1 - 2018-03-18</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added a new constant containing the current version: <code class="language-plaintext highlighter-rouge">CommonMarkConverter::VERSION</code> (#314)</li>
+</ul>
+
+<h2 id="0170---2017-12-30">0.17.0 - 2017-12-30</h2>
+
+<p>This release contains several breaking changes and a minimum PHP version bump - see <a href="https://github.com/thephpleague/commonmark/blob/0.17.0/UPGRADE.md#0170">UPGRADE.md</a> for more details.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">max_nesting_level</code> setting (#243)</li>
+  <li>Added minor performance optimizations to <code class="language-plaintext highlighter-rouge">Cursor</code></li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Minimum PHP version is now 5.6.5.</li>
+  <li>All full and partial regular expressions in <code class="language-plaintext highlighter-rouge">RegexHelper</code> are now defined as constants instead of being built on-the-fly.</li>
+  <li><code class="language-plaintext highlighter-rouge">Cursor::saveState()</code> now returns an <code class="language-plaintext highlighter-rouge">array</code> instead of a <code class="language-plaintext highlighter-rouge">CursorState</code> object.</li>
+  <li><code class="language-plaintext highlighter-rouge">Cursor::restoreState()</code> now accepts an <code class="language-plaintext highlighter-rouge">array</code> parameter instead of a <code class="language-plaintext highlighter-rouge">CursorState</code> object.</li>
+  <li>Saving/restoring the Cursor state no longer tracks things that don’t change (like the text content).</li>
+  <li><code class="language-plaintext highlighter-rouge">RegexHelper</code> is now <code class="language-plaintext highlighter-rouge">final</code>.</li>
+  <li>References to <code class="language-plaintext highlighter-rouge">InlineContainer</code> changed to new <code class="language-plaintext highlighter-rouge">InlineContainerInterface</code> interface.</li>
+  <li><code class="language-plaintext highlighter-rouge">MiscExtension::addInlineParser()</code> and <code class="language-plaintext highlighter-rouge">MiscExtension::addBlockRenderer()</code> now return <code class="language-plaintext highlighter-rouge">$this</code> instead of nothing.</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">Reference::normalizeReference()</code> not properly collapsing whitespace to a single space</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">RegexHelper::getInstance()</code> and all instance (non-static) methods have been deprecated.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">InlineContainer</code> interface has been deprecated. Use <code class="language-plaintext highlighter-rouge">InlineContainerInterface</code> instead.</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed support for PHP 5.4 and 5.5.</li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">CursorState</code> class</li>
+  <li>Removed all previous deprecations:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Cursor::getFirstNonSpacePosition()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Cursor::getFirstNonSpaceCharacter()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Cursor::advanceWhileMatches()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Cursor::advanceToFirstNonSpace()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ElementRendererInterface::escape()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HtmlRenderer::escape()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::REGEX_UNICODE_WHITESPACE</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getLinkDestinationRegex()</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="0160---2017-10-31">0.16.0 - 2017-10-31</h2>
+
+<p>This release contains breaking changes, several performance improvements, and two deprecations:</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">Xml</code> utility class; moved HTML/XML escaping logic into there (see deprecations below)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Environment::getInlineParsersForCharacter()</code> now returns an empty array (instead of <code class="language-plaintext highlighter-rouge">null</code>) when no matching parsers are found</li>
+  <li>Three utility classes are now marked <code class="language-plaintext highlighter-rouge">final</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Html5Entities</code></li>
+      <li><code class="language-plaintext highlighter-rouge">LinkParserHelper</code></li>
+      <li><code class="language-plaintext highlighter-rouge">UrlEncoder</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Improved performance of several methods (for a 10% overall performance boost - #292)</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<p>The following methods were deprecated and are scheduled for removal in 0.17.0 or 1.0.0 (whichever comes first).  See <a href="https://github.com/thephpleague/commonmark/blob/0.16.0/UPGRADE.md">UPGRADE.md</a> for more information.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Cursor::advanceWhileMatches()</code> deprecated; use <code class="language-plaintext highlighter-rouge">Cursor::match()</code> instead.</li>
+  <li><code class="language-plaintext highlighter-rouge">HtmlRenderer::escape()</code> deprecated; use <code class="language-plaintext highlighter-rouge">Xml::escape()</code> instead.</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+
+<ul>
+  <li>Removed <code class="language-plaintext highlighter-rouge">DelimiterStack::findFirstMatchingOpener()</code> which was previously deprecated in 0.15.0</li>
+</ul>
+
+<h2 id="0157---2017-10-26">0.15.7 - 2017-10-26</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Improved performance of <code class="language-plaintext highlighter-rouge">Cursor::advanceBy()</code> (for a 16% performance boost!) :tada:</li>
+</ul>
+
+<h2 id="0156---2017-08-08">0.15.6 - 2017-08-08</h2>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed URI normalization not properly encoding/decoding special characters in certain cases (#287)</li>
+</ul>
+
+<h2 id="0155---2017-08-05">0.15.5 - 2017-08-05</h2>
+
+<p>This release bumps spec compliance to 0.28 without breaking changes to the API.</p>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Project is now tested against PHP 7.2</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+
+<ul>
+  <li>Bumped CommonMark spec target to 0.28</li>
+  <li>Changed internal implementation of <code class="language-plaintext highlighter-rouge">LinkParserHelper::parseLinkDestination()</code> to allow nested parens</li>
+  <li>Changed precedence of strong/emph when both nestings are possible (rule 14)</li>
+  <li>Allow tabs before and after ATX closing header</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed HTML type 6 block regex matching against <code class="language-plaintext highlighter-rouge">&lt;pre&gt;</code> (it shouldn’t) and not matching <code class="language-plaintext highlighter-rouge">&lt;iframe&gt;</code> (it should)</li>
+  <li>Fixed reference parser incorrectly handling escaped <code class="language-plaintext highlighter-rouge">]</code> characters</li>
+  <li>Fixed “multiple of 3” delimiter run calculations</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<p>An unused constant and static method were deprecated and will be removed in a future release.  See <UPGRADE.md> for more information.</UPGRADE.md></p>
+
+<ul>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">RegexHelper::REGEX_UNICODE_WHITESPACE</code> (no longer used)</li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">RegexHelper::getLinkDestinationRegex()</code> (no longer used)</li>
+</ul>
+
+<h2 id="0154---2017-05-09">0.15.4 - 2017-05-09</h2>
+
+<h3 id="added">Added</h3>
+
+<ul>
+  <li>Added new methods to <code class="language-plaintext highlighter-rouge">Cursor</code> (#280):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">advanceToNextNonSpaceOrNewline()</code> - Identical replacement for the (now-deprecated) <code class="language-plaintext highlighter-rouge">advanceToFirstNonSpace()</code> method</li>
+      <li><code class="language-plaintext highlighter-rouge">advanceToNextNonSpaceOrTab()</code> - Similar replacement for <code class="language-plaintext highlighter-rouge">advanceToFirstNonSpace()</code> but with proper tab handling</li>
+      <li><code class="language-plaintext highlighter-rouge">getNextNonSpaceCharacter()</code> - Identical replacement for the (now-deprecated) <code class="language-plaintext highlighter-rouge">getFirstNonSpaceCharacter()</code> method</li>
+      <li><code class="language-plaintext highlighter-rouge">getNextNonSpacePosition()</code> - Identical replacement for the (now-deprecated) <code class="language-plaintext highlighter-rouge">getFirstNonSpacePosition()</code> method</li>
+    </ul>
+  </li>
+  <li>Added new method to <code class="language-plaintext highlighter-rouge">CursorState</code> (#280):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">getNextNonSpaceCache()</code> - Identical replacement for the (now-deprecated) <code class="language-plaintext highlighter-rouge">getFirstNonSpaceCache()</code> method</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+
+<ul>
+  <li>Fixed duplicate characters in non-intended lines containing tabs (#279)</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+
+<p><strong>All deprecations listed here will be removed in a future 0.x release.</strong> See <a href="UPGRADE.md">UPGRADE.md</a> for instructions on preparing your code for the eventual removal of these methods.</p>
+
+<ul>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">Cursor::advanceToFirstNonSpace()</code> (#280)
+    <ul>
+      <li>Use <code class="language-plaintext highlighter-rouge">advanceToNextNonSpaceOrTab()</code> or <code class="language-plaintext highlighter-rouge">advanceToNextNonSpaceOrNewline()</code> instead, depending on your requirements</li>
+    </ul>
+  </li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">Cursor::getFirstNonSpaceCharacter()</code> (#280)
+    <ul>
+      <li>Use <code class="language-plaintext highlighter-rouge">Cursor::getNextNonSpaceCharacter()</code> instead</li>
+    </ul>
+  </li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">Cursor::getFirstNonSpacePosition()</code> (#280)
+    <ul>
+      <li>Use <code class="language-plaintext highlighter-rouge">Cursor::getNextNonSpacePosition()</code> instead</li>
+    </ul>
+  </li>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">CursorState::getFirstNonSpaceCache()</code> (#280)
+    <ul>
+      <li>Use <code class="language-plaintext highlighter-rouge">CursorState::getNextNonSpaceCache()</code> instead</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="0153---2016-12-19">0.15.3 - 2016-12-19</h2>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Allow inline parsers matching regex delimiter to be created (#271, #272)</li>
+</ul>
+
+<h2 id="0152---2016-11-22">0.15.2 - 2016-11-22</h2>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.27 (#268)</li>
+  <li>H2-H6 elements are now parsed as HTML block elements instead of HTML inlines</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed incomplete punctuation regex</li>
+  <li>Fixed shortcut links not being allowed before a <code class="language-plaintext highlighter-rouge">(</code></li>
+  <li>Fixed distinction between Unicode whitespace and regular whitespace</li>
+</ul>
+
+<h2 id="0151---2016-11-08">0.15.1 - 2016-11-08</h2>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed setext heading underlines not allowing trailing tabs (#266)</li>
+</ul>
+
+<h2 id="0150---2016-09-14">0.15.0 - 2016-09-14</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Added preliminary support for PHP 7.1 (#259)</li>
+  <li>Added more regression tests (#258, #260)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.26 (#260)</li>
+  <li>The <code class="language-plaintext highlighter-rouge">CursorState</code> constructor requires an additional parameter (#258)</li>
+  <li>Ordered lists cannot interupt a paragraph unless they start with <code class="language-plaintext highlighter-rouge">1</code> (#260)</li>
+  <li>Blank list items cannot interupt a paragraph (#260)</li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+<ul>
+  <li>Deprecated <code class="language-plaintext highlighter-rouge">DelimiterStack::findFirstMatchingOpener()</code> - use <code class="language-plaintext highlighter-rouge">findMatchingOpener()</code> instead (#260)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed tabs in ATX headers and thematic breaks (#260)</li>
+  <li>Fixed issue where cursor state was not being restored properly (#258, #260)
+    <ul>
+      <li>This fixed the lists-with-tabs regression reported in #258</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed an unnecessary check in <code class="language-plaintext highlighter-rouge">Cursor::advanceBy()</code> (#260)</li>
+  <li>Removed the two-blanks-break-out-of-lists feature (#260)</li>
+</ul>
+
+<h2 id="0140---2016-07-02">0.14.0 - 2016-07-02</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">safe</code> option is deprecated and replaced by 2 new options (#253, #255):
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">html_input</code> (<code class="language-plaintext highlighter-rouge">strip</code>, <code class="language-plaintext highlighter-rouge">allow</code> or <code class="language-plaintext highlighter-rouge">escape</code>): how to handle untrusted HTML input (the default is <code class="language-plaintext highlighter-rouge">strip</code> for BC reasons)</li>
+      <li><code class="language-plaintext highlighter-rouge">allow_unsafe_links</code> (<code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code>): whether to allow risky image URLs and links (the default is <code class="language-plaintext highlighter-rouge">true</code> for BC reasons)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="deprecated">Deprecated</h3>
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">safe</code> option is now deprecated and will be removed in the 1.0.0 release.</li>
+</ul>
+
+<h2 id="0134---2016-06-14">0.13.4 - 2016-06-14</h2>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed path to <code class="language-plaintext highlighter-rouge">autoload.php</code> within bin/commonmark (#250)</li>
+</ul>
+
+<h2 id="0133---2016-05-21">0.13.3 - 2016-05-21</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">setUrl()</code> method for <code class="language-plaintext highlighter-rouge">Link</code> and <code class="language-plaintext highlighter-rouge">Image</code> elements (#227, #244)</li>
+  <li>Added cebe/markdown to the benchmark tool (#245)</li>
+</ul>
+
+<h2 id="0132---2016-03-27">0.13.2 - 2016-03-27</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Added ability to invoke <code class="language-plaintext highlighter-rouge">Converter</code> as a function (#233, #239)</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">advanceBySpaceOrTab</code> convenience method to <code class="language-plaintext highlighter-rouge">Cursor</code></li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.25</li>
+  <li>Adjusted how tabs are handled by the <code class="language-plaintext highlighter-rouge">Cursor</code> (#234)</li>
+  <li>Made a couple small micro-optimizations to heavily used functions (#240)</li>
+  <li>Updated URLs in docblocks to use HTTPS where possible (#238)</li>
+</ul>
+
+<h2 id="0131---2016-03-09">0.13.1 - 2016-03-09</h2>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Refactored <code class="language-plaintext highlighter-rouge">EmphasisParser::parse()</code> to simplify it (#223)</li>
+  <li>Updated dev dependencies (#218 &amp; #220)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed invalid regex generated when no inline parsers are defined (#224)</li>
+  <li>Fixed logic bug with blank line after empty list item (#230)</li>
+  <li>Fixed some incorrect code comments</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed unused variables (#223)</li>
+</ul>
+
+<h2 id="0130---2016-01-14">0.13.0 - 2016-01-14</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Added AST document processors (#210)</li>
+  <li>Added optional <code class="language-plaintext highlighter-rouge">Environment</code> parameter to <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> constructor</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Renamed “header” things to “heading” for spec consistency
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Header</code> =&gt; <code class="language-plaintext highlighter-rouge">Heading</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ATXHeaderParser</code> =&gt; <code class="language-plaintext highlighter-rouge">ATXHeadingParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">SetExtHeaderParser</code> =&gt; <code class="language-plaintext highlighter-rouge">SetExtHeadingParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HeaderRenderer</code> =&gt; <code class="language-plaintext highlighter-rouge">HeadingRenderer</code></li>
+    </ul>
+  </li>
+  <li>Renamed “HorizontalRule” to “ThematicBreak” for spec consistency
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">HorizontalRule</code> =&gt; <code class="language-plaintext highlighter-rouge">ThematicBreak</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HorizontalRuleParser</code> =&gt; <code class="language-plaintext highlighter-rouge">ThematicBreakParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HorizontalRuleRenderer</code> =&gt; <code class="language-plaintext highlighter-rouge">ThematicBreakRenderer</code></li>
+      <li><code class="language-plaintext highlighter-rouge">HorizontalRuleRendererTest</code> =&gt; <code class="language-plaintext highlighter-rouge">ThematicBreakRendererTest</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RegexHelper::getHRuleRegex()</code> =&gt; <code class="language-plaintext highlighter-rouge">RegexHelper::getThematicBreakRegex()</code></li>
+    </ul>
+  </li>
+  <li>Renamed inline “Html” and “RawHtml” to “HtmlInline” for consistency
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Html</code> =&gt; <code class="language-plaintext highlighter-rouge">HtmlInline</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RawHtmlParser</code> =&gt; <code class="language-plaintext highlighter-rouge">HtmlInlineParser</code></li>
+      <li><code class="language-plaintext highlighter-rouge">RawHtmlRenderer</code> =&gt; <code class="language-plaintext highlighter-rouge">HtmlInlineRenderer</code></li>
+    </ul>
+  </li>
+  <li>Don’t allow whitespace between link text and link label of a reference link (spec change)</li>
+  <li>Don’t allow spaces in link destinations, even in <code class="language-plaintext highlighter-rouge">&lt;&gt;</code></li>
+  <li>Allow multiline setext header content
+    <ul>
+      <li>The <code class="language-plaintext highlighter-rouge">Heading</code> constructor now allows <code class="language-plaintext highlighter-rouge">$contents</code> to be a <code class="language-plaintext highlighter-rouge">string</code> (old behavior) or <code class="language-plaintext highlighter-rouge">string[]</code> (new)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed several list issues and regressions (jgm/commonmark.js#59)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed schema whitelist from autolink regex</li>
+  <li>Moved SmartPunct functionality into new <a href="https://github.com/thephpleague/commonmark-extras">league/commonmark-extras</a> package</li>
+</ul>
+
+<h2 id="0120---2015-11-04">0.12.0 - 2015-11-04</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Added ability to configure characters and disable emphasis/strong (#135)</li>
+  <li>Added new ConfigurationAwareInterface support for all parsers, processors, and renderers (#201)</li>
+  <li>Added HTML safe mode to handle untrusted input (#200, #201)
+    <ul>
+      <li>Safe mode is disabled by default for backwards-compatibility</li>
+      <li>To enable it, set the <code class="language-plaintext highlighter-rouge">safe</code> option to <code class="language-plaintext highlighter-rouge">true</code></li>
+    </ul>
+  </li>
+  <li>Added AppVeyor integration for automated unit/functional testing on Windows (#195)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AbstractBlock::finalize()</code> now reqires a second parameter, <code class="language-plaintext highlighter-rouge">$endLineNumber</code></li>
+  <li><code class="language-plaintext highlighter-rouge">RegexHelper::REGEX_ENTITY</code> no longer includes the starting <code class="language-plaintext highlighter-rouge">/</code> or the ending <code class="language-plaintext highlighter-rouge">/i</code> (#194)</li>
+  <li><code class="language-plaintext highlighter-rouge">Node::setParent()</code> now accepts null values (#203)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed incorrect <code class="language-plaintext highlighter-rouge">endLine</code> positions (#187)</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">DocParser::preProcessInput</code> dropping up to 2 ending newlines instead of just one</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">EntityParser</code> not checking for ampersands at the start of the current position (#192, #194)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed protected function Context::addChild()
+    <ul>
+      <li>It was a duplicate of the Context::addBlock() method</li>
+    </ul>
+  </li>
+  <li>Disabled STDIN reading on <code class="language-plaintext highlighter-rouge">bin/commonmark</code> for Windows due to PHP issues (#189, #195)</li>
+</ul>
+
+<h2 id="0113---2015-09-25">0.11.3 - 2015-09-25</h2>
+
+<h2 id="fixed">Fixed</h2>
+<ul>
+  <li>Reset container after closing containing lists (#183; jgm/commonmark.js#67)
+    <ul>
+      <li>The temporary fix from 0.11.2 was reverted</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="0112---2015-09-23">0.11.2 - 2015-09-23</h2>
+
+<h2 id="fixed">Fixed</h2>
+<ul>
+  <li>Fixed parser checking acceptsLines on the wrong element (#183)</li>
+</ul>
+
+<h2 id="0111---2015-09-22">0.11.1 - 2015-09-22</h2>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Tightened up some loose comparisons</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed missing “bin” directive in composer.json</li>
+  <li>Updated a docblock to match recent changes to method parameters</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed unused variable from within QuoteProcessor’s closure</li>
+</ul>
+
+<h2 id="0110---2015-09-19">0.11.0 - 2015-09-19</h2>
+
+<p><strong>This release contains several major internal changes.</strong>  It will likely break compatibility with custom elements, parsers, and renderers.  Simple Markdown parsing is unaffected.</p>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Added new <code class="language-plaintext highlighter-rouge">Node</code> class, which both <code class="language-plaintext highlighter-rouge">AbstractBlock</code> and <code class="language-plaintext highlighter-rouge">AbstractInline</code> extend from (#169)</li>
+  <li>Added a <code class="language-plaintext highlighter-rouge">NodeWalker</code> and <code class="language-plaintext highlighter-rouge">NodeWalkerEvent</code> to traverse the AST without using recursion</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">InlineContainer</code> interface for blocks</li>
+  <li>Added new <code class="language-plaintext highlighter-rouge">getContainer()</code> and <code class="language-plaintext highlighter-rouge">getReferenceMap()</code> methods to <code class="language-plaintext highlighter-rouge">InlineParserContext</code></li>
+  <li>Added <code class="language-plaintext highlighter-rouge">iframe</code> to whitelist of HTML block tags (as per spec)</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">./bin/commonmark</code> for converting Markdown at the command line</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.22</li>
+  <li>Revised AST to use a double-linked list (#169)</li>
+  <li><code class="language-plaintext highlighter-rouge">AbstractBlock</code> and <code class="language-plaintext highlighter-rouge">AbstractInline</code> both extend from <code class="language-plaintext highlighter-rouge">Node</code>
+    <ul>
+      <li>Sub-classes must implement new <code class="language-plaintext highlighter-rouge">isContainer()</code> method</li>
+    </ul>
+  </li>
+  <li>Other major changes to <code class="language-plaintext highlighter-rouge">AbstractBlock</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">getParent()</code> is now <code class="language-plaintext highlighter-rouge">parent()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">setParent()</code> now expects a <code class="language-plaintext highlighter-rouge">Node</code> instead of an <code class="language-plaintext highlighter-rouge">AbstractBlock</code></li>
+      <li><code class="language-plaintext highlighter-rouge">getChildren()</code> is now <code class="language-plaintext highlighter-rouge">children()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">getLastChild()</code> is now <code class="language-plaintext highlighter-rouge">lastChild()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">addChild()</code> is now <code class="language-plaintext highlighter-rouge">appendChild()</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">InlineParserContext</code> is constructed using the container <code class="language-plaintext highlighter-rouge">AbstractBlock</code> and the document’s <code class="language-plaintext highlighter-rouge">RefereceMap</code>
+    <ul>
+      <li>The constructor will automatically create the <code class="language-plaintext highlighter-rouge">Cursor</code> using the container’s string contents</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">InlineParserEngine::parse</code> now requires the <code class="language-plaintext highlighter-rouge">Node</code> container and the document’s <code class="language-plaintext highlighter-rouge">ReferenceMap</code> instead of a <code class="language-plaintext highlighter-rouge">ContextInterface</code> and <code class="language-plaintext highlighter-rouge">Cursor</code></li>
+  <li>Changed <code class="language-plaintext highlighter-rouge">Delimiter</code> to reference the actual inline <code class="language-plaintext highlighter-rouge">Node</code> instead of the position
+    <ul>
+      <li>The <code class="language-plaintext highlighter-rouge">int $pos</code> protected member and constructor arg is now <code class="language-plaintext highlighter-rouge">Node $node</code></li>
+      <li>Use <code class="language-plaintext highlighter-rouge">getInlineNode()</code> and <code class="language-plaintext highlighter-rouge">setInlineNode()</code> instead of <code class="language-plaintext highlighter-rouge">getPos()</code> and <code class="language-plaintext highlighter-rouge">setPos()</code></li>
+    </ul>
+  </li>
+  <li>Changed <code class="language-plaintext highlighter-rouge">DocParser::processInlines</code> to use a <code class="language-plaintext highlighter-rouge">NodeWalker</code> to iterate through inlines
+    <ul>
+      <li>Walker passed as second argument instead of <code class="language-plaintext highlighter-rouge">AbstractBlock</code></li>
+      <li>Uses a <code class="language-plaintext highlighter-rouge">while</code> loop instead of recursion to traverse the AST</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Image</code> and <code class="language-plaintext highlighter-rouge">Link</code> now only accept a string as their second argument</li>
+  <li>Refactored how <code class="language-plaintext highlighter-rouge">CloseBracketParser::parse()</code> works internally</li>
+  <li><code class="language-plaintext highlighter-rouge">CloseBracketParser::createInline</code> no longer accepts label inlines</li>
+  <li>Disallow list item starting with multiple blank lines (see jgm/CommonMark#332)</li>
+  <li>Modified <code class="language-plaintext highlighter-rouge">AbstractBlock::setLastLineBlank()</code>
+    <ul>
+      <li>Functionality moved to <code class="language-plaintext highlighter-rouge">AbstractBlock::shouldLastLineBeBlank()</code> and new <code class="language-plaintext highlighter-rouge">DocParser::setAndPropagateLastLineBlank()</code> method</li>
+      <li><code class="language-plaintext highlighter-rouge">AbstractBlock::setLastLineBlank()</code> is now a setter method for <code class="language-plaintext highlighter-rouge">AbstractBlock::$lastLineBlank</code></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">AbstractBlock::handleRemainingContents()</code> is no longer abstract
+    <ul>
+      <li>A default implementation is provided</li>
+      <li>Removed duplicate code from sub-classes which used the default implementation - they’ll just use the parent method from now on</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed logic error in calculation of offset (see jgm/commonmark.js@94053a8)</li>
+  <li>Fixed bug where <code class="language-plaintext highlighter-rouge">DocParser</code> checked the wrong method to determine remainder handling behavior</li>
+  <li>Fixed bug where <code class="language-plaintext highlighter-rouge">HorizontalRuleParser</code> failed to advance the cursor beyond the parsed horizontal rule characters</li>
+  <li>Fixed <code class="language-plaintext highlighter-rouge">DocParser</code> not ignoring the final newline of the input (like the reference parser does)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed <code class="language-plaintext highlighter-rouge">Block\Element\AbstractInlineContainer</code>
+    <ul>
+      <li>Extend <code class="language-plaintext highlighter-rouge">AbstractBlock</code> and implement <code class="language-plaintext highlighter-rouge">InlineContainer</code> instead</li>
+      <li>Use child methods instead of <code class="language-plaintext highlighter-rouge">getInlines</code> and <code class="language-plaintext highlighter-rouge">setInlines</code></li>
+    </ul>
+  </li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">AbstractBlock::replaceChild()</code>
+    <ul>
+      <li>Call <code class="language-plaintext highlighter-rouge">Node::replaceWith()</code> directly the child node instead</li>
+    </ul>
+  </li>
+  <li>Removed the <code class="language-plaintext highlighter-rouge">getInlines()</code> method from <code class="language-plaintext highlighter-rouge">InlineParserContext</code>
+    <ul>
+      <li>Add parsed inlines using <code class="language-plaintext highlighter-rouge">$inlineContext-&gt;getContainer()-&gt;appendChild()</code> instead of <code class="language-plaintext highlighter-rouge">$inlineContext-&gt;getInlines()-&gt;add()</code></li>
+    </ul>
+  </li>
+  <li>Removed the <code class="language-plaintext highlighter-rouge">ContextInterface</code> argument from <code class="language-plaintext highlighter-rouge">AbstractInlineParser::parse()</code> and <code class="language-plaintext highlighter-rouge">InlineParserEngine::parseCharacter</code></li>
+  <li>Removed the first <code class="language-plaintext highlighter-rouge">ArrayCollection $inlines</code> argument from <code class="language-plaintext highlighter-rouge">InlineProcessorInterface::processInlines()</code></li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">CloseBracketParser::nullify()</code></li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">pre</code> from rule 6 of HTML blocks (see jgm/CommonMark#355)</li>
+</ul>
+
+<h2 id="0100---2015-07-25">0.10.0 - 2015-07-25</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Added parent references to inline elements (#124)</li>
+  <li>Added smart punctuation extension (#134)</li>
+  <li>Added HTML block types</li>
+  <li>Added indentation caching to the cursor</li>
+  <li>Added automated code style checks (#133)</li>
+  <li>Added support for tag attributes in renderers (#101, #165)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.21</li>
+  <li>Revised HTML block parsing to conform to new spec (jgm/commonmark.js@99bd473)</li>
+  <li>Imposed 9-digit limit on ordered list markers, per spec</li>
+  <li>Allow non-initial hyphens in html tag names (jgm/CommonMark#239)</li>
+  <li>Updated list of block tag names</li>
+  <li>Changed tab/indentation handling to meet the new spec behavior</li>
+  <li>Modified spec tests to show spaces and tabs in test results</li>
+  <li>Replaced <code class="language-plaintext highlighter-rouge">HtmlRendererInterface</code> with <code class="language-plaintext highlighter-rouge">ElementRendererInterface</code> (#141)</li>
+  <li>Removed the unnecessary <code class="language-plaintext highlighter-rouge">trim()</code> and string cast from <code class="language-plaintext highlighter-rouge">ListItemRenderer</code></li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed link reference definition edge case (#120)</li>
+  <li>Allow literal (non-escaping) backslashes in link destinations (#118)</li>
+  <li>Allow backslash-escaped backslashes in link labels (#119)</li>
+  <li>Allow link labels up to 999 characters (per the spec)</li>
+  <li>Properly split on whitespace when determining code block class (jgm/commonmark.js#54)</li>
+  <li>Fixed code style issues (#132, #133, #151, #152)</li>
+  <li>Fixed wording for invalid inline exception (#136)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed the advance-by-one optimization due to added cursor complexity</li>
+</ul>
+
+<h2 id="090---2015-06-19">0.9.0 - 2015-06-19</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Added public $data array to block elements (#95)</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">isIndented</code> helper method to <code class="language-plaintext highlighter-rouge">Cursor</code></li>
+  <li>Added a new <code class="language-plaintext highlighter-rouge">Converter</code> base class which <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> extends from (#105)</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.20 (#112)</li>
+  <li>Renamed <code class="language-plaintext highlighter-rouge">ListBlock::$data</code> and <code class="language-plaintext highlighter-rouge">ListItem::$data</code> to <code class="language-plaintext highlighter-rouge">$listData</code></li>
+  <li>Require link labels to contain non-whitespace (jgm/CommonMark#322)</li>
+  <li>Use U+FFFD for entities resolving to 0 (jgm/CommonMark#323)</li>
+  <li>Moved <code class="language-plaintext highlighter-rouge">IndentedCodeParser::CODE_INDENT_LEVEL</code> to <code class="language-plaintext highlighter-rouge">Cursor::INDENT_LEVEL</code></li>
+  <li>Changed arrays to short syntax (#116)</li>
+  <li>Improved efficiency of DelimiterStack iteration (jgm/commonmark.js#43)</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed open block tag followed by newline not being recognized (jgm/CommonMark#324)</li>
+  <li>Fixed indented lists sometimes being parsed incorrectly (jgm/commonmark.js#42)</li>
+</ul>
+
+<h2 id="080---2015-04-29">0.8.0 - 2015-04-29</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Allow swapping built-in renderers without using their fully qualified names (#84)</li>
+  <li>Lots of unit tests (for existing code)</li>
+  <li>Ability to include arbitrary functional tests in addition to spec-based tests</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li><strong>Dropped support for PHP 5.3</strong> (#64 and #76)</li>
+  <li>Bumped spec target version to 0.19</li>
+  <li>Made the AbstractInlineContainer be abstract</li>
+  <li>Moved environment config. logic into separate class</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed underscore emphasis to conform to spec changes (jgm/CommonMark#317)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed PHP 5.3 workaround (see commit 5747822)</li>
+  <li>Removed unused AbstractWebResource::setUrl() method</li>
+  <li>Removed unnecessary check for hrule when parsing lists (#85)</li>
+</ul>
+
+<h2 id="072---2015-03-08">0.7.2 - 2015-03-08</h2>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.18</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed broken parsing of emphasized text ending with a ‘0’ character (#81)</li>
+</ul>
+
+<h2 id="071---2015-03-01">0.7.1 - 2015-03-01</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>All references can now be obtained from the <code class="language-plaintext highlighter-rouge">ReferenceMap</code> via <code class="language-plaintext highlighter-rouge">listReferences()</code> (#73)</li>
+  <li>Test against PHP 7.0 (nightly) but allow failures</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>ListData::$start now defaults to null instead of 0 (#74)</li>
+  <li>Replace references to HtmlRenderer with new HtmlRendererInterface</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed 0-based ordered lists starting at 1 instead of 0 (#74)</li>
+  <li>Fixed errors parsing multi-byte characters (#78 and #79)</li>
+</ul>
+
+<h2 id="070---2015-02-17">0.7.0 - 2015-02-17</h2>
+
+<p><em>Now with 50% more speed!</em></p>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>More unit tests to increase code coverage</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Enabled the InlineParserEngine to parse several non-special characters at once (performance boost)</li>
+  <li>NewlineParser no longer attempts to parse spaces; look-behind is used instead (major performance boost)</li>
+  <li>Moved closeUnmatchedBlocks into its own class</li>
+  <li>Image and link elements now extend AbstractInlineContainer; label data is stored via $inlineContents instead</li>
+  <li>Renamed AbstractInlineContainer::$inlineContents and its getter/setter</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed the InlineCollection class</li>
+  <li>Removed the unused ArrayCollection::splice() method</li>
+  <li>Removed impossible-to-reach code in Cursor::advanceToFirstNonSpace</li>
+  <li>Removed unnecessary test from the InlineParserEngine</li>
+  <li>Removed unnecessary/unused RegexHelper::getMainRegex() method</li>
+</ul>
+
+<h2 id="061---2015-01-25">0.6.1 - 2015-01-25</h2>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.17</li>
+  <li>Updated emphasis parsing for underscores to prevent intra-word emphasis</li>
+  <li>Defered closing of fenced code blocks</li>
+</ul>
+
+<h2 id="060---2015-01-09">0.6.0 - 2015-01-09</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Bulk registration of parsers/renderers via extensions (#45)</li>
+  <li>Proper UTF-8 support, especially in the Cursor; mbstring extension is now required (#49)</li>
+  <li>Environment is now configurable; options can be accessed in its parsers/renderers (#56)</li>
+  <li>Added some unit tests</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Bumped spec target version to 0.15 (#50)</li>
+  <li>Parsers/renderers are now lazy-initialized (#52)</li>
+  <li>Some private elements are now protected for easier extending, especially on Element classes (#53)</li>
+  <li>Renderer option names changed from underscore_case to camelCase (#56)</li>
+  <li>Moved CommonMark parser/render definitions into CommonMarkCoreExtension</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Improved parsing of emphasis around punctuation</li>
+  <li>Improved regexes for CDATA and HTML comments</li>
+  <li>Fixed issue with HTML content that is considered false in loose comparisons, like <code class="language-plaintext highlighter-rouge">'0'</code> (#55)</li>
+  <li>Fixed DocParser trying to add empty strings to closed containers (#58)</li>
+  <li>Fixed incorrect use of a null parameter value in the HtmlElementTest</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed unused ReferenceDefinition* classes (#51)</li>
+  <li>Removed UnicodeCaseFolder in favor of mb_strtoupper</li>
+</ul>
+
+<h2 id="051---2014-12-27">0.5.1 - 2014-12-27</h2>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed infinite loop and link-in-link-in-image parsing (#37)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed hard dependency on mbstring extension; workaround used if not installed (#38)</li>
+</ul>
+
+<h2 id="050---2014-12-24">0.5.0 - 2014-12-24</h2>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Support for custom directives, parsers, and renderers</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Major refactoring to de-couple directives from the parser, support custom directive functionality, and reduce complexity</li>
+  <li>Updated references to stmd.js in README and docblocks</li>
+  <li>Modified CHANGELOG formatting</li>
+  <li>Improved travis configuration</li>
+  <li>Put tests in autoload-dev</li>
+</ul>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>Fixed CommonMarkConverter re-creating object each time new text is converted (#26)</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Removed dependency on symfony/options-resolver (fixes #20)</li>
+</ul>
+
+<h2 id="--2014-12-16">- 2014-12-16</h2>
+
+<ul>
+  <li>Changed namespace to League\CommonMark</li>
+  <li>Made compatible with spec version 0.13</li>
+  <li>Moved delimiter stack functionality into seperate class</li>
+  <li>Fixed regex which caused HHVM tests to fail</li>
+  <li>Added some missing copyright info</li>
+</ul>
+
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/releases.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v2.5"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>
