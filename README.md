@@ -164,11 +164,13 @@ $ ./tests/benchmark/benchmark.php
 
 ## 👥 Credits & Acknowledgements
 
-- [Colin O'Dell][@colinodell]
-- [John MacFarlane][@jgm]
-- [All Contributors]
+This code was originally based on the [CommonMark JS reference implementation][commonmark.js] which is written, maintained, and copyrighted by [John MacFarlane].  This project simply wouldn't exist without his work.
 
-This code is partially based on the [CommonMark JS reference implementation][commonmark.js] which is written, maintained and copyrighted by [John MacFarlane].  This project simply wouldn't exist without his work.
+And a huge thanks to all of our amazing contributors:
+
+<a href="https://github.com/thephpleague/commonmark/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=thephpleague/commonmark" />
+</a>
 
 ### Sponsors
 
