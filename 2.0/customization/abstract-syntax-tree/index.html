@@ -1,0 +1,702 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Using the Abstract Syntax Tree (AST) to manipulate the parsed content">
+    
+    <meta name="docsearch:version" content="2.0">
+    
+        <title>Abstract Syntax Tree - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/2.0/customization/abstract-syntax-tree/" />
+    
+        <meta property="og:title" content="Abstract Syntax Tree - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="Using the Abstract Syntax Tree (AST) to manipulate the parsed content" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v2.0 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/customization/abstract-syntax-tree/">v2.5</a></li>
+            
+                <li ><a href="/2.4/customization/abstract-syntax-tree/">v2.4</a></li>
+            
+                <li ><a href="/2.3/customization/abstract-syntax-tree/">v2.3</a></li>
+            
+                <li ><a href="/2.2/customization/abstract-syntax-tree/">v2.2</a></li>
+            
+                <li ><a href="/2.1/customization/abstract-syntax-tree/">v2.1</a></li>
+            
+                <li class="selected"><a href="/2.0/customization/abstract-syntax-tree/">v2.0</a></li>
+            
+                <li ><a href="/1.6/customization/abstract-syntax-tree/">v1.6</a></li>
+            
+                <li ><a href="/1.5/customization/abstract-syntax-tree/">v1.5</a></li>
+            
+                <li ><a href="/1.4/customization/abstract-syntax-tree/">v1.4</a></li>
+            
+                <li ><a href="/1.3/customization/abstract-syntax-tree/">v1.3</a></li>
+            
+                <li ><a href="/1.0/customization/abstract-syntax-tree/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/upgrading/">Upgrading from 1.6</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/changelog/">Changelog</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/support/">Support</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/xml/">XML</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/default-attributes/">Default Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/description-lists/">Description Lists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/front-matter/">Front Matter</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/2.0/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/rendering/">Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/slug-normalizer/">Slug Normalizer</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 2.0</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="abstract-syntax-tree">Abstract Syntax Tree</h1>
+
+<p>This library uses a doubly-linked list Abstract Syntax Tree (AST) to represent the parsed block and inline elements.  All such elements extend from the <code class="language-plaintext highlighter-rouge">Node</code> class.</p>
+
+<h2 id="document"><code class="language-plaintext highlighter-rouge">Document</code></h2>
+
+<p>The root node of the AST will always be a <code class="language-plaintext highlighter-rouge">Document</code> object.  You can obtain this node a few different ways:</p>
+
+<ul>
+  <li>By calling the <code class="language-plaintext highlighter-rouge">parse()</code> method on the <code class="language-plaintext highlighter-rouge">MarkdownParser</code></li>
+  <li>By calling the <code class="language-plaintext highlighter-rouge">getDocument()</code> method on either the <code class="language-plaintext highlighter-rouge">DocumentPreParsedEvent</code> or <code class="language-plaintext highlighter-rouge">DocumentParsedEvent</code> <a href="/2.0/customization/event-dispatcher/">see the (Event Dispatcher documentation</a>)</li>
+</ul>
+
+<h2 id="visualization">Visualization</h2>
+
+<p>Even with an interactive debugger it can be tricky to view an entire tree at once.  Consider using the <a href="/2.0/xml/"><code class="language-plaintext highlighter-rouge">XmlRenderer</code></a> to provide a simple text-based representation of the AST for debugging purposes.</p>
+
+<h2 id="node-traversal">Node Traversal</h2>
+
+<p>There are four different ways to traverse/iterate the Nodes within the AST:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Pros</th>
+      <th>Cons</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Manual Traversal</td>
+      <td>Best way to access/check direct relatives of nodes</td>
+      <td>Not useful for iteration</td>
+    </tr>
+    <tr>
+      <td>Iterating the Tree</td>
+      <td>Fast and efficient</td>
+      <td>Possible unexpected behavior when adding/removing sibling nodes while iterating</td>
+    </tr>
+    <tr>
+      <td>Walking the Tree</td>
+      <td>Full control over iteration</td>
+      <td>Up to twice as slow as iteration; adding/removing nodes while iterating can lead to weird behaviors</td>
+    </tr>
+    <tr>
+      <td>Querying Nodes</td>
+      <td>Easier to write and understand; no weird behaviors</td>
+      <td>Not memory efficient</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Each is described in more detail below</p>
+
+<h3 id="manual-traversal">Manual Traversal</h3>
+
+<p>The following methods can be used to manually traverse from one <code class="language-plaintext highlighter-rouge">Node</code> to any of its direct relatives:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">previous()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">next()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">parent()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">firstChild()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">lastChild()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">children()</code></li>
+</ul>
+
+<p>This is best suited for situations when you need to know information about those relatives.</p>
+
+<h3 id="iterating-the-tree">Iterating the Tree</h3>
+
+<p>If you’d like to iterate through all the nodes, use the <code class="language-plaintext highlighter-rouge">iterator()</code> method to obtain an iterator that will loop through each node in the tree (using pre-order traversal):</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">foreach</span> <span class="p">(</span><span class="nv">$document</span><span class="o">-&gt;</span><span class="nf">iterator</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">'Current node: '</span> <span class="mf">.</span> <span class="nb">get_class</span><span class="p">(</span><span class="nv">$node</span><span class="p">)</span> <span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Given an AST like this (XML representation):</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;document&gt;</span>
+  <span class="nt">&lt;heading</span> <span class="na">level=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;text&gt;</span>Hello World!<span class="nt">&lt;/text&gt;</span>
+  <span class="nt">&lt;/heading&gt;</span>
+  <span class="nt">&lt;paragraph&gt;</span>
+    <span class="nt">&lt;text&gt;</span>This is an example of <span class="nt">&lt;/text&gt;</span>
+    <span class="nt">&lt;strong&gt;</span>
+      <span class="nt">&lt;text&gt;</span>CommonMark<span class="nt">&lt;/text&gt;</span>
+    <span class="nt">&lt;/strong&gt;</span>
+    <span class="nt">&lt;text&gt;</span>.<span class="nt">&lt;/text&gt;</span>
+  <span class="nt">&lt;/paragraph&gt;</span>
+<span class="nt">&lt;/document&gt;</span>
+</code></pre></div></div>
+
+<p>The code above will output:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Current node: League\CommonMark\Node\Block\Document
+Current node: League\CommonMark\Extension\CommonMark\Node\Block\Heading
+Current node: League\CommonMark\Node\Inline\Text
+Current node: League\CommonMark\Node\Block\Paragraph
+Current node: League\CommonMark\Node\Inline\Text
+Current node: League\CommonMark\Extension\CommonMark\Node\Inline\Strong
+Current node: League\CommonMark\Node\Inline\Text
+Current node: League\CommonMark\Node\Inline\Text
+</code></pre></div></div>
+
+<p>This iterator doesn’t use recursion, so you won’t blow the stack when working with deeply-nested nodes.  It’s also very CPU and memory-efficient.</p>
+
+<p>Be careful when modifying nodes while iterating the tree as some of those changes may affect the current iteration process, especially for sibling nodes that come after the current one.  For example, if you remove the current node’s <code class="language-plaintext highlighter-rouge">next()</code> sibling, the next loop of that iteration will still include the removed sibling even though it was successfully removed from the AST.  Similarly, any new siblings that are added won’t be visited on the next loop.</p>
+
+<h3 id="walking-the-tree">Walking the Tree</h3>
+
+<p>If you’d like to walk through all the nodes, visiting each one as you enter and leave it, use the <code class="language-plaintext highlighter-rouge">walker()</code> method to obtain an instance of <code class="language-plaintext highlighter-rouge">NodeWalker</code>.  This also uses pre-order traversal but emitting <code class="language-plaintext highlighter-rouge">NodeWalkerEvent</code>s along the way:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Node\NodeWalker</span><span class="p">;</span>
+
+<span class="cd">/** @var NodeWalker $walker */</span>
+<span class="nv">$walker</span> <span class="o">=</span> <span class="nv">$document</span><span class="o">-&gt;</span><span class="nf">walker</span><span class="p">();</span>
+<span class="k">while</span> <span class="p">(</span><span class="nv">$event</span> <span class="o">=</span> <span class="nv">$walker</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">'Now '</span> <span class="mf">.</span> <span class="p">(</span><span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">isEntering</span><span class="p">()</span> <span class="o">?</span> <span class="s1">'entering'</span> <span class="o">:</span> <span class="s1">'leaving'</span><span class="p">)</span> <span class="mf">.</span> <span class="s1">' a '</span> <span class="mf">.</span> <span class="nb">get_class</span><span class="p">(</span><span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">getNode</span><span class="p">())</span> <span class="mf">.</span> <span class="s1">' node'</span> <span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Using the same example AST in the previous section, this code will output:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Now entering a League\CommonMark\Node\Block\Document node
+Now entering a League\CommonMark\Extension\CommonMark\Node\Block\Heading node
+Now entering a League\CommonMark\Node\Inline\Text node
+Now leaving a League\CommonMark\Extension\CommonMark\Node\Block\Heading node
+Now entering a League\CommonMark\Node\Block\Paragraph node
+Now entering a League\CommonMark\Node\Inline\Text node
+Now entering a League\CommonMark\Extension\CommonMark\Node\Inline\Strong node
+Now entering a League\CommonMark\Node\Inline\Text node
+Now leaving a League\CommonMark\Extension\CommonMark\Node\Inline\Strong node
+Now entering a League\CommonMark\Node\Inline\Text node
+Now leaving a League\CommonMark\Node\Block\Paragraph node
+Now leaving a League\CommonMark\Node\Block\Document node
+</code></pre></div></div>
+
+<p>This approach offers many of the same benefits as the simple iteration shown in the previous section such as memory efficiency and no recursion.  The key differences come from how you enter and leave nodes:</p>
+
+<ol>
+  <li>Iteration can potentially take twice as long - not ideal for performance</li>
+  <li>Provides you with more control over exactly when an action is taken on a node which is sometimes needed for certain AST manipulations</li>
+  <li>Also provides a <code class="language-plaintext highlighter-rouge">resumeAt()</code> method to override where it should iterate next</li>
+</ol>
+
+<p>But like with the iterator, be careful when adding/removing nodes while walking the tree, as there are even more subtle cases where the walker could even lose track of where it was, which may result in some nodes being visited multiple times or not at all.</p>
+
+<h3 id="querying-nodes">Querying Nodes</h3>
+
+<p>If you’re trying to locate certain nodes to perform actions on them, querying the nodes from the AST might be easier to implement.  This can be done with the <code class="language-plaintext highlighter-rouge">Query</code> class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Inline\Link</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Node\Block\Paragraph</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Node\Query</span><span class="p">;</span>
+
+<span class="c1">// Find all paragraphs and blockquotes that contain links</span>
+<span class="nv">$matchingNodes</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nc">Query</span><span class="p">())</span>
+    <span class="o">-&gt;</span><span class="nf">where</span><span class="p">(</span><span class="nc">Query</span><span class="o">::</span><span class="nf">type</span><span class="p">(</span><span class="nc">Paragraph</span><span class="o">::</span><span class="n">class</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">orWhere</span><span class="p">(</span><span class="nc">Query</span><span class="o">::</span><span class="nf">type</span><span class="p">(</span><span class="nc">BlockQuote</span><span class="o">::</span><span class="n">class</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">andWhere</span><span class="p">(</span><span class="nc">Query</span><span class="o">::</span><span class="nf">hasChild</span><span class="p">(</span><span class="nc">Query</span><span class="o">::</span><span class="nf">type</span><span class="p">(</span><span class="nc">Link</span><span class="o">::</span><span class="n">class</span><span class="p">)))</span>
+    <span class="o">-&gt;</span><span class="nf">findAll</span><span class="p">(</span><span class="nv">$document</span><span class="p">);</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$matchingNodes</span> <span class="k">as</span> <span class="nv">$node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// TODO: Do something with them</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Each condition passed into <code class="language-plaintext highlighter-rouge">where()</code>, <code class="language-plaintext highlighter-rouge">orWhere()</code>, or <code class="language-plaintext highlighter-rouge">andWhere()</code> must be a callable “filter” that accepts a <code class="language-plaintext highlighter-rouge">Node</code> and returns <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code>.  We provide several methods that can help create these filters for you:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Query::type(string $class)</code></td>
+      <td>Creates a filter that matches nodes with the given class name</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Query::hasChild()</code></td>
+      <td>Creates a filter that matches nodes which contain at least one child</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Query::hasChild(callable $condition)</code></td>
+      <td>Creates a filter that matches nodes which contain at least one child that matches the inner <code class="language-plaintext highlighter-rouge">$condition</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Query::hasParent()</code></td>
+      <td>Creates a filter that matches nodes which have a parent</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Query::hasParent(callable $condition)</code></td>
+      <td>Creates a filter that matches nodes which have a parent that matches the inner <code class="language-plaintext highlighter-rouge">$condition</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You can of course create your own custom filters/conditions using an anonymous function or by implementing <code class="language-plaintext highlighter-rouge">ExpressionInterface</code>:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Node\Node</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Node\Query</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Node\Query\ExpressionInterface</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">ChildCountGreaterThan</span> <span class="kd">implements</span> <span class="nc">ExpressionInterface</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$count</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">int</span> <span class="nv">$count</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">count</span> <span class="o">=</span> <span class="nv">$count</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__invoke</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">)</span> <span class="p">:</span> <span class="kt">bool</span><span class="p">{</span>
+        <span class="k">return</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$node</span><span class="o">-&gt;</span><span class="nf">children</span><span class="p">())</span> <span class="o">&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nc">Query</span><span class="p">())</span>
+    <span class="o">-&gt;</span><span class="nf">where</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">):</span> <span class="kt">bool</span> <span class="p">{</span> <span class="k">return</span> <span class="nv">$node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">has</span><span class="p">(</span><span class="s1">'attributes/class'</span><span class="p">);</span> <span class="p">})</span>
+    <span class="o">-&gt;</span><span class="nf">andWhere</span><span class="p">(</span><span class="k">new</span> <span class="nc">ChildCountGreaterThan</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="modification">Modification</h2>
+
+<p>The following methods can be used to modify the AST:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">insertAfter(Node $sibling)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">insertBefore(Node $sibling)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">replaceWith(Node $replacement)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">detach()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">appendChild(Node $child)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">prependChild(Node $child)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">detachChildren()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">replaceChildren(Node[] $children)</code></li>
+</ul>
+
+<h2 id="documentparsedevent"><code class="language-plaintext highlighter-rouge">DocumentParsedEvent</code></h2>
+
+<p>The best way to access and manipulate the AST is by adding an <a href="/2.0/customization/event-dispatcher/">event listener</a> for the <code class="language-plaintext highlighter-rouge">DocumentParsedEvent</code>.</p>
+
+<h2 id="data-storage">Data Storage</h2>
+
+<p>Each <code class="language-plaintext highlighter-rouge">Node</code> has a property called <code class="language-plaintext highlighter-rouge">data</code> which is a <code class="language-plaintext highlighter-rouge">Data</code> (array-like) object.  This can be used to store any arbitrary data you’d like on the node:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Node\Inline\Text</span><span class="p">;</span>
+
+<span class="nv">$text1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="p">(</span><span class="s1">'Hello, world!'</span><span class="p">);</span>
+<span class="nv">$text1</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'language'</span><span class="p">,</span> <span class="s1">'English'</span><span class="p">);</span>
+<span class="nv">$text1</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'is_good_translation'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$text2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="p">(</span><span class="s1">'Bonjour monde!'</span><span class="p">);</span>
+<span class="nv">$text2</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'language'</span><span class="p">,</span> <span class="s1">'French'</span><span class="p">);</span>
+<span class="nv">$text2</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'is_good_translation'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="k">foreach</span> <span class="p">([</span><span class="nv">$text1</span><span class="p">,</span> <span class="nv">$text2</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$text</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'is_good_translation'</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nb">sprintf</span><span class="p">(</span><span class="s1">'In %s we would say: "%s"'</span><span class="p">,</span> <span class="nv">$text</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'language'</span><span class="p">),</span> <span class="nv">$text</span><span class="o">-&gt;</span><span class="nf">getLiteral</span><span class="p">());</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nb">sprintf</span><span class="p">(</span><span class="s1">'I think they would say "%s" in %s, but I\'m not sure.'</span><span class="p">,</span> <span class="nv">$text</span><span class="o">-&gt;</span><span class="nf">getLiteral</span><span class="p">(),</span> <span class="nv">$text</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'language'</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You can also access deeply-nested paths using <code class="language-plaintext highlighter-rouge">/</code> or <code class="language-plaintext highlighter-rouge">.</code> as delimiters:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Node\Inline\Text</span><span class="p">;</span>
+
+<span class="nv">$text</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="p">(</span><span class="s1">'Hello, world!'</span><span class="p">);</span>
+<span class="nv">$text</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'info'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'language'</span> <span class="o">=&gt;</span> <span class="s1">'English'</span><span class="p">,</span> <span class="s1">'is_good_translation'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">]);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$text</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'info/language'</span><span class="p">));</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$text</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'info.is_good_translation'</span><span class="p">));</span>
+
+<span class="nv">$text</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'info/is_example'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="html-attributes">HTML Attributes</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">data</code> property comes pre-instantiated with a single data element called <code class="language-plaintext highlighter-rouge">attributes</code> which is used to store any HTML attributes that need to be rendered.  For example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Inline\Link</span><span class="p">;</span>
+
+<span class="nv">$link</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Link</span><span class="p">(</span><span class="s1">'https://twitter.com/colinodell'</span><span class="p">,</span> <span class="s1">'@colinodell'</span><span class="p">);</span>
+<span class="nv">$link</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">append</span><span class="p">(</span><span class="s1">'attributes/class'</span><span class="p">,</span> <span class="s1">'social-link'</span><span class="p">);</span>
+<span class="nv">$link</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">append</span><span class="p">(</span><span class="s1">'attributes/class'</span><span class="p">,</span> <span class="s1">'twitter'</span><span class="p">);</span>
+<span class="nv">$link</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'attributes/target'</span><span class="p">,</span> <span class="s1">'_blank'</span><span class="p">);</span>
+<span class="nv">$link</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'attributes/rel'</span><span class="p">,</span> <span class="s1">'noopener'</span><span class="p">);</span>
+</code></pre></div></div>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/2.0/customization/abstract-syntax-tree.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v2.0"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

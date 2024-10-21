@@ -1,0 +1,575 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="The Table of Contents extension automatically inserts links to the headings in your document.">
+    
+    <meta name="docsearch:version" content="1.5">
+    
+        <title>Table of Contents Extension - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/1.5/extensions/table-of-contents/" />
+    
+        <meta property="og:title" content="Table of Contents Extension - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="The Table of Contents extension automatically inserts links to the headings in your document." />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v1.5 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/extensions/table-of-contents/">v2.5</a></li>
+            
+                <li ><a href="/2.4/extensions/table-of-contents/">v2.4</a></li>
+            
+                <li ><a href="/2.3/extensions/table-of-contents/">v2.3</a></li>
+            
+                <li ><a href="/2.2/extensions/table-of-contents/">v2.2</a></li>
+            
+                <li ><a href="/2.1/extensions/table-of-contents/">v2.1</a></li>
+            
+                <li ><a href="/2.0/extensions/table-of-contents/">v2.0</a></li>
+            
+                <li ><a href="/1.6/extensions/table-of-contents/">v1.6</a></li>
+            
+                <li class="selected"><a href="/1.5/extensions/table-of-contents/">v1.5</a></li>
+            
+                <li ><a href="/1.4/extensions/table-of-contents/">v1.4</a></li>
+            
+                <li ><a href="/1.3/">v1.3</a></li>
+            
+                <li ><a href="/1.0/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.5/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/upgrading/">Upgrading from 1.4</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/changelog/">Changelog</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.5/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/command-line/">Command Line</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.5/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/1.5/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.5/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/block-rendering/">Block Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.5/customization/inline-rendering/">Inline Rendering</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 1.5</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="table-of-contents-extension">Table of Contents Extension</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">TableOfContentsExtension</code> automatically inserts a table of contents into your document with links to the various headings.</p>
+
+<p>The <a href="/1.5/extensions/heading-permalinks/">Heading Permalink</a> extension must also be included for this to work.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>This extension is bundled with <code class="language-plaintext highlighter-rouge">league/commonmark</code>. This library can be installed via Composer:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>composer require league/commonmark
+</code></pre></div></div>
+
+<p>See the <a href="/1.5/installation/">installation</a> section for more details.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>Configure your <code class="language-plaintext highlighter-rouge">Environment</code> as usual and simply add the <code class="language-plaintext highlighter-rouge">TableOfContentsExtension</code> and <code class="language-plaintext highlighter-rouge">HeadingPermalinkExtension</code> provided by this package:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\CommonMarkConverter</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\TableOfContents\TableOfContentsExtension</span><span class="p">;</span>
+
+<span class="c1">// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go</span>
+<span class="nv">$environment</span> <span class="o">=</span> <span class="nc">Environment</span><span class="o">::</span><span class="nf">createCommonMarkEnvironment</span><span class="p">();</span>
+
+<span class="c1">// Add the two extensions</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">HeadingPermalinkExtension</span><span class="p">());</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">TableOfContentsExtension</span><span class="p">());</span>
+
+<span class="c1">// Set your configuration</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1">// Extension defaults are shown below</span>
+    <span class="c1">// If you're happy with the defaults, feel free to remove them from this array</span>
+    <span class="s1">'table_of_contents'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'html_class'</span> <span class="o">=&gt;</span> <span class="s1">'table-of-contents'</span><span class="p">,</span>
+        <span class="s1">'position'</span> <span class="o">=&gt;</span> <span class="s1">'top'</span><span class="p">,</span>
+        <span class="s1">'style'</span> <span class="o">=&gt;</span> <span class="s1">'bullet'</span><span class="p">,</span>
+        <span class="s1">'min_heading_level'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'max_heading_level'</span> <span class="o">=&gt;</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="s1">'normalize'</span> <span class="o">=&gt;</span> <span class="s1">'relative'</span><span class="p">,</span>
+        <span class="s1">'placeholder'</span> <span class="o">=&gt;</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="c1">// Instantiate the converter engine and start converting some Markdown!</span>
+<span class="nv">$converter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CommonMarkConverter</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="nv">$environment</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$converter</span><span class="o">-&gt;</span><span class="nf">convertToHtml</span><span class="p">(</span><span class="s1">'# Awesome!'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>This extension can be configured by providing a <code class="language-plaintext highlighter-rouge">table_of_contents</code> array with several nested configuration options.  The defaults are shown in the code example above.</p>
+
+<h3 id="html_class"><code class="language-plaintext highlighter-rouge">html_class</code></h3>
+
+<p>The value of this nested configuration option should be a <code class="language-plaintext highlighter-rouge">string</code> that you want set as the <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code> or <code class="language-plaintext highlighter-rouge">&lt;ol&gt;</code> tag’s <code class="language-plaintext highlighter-rouge">class</code> attribute.  This defaults to <code class="language-plaintext highlighter-rouge">'table-of-contents'</code>.</p>
+
+<h3 id="normalize"><code class="language-plaintext highlighter-rouge">normalize</code></h3>
+
+<p>This should be a <code class="language-plaintext highlighter-rouge">string</code> that defines one of three different strategies to use when generating a (potentially-nested) list from your various headings:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">'flat'</code></li>
+  <li><code class="language-plaintext highlighter-rouge">'as-is'</code></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">'relative'</code></strong> (default)</li>
+</ul>
+
+<p>See “<a href="#normalization-strategies">Normalization Strategies</a>” below for more information.</p>
+
+<h3 id="position"><code class="language-plaintext highlighter-rouge">position</code></h3>
+
+<p>This <code class="language-plaintext highlighter-rouge">string</code> controls where in the document your table of contents will be placed.  There are two options:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">'top'</code></strong> (default) - Insert at the very top of the document, before any content</li>
+  <li><code class="language-plaintext highlighter-rouge">'before-headings'</code> - Insert just before the very first heading - useful if you want to have some descriptive text show above the table of content.</li>
+  <li><code class="language-plaintext highlighter-rouge">'placeholder'</code> - Location is manually defined by a user-provided placeholder somewhere in the document (see the <code class="language-plaintext highlighter-rouge">placeholder</code> option below)</li>
+</ul>
+
+<p>If you’d like to customize this further, you can implement a <a href="/1.5/customization/event-dispatcher/#registering-listeners">custom event listener</a> to locate the <code class="language-plaintext highlighter-rouge">TableOfContents</code> node and reposition it somewhere else in the document prior to rendering.</p>
+
+<h3 id="placeholder"><code class="language-plaintext highlighter-rouge">placeholder</code></h3>
+
+<p>When combined with <code class="language-plaintext highlighter-rouge">'position' =&gt; 'placeholder'</code>, this setting tells the extension which placeholder content should be replaced with the Table of Contents.  For example, if you set this option to <code class="language-plaintext highlighter-rouge">[TOC]</code>, then any lines in your document consisting of that <code class="language-plaintext highlighter-rouge">[TOC]</code> placeholder will be replaced by the Table of Contents. Note that this option has no default value - you must provide this string yourself.</p>
+
+<h3 id="style"><code class="language-plaintext highlighter-rouge">style</code></h3>
+
+<p>This <code class="language-plaintext highlighter-rouge">string</code> option controls what style of HTML list should be used to render the table of contents:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">'bullet'</code></strong> (default) - Unordered, bulleted list (<code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">'ordered'</code> - Ordered list (<code class="language-plaintext highlighter-rouge">&lt;ol&gt;</code>)</li>
+</ul>
+
+<h3 id="min_heading_level-and-max_heading_level"><code class="language-plaintext highlighter-rouge">min_heading_level</code> and <code class="language-plaintext highlighter-rouge">max_heading_level</code></h3>
+
+<p>These two settings control which headings should appear in the list.  By default, all 6 levels (<code class="language-plaintext highlighter-rouge">1</code>, <code class="language-plaintext highlighter-rouge">2</code>, <code class="language-plaintext highlighter-rouge">3</code>, <code class="language-plaintext highlighter-rouge">4</code>, <code class="language-plaintext highlighter-rouge">5</code>, and <code class="language-plaintext highlighter-rouge">6</code>).  You can override this by setting the <code class="language-plaintext highlighter-rouge">min_heading_level</code> and/or <code class="language-plaintext highlighter-rouge">max_heading_level</code> to a different number (<code class="language-plaintext highlighter-rouge">int</code> value).</p>
+
+<h2 id="normalization-strategies">Normalization Strategies</h2>
+
+<p>Consider this sample Markdown input:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Level 2 Heading</span>
+
+This is a sample document that starts with a level 2 heading
+
+<span class="gu">#### Level 4 Heading</span>
+
+Notice how we went from a level 2 heading to a level 4 heading!
+
+<span class="gu">### Level 3 Heading</span>
+
+And now we have a level 3 heading here.
+</code></pre></div></div>
+
+<p>Here’s how the different normalization strategies would handle this input:</p>
+
+<h3 id="strategy-flat">Strategy: <code class="language-plaintext highlighter-rouge">'flat'</code></h3>
+
+<p>All links in your table of contents will be shown in a flat, single-level list:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"table-of-contents"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li&gt;</span>
+        <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-2-heading"</span><span class="nt">&gt;</span>Level 2 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>
+        <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-4-heading"</span><span class="nt">&gt;</span>Level 4 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>
+        <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-3-heading"</span><span class="nt">&gt;</span>Level 3 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="c">&lt;!-- The rest of the content would go here --&gt;</span>
+</code></pre></div></div>
+
+<h3 id="strategy-as-is">Strategy: <code class="language-plaintext highlighter-rouge">'as-is'</code></h3>
+
+<p>Level 1 headings (<code class="language-plaintext highlighter-rouge">&lt;h1&gt;</code>) will appear on the first level of the list, with level 2 headings (<code class="language-plaintext highlighter-rouge">&lt;h2&gt;</code>) nested under those, and so forth - exactly as they occur within the document.  But this can get weird if your document doesn’t start with level 1 headings, or it doesn’t properly nest the levels:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"table-of-contents"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li&gt;</span>
+        <span class="nt">&lt;ul&gt;</span>
+            <span class="nt">&lt;li&gt;</span>
+                <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-2-heading"</span><span class="nt">&gt;</span>Level 2 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+                <span class="nt">&lt;ul&gt;</span>
+                    <span class="nt">&lt;li&gt;</span>
+                        <span class="nt">&lt;ul&gt;</span>
+                            <span class="nt">&lt;li&gt;</span>
+                                <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-4-heading"</span><span class="nt">&gt;</span>Level 4 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+                            <span class="nt">&lt;/li&gt;</span>
+                        <span class="nt">&lt;/ul&gt;</span>
+                    <span class="nt">&lt;/li&gt;</span>
+                    <span class="nt">&lt;li&gt;</span>
+                        <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-3-heading"</span><span class="nt">&gt;</span>Level 3 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+                    <span class="nt">&lt;/li&gt;</span>
+                <span class="nt">&lt;/ul&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="c">&lt;!-- The rest of the content would go here --&gt;</span>
+</code></pre></div></div>
+
+<h3 id="strategy-relative">Strategy: <code class="language-plaintext highlighter-rouge">'relative'</code></h3>
+
+<p>Applies nesting, but handles edge cases (like incorrect nesting levels) as you’d expect:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"table-of-contents"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li&gt;</span>
+        <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-2-heading"</span><span class="nt">&gt;</span>Level 2 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+        <span class="nt">&lt;ul&gt;</span>
+            <span class="nt">&lt;li&gt;</span>
+                <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-4-heading"</span><span class="nt">&gt;</span>Level 4 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;ul&gt;</span>
+            <span class="nt">&lt;li&gt;</span>
+                <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#level-3-heading"</span><span class="nt">&gt;</span>Level 3 Heading<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="c">&lt;!-- The rest of the content would go here --&gt;</span>
+</code></pre></div></div>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/1.5/extensions/table-of-contents.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v1.5"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,666 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="The MentionParser makes it easy to parse shortened references like @colinodell and">
+    
+    <meta name="docsearch:version" content="2.0">
+    
+        <title>Mention Parser - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/2.0/extensions/mentions/" />
+    
+        <meta property="og:title" content="Mention Parser - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="The MentionParser makes it easy to parse shortened references like @colinodell and" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v2.0 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/extensions/mentions/">v2.5</a></li>
+            
+                <li ><a href="/2.4/extensions/mentions/">v2.4</a></li>
+            
+                <li ><a href="/2.3/extensions/mentions/">v2.3</a></li>
+            
+                <li ><a href="/2.2/extensions/mentions/">v2.2</a></li>
+            
+                <li ><a href="/2.1/extensions/mentions/">v2.1</a></li>
+            
+                <li class="selected"><a href="/2.0/extensions/mentions/">v2.0</a></li>
+            
+                <li ><a href="/1.6/extensions/mentions/">v1.6</a></li>
+            
+                <li ><a href="/1.5/extensions/mentions/">v1.5</a></li>
+            
+                <li ><a href="/1.4/">v1.4</a></li>
+            
+                <li ><a href="/1.3/">v1.3</a></li>
+            
+                <li ><a href="/1.0/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li >
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/installation/">Installation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/upgrading/">Upgrading from 1.6</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/changelog/">Changelog</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/support/">Support</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/xml/">XML</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/default-attributes/">Default Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/description-lists/">Description Lists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/front-matter/">Front Matter</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/2.0/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/2.0/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/rendering/">Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/2.0/customization/slug-normalizer/">Slug Normalizer</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 2.0</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="mention-extension">Mention Extension</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">MentionExtension</code> makes it easy to parse shortened mentions and references like <code class="language-plaintext highlighter-rouge">@colinodell</code> to a Twitter URL
+or <code class="language-plaintext highlighter-rouge">#123</code> to a GitHub issue URL.  You can create your own custom syntax by defining which prefix you want to use and
+how to generate the corresponding URL.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>You can create your own custom syntax by supplying the configuration with an array of options that
+define the starting prefix, a regular expression to match against, and any custom URL template or callable to
+generate the URL.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Mention\MentionExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\MarkdownConverter</span><span class="p">;</span>
+
+<span class="c1">// Define your configuration</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'mentions'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="c1">// GitHub handler mention configuration.</span>
+        <span class="c1">// Sample Input:  `@colinodell`</span>
+        <span class="c1">// Sample Output: `&lt;a href="https://www.github.com/colinodell"&gt;@colinodell&lt;/a&gt;`</span>
+        <span class="s1">'github_handle'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'prefix'</span>    <span class="o">=&gt;</span> <span class="s1">'@'</span><span class="p">,</span>
+            <span class="s1">'pattern'</span>   <span class="o">=&gt;</span> <span class="s1">'[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)'</span><span class="p">,</span>
+            <span class="s1">'generator'</span> <span class="o">=&gt;</span> <span class="s1">'https://github.com/%s'</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="c1">// GitHub issue mention configuration.</span>
+        <span class="c1">// Sample Input:  `#473`</span>
+        <span class="c1">// Sample Output: `&lt;a href="https://github.com/thephpleague/commonmark/issues/473"&gt;#473&lt;/a&gt;`</span>
+        <span class="s1">'github_issue'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'prefix'</span>    <span class="o">=&gt;</span> <span class="s1">'#'</span><span class="p">,</span>
+            <span class="s1">'pattern'</span>   <span class="o">=&gt;</span> <span class="s1">'\d+'</span><span class="p">,</span>
+            <span class="s1">'generator'</span> <span class="o">=&gt;</span> <span class="s2">"https://github.com/thephpleague/commonmark/issues/%d"</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="c1">// Twitter handler mention configuration.</span>
+        <span class="c1">// Sample Input:  `@colinodell`</span>
+        <span class="c1">// Sample Output: `&lt;a href="https://www.twitter.com/colinodell"&gt;@colinodell&lt;/a&gt;`</span>
+        <span class="c1">// Note: when registering more than one mention parser with the same prefix, the first mention parser to</span>
+        <span class="c1">// successfully match and return a properly constructed Mention object (where the URL has been set) will be the</span>
+        <span class="c1">// the mention parser that is used. In this example, the GitHub handle would actually match first because</span>
+        <span class="c1">// there isn't any real validation to check whether https://www.github.com/colinodell exists. However, in</span>
+        <span class="c1">// CMS applications, you could check whether its a local user first, then check Twitter and then GitHub, etc.</span>
+        <span class="s1">'twitter_handle'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'prefix'</span>    <span class="o">=&gt;</span> <span class="s1">'@'</span><span class="p">,</span>
+            <span class="s1">'pattern'</span>   <span class="o">=&gt;</span> <span class="s1">'[A-Za-z0-9_]{1,15}(?!\w)'</span><span class="p">,</span>
+            <span class="s1">'generator'</span> <span class="o">=&gt;</span> <span class="s1">'https://twitter.com/%s'</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="c1">// Configure the Environment with all the CommonMark parsers/renderers</span>
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+
+<span class="c1">// Add the Mention extension.</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">MentionExtension</span><span class="p">());</span>
+
+<span class="c1">// Instantiate the converter engine and start converting some Markdown!</span>
+<span class="nv">$converter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MarkdownConverter</span><span class="p">(</span><span class="nv">$environment</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$converter</span><span class="o">-&gt;</span><span class="nf">convertToHtml</span><span class="p">(</span><span class="s1">'Follow me on GitHub: @colinodell'</span><span class="p">);</span>
+<span class="c1">// Output:</span>
+<span class="c1">// &lt;p&gt;Follow me on GitHub: &lt;a href="https://www.github.com/colinodell"&gt;@colinodell&lt;/a&gt;&lt;/p&gt;</span>
+</code></pre></div></div>
+
+<h2 id="string-based-url-templates">String-Based URL Templates</h2>
+
+<p>URL templates are perfect for situations where the identifier is inserted directly into a URL:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"@colinodell" =&gt; https://www.twitter.com/colinodell
+ ▲└────┬───┘                             └───┬────┘
+ │     │                                     │
+Prefix └───────────── Identifier ────────────┘
+</code></pre></div></div>
+
+<p>Examples of using string-based URL templates can be seen in the usage example above - you simply provide a <code class="language-plaintext highlighter-rouge">string</code> to the <code class="language-plaintext highlighter-rouge">generator</code> option.</p>
+
+<p>Note that the URL template must be a string, and that the <code class="language-plaintext highlighter-rouge">%s</code> placeholder will be replaced by whatever the user enters after the prefix (in this case, <code class="language-plaintext highlighter-rouge">@</code>).  You can use any prefix, regular expression pattern (without opening/closing delimiter or modifiers), or URL template you want!</p>
+
+<h2 id="custom-callback-based-parsers">Custom Callback-Based Parsers</h2>
+
+<p>Need more power than simply adding the mention inside a string based URL template? The <code class="language-plaintext highlighter-rouge">MentionExtension</code> automatically
+detects if the provided generator is an object that implements <code class="language-plaintext highlighter-rouge">\League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface</code>
+or a valid <a href="https://www.php.net/manual/en/language.types.callable.php">PHP callable</a> that can generate a
+resulting URL.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Mention\Mention</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Mention\MentionExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Node\Inline\AbstractInline</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\MarkdownConverter</span><span class="p">;</span>
+
+<span class="c1">// Define your configuration</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'mentions'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'github_handle'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'prefix'</span>    <span class="o">=&gt;</span> <span class="s1">'@'</span><span class="p">,</span>
+            <span class="s1">'pattern'</span>   <span class="o">=&gt;</span> <span class="s1">'[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)'</span><span class="p">,</span>
+            <span class="c1">// The recommended approach is to provide a class that implements MentionGeneratorInterface.</span>
+            <span class="s1">'generator'</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nc">GithubUserMentionGenerator</span><span class="p">(),</span> <span class="c1">// TODO: Implement such a class yourself</span>
+        <span class="p">],</span>
+        <span class="s1">'github_issue'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'prefix'</span>    <span class="o">=&gt;</span> <span class="s1">'#'</span><span class="p">,</span>
+            <span class="s1">'pattern'</span>   <span class="o">=&gt;</span> <span class="s1">'\d+'</span><span class="p">,</span>
+            <span class="c1">// Alternatively, if your logic is simple, you can implement an inline anonymous class like this example.</span>
+            <span class="s1">'generator'</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="kd">class</span> <span class="kd">implements</span> <span class="nc">MentionGeneratorInterface</span> <span class="p">{</span>
+                 <span class="k">public</span> <span class="k">function</span> <span class="n">generateMention</span><span class="p">(</span><span class="kt">Mention</span> <span class="nv">$mention</span><span class="p">):</span> <span class="kt">?AbstractInline</span>
+                 <span class="p">{</span>
+                     <span class="nv">$mention</span><span class="o">-&gt;</span><span class="nf">setUrl</span><span class="p">(</span><span class="err">\</span><span class="nb">sprintf</span><span class="p">(</span><span class="s1">'https://github.com/thephpleague/commonmark/issues/%d'</span><span class="p">,</span> <span class="nv">$mention</span><span class="o">-&gt;</span><span class="nf">getIdentifier</span><span class="p">()));</span>
+
+                     <span class="k">return</span> <span class="nv">$mention</span><span class="p">;</span>
+                 <span class="p">}</span>
+             <span class="p">},</span>
+        <span class="p">],</span>
+        <span class="s1">'github_issue'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'prefix'</span>    <span class="o">=&gt;</span> <span class="s1">'#'</span><span class="p">,</span>
+            <span class="s1">'pattern'</span>   <span class="o">=&gt;</span> <span class="s1">'\d+'</span><span class="p">,</span>
+            <span class="c1">// Any type of callable, including anonymous closures, (with optional typehints) are also supported.</span>
+            <span class="c1">// This allows for better compatibility between different major versions of CommonMark.</span>
+            <span class="c1">// However, you sacrifice the ability to type-check which means automated development tools</span>
+            <span class="c1">// may not notice if your code is no longer compatible with new versions - you'll need to</span>
+            <span class="c1">// manually verify this yourself.</span>
+            <span class="s1">'generator'</span> <span class="o">=&gt;</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$mention</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// Immediately return if not passed the supported Mention object.</span>
+                <span class="c1">// This is an example of the types of manual checks you'll need to perform if not using type hints</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nv">$mention</span> <span class="k">instanceof</span> <span class="nc">Mention</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="nv">$mention</span><span class="o">-&gt;</span><span class="nf">setUrl</span><span class="p">(</span><span class="err">\</span><span class="nb">sprintf</span><span class="p">(</span><span class="s1">'https://github.com/thephpleague/commonmark/issues/%d'</span><span class="p">,</span> <span class="nv">$mention</span><span class="o">-&gt;</span><span class="nf">getIdentifier</span><span class="p">()));</span>
+
+                <span class="k">return</span> <span class="nv">$mention</span><span class="p">;</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="c1">// Configure the Environment with all the CommonMark parsers/renderers</span>
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+
+<span class="c1">// Add the Mention extension.</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">MentionExtension</span><span class="p">());</span>
+
+<span class="c1">// Instantiate the converter engine and start converting some Markdown!</span>
+<span class="nv">$converter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MarkdownConverter</span><span class="p">(</span><span class="nv">$environment</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$converter</span><span class="o">-&gt;</span><span class="nf">convertToHtml</span><span class="p">(</span><span class="s1">'Follow me on Twitter: @colinodell'</span><span class="p">);</span>
+<span class="c1">// Output:</span>
+<span class="c1">// &lt;p&gt;Follow me on Twitter: &lt;a href="https://www.github.com/colinodell"&gt;@colinodell&lt;/a&gt;&lt;/p&gt;</span>
+</code></pre></div></div>
+
+<p>When implementing <code class="language-plaintext highlighter-rouge">MentionGeneratorInterface</code> or a simple callable, you’ll receive a single <code class="language-plaintext highlighter-rouge">Mention</code> parameter and must either:</p>
+
+<ul>
+  <li>Return the same passed <code class="language-plaintext highlighter-rouge">Mention</code> object along with setting the URL; or,</li>
+  <li>Return a new object that extends <code class="language-plaintext highlighter-rouge">\League\CommonMark\Inline\Element\AbstractInline</code>; or,</li>
+  <li>Return <code class="language-plaintext highlighter-rouge">null</code> (and not set a URL on the <code class="language-plaintext highlighter-rouge">Mention</code> object) if the mention isn’t a match and should be skipped; not parsed.</li>
+</ul>
+
+<p>Here’s a faux-real-world example of how you might use such a generator for your application. Imagine you
+want to parse <code class="language-plaintext highlighter-rouge">@username</code> into custom user profile links for your application, but only if the user exists. You could
+create a class like the following which integrates with the framework your application is built on:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Mention\Generator\MentionGeneratorInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Mention\Mention</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Inline\Element\AbstractInline</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">UserMentionGenerator</span> <span class="kd">implements</span> <span class="nc">MentionGeneratorInterface</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$currentUser</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$userRepository</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$router</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span> <span class="p">(</span><span class="kt">AccountInterface</span> <span class="nv">$currentUser</span><span class="p">,</span> <span class="kt">UserRepository</span> <span class="nv">$userRepository</span><span class="p">,</span> <span class="kt">Router</span> <span class="nv">$router</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">currentUser</span> <span class="o">=</span> <span class="nv">$currentUser</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">userRepository</span> <span class="o">=</span> <span class="nv">$userRepository</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">router</span> <span class="o">=</span> <span class="nv">$router</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">generateMention</span><span class="p">(</span><span class="kt">Mention</span> <span class="nv">$mention</span><span class="p">):</span> <span class="kt">?AbstractInline</span>
+    <span class="p">{</span>
+        <span class="c1">// Determine mention visibility (i.e. member privacy).</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">currentUser</span><span class="o">-&gt;</span><span class="nf">hasPermission</span><span class="p">(</span><span class="s1">'access profiles'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$emphasis</span> <span class="o">=</span> <span class="k">new</span> <span class="err">\</span><span class="nf">League\CommonMark\Inline\Element\Emphasis</span><span class="p">();</span>
+            <span class="nv">$emphasis</span><span class="o">-&gt;</span><span class="nf">appendChild</span><span class="p">(</span><span class="k">new</span> <span class="err">\</span><span class="nf">League\CommonMark\Inline\Element\Text</span><span class="p">(</span><span class="s1">'[members only]'</span><span class="p">));</span>
+            <span class="k">return</span> <span class="nv">$emphasis</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Locate the user that is mentioned.</span>
+        <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">userRepository</span><span class="o">-&gt;</span><span class="nf">findUser</span><span class="p">(</span><span class="nv">$mention</span><span class="o">-&gt;</span><span class="nf">getIdentifier</span><span class="p">());</span>
+
+        <span class="c1">// The mention isn't valid if the user does not exist.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Change the label.</span>
+        <span class="nv">$mention</span><span class="o">-&gt;</span><span class="nf">setLabel</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="nf">getFullName</span><span class="p">());</span>
+        <span class="c1">// Use the path to their profile as the URL, typecasting to a string in case the service returns</span>
+        <span class="c1">// a __toString object; otherwise you will need to figure out a way to extract the string URL</span>
+        <span class="c1">// from the service.</span>
+        <span class="nv">$mention</span><span class="o">-&gt;</span><span class="nf">setUrl</span><span class="p">((</span><span class="n">string</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">router</span><span class="o">-&gt;</span><span class="nf">generate</span><span class="p">(</span><span class="s1">'user_profile'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="nf">getId</span><span class="p">()]));</span>
+
+        <span class="k">return</span> <span class="nv">$mention</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You can then hook this class up to a mention definition in the configuration to generate profile URLs from Markdown
+mentions:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Mention\MentionExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\MarkdownConverter</span><span class="p">;</span>
+
+<span class="c1">// Grab your UserMentionGenerator somehow, perhaps from a DI container or instantiate it if needed</span>
+<span class="nv">$userMentionGenerator</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="nc">UserMentionGenerator</span><span class="o">::</span><span class="n">class</span><span class="p">);</span>
+
+<span class="c1">// Define your configuration</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'mentions'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'user_url_generator'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'prefix'</span>    <span class="o">=&gt;</span> <span class="s1">'@'</span><span class="p">,</span>
+            <span class="s1">'pattern'</span>   <span class="o">=&gt;</span> <span class="s1">'[a-z0-9]+'</span><span class="p">,</span>
+            <span class="s1">'generator'</span> <span class="o">=&gt;</span> <span class="nv">$userMentionGenerator</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="c1">// Configure the Environment with all the CommonMark parsers/renderers</span>
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+
+<span class="c1">// Add the Mention extension.</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">MentionExtension</span><span class="p">());</span>
+
+<span class="c1">// Instantiate the converter engine and start converting some Markdown!</span>
+<span class="nv">$converter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MarkdownConverter</span><span class="p">(</span><span class="nv">$environment</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$converter</span><span class="o">-&gt;</span><span class="nf">convertToHtml</span><span class="p">(</span><span class="s1">'You should ask @colinodell about that'</span><span class="p">);</span>
+
+<span class="c1">// Output (if current user has permission to view profiles):</span>
+<span class="c1">// &lt;p&gt;You should ask &lt;a href="/user/123/profile"&gt;Colin O'Dell&lt;/a&gt; about that&lt;/p&gt;</span>
+<span class="c1">//</span>
+<span class="c1">// Output (if current user doesn't have has access to view profiles):</span>
+<span class="c1">// &lt;p&gt;You should ask &lt;em&gt;[members only]&lt;/em&gt; about that&lt;/p&gt;</span>
+</code></pre></div></div>
+
+<h2 id="rendering">Rendering</h2>
+
+<p>Whenever a mention is found, a <code class="language-plaintext highlighter-rouge">Mention</code> object is added to the <a href="/2.0/customization/abstract-syntax-tree/">document’s AST</a>.
+This object extends from <code class="language-plaintext highlighter-rouge">Link</code>, so it’ll be rendered as a normal <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> tag by default.</p>
+
+<p>If you need more control over the output you can implement a <a href="/2.0/customization/rendering/">custom renderer</a> for the <code class="language-plaintext highlighter-rouge">Mention</code> type
+and convert it to whatever HTML you wish!</p>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/2.0/extensions/mentions.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v2.0"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>

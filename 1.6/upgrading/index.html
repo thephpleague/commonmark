@@ -1,0 +1,522 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <meta name="description" content="Guide to upgrading to newer versions of this library">
+    
+    <meta name="docsearch:version" content="1.6">
+    
+        <title>Upgrading from 1.5 - 1.6 - CommonMark for PHP</title>
+    
+    <link rel="icon" type="image/x-icon" href="//theme.thephpleague.com/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="//theme.thephpleague.com/img/apple-touch-icon-precomposed.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@thephpleague" />
+    <meta name="twitter:creator" content="@colinodell" />
+    <meta property="og:url" content="https://commonmark.thephpleague.com/1.6/upgrading/" />
+    
+        <meta property="og:title" content="Upgrading from 1.5 - 1.6 - CommonMark for PHP" />
+    
+    
+        <meta property="og:description" content="Guide to upgrading to newer versions of this library" />
+    
+    <meta property="og:image" content="https://commonmark.thephpleague.com/images/commonmark-social.png" />
+    <link rel="stylesheet" href="//theme.thephpleague.com/css/all.css?">
+    <link rel="stylesheet" href="/custom.css?">
+    <link rel="stylesheet" href="/global.css?">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+    <link rel="stylesheet" href="/support.css?">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137970568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-137970568-1');
+    </script>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 class="title">
+            <a class="logo" href="/">
+            <span class="name">
+                <em>League\</em>CommonMark
+            </span>
+            </a>
+        </h1>
+        <div class="search"><input type="search" id="doc-search" placeholder="search the docs..."></div>
+        <nav class="versions">
+            <h2>v1.6 &#9662;</h2>
+            <ul>
+            
+                <li ><a href="/2.5/upgrading/">v2.5</a></li>
+            
+                <li ><a href="/2.4/upgrading/">v2.4</a></li>
+            
+                <li ><a href="/2.3/upgrading/">v2.3</a></li>
+            
+                <li ><a href="/2.2/upgrading/">v2.2</a></li>
+            
+                <li ><a href="/2.1/upgrading/">v2.1</a></li>
+            
+                <li ><a href="/2.0/upgrading/">v2.0</a></li>
+            
+                <li class="selected"><a href="/1.6/upgrading/">v1.6</a></li>
+            
+                <li ><a href="/1.5/upgrading/">v1.5</a></li>
+            
+                <li ><a href="/1.4/upgrading/">v1.4</a></li>
+            
+                <li ><a href="/1.3/upgrading/">v1.3</a></li>
+            
+                <li ><a href="/1.0/upgrading/">v1.0</a></li>
+            
+                <li ><a href="/releases/">Notes</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<input type="checkbox" id="menu">
+<label for="menu" onclick>
+    <div class="closed">&#9776;</div>
+    <div class="open">&#10799;</div>
+</label>
+
+<main>
+    <menu>
+        <div class="versions-small">
+        <h2>Versions</h2>
+            <ul>
+        
+                <li >
+                    <a href="/2.5/">2.5</a>
+                </li>
+        
+                <li >
+                    <a href="/2.4/">2.4</a>
+                </li>
+        
+                <li >
+                    <a href="/2.3/">2.3</a>
+                </li>
+        
+                <li >
+                    <a href="/2.2/">2.2</a>
+                </li>
+        
+                <li >
+                    <a href="/2.1/">2.1</a>
+                </li>
+        
+                <li >
+                    <a href="/2.0/">2.0</a>
+                </li>
+        
+                <li class="selected">
+                    <a href="/1.6/">1.6</a>
+                </li>
+        
+                <li >
+                    <a href="/1.5/">1.5</a>
+                </li>
+        
+                <li >
+                    <a href="/1.4/">1.4</a>
+                </li>
+        
+                <li >
+                    <a href="/1.3/">1.3</a>
+                </li>
+        
+                <li >
+                    <a href="/1.0/">1.0</a>
+                </li>
+        
+                <li ><a href="/releases/">Releases Notes</a></li>
+            </ul>
+        </div>
+
+        
+            
+            <div class="menu-section">
+                <h2>Getting Started</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.6/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/installation/">Installation</a>
+                        </li>
+                    
+                        <li class="selected">
+                            <a href="/1.6/upgrading/">Upgrading from 1.5</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/changelog/">Changelog</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/support/">Support</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Usage</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.6/basic-usage/">Basic Usage</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/configuration/">Configuration</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/security/">Security</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/command-line/">Command Line</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Extensions</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.6/extensions/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/commonmark/">CommonMark</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/github-flavored-markdown/">GitHub-Flavored Markdown</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/attributes/">Attributes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/autolinks/">Autolinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/disallowed-raw-html/">Disallowed Raw HTML</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/external-links/">External Links</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/footnotes/">Footnotes</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/heading-permalinks/">Heading Permalinks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/inlines-only/">Inlines Only</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/mentions/">Mentions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/smart-punctuation/">Smart Punctuation</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/strikethrough/">Strikethrough</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/table-of-contents/">Table of Contents</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/tables/">Tables</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/extensions/task-lists/">Task Lists</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h2>Customization</h2>
+                <ul>
+                    
+                        <li >
+                            <a href="/1.6/customization/overview/">Overview</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/environment/">Environment</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/extensions/">Extensions</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/event-dispatcher/">Event Dispatcher</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/cursor/">Cursor</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/block-parsing/">Block Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/inline-parsing/">Inline Parsing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/delimiter-processing/">Delimiter Processing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/abstract-syntax-tree/">Abstract Syntax Tree</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/block-rendering/">Block Rendering</a>
+                        </li>
+                    
+                        <li >
+                            <a href="/1.6/customization/inline-rendering/">Inline Rendering</a>
+                        </li>
+                    
+                </ul>
+            </div>
+            
+        
+    </menu>
+    <article>
+    
+
+    
+
+    
+        <p class="message-warning">This is the documentation for the unsupported <code>version 1.6</code>. Please consider upgrading your code to <a href="/2.5/">the latest stable version</a></p>
+    
+
+        <h1 id="upgrading-from-15-to-16">Upgrading from 1.5 to 1.6</h1>
+
+<h2 id="configuration-changes">Configuration changes</h2>
+
+<p>The upcoming v2.0 release is going to change the keys/paths for several configuration options. To help prepare for that change, we’ve added support for the new keys/paths:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Current Key/Path</th>
+      <th>New Key/Path</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">enable_em</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/enable_em</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">enable_strong</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/enable_strong</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">use_asterisk</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/use_asterisk</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">use_underscore</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/use_underscore</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">unordered_list_markers</code></td>
+      <td><code class="language-plaintext highlighter-rouge">commonmark/unordered_list_markers</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mentions/*/symbol</code></td>
+      <td><code class="language-plaintext highlighter-rouge">mentions/*/prefix</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mentions/*/regex</code></td>
+      <td><code class="language-plaintext highlighter-rouge">mentions/*/pattern</code></td>
+      <td>Should not contain starting/ending <code class="language-plaintext highlighter-rouge">/</code> delimiters or flags - must be a partial regex</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Additionally, 2.0 will not support using floats for the <code class="language-plaintext highlighter-rouge">max_nesting_level</code> option.</p>
+
+<p>Version 1.6 will support both the 1.x and 2.0 variations mentioned above but 2.0 won’t, so consider changing them now:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $config = [
+     'html_input' =&gt; 'escape',
+     'allow_unsafe_links' =&gt; false,
+<span class="gd">-    'max_nesting_level' =&gt; INF,
+</span><span class="gi">+    'max_nesting_level' =&gt; PHP_INT_MAX,
+</span>     'renderer' =&gt; [
+         'block_separator' =&gt; "\n",
+         'inner_separator' =&gt; "\n",
+         'soft_break'      =&gt; "\n",
+     ],
+<span class="gd">-    'enable_em' =&gt; true,
+-    'enable_strong' =&gt; true,
+-    'use_asterisk' =&gt; true,
+-    'use_underscore' =&gt; true,
+-    'unordered_list_markers' =&gt; ['-', '+', '*'],
+</span><span class="gi">+    'commonmark' =&gt; [
++        'enable_em' =&gt; true,
++        'enable_strong' =&gt; true,
++        'use_asterisk' =&gt; true,
++        'use_underscore' =&gt; true,
++        'unordered_list_markers' =&gt; ['-', '+', '*'],
++    ],
+</span>     'mentions' =&gt; [
+         'github_handle' =&gt; [
+<span class="gd">-            'symbol'    =&gt; '@',
+-            'regex'     =&gt; '/[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)/i',
+</span><span class="gi">+            'prefix'    =&gt; '@',
++            'regex'     =&gt; '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+</span>             'generator' =&gt; 'https://github.com/%s',
+         ],
+     ],
+ ];
+</code></pre></div></div>
+
+<h2 id="converters-with-custom-environments">Converters with custom environments</h2>
+
+<p>Version 2.0 will no longer allow custom environments to be injected via the constructors of <code class="language-plaintext highlighter-rouge">CommonMarkConverter</code> or <code class="language-plaintext highlighter-rouge">GithubFlavoredMarkdownConverter</code>. You should instead use the newly-added <code class="language-plaintext highlighter-rouge">MarkdownConverter</code> class:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">-use League\CommonMark\CommonMarkConverter;
+</span> use League\CommonMark\Environment;
+ use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
+<span class="gi">+use League\CommonMark\MarkdownConverter;
+</span>
+ $config = [
+     'html_input' =&gt; 'escape',
+     'allow_unsafe_links' =&gt; false,
+ ];
+
+ $environment = Environment::createCommonMarkEnvironment();
+ $environment-&gt;addExtension(new InlinesOnlyExtension());
+<span class="gi">+$environment-&gt;mergeConfig($config);
+</span>
+ // Go forth and convert you some Markdown!
+<span class="gd">-$converter = new CommonMarkConverter($config, $environment);
+</span><span class="gi">+$converter = new MarkdownConverter($environment);
+</span> echo $converter-&gt;convertToHtml('# Hello World!');
+</code></pre></div></div>
+
+<h2 id="environment-and-configuration-method-changes">Environment and Configuration method changes</h2>
+
+<p>The environment’s <code class="language-plaintext highlighter-rouge">setConfig()</code> method is now deprecated and will be removed in 2.0 - use <code class="language-plaintext highlighter-rouge">mergeConfig()</code> instead.</p>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">ConfigurableEnvironmentInterface::mergeConfig()</code> without the array parameter is deprecated and won’t be allowed in 2.0.</p>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">Configuration::getConfig()</code> without any parameters to retrieve the full configuration is deprecated and won’t be allowed in 2.0. Future versions should only fetch the config items they need, not the whole configuration.</p>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">Configuration::set()</code> without the second <code class="language-plaintext highlighter-rouge">$value</code> parameter is deprecated and won’t be allowed in 2.0.  You should always explicitly define the value you want to be set.</p>
+
+<h2 id="regexhelpermatchall">RegexHelper::matchAll()</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">RegexHelper::matchAll()</code> method has been deprecated and will be removed in 2.0. Use the new, more-efficient <code class="language-plaintext highlighter-rouge">RegexHelper::matchFirst()</code> method instead.</p>
+
+<h2 id="extending-arraycollection">Extending ArrayCollection</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ArrayCollection</code> class will be marked <code class="language-plaintext highlighter-rouge">final</code> in 2.0 so avoid extending it.</p>
+
+
+        <hr>
+
+        <p>
+            <a class="btn btn-sm btn-black" href="https://github.com/thephpleague/commonmark/edit/2.5/docs/1.6/upgrading.md" title="Edit this page on GitHub" target="_blank" rel="noopener"><i class="fas fa-edit"></i> Edit this page</a>
+        </p>
+    </article>
+
+    <aside class="support-banner-wrapper" x-data="{ show: false }" x-show.transition="show" x-init="h = localStorage.getItem('hideBanner'); (h === null || h < (new Date().getTime())) ? (setTimeout(() => show = true, 500)) : (show = false)">
+        <div class="support-banner">
+            <p class="support-banner-left">
+                <strong>Love PHP Commonmark?</strong>
+                <span class="hidden sm:inline-block lg:hidden">
+                    Show your support!
+                </span>
+
+                <span class="hidden lg:inline-block">
+                    Support development via monthly sponsorship or a one-time donation!
+                </span>
+            </p>
+
+            <div class="support-banner-right">
+                <a href="https://github.com/sponsors/colinodell" class="btn btn-pink btn-block">
+                    <i class="fas fa-heart fa-fw" aria-hidden="true"></i> Sponsor
+                </a>
+
+                <a href="https://www.paypal.me/colinpodell/10.00" class="btn btn-green btn-block">
+                    <i class="fas fa-donate fa-fw" aria-hidden="true"></i> Donate
+                </a>
+            </div>
+
+            <button x-on:click="localStorage.setItem('hideBanner', new Date().getTime() + (7*24*60*60*1000)); show = false" class="support-banner-close">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </aside>
+</main>
+
+<footer>
+    <span>&copy; Copyright <a href="https://www.colinodell.com">Colin O'Dell</a> &amp; <a href="//thephpleague.com">The League of Extraordinary Packages</a>.</span>
+    <span>Site design by <a href="//reinink.ca">Jonathan Reinink</a> and <a href="//nyamsprod.com">Ignace Nyamagana Butera</a>.</span>
+</footer>
+<script src="/custom.js?"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script> docsearch({
+    apiKey: 'f8a60b0120292f75f23d313f6cebba05',
+    appId: '5WPQI5503X',
+    indexName: 'commonmark-thephpleague',
+    inputSelector: '#doc-search',
+    algoliaOptions: { 'facetFilters': ["version:v1.6"] },
+    debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+</body>
+</html>
