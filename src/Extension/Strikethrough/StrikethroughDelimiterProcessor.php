@@ -44,7 +44,7 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
             return 0;
         }
 
-        return \min($opener->getLength(), $closer->getLength());
+        return $opener->getLength();
     }
 
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
