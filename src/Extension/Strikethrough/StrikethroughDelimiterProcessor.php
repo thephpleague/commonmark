@@ -44,6 +44,7 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
             return 0;
         }
 
+        // $opener and $closer are the same length so we just return one of them
         return $opener->getLength();
     }
 
