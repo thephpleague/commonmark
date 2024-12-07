@@ -18,6 +18,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - `[` and `]` are no longer added as `Delimiter` objects on the stack; a new `Bracket` type with its own stack is used instead
 - `UrlAutolinkParser` no longer parses URLs with more than 127 subdomains
 - Expanded reference links can no longer exceed 100kb, or the size of the input document (whichever is greater)
+- Delimiters should always provide a non-null value via `DelimiterInterface::getIndex()`
+  - We'll attempt to infer the index based on surrounding delimiters where possible
+- The `DelimiterStack` now accepts integer positions for any `$stackBottom` argument
 - Several small performance optimizations
 
 ## [2.5.3] - 2024-08-16
@@ -95,14 +98,16 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 - Returning dynamic values from `DelimiterProcessorInterface::getDelimiterUse()` is deprecated
     - You should instead implement `CacheableDelimiterProcessorInterface` to help the engine perform caching to avoid performance issues.
+- Failing to set a delimiter's index (or returning `null` from `DelimiterInterface::getIndex()`) is deprecated and will not be supported in 3.0
 - Deprecated `DelimiterInterface::isActive()` and `DelimiterInterface::setActive()`, as these are no longer used by the engine
 - Deprecated `DelimiterStack::removeEarlierMatches()` and `DelimiterStack::searchByCharacter()`, as these are no longer used by the engine
+- Passing a `DelimiterInterface` as the `$stackBottom` argument to `DelimiterStack::processDelimiters()` or `::removeAll()` is deprecated and will not be supported in 3.0; pass the integer position instead.
 
 ### Fixed
 
 - Fixed NUL characters not being replaced in the input
 - Fixed quadratic complexity parsing unclosed inline links
-- Fixed quadratic complexity finding the bottom opener for emphasis and strikethrough delimiters
+- Fixed quadratic complexity parsing emphasis and strikethrough delimiters
 - Fixed issue where having 500,000+ delimiters could trigger a [known segmentation fault issue in PHP's garbage collection](https://bugs.php.net/bug.php?id=68606)
 - Fixed quadratic complexity deactivating link openers
 - Fixed catastrophic backtracking when parsing link labels/titles

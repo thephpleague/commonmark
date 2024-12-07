@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Parser;
 
+use League\CommonMark\Exception\LogicException;
 use League\CommonMark\Node\Block\AbstractBlock;
 
 /**
@@ -22,6 +23,8 @@ interface InlineParserEngineInterface
 {
     /**
      * Parse the given contents as inlines and insert them into the given block
+     *
+     * @throws LogicException
      */
     public function parse(string $contents, AbstractBlock $block): void;
 }

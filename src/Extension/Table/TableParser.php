@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
+use League\CommonMark\Exception\LogicException;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
@@ -150,6 +151,9 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
         }
     }
 
+    /**
+     * @throws LogicException
+     */
     private function parseCell(string $cell, int $column, InlineParserEngineInterface $inlineParser): TableCell
     {
         $tableCell = new TableCell(TableCell::TYPE_DATA, $this->columns[$column] ?? null);

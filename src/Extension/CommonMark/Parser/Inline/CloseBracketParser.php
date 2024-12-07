@@ -103,7 +103,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         // Process delimiters such as emphasis inside link/image
         $delimiterStack = $inlineContext->getDelimiterStack();
-        $stackBottom    = $opener->getPreviousDelimiter();
+        $stackBottom    = $opener->getPosition();
         $delimiterStack->processDelimiters($stackBottom, $this->environment->getDelimiterProcessors());
         $delimiterStack->removeBracket();
         $delimiterStack->removeAll($stackBottom);
@@ -179,7 +179,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         } elseif (! $opener->hasNext()) {
             // Empty or missing second label means to use the first label as the reference.
             // The reference must not contain a bracket. If we know there's a bracket, we don't even bother checking it.
-            $start  = $opener->getIndex();
+            $start  = $opener->getPosition();
             $length = $startPos - $start;
         } else {
             $cursor->restoreState($savePos);

@@ -13,11 +13,15 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Parser\Inline;
 
+use League\CommonMark\Exception\LogicException;
 use League\CommonMark\Parser\InlineParserContext;
 
 interface InlineParserInterface
 {
     public function getMatchDefinition(): InlineParserMatch;
 
+    /**
+     * @throws LogicException
+     */
     public function parse(InlineParserContext $inlineContext): bool;
 }

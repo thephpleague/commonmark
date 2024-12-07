@@ -19,19 +19,17 @@ final class Bracket
 {
     private Node $node;
     private ?Bracket $previous;
-    private ?DelimiterInterface $previousDelimiter;
     private bool $hasNext = false;
-    private int $index;
+    private int $position;
     private bool $image;
     private bool $active = true;
 
-    public function __construct(Node $node, ?Bracket $previous, ?DelimiterInterface $previousDelimiter, int $index, bool $image)
+    public function __construct(Node $node, ?Bracket $previous, int $position, bool $image)
     {
-        $this->node              = $node;
-        $this->previous          = $previous;
-        $this->previousDelimiter = $previousDelimiter;
-        $this->index             = $index;
-        $this->image             = $image;
+        $this->node     = $node;
+        $this->previous = $previous;
+        $this->position = $position;
+        $this->image    = $image;
     }
 
     public function getNode(): Node
@@ -44,19 +42,14 @@ final class Bracket
         return $this->previous;
     }
 
-    public function getPreviousDelimiter(): ?DelimiterInterface
-    {
-        return $this->previousDelimiter;
-    }
-
     public function hasNext(): bool
     {
         return $this->hasNext;
     }
 
-    public function getIndex(): int
+    public function getPosition(): int
     {
-        return $this->index;
+        return $this->position;
     }
 
     public function isImage(): bool

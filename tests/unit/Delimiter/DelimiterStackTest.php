@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Delimiter;
 
-use League\CommonMark\Delimiter\Bracket;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\DelimiterStack;
 use League\CommonMark\Node\Inline\Text;
@@ -119,11 +118,11 @@ final class DelimiterStackTest extends TestCase
         $text5 = new Text('*');
 
         $stack = new DelimiterStack();
-        $stack->push($delim1 = new Delimiter('*', 1, $text1, false, false));
-        $stack->push($delim2 = new Delimiter('_', 1, $text2, false, false));
-        $stack->push($delim3 = new Delimiter('*', 1, $text3, false, false));
-        $stack->push($delim4 = new Delimiter('_', 1, $text4, false, false));
-        $stack->push($delim5 = new Delimiter('*', 1, $text5, false, false));
+        $stack->push($delim1 = new Delimiter('*', 1, $text1, false, false, 0));
+        $stack->push($delim2 = new Delimiter('_', 1, $text2, false, false, 1));
+        $stack->push($delim3 = new Delimiter('*', 1, $text3, false, false, 2));
+        $stack->push($delim4 = new Delimiter('_', 1, $text4, false, false, 3));
+        $stack->push($delim5 = new Delimiter('*', 1, $text5, false, false, 4));
 
         // Make removeDelimiterBetween() callable using reflection
         $reflection = new \ReflectionClass($stack);
@@ -155,19 +154,19 @@ final class DelimiterStackTest extends TestCase
         $text3 = new Text('*');
 
         $stack = new DelimiterStack();
-        $stack->push($delim1 = new Delimiter('*', 1, $text1, true, false));
-        $stack->push($delim2 = new Delimiter('_', 1, $text2, false, false));
-        $stack->push($delim3 = new Delimiter('*', 1, $text3, false, true));
+        $stack->push($delim1 = new Delimiter('*', 1, $text1, true, false, 0));
+        $stack->push($delim2 = new Delimiter('_', 1, $text2, false, false, 17));
+        $stack->push($delim3 = new Delimiter('*', 1, $text3, false, true, 24));
 
         // Use reflection to make findEarliest() callable
         $reflection = new \ReflectionClass($stack);
         $method     = $reflection->getMethod('findEarliest');
         $method->setAccessible(true);
 
-        $this->assertSame($delim1, $method->invoke($stack));
-        $this->assertSame($delim2, $method->invoke($stack, $delim1));
-        $this->assertSame($delim3, $method->invoke($stack, $delim2));
-        $this->assertNull($method->invoke($stack, $delim3));
+        $this->assertSame($delim1, $method->invoke($stack, -1));
+        $this->assertSame($delim2, $method->invoke($stack, $delim1->getIndex()));
+        $this->assertSame($delim3, $method->invoke($stack, $delim2->getIndex()));
+        $this->assertNull($method->invoke($stack, $delim3->getIndex()));
     }
 
     public function testRemoveAll(): void
@@ -259,20 +258,18 @@ final class DelimiterStackTest extends TestCase
 
         $firstBracket = $stack->getLastBracket();
         $this->assertSame($text1, $firstBracket->getNode());
-        $this->assertSame(0, $firstBracket->getIndex());
+        $this->assertSame(0, $firstBracket->getPosition());
         $this->assertFalse($firstBracket->isImage());
         $this->assertNull($firstBracket->getPrevious());
-        $this->assertNull($firstBracket->getPreviousDelimiter());
         $this->assertFalse($firstBracket->hasNext());
 
         $stack->push(new Delimiter('*', 1, $text2, true, false));
         $stack->addBracket($text3, 2, true);
 
         $this->assertSame($text3, $stack->getLastBracket()->getNode());
-        $this->assertSame(2, $stack->getLastBracket()->getIndex());
+        $this->assertSame(2, $stack->getLastBracket()->getPosition());
         $this->assertTrue($stack->getLastBracket()->isImage());
         $this->assertSame($firstBracket, $stack->getLastBracket()->getPrevious());
-        $this->assertSame($text2, $stack->getLastBracket()->getPreviousDelimiter()->getInlineNode());
         $this->assertFalse($stack->getLastBracket()->hasNext());
 
         $this->assertTrue($firstBracket->hasNext());
@@ -326,5 +323,32 @@ final class DelimiterStackTest extends TestCase
         $this->assertFalse($bracket1->isActive());
         $this->assertFalse($bracket2->isActive());
         $this->assertFalse($bracket3->isActive());
+    }
+
+    public function testGetIndex(): void
+    {
+        $delim1 = new Delimiter('*', 1, new Text('*'), true, false);
+        $delim2 = new Delimiter('_', 1, new Text('_'), true, false, 10);
+        $delim3 = new Delimiter('*', 1, new Text('*'), true, true, 20);
+        $delim4 = new Delimiter('_', 1, new Text('_'), false, true);
+        $delim5 = new Delimiter('*', 1, new Text('*'), false, true);
+
+        $stack = new DelimiterStack();
+
+        $stack->push($delim1);
+        $stack->push($delim2);
+        $stack->push($delim3);
+        $stack->push($delim4);
+        $stack->push($delim5);
+
+        $reflection = new \ReflectionClass($stack);
+        $method     = $reflection->getMethod('getIndex');
+        $method->setAccessible(true);
+
+        $this->assertSame(0, $method->invoke($stack, $delim1));
+        $this->assertSame(10, $method->invoke($stack, $delim2));
+        $this->assertSame(20, $method->invoke($stack, $delim3));
+        $this->assertSame(21, $method->invoke($stack, $delim4));
+        $this->assertSame(22, $method->invoke($stack, $delim5));
     }
 }

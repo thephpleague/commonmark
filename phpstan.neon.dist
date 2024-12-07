@@ -7,6 +7,8 @@ parameters:
      message: '#Parameter .+ of class .+Reference constructor expects string, string\|null given#'
    - path: src/Util/RegexHelper.php
      message: '#Method .+RegexHelper::unescape\(\) should return string but returns string\|null#'
+   - path: src/Delimiter/DelimiterStack.php
+     message: '#unknown class WeakMap#'
   exceptions:
     uncheckedExceptionClasses:
       # Exceptions caused by bad developer logic that should always bubble up:

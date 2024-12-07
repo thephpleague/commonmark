@@ -21,6 +21,7 @@ namespace League\CommonMark\Delimiter;
 
 use League\CommonMark\Delimiter\Processor\CacheableDelimiterProcessorInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
+use League\CommonMark\Exception\LogicException;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
 use League\CommonMark\Node\Node;
 
@@ -31,6 +32,23 @@ final class DelimiterStack
 
     /** @psalm-readonly-allow-private-mutation */
     private ?Bracket $brackets = null;
+
+    /**
+     * @deprecated This property will be removed in 3.0 once all delimiters MUST have an index/position
+     *
+     * @var \SplObjectStorage<DelimiterInterface, int>|\WeakMap<DelimiterInterface, int>
+     */
+    private $missingIndexCache;
+
+    public function __construct()
+    {
+        if (\PHP_VERSION_ID >= 80000) {
+            /** @psalm-suppress PropertyTypeCoercion */
+            $this->missingIndexCache = new \WeakMap(); // @phpstan-ignore-line
+        } else {
+            $this->missingIndexCache = new \SplObjectStorage(); // @phpstan-ignore-line
+        }
+    }
 
     public function push(DelimiterInterface $newDelimiter): void
     {
@@ -52,7 +70,7 @@ final class DelimiterStack
             $this->brackets->setHasNext(true);
         }
 
-        $this->brackets = new Bracket($node, $this->brackets, $this->top, $index, $image);
+        $this->brackets = new Bracket($node, $this->brackets, $index, $image);
     }
 
     /**
@@ -63,14 +81,21 @@ final class DelimiterStack
         return $this->brackets;
     }
 
-    private function findEarliest(?DelimiterInterface $stackBottom = null): ?DelimiterInterface
+    /**
+     * @throws LogicException
+     */
+    private function findEarliest(int $stackBottom): ?DelimiterInterface
     {
-        $delimiter = $this->top;
-        while ($delimiter !== null && $delimiter->getPrevious() !== $stackBottom) {
-            $delimiter = $delimiter->getPrevious();
+        // Move back to first relevant delim.
+        $delimiter   = $this->top;
+        $lastChecked = null;
+
+        while ($delimiter !== null && self::getIndex($delimiter) > $stackBottom) {
+            $lastChecked = $delimiter;
+            $delimiter   = $delimiter->getPrevious();
         }
 
-        return $delimiter;
+        return $lastChecked;
     }
 
     /**
@@ -113,6 +138,9 @@ final class DelimiterStack
         // segfaults like in https://bugs.php.net/bug.php?id=68606.
         $delimiter->setPrevious(null);
         $delimiter->setNext(null);
+
+        // TODO: Remove the line below once PHP 7.4 support is dropped, as WeakMap won't hold onto the reference, making this unnecessary
+        unset($this->missingIndexCache[$delimiter]);
     }
 
     private function removeDelimiterAndNode(DelimiterInterface $delimiter): void
@@ -121,19 +149,30 @@ final class DelimiterStack
         $this->removeDelimiter($delimiter);
     }
 
+    /**
+     * @throws LogicException
+     */
     private function removeDelimitersBetween(DelimiterInterface $opener, DelimiterInterface $closer): void
     {
-        $delimiter = $closer->getPrevious();
-        while ($delimiter !== null && $delimiter !== $opener) {
+        $delimiter      = $closer->getPrevious();
+        $openerPosition = self::getIndex($opener);
+        while ($delimiter !== null && self::getIndex($delimiter) > $openerPosition) {
             $previous = $delimiter->getPrevious();
             $this->removeDelimiter($delimiter);
             $delimiter = $previous;
         }
     }
 
-    public function removeAll(?DelimiterInterface $stackBottom = null): void
+    /**
+     * @param DelimiterInterface|int|null $stackBottom
+     *
+     * @throws LogicException if the index/position cannot be determined for some delimiter
+     */
+    public function removeAll($stackBottom = null): void
     {
-        while ($this->top && $this->top !== $stackBottom) {
+        $stackBottomPosition = \is_int($stackBottom) ? $stackBottom : self::getIndex($stackBottom);
+
+        while ($this->top && $this->getIndex($this->top) > $stackBottomPosition) {
             $this->removeDelimiter($this->top);
         }
     }
@@ -188,12 +227,22 @@ final class DelimiterStack
         return $opener;
     }
 
-    public function processDelimiters(?DelimiterInterface $stackBottom, DelimiterProcessorCollection $processors): void
+    /**
+     * @param DelimiterInterface|int|null $stackBottom
+     *
+     * @throws LogicException if the index/position cannot be determined for any delimiter
+     *
+     * @todo change $stackBottom to an int in 3.0
+     */
+    public function processDelimiters($stackBottom, DelimiterProcessorCollection $processors): void
     {
+        /** @var array<string, int> $openersBottom */
         $openersBottom = [];
 
+        $stackBottomPosition = \is_int($stackBottom) ? $stackBottom : self::getIndex($stackBottom);
+
         // Find first closer above stackBottom
-        $closer = $this->findEarliest($stackBottom);
+        $closer = $this->findEarliest($stackBottomPosition);
 
         // Move forward, looking for closers, and handling each
         while ($closer !== null) {
@@ -217,7 +266,7 @@ final class DelimiterStack
             $openerFound          = false;
             $potentialOpenerFound = false;
             $opener               = $closer->getPrevious();
-            while ($opener !== null && $opener !== $stackBottom && $opener !== ($openersBottom[$openersBottomCacheKey] ?? null)) {
+            while ($opener !== null && ($openerPosition = self::getIndex($opener)) > $stackBottomPosition && $openerPosition >= ($openersBottom[$openersBottomCacheKey] ?? 0)) {
                 if ($opener->canOpen() && $opener->getChar() === $openingDelimiterChar) {
                     $potentialOpenerFound = true;
                     $useDelims            = $delimiterProcessor->getDelimiterUse($opener, $closer);
@@ -234,7 +283,7 @@ final class DelimiterStack
                 // Set lower bound for future searches
                 // TODO: Remove this conditional check in 3.0. It only exists to prevent behavioral BC breaks in 2.x.
                 if ($potentialOpenerFound === false || $delimiterProcessor instanceof CacheableDelimiterProcessorInterface) {
-                    $openersBottom[$openersBottomCacheKey] = $closer->getPrevious();
+                    $openersBottom[$openersBottomCacheKey] = self::getIndex($closer);
                 }
 
                 if (! $potentialOpenerFound && ! $closer->canOpen()) {
@@ -282,7 +331,7 @@ final class DelimiterStack
         }
 
         // Remove all delimiters
-        $this->removeAll($stackBottom);
+        $this->removeAll($stackBottomPosition);
     }
 
     /**
@@ -297,5 +346,55 @@ final class DelimiterStack
         while ($this->brackets) {
             $this->removeBracket();
         }
+    }
+
+    /**
+     * @deprecated This method will be dropped in 3.0 once all delimiters MUST have an index/position
+     *
+     * @throws LogicException if no index was defined on this delimiter, and no reasonable guess could be made based on its neighbors
+     */
+    private function getIndex(?DelimiterInterface $delimiter): int
+    {
+        if ($delimiter === null) {
+            return -1;
+        }
+
+        if (($index = $delimiter->getIndex()) !== null) {
+            return $index;
+        }
+
+        if (isset($this->missingIndexCache[$delimiter])) {
+            return $this->missingIndexCache[$delimiter];
+        }
+
+        $prev = $delimiter->getPrevious();
+        $next = $delimiter->getNext();
+
+        $i = 0;
+        do {
+            $i++;
+            if ($prev === null) {
+                break;
+            }
+
+            if ($prev->getIndex() !== null) {
+                return $this->missingIndexCache[$delimiter] = $prev->getIndex() + $i;
+            }
+        } while ($prev = $prev->getPrevious());
+
+        $j = 0;
+        do {
+            $j++;
+            if ($next === null) {
+                break;
+            }
+
+            if ($next->getIndex() !== null) {
+                return $this->missingIndexCache[$delimiter] = $next->getIndex() - $j;
+            }
+        } while ($next = $next->getNext());
+
+        // No index was defined on this delimiter, and none could be guesstimated based on the stack.
+        throw new LogicException('No index was defined on this delimiter, and none could be guessed based on the stack.  Ensure you are passing the index when instantiating the Delimiter.');
     }
 }
