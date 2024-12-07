@@ -69,7 +69,7 @@ final class LinkParserHelper
 
     public static function parsePartialLinkLabel(Cursor $cursor): ?string
     {
-        return $cursor->match('/^(?:[^\\\\\[\]]+|\\\\.?)*/');
+        return $cursor->match('/^(?:[^\\\\\[\]]++|\\\\.?)*+/');
     }
 
     /**
