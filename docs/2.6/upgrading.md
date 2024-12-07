@@ -7,6 +7,13 @@ redirect_from: /upgrading/
 
 # Upgrading from 2.5 to 2.6
 
+## `max_delimiters_per_line` Configuration Option
+
+The `max_delimiters_per_line` configuration option was added in 2.6 to help protect against malicious input that could
+cause excessive memory usage or denial of service attacks.  It defaults to `PHP_INT_MAX` (no limit) for backwards
+compatibility, which is safe when parsing trusted input. However, if you're parsing untrusted input from users, you
+should probably set this to a reasonable value (somewhere between `100` and `1000`) to protect against malicious inputs.
+
 ## Custom Delimiter Processors
 
 If you're implementing a custom delimiter processor, and `getDelimiterUse()` has more logic than just a

@@ -39,8 +39,13 @@ final class DelimiterStack
      */
     private $missingIndexCache;
 
-    public function __construct()
+
+    private int $remainingDelimiters = 0;
+
+    public function __construct(int $maximumStackSize = PHP_INT_MAX)
     {
+        $this->remainingDelimiters = $maximumStackSize;
+
         if (\PHP_VERSION_ID >= 80000) {
             /** @psalm-suppress PropertyTypeCoercion */
             $this->missingIndexCache = new \WeakMap(); // @phpstan-ignore-line
@@ -51,6 +56,10 @@ final class DelimiterStack
 
     public function push(DelimiterInterface $newDelimiter): void
     {
+        if ($this->remainingDelimiters-- <= 0) {
+            return;
+        }
+
         $newDelimiter->setPrevious($this->top);
 
         if ($this->top !== null) {

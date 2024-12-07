@@ -8,9 +8,14 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
+- Added `max_delimiters_per_line` config option to prevent denial of service attacks when parsing malicious input
+- Added `table/max_autocompleted_cells` config option to prevent denial of service attacks when parsing large tables
+- The `AttributesExtension` now supports attributes without values (#985, #986)
+- The `AutolinkExtension` exposes two new configuration options to override the default behavior (#969, #987):
+    - `autolink/allowed_protocols` - an array of protocols to allow autolinking for
+    - `autolink/default_protocol` - the default protocol to use when none is specified
 - Added `RegexHelper::isWhitespace()` method to check if a given character is an ASCII whitespace character
 - Added `CacheableDelimiterProcessorInterface` to ensure linear complexity for dynamic delimiter processing
-- Added `table/max_autocompleted_cells` config option to prevent denial of service attacks when parsing large tables
 - Added `Bracket` delimiter type to optimize bracket parsing
 
 ### Changed

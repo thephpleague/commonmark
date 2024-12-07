@@ -31,6 +31,7 @@ namespace PHPSTORM_META
         'html_input',
         'allow_unsafe_links',
         'max_nesting_level',
+        'max_delimiters_per_line',
         'renderer',
         'renderer/block_separator',
         'renderer/inner_separator',
