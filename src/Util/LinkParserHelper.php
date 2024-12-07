@@ -30,14 +30,14 @@ final class LinkParserHelper
      */
     public static function parseLinkDestination(Cursor $cursor): ?string
     {
-        if ($res = $cursor->match(RegexHelper::REGEX_LINK_DESTINATION_BRACES)) {
-            // Chop off surrounding <..>:
-            return UrlEncoder::unescapeAndEncode(
-                RegexHelper::unescape(\substr($res, 1, -1))
-            );
-        }
-
         if ($cursor->getCurrentCharacter() === '<') {
+            if ($res = $cursor->match(RegexHelper::REGEX_LINK_DESTINATION_BRACES)) {
+                // Chop off surrounding <..>:
+                return UrlEncoder::unescapeAndEncode(
+                    RegexHelper::unescape(\substr($res, 1, -1))
+                );
+            }
+
             return null;
         }
 
@@ -100,9 +100,9 @@ final class LinkParserHelper
 
     private static function manuallyParseLinkDestination(Cursor $cursor): ?string
     {
-        $remainder = $cursor->getRemainder();
+        $remainder  = $cursor->getRemainder();
         $openParens = 0;
-        $len = \strlen($remainder);
+        $len        = \strlen($remainder);
         for ($i = 0; $i < $len; $i++) {
             $c = $remainder[$i];
             if ($c === '\\' && $i + 1 < $len && RegexHelper::isEscapable($remainder[$i + 1])) {
