@@ -11,9 +11,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Added `RegexHelper::isWhitespace()` method to check if a given character is an ASCII whitespace character
 - Added `CacheableDelimiterProcessorInterface` to ensure linear complexity for dynamic delimiter processing
 - Added `table/max_autocompleted_cells` config option to prevent denial of service attacks when parsing large tables
+- Added `Bracket` delimiter type to optimize bracket parsing
 
 ### Changed
 
+- `[` and `]` are no longer added as `Delimiter` objects on the stack; a new `Bracket` type with its own stack is used instead
 - `UrlAutolinkParser` no longer parses URLs with more than 127 subdomains
 - Expanded reference links can no longer exceed 100kb, or the size of the input document (whichever is greater)
 - Several small performance optimizations
@@ -93,6 +95,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 - Returning dynamic values from `DelimiterProcessorInterface::getDelimiterUse()` is deprecated
     - You should instead implement `CacheableDelimiterProcessorInterface` to help the engine perform caching to avoid performance issues.
+- Deprecated `DelimiterInterface::isActive()` and `DelimiterInterface::setActive()`, as these are no longer used by the engine
+- Deprecated `DelimiterStack::removeEarlierMatches()` and `DelimiterStack::searchByCharacter()`, as these are no longer used by the engine
 
 ### Fixed
 

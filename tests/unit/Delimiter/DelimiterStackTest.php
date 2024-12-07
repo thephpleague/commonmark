@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Tests\Unit\Delimiter;
 
+use League\CommonMark\Delimiter\Bracket;
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Delimiter\DelimiterStack;
 use League\CommonMark\Node\Inline\Text;
@@ -244,5 +245,86 @@ final class DelimiterStackTest extends TestCase
 
         $stack->removeEarlierMatches('_');
         $this->assertFalse($delim2->isActive());
+    }
+
+    public function testAddBracket(): void
+    {
+        $text1 = new Text('[');
+        $text2 = new Text('*');
+        $text3 = new Text(']');
+
+        $stack = new DelimiterStack();
+
+        $stack->addBracket($text1, 0, false);
+
+        $firstBracket = $stack->getLastBracket();
+        $this->assertSame($text1, $firstBracket->getNode());
+        $this->assertSame(0, $firstBracket->getIndex());
+        $this->assertFalse($firstBracket->isImage());
+        $this->assertNull($firstBracket->getPrevious());
+        $this->assertNull($firstBracket->getPreviousDelimiter());
+        $this->assertFalse($firstBracket->hasNext());
+
+        $stack->push(new Delimiter('*', 1, $text2, true, false));
+        $stack->addBracket($text3, 2, true);
+
+        $this->assertSame($text3, $stack->getLastBracket()->getNode());
+        $this->assertSame(2, $stack->getLastBracket()->getIndex());
+        $this->assertTrue($stack->getLastBracket()->isImage());
+        $this->assertSame($firstBracket, $stack->getLastBracket()->getPrevious());
+        $this->assertSame($text2, $stack->getLastBracket()->getPreviousDelimiter()->getInlineNode());
+        $this->assertFalse($stack->getLastBracket()->hasNext());
+
+        $this->assertTrue($firstBracket->hasNext());
+    }
+
+    public function testRemoveBracket(): void
+    {
+        $text1 = new Text('[');
+        $text2 = new Text(']');
+
+        $stack = new DelimiterStack();
+
+        $stack->addBracket($text1, 0, false);
+        $firstBracket = $stack->getLastBracket();
+
+        $stack->addBracket($text2, 1, false);
+
+        $this->assertSame($text2, $stack->getLastBracket()->getNode());
+        $this->assertTrue($firstBracket->hasNext());
+
+        $stack->removeBracket();
+
+        $this->assertSame($text1, $stack->getLastBracket()->getNode());
+        $this->assertFalse($firstBracket->hasNext());
+    }
+
+    public function testDeactivateLinkOpeners(): void
+    {
+        $text1 = new Text('[');
+        $text2 = new Text('[');
+        $text3 = new Text('[');
+
+        $stack = new DelimiterStack();
+
+        $stack->addBracket($text1, 0, false);
+        $bracket1 = $stack->getLastBracket();
+        $this->assertTrue($bracket1->isActive());
+
+        $stack->addBracket($text2, 1, true);
+        $bracket2 = $stack->getLastBracket();
+        $this->assertTrue($bracket2->isActive());
+
+        $stack->addBracket($text3, 2, false);
+        $bracket3 = $stack->getLastBracket();
+        $this->assertTrue($bracket3->isActive());
+
+        $stack->deactivateLinkOpeners();
+
+        $this->assertSame($bracket3, $stack->getLastBracket());
+
+        $this->assertFalse($bracket1->isActive());
+        $this->assertTrue($bracket2->isActive());
+        $this->assertFalse($bracket3->isActive());
     }
 }

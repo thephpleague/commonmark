@@ -22,11 +22,15 @@ namespace League\CommonMark\Delimiter;
 use League\CommonMark\Delimiter\Processor\CacheableDelimiterProcessorInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
+use League\CommonMark\Node\Node;
 
 final class DelimiterStack
 {
     /** @psalm-readonly-allow-private-mutation */
     private ?DelimiterInterface $top = null;
+
+    /** @psalm-readonly-allow-private-mutation */
+    private ?Bracket $brackets = null;
 
     public function push(DelimiterInterface $newDelimiter): void
     {
@@ -39,6 +43,26 @@ final class DelimiterStack
         $this->top = $newDelimiter;
     }
 
+    /**
+     * @internal
+     */
+    public function addBracket(Node $node, int $index, bool $image): void
+    {
+        if ($this->brackets !== null) {
+            $this->brackets->setHasNext(true);
+        }
+
+        $this->brackets = new Bracket($node, $this->brackets, $this->top, $index, $image);
+    }
+
+    /**
+     * @psalm-immutable
+     */
+    public function getLastBracket(): ?Bracket
+    {
+        return $this->brackets;
+    }
+
     private function findEarliest(?DelimiterInterface $stackBottom = null): ?DelimiterInterface
     {
         $delimiter = $this->top;
@@ -47,6 +71,22 @@ final class DelimiterStack
         }
 
         return $delimiter;
+    }
+
+    /**
+     * @internal
+     */
+    public function removeBracket(): void
+    {
+        if ($this->brackets === null) {
+            return;
+        }
+
+        $this->brackets = $this->brackets->getPrevious();
+
+        if ($this->brackets !== null) {
+            $this->brackets->setHasNext(false);
+        }
     }
 
     public function removeDelimiter(DelimiterInterface $delimiter): void
@@ -98,6 +138,9 @@ final class DelimiterStack
         }
     }
 
+    /**
+     * @deprecated This method is no longer used internally and will be removed in 3.0
+     */
     public function removeEarlierMatches(string $character): void
     {
         $opener = $this->top;
@@ -111,6 +154,22 @@ final class DelimiterStack
     }
 
     /**
+     * @internal
+     */
+    public function deactivateLinkOpeners(): void
+    {
+        $opener = $this->brackets;
+        while ($opener !== null) {
+            if (! $opener->isImage()) {
+                $opener->setActive(false);
+            }
+            $opener = $opener->getPrevious();
+        }
+    }
+
+    /**
+     * @deprecated This method is no longer used internally and will be removed in 3.0
+     *
      * @param string|string[] $characters
      */
     public function searchByCharacter($characters): ?DelimiterInterface
@@ -233,6 +292,12 @@ final class DelimiterStack
      */
     public function __destruct()
     {
-        $this->removeAll();
+        while ($this->top) {
+            $this->removeDelimiter($this->top);
+        }
+
+        while ($this->brackets) {
+            $this->removeBracket();
+        }
     }
 }
