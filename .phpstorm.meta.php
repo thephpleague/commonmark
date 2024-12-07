@@ -89,6 +89,7 @@ namespace PHPSTORM_META
         'table/alignment_attributes/left',
         'table/alignment_attributes/center',
         'table/alignment_attributes/right',
+        'table/max_autocompleted_cells',
         'table_of_contents',
         'table_of_contents/html_class',
         'table_of_contents/max_heading_level',

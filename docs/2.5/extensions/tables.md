@@ -44,6 +44,7 @@ $config = [
             'center' => ['align' => 'center'],
             'right'  => ['align' => 'right'],
         ],
+        'max_autocompleted_cells' => 10_000,
     ],
 ];
 
@@ -158,6 +159,14 @@ $config = [
 ```
 
 Or any other HTML attributes you'd like!
+
+### Limiting Auto-Completed Cells
+
+The GFM specification says that the:
+
+> table’s rows may vary in the number of cells. If there are a number of cells fewer than the number of cells in the header row, empty cells are inserted.
+
+This feature could be abused to create very large tables. To prevent this, you can configure the `max_autocompleted_cells` option to limit the number of empty cells that will be autocompleted. If the limit is reached, further parsing of the table will be aborted.
 
 ## Credits
 

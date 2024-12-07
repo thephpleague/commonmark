@@ -23,6 +23,13 @@ use League\CommonMark\Parser\MarkdownParserStateInterface;
 
 final class TableStartParser implements BlockStartParserInterface
 {
+    private int $maxAutocompletedCells;
+
+    public function __construct(int $maxAutocompletedCells = TableParser::DEFAULT_MAX_AUTOCOMPLETED_CELLS)
+    {
+        $this->maxAutocompletedCells = $maxAutocompletedCells;
+    }
+
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
         $paragraph = $parserState->getParagraphContent();
@@ -53,7 +60,7 @@ final class TableStartParser implements BlockStartParserInterface
             $parsers[] = $p;
         }
 
-        $parsers[] = new TableParser($columns, $headerCells);
+        $parsers[] = new TableParser($columns, $headerCells, $this->maxAutocompletedCells);
 
         return BlockStart::of(...$parsers)
             ->at($cursor)

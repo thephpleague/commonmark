@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 - Added `RegexHelper::isWhitespace()` method to check if a given character is an ASCII whitespace character
 - Added `CacheableDelimiterProcessorInterface` to ensure linear complexity for dynamic delimiter processing
+- Added `table/max_autocompleted_cells` config option to prevent denial of service attacks when parsing large tables
 
 ### Changed
 
