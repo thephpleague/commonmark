@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Added `RegexHelper::isWhitespace()` method to check if a given character is an ASCII whitespace character
+
 ### Changed
 
 - Several small performance optimizations
@@ -84,6 +88,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Fixed
 
 - Fixed NUL characters not being replaced in the input
+- Fixed quadratic complexity parsing unclosed inline links
 
 ## [2.4.1] - 2023-08-30
 

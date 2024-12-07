@@ -83,6 +83,12 @@ final class RegexHelper
         return \preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
     }
 
+    public static function isWhitespace(string $character): bool
+    {
+        /** @psalm-suppress InvalidLiteralArgument */
+        return $character !== '' && \strpos(" \t\n\x0b\x0c\x0d", $character) !== false;
+    }
+
     /**
      * @psalm-pure
      */

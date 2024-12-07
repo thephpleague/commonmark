@@ -281,6 +281,16 @@ final class RegexHelperTest extends TestCase
         $this->assertTrue(RegexHelper::isEscapable('\\'));
     }
 
+    public function testIsWhitespace(): void
+    {
+        $this->assertFalse(RegexHelper::isWhitespace(''));
+        $this->assertFalse(RegexHelper::isWhitespace('A'));
+        $this->assertTrue(RegexHelper::isWhitespace(' '));
+        $this->assertTrue(RegexHelper::isWhitespace("\t"));
+        $this->assertTrue(RegexHelper::isWhitespace("\n"));
+        $this->assertTrue(RegexHelper::isWhitespace("\r"));
+    }
+
     /**
      * @dataProvider dataForTestMatchAt
      */

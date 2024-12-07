@@ -100,27 +100,27 @@ final class LinkParserHelper
 
     private static function manuallyParseLinkDestination(Cursor $cursor): ?string
     {
-        $oldPosition = $cursor->getPosition();
-        $oldState    = $cursor->saveState();
-
+        $remainder = $cursor->getRemainder();
         $openParens = 0;
-        while (($c = $cursor->getCurrentCharacter()) !== null) {
-            if ($c === '\\' && ($peek = $cursor->peek()) !== null && RegexHelper::isEscapable($peek)) {
-                $cursor->advanceBy(2);
+        $len = \strlen($remainder);
+        for ($i = 0; $i < $len; $i++) {
+            $c = $remainder[$i];
+            if ($c === '\\' && $i + 1 < $len && RegexHelper::isEscapable($remainder[$i + 1])) {
+                $i++;
             } elseif ($c === '(') {
-                $cursor->advanceBy(1);
                 $openParens++;
+                // Limit to 32 nested parens for pathological cases
+                if ($openParens > 32) {
+                    return null;
+                }
             } elseif ($c === ')') {
                 if ($openParens < 1) {
                     break;
                 }
 
-                $cursor->advanceBy(1);
                 $openParens--;
-            } elseif (\preg_match(RegexHelper::REGEX_WHITESPACE_CHAR, $c)) {
+            } elseif (\ord($c) <= 32 && RegexHelper::isWhitespace($c)) {
                 break;
-            } else {
-                $cursor->advanceBy(1);
             }
         }
 
@@ -128,15 +128,13 @@ final class LinkParserHelper
             return null;
         }
 
-        if ($cursor->getPosition() === $oldPosition && (! isset($c) || $c !== ')')) {
+        if ($i === 0 && (! isset($c) || $c !== ')')) {
             return null;
         }
 
-        $newPos = $cursor->getPosition();
-        $cursor->restoreState($oldState);
+        $destination = \substr($remainder, 0, $i);
+        $cursor->advanceBy(\mb_strlen($destination, 'UTF-8'));
 
-        $cursor->advanceBy($newPos - $cursor->getPosition());
-
-        return $cursor->getPreviousText();
+        return $destination;
     }
 }
