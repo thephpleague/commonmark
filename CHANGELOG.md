@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+- Several small performance optimizations
+
 ## [2.5.3] - 2024-08-16
 
 ### Changed
