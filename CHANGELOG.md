@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+This is a **security release** to address potential denial of service attacks when parsing specially crafted,
+malicious input from untrusted sources (like user input).
+
 ### Added
 
 - Added `max_delimiters_per_line` config option to prevent denial of service attacks when parsing malicious input
