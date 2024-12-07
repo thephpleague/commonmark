@@ -308,7 +308,7 @@ foreach ($cases as $name => $case) {
         }
 
         if (isset($_ENV['CI']) || isset($_SERVER['CI'])) {
-            $command = ['php', 'convert.php'];
+            $command = ['php', 'convert.php', \json_encode($case['configuration'] ?? [])];
         } else {
             $command = ['php', '-n', 'convert.php', \json_encode($case['configuration'] ?? [])];
         }
