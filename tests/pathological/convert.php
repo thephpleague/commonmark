@@ -35,10 +35,7 @@ if (empty($markdown)) {
     exit(1);
 }
 
-$config = [];
-if (isset($argv[1])) {
-    $config = \json_decode($argv[1], true);
-}
+$config = json_decode($argv[1] ?? '[]', true) ?? [];
 
 $environment = new Environment($config);
 $environment->addExtension(new CommonMarkCoreExtension());
