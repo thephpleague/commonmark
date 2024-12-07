@@ -15,6 +15,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 
 - `UrlAutolinkParser` no longer parses URLs with more than 127 subdomains
+- Expanded reference links can no longer exceed 100kb, or the size of the input document (whichever is greater)
 - Several small performance optimizations
 
 ## [2.5.3] - 2024-08-16
