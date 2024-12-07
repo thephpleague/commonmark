@@ -52,7 +52,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
             return false;
         }
 
-        if (! $opener->isActive()) {
+        if (! $opener->isImage() && ! $opener->isActive()) {
             // no matched opener; remove from stack
             $inlineContext->getDelimiterStack()->removeBracket();
 

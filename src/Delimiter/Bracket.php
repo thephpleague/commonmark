@@ -64,6 +64,9 @@ final class Bracket
         return $this->image;
     }
 
+    /**
+     * Only valid in the context of non-images (links)
+     */
     public function isActive(): bool
     {
         return $this->active;

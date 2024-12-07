@@ -159,10 +159,8 @@ final class DelimiterStack
     public function deactivateLinkOpeners(): void
     {
         $opener = $this->brackets;
-        while ($opener !== null) {
-            if (! $opener->isImage()) {
-                $opener->setActive(false);
-            }
+        while ($opener !== null && $opener->isActive()) {
+            $opener->setActive(false);
             $opener = $opener->getPrevious();
         }
     }

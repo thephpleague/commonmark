@@ -324,7 +324,7 @@ final class DelimiterStackTest extends TestCase
         $this->assertSame($bracket3, $stack->getLastBracket());
 
         $this->assertFalse($bracket1->isActive());
-        $this->assertTrue($bracket2->isActive());
+        $this->assertFalse($bracket2->isActive());
         $this->assertFalse($bracket3->isActive());
     }
 }
