@@ -28,9 +28,6 @@ final class DelimiterStack
     /** @psalm-readonly-allow-private-mutation */
     private ?DelimiterInterface $top = null;
 
-    /** @var DelimiterInterface[] */
-    private array $removedDelimiters = [];
-
     public function push(DelimiterInterface $newDelimiter): void
     {
         $newDelimiter->setPrevious($this->top);
@@ -67,8 +64,15 @@ final class DelimiterStack
             $delimiter->getNext()->setPrevious($delimiter->getPrevious());
         }
 
-        // Mark this delimiter as removed so we can help garbage collect references from it later
-        $this->removedDelimiters[] = $delimiter;
+        // Nullify all references from the removed delimiter to other delimiters.
+        // All references to this particular delimiter in the linked list should be gone,
+        // but it's possible we're still hanging on to other references to things that
+        // have been (or soon will be) removed, which may interfere with efficient
+        // garbage collection by the PHP runtime.
+        // Explicitly releasing these references should help to avoid possible
+        // segfaults like in https://bugs.php.net/bug.php?id=68606.
+        $delimiter->setPrevious(null);
+        $delimiter->setNext(null);
     }
 
     private function removeDelimiterAndNode(DelimiterInterface $delimiter): void
@@ -136,8 +140,6 @@ final class DelimiterStack
 
         // Move forward, looking for closers, and handling each
         while ($closer !== null) {
-            $this->garbageCollectRemovedDelimiterReferences();
-
             $closingDelimiterChar = $closer->getChar();
 
             $delimiterProcessor = $processors->getDelimiterProcessor($closingDelimiterChar);
@@ -181,10 +183,13 @@ final class DelimiterStack
                 if (! $potentialOpenerFound && ! $closer->canOpen()) {
                     // We can remove a closer that can't be an opener,
                     // once we've seen there's no matching opener.
+                    $next = $closer->getNext();
                     $this->removeDelimiter($closer);
+                    $closer = $next;
+                } else {
+                    $closer = $closer->getNext();
                 }
 
-                $closer = $closer->getNext();
                 continue;
             }
 
@@ -224,29 +229,10 @@ final class DelimiterStack
     }
 
     /**
-     * Nullify all references from removed delimiters to other delimiters.
-     *
-     * All references to this particular delimiter in the linked list should be gone,
-     * but it's possible we're still hanging on to other references to things that
-     * have been (or soon will be) removed, which may interfere with efficient
-     * garbage collection by the PHP runtime.
-     *
-     * Explicitly releasing these references should help to avoid possible
-     * segfaults like in https://bugs.php.net/bug.php?id=68606.
-     *
-     * Note that we cannot do this in the `removeDelimiter()` method, because
-     * that method is called from within a loop that iterates over the linked
-     * list. If we were to nullify the references there, we'd be modifying the
-     * linked list while we're iterating over it, which would cause the loop to
-     * skip over some elements.
+     * @internal
      */
-    private function garbageCollectRemovedDelimiterReferences(): void
+    public function __destruct()
     {
-        foreach ($this->removedDelimiters as $delimiter) {
-            $delimiter->setPrevious(null);
-            $delimiter->setNext(null);
-        }
-
-        $this->removedDelimiters = [];
+        $this->removeAll();
     }
 }
