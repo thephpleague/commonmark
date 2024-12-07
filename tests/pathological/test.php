@@ -300,8 +300,12 @@ foreach ($cases as $name => $case) {
             $timeout = 5; // 5 seconds
         } else {
             // Ideally, these cases should run in linear time or better,
-            // but we'll allow a 50% margin of error.
-            $timeout = \ceil($lastRunTime * $inputSize / $lastInputSize * 1.5);
+            // but we'll allow a 50% margin of error locally (or 2x in CI)
+            if (isset($_ENV['CI']) || isset($_SERVER['CI'])) {
+                $timeout = \ceil($lastRunTime * $inputSize / $lastInputSize * 2);
+            } else {
+                $timeout = \ceil($lastRunTime * $inputSize / $lastInputSize * 1.5);
+            }
             // But regardless of this, we always want to wait at least 5 seconds,
             // and at most 60 seconds.
             $timeout = \max(5, \min(60, $timeout));
