@@ -81,6 +81,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed declaration parser being too strict
 - `FencedCodeRenderer`: don't add `language-` to class if already prefixed
 
+### Fixed
+
+- Fixed NUL characters not being replaced in the input
+
 ## [2.4.1] - 2023-08-30
 
 ### Fixed

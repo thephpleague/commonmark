@@ -19,6 +19,11 @@ use Symfony\Component\Process\Process;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $cases = [
+    'U+0000 in input' => [
+        'sizes' => [1],
+        'input' => static fn($n) => "abc\u{0000}def\u{0000}\n",
+        'expected' => static fn($n) => "<p>abc\u{FFFD}def\u{FFFD}</p>",
+    ],
     'Alternate line endings' => [
         'sizes' => [1],
         'input' => static fn($n) => "- a\n- b\r- c\r\n- d",

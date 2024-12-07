@@ -115,6 +115,9 @@ final class MarkdownParser implements MarkdownParserInterface
      */
     private function parseLine(string $line): void
     {
+        // replace NUL characters for security
+        $line = \str_replace("\0", "\u{FFFD}", $line);
+
         $this->cursor = new Cursor($line);
 
         $matches = $this->parseBlockContinuation();
