@@ -31,14 +31,7 @@ final class LinkParserHelper
     public static function parseLinkDestination(Cursor $cursor): ?string
     {
         if ($cursor->getCurrentCharacter() === '<') {
-            if ($res = $cursor->match(RegexHelper::REGEX_LINK_DESTINATION_BRACES)) {
-                // Chop off surrounding <..>:
-                return UrlEncoder::unescapeAndEncode(
-                    RegexHelper::unescape(\substr($res, 1, -1))
-                );
-            }
-
-            return null;
+            return self::parseDestinationBraces($cursor);
         }
 
         $destination = self::manuallyParseLinkDestination($cursor);
@@ -136,5 +129,37 @@ final class LinkParserHelper
         $cursor->advanceBy(\mb_strlen($destination, 'UTF-8'));
 
         return $destination;
+    }
+
+    /** @var \WeakReference<Cursor>|null */
+    private static ?\WeakReference $lastCursor       = null;
+    private static bool $lastCursorLacksClosingBrace = false;
+
+    private static function parseDestinationBraces(Cursor $cursor): ?string
+    {
+        // Optimization: If we've previously parsed this cursor and returned `null`, we know
+        // that no closing brace exists, so we can skip the regex entirely. This helps avoid
+        // certain pathological cases where the regex engine can take a very long time to
+        // determine that no match exists.
+        if (self::$lastCursor !== null && self::$lastCursor->get() === $cursor) {
+            if (self::$lastCursorLacksClosingBrace) {
+                return null;
+            }
+        } else {
+            self::$lastCursor = \WeakReference::create($cursor);
+        }
+
+        if ($res = $cursor->match(RegexHelper::REGEX_LINK_DESTINATION_BRACES)) {
+            self::$lastCursorLacksClosingBrace = false;
+
+            // Chop off surrounding <..>:
+            return UrlEncoder::unescapeAndEncode(
+                RegexHelper::unescape(\substr($res, 1, -1))
+            );
+        }
+
+        self::$lastCursorLacksClosingBrace = true;
+
+        return null;
     }
 }
