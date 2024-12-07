@@ -2,7 +2,6 @@
 layout: default
 title: Attributes Extension
 description: The AttributesExtension allows HTML attributes to be added from within the document.
-redirect_from: /extensions/attributes/
 ---
 
 # Attributes

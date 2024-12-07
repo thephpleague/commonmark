@@ -2,7 +2,6 @@
 layout: default
 title: Configuration
 description: Defining configuration schemas and accessing user-provided configuration options within your custom extensions
-redirect_from: /customization/configuration/
 ---
 
 # Configuration Schemas and Values

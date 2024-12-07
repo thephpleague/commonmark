@@ -2,7 +2,6 @@
 layout: default
 title: Cursor
 description: Using the Cursor object to parse Markdown content
-redirect_from: /customization/cursor/
 ---
 
 # Cursor

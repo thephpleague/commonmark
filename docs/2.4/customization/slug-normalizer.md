@@ -2,7 +2,6 @@
 layout: default
 title: Slug Normalizer
 description: Using the Slug Normalizer to produce unique, URL-safe text strings
-redirect_from: /customization/slug-normalizer/
 ---
 
 # Slug Normalizer

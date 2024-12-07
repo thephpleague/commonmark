@@ -2,7 +2,6 @@
 layout: default
 title: Footnote Extension
 description: The FootnoteExtension adds the ability to create footnotes in Markdown documents.
-redirect_from: /extensions/footnotes/
 ---
 
 # Footnotes
