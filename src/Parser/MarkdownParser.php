@@ -23,7 +23,6 @@ use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Event\DocumentPreParsedEvent;
 use League\CommonMark\Exception\CommonMarkException;
-use League\CommonMark\Exception\LogicException;
 use League\CommonMark\Input\MarkdownInput;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
@@ -267,8 +266,6 @@ final class MarkdownParser implements MarkdownParserInterface
 
     /**
      * Walk through a block & children recursively, parsing string content into inline content where appropriate.
-     *
-     * @throws LogicException
      */
     private function processInlines(int $inputSize): void
     {

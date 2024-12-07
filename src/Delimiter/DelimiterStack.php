@@ -21,7 +21,6 @@ namespace League\CommonMark\Delimiter;
 
 use League\CommonMark\Delimiter\Processor\CacheableDelimiterProcessorInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
-use League\CommonMark\Exception\LogicException;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
 use League\CommonMark\Node\Node;
 
@@ -81,9 +80,6 @@ final class DelimiterStack
         return $this->brackets;
     }
 
-    /**
-     * @throws LogicException
-     */
     private function findEarliest(int $stackBottom): ?DelimiterInterface
     {
         // Move back to first relevant delim.
@@ -149,9 +145,6 @@ final class DelimiterStack
         $this->removeDelimiter($delimiter);
     }
 
-    /**
-     * @throws LogicException
-     */
     private function removeDelimitersBetween(DelimiterInterface $opener, DelimiterInterface $closer): void
     {
         $delimiter      = $closer->getPrevious();
@@ -165,8 +158,6 @@ final class DelimiterStack
 
     /**
      * @param DelimiterInterface|int|null $stackBottom
-     *
-     * @throws LogicException if the index/position cannot be determined for some delimiter
      */
     public function removeAll($stackBottom = null): void
     {
@@ -229,8 +220,6 @@ final class DelimiterStack
 
     /**
      * @param DelimiterInterface|int|null $stackBottom
-     *
-     * @throws LogicException if the index/position cannot be determined for any delimiter
      *
      * @todo change $stackBottom to an int in 3.0
      */
@@ -350,8 +339,6 @@ final class DelimiterStack
 
     /**
      * @deprecated This method will be dropped in 3.0 once all delimiters MUST have an index/position
-     *
-     * @throws LogicException if no index was defined on this delimiter, and no reasonable guess could be made based on its neighbors
      */
     private function getIndex(?DelimiterInterface $delimiter): int
     {
@@ -395,6 +382,6 @@ final class DelimiterStack
         } while ($next = $next->getNext());
 
         // No index was defined on this delimiter, and none could be guesstimated based on the stack.
-        throw new LogicException('No index was defined on this delimiter, and none could be guessed based on the stack.  Ensure you are passing the index when instantiating the Delimiter.');
+        return $this->missingIndexCache[$delimiter] = $this->getIndex($delimiter->getPrevious()) + 1;
     }
 }

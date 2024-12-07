@@ -13,15 +13,12 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Parser\Block;
 
-use League\CommonMark\Exception\LogicException;
 use League\CommonMark\Parser\InlineParserEngineInterface;
 
 interface BlockContinueParserWithInlinesInterface extends BlockContinueParserInterface
 {
     /**
      * Parse any inlines inside of the current block
-     *
-     * @throws LogicException
      */
     public function parseInlines(InlineParserEngineInterface $inlineParser): void;
 }

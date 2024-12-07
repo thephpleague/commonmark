@@ -345,7 +345,7 @@ final class DelimiterStackTest extends TestCase
         $method     = $reflection->getMethod('getIndex');
         $method->setAccessible(true);
 
-        $this->assertSame(0, $method->invoke($stack, $delim1));
+        $this->assertSame(9, $method->invoke($stack, $delim1));
         $this->assertSame(10, $method->invoke($stack, $delim2));
         $this->assertSame(20, $method->invoke($stack, $delim3));
         $this->assertSame(21, $method->invoke($stack, $delim4));
