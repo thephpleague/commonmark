@@ -48,6 +48,8 @@ public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $
 
 This method is used to tell the engine how many characters from the matching delimiters should be consumed.  For simple processors you'll likely return `1` (or whatever your minimum length is).  In more advanced cases, you can examine the opening and closing delimiters and perform additional logic to determine whether they should be fully or partially consumed.  You can also return `0` if you'd like.
 
+**Note:** Unless you're returning a hard-coded value, you should probably implement `CacheableDelimiterProcessorInterface` instead of `DelimiterProcessorInterface` - this will allow the engine to perform additional caching for better performance.
+
 ### `process()`
 
 ```php

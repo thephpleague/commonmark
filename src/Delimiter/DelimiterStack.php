@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Delimiter;
 
+use League\CommonMark\Delimiter\Processor\CacheableDelimiterProcessorInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
 
@@ -129,12 +130,18 @@ final class DelimiterStack
 
         // Move forward, looking for closers, and handling each
         while ($closer !== null) {
-            $delimiterChar = $closer->getChar();
+            $closingDelimiterChar = $closer->getChar();
 
-            $delimiterProcessor = $processors->getDelimiterProcessor($delimiterChar);
+            $delimiterProcessor = $processors->getDelimiterProcessor($closingDelimiterChar);
             if (! $closer->canClose() || $delimiterProcessor === null) {
                 $closer = $closer->getNext();
                 continue;
+            }
+
+            if ($delimiterProcessor instanceof CacheableDelimiterProcessorInterface) {
+                $openersBottomCacheKey = $delimiterProcessor->getCacheKey($closer);
+            } else {
+                $openersBottomCacheKey = $closingDelimiterChar;
             }
 
             $openingDelimiterChar = $delimiterProcessor->getOpeningCharacter();
@@ -143,7 +150,7 @@ final class DelimiterStack
             $openerFound          = false;
             $potentialOpenerFound = false;
             $opener               = $closer->getPrevious();
-            while ($opener !== null && $opener !== $stackBottom && $opener !== ($openersBottom[$delimiterChar] ?? null)) {
+            while ($opener !== null && $opener !== $stackBottom && $opener !== ($openersBottom[$openersBottomCacheKey] ?? null)) {
                 if ($opener->canOpen() && $opener->getChar() === $openingDelimiterChar) {
                     $potentialOpenerFound = true;
                     $useDelims            = $delimiterProcessor->getDelimiterUse($opener, $closer);
@@ -157,20 +164,16 @@ final class DelimiterStack
             }
 
             if (! $openerFound) {
-                if (! $potentialOpenerFound) {
-                    // Only do this when we didn't even have a potential
-                    // opener (one that matches the character and can open).
-                    // If an opener was rejected because of the number of
-                    // delimiters (e.g. because of the "multiple of 3"
-                    // Set lower bound for future searches for openersrule),
-                    // we want to consider it next time because the number
-                    // of delimiters can change as we continue processing.
-                    $openersBottom[$delimiterChar] = $closer->getPrevious();
-                    if (! $closer->canOpen()) {
-                        // We can remove a closer that can't be an opener,
-                        // once we've seen there's no matching opener.
-                        $this->removeDelimiter($closer);
-                    }
+                // Set lower bound for future searches
+                // TODO: Remove this conditional check in 3.0. It only exists to prevent behavioral BC breaks in 2.x.
+                if ($potentialOpenerFound === false || $delimiterProcessor instanceof CacheableDelimiterProcessorInterface) {
+                    $openersBottom[$openersBottomCacheKey] = $closer->getPrevious();
+                }
+
+                if (! $potentialOpenerFound && ! $closer->canOpen()) {
+                    // We can remove a closer that can't be an opener,
+                    // once we've seen there's no matching opener.
+                    $this->removeDelimiter($closer);
                 }
 
                 $closer = $closer->getNext();

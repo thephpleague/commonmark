@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Strikethrough;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
-use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Delimiter\Processor\CacheableDelimiterProcessorInterface;
 use League\CommonMark\Node\Inline\AbstractStringContainer;
 
-final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterface
+final class StrikethroughDelimiterProcessor implements CacheableDelimiterProcessorInterface
 {
     public function getOpeningCharacter(): string
     {
@@ -60,5 +60,10 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
         }
 
         $opener->insertAfter($strikethrough);
+    }
+
+    public function getCacheKey(DelimiterInterface $closer): string
+    {
+        return '~' . $closer->getLength();
     }
 }

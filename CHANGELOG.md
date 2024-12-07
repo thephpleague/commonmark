@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Added
 
 - Added `RegexHelper::isWhitespace()` method to check if a given character is an ASCII whitespace character
+- Added `CacheableDelimiterProcessorInterface` to ensure linear complexity for dynamic delimiter processing
 
 ### Changed
 
@@ -85,10 +86,16 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed declaration parser being too strict
 - `FencedCodeRenderer`: don't add `language-` to class if already prefixed
 
+### Deprecated
+
+- Returning dynamic values from `DelimiterProcessorInterface::getDelimiterUse()` is deprecated
+    - You should instead implement `CacheableDelimiterProcessorInterface` to help the engine perform caching to avoid performance issues.
+
 ### Fixed
 
 - Fixed NUL characters not being replaced in the input
 - Fixed quadratic complexity parsing unclosed inline links
+- Fixed quadratic complexity finding the bottom opener for emphasis and strikethrough delimiters
 
 ## [2.4.1] - 2023-08-30
 
