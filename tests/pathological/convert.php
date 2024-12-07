@@ -35,12 +35,16 @@ if (empty($markdown)) {
     exit(1);
 }
 
-$environment = new Environment();
+$config = [];
+if (isset($argv[1])) {
+    $config = \json_decode($argv[1], true);
+}
+
+$environment = new Environment($config);
 $environment->addExtension(new CommonMarkCoreExtension());
 
 // Enable additional extensions if requested
-$extension = $argv[1] ?? null;
-switch ($argv[1] ?? null) {
+switch ($argv[2] ?? null) {
     case 'table':
         $environment->addExtension(new TableExtension());
         break;

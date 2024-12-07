@@ -221,6 +221,22 @@ $cases = [
         'input' => static fn($n) => \str_repeat(">", $n) . \str_repeat(".", $n) . "\n",
         'expected' => static fn($n) => \str_repeat("<blockquote>\n", $n) . '<p>' . \str_repeat('.', $n) . "</p>\n" . \str_repeat("</blockquote>\n", $n),
     ],
+    'CVE-2023-24824 test 1' => [
+        'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-66g8-4hjf-77xh',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => \str_repeat(">", $n) . \str_repeat("a*", $n) . "\n",
+        'configuration' => [
+            'max_nesting_level' => 1_000,
+        ],
+    ],
+    'CVE-2023-24824 test 2' => [
+        'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-66g8-4hjf-77xh',
+        'sizes' => [500, 5_000, 50_000],
+        'input' => static fn($n) => \str_repeat(" -", $n) . 'x' . \str_repeat("\n", $n),
+        'configuration' => [
+            'max_nesting_level' => 500,
+        ],
+    ],
     'CVE-2023-26485 test 1' => [
         'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-r8vr-c48j-fcc5',
         'sizes' => [50, 500, 5_000], // ideally should be 1000, 10_000, 100_000 but recursive rendering makes large sizes fail
@@ -294,7 +310,7 @@ foreach ($cases as $name => $case) {
         if (isset($_ENV['CI']) || isset($_SERVER['CI'])) {
             $command = ['php', 'convert.php'];
         } else {
-            $command = ['php', '-n', 'convert.php'];
+            $command = ['php', '-n', 'convert.php', \json_encode($case['configuration'] ?? [])];
         }
 
         if (isset($case['extension'])) {
