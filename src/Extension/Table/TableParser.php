@@ -152,13 +152,11 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
 
     private function parseCell(string $cell, int $column, InlineParserEngineInterface $inlineParser): TableCell
     {
-        $tableCell = new TableCell();
+        $tableCell = new TableCell(TableCell::TYPE_DATA, $this->columns[$column] ?? null);
 
-        if ($column < \count($this->columns)) {
-            $tableCell->setAlign($this->columns[$column]);
+        if ($cell !== '') {
+            $inlineParser->parse(\trim($cell), $tableCell);
         }
-
-        $inlineParser->parse(\trim($cell), $tableCell);
 
         return $tableCell;
     }
