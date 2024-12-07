@@ -291,7 +291,7 @@ foreach ($cases as $name => $case) {
             $timeout = \max(5, \min(60, $timeout));
         }
 
-        $command = ['php', 'convert.php'];
+        $command = ['php', '-n', 'convert.php'];
         if (isset($case['extension'])) {
             $command[] = $case['extension'];
         }
