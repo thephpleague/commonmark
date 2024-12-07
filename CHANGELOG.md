@@ -110,6 +110,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed quadratic complexity parsing emphasis and strikethrough delimiters
 - Fixed issue where having 500,000+ delimiters could trigger a [known segmentation fault issue in PHP's garbage collection](https://bugs.php.net/bug.php?id=68606)
 - Fixed quadratic complexity deactivating link openers
+- Fixed quadratic complexity parsing long backtick code spans with no matching closers
 - Fixed catastrophic backtracking when parsing link labels/titles
 
 ## [2.4.1] - 2023-08-30
