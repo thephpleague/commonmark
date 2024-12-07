@@ -109,6 +109,24 @@ jobs:
 
             - run: vendor/bin/psalm --no-progress --stats --threads=$(nproc) --output-format=github --shepherd
 
+    pathological:
+        name: Pathological Tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.1
+                  extensions: curl, mbstring, yaml
+                  coverage: none
+                  tools: composer:v2
+
+            - run: composer update --no-progress
+
+            - run: php tests/pathological/test.php
+
     docs-lint:
         permissions:
           contents: read  # for actions/checkout to fetch code

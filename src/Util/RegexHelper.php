@@ -61,9 +61,9 @@ final class RegexHelper
         self::PARTIAL_PROCESSINGINSTRUCTION . '|' . self::PARTIAL_DECLARATION . '|' . self::PARTIAL_CDATA . ')';
     public const PARTIAL_HTMLBLOCKOPEN         = '<(?:' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s\/>]|$)' . '|' .
         '\/' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s>]|$)' . '|' . '[?!])';
-    public const PARTIAL_LINK_TITLE            = '^(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"' .
-        '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*\'' .
-        '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*\))';
+    public const PARTIAL_LINK_TITLE            = '^(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*+"' .
+        '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*+\'' .
+        '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*+\))';
 
     public const REGEX_PUNCTUATION        = '/^[!"#$%&\'()*+,\-.\\/:;<=>?@\\[\\]\\\\^_`{|}~\p{P}\p{S}]/u';
     public const REGEX_UNSAFE_PROTOCOL    = '/^javascript:|vbscript:|file:|data:/i';
@@ -81,6 +81,12 @@ final class RegexHelper
     public static function isEscapable(string $character): bool
     {
         return \preg_match('/' . self::PARTIAL_ESCAPABLE . '/', $character) === 1;
+    }
+
+    public static function isWhitespace(string $character): bool
+    {
+        /** @psalm-suppress InvalidLiteralArgument */
+        return $character !== '' && \strpos(" \t\n\x0b\x0c\x0d", $character) !== false;
     }
 
     /**

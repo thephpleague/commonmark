@@ -46,6 +46,7 @@ final class QuoteParser implements InlineParserInterface
     {
         $char   = $inlineContext->getFullMatch();
         $cursor = $inlineContext->getCursor();
+        $index  = $cursor->getPosition();
 
         $charBefore = $cursor->peek(-1);
         if ($charBefore === null) {
@@ -67,7 +68,7 @@ final class QuoteParser implements InlineParserInterface
         $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack to this opener
-        $inlineContext->getDelimiterStack()->push(new Delimiter($char, 1, $node, $canOpen, $canClose));
+        $inlineContext->getDelimiterStack()->push(new Delimiter($char, 1, $node, $canOpen, $canClose, $index));
 
         return true;
     }
