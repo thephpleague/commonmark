@@ -3,7 +3,7 @@ version:
         Getting Started:
             'Overview': '/2.6/'
             'Installation': '/2.6/installation/'
-            'Upgrading from 2.3': '/2.6/upgrading/'
+            'Upgrading from 2.5': '/2.6/upgrading/'
             'Changelog': '/2.6/changelog/'
             'Support': '/2.6/support/'
         Usage:
@@ -50,7 +50,7 @@ version:
         Getting Started:
             'Overview': '/2.5/'
             'Installation': '/2.5/installation/'
-            'Upgrading from 2.3': '/2.5/upgrading/'
+            'Upgrading from 2.4': '/2.5/upgrading/'
             'Changelog': '/2.5/changelog/'
             'Support': '/2.5/support/'
         Usage:

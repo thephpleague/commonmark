@@ -26,7 +26,6 @@ $config = [
     'html_input' => 'escape',
     'allow_unsafe_links' => false,
     'max_nesting_level' => PHP_INT_MAX,
-    'max_delimiters_per_line' => PHP_INT_MAX,
     'slug_normalizer' => [
         'max_length' => 255,
     ],
@@ -73,7 +72,6 @@ Here's a list of the core configuration options available:
   - `escape` - Escape all HTML
 - `allow_unsafe_links` - Remove risky link and image URLs by setting this to `false` (default: `true`)
 - `max_nesting_level` - The maximum nesting level for blocks (default: `PHP_INT_MAX`). Setting this to a positive integer can help protect against long parse times and/or segfaults if blocks are too deeply-nested.
-- `max_delimiters_per_line` - The maximum number of delimiters (e.g. `*` or `_`) allowed in a single line (default: `PHP_INT_MAX`). Setting this to a positive integer can help protect against long parse times and/or segfaults if lines are too long.
 - `slug_normalizer` - Array of options for configuring how URL-safe slugs are created; see [the slug normalizer docs](/2.5/customization/slug-normalizer/#configuration) for more details
   - `instance` - An alternative normalizer to use (defaults to the included `SlugNormalizer`)
   - `max_length` - Limits the size of generated slugs (defaults to 255 characters)

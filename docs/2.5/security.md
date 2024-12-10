@@ -11,7 +11,6 @@ In order to be fully compliant with the CommonMark spec, certain security settin
 - `html_input`: How to handle raw HTML
 - `allow_unsafe_links`: Whether unsafe links are permitted
 - `max_nesting_level`: Protect against long render times or segfaults
-- `max_delimiters_per_line`: Protect against long parse times or rendering segfaults
 
 Further information about each option can be found below.
 
@@ -87,25 +86,6 @@ echo $converter->convert($markdown);
 ```
 
 See the [configuration](/2.5/configuration/) section for more information.
-
-## Max Delimiters Per Line
-
-Similarly to the maximum nesting level, **no maximum number of delimiters per line is enforced by default.**  Delimiters can be nested (like `*a **b** c*`) or un-nested (like `*a* *b* *c*`) - in either case, having too many in a single line can result in long parse times. We therefore have a separate option to limit the number of delimiters per line.
-
-If you need to parse untrusted input, consider setting a reasonable `max_delimiters_per_line` (perhaps 100-1000) depending on your needs.  Once this level is hit, any subsequent delimiters on that line will be rendered as plain text.
-
-### Example - Prevent too many delimiters
-
-```php
-use League\CommonMark\CommonMarkConverter;
-
-$markdown = '*a* **b *c **d** c* b**'; // 8 delimiters (* and **)
-
-$converter = new CommonMarkConverter(['max_delimiters_per_line' => 6]);
-echo $converter->convert($markdown);
-
-// <p><em>a</em> **b *c <strong>d</strong> c* b**</p>
-```
 
 ## Additional Filtering
 
