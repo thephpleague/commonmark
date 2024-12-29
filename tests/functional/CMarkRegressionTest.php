@@ -27,12 +27,6 @@ final class CMarkRegressionTest extends AbstractSpecTestCase
     {
         $tests = SpecReader::readFile(__DIR__ . '/../../vendor/commonmark/cmark/test/regression.txt');
         foreach ($tests as $example) {
-            // We can't currently render spec example 13 exactly how the upstream library does. We'll likely need to overhaul
-            // our rendering approach in order to fix that, so we'll use this temporary workaround for now.
-            if ($example['number'] === 13) {
-                $example['output'] = \str_replace('</script></li>', "</script>\n</li>", $example['output']);
-            }
-
             // The case-fold test from example 21 fails on PHP 8.0.* and below due to the behavior of mb_convert_case().
             // See https://3v4l.org/7TeXJ.
             if (\PHP_VERSION_ID < 81000 && $example['number'] === 21) {

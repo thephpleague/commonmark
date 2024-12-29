@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Rendered list items should only add newlines around block-level children (#1059, #1061)
+
 ## [2.6.0] - 2024-12-07
 
 This is a **security release** to address potential denial of service attacks when parsing specially crafted,
