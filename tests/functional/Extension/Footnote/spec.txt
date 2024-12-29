@@ -106,12 +106,9 @@ A [footnote identifier] can come immediately after a word, or have a space betwe
 [^5]: Not allowed
 .
 <ul>
-<li>No spaces<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup>
-</li>
-<li>One space <sup id="fnref:2"><a class="footnote-ref" href="#fn:2" role="doc-noteref">2</a></sup>
-</li>
-<li>Exclamation mark with space! <sup id="fnref:3"><a class="footnote-ref" href="#fn:3" role="doc-noteref">3</a></sup>
-</li>
+<li>No spaces<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup></li>
+<li>One space <sup id="fnref:2"><a class="footnote-ref" href="#fn:2" role="doc-noteref">2</a></sup></li>
+<li>Exclamation mark with space! <sup id="fnref:3"><a class="footnote-ref" href="#fn:3" role="doc-noteref">3</a></sup></li>
 <li>Exclamation mark with no space![^4]</li>
 <li>Another exclamation mark![^5](not allowed)</li>
 </ul>
