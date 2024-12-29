@@ -87,9 +87,7 @@ EOT;
 <li>Checkbox [x] in the middle</li>
 <li>Checkbox at the end [ ]</li>
 <li>[  ] too many spaces</li>
-<li>
-<strong>[x] Checkbox inside of emphasis</strong>
-</li>
+<li><strong>[x] Checkbox inside of emphasis</strong></li>
 <li>No text, as shown in these examples:
 <ul>
 <li>[x]</li>
@@ -104,14 +102,11 @@ EOT;
 </ul>
 <p>Here's a test using <code>&lt;del&gt;</code>:</p>
 <ul>
-<li><input checked="" disabled="" type="checkbox"> <del>Checkbox inside of strikeout</del>
-</li>
+<li><input checked="" disabled="" type="checkbox"> <del>Checkbox inside of strikeout</del></li>
 </ul>
 <p>And another which does not render the checkbox:</p>
 <ul>
-<li>
-<del>[x] Checkbox inside of strikeout</del>
-</li>
+<li><del>[x] Checkbox inside of strikeout</del></li>
 </ul>
 
 EOT;
@@ -122,6 +117,6 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convert($input));
+        $this->assertEquals($expected, $converter->convert($input)->getContent());
     }
 }

@@ -44,7 +44,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convert($input));
+        $this->assertEquals($expected, $converter->convert($input)->getContent());
     }
 
     public function testConfigStringGenerator(): void
@@ -72,7 +72,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convert($input));
+        $this->assertEquals($expected, $converter->convert($input)->getContent());
     }
 
     public function testConfigCallableGenerator(): void
@@ -104,7 +104,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convert($input));
+        $this->assertEquals($expected, $converter->convert($input)->getContent());
     }
 
     public function testConfigObjectImplementingMentionGeneratorInterface(): void
@@ -139,7 +139,7 @@ EOT;
 
         $converter = new MarkdownConverter($environment);
 
-        $this->assertEquals($expected, $converter->convert($input));
+        $this->assertEquals($expected, $converter->convert($input)->getContent());
     }
 
     public function testConfigUnknownGenerator(): void
