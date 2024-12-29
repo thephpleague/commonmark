@@ -49,7 +49,7 @@ final class DelimiterProcessingTest extends TestCase
 
         $converter = new MarkdownConverter($e);
 
-        $this->assertEquals($expected, $converter->convert($input));
+        $this->assertEquals($expected, $converter->convert($input)->getContent());
     }
 
     /**
