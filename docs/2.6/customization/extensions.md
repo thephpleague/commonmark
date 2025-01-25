@@ -13,11 +13,11 @@ To create an extension, simply create a new class implementing `ExtensionInterfa
 
 ```php
 use League\CommonMark\Extension\ExtensionInterface;
-use League\CommonMark\Environment\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 
 final class EmojiExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
             // TODO: Create the EmojiParser, Emoji, and EmojiRenderer classes
