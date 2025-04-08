@@ -31,7 +31,7 @@
     "require-dev": {
         "ext-json": "*",
         "cebe/markdown": "^1.0",
-        "commonmark/cmark": "0.31.1",
+        "commonmark/cmark": "0.31.1 || 5.66",
         "commonmark/commonmark.js": "0.31.1",
         "composer/package-versions-deprecated": "^1.8",
         "embed/embed": "^4.4",
