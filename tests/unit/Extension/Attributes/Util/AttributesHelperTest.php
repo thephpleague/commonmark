@@ -108,6 +108,9 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{{ foo }}'), [], '{{ foo }}'];
         yield [new Cursor(' {{ foo }}'), [], ' {{ foo }}'];
         yield [new Cursor('{ foo }}'), [], '{ foo }}'];
+
+        // Issue 1071
+        yield [new Cursor('{.display-4.mt-5.mx-auto}'), ['class' => 'display-4 mt-5 mx-auto']];
     }
 
     /**

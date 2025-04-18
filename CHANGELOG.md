@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+
+- Fixed Attributes extension parsing regression (#1071)
+
 ## [2.6.1] - 2024-12-29
 
 ### Fixed
