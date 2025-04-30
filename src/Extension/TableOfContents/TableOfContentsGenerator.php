@@ -18,6 +18,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Extension\TableOfContents\Normalizer\AsIsNormalizerStrategy;
@@ -25,6 +26,7 @@ use League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrateg
 use League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;
 use League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\NodeIterator;
 use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
@@ -54,13 +56,17 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
     /** @psalm-readonly */
     private string $fragmentPrefix;
 
-    public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel, string $fragmentPrefix)
+    /** @psalm-readonly */
+    private string $label;
+
+    public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel, string $fragmentPrefix, string $label)
     {
         $this->style                 = $style;
         $this->normalizationStrategy = $normalizationStrategy;
         $this->minHeadingLevel       = $minHeadingLevel;
         $this->maxHeadingLevel       = $maxHeadingLevel;
         $this->fragmentPrefix        = $fragmentPrefix;
+        $this->label                 = $label;
 
         if ($fragmentPrefix !== '') {
             $this->fragmentPrefix .= '-';
@@ -109,6 +115,12 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         // Don't add the TOC if no headings were present
         if (! $toc->hasChildren() || $firstHeading === null) {
             return null;
+        }
+
+        if ($this->label !== '') {
+            $label = new Strong();
+            $label->appendChild(new Text($this->label));
+            $toc->prependChild($label);
         }
 
         return $toc;

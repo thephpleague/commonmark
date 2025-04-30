@@ -35,6 +35,7 @@ final class TableOfContentsExtension implements ConfigurableExtensionInterface
             'max_heading_level' => Expect::int()->min(1)->max(6)->default(6),
             'html_class' => Expect::string()->default('table-of-contents'),
             'placeholder' => Expect::anyOf(Expect::string(), Expect::null())->default(null),
+            'label' => Expect::anyOf(Expect::string(), Expect::null())->default(null),
         ]));
     }
 
