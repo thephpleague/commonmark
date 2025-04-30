@@ -59,7 +59,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
     /** @psalm-readonly */
     private string $label;
 
-    public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel, string $fragmentPrefix, string $label)
+    public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel, string $fragmentPrefix, string $label = '')
     {
         $this->style                 = $style;
         $this->normalizationStrategy = $normalizationStrategy;
