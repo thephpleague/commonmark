@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Configuration
-redirect_from: /configuration/
 ---
 
 # Configuration

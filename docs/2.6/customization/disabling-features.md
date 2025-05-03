@@ -2,8 +2,6 @@
 layout: default
 title: Disabling Features
 description: How to disable certain features of this library
-redirect_from:
-- /customization/disabling-features/
 ---
 
 # Disabling Features

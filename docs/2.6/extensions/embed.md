@@ -2,7 +2,6 @@
 layout: default
 title: Embed Extension
 description: The EmbedExtension supports embedding rich content from other websites.
-redirect_from: /extensions/embed/
 ---
 
 # Embed Extension

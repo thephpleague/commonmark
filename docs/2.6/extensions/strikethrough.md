@@ -2,7 +2,6 @@
 layout: default
 title: Strikethrough Extension
 description: The StrikethroughExtension intelligently converts ASCII quotes, dashes, and ellipses to their Unicode equivalents
-redirect_from: /extensions/strikethrough/
 ---
 
 # Strikethrough Extension

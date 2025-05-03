@@ -115,7 +115,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.7-dev"
+            "dev-main": "2.8-dev"
         }
     },
     "config": {
