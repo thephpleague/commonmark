@@ -78,8 +78,6 @@ This option was deprecated in 1.5.0 and will be removed in 2.0.0. Use the `symbo
 This option has no default value and if one is provided, a deprecation warning will be triggered and the `symbol`
 config option below will be ignored completely.
 
-See the [Upgrade Guide](/1.6/upgrading/) for more information.
-
 ### `insert`
 
 This controls whether the anchor is added to the beginning of the `<h1>`, `<h2>` etc. tag or to the end.  Can be set to either `'before'` or `'after'`.
