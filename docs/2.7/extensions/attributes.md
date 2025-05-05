@@ -9,6 +9,8 @@ redirect_from: /extensions/attributes/
 
 The `AttributesExtension` allows HTML attributes to be added from within the document.
 
+**Security warning:** Allowing untrusted users to inject arbitrary HTML attributes could lead to XSS vulnerabilities, styling issues, or other problems. Consider [disabling unsafe links](/2.7/security/#unsafe-links), [configuring allowed attributes](#configuration), and/or [using additional filtering](/2.7/security/#additional-filtering).
+
 ## Attribute Syntax
 
 The basic syntax was inspired by [Kramdown](http://kramdown.gettalong.org/syntax.html#attribute-list-definitions)'s Attribute Lists feature.
@@ -75,8 +77,12 @@ use League\CommonMark\Extension\Attributes\AttributesExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 
-// Define your configuration, if needed
-$config = [];
+// Example custom configuration
+$config = [
+    'attributes' => [
+        'allow' => ['id', 'class', 'align'],
+    ],
+];
 
 // Configure the Environment with all the CommonMark parsers/renderers
 $environment = new Environment($config);
@@ -87,5 +93,15 @@ $environment->addExtension(new AttributesExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
-echo $converter->convert('# Hello World!');
+echo $converter->convert('# Hello World! {.article-title}');
 ```
+
+## Configuration
+
+As of version 2.7.0, this extension can be configured by providing a `attributes` array with nested configuration options.
+
+### `allow`
+
+An array of allowed attributes. An empty array `[]` (default) allows virtually all attributes.
+
+**Note:** Attributes starting with `on` (e.g. `onclick` or `onerror`) are capable of executing JavaScript code and are therefore **never allowed by default**. You must explicitly add them to the `allow` list if you want to use them.

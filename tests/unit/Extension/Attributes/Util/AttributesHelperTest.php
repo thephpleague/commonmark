@@ -194,4 +194,70 @@ final class AttributesHelperTest extends TestCase
             ['id' => 'block', 'class' => 'inline block'],
         ];
     }
+
+    /**
+     * @dataProvider dataForTestFilterAttributes
+     *
+     * @param array<string, mixed> $attributes
+     * @param list<string>         $allowList
+     * @param array<string, mixed> $expected
+     */
+    public function testFilterAttributes(array $attributes, array $allowList, bool $allowUnsafeLinks, array $expected): void
+    {
+        $this->assertEquals($expected, AttributesHelper::filterAttributes($attributes, $allowList, $allowUnsafeLinks));
+    }
+
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public static function dataForTestFilterAttributes(): iterable
+    {
+        // No allow list; unsafe links disallowed (default behavior)
+        yield [
+            ['id' => 'foo', 'class' => 'bar', 'onclick' => 'alert("XSS")', 'href' => 'javascript:alert("XSS")'],
+            [],
+            false,
+            ['id' => 'foo', 'class' => 'bar'],
+        ];
+
+        // No allow list; unsafe links allowed
+        yield [
+            ['id' => 'foo', 'class' => 'bar', 'onclick' => 'alert("XSS")', 'href' => 'javascript:alert("XSS")'],
+            [],
+            true,
+            ['id' => 'foo', 'class' => 'bar', 'href' => 'javascript:alert("XSS")'],
+        ];
+
+        // Allow list; unsafe links disallowed
+        yield [
+            ['id' => 'foo', 'class' => 'bar', 'onclick' => 'alert("XSS")', 'href' => 'javascript:alert("XSS")'],
+            ['id', 'onclick', 'href'],
+            false,
+            ['id' => 'foo', 'onclick' => 'alert("XSS")'],
+        ];
+
+        // Allow list; unsafe links allowed
+        yield [
+            ['id' => 'foo', 'class' => 'bar', 'onclick' => 'alert("XSS")', 'href' => 'javascript:alert("XSS")'],
+            ['id', 'onclick', 'href'],
+            true,
+            ['id' => 'foo', 'onclick' => 'alert("XSS")', 'href' => 'javascript:alert("XSS")'],
+        ];
+
+        // Allow list blocks all
+        yield [
+            ['id' => 'foo', 'class' => '<script>alert("XSS")</script>'],
+            ['style'],
+            false,
+            [],
+        ];
+
+        // Can't use weird casing to bypass allowlist or 'on*' restriction
+        yield [
+            ['ID' => 'foo', 'oNcLiCk' => 'alert("XSS")'],
+            ['id', 'class'],
+            false,
+            [],
+        ];
+    }
 }
