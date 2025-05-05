@@ -6,6 +6,15 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+This is a **security release** to address a potential cross-site scripting (XSS) vulnerability when using the `AttributesExtension` with untrusted user input.
+
+### Added
+- Added `attributes/allow` config option to specify which attributes users are allowed to set on elements (default allows virtually all attributes)
+
+### Changed
+- The `AttributesExtension` blocks all attributes starting with `on` unless explicitly allowed via the `attributes/allow` config option
+- The `allow_unsafe_links` option is now respected by the `AttributesExtension` when users specify `href` and `src` attributes
+
 ## [2.6.2] - 2025-04-18
 
 ### Fixed
