@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <table_of_contents type="bullet" tight="false">
+        <strong>
+            <text>Table of Contents</text>
+        </strong>
+        <item>
+            <link destination="#content-hello-world" title="">
+                <text>Hello World!</text>
+            </link>
+            <list type="bullet" tight="false">
+                <item>
+                    <link destination="#content-isnt-markdown-great" title="">
+                        <text>Isn't Markdown Great?</text>
+                    </link>
+                </item>
+            </list>
+        </item>
+    </table_of_contents>
+    <paragraph>
+        <text>This is my document.</text>
+    </paragraph>
+    <heading level="1">
+        <heading_permalink slug="hello-world" />
+        <text>Hello World!</text>
+    </heading>
+    <heading level="2">
+        <heading_permalink slug="isnt-markdown-great" />
+        <text>Isn't Markdown Great?</text>
+    </heading>
+</document>
