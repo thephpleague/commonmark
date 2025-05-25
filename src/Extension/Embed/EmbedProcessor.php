@@ -51,7 +51,9 @@ final class EmbedProcessor
             }
         }
 
-        $this->adapter->updateEmbeds($embeds);
+        if (! empty($embeds)) {
+            $this->adapter->updateEmbeds($embeds);
+        }
 
         foreach ($embeds as $embed) {
             if ($embed->getEmbedCode() !== null) {
