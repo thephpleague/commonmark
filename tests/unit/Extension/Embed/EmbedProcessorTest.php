@@ -42,8 +42,7 @@ final class EmbedProcessorTest extends TestCase
 
     public function testNoUpdatesEmbedsWithoutEmbeds(): void
     {
-        $adapter = $this->getMockBuilder(EmbedAdapterInterface::class);
-        $adapter = $adapter->getMock();
+        $adapter = $this->getMockBuilder(EmbedAdapterInterface::class)->getMock();
         $adapter->expects($this->never())
             ->method('updateEmbeds');
         $processor = new EmbedProcessor($adapter);
