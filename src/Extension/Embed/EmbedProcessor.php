@@ -51,7 +51,7 @@ final class EmbedProcessor
             }
         }
 
-        if (! empty($embeds)) {
+        if ($embeds) {
             $this->adapter->updateEmbeds($embeds);
         }
 
