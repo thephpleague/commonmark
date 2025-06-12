@@ -40,6 +40,18 @@ final class EmbedProcessorTest extends TestCase
         $this->assertNotNull($embed2->getEmbedCode());
     }
 
+    public function testNoUpdatesEmbedsWithoutEmbeds(): void
+    {
+        $adapter = $this->getMockBuilder(EmbedAdapterInterface::class)->getMock();
+        $adapter->expects($this->never())
+            ->method('updateEmbeds');
+        $processor = new EmbedProcessor($adapter);
+
+        $document = new Document();
+
+        $processor(new DocumentParsedEvent($document));
+    }
+
     public function testWithFallbackRemove(): void
     {
         // A fake adapter that doesn't do anything (like updating the embed codes)
