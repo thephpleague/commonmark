@@ -31,7 +31,7 @@ final class MaxDelimitersPerLineTest extends TestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function provideTestCases(): iterable
+    public static function provideTestCases(): iterable
     {
         yield ['*a* **b *c* b**', 6, '<p><em>a</em> <strong>b <em>c</em> b</strong></p>'];
 

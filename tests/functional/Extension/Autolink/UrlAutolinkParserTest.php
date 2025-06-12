@@ -153,7 +153,7 @@ final class UrlAutolinkParserTest extends TestCase
     /**
      * @return iterable<array<string>>
      */
-    public function dataProviderForSchemes(): iterable
+    public static function dataProviderForSchemes(): iterable
     {
         yield ['http'];
         yield ['https'];
