@@ -14,10 +14,13 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\TableOfContents;
 
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsPlaceholder;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsWrapper;
+use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\NodeIterator;
 use League\Config\ConfigurationAwareInterface;
@@ -43,6 +46,7 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
             (int) $this->config->get('table_of_contents/min_heading_level'),
             (int) $this->config->get('table_of_contents/max_heading_level'),
             (string) $this->config->get('heading_permalink/fragment_prefix'),
+            (string) $this->config->get('table_of_contents/label'),
         );
 
         $toc = $generator->generate($document);
@@ -54,7 +58,11 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         // Add custom CSS class(es), if defined
         $class = $this->config->get('table_of_contents/html_class');
         if ($class !== null) {
-            $toc->data->append('attributes/class', $class);
+            if ($toc instanceof TableOfContentsWrapper) {
+                $toc->getInnerToc()->data->append('attributes/class', $class);
+            } else {
+                $toc->data->append('attributes/class', $class);
+            }
         }
 
         // Add the TOC to the Document
@@ -70,8 +78,20 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         }
     }
 
-    private function insertBeforeFirstLinkedHeading(Document $document, TableOfContents $toc): void
+    /**
+     * @psalm-param TableOfContents|TableOfContentsWrapper $toc
+     *
+     * @phpstan-param TableOfContents|TableOfContentsWrapper $toc
+     */
+    private function insertBeforeFirstLinkedHeading(Document $document, AbstractBlock $toc): void
     {
+        // @phpstan-ignore booleanAnd.alwaysFalse
+        if (! $toc instanceof TableOfContents && ! $toc instanceof TableOfContentsWrapper) {
+            throw new InvalidArgumentException(
+                'Toc should be a TableOfContents or TableOfContentsWrapper, got ' . \get_class($toc)
+            );
+        }
+
         foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             if (! $node instanceof Heading) {
                 continue;
@@ -87,8 +107,20 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
         }
     }
 
-    private function replacePlaceholders(Document $document, TableOfContents $toc): void
+    /**
+     * @psalm-param TableOfContents|TableOfContentsWrapper $toc
+     *
+     * @phpstan-param TableOfContents|TableOfContentsWrapper $toc
+     */
+    private function replacePlaceholders(Document $document, AbstractBlock $toc): void
     {
+        // @phpstan-ignore booleanAnd.alwaysFalse
+        if (! $toc instanceof TableOfContents && ! $toc instanceof TableOfContentsWrapper) {
+            throw new InvalidArgumentException(
+                'Toc should be a TableOfContents or TableOfContentsWrapper, got ' . \get_class($toc)
+            );
+        }
+
         foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             // Add the block once we find a placeholder
             if (! $node instanceof TableOfContentsPlaceholder) {
