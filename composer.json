@@ -101,6 +101,7 @@
     },
     "scripts": {
         "phpcs": "phpcs",
+        "phpcbf": "phpcbf",
         "phpstan": "phpstan analyse",
         "phpunit": "phpunit --no-coverage",
         "psalm": "psalm --stats",
