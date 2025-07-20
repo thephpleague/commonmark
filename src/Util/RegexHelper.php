@@ -32,7 +32,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 final class RegexHelper
 {
     // Partial regular expressions (wrap with `/` on each side and add the case-insensitive `i` flag before use)
-    public const PARTIAL_ENTITY                = '&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});';
+    public const PARTIAL_ENTITY                = '&(?>#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});';
     public const PARTIAL_ESCAPABLE             = '[!"#$%&\'()*+,.\/:;<=>?@[\\\\\]^_`{|}~-]';
     public const PARTIAL_ESCAPED_CHAR          = '\\\\' . self::PARTIAL_ESCAPABLE;
     public const PARTIAL_IN_DOUBLE_QUOTES      = '"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*"';
