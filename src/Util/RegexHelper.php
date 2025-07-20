@@ -49,10 +49,10 @@ final class RegexHelper
     public const PARTIAL_ATTRIBUTEVALUE        = '(?:' . self::PARTIAL_UNQUOTEDVALUE . '|' . self::PARTIAL_SINGLEQUOTEDVALUE . '|' . self::PARTIAL_DOUBLEQUOTEDVALUE . ')';
     public const PARTIAL_ATTRIBUTEVALUESPEC    = '(?:' . '\s*=' . '\s*' . self::PARTIAL_ATTRIBUTEVALUE . ')';
     public const PARTIAL_ATTRIBUTE             = '(?:' . '\s+' . self::PARTIAL_ATTRIBUTENAME . self::PARTIAL_ATTRIBUTEVALUESPEC . '?)';
-    public const PARTIAL_OPENTAG               = '<' . self::PARTIAL_TAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
-    public const PARTIAL_CLOSETAG              = '<\/' . self::PARTIAL_TAGNAME . '\s*[>]';
-    public const PARTIAL_OPENBLOCKTAG          = '<' . self::PARTIAL_BLOCKTAGNAME . self::PARTIAL_ATTRIBUTE . '*' . '\s*\/?>';
-    public const PARTIAL_CLOSEBLOCKTAG         = '<\/' . self::PARTIAL_BLOCKTAGNAME . '\s*[>]';
+    public const PARTIAL_OPENTAG               = '<' . self::PARTIAL_TAGNAME . self::PARTIAL_ATTRIBUTE . '*+' . '\s*+\/?+>';
+    public const PARTIAL_CLOSETAG              = '<\/' . self::PARTIAL_TAGNAME . '\s*+[>]';
+    public const PARTIAL_OPENBLOCKTAG          = '<' . self::PARTIAL_BLOCKTAGNAME . self::PARTIAL_ATTRIBUTE . '*+' . '\s*+\/?+>';
+    public const PARTIAL_CLOSEBLOCKTAG         = '<\/' . self::PARTIAL_BLOCKTAGNAME . '\s*+[>]';
     public const PARTIAL_HTMLCOMMENT           = '(?:<!-->|<!--->|<!--[\s\S]*?-->)';
     public const PARTIAL_PROCESSINGINSTRUCTION = '[<][?][\s\S]*?[?][>]';
     public const PARTIAL_DECLARATION           = '<![A-Za-z]+' . '[^>]*>';
