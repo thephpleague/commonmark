@@ -72,7 +72,7 @@ final class RegexHelper
 
     public const REGEX_WHITESPACE_CHAR         = '/^[ \t\n\x0b\x0c\x0d]/';
     public const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
-    public const REGEX_THEMATIC_BREAK          = '/^(?:\*[ \t]*){3,}$|^(?:_[ \t]*){3,}$|^(?:-[ \t]*){3,}$/';
+    public const REGEX_THEMATIC_BREAK          = '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})$/';
     public const REGEX_LINK_DESTINATION_BRACES = '/^(?:<(?:[^<>\\n\\\\\\x00]|\\\\.)*>)/';
 
     /**
