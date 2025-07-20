@@ -120,6 +120,14 @@ if ($config['csv'] !== false) {
         "php://fd/{$config['csv']}" :
         realpath($config['csv']);
 
+    if ($stream === false || $stream === '') {
+        $usage(
+            $config,
+            'path not found: %s',
+            $config['csv']
+        );
+    }
+
     $fd = @fopen(
         $stream,
         $config['exec'] === 'exec' ?
