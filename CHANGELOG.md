@@ -6,7 +6,16 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
-## [2.7.0]
+## [2.7.1] - 2025-07-20
+
+### Changed
+- Optimized several regular expressions in `RegexHelper` to improve performance (#674, #1086)
+
+### Fixed
+- `EmbedProcessor` no longer calls `updateEmbeds()` when there are no embeds to update (#1081)
+- Fixed missing `benchmark.php` CSV path validation for non-existent files (#1068, #1085)
+
+## [2.7.0] - 2025-05-05
 
 This is a **security release** to address a potential cross-site scripting (XSS) vulnerability when using the `AttributesExtension` with untrusted user input.
 
@@ -700,7 +709,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.7.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.7.1...HEAD
+[2.7.1]: https://github.com/thephpleague/commonmark/compare/2.7.0...2.7.1
 [2.7.0]: https://github.com/thephpleague/commonmark/compare/2.6.2...2.7.0
 [2.6.2]: https://github.com/thephpleague/commonmark/compare/2.6.1...2.6.2
 [2.6.1]: https://github.com/thephpleague/commonmark/compare/2.6.0...2.6.1
