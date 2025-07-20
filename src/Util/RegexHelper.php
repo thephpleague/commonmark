@@ -65,7 +65,7 @@ final class RegexHelper
         '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*+\'' .
         '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*+\))';
 
-    public const REGEX_PUNCTUATION        = '/^[!"#$%&\'()*+,\-.\\/:;<=>?@\\[\\]\\\\^_`{|}~\p{P}\p{S}]/u';
+    public const REGEX_PUNCTUATION        = '/^[\p{P}\p{S}]/u';
     public const REGEX_UNSAFE_PROTOCOL    = '/^javascript:|vbscript:|file:|data:/i';
     public const REGEX_SAFE_DATA_PROTOCOL = '/^data:image\/(?:png|gif|jpeg|webp)/i';
     public const REGEX_NON_SPACE          = '/[^ \t\f\v\r\n]/';
