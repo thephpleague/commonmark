@@ -37,7 +37,7 @@ RUN set -xe \
             mbstring \
             opcache \
             zip \
-        && pecl install xdebug \
+        && pecl install xdebug-3.1.6 \
         && apk del .build-deps
 
 
