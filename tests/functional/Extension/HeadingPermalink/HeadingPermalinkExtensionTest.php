@@ -222,6 +222,100 @@ EOT;
         $this->assertEquals($expected, \trim((string) $converter->convert($input)));
     }
 
+    /**
+     * @dataProvider dataProviderForTestHeadingPermalinksWithBlacklist
+     */
+    public function testHeadingPermalinksWithBlacklist(string $input, string $expected): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'id_blacklist' => ['example-id', 'another-example'],
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
+    public static function dataProviderForTestHeadingPermalinksWithBlacklist(): \Generator
+    {
+        $symbol = HeadingPermalinkRenderer::DEFAULT_SYMBOL;
+        
+        // Blacklisted ID gets suffix -1
+        yield ['# Example ID', \sprintf('<h1><a id="content-example-id-1" href="#content-example-id-1" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Example ID</h1>', $symbol)];
+        
+        // Another blacklisted ID gets suffix -1
+        yield ['# Another Example', \sprintf('<h1><a id="content-another-example-1" href="#content-another-example-1" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Another Example</h1>', $symbol)];
+        
+        // Non-blacklisted ID works normally
+        yield ['# Regular Heading', \sprintf('<h1><a id="content-regular-heading" href="#content-regular-heading" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Regular Heading</h1>', $symbol)];
+        
+        // Multiple headings with same blacklisted ID get incremental suffixes
+        yield ["# Example ID\n\n# Example ID", \sprintf("<h1><a id=\"content-example-id-1\" href=\"#content-example-id-1\" class=\"heading-permalink\" aria-hidden=\"true\" title=\"Permalink\">%s</a>Example ID</h1>\n<h1><a id=\"content-example-id-2\" href=\"#content-example-id-2\" class=\"heading-permalink\" aria-hidden=\"true\" title=\"Permalink\">%s</a>Example ID</h1>", $symbol, $symbol)];
+    }
+
+    public function testHeadingPermalinksWithRawTextInBlacklist(): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'id_blacklist' => ['User Guide', 'About Us'], // Raw text in blacklist
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $input = '# User Guide';
+        $expected = \sprintf('<h1><a id="content-user-guide-1" href="#content-user-guide-1" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>User Guide</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
+    public function testHeadingPermalinksWithBlacklistAndCustomPrefix(): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'id_prefix' => 'my-prefix',
+                'fragment_prefix' => 'my-prefix',
+                'id_blacklist' => ['hello-world'],
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $input = '# Hello World';
+        $expected = \sprintf('<h1><a id="my-prefix-hello-world-1" href="#my-prefix-hello-world-1" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
+    public function testHeadingPermalinksWithBlacklistAndEmptyPrefix(): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'id_prefix' => '',
+                'fragment_prefix' => '',
+                'id_blacklist' => ['hello-world'],
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $input = '# Hello World';
+        $expected = \sprintf('<h1><a id="hello-world-1" href="#hello-world-1" class="heading-permalink" aria-hidden="true" title="Permalink">%s</a>Hello World</h1>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
+
     public function testXml(): void
     {
         $md = '# Hello *World*';

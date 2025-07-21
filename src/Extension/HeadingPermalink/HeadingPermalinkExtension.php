@@ -31,6 +31,7 @@ final class HeadingPermalinkExtension implements ConfigurableExtensionInterface
             'max_heading_level' => Expect::int()->min(1)->max(6)->default(6),
             'insert' => Expect::anyOf(HeadingPermalinkProcessor::INSERT_BEFORE, HeadingPermalinkProcessor::INSERT_AFTER, HeadingPermalinkProcessor::INSERT_NONE)->default(HeadingPermalinkProcessor::INSERT_BEFORE),
             'id_prefix' => Expect::string()->default('content'),
+            'id_blacklist' => Expect::arrayOf('string')->default([]),
             'apply_id_to_heading' => Expect::bool()->default(false),
             'heading_class' => Expect::string()->default(''),
             'fragment_prefix' => Expect::string()->default('content'),

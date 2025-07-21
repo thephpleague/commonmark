@@ -21,6 +21,7 @@ use League\CommonMark\Node\NodeIterator;
 use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
+use League\CommonMark\Normalizer\UniqueSlugNormalizer;
 use League\Config\ConfigurationInterface;
 use League\Config\Exception\InvalidConfigurationException;
 
@@ -53,9 +54,15 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
         $idPrefix       = (string) $this->config->get('heading_permalink/id_prefix');
         $slugLength     = (int) $this->config->get('slug_normalizer/max_length');
         $headingClass   = (string) $this->config->get('heading_permalink/heading_class');
+        $idBlacklist    = (array) $this->config->get('heading_permalink/id_blacklist');
 
         if ($idPrefix !== '') {
             $idPrefix .= '-';
+        }
+
+        // Apply blacklist to slug normalizer if it supports it
+        if ($this->slugNormalizer instanceof UniqueSlugNormalizer && \count($idBlacklist) > 0) {
+            $this->slugNormalizer->setBlacklist($idBlacklist);
         }
 
         foreach ($e->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {

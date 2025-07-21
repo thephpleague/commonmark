@@ -19,16 +19,40 @@ final class UniqueSlugNormalizer implements UniqueSlugNormalizerInterface
     private TextNormalizerInterface $innerNormalizer;
     /** @var array<string, bool> */
     private array $alreadyUsed = [];
+    /** @var array<string, bool> */
+    private array $blacklist = [];
 
     public function __construct(TextNormalizerInterface $innerNormalizer)
     {
         $this->innerNormalizer = $innerNormalizer;
     }
 
+    /**
+     * Set a list of IDs that should be treated as already used
+     *
+     * These IDs will be considered "taken" and any generated slug matching
+     * a blacklisted ID will receive a numeric suffix (e.g., -1, -2, etc.)
+     *
+     * @param array<string> $blacklistedIds List of IDs to blacklist
+     */
+    public function setBlacklist(array $blacklistedIds): void
+    {
+        $this->blacklist = [];
+        foreach ($blacklistedIds as $id) {
+            // Normalize the blacklist entry using the same normalizer as headings
+            $normalized = $this->innerNormalizer->normalize($id);
+            if ($normalized !== '') {
+                $this->blacklist[$normalized] = true;
+            }
+        }
+        $this->clearHistory();
+    }
+
     public function clearHistory(): void
     {
-        $this->alreadyUsed = [];
+        $this->alreadyUsed = $this->blacklist;
     }
+
 
     /**
      * {@inheritDoc}

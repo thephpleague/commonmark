@@ -6,6 +6,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+- Added `heading_permalink/id_blacklist` configuration option to pre-reserve
+  specific heading IDs, ensuring duplicates get numeric suffixes. Supports
+  both raw text (`'User Guide'`) and normalized forms (`'user-guide'`)
+  (fixes [#1080](https://github.com/thephpleague/commonmark/issues/1080)).
+
 ## [2.7.1] - 2025-07-20
 
 ### Changed
