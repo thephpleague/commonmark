@@ -14,9 +14,17 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\TableOfContents;
 
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
+use League\CommonMark\Extension\TableOfContents\Node\TableOfContentsWrapper;
+use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
 
 interface TableOfContentsGeneratorInterface
 {
-    public function generate(Document $document): ?TableOfContents;
+    /**
+     * If there is a table of contents, returns either a `TableOfContents` or
+     * `TableOfContentsWrapper` node object.
+     *
+     * @psalm-return TableOfContents|TableOfContentsWrapper
+     */
+    public function generate(Document $document): ?AbstractBlock;
 }
