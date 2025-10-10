@@ -50,8 +50,10 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
         $slug = $node->getSlug();
 
         $fragmentPrefix = (string) $this->config->get('heading_permalink/fragment_prefix');
+		$slugDelimiter  = (string) $this->config->get('slug_normalizer/delimiter');
+
         if ($fragmentPrefix !== '') {
-            $fragmentPrefix .= '-';
+            $fragmentPrefix .= $slugDelimiter;
         }
 
         $attrs    = $node->data->getData('attributes');
@@ -61,7 +63,7 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
             $idPrefix = (string) $this->config->get('heading_permalink/id_prefix');
 
             if ($idPrefix !== '') {
-                $idPrefix .= '-';
+                $idPrefix .= $slugDelimiter;
             }
 
             $attrs->set('id', $idPrefix . $slug);
