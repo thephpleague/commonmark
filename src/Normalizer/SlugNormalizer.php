@@ -24,9 +24,12 @@ final class SlugNormalizer implements TextNormalizerInterface, ConfigurationAwar
     /** @psalm-allow-private-mutation */
     private int $defaultMaxLength = 255;
 
+	private string $delimiter = '-';
+
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->defaultMaxLength = $configuration->get('slug_normalizer/max_length');
+        $this->delimiter = $configuration->get('slug_normalizer/delimiter');
     }
 
     /**
@@ -42,10 +45,13 @@ final class SlugNormalizer implements TextNormalizerInterface, ConfigurationAwar
         $slug = \trim($slug);
         // Convert to lowercase
         $slug = \mb_strtolower($slug, 'UTF-8');
-        // Try replacing whitespace with a dash
-        $slug = \preg_replace('/\s+/u', '-', $slug) ?? $slug;
+
         // Try removing characters other than letters, numbers, and marks.
-        $slug = \preg_replace('/[^\p{L}\p{Nd}\p{Nl}\p{M}-]+/u', '', $slug) ?? $slug;
+        $slug = \preg_replace('/[^\p{L}\p{Nd}\p{Nl}\p{M}-]\s+/u', '', $slug) ?? $slug;
+
+		 // Try replacing whitespace with the delimited
+        $slug = \preg_replace('/\s+/u', $this->delimiter, $slug) ?? $slug;
+
         // Trim to requested length if given
         if ($length = $context['length'] ?? $this->defaultMaxLength) {
             $slug = \mb_substr($slug, 0, $length, 'UTF-8');
