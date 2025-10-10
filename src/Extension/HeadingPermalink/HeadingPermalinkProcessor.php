@@ -52,10 +52,11 @@ final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
         $applyToHeading = (bool) $this->config->get('heading_permalink/apply_id_to_heading');
         $idPrefix       = (string) $this->config->get('heading_permalink/id_prefix');
         $slugLength     = (int) $this->config->get('slug_normalizer/max_length');
+        $slugDelimiter  = (string) $this->config->get('slug_normalizer/delimiter');
         $headingClass   = (string) $this->config->get('heading_permalink/heading_class');
 
         if ($idPrefix !== '') {
-            $idPrefix .= '-';
+            $idPrefix .= $slugDelimiter;
         }
 
         foreach ($e->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
