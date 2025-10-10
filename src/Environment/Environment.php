@@ -442,6 +442,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
                 'instance' => Expect::type(TextNormalizerInterface::class)->default(new SlugNormalizer()),
                 'max_length' => Expect::int()->min(0)->default(255),
                 'unique' => Expect::anyOf(UniqueSlugNormalizerInterface::DISABLED, UniqueSlugNormalizerInterface::PER_ENVIRONMENT, UniqueSlugNormalizerInterface::PER_DOCUMENT)->default(UniqueSlugNormalizerInterface::PER_DOCUMENT),
+	            'delimiter' => Expect::string()->default('-')
             ]),
         ]);
     }
