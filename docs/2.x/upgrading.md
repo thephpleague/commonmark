@@ -16,6 +16,10 @@ redirect_from:
 
 # Upgrading to Newer Versions
 
+## Upgrading from 2.7 to 2.8
+
+There are no breaking changes when upgrading from 2.7 to 2.8.
+
 ## Upgrading from 2.6 to 2.7
 
 There are no breaking changes when upgrading from 2.6 to 2.7.

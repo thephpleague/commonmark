@@ -12,7 +12,6 @@
 
  - [ ] Update the relevant documentation in `./docs/`
  - [ ] Remember to note the upgrade changes in the docs too
- - [ ] If releasing a new major or minor version, make sure to clone the previous one and make the necessary changes.  This will allow people to submit new features to the dev-main version. Don't forget to update version numbers in project.yml! And update the redirects too. Especially for /security/.
  - [ ] Build and preview the docs locally
 
 ## Release

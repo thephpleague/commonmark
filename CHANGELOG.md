@@ -6,8 +6,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.8.0] - 2025-11-26
+
 ### Added
 - Added a new `HighlightExtension` for marking important text using `==` syntax (#1100)
+
+### Fixed
+- Fixed `AutolinkExtension` incorrectly matching URLs after invalid `www.` prefix (#1095, #1103)
 
 ## [2.7.1] - 2025-07-20
 
@@ -712,7 +717,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.7.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.8.0...HEAD
+[2.8.0]: https://github.com/thephpleague/commonmark/compare/2.7.1...2.8.0
 [2.7.1]: https://github.com/thephpleague/commonmark/compare/2.7.0...2.7.1
 [2.7.0]: https://github.com/thephpleague/commonmark/compare/2.6.2...2.7.0
 [2.6.2]: https://github.com/thephpleague/commonmark/compare/2.6.1...2.6.2
