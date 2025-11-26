@@ -4,29 +4,14 @@ description: PHP Markdown parser featuring support for CommonMark, GFM, and cust
 site_title: CommonMark for PHP
 google_analytics_tracking_id: UA-137970568-1
 repository: commonmark
-default_version: '2.7'
+default_version: '2.x'
 releases:
   current:
-    '2.7':
-      documentation_link: '/2.7/'
-  previous:
-    '2.6':
-      documentation_link: '/2.6/'
+    '2.x':
+      documentation_link: '/2.x/'
   legacy:
-    '2.5':
-      documentation_link: '/2.5/'
-    '2.4':
-      documentation_link: '/2.4/'
-    '2.3':
-      documentation_link: '/2.3/'
-    '2.2':
-      documentation_link: '/2.2/'
-    '2.1':
-      documentation_link: '/2.1/'
-    '2.0':
-      documentation_link: '/2.0/'
-    '1.6':
-      documentation_link: '/1.6/'
+    '1.x':
+      documentation_link: '/1.x/'
 author:
     name: Colin O'Dell
     twitter_account: colinodell
