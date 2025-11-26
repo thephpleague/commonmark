@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>This paragraph has </text>
+        <mark>
+            <text>two words</text>
+        </mark>
+        <text> highlighted.</text>
+    </paragraph>
+</document>
