@@ -90,6 +90,11 @@ final class UrlAutolinkParserTest extends TestCase
 
         // Issue 492: underscores in URLs (see https://github.com/thephpleague/commonmark/issues/492)
         yield ['http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)', '<p><a href="http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)">http://wiki/Puncutation_in_links:_why_its_bad_(and_should_be_avoided)</a></p>'];
+
+        // Regression: www. (with space) followed by a valid URL should not incorrectly link
+        yield ['test text www. test https://commonmark.thephpleague.com/2.7/extensions/autolinks/ more text', '<p>test text www. test <a href="https://commonmark.thephpleague.com/2.7/extensions/autolinks/">https://commonmark.thephpleague.com/2.7/extensions/autolinks/</a> more text</p>'];
+        yield ['www. example.com', '<p>www. example.com</p>'];
+        yield ['www.  https://example.com', '<p>www.  <a href="https://example.com">https://example.com</a></p>'];
     }
 
     public function testUrlAutolinksWithStrikethrough(): void
