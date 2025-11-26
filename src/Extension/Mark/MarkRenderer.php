@@ -19,8 +19,8 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class MarkRenderer implements NodeRendererInterface, XmlNodeRendererInterface {
-
+final class MarkRenderer implements NodeRendererInterface, XmlNodeRendererInterface
+{
     /**
      * @param Mark $node
      *
@@ -47,5 +47,4 @@ final class MarkRenderer implements NodeRendererInterface, XmlNodeRendererInterf
     {
         return [];
     }
-
 }

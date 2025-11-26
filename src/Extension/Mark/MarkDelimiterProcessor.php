@@ -17,8 +17,8 @@ use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Node\Inline\AbstractStringContainer;
 
-class MarkDelimiterProcessor implements DelimiterProcessorInterface {
-
+class MarkDelimiterProcessor implements DelimiterProcessorInterface
+{
     public function getOpeningCharacter(): string
     {
         return '=';
@@ -66,5 +66,4 @@ class MarkDelimiterProcessor implements DelimiterProcessorInterface {
     {
         return '=' . $closer->getLength();
     }
-
 }

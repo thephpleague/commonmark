@@ -16,12 +16,11 @@ namespace League\CommonMark\Extension\Mark;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 
-class MarkExtension implements ExtensionInterface {
-
+class MarkExtension implements ExtensionInterface
+{
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addDelimiterProcessor(new MarkDelimiterProcessor());
         $environment->addRenderer(Mark::class, new MarkRenderer());
     }
-
 }

@@ -16,8 +16,8 @@ namespace League\CommonMark\Extension\Mark;
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\DelimitedInterface;
 
-final class Mark extends AbstractInline implements DelimitedInterface {
-
+final class Mark extends AbstractInline implements DelimitedInterface
+{
     private string $delimiter;
 
     public function __construct(string $delimiter = '==')
