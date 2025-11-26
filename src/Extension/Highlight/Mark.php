@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\Mark;
+namespace League\CommonMark\Extension\Highlight;
 
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\DelimitedInterface;

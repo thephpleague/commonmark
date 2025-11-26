@@ -11,16 +11,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Functional\Extension\Mark;
+namespace League\CommonMark\Tests\Functional\Extension\Highlight;
 
 use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\Mark\MarkExtension;
+use League\CommonMark\Extension\Highlight\HighlightExtension;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 use League\CommonMark\Xml\MarkdownToXmlConverter;
 
-final class MarkXmlTest extends AbstractLocalDataTestCase
+final class HighlightXmlTest extends AbstractLocalDataTestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -29,7 +29,7 @@ final class MarkXmlTest extends AbstractLocalDataTestCase
     {
         $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new MarkExtension());
+        $environment->addExtension(new HighlightExtension());
 
         return new MarkdownToXmlConverter($environment);
     }

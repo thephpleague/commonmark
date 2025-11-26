@@ -11,9 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit\Extension\Mark;
+namespace League\CommonMark\Tests\Unit\Extension\Highlight;
 
-use League\CommonMark\Extension\Mark\Mark;
+use League\CommonMark\Extension\Highlight\Mark;
 use PHPUnit\Framework\TestCase;
 
 final class MarkTest extends TestCase

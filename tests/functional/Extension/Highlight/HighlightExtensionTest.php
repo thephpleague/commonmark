@@ -11,16 +11,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Functional\Extension\Mark;
+namespace League\CommonMark\Tests\Functional\Extension\Highlight;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\Mark\MarkExtension;
+use League\CommonMark\Extension\Highlight\HighlightExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
-final class MarkExtensionTest extends TestCase
+final class HighlightExtensionTest extends TestCase
 {
     /**
      * @dataProvider dataForIntegrationTest
@@ -29,7 +29,7 @@ final class MarkExtensionTest extends TestCase
     {
         $environment = new Environment();
         $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new MarkExtension());
+        $environment->addExtension(new HighlightExtension());
 
         $parser   = new MarkdownParser($environment);
         $renderer = new HtmlRenderer($environment);

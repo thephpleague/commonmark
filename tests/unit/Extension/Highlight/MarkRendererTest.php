@@ -11,11 +11,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit\Extension\Mark;
+namespace League\CommonMark\Tests\Unit\Extension\Highlight;
 
 use League\CommonMark\Exception\InvalidArgumentException;
-use League\CommonMark\Extension\Mark\Mark;
-use League\CommonMark\Extension\Mark\MarkRenderer;
+use League\CommonMark\Extension\Highlight\Mark;
+use League\CommonMark\Extension\Highlight\MarkRenderer;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;

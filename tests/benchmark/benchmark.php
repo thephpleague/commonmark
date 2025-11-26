@@ -24,7 +24,7 @@ use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
-use League\CommonMark\Extension\Mark\MarkExtension;
+use League\CommonMark\Extension\Highlight\HighlightExtension;
 use League\CommonMark\Extension\Mention\MentionExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
@@ -195,7 +195,7 @@ $parsers = [
         $environment->addExtension(new FootnoteExtension());
         $environment->addExtension(new FrontMatterExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
-        $environment->addExtension(new MarkExtension());
+        $environment->addExtension(new HighlightExtension());
         $environment->addExtension(new MentionExtension());
         $environment->addExtension(new SmartPunctExtension());
         $environment->addExtension(new StrikethroughExtension());

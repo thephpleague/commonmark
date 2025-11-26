@@ -11,12 +11,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\Mark;
+namespace League\CommonMark\Extension\Highlight;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 
-class MarkExtension implements ExtensionInterface
+class HighlightExtension implements ExtensionInterface
 {
     public function register(EnvironmentBuilderInterface $environment): void
     {
