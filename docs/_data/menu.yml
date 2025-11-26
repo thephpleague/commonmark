@@ -25,6 +25,7 @@ version:
             'Footnotes': '/2.x/extensions/footnotes/'
             'Front Matter': '/2.x/extensions/front-matter/'
             'Heading Permalinks': '/2.x/extensions/heading-permalinks/'
+            'Highlight': '/2.x/extensions/highlight/'
             'Inlines Only': '/2.x/extensions/inlines-only/'
             'Mentions': '/2.x/extensions/mentions/'
             'Smart Punctuation': '/2.x/extensions/smart-punctuation/'
