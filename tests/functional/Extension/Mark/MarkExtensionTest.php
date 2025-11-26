@@ -53,7 +53,7 @@ final class MarkExtensionTest extends TestCase
             ['This is a test `with` ==valid== marks', "<p>This is a test <code>with</code> <mark>valid</mark> marks</p>\n"],
             ['This is a ==unit== integration test', "<p>This is a <mark>unit</mark> integration test</p>\n"],
             ['==Mark== on the left', "<p><mark>Mark</mark> on the left</p>\n"],
-            ['Mark on the ==right==', "<p>Mark on the <del>right</del></p>\n"],
+            ['Mark on the ==right==', "<p>Mark on the <mark>right</mark></p>\n"],
             ['==Mark everywhere==', "<p><mark>Mark everywhere</mark></p>\n"],
             ['This ==test has no ending match', "<p>This ==test has no ending match</p>\n"],
             ['This ==test=== has mismatched equal signs', "<p>This ==test=== has mismatched equal signs</p>\n"],
@@ -74,7 +74,7 @@ final class MarkExtensionTest extends TestCase
             ['==foo====bar==', "<p><mark>foo====bar</mark></p>\n"],
             ['==foo=====bar==', "<p><mark>foo=====bar</mark></p>\n"],
             ['==foo======bar==', "<p><mark>foo======bar</mark></p>\n"],
-            ['==foo=======bar==', "<p><del>foo=======bar</del></p>\n"],
+            ['==foo=======bar==', "<p><mark>foo=======bar</mark></p>\n"],
             ['> inside a ==blockquote==', "<blockquote>\n<p>inside a <mark>blockquote</mark></p>\n</blockquote>\n"],
         ];
     }
