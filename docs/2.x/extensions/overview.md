@@ -12,8 +12,6 @@ redirect_from:
   - /2.5/extensions/overview/
   - /2.6/extensions/overview/
   - /2.7/extensions/overview/
-- /extensions/
-- /extensions/overview/
 ---
 
 # Extensions Overview
