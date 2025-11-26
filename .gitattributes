@@ -12,6 +12,7 @@
 /.styleci.yml         export-ignore
 /CHANGELOG-0.x.md     export-ignore
 /CHANGELOG-1.x.md     export-ignore
+/CLAUDE.md            export-ignore
 /docker               export-ignore
 /docker-compose.yml   export-ignore
 /docs                 export-ignore

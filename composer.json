@@ -46,7 +46,7 @@
         "symfony/process": "^5.4 | ^6.0 | ^7.0",
         "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0 | ^6.0 | ^7.0",
         "unleashedtech/php-coding-standard": "^3.1.1",
-        "vimeo/psalm": "^4.24.0 || ^5.0.0"
+        "vimeo/psalm": "^4.24.0 || ^5.0.0 || ^6.0.0"
     },
     "minimum-stability": "beta",
     "suggest": {
@@ -101,6 +101,7 @@
     },
     "scripts": {
         "phpcs": "phpcs",
+        "phpcbf": "phpcbf",
         "phpstan": "phpstan analyse",
         "phpunit": "phpunit --no-coverage",
         "psalm": "psalm --stats",

@@ -111,7 +111,7 @@ We do provide an adapter for the popular [`embed/embed`](https://github.com/osca
 because it supports fetching multiple URLs in parallel, which is ideal for performance, and it supports a wide range
 of embeddable content.
 
-To use that library, you'll need to `composer install embed/embed` and then pass `new OscaroteroEmbedAdapter()` as the `adapter`
+To use that library, you'll need to `composer require embed/embed` and then pass `new OscaroteroEmbedAdapter()` as the `adapter`
 configuration option, as shown in the [**Usage**](#usage) section above.
 
 Note: `embed/embed` *requires* a PSR-17 implementation to be installed.  If you do not have one installed, the library will not work.  By default these libraries are detected automatically:
