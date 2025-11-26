@@ -18,11 +18,11 @@ Delimiter runs are a special type of inline:
 This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after.
 ```
 
-When implementing something with these characteristics you should consider leveraging delimiter runs; otherwise, a basic [inline parser](/1.x/inline-parsing/) should be sufficient.
+When implementing something with these characteristics you should consider leveraging delimiter runs; otherwise, a basic [inline parser](/1.x/customization/inline-parsing/) should be sufficient.
 
 ## Delimiter Priority
 
-Delimiter processors have a lower priority than inline parsers - if an [inline parser](/1.x/inline-parsing/) successfully handles the same special character you're interested in then your delimiter processor will not be called.
+Delimiter processors have a lower priority than inline parsers - if an [inline parser](/1.x/customization/inline-parsing/) successfully handles the same special character you're interested in then your delimiter processor will not be called.
 
 ## Implementing Standalone Delimiter Processors
 
