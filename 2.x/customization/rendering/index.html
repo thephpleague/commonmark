@@ -1,0 +1,150 @@
+<h1 id="custom-rendering">Custom Rendering</h1>
+
+<p>Renderers are responsible for converting the parsed AST elements into their HTML representation.</p>
+
+<p>All block renderers should implement <code class="language-plaintext highlighter-rouge">NodeRendererInterface</code> and its <code class="language-plaintext highlighter-rouge">render()</code> method.  Note that in v2.0, both
+block renderers and inline renderers share the same interface and method:</p>
+
+<h2 id="render">render()</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">function</span> <span class="n">render</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">,</span> <span class="kt">ChildNodeRendererInterface</span> <span class="nv">$childRenderer</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">HtmlRenderer</code> will call this method during the rendering process whenever a supported element is encountered.</p>
+
+<p>If your renderer can only handle certain block types, be sure to verify that you’ve been passed the correct type.</p>
+
+<h3 id="parameters">Parameters</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Node $node</code> - The encountered block or inline element that needs to be rendered</li>
+  <li><code class="language-plaintext highlighter-rouge">ChildNodeRendererInterface $childRenderer</code> - If the given $node has children, use this to render those child elements</li>
+</ul>
+
+<h3 id="return-value">Return value</h3>
+
+<p>The method must return the final HTML representation of the node and its contents, including any children. This can be an <code class="language-plaintext highlighter-rouge">HtmlElement</code> object (preferred; castable to a string), a string of raw HTML, or <code class="language-plaintext highlighter-rouge">null</code> if it could not render (and perhaps another renderer should give it a try).</p>
+
+<p>If you choose to return an HTML <code class="language-plaintext highlighter-rouge">string</code> you are responsible for handling any escaping that may be necessary.</p>
+
+<h4 id="htmlelement"><code class="language-plaintext highlighter-rouge">HtmlElement</code></h4>
+
+<p>Instead of manually building the HTML output yourself, you can leverage the <code class="language-plaintext highlighter-rouge">HtmlElement</code> to generate that for you.  For example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Util\HtmlElement</span><span class="p">;</span>
+
+<span class="nv">$link</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HtmlElement</span><span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://github.com'</span><span class="p">],</span> <span class="s1">'GitHub'</span><span class="p">);</span>
+<span class="nv">$img</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HtmlElement</span><span class="p">(</span><span class="s1">'img'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'src'</span> <span class="o">=&gt;</span> <span class="s1">'logo.jpg'</span><span class="p">],</span> <span class="s1">''</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="designating-renderers">Designating Renderers</h2>
+
+<p>When registering your renderer, you must tell the <code class="language-plaintext highlighter-rouge">Environment</code> which node element class your renderer should handle. For example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\FencedCode</span><span class="p">;</span>
+
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">();</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+
+<span class="c1">// First param - the node class type that should use our renderer</span>
+<span class="c1">// Second param - instance of the renderer</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">FencedCode</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">MyCustomCodeRenderer</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>A single renderer could even be used for multiple types:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\FencedCode</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode</span><span class="p">;</span>
+
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">();</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+
+<span class="nv">$myRenderer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyCustomCodeRenderer</span><span class="p">();</span>
+
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">FencedCode</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="nv">$myRenderer</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">IndentedCode</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="nv">$myRenderer</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Multiple renderers can be added per element type - when this happens, we use the result from the highest-priority renderer that returns a non-<code class="language-plaintext highlighter-rouge">null</code> result.</p>
+
+<h2 id="example">Example</h2>
+
+<p>Here’s a custom renderer which renders thematic breaks as text (instead of <code class="language-plaintext highlighter-rouge">&lt;hr&gt;</code>):</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Node\Node</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\ChildNodeRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\NodeRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Util\HtmlElement</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">TextDividerRenderer</span> <span class="kd">implements</span> <span class="nc">NodeRendererInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">render</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">,</span> <span class="kt">ChildNodeRendererInterface</span> <span class="nv">$childRenderer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">HtmlElement</span><span class="p">(</span><span class="s1">'pre'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'divider'</span><span class="p">],</span> <span class="s1">'=============================='</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">();</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">ThematicBreak</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">TextDividerRenderer</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>Note that thematic breaks should not contain children, which is why the <code class="language-plaintext highlighter-rouge">$childRenderer</code> is unused in this example.  Otherwise we’d have to call code like this and return the result as part of the rendered HTML we’re generating here: <code class="language-plaintext highlighter-rouge">$innerHtml = $childRenderer-&gt;renderNodes($node-&gt;children());</code></p>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+  <li>Return an <code class="language-plaintext highlighter-rouge">HtmlElement</code> if possible. This makes it easier to extend and modify the results later.</li>
+  <li>Don’t forget to render any child elements that your node might contain!</li>
+</ul>
+
+<h2 id="wrapping-elements-with-htmldecorator">Wrapping Elements with <code class="language-plaintext highlighter-rouge">HtmlDecorator</code></h2>
+
+<p>A utility class called <code class="language-plaintext highlighter-rouge">HtmlDecorator</code> is provided to make it easier to wrap the output of any renderer within an additional HTML tag with custom attributes and/or classes. To use it:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Environment\Environment</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\HtmlDecorator</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Table\Table</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Extension\Table\TableRenderer</span><span class="p">;</span>
+
+<span class="nv">$environment</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Environment</span><span class="p">();</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addExtension</span><span class="p">(</span><span class="k">new</span> <span class="nc">CommonMarkCoreExtension</span><span class="p">());</span>
+<span class="nv">$environment</span><span class="o">-&gt;</span><span class="nf">addRenderer</span><span class="p">(</span><span class="nc">Table</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">new</span> <span class="nc">HtmlDecorator</span><span class="p">(</span><span class="k">new</span> <span class="nc">TableRenderer</span><span class="p">(),</span> <span class="s1">'div'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'table-responsive'</span><span class="p">]));</span>
+</code></pre></div></div>
+
+<h2 id="xml-rendering">XML Rendering</h2>
+
+<p>The <a href="/2.x/xml/">XML renderer</a> will automatically attempt to convert any AST nodes to XML by inspecting the name of the block/inline node and its attributes. You can instead control the XML element name and attributes by making your renderer implement <code class="language-plaintext highlighter-rouge">XmlNodeRendererInterface</code>:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">League\CommonMark\Node\Node</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\ChildNodeRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Renderer\NodeRendererInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Util\HtmlElement</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">League\CommonMark\Xml\XmlNodeRendererInterface</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">TextDividerRenderer</span> <span class="kd">implements</span> <span class="nc">NodeRendererInterface</span><span class="p">,</span> <span class="nc">XmlNodeRendererInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">render</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">,</span> <span class="kt">ChildNodeRendererInterface</span> <span class="nv">$childRenderer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">HtmlElement</span><span class="p">(</span><span class="s1">'pre'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'divider'</span><span class="p">],</span> <span class="s1">'=============================='</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getXmlTagName</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">):</span> <span class="kt">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">'text_divider'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getXmlAttributes</span><span class="p">(</span><span class="kt">Node</span> <span class="nv">$node</span><span class="p">):</span> <span class="kt">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">'character'</span> <span class="o">=&gt;</span> <span class="s1">'='</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
