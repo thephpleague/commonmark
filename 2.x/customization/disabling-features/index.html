@@ -1,0 +1,61 @@
+<h1 id="disabling-features">Disabling Features</h1>
+
+<p>The CommonMark parser is designed to be highly configurable.  You can disable certain features that you don’t want to have in your application.  There are a few ways to do this, depending on your needs:</p>
+
+<h2 id="avoiding-parsing">Avoiding Parsing</h2>
+
+<p>You cannot disable an already-registered parser, but you can prevent it from being registered with
+the <a href="/2.x/customization/environment/"><code class="language-plaintext highlighter-rouge">Environment</code></a> in the first place.  This is exactly how the
+<a href="/2.x/extensions/inlines-only/"><code class="language-plaintext highlighter-rouge">InlinesOnlyExtension</code></a> works - it’s a copy of the <code class="language-plaintext highlighter-rouge">CommonMarkCoreExtension</code> class but
+with the parsers we don’t want removed.</p>
+
+<p>You can mirror this approach by defining your own <a href="/2.x/customization/extensions/">custom extension class</a> that registers
+only the specific parsers, renderers, etc. that you want.</p>
+
+<p>The only potential downside to this approach is that any syntax for those disabled features will appear in the output.
+For example, if you were to prevent block quotes from being parsed, then the following Markdown:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; This is a block quote</span>
+</code></pre></div></div>
+
+<p>Would have the <code class="language-plaintext highlighter-rouge">&gt;</code> character appear in the output HTML:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;</span><span class="ni">&amp;gt;</span> This is a block quote<span class="nt">&lt;/p&gt;</span>
+</code></pre></div></div>
+
+<p>This is probably fine for most use cases.</p>
+
+<h2 id="removing-parsed-elements">Removing Parsed Elements</h2>
+
+<p>An alternative approach is to keep the parser enabled, but remove the parsed elements from the AST before rendering.</p>
+
+<p>You’d create an <a href="/2.x/customization/event-dispatcher/#registering-listeners">event listener</a>
+(sort of like <a href="/2.x/customization/event-dispatcher/#example">this one</a>) that will
+<a href="/2.x/customization/abstract-syntax-tree/">iterate all parsed elements</a>, locate the target nodes, and remove them
+by calling <code class="language-plaintext highlighter-rouge">$node-&gt;detach()</code>.</p>
+
+<p>There are three potential advantages to this approach:</p>
+
+<ol>
+  <li>You don’t need to create a custom extension class or prevent parsers from being registered</li>
+  <li>You can selectively remove certain elements based on their properties (e.g. only remove heading levels 3-6) while keeping others</li>
+  <li>The syntax and contents of the removed elements will not appear in the output HTML</li>
+</ol>
+
+<p>The downside is that you still incur the overhead of parsing the elements that are eventually removed.</p>
+
+<h2 id="override-rendering">Override Rendering</h2>
+
+<p>The final approach is to keep the parser enabled, but override how the parsed elements are rendered.  For example,
+you could implement a <a href="/2.x/customization/rendering/">custom renderer</a> for certain elements that simply returns
+something else (perhaps an empty string, or an HTML comment of <code class="language-plaintext highlighter-rouge">&lt;!-- REMOVED --&gt;</code>) instead of the HTML you don’t want.</p>
+
+<p>This approach is not recommended because:</p>
+
+<ol>
+  <li>You still incur the overhead of parsing the elements that are eventually removed</li>
+  <li>You’d need to register your custom renderer with a higher priority than the default renderer</li>
+  <li>You’d need to repeat this for every renderer that could potentially render the elements you want to remove</li>
+</ol>
+
+<p>It should technically work though, if you <em>really</em> want to go this route.</p>
