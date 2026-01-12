@@ -79,7 +79,7 @@ final class XmlRenderer implements DocumentRendererInterface
     /**
      * @param array<string, string|int|float|bool> $attrs
      */
-    private static function tag(string $name, array $attrs = [], bool $selfClosing = \false): string
+    private static function tag(string $name, array $attrs = [], bool $selfClosing = false): string
     {
         $result = '<' . $name;
         foreach ($attrs as $key => $value) {
