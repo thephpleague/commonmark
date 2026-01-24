@@ -112,7 +112,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
     private function addPlainText(string $text, AbstractBlock $container): void
     {
         $lastInline = $container->lastChild();
-        if ($lastInline instanceof Text && ! $lastInline->data->has('delim')) {
+        if ($lastInline instanceof Text && ! $lastInline->isDelimiter) {
             $lastInline->append($text);
         } else {
             $container->appendChild(new Text($text));

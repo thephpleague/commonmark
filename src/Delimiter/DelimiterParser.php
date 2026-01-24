@@ -68,9 +68,8 @@ final class DelimiterParser implements InlineParserInterface
             return true;
         }
 
-        $node = new Text(\str_repeat($character, $numDelims), [
-            'delim' => true,
-        ]);
+        $node              = new Text(\str_repeat($character, $numDelims));
+        $node->isDelimiter = true;
         $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack to this opener

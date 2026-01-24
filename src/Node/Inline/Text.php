@@ -18,6 +18,17 @@ namespace League\CommonMark\Node\Inline;
 
 final class Text extends AbstractStringContainer
 {
+    public bool $isDelimiter = false;
+
+    /**
+     * @param string               $contents The text contents
+     * @param array<string, mixed> $data     Arbitrary data
+     */
+    public function __construct(string $contents = '', array $data = [])
+    {
+        parent::__construct($contents, $data);
+    }
+
     public function append(string $literal): void
     {
         $this->literal .= $literal;

@@ -6,6 +6,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+- Promoted the `delim` status on `Text` nodes to a first-class property (`$isDelimiter`) instead of storing it in the `$data` array (#963).
+    - This improves performance in the inline parser engine.
+    - **Breaking Change:** The `$isDelimiter` property on `Text` nodes is now public. The `isDelimiter()` and `setDelimiter()` methods have been removed. Accessing this status via `$text->data['delim']` is no longer supported. You must now access the public `$text->isDelimiter` property directly.
+
 ## [2.8.0] - 2025-11-26
 
 ### Added

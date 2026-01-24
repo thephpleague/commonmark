@@ -33,7 +33,8 @@ final class BangParser implements InlineParserInterface
         $cursor = $inlineContext->getCursor();
         $cursor->advanceBy(2);
 
-        $node = new Text('![', ['delim' => true]);
+        $node              = new Text('![');
+        $node->isDelimiter = true;
         $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack for this opener
