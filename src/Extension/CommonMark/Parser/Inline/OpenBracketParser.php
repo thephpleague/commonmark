@@ -31,7 +31,8 @@ final class OpenBracketParser implements InlineParserInterface
     public function parse(InlineParserContext $inlineContext): bool
     {
         $inlineContext->getCursor()->advanceBy(1);
-        $node = new Text('[', ['delim' => true]);
+        $node              = new Text('[');
+        $node->isDelimiter = true;
         $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack for this opener

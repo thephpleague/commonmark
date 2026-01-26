@@ -64,7 +64,7 @@ final class QuoteParser implements InlineParserInterface
         $canOpen                        = $leftFlanking && ! $rightFlanking;
         $canClose                       = $rightFlanking;
 
-        $node = new Quote($char, ['delim' => true]);
+        $node = new Quote($char);
         $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack to this opener
