@@ -59,6 +59,34 @@ Result:
 </div>
 ```
 
+### Inline footnotes
+
+Inline footnotes (or anonymous footnotes) are easier to write, since you don't have to pick an identifier and move down to type the note. They have a slightly different syntax, with the caret placed before the opening square bracket: `^[Note]`. Inline footnotes do not support multiple paragraphs.
+
+Sample Markdown input:
+
+```markdown
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi^[Elit Malesuada Ridiculus] leo risus, porta ac consectetur ac.
+```
+
+Result:
+
+```html
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi<sup id="fnref:elit-malesuada-ridic"><a class="footnote-ref" href="#fn:elit-malesuada-ridic" role="doc-noteref">1</a></sup> leo risus, porta ac consectetur ac.
+</p>
+<div class="footnotes" role="doc-endnotes">
+    <hr />
+    <ol>
+        <li class="footnote" id="fn:elit-malesuada-ridic" role="doc-endnote">
+            <p>
+                Elit Malesuada Ridiculus&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:elit-malesuada-ridic" role="doc-backlink">↩</a>
+            </p>
+        </li>
+    </ol>
+</div>
+```
+
 ## Usage
 
 Configure your `Environment` as usual and simply add the `FootnoteExtension`:
@@ -74,14 +102,15 @@ use League\CommonMark\MarkdownConverter;
 // If you're happy with the defaults, feel free to remove them from this array
 $config = [
     'footnote' => [
-        'backref_class'      => 'footnote-backref',
-        'backref_symbol'     => '↩',
-        'container_add_hr'   => true,
-        'container_class'    => 'footnotes',
-        'ref_class'          => 'footnote-ref',
-        'ref_id_prefix'      => 'fnref:',
-        'footnote_class'     => 'footnote',
-        'footnote_id_prefix' => 'fn:',
+        'backref_class'           => 'footnote-backref',
+        'backref_symbol'          => '↩',
+        'container_add_hr'        => true,
+        'container_class'         => 'footnotes',
+        'enable_inline_footnotes' => true,
+        'ref_class'               => 'footnote-ref',
+        'ref_id_prefix'           => 'fnref:',
+        'footnote_class'          => 'footnote',
+        'footnote_id_prefix'      => 'fn:',
     ],
 ];
 
