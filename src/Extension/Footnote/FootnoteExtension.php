@@ -44,6 +44,7 @@ final class FootnoteExtension implements ConfigurableExtensionInterface
             'backref_symbol' => Expect::string('↩'),
             'container_add_hr' => Expect::bool(true),
             'container_class' => Expect::string('footnotes'),
+            'enable_inline_footnotes' => Expect::bool(true),
             'ref_class' => Expect::string('footnote-ref'),
             'ref_id_prefix' => Expect::string('fnref:'),
             'footnote_class' => Expect::string('footnote'),
@@ -54,7 +55,6 @@ final class FootnoteExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addBlockStartParser(new FootnoteStartParser(), 51);
-        $environment->addInlineParser(new AnonymousFootnoteRefParser(), 35);
         $environment->addInlineParser(new FootnoteRefParser(), 51);
 
         $environment->addRenderer(FootnoteContainer::class, new FootnoteContainerRenderer());
@@ -62,9 +62,13 @@ final class FootnoteExtension implements ConfigurableExtensionInterface
         $environment->addRenderer(FootnoteRef::class, new FootnoteRefRenderer());
         $environment->addRenderer(FootnoteBackref::class, new FootnoteBackrefRenderer());
 
-        $environment->addEventListener(DocumentParsedEvent::class, [new AnonymousFootnotesListener(), 'onDocumentParsed'], 40);
         $environment->addEventListener(DocumentParsedEvent::class, [new FixOrphanedFootnotesAndRefsListener(), 'onDocumentParsed'], 30);
         $environment->addEventListener(DocumentParsedEvent::class, [new NumberFootnotesListener(), 'onDocumentParsed'], 20);
         $environment->addEventListener(DocumentParsedEvent::class, [new GatherFootnotesListener(), 'onDocumentParsed'], 10);
+
+        if ($environment->getConfiguration()->get('footnote/enable_inline_footnotes')) {
+            $environment->addInlineParser(new AnonymousFootnoteRefParser(), 35);
+            $environment->addEventListener(DocumentParsedEvent::class, [new AnonymousFootnotesListener(), 'onDocumentParsed'], 40);
+        }
     }
 }

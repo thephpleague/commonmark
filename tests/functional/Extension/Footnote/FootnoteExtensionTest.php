@@ -66,15 +66,16 @@ final class FootnoteExtensionTest extends TestCase
     {
         $environment = new Environment([
             'footnote' => [
-                'backref_class'      => 'custom-backref',
+                'backref_class'           => 'custom-backref',
                 // Ensure multiple characters are allowed (including multibyte) and special HTML characters are escaped.
-                'backref_symbol'     => '↩ 🦄️ <3 You',
-                'container_add_hr'   => false,
-                'container_class'    => 'custom-notes',
-                'ref_class'          => 'custom-ref',
-                'ref_id_prefix'      => 'fnref:',
-                'footnote_class'     => 'custom-footnote',
-                'footnote_id_prefix' => 'fn:',
+                'backref_symbol'          => '↩ 🦄️ <3 You',
+                'container_add_hr'        => false,
+                'container_class'         => 'custom-notes',
+                'enable_inline_footnotes' => false,
+                'ref_class'               => 'custom-ref',
+                'ref_id_prefix'           => 'fnref:',
+                'footnote_class'          => 'custom-footnote',
+                'footnote_id_prefix'      => 'fn:',
             ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
@@ -89,6 +90,7 @@ final class FootnoteExtensionTest extends TestCase
     {
         yield ["Here[^note1]\n\n[^note1]: There", '<p>Here<sup id="fnref:note1"><a class="custom-ref" href="#fn:note1" role="doc-noteref">1</a></sup></p>' . "\n" . '<div class="custom-notes" role="doc-endnotes"><ol><li class="custom-footnote" id="fn:note1" role="doc-endnote"><p>There&nbsp;<a class="custom-backref" rev="footnote" href="#fnref:note1" role="doc-backlink">↩ 🦄️ &lt;3 You</a></p></li></ol></div>'];
         yield ["_Here_[^note1]\n\n[^note1]: **There**", '<p><em>Here</em><sup id="fnref:note1"><a class="custom-ref" href="#fn:note1" role="doc-noteref">1</a></sup></p>' . "\n" . '<div class="custom-notes" role="doc-endnotes"><ol><li class="custom-footnote" id="fn:note1" role="doc-endnote"><p><strong>There</strong>&nbsp;<a class="custom-backref" rev="footnote" href="#fnref:note1" role="doc-backlink">↩ 🦄️ &lt;3 You</a></p></li></ol></div>'];
+        yield ['Disabled inline notes^[note1]', '<p>Disabled inline notes^[note1]</p>'];
     }
 
     public function testFootnotesWithEmptySymbol(): void
