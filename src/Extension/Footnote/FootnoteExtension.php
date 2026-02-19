@@ -54,6 +54,11 @@ final class FootnoteExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
+        if ($environment->getConfiguration()->get('footnote/enable_inline_footnotes')) {
+            $environment->addInlineParser(new AnonymousFootnoteRefParser(), 35);
+            $environment->addEventListener(DocumentParsedEvent::class, [new AnonymousFootnotesListener(), 'onDocumentParsed'], 40);
+        }
+
         $environment->addBlockStartParser(new FootnoteStartParser(), 51);
         $environment->addInlineParser(new FootnoteRefParser(), 51);
 
@@ -65,10 +70,5 @@ final class FootnoteExtension implements ConfigurableExtensionInterface
         $environment->addEventListener(DocumentParsedEvent::class, [new FixOrphanedFootnotesAndRefsListener(), 'onDocumentParsed'], 30);
         $environment->addEventListener(DocumentParsedEvent::class, [new NumberFootnotesListener(), 'onDocumentParsed'], 20);
         $environment->addEventListener(DocumentParsedEvent::class, [new GatherFootnotesListener(), 'onDocumentParsed'], 10);
-
-        if ($environment->getConfiguration()->get('footnote/enable_inline_footnotes')) {
-            $environment->addInlineParser(new AnonymousFootnoteRefParser(), 35);
-            $environment->addEventListener(DocumentParsedEvent::class, [new AnonymousFootnotesListener(), 'onDocumentParsed'], 40);
-        }
     }
 }
