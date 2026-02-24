@@ -27,6 +27,7 @@ version:
             'Heading Permalinks': '/2.x/extensions/heading-permalinks/'
             'Highlight': '/2.x/extensions/highlight/'
             'Inlines Only': '/2.x/extensions/inlines-only/'
+            'Limit Headings': '/2.x/extensions/limit-headings/'
             'Mentions': '/2.x/extensions/mentions/'
             'Smart Punctuation': '/2.x/extensions/smart-punctuation/'
             'Strikethrough': '/2.x/extensions/strikethrough/'
