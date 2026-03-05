@@ -12,8 +12,8 @@ redirect_from:
   - /2.5/customization/rendering/
   - /2.6/customization/rendering/
   - /2.7/customization/rendering/
-- /customization/block-rendering/
-- /customization/inline-rendering/
+  - /customization/block-rendering/
+  - /customization/inline-rendering/
 ---
 
 # Custom Rendering

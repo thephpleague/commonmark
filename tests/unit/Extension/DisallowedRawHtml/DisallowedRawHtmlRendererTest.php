@@ -71,6 +71,16 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         yield ['<script>', '&lt;script>'];
         yield ['<plaintext>', '&lt;plaintext>'];
 
+        // Newline/whitespace bypass attempts (security fix)
+        yield ['<script   >', '&lt;script   >'];
+        yield ["<script\n>", "&lt;script\n>"];
+        yield ["<script\t>", "&lt;script\t>"];
+        yield ["<script\r\n>", "&lt;script\r\n>"];
+        yield ["<iframe\nwidth=\"560\">", "&lt;iframe\nwidth=\"560\">"];
+
+        // Ensure non-disallowed tags with similar names are NOT filtered
+        yield ['<scriptfoo>', '<scriptfoo>'];
+
         // Tags not escaped by default
         yield ['<strong>', '<strong>'];
     }
@@ -106,6 +116,11 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         yield ['<strong x="sdf">', '&lt;strong x="sdf">'];
         yield ['<strong/>', '&lt;strong/>'];
         yield ['<strong />', '&lt;strong />'];
+
+        // Newline bypass with custom config
+        yield ['<strong   >', '&lt;strong   >'];
+        yield ["<strong\n>", "&lt;strong\n>"];
+        yield ["<strong\t>", "&lt;strong\t>"];
 
         // Defaults that I didn't include in my custom config
         yield ['<title>', '<title>'];
