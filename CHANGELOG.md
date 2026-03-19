@@ -6,6 +6,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.8.2] - 2026-03-19
+
+This is a **security release** to address an issue where the `allowed_domains` setting for the `Embed` extension can be bypassed, resulting in a possible SSRF and XSS vulnerabilities.
+
+### Fixed
+- Fixed `DomainFilteringAdapter` hostname boundary bypass where domains like `youtube.com.evil` could match an allowlist entry for `youtube.com` (GHSA-hh8v-hgvp-g3f5)
+
 ## [2.8.1] - 2026-03-05
 
 This is a **security release** to address an issue where `DisallowedRawHtml` can be bypassed, resulting in a possible cross-site scripting (XSS) vulnerability.
@@ -725,7 +732,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.8.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.8.2...HEAD
+[2.8.2]: https://github.com/thephpleague/commonmark/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/thephpleague/commonmark/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/thephpleague/commonmark/compare/2.7.1...2.8.0
 [2.7.1]: https://github.com/thephpleague/commonmark/compare/2.7.0...2.7.1

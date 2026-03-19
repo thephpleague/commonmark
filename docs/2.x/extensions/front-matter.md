@@ -28,13 +28,15 @@ composer require league/commonmark
 
 See the [installation](/2.x/installation/) section for more details.
 
-You will also need to install `symfony/yaml` or the [YAML extension for PHP](https://www.php.net/manual/book.yaml.php) to use this extension. For `symfony/yaml`:
+You will also need to install `symfony/yaml` (2.6 or higher) or the [YAML extension for PHP](https://www.php.net/manual/book.yaml.php) to use this extension. For `symfony/yaml`:
 
 ```bash
 composer require symfony/yaml
 ```
 
-(You can use any version of `symfony/yaml` 2.6 or higher, though we recommend using 4.0 or higher.)
+If both are installed, the PHP YAML extension will be used by default.
+
+**Warning:** When using the PHP YAML extension, avoid setting `yaml.decode_php=1` in your `php.ini` file as this enables deserialization of arbitrary classes, which can lead to security vulnerabilities!
 
 ## Front Matter Syntax
 
