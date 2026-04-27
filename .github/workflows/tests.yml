@@ -137,7 +137,7 @@ jobs:
         steps:
             - uses: actions/checkout@v6
 
-            - uses: github/super-linter/slim@v5.0.0
+            - uses: github/super-linter/slim@v7
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
