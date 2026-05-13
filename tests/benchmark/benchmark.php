@@ -368,7 +368,7 @@ $display = function (array $config, string $title, array $fmt, array $results, s
     }
 };
 
-if (extension_loaded('xdebug')) {
+if (extension_loaded('xdebug') && getenv('XDEBUG_MODE') !== 'off') {
     fwrite(STDERR, 'The xdebug extension is loaded, this can significantly skew benchmarks. Disable it for accurate results. For xdebug 3, prefix your command with "XDEBUG_MODE=off"' . PHP_EOL . PHP_EOL);
 }
 
