@@ -98,7 +98,12 @@ final class RegexHelper
             return false;
         }
 
-        return \preg_match('/[\pL]/u', $character) === 1;
+        // Fast path for ASCII letters (the common case in Markdown)
+        if (\strlen($character) === 1) {
+            return ($character >= 'a' && $character <= 'z') || ($character >= 'A' && $character <= 'Z');
+        }
+
+        return \preg_match('/^\pL/u', $character) === 1;
     }
 
     /**

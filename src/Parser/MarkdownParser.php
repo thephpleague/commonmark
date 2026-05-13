@@ -53,6 +53,9 @@ final class MarkdownParser implements MarkdownParserInterface
     /** @psalm-readonly-allow-private-mutation */
     private Cursor $cursor;
 
+    /** @psalm-readonly-allow-private-mutation */
+    private BlockContinueParserInterface $activeBlockParser;
+
     /**
      * @var array<int, BlockContinueParserInterface>
      *
@@ -297,6 +300,7 @@ final class MarkdownParser implements MarkdownParserInterface
     private function activateBlockParser(BlockContinueParserInterface $blockParser): void
     {
         $this->activeBlockParsers[] = $blockParser;
+        $this->activeBlockParser    = $blockParser;
     }
 
     /**
@@ -307,6 +311,11 @@ final class MarkdownParser implements MarkdownParserInterface
         $popped = \array_pop($this->activeBlockParsers);
         if ($popped === null) {
             throw new ParserLogicException('The last block parser should not be deactivated');
+        }
+
+        $last = \end($this->activeBlockParsers);
+        if ($last !== false) {
+            $this->activeBlockParser = $last;
         }
 
         return $popped;
@@ -346,11 +355,6 @@ final class MarkdownParser implements MarkdownParserInterface
      */
     public function getActiveBlockParser(): BlockContinueParserInterface
     {
-        $active = \end($this->activeBlockParsers);
-        if ($active === false) {
-            throw new ParserLogicException('No active block parsers are available');
-        }
-
-        return $active;
+        return $this->activeBlockParser;
     }
 }
