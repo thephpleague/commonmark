@@ -98,9 +98,9 @@ final class RegexHelper
             return false;
         }
 
-        // Fast path for ASCII letters (the common case in Markdown)
+        // Fast path for ASCII (the common case in Markdown); ctype_alpha is locale-independent for single bytes
         if (\strlen($character) === 1) {
-            return ($character >= 'a' && $character <= 'z') || ($character >= 'A' && $character <= 'Z');
+            return \ctype_alpha($character);
         }
 
         return \preg_match('/^\pL/u', $character) === 1;
