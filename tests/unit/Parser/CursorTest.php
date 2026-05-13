@@ -32,6 +32,22 @@ final class CursorTest extends TestCase
         new Cursor(\hex2bin('A5A5A5'));
     }
 
+    public function testConstructorWithLineCouldHaveTabsFalse(): void
+    {
+        // When the caller guarantees no tabs are present, advanceBy must still
+        // track position and column correctly via the tab-free fast path.
+        $cursor = new Cursor('Hello world', false);
+        $this->assertSame('Hello world', $cursor->getLine());
+
+        $cursor->advanceBy(5);
+        $this->assertSame(5, $cursor->getPosition());
+        $this->assertSame(5, $cursor->getColumn());
+
+        $cursor->advanceBy(3);
+        $this->assertSame(8, $cursor->getPosition());
+        $this->assertSame(8, $cursor->getColumn());
+    }
+
     /**
      * @dataProvider dataForTestingNextNonSpaceMethods
      */

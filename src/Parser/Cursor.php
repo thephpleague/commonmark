@@ -59,7 +59,7 @@ class Cursor
     /**
      * @param string $line The line being parsed (ASCII or UTF-8)
      */
-    public function __construct(string $line)
+    public function __construct(string $line, bool $lineCouldHaveTabs = true)
     {
         if (! \mb_check_encoding($line, 'UTF-8')) {
             throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
@@ -68,7 +68,9 @@ class Cursor
         $this->line            = $line;
         $this->length          = \mb_strlen($line, 'UTF-8') ?: 0;
         $this->isMultibyte     = $this->length !== \strlen($line);
-        $this->lastTabPosition = $this->isMultibyte ? \mb_strrpos($line, "\t", 0, 'UTF-8') : \strrpos($line, "\t");
+        $this->lastTabPosition = $lineCouldHaveTabs
+            ? ($this->isMultibyte ? \mb_strrpos($line, "\t", 0, 'UTF-8') : \strrpos($line, "\t"))
+            : false;
     }
 
     /**

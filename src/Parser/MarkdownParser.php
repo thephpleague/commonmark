@@ -53,6 +53,9 @@ final class MarkdownParser implements MarkdownParserInterface
     /** @psalm-readonly-allow-private-mutation */
     private Cursor $cursor;
 
+    /** @psalm-readonly-allow-private-mutation */
+    private bool $documentHasTabs = false;
+
     /**
      * @var array<int, BlockContinueParserInterface>
      *
@@ -96,6 +99,8 @@ final class MarkdownParser implements MarkdownParserInterface
         $this->environment->dispatch($preParsedEvent);
         $markdownInput = $preParsedEvent->getMarkdown();
 
+        $this->documentHasTabs = \str_contains($markdownInput->getContent(), "\t");
+
         foreach ($markdownInput->getLines() as $lineNumber => $line) {
             $this->lineNumber = $lineNumber;
             $this->parseLine($line);
@@ -119,7 +124,7 @@ final class MarkdownParser implements MarkdownParserInterface
         // replace NUL characters for security
         $line = \str_replace("\0", "\u{FFFD}", $line);
 
-        $this->cursor = new Cursor($line);
+        $this->cursor = new Cursor($line, $this->documentHasTabs);
 
         $matches = $this->parseBlockContinuation();
         if ($matches === null) {
