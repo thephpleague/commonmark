@@ -55,7 +55,7 @@ final class EmbedProcessorTest extends TestCase
     public function testWithFallbackRemove(): void
     {
         // A fake adapter that doesn't do anything (like updating the embed codes)
-        $adapter = $this->getMockForAbstractClass(EmbedAdapterInterface::class);
+        $adapter = $this->createStub(EmbedAdapterInterface::class);
 
         $processor = new EmbedProcessor($adapter, EmbedProcessor::FALLBACK_REMOVE);
 
@@ -71,7 +71,7 @@ final class EmbedProcessorTest extends TestCase
     public function testWithFallbackLink(): void
     {
         // A fake adapter that doesn't do anything (like updating the embed codes)
-        $adapter = $this->getMockForAbstractClass(EmbedAdapterInterface::class);
+        $adapter = $this->createStub(EmbedAdapterInterface::class);
 
         $processor = new EmbedProcessor($adapter, EmbedProcessor::FALLBACK_LINK);
 

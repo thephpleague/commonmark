@@ -17,6 +17,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\MarkdownConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class FootnoteExtensionTest extends TestCase
@@ -26,6 +27,7 @@ final class FootnoteExtensionTest extends TestCase
      *
      * @param array<string, mixed> $config
      */
+    #[DataProvider('dataForIntegrationTest')]
     public function testFootnote(string $string, string $expected, array $config = []): void
     {
         $environment = new Environment(['footnote' => $config]);
@@ -62,6 +64,7 @@ final class FootnoteExtensionTest extends TestCase
     /**
      * @dataProvider dataProviderForTestFootnotesWithCustomOptions
      */
+    #[DataProvider('dataProviderForTestFootnotesWithCustomOptions')]
     public function testFootnotesWithCustomOptions(string $input, string $expected): void
     {
         $environment = new Environment([

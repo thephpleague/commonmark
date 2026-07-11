@@ -49,7 +49,7 @@ final class DescriptionListRendererTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $block = $this->getMockForAbstractClass(AbstractBlock::class);
+        $block = $this->createStub(AbstractBlock::class);
 
         $this->renderer->render($block, new FakeChildNodeRenderer());
     }

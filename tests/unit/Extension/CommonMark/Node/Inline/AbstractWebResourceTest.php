@@ -28,10 +28,8 @@ final class AbstractWebResourceTest extends TestCase
     {
         $url = 'https://www.example.com/foo';
 
-        $element = $this->getMockBuilder(AbstractWebResource::class)
-            ->setConstructorArgs([$url])
-            ->getMockForAbstractClass();
-        \assert($element instanceof AbstractWebResource);
+        $element = new class ($url) extends AbstractWebResource {
+        };
 
         $this->assertEquals($url, $element->getUrl());
     }
@@ -44,10 +42,8 @@ final class AbstractWebResourceTest extends TestCase
         $url1 = 'https://www.example.com/foo';
         $url2 = 'https://www.example.com/bar';
 
-        $element = $this->getMockBuilder(AbstractWebResource::class)
-            ->setConstructorArgs([$url1])
-            ->getMockForAbstractClass();
-        \assert($element instanceof AbstractWebResource);
+        $element = new class ($url1) extends AbstractWebResource {
+        };
 
         $element->setUrl($url2);
 

@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Parser;
 
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Parser\Cursor;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class CursorTest extends TestCase
@@ -35,6 +36,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForTestingNextNonSpaceMethods
      */
+    #[DataProvider('dataForTestingNextNonSpaceMethods')]
     public function testGetNextNonSpacePosition(string $string, int $expectedPosition, ?string $expectedCharacter): void
     {
         $cursor = new Cursor($string);
@@ -46,6 +48,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForTestingNextNonSpaceMethods
      */
+    #[DataProvider('dataForTestingNextNonSpaceMethods')]
     public function testGetNextNonSpaceCharacter(string $string, int $expectedPosition, ?string $expectedCharacter): void
     {
         $cursor = new Cursor($string);
@@ -74,6 +77,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForGetIndentTest
      */
+    #[DataProvider('dataForGetIndentTest')]
     public function testGetIndent(string $string, int $position, int $expectedValue): void
     {
         $cursor = new Cursor($string);
@@ -113,6 +117,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForGetCharacterTest
      */
+    #[DataProvider('dataForGetCharacterTest')]
     public function testGetCharacter(string $string, ?int $index, string $expectedValue): void
     {
         $cursor = new Cursor($string);
@@ -123,6 +128,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForGetCharacterTest
      */
+    #[DataProvider('dataForGetCharacterTest')]
     public function testGetCurrentCharacter(string $string, ?int $index, string $expectedValue): void
     {
         $cursor = new Cursor($string);
@@ -157,6 +163,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForPeekTest
      */
+    #[DataProvider('dataForPeekTest')]
     public function testPeek(string $string, int $position, string $expectedValue): void
     {
         $cursor = new Cursor($string);
@@ -183,6 +190,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForIsLineBlankTest
      */
+    #[DataProvider('dataForIsLineBlankTest')]
     public function testIsLineBlank(string $string, bool $expectedValue): void
     {
         $cursor = new Cursor($string);
@@ -208,6 +216,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForAdvanceTest
      */
+    #[DataProvider('dataForAdvanceTest')]
     public function testAdvance(string $string, int $numberOfAdvances, int $expectedPosition): void
     {
         $cursor = new Cursor($string);
@@ -244,6 +253,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForAdvanceTestBy
      */
+    #[DataProvider('dataForAdvanceTestBy')]
     public function testAdvanceBy(string $string, int $advance, int $expectedPosition): void
     {
         $cursor = new Cursor($string);
@@ -304,6 +314,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForAdvanceToNextNonSpaceTest
      */
+    #[DataProvider('dataForAdvanceToNextNonSpaceTest')]
     public function testAdvanceToNextNonSpace(string $subject, int $startPos, int $expectedResult): void
     {
         $cursor = new Cursor($subject);
@@ -345,6 +356,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForAdvanceToNextNonSpaceOrNewlineTest
      */
+    #[DataProvider('dataForAdvanceToNextNonSpaceOrNewlineTest')]
     public function testAdvanceToNextNonSpaceOrNewline(string $subject, int $startPos, int $expectedResult): void
     {
         $cursor = new Cursor($subject);
@@ -383,6 +395,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForGetRemainderTest
      */
+    #[DataProvider('dataForGetRemainderTest')]
     public function testGetRemainder(string $string, int $position, string $expectedResult): void
     {
         $cursor = new Cursor($string);
@@ -411,6 +424,7 @@ final class CursorTest extends TestCase
      *
      * @param int|false|null $advanceBy
      */
+    #[DataProvider('dataForIsAtEndTest')]
     public function testIsAtEnd(string $string, $advanceBy, bool $expectedValue): void
     {
         $cursor = new Cursor($string);
@@ -442,6 +456,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForTestMatch
      */
+    #[DataProvider('dataForTestMatch')]
     public function testMatch(string $string, string $regex, int $initialPosition, int $expectedPosition, string $expectedResult): void
     {
         $cursor = new Cursor($string);
@@ -472,6 +487,7 @@ final class CursorTest extends TestCase
     /**
      * @dataProvider dataForTestGetSubstring
      */
+    #[DataProvider('dataForTestGetSubstring')]
     public function testGetSubstring(string $string, int $start, ?int $length, string $expectedResult): void
     {
         $cursor = new Cursor($string);

@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Util;
 
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Util\LinkParserHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class LinkParserHelperTest extends TestCase
@@ -22,6 +23,7 @@ final class LinkParserHelperTest extends TestCase
     /**
      * @dataProvider dataProviderForTestParseLinkDestination
      */
+    #[DataProvider('dataProviderForTestParseLinkDestination')]
     public function testParseLinkDestination(string $input, string $expected): void
     {
         $cursor = new Cursor($input);
@@ -42,6 +44,7 @@ final class LinkParserHelperTest extends TestCase
     /**
      * @dataProvider dataProviderForTestParseLinkLabel
      */
+    #[DataProvider('dataProviderForTestParseLinkLabel')]
     public function testParseLinkLabel(string $input, int $expected): void
     {
         $cursor = new Cursor($input);

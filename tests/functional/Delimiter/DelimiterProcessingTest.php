@@ -20,6 +20,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class DelimiterProcessingTest extends TestCase
@@ -40,6 +41,7 @@ final class DelimiterProcessingTest extends TestCase
     /**
      * @dataProvider asymmetricDelimiterDataProvider
      */
+    #[DataProvider('asymmetricDelimiterDataProvider')]
     public function testAsymmetricDelimiterProcessing(string $input, string $expected): void
     {
         $e = new Environment();

@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Normalizer;
 
 use League\CommonMark\Normalizer\SlugNormalizer;
 use League\Config\ConfigurationInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class SlugNormalizerTest extends TestCase
@@ -22,6 +23,7 @@ final class SlugNormalizerTest extends TestCase
     /**
      * @dataProvider dataProviderForTestNormalize
      */
+    #[DataProvider('dataProviderForTestNormalize')]
     public function testNormalize(string $input, string $expectedOutput): void
     {
         $this->assertSame($expectedOutput, (new SlugNormalizer())->normalize($input));
@@ -73,6 +75,7 @@ final class SlugNormalizerTest extends TestCase
     /**
      * @dataProvider dataProviderForTestNormalizeWithMaxLength
      */
+    #[DataProvider('dataProviderForTestNormalizeWithMaxLength')]
     public function testNormalizeWithMaxLength(string $input, int $maxLength, string $expectedOutput): void
     {
         $this->assertSame($expectedOutput, (new SlugNormalizer())->normalize($input, ['length' => $maxLength]));

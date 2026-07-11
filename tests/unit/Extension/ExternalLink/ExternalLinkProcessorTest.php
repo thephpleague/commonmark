@@ -18,6 +18,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkProcessor;
 use League\CommonMark\MarkdownConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ExternalLinkProcessorTest extends TestCase
@@ -74,6 +75,7 @@ final class ExternalLinkProcessorTest extends TestCase
      *
      * @param mixed $compareTo
      */
+    #[DataProvider('dataProviderForTestHostMatches')]
     public function testHostMatches(string $host, $compareTo, bool $expected): void
     {
         $this->assertEquals($expected, ExternalLinkProcessor::hostMatches($host, $compareTo));
@@ -103,6 +105,7 @@ final class ExternalLinkProcessorTest extends TestCase
     /**
      * @dataProvider dataProviderForTestRelOptions
      */
+    #[DataProvider('dataProviderForTestRelOptions')]
     public function testRelOptions(string $nofollow, string $noopener, string $noreferrer, string $expectedOutput): void
     {
         $config = [
