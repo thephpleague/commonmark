@@ -2,6 +2,8 @@ parameters:
   level: 8
   paths:
     - src
+  # We use assert() calls to help Psalm narrow types which PHPStan already knows about from our PHPDocs
+  treatPhpDocTypesAsCertain: false
   ignoreErrors:
    - path: src/Reference/ReferenceParser.php
      message: '#Parameter .+ of class .+Reference constructor expects string, string\|null given#'
@@ -9,6 +11,21 @@ parameters:
      message: '#Method .+RegexHelper::unescape\(\) should return string but returns string\|null#'
    - path: src/Delimiter/DelimiterStack.php
      message: '#unknown class WeakMap#'
+   # PHPStan treats our `@psalm-readonly` and `@psalm-readonly-allow-private-mutation` annotations as its own,
+   # stricter `@readonly`.  All of these properties are only ever mutated by their declaring class, which is
+   # exactly what those Psalm annotations permit.
+   - identifier: property.uninitializedReadonlyByPhpDoc
+   - identifier: property.readOnlyByPhpDocDefaultValue
+   - identifier: argument.byRef
+   # Similarly, our `@psalm-pure` methods call functions like preg_match() which PHPStan cannot prove are pure
+   # because of their by-reference parameters.
+   - identifier: possiblyImpure.functionCall
+   - identifier: possiblyImpure.methodCall
+   # Nullable return types are part of our public API, so implementations must keep them even if they never
+   # actually return null themselves.
+   - identifier: return.unusedType
+   # PHPStan knows that variadic parameters are already lists, but Psalm doesn't, so we can't drop array_values()
+   - identifier: arrayValues.list
   exceptions:
     uncheckedExceptionClasses:
       # Exceptions caused by bad developer logic that should always bubble up:
@@ -21,6 +38,7 @@ parameters:
       - 'League\Config\Exception\InvalidConfigurationException'
       - 'League\Config\Exception\UnknownOptionException'
       - 'League\Config\Exception\ValidationException'
+      - 'TypeError'
       # Should never be thrown by our code:
       - 'Dflydev\DotAccessData\Exception\DataException'
       - 'Dflydev\DotAccessData\Exception\InvalidPathException'
