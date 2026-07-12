@@ -49,6 +49,7 @@ use League\CommonMark\Node\Block\Paragraph;
 // Extension defaults are shown below
 // If you're happy with the defaults, feel free to remove them from this array
 $config = [
+    'default_attributes_literal_strings' => false,
     'default_attributes' => [
         Heading::class => [
             'class' => static function (Heading $node) {
@@ -93,7 +94,11 @@ Attribute values may be any of the following types:
 - `string`
 - `string[]`
 - `bool`
-- `callable` (parameter is the `Node`, return value may be `string|string[]|bool`)
+- `callable` (parameter is the `Node`, return value may be `string|string[]|bool|null`)
+
+For backwards compatibility, strings and string arrays that PHP considers callable are invoked by default. Set `default_attributes_literal_strings` to `true` to always treat those values as literal attributes. Other callable types, such as closures and invokable objects, remain callable.
+
+When literal string values are enabled, wrap named function or method callbacks with `\Closure::fromCallable()`.
 
 ## Examples
 

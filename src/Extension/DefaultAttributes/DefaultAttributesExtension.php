@@ -23,6 +23,7 @@ final class DefaultAttributesExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
+        $builder->addSchema('default_attributes_literal_strings', Expect::bool()->default(false));
         $builder->addSchema('default_attributes', Expect::arrayOf(
             Expect::arrayOf(
                 Expect::type('string|string[]|bool|callable'), // attribute value(s)

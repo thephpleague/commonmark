@@ -26,6 +26,7 @@ final class ApplyDefaultAttributesProcessor implements ConfigurationAwareInterfa
     {
         /** @var array<string, array<string, mixed>> $map */
         $map = $this->config->get('default_attributes');
+        $literalStrings = $this->config->get('default_attributes_literal_strings');
 
         // Don't bother iterating if no default attributes are configured
         if (! $map) {
@@ -40,7 +41,7 @@ final class ApplyDefaultAttributesProcessor implements ConfigurationAwareInterfa
 
             $newAttributes = [];
             foreach ($attributesToApply as $name => $value) {
-                if (\is_callable($value)) {
+                if ((! $literalStrings || ! self::isStringValue($value)) && \is_callable($value)) {
                     $value = $value($node);
                     // Callables are allowed to return `null` indicating that no changes should be made
                     if ($value !== null) {
@@ -61,5 +62,27 @@ final class ApplyDefaultAttributesProcessor implements ConfigurationAwareInterfa
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    private static function isStringValue($value): bool
+    {
+        if (\is_string($value)) {
+            return true;
+        }
+
+        if (! \is_array($value)) {
+            return false;
+        }
+
+        foreach ($value as $item) {
+            if (! \is_string($item)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

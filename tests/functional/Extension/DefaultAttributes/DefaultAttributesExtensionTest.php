@@ -23,6 +23,7 @@ use League\CommonMark\Extension\Table\Table;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\Node;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -85,8 +86,59 @@ HTML,
         ];
 
         yield [
+            '[Example](https://example.com)',
+            [
+                'default_attributes_literal_strings' => true,
+                'default_attributes' => [
+                    Link::class => [
+                        'class' => 'link',
+                    ],
+                ],
+            ],
+            '<p><a class="link" href="https://example.com">Example</a></p>',
+        ];
+
+        yield [
+            '[Example](https://example.com)',
+            [
+                'default_attributes' => [
+                    Link::class => [
+                        'class' => self::class . '::provideAttributeClass',
+                    ],
+                ],
+            ],
+            '<p><a class="callback-link" href="https://example.com">Example</a></p>',
+        ];
+
+        yield [
+            '[Example](https://example.com)',
+            [
+                'default_attributes' => [
+                    Link::class => [
+                        'class' => [self::class, 'provideAttributeClass'],
+                    ],
+                ],
+            ],
+            '<p><a class="callback-link" href="https://example.com">Example</a></p>',
+        ];
+
+        yield [
+            '[Example](https://example.com)',
+            [
+                'default_attributes_literal_strings' => true,
+                'default_attributes' => [
+                    Link::class => [
+                        'class' => [self::class, 'provideAttributeClass'],
+                    ],
+                ],
+            ],
+            '<p><a class="' . self::class . ' provideAttributeClass" href="https://example.com">Example</a></p>',
+        ];
+
+        yield [
             $markdown,
             [
+                'default_attributes_literal_strings' => true,
                 'default_attributes' => [
                     Paragraph::class => [
                         'class' => ['text-center', 'font-comic-sans'],
@@ -189,5 +241,12 @@ MD
 </table>
 HTML,
         ];
+    }
+
+    public static function provideAttributeClass(Node $node): string
+    {
+        self::assertInstanceOf(Link::class, $node);
+
+        return 'callback-link';
     }
 }

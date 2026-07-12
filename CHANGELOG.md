@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Added
+- Added a `default_attributes_literal_strings` option to treat callable strings and string arrays as literal values in the `DefaultAttributesExtension`
+
 ## [2.8.3] - 2026-07-12
 
 ### Fixed
