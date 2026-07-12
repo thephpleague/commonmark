@@ -102,7 +102,7 @@ This can be configured to limit the length of that slug to prevent overly-long v
 
 ### `unique`
 
-This options controls whether slugs should be unique.  Possible values include:
+This option controls whether slugs should be unique.  Possible values include:
 
 - `'document'` (string; **default**) - Ensures slugs are unique within a single document
 - `'environment'` (string) - Ensures slugs are unique across multiple documents - see below
