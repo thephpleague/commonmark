@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class MaxDelimitersPerLineTest extends TestCase
@@ -21,6 +22,7 @@ final class MaxDelimitersPerLineTest extends TestCase
     /**
      * @dataProvider provideTestCases
      */
+    #[DataProvider('provideTestCases')]
     public function testIt(string $input, int $maxDelimsPerLine, string $expectedOutput): void
     {
         $converter = new CommonMarkConverter(['max_delimiters_per_line' => $maxDelimsPerLine]);

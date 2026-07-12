@@ -16,4 +16,14 @@
 
     <!-- Include full Unleashed Coding Standard -->
     <rule ref="Unleashed"/>
+
+    <!-- PHPUnit's @dataProvider annotation isn't a class reference, so don't try to resolve it against
+         the imported DataProvider attribute class (which differs only by case) -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <properties>
+            <property name="ignoredAnnotations" type="array">
+                <element value="@dataProvider"/>
+            </property>
+        </properties>
+    </rule>
 </ruleset>

@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Parser\Inline;
 
 use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class InlineParserMatchTest extends TestCase
@@ -22,6 +23,7 @@ final class InlineParserMatchTest extends TestCase
     /**
      * @dataProvider provideDataForTesting
      */
+    #[DataProvider('provideDataForTesting')]
     public function testGetRegex(InlineParserMatch $definition, string $expectedRegex): void
     {
         $this->assertSame($expectedRegex, $definition->getRegex());

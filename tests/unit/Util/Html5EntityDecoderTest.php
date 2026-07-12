@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Util;
 
 use League\CommonMark\Util\Html5EntityDecoder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class Html5EntityDecoderTest extends TestCase
@@ -22,6 +23,7 @@ final class Html5EntityDecoderTest extends TestCase
     /**
      * @dataProvider htmlEntityDataProvider
      */
+    #[DataProvider('htmlEntityDataProvider')]
     public function testAllHtml5EntityReferences(string $entity, string $decoded): void
     {
         $this->assertEquals($decoded, \html_entity_decode($entity, ENT_QUOTES | ENT_HTML5, 'UTF-8'), \sprintf('Failed parsing the "%s" entity', $entity));

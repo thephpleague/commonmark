@@ -26,14 +26,14 @@ final class HtmlDecoratorTest extends TestCase
 {
     public function testRender(): void
     {
-        $inner = $this->getMockForAbstractClass(NodeRendererInterface::class);
+        $inner = $this->createStub(NodeRendererInterface::class);
         $inner->method('render')->willReturn('INNER CONTENTS');
 
         $decorator = new HtmlDecorator($inner, 'div', ['class' => 'foo', 'id' => 'bar'], true);
 
         $this->assertSame('<div class="foo" id="bar">INNER CONTENTS</div>', (string) $decorator->render(
-            $this->getMockForAbstractClass(Node::class),
-            $this->getMockForAbstractClass(ChildNodeRendererInterface::class)
+            $this->createStub(Node::class),
+            $this->createStub(ChildNodeRendererInterface::class)
         ));
     }
 }

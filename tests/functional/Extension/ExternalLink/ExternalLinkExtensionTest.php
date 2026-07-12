@@ -21,6 +21,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ExternalLinkExtensionTest extends TestCase
@@ -28,6 +29,7 @@ final class ExternalLinkExtensionTest extends TestCase
     /**
      * @dataProvider provideEnvironmentForTestingExtensionWithAutolinks
      */
+    #[DataProvider('provideEnvironmentForTestingExtensionWithAutolinks')]
     public function testExtensionWithAutolinks(EnvironmentInterface $environment): void
     {
         $markdown     = 'Email me at colinodell@gmail.com or read the docs at https://commonmark.thephpleague.com';

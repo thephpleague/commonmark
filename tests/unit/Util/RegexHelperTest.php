@@ -16,6 +16,7 @@ namespace League\CommonMark\Tests\Unit\Util;
 use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
 use League\CommonMark\Util\RegexHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -294,6 +295,7 @@ final class RegexHelperTest extends TestCase
     /**
      * @dataProvider dataForTestMatchAt
      */
+    #[DataProvider('dataForTestMatchAt')]
     public function testMatchAt(string $regex, string $string, ?int $offset, int $expectedResult): void
     {
         if ($offset === null) {
@@ -331,6 +333,7 @@ final class RegexHelperTest extends TestCase
     /**
      * @dataProvider blockTypesWithValidOpenerRegexes
      */
+    #[DataProvider('blockTypesWithValidOpenerRegexes')]
     public function testValidHtmlBlockOpenRegex(int $type): void
     {
         $this->assertNotEmpty(RegexHelper::getHtmlBlockOpenRegex($type));
@@ -360,6 +363,7 @@ final class RegexHelperTest extends TestCase
     /**
      * @dataProvider blockTypesWithValidCloserRegexes
      */
+    #[DataProvider('blockTypesWithValidCloserRegexes')]
     public function testValidHtmlBlockCloseRegex(int $type): void
     {
         $this->assertNotEmpty(RegexHelper::getHtmlBlockOpenRegex($type));
@@ -380,6 +384,7 @@ final class RegexHelperTest extends TestCase
     /**
      * @dataProvider blockTypesWithInvalidCloserRegexes
      */
+    #[DataProvider('blockTypesWithInvalidCloserRegexes')]
     public function testInvalidHtmlBlockCloseRegex(int $type): void
     {
         $this->expectException(InvalidArgumentException::class);

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\CommonMark;
 
 use League\CommonMark\CommonMarkConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class CommonMarkCoreExtensionTest extends TestCase
@@ -23,6 +24,7 @@ final class CommonMarkCoreExtensionTest extends TestCase
      *
      * @param array<string, mixed> $config
      */
+    #[DataProvider('getTestData')]
     public function testConfiguration(string $markdown, array $config, string $expected): void
     {
         $converter = new CommonMarkConverter($config);
