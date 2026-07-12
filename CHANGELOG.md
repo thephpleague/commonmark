@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Added
 
 - Added a new `NormalizeHeadingsExtension` to constrain headings to a configured level range (#989)
+- Added a new `footnote/enable_inline_footnotes` config option to disable the inline `^[Footnote text]` syntax (#1112)
 
 ## [2.8.2] - 2026-03-19
 
