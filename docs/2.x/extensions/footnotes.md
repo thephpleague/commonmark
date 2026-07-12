@@ -61,7 +61,7 @@ Result:
 
 ### Inline footnotes
 
-Inline footnotes (or anonymous footnotes) are easier to write, since you don't have to pick an identifier and move down to type the note. They have a slightly different syntax, with the caret placed before the opening square bracket: `^[Note]`. Inline footnotes do not support multiple paragraphs.
+Inline footnotes (or anonymous footnotes) are easier to write, since you don't have to pick an identifier and move down to type the note. They have a slightly different syntax, with the caret placed before the opening square bracket: `^[Note]`. Inline footnotes do not support multiple paragraphs. You can disable them by setting `'enable_inline_footnotes' => false` in the `footnote` configuration.
 
 Sample Markdown input:
 
