@@ -32,6 +32,6 @@ final class EmbedParserTest extends TestCase
 
         self::assertFalse($parser->isContainer());
         self::assertFalse($parser->canHaveLazyContinuationLines());
-        self::assertFalse($parser->canContain($this->getMockForAbstractClass(AbstractBlock::class)));
+        self::assertFalse($parser->canContain($this->createStub(AbstractBlock::class)));
     }
 }

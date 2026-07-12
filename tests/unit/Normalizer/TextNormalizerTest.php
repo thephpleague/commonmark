@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Normalizer;
 
 use League\CommonMark\Normalizer\TextNormalizer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class TextNormalizerTest extends TestCase
@@ -21,6 +22,7 @@ final class TextNormalizerTest extends TestCase
     /**
      * @dataProvider dataProviderForTestNormalize
      */
+    #[DataProvider('dataProviderForTestNormalize')]
     public function testNormalize(string $input, string $expectedOutput): void
     {
         $this->assertEquals($expectedOutput, (new TextNormalizer())->normalize($input));

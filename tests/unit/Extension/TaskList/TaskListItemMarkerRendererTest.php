@@ -26,7 +26,7 @@ final class TaskListItemMarkerRendererTest extends TestCase
     public function testWithCheckedItem(): void
     {
         $renderer     = new TaskListItemMarkerRenderer();
-        $htmlRenderer = $this->getMockForAbstractClass(ChildNodeRendererInterface::class);
+        $htmlRenderer = $this->createStub(ChildNodeRendererInterface::class);
 
         $item = new TaskListItemMarker(true);
 
@@ -41,7 +41,7 @@ final class TaskListItemMarkerRendererTest extends TestCase
     public function testWithUncheckedItem(): void
     {
         $renderer     = new TaskListItemMarkerRenderer();
-        $htmlRenderer = $this->getMockForAbstractClass(ChildNodeRendererInterface::class);
+        $htmlRenderer = $this->createStub(ChildNodeRendererInterface::class);
 
         $item = new TaskListItemMarker(false);
 
@@ -58,9 +58,9 @@ final class TaskListItemMarkerRendererTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $renderer     = new TaskListItemMarkerRenderer();
-        $htmlRenderer = $this->getMockForAbstractClass(ChildNodeRendererInterface::class);
+        $htmlRenderer = $this->createStub(ChildNodeRendererInterface::class);
 
-        $item = $this->getMockForAbstractClass(AbstractInline::class);
+        $item = $this->createStub(AbstractInline::class);
 
         $renderer->render($item, $htmlRenderer);
     }

@@ -22,6 +22,7 @@ use League\CommonMark\Extension\CommonMark\Renderer\Block\HeadingRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingRendererTest extends TestCase
@@ -36,6 +37,7 @@ final class HeadingRendererTest extends TestCase
     /**
      * @dataProvider dataForTestRender
      */
+    #[DataProvider('dataForTestRender')]
     public function testRender(int $level, string $expectedTag): void
     {
         $block = new Heading($level);
@@ -70,7 +72,7 @@ final class HeadingRendererTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->createStub(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

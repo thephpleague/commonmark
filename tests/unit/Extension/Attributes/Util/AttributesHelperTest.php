@@ -20,6 +20,7 @@ use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Tests\Unit\Environment\FakeBlock1;
 use League\CommonMark\Tests\Unit\Environment\FakeInline1;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class AttributesHelperTest extends TestCase
@@ -29,6 +30,7 @@ final class AttributesHelperTest extends TestCase
      *
      * @param array<string, mixed> $expectedResult
      */
+    #[DataProvider('dataForTestParseAttributes')]
     public function testParseAttributes(Cursor $input, array $expectedResult, string $expectedRemainder = ''): void
     {
         $this->assertSame($expectedResult, AttributesHelper::parseAttributes($input));
@@ -120,6 +122,7 @@ final class AttributesHelperTest extends TestCase
      * @param AbstractBlock|AbstractInline|array<string, mixed> $a2
      * @param array<string, mixed>                              $expected
      */
+    #[DataProvider('dataForTestMergeAttributes')]
     public function testMergeAttributes($a1, $a2, array $expected): void
     {
         $this->assertEquals($expected, AttributesHelper::mergeAttributes($a1, $a2));
@@ -202,6 +205,7 @@ final class AttributesHelperTest extends TestCase
      * @param list<string>         $allowList
      * @param array<string, mixed> $expected
      */
+    #[DataProvider('dataForTestFilterAttributes')]
     public function testFilterAttributes(array $attributes, array $allowList, bool $allowUnsafeLinks, array $expected): void
     {
         $this->assertEquals($expected, AttributesHelper::filterAttributes($attributes, $allowList, $allowUnsafeLinks));

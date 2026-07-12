@@ -17,6 +17,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class EmailAutolinkParserTest extends TestCase
@@ -24,6 +25,7 @@ final class EmailAutolinkParserTest extends TestCase
     /**
      * @dataProvider dataProviderForEmailAutolinks
      */
+    #[DataProvider('dataProviderForEmailAutolinks')]
     public function testEmailAutolinks(string $input, string $expected): void
     {
         $environment = new Environment();

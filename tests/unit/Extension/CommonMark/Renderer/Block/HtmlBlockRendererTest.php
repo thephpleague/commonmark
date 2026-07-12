@@ -105,7 +105,7 @@ final class HtmlBlockRendererTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->createStub(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

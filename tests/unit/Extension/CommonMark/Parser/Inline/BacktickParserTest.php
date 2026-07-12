@@ -22,6 +22,7 @@ use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Reference\ReferenceMapInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class BacktickParserTest extends TestCase
@@ -29,6 +30,7 @@ final class BacktickParserTest extends TestCase
     /**
      * @dataProvider dataForTestParse
      */
+    #[DataProvider('dataForTestParse')]
     public function testParse(string $string, string $expectedContents): void
     {
         $paragraph     = new Paragraph();
