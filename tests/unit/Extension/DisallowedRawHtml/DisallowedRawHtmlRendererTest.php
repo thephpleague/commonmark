@@ -20,6 +20,7 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\Config\ConfigurationInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class DisallowedRawHtmlRendererTest extends TestCase
@@ -38,6 +39,7 @@ final class DisallowedRawHtmlRendererTest extends TestCase
     /**
      * @dataProvider dataProviderForTestWithDefaultSettings
      */
+    #[DataProvider('dataProviderForTestWithDefaultSettings')]
     public function testWithDefaultSettings(string $input, string $expectedOutput): void
     {
         $mockRenderer = $this->createMock(NodeRendererInterface::class);
@@ -88,6 +90,7 @@ final class DisallowedRawHtmlRendererTest extends TestCase
     /**
      * @dataProvider dataProviderForTestWithCustomSettings
      */
+    #[DataProvider('dataProviderForTestWithCustomSettings')]
     public function testWithCustomSettings(string $input, string $expectedOutput): void
     {
         $mockRenderer = $this->createMock(NodeRendererInterface::class);

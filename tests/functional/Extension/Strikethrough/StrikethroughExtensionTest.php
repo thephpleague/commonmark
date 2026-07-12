@@ -18,6 +18,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class StrikethroughExtensionTest extends TestCase
@@ -25,6 +26,7 @@ final class StrikethroughExtensionTest extends TestCase
     /**
      * @dataProvider dataForIntegrationTest
      */
+    #[DataProvider('dataForIntegrationTest')]
     public function testStrikethrough(string $string, string $expected): void
     {
         $environment = new Environment();

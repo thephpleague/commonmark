@@ -17,6 +17,7 @@ use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Xml\XmlRenderer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class FrontMatterExtensionTest extends TestCase
@@ -51,6 +52,7 @@ final class FrontMatterExtensionTest extends TestCase
     /**
      * @dataProvider parserProvider
      */
+    #[DataProvider('parserProvider')]
     public function testWithSampleData(FrontMatterDataParserInterface $parser, bool $shouldTest): void
     {
         $this->skipIfParserNotAvailable($parser, $shouldTest);
@@ -103,6 +105,7 @@ EOT;
     /**
      * @dataProvider parserProvider
      */
+    #[DataProvider('parserProvider')]
     public function testWithMultipleYamlDocuments(FrontMatterDataParserInterface $parser, bool $shouldTest): void
     {
         $this->skipIfParserNotAvailable($parser, $shouldTest);
@@ -157,6 +160,7 @@ EOT;
     /**
      * @dataProvider parserProvider
      */
+    #[DataProvider('parserProvider')]
     public function testWithWindowsLineEndings(FrontMatterDataParserInterface $parser, bool $shouldTest): void
     {
         $this->skipIfParserNotAvailable($parser, $shouldTest);
@@ -185,6 +189,7 @@ EOT;
     /**
      * @dataProvider parserProvider
      */
+    #[DataProvider('parserProvider')]
     public function testWithNoFrontMatter(FrontMatterDataParserInterface $parser, bool $shouldTest): void
     {
         $this->skipIfParserNotAvailable($parser, $shouldTest);
@@ -209,6 +214,7 @@ EOT;
     /**
      * @dataProvider parserProvider
      */
+    #[DataProvider('parserProvider')]
     public function testWithInvalidYaml(FrontMatterDataParserInterface $parser, bool $shouldTest): void
     {
         $this->skipIfParserNotAvailable($parser, $shouldTest);
@@ -232,6 +238,7 @@ EOT;
     /**
      * @dataProvider parserProvider
      */
+    #[DataProvider('parserProvider')]
     public function testRenderXml(FrontMatterDataParserInterface $parser, bool $shouldTest): void
     {
         $this->skipIfParserNotAvailable($parser, $shouldTest);

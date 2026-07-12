@@ -21,6 +21,7 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ReplaceUnpairedQuotesListenerTest extends TestCase
@@ -30,6 +31,7 @@ final class ReplaceUnpairedQuotesListenerTest extends TestCase
      *
      * @param array<int, Node> $paragraphNodes
      */
+    #[DataProvider('provideTestData')]
     public function testWithConsecutiveMerging(array $paragraphNodes, string $expectedText): void
     {
         $document = new Document();

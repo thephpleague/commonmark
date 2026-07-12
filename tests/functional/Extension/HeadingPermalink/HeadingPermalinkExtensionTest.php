@@ -22,6 +22,7 @@ use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Xml\XmlRenderer;
 use League\Config\Exception\InvalidConfigurationException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingPermalinkExtensionTest extends TestCase
@@ -29,6 +30,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
     /**
      * @dataProvider dataProviderForTestHeadingPermalinksWithDefaultOptions
      */
+    #[DataProvider('dataProviderForTestHeadingPermalinksWithDefaultOptions')]
     public function testHeadingPermalinksWithDefaultOptions(string $input, string $expected): void
     {
         $environment = new Environment();
@@ -52,6 +54,7 @@ final class HeadingPermalinkExtensionTest extends TestCase
     /**
      * @dataProvider dataProviderForTestHeadingPermalinksWithCustomOptions
      */
+    #[DataProvider('dataProviderForTestHeadingPermalinksWithCustomOptions')]
     public function testHeadingPermalinksWithCustomOptions(string $input, string $expected): void
     {
         $environment = new Environment([

@@ -62,7 +62,7 @@ final class NewlineRendererTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $inline       = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline       = $this->createStub(AbstractInline::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

@@ -23,6 +23,7 @@ use League\CommonMark\Extension\CommonMark\Renderer\Block\ListBlockRenderer;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Tests\Unit\Renderer\FakeChildNodeRenderer;
 use League\CommonMark\Util\HtmlElement;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ListBlockRendererTest extends TestCase
@@ -39,6 +40,7 @@ final class ListBlockRendererTest extends TestCase
      *
      * @param mixed $expectedAttributeValue
      */
+    #[DataProvider('dataForTestOrderedListStartingNumber')]
     public function testRenderOrderedList(?int $listStart = null, $expectedAttributeValue = null): void
     {
         $list         = $this->createOrderedListBlock($listStart);
@@ -86,7 +88,7 @@ final class ListBlockRendererTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $inline       = $this->getMockForAbstractClass(AbstractBlock::class);
+        $inline       = $this->createStub(AbstractBlock::class);
         $fakeRenderer = new FakeChildNodeRenderer();
 
         $this->renderer->render($inline, $fakeRenderer);

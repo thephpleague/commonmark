@@ -18,6 +18,7 @@ namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\MarkdownConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractSpecTestCase extends TestCase
@@ -35,6 +36,7 @@ abstract class AbstractSpecTestCase extends TestCase
      * @param string $input  Markdown to parse
      * @param string $output Expected result
      */
+    #[DataProvider('dataProvider')]
     public function testSpecExample(string $input, string $output, string $type = '', string $section = '', int $number = -1): void
     {
         $actualResult = (string) $this->converter->convert($input);
