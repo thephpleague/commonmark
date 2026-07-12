@@ -34,8 +34,8 @@ final class NormalizeHeadingsProcessorTest extends TestCase
         $processor = new NormalizeHeadingsProcessor();
         $processor->setEnvironment($this->createEnvironment([
             'normalize_headings' => [
-                'min_heading_level' => 2,
-                'max_heading_level' => 4,
+                'min_level' => 2,
+                'max_level' => 4,
             ],
         ]));
 
@@ -81,15 +81,15 @@ final class NormalizeHeadingsProcessorTest extends TestCase
         $this->assertSame([1, 2, 3, 4, 5, 6], $levels);
     }
 
-    public function testThrowsExceptionWhenMinHeadingLevelExceedsMaxHeadingLevel(): void
+    public function testThrowsExceptionWhenMinLevelExceedsMaxLevel(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
         $processor = new NormalizeHeadingsProcessor();
         $processor->setEnvironment($this->createEnvironment([
             'normalize_headings' => [
-                'min_heading_level' => 4,
-                'max_heading_level' => 2,
+                'min_level' => 4,
+                'max_level' => 2,
             ],
         ]));
 

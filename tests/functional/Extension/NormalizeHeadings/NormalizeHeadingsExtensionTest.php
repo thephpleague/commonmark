@@ -55,8 +55,8 @@ final class NormalizeHeadingsExtensionTest extends AbstractLocalDataTestCase
     {
         $environment = new Environment([
             'normalize_headings' => [
-                'min_heading_level' => 2,
-                'max_heading_level' => 2,
+                'min_level' => 2,
+                'max_level' => 2,
             ],
             'table_of_contents' => [
                 'min_heading_level' => 2,
@@ -87,14 +87,14 @@ final class NormalizeHeadingsExtensionTest extends AbstractLocalDataTestCase
      * @throws CommonMarkException
      * @throws ConfigurationExceptionInterface
      */
-    public function testThrowsExceptionWhenMinHeadingLevelExceedsMaxHeadingLevel(): void
+    public function testThrowsExceptionWhenMinLevelExceedsMaxLevel(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
         $this->createConverter([
             'normalize_headings' => [
-                'min_heading_level' => 4,
-                'max_heading_level' => 2,
+                'min_level' => 4,
+                'max_level' => 2,
             ],
         ])->convert('# This should fail');
     }

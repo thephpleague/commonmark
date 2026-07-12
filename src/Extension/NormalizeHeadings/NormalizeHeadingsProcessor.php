@@ -32,18 +32,18 @@ final class NormalizeHeadingsProcessor implements EnvironmentAwareInterface
 
     public function __invoke(DocumentParsedEvent $event): void
     {
-        $minHeadingLevel = (int) $this->config->get('normalize_headings/min_heading_level');
-        $maxHeadingLevel = (int) $this->config->get('normalize_headings/max_heading_level');
+        $minLevel = (int) $this->config->get('normalize_headings/min_level');
+        $maxLevel = (int) $this->config->get('normalize_headings/max_level');
 
         foreach ($event->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             if (! $node instanceof Heading) {
                 continue;
             }
 
-            if ($node->getLevel() < $minHeadingLevel) {
-                $node->setLevel($minHeadingLevel);
-            } elseif ($node->getLevel() > $maxHeadingLevel) {
-                $node->setLevel($maxHeadingLevel);
+            if ($node->getLevel() < $minLevel) {
+                $node->setLevel($minLevel);
+            } elseif ($node->getLevel() > $maxLevel) {
+                $node->setLevel($maxLevel);
             }
         }
     }

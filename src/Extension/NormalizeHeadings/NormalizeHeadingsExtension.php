@@ -24,15 +24,15 @@ final class NormalizeHeadingsExtension implements ConfigurableExtensionInterface
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
         $builder->addSchema('normalize_headings', Expect::structure([
-            'min_heading_level' => Expect::int()->min(1)->max(6)->default(1),
-            'max_heading_level' => Expect::int()->min(1)->max(6)->default(6),
+            'min_level' => Expect::int()->min(1)->max(6)->default(1),
+            'max_level' => Expect::int()->min(1)->max(6)->default(6),
         ])->assert(
             static function (\stdClass $config): bool {
                 $headingLevels = (array) $config;
 
-                return $headingLevels['min_heading_level'] <= $headingLevels['max_heading_level'];
+                return $headingLevels['min_level'] <= $headingLevels['max_level'];
             },
-            '"min_heading_level" must be less than or equal to "max_heading_level"'
+            '"min_level" must be less than or equal to "max_level"'
         ));
     }
 

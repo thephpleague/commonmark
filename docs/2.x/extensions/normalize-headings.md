@@ -39,8 +39,8 @@ use League\CommonMark\MarkdownConverter;
 // If you're happy with the defaults, feel free to remove them from this array
 $config = [
     'normalize_headings' => [
-        'min_heading_level' => 1,
-        'max_heading_level' => 6,
+        'min_level' => 1,
+        'max_level' => 6,
     ],
 ];
 
@@ -60,12 +60,12 @@ echo $converter->convert("# Heading 1\n\n## Heading 2");
 
 This extension can be configured by providing a `normalize_headings` array with two nested options.
 
-### `min_heading_level` and `max_heading_level`
+### `min_level` and `max_level`
 
 These two settings control the allowed heading range. By default, all six levels (`1` to `6`) are allowed.
-The `min_heading_level` value must be less than or equal to `max_heading_level`.
+The `min_level` value must be less than or equal to `max_level`.
 
 When a parsed heading level falls outside the configured range, it is converted to the nearest boundary:
 
-- below `min_heading_level` -> `min_heading_level`
-- above `max_heading_level` -> `max_heading_level`
+- below `min_level` -> `min_level`
+- above `max_level` -> `max_level`
