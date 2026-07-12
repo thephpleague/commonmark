@@ -28,6 +28,7 @@ version:
             'Highlight': '/2.x/extensions/highlight/'
             'Inlines Only': '/2.x/extensions/inlines-only/'
             'Mentions': '/2.x/extensions/mentions/'
+            'Normalize Headings': '/2.x/extensions/normalize-headings/'
             'Smart Punctuation': '/2.x/extensions/smart-punctuation/'
             'Strikethrough': '/2.x/extensions/strikethrough/'
             'Table of Contents': '/2.x/extensions/table-of-contents/'
