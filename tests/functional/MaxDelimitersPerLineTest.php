@@ -48,5 +48,9 @@ final class MaxDelimitersPerLineTest extends TestCase
         yield ['*a* **b *c **d** c* b**', 8, '<p><em>a</em> <strong>b <em>c <strong>d</strong> c</em> b</strong></p>'];
         yield ['*a* **b *c **d** c* b**', 9, '<p><em>a</em> <strong>b <em>c <strong>d</strong> c</em> b</strong></p>'];
         yield ['*a* **b *c **d** c* b**', 100, '<p><em>a</em> <strong>b <em>c <strong>d</strong> c</em> b</strong></p>'];
+
+        // Link and image bracket openers are tracked separately and are not limited by this option
+        yield ['[text](https://example.com)', 0, '<p><a href="https://example.com">text</a></p>'];
+        yield ['![alt](https://example.com/x.png)', 0, '<p><img src="https://example.com/x.png" alt="alt" /></p>'];
     }
 }
