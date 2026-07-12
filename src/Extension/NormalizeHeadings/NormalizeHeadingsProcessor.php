@@ -32,19 +32,47 @@ final class NormalizeHeadingsProcessor implements EnvironmentAwareInterface
 
     public function __invoke(DocumentParsedEvent $event): void
     {
-        $minLevel = (int) $this->config->get('normalize_headings/min_level');
-        $maxLevel = (int) $this->config->get('normalize_headings/max_level');
+        $minLevel         = (int) $this->config->get('normalize_headings/min_level');
+        $maxLevel         = (int) $this->config->get('normalize_headings/max_level');
+        $rebaseToMinLevel = (bool) $this->config->get('normalize_headings/rebase_to_min_level');
+
+        /**
+         * The headings the current one is nested within, tracked by both their original level (which
+         * determines that nesting) and their new level (which limits how far the current one may descend)
+         *
+         * @var array<int, array{original: int, output: int}> $ancestors
+         */
+        $ancestors = [];
 
         foreach ($event->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             if (! $node instanceof Heading) {
                 continue;
             }
 
-            if ($node->getLevel() < $minLevel) {
-                $node->setLevel($minLevel);
-            } elseif ($node->getLevel() > $maxLevel) {
-                $node->setLevel($maxLevel);
+            $level = $node->getLevel();
+
+            // Pop any headings this one isn't nested within - they're siblings or cousins, not ancestors
+            $parent = \end($ancestors);
+            while ($parent !== false && $level <= $parent['original']) {
+                \array_pop($ancestors);
+                $parent = \end($ancestors);
             }
+
+            if ($parent === false) {
+                $newLevel = $rebaseToMinLevel ? $minLevel : self::clamp($level, $minLevel, $maxLevel);
+            } else {
+                // The original level always exceeds the parent's original level, which in turn is never
+                // shallower than the parent's new level, so descending by one is always allowed here
+                $newLevel = \min($parent['output'] + 1, $maxLevel);
+            }
+
+            $node->setLevel($newLevel);
+            $ancestors[] = ['original' => $level, 'output' => $newLevel];
         }
+    }
+
+    private static function clamp(int $level, int $minLevel, int $maxLevel): int
+    {
+        return \max($minLevel, \min($level, $maxLevel));
     }
 }

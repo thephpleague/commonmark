@@ -26,6 +26,7 @@ final class NormalizeHeadingsExtension implements ConfigurableExtensionInterface
         $builder->addSchema('normalize_headings', Expect::structure([
             'min_level' => Expect::int()->min(1)->max(6)->default(1),
             'max_level' => Expect::int()->min(1)->max(6)->default(6),
+            'rebase_to_min_level' => Expect::bool()->default(false),
         ])->assert(
             static function (\stdClass $config): bool {
                 $headingLevels = (array) $config;
