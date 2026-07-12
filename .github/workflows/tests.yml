@@ -136,10 +136,11 @@ jobs:
 
         steps:
             - uses: actions/checkout@v7
+              with:
+                  fetch-depth: 0 # super-linter needs the full git history
 
             - uses: github/super-linter/slim@v7
               env:
-                  DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   LINTER_RULES_PATH: '.' # From https://github.com/github/super-linter/pull/859#issuecomment-709625090
                   VALIDATE_MARKDOWN: true
