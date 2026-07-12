@@ -13,6 +13,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - `normalize_headings/rebase_to_min_level` - rebases each document so its headings begin at `min_level`
 - Added a new `footnote/enable_inline_footnotes` config option to disable the inline `^[Footnote text]` syntax (#1112)
 
+### Fixed
+
+- Fixed `MarkDelimiterProcessor` not being declared as a `CacheableDelimiterProcessorInterface`, preventing the delimiter stack from caching the opener search for `==` runs (#1133)
+
 ## [2.8.3] - 2026-07-12
 
 ### Fixed
