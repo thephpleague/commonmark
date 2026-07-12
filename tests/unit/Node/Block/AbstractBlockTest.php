@@ -25,7 +25,8 @@ final class AbstractBlockTest extends TestCase
 {
     public function testSetParent(): void
     {
-        $block = $this->getMockForAbstractClass(AbstractBlock::class);
+        $block = new class extends AbstractBlock {
+        };
 
         $parent = $this->createMock(AbstractBlock::class);
         self::getMethod('setParent')->invoke($block, $parent);
@@ -39,15 +40,17 @@ final class AbstractBlockTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $block = $this->getMockForAbstractClass(AbstractBlock::class);
+        $block = new class extends AbstractBlock {
+        };
 
-        $inline = $this->getMockForAbstractClass(AbstractInline::class);
+        $inline = $this->createStub(AbstractInline::class);
         self::getMethod('setParent')->invoke($block, $inline);
     }
 
     public function testGetStartLine(): void
     {
-        $block = $this->getMockForAbstractClass(AbstractBlock::class);
+        $block = new class extends AbstractBlock {
+        };
 
         self::getProperty('startLine')->setValue($block, 42);
         $this->assertEquals(42, $block->getStartLine());
@@ -55,7 +58,8 @@ final class AbstractBlockTest extends TestCase
 
     public function testGetSetEndLine(): void
     {
-        $block = $this->getMockForAbstractClass(AbstractBlock::class);
+        $block = new class extends AbstractBlock {
+        };
 
         $block->setEndLine(42);
         $this->assertEquals(42, $block->getEndLine());

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Util;
 
 use League\CommonMark\Util\Xml;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class XmlTest extends TestCase
@@ -24,6 +25,7 @@ final class XmlTest extends TestCase
     /**
      * @dataProvider dataProviderForTestEscape
      */
+    #[DataProvider('dataProviderForTestEscape')]
     public function testEscape(string $input, string $expectedOutput): void
     {
         $this->assertEquals($expectedOutput, Xml::escape($input));

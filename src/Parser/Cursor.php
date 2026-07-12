@@ -239,7 +239,7 @@ class Cursor
         if ($characters === 1) {
             $asArray = [$nextFewChars];
         } elseif ($this->isMultibyte) {
-            /** @var string[] $asArray */
+            /** @var list<string> $asArray */
             $asArray = \mb_str_split($nextFewChars, 1, 'UTF-8');
         } else {
             $asArray = \str_split($nextFewChars);

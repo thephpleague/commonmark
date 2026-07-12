@@ -18,6 +18,7 @@ use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\MarkdownConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class UrlAutolinkParserTest extends TestCase
@@ -25,6 +26,7 @@ final class UrlAutolinkParserTest extends TestCase
     /**
      * @dataProvider dataProviderForAutolinkTests
      */
+    #[DataProvider('dataProviderForAutolinkTests')]
     public function testUrlAutolinks(string $input, string $expected): void
     {
         $environment = new Environment();
@@ -134,6 +136,7 @@ final class UrlAutolinkParserTest extends TestCase
     /**
      * @dataProvider dataProviderForSchemes
      */
+    #[DataProvider('dataProviderForSchemes')]
     public function testUrlAutolinksWithConfigurableSchemes(string $scheme): void
     {
         $markdown = 'www.example.com';

@@ -16,6 +16,7 @@ namespace League\CommonMark\Tests\Functional;
 use League\CommonMark\ConverterInterface;
 use League\CommonMark\Extension\FrontMatter\Data\SymfonyYamlFrontMatterParser;
 use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -46,6 +47,7 @@ abstract class AbstractLocalDataTestCase extends TestCase
      * @param array<string, mixed> $config   Configuration loaded from front matter
      * @param string               $testName Name of the test
      */
+    #[DataProvider('dataProvider')]
     public function testWithLocalData(string $markdown, string $html, array $config, string $testName): void
     {
         $actualResult = (string) $this->createConverter($config)->convert($markdown);

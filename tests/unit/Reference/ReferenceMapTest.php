@@ -18,6 +18,7 @@ namespace League\CommonMark\Tests\Unit\Reference;
 
 use League\CommonMark\Reference\Reference;
 use League\CommonMark\Reference\ReferenceMap;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ReferenceMapTest extends TestCase
@@ -36,6 +37,7 @@ final class ReferenceMapTest extends TestCase
     /**
      * @dataProvider provideLabelsForCaseFoldingTest
      */
+    #[DataProvider('provideLabelsForCaseFoldingTest')]
     public function testUnicodeCaseFolding(string $label): void
     {
         $map = new ReferenceMap();

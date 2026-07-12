@@ -24,12 +24,12 @@ final class DelimiterProcessorCollectionTest extends TestCase
     {
         $collection = new DelimiterProcessorCollection();
 
-        $processor1 = $this->getMockForAbstractClass(DelimiterProcessorInterface::class);
+        $processor1 = $this->createStub(DelimiterProcessorInterface::class);
         $processor1->method('getOpeningCharacter')->willReturn('*');
         $processor1->method('getClosingCharacter')->willReturn('*');
         $collection->add($processor1);
 
-        $processor2 = $this->getMockForAbstractClass(DelimiterProcessorInterface::class);
+        $processor2 = $this->createStub(DelimiterProcessorInterface::class);
         $processor2->method('getOpeningCharacter')->willReturn('_');
         $processor2->method('getClosingCharacter')->willReturn('_');
         $collection->add($processor2);
@@ -45,11 +45,11 @@ final class DelimiterProcessorCollectionTest extends TestCase
 
         $collection = new DelimiterProcessorCollection();
 
-        $processor1 = $this->getMockForAbstractClass(DelimiterProcessorInterface::class);
+        $processor1 = $this->createStub(DelimiterProcessorInterface::class);
         $processor1->method('getOpeningCharacter')->willReturn('*');
         $collection->add($processor1);
 
-        $processor2 = $this->getMockForAbstractClass(DelimiterProcessorInterface::class);
+        $processor2 = $this->createStub(DelimiterProcessorInterface::class);
         $processor2->method('getOpeningCharacter')->willReturn('*');
         $collection->add($processor2);
     }

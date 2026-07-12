@@ -18,6 +18,7 @@ namespace League\CommonMark\Tests\Unit\Util;
 
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Util\UrlEncoder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class UrlEncoderTest extends TestCase
@@ -25,6 +26,7 @@ final class UrlEncoderTest extends TestCase
     /**
      * @dataProvider unescapeAndEncodeTestProvider
      */
+    #[DataProvider('unescapeAndEncodeTestProvider')]
     public function testUnescapeAndEncode(string $input, string $expected): void
     {
         $this->assertEquals($expected, UrlEncoder::unescapeAndEncode($input));

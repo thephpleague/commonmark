@@ -27,6 +27,6 @@ final class EmbedRendererTest extends TestCase
         $embed = new Embed('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
         $embed->setEmbedCode('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
 
-        self::assertSame('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', $renderer->render($embed, $this->getMockForAbstractClass(ChildNodeRendererInterface::class)));
+        self::assertSame('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', $renderer->render($embed, $this->createStub(ChildNodeRendererInterface::class)));
     }
 }

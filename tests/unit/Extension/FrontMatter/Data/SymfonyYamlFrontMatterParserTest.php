@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Extension\FrontMatter\Data;
 
 use League\CommonMark\Extension\FrontMatter\Data\SymfonyYamlFrontMatterParser;
 use League\CommonMark\Extension\FrontMatter\Exception\InvalidFrontMatterException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use PackageVersions\Versions as InstalledComposerPackages;
 
@@ -25,6 +26,7 @@ final class SymfonyYamlFrontMatterParserTest extends TestCase
      *
      * @param mixed $expected
      */
+    #[DataProvider('provideValidYamlExamples')]
     public function testParseWithValidYaml(string $input, $expected): void
     {
         $dataParser = new SymfonyYamlFrontMatterParser();
@@ -45,6 +47,7 @@ final class SymfonyYamlFrontMatterParserTest extends TestCase
     /**
      * @dataProvider provideInvalidYamlExamples
      */
+    #[DataProvider('provideInvalidYamlExamples')]
     public function testParseWithInvalidYaml(string $input): void
     {
         $this->expectException(InvalidFrontMatterException::class);

@@ -16,6 +16,7 @@ namespace League\CommonMark\Tests\Functional\Extension\InlinesOnly;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,6 +39,7 @@ final class InlinesOnlyFunctionalTest extends TestCase
      * @param string $markdown Markdown to parse
      * @param string $html     Expected result
      */
+    #[DataProvider('dataProvider')]
     public function testExample(string $markdown, string $html): void
     {
         $actualResult = $this->converter->convert($markdown);

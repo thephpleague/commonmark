@@ -23,6 +23,7 @@ use League\CommonMark\Extension\Table\Table;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Node\Block\Paragraph;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class DefaultAttributesExtensionTest extends TestCase
@@ -32,6 +33,7 @@ final class DefaultAttributesExtensionTest extends TestCase
      *
      * @param array<string, mixed> $config
      */
+    #[DataProvider('provideTestCases')]
     public function testExample(string $markdown, array $config, string $expectedHtml): void
     {
         $environment = new Environment($config);
