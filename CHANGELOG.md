@@ -13,6 +13,12 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - `normalize_headings/rebase_to_min_level` - rebases each document so its headings begin at `min_level`
 - Added a new `footnote/enable_inline_footnotes` config option to disable the inline `^[Footnote text]` syntax (#1112)
 
+## [2.8.3] - 2026-07-12
+
+### Fixed
+- Fixed tab-indented fenced code blocks inside list items losing the first character of each line and having their info string mangled (#981, #1130)
+- Fixed the unsafe link filter incorrectly blocking safe URLs containing `vbscript:`, `file:`, or `data:` anywhere after the start (#1131)
+
 ## [2.8.2] - 2026-03-19
 
 This is a **security release** to address an issue where the `allowed_domains` setting for the `Embed` extension can be bypassed, resulting in a possible SSRF and XSS vulnerabilities.
@@ -739,7 +745,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.8.2...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.8.3...HEAD
+[2.8.3]: https://github.com/thephpleague/commonmark/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/thephpleague/commonmark/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/thephpleague/commonmark/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/thephpleague/commonmark/compare/2.7.1...2.8.0

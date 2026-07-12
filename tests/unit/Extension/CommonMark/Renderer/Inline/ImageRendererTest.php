@@ -117,7 +117,7 @@ final class ImageRendererTest extends TestCase
         $result = $this->renderer->render($inline, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
-        $this->assertEquals('', $result->getAttribute('src'));
+        $this->assertSame('', $result->getAttribute('src'));
     }
 
     public function testRenderWithInvalidType(): void

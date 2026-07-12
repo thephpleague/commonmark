@@ -93,13 +93,13 @@ By default, this option is an empty array (`[]`), which means that all domains a
 
 ### `fallback` option
 
-This options defines the behavior when a URL cannot be embedded, either because it's not in the list of `allowed_domains`,
+This option defines the behavior when a URL cannot be embedded, either because it's not in the list of `allowed_domains`,
 or because the `adapter` could not find embeddable content for that URL.
 
 There are two possible values for this option:
 
 - `'link'` - the URL will be kept in the document as a link (**default**)
--`'remove'` - the URL will be completely removed from the document
+- `'remove'` - the URL will be completely removed from the document
 
 ## Adapter
 
