@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed tab-indented fenced code blocks inside list items losing the first character of each line and having their info string mangled (#981, #1130)
+
 ## [2.8.2] - 2026-03-19
 
 This is a **security release** to address an issue where the `allowed_domains` setting for the `Embed` extension can be bypassed, resulting in a possible SSRF and XSS vulnerabilities.
