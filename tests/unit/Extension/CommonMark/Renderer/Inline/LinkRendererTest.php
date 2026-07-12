@@ -94,7 +94,8 @@ final class LinkRendererTest extends TestCase
         $result = $this->renderer->render($inline, $fakeRenderer);
 
         $this->assertTrue($result instanceof HtmlElement);
-        $this->assertEquals('', $result->getAttribute('href'));
+        $this->assertNull($result->getAttribute('href'));
+        $this->assertSame('<a></a>', (string) $result);
     }
 
     public function testRenderWithInvalidType(): void
