@@ -41,7 +41,7 @@ to enhance your experience out-of-the-box depending on your specific use-cases.
 | [Highlight] | Mark text as being highlighted for reference or notation purposes | `2.8.0` | |
 | [Inlines Only] | Only includes standard CommonMark inline elements - perfect for handling comments and other short bits of text where you only want bold, italic, links, etc. | `1.3.0` | |
 | [Mentions] | Easy parsing of `@mention` and `#123`-style references | `1.5.0` | |
-| [Normalize Headings] | Constrains heading levels to a configured min/max range | `2.9.0` | |
+| [Normalize Headings] | Rewrites heading levels to produce a valid outline within a configured min/max range | `2.9.0` | |
 | [Strikethrough] | Allows using tilde characters (`~~`) for ~strikethrough~ formatting | `1.3.0`  | <i class="fab fa-github"></i> |
 | [Tables] | Enables you to create HTML tables | `1.3.0`  | <i class="fab fa-github"></i> |
 | [Table of Contents] | Automatically inserts links to the headings at the top of your document | `1.4.0` | |
