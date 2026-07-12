@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Fixed
 - Fixed tab-indented fenced code blocks inside list items losing the first character of each line and having their info string mangled (#981, #1130)
+- Fixed the unsafe link filter incorrectly blocking safe URLs containing `vbscript:`, `file:`, or `data:` anywhere after the start (#1131)
 
 ## [2.8.2] - 2026-03-19
 
