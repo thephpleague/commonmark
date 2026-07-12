@@ -61,8 +61,8 @@ final class NormalizeHeadingsProcessor implements EnvironmentAwareInterface
             if ($parent === false) {
                 $newLevel = $rebaseToMinLevel ? $minLevel : self::clamp($level, $minLevel, $maxLevel);
             } else {
-                // The original level always exceeds the parent's original level, which in turn is never
-                // shallower than the parent's new level, so descending by one is always allowed here
+                // Place this heading exactly one level below its parent, regardless of the level it was
+                // written at - unless that would exceed the maximum, in which case it becomes a sibling
                 $newLevel = \min($parent['output'] + 1, $maxLevel);
             }
 

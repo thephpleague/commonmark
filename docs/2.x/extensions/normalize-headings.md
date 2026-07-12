@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Normalize Headings Extension
-description: The NormalizeHeadingsExtension constrains heading levels to a configured range
+description: The NormalizeHeadingsExtension rewrites heading levels to produce a valid outline within a configured range
 redirect_from:
   - /extensions/normalize-headings/
 ---
