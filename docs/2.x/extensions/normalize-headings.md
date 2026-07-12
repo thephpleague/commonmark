@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Limit Headings Extension
-description: The LimitHeadingsExtension constrains heading levels to a configured range
+title: Normalize Headings Extension
+description: The NormalizeHeadingsExtension constrains heading levels to a configured range
 redirect_from:
-  - /extensions/limit-headings/
+  - /extensions/normalize-headings/
 ---
 
-# Limit Headings Extension
+# Normalize Headings Extension
 
 This extension lets you constrain heading levels to a configured range.
 
@@ -32,13 +32,13 @@ This extension can be added to any new `Environment`:
 ```php
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\LimitHeadings\LimitHeadingsExtension;
+use League\CommonMark\Extension\NormalizeHeadings\NormalizeHeadingsExtension;
 use League\CommonMark\MarkdownConverter;
 
 // Extension defaults are shown below
 // If you're happy with the defaults, feel free to remove them from this array
 $config = [
-    'limit_headings' => [
+    'normalize_headings' => [
         'min_heading_level' => 1,
         'max_heading_level' => 6,
     ],
@@ -49,7 +49,7 @@ $environment = new Environment($config);
 $environment->addExtension(new CommonMarkCoreExtension());
 
 // Add this extension
-$environment->addExtension(new LimitHeadingsExtension());
+$environment->addExtension(new NormalizeHeadingsExtension());
 
 // Instantiate the converter engine and start converting some Markdown!
 $converter = new MarkdownConverter($environment);
@@ -58,7 +58,7 @@ echo $converter->convert("# Heading 1\n\n## Heading 2");
 
 ## Configuration
 
-This extension can be configured by providing a `limit_headings` array with two nested options.
+This extension can be configured by providing a `normalize_headings` array with two nested options.
 
 ### `min_heading_level` and `max_heading_level`
 

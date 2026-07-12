@@ -8,7 +8,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 
-- Added a new `LimitHeadingsExtension` to constrain headings to a configured level range (#989)
+- Added a new `NormalizeHeadingsExtension` to constrain headings to a configured level range (#989)
 
 ## [2.8.2] - 2026-03-19
 

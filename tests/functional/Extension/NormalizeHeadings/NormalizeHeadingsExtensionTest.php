@@ -11,21 +11,21 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Functional\Extension\LimitHeadings;
+namespace League\CommonMark\Tests\Functional\Extension\NormalizeHeadings;
 
 use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
-use League\CommonMark\Extension\LimitHeadings\LimitHeadingsExtension;
+use League\CommonMark\Extension\NormalizeHeadings\NormalizeHeadingsExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Tests\Functional\AbstractLocalDataTestCase;
 use League\Config\Exception\ConfigurationExceptionInterface;
 use League\Config\Exception\InvalidConfigurationException;
 
-final class LimitHeadingsExtensionTest extends AbstractLocalDataTestCase
+final class NormalizeHeadingsExtensionTest extends AbstractLocalDataTestCase
 {
     /**
      * @param array<string, mixed> $config
@@ -34,7 +34,7 @@ final class LimitHeadingsExtensionTest extends AbstractLocalDataTestCase
     {
         $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new LimitHeadingsExtension());
+        $environment->addExtension(new NormalizeHeadingsExtension());
 
         return new MarkdownConverter($environment);
     }
@@ -54,7 +54,7 @@ final class LimitHeadingsExtensionTest extends AbstractLocalDataTestCase
     public function testRunsBeforeTableOfContentsAndHeadingPermalinks(): void
     {
         $environment = new Environment([
-            'limit_headings' => [
+            'normalize_headings' => [
                 'min_heading_level' => 2,
                 'max_heading_level' => 2,
             ],
@@ -68,7 +68,7 @@ final class LimitHeadingsExtensionTest extends AbstractLocalDataTestCase
             ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new LimitHeadingsExtension());
+        $environment->addExtension(new NormalizeHeadingsExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
         $environment->addExtension(new TableOfContentsExtension());
 
@@ -92,7 +92,7 @@ final class LimitHeadingsExtensionTest extends AbstractLocalDataTestCase
         $this->expectException(InvalidConfigurationException::class);
 
         $this->createConverter([
-            'limit_headings' => [
+            'normalize_headings' => [
                 'min_heading_level' => 4,
                 'max_heading_level' => 2,
             ],

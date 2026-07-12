@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\LimitHeadings;
+namespace League\CommonMark\Extension\NormalizeHeadings;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
@@ -19,11 +19,11 @@ use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
-final class LimitHeadingsExtension implements ConfigurableExtensionInterface
+final class NormalizeHeadingsExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
-        $builder->addSchema('limit_headings', Expect::structure([
+        $builder->addSchema('normalize_headings', Expect::structure([
             'min_heading_level' => Expect::int()->min(1)->max(6)->default(1),
             'max_heading_level' => Expect::int()->min(1)->max(6)->default(6),
         ])->assert(
@@ -38,6 +38,6 @@ final class LimitHeadingsExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
-        $environment->addEventListener(DocumentParsedEvent::class, new LimitHeadingsProcessor(), -99);
+        $environment->addEventListener(DocumentParsedEvent::class, new NormalizeHeadingsProcessor(), -99);
     }
 }

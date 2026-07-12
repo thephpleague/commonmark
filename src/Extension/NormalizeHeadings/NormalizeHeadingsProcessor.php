@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Extension\LimitHeadings;
+namespace League\CommonMark\Extension\NormalizeHeadings;
 
 use League\CommonMark\Environment\EnvironmentAwareInterface;
 use League\CommonMark\Environment\EnvironmentInterface;
@@ -20,7 +20,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\NodeIterator;
 use League\Config\ConfigurationInterface;
 
-final class LimitHeadingsProcessor implements EnvironmentAwareInterface
+final class NormalizeHeadingsProcessor implements EnvironmentAwareInterface
 {
     /** @psalm-readonly-allow-private-mutation */
     private ConfigurationInterface $config;
@@ -32,8 +32,8 @@ final class LimitHeadingsProcessor implements EnvironmentAwareInterface
 
     public function __invoke(DocumentParsedEvent $event): void
     {
-        $minHeadingLevel = (int) $this->config->get('limit_headings/min_heading_level');
-        $maxHeadingLevel = (int) $this->config->get('limit_headings/max_heading_level');
+        $minHeadingLevel = (int) $this->config->get('normalize_headings/min_heading_level');
+        $maxHeadingLevel = (int) $this->config->get('normalize_headings/max_heading_level');
 
         foreach ($event->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             if (! $node instanceof Heading) {

@@ -11,29 +11,29 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace League\CommonMark\Tests\Unit\Extension\LimitHeadings;
+namespace League\CommonMark\Tests\Unit\Extension\NormalizeHeadings;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
-use League\CommonMark\Extension\LimitHeadings\LimitHeadingsExtension;
-use League\CommonMark\Extension\LimitHeadings\LimitHeadingsProcessor;
+use League\CommonMark\Extension\NormalizeHeadings\NormalizeHeadingsExtension;
+use League\CommonMark\Extension\NormalizeHeadings\NormalizeHeadingsProcessor;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\NodeIterator;
 use League\Config\Exception\InvalidConfigurationException;
 use PHPUnit\Framework\TestCase;
 
-final class LimitHeadingsProcessorTest extends TestCase
+final class NormalizeHeadingsProcessorTest extends TestCase
 {
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testClampsHeadingLevelsWithinConfiguredRange(): void
     {
-        $processor = new LimitHeadingsProcessor();
+        $processor = new NormalizeHeadingsProcessor();
         $processor->setEnvironment($this->createEnvironment([
-            'limit_headings' => [
+            'normalize_headings' => [
                 'min_heading_level' => 2,
                 'max_heading_level' => 4,
             ],
@@ -61,7 +61,7 @@ final class LimitHeadingsProcessorTest extends TestCase
      */
     public function testLeavesHeadingsUntouchedWithDefaultConfig(): void
     {
-        $processor = new LimitHeadingsProcessor();
+        $processor = new NormalizeHeadingsProcessor();
         $processor->setEnvironment($this->createEnvironment());
 
         $document = new Document();
@@ -85,9 +85,9 @@ final class LimitHeadingsProcessorTest extends TestCase
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $processor = new LimitHeadingsProcessor();
+        $processor = new NormalizeHeadingsProcessor();
         $processor->setEnvironment($this->createEnvironment([
-            'limit_headings' => [
+            'normalize_headings' => [
                 'min_heading_level' => 4,
                 'max_heading_level' => 2,
             ],
@@ -105,7 +105,7 @@ final class LimitHeadingsProcessorTest extends TestCase
     private function createEnvironment(array $values = []): EnvironmentInterface
     {
         $environment = new Environment($values);
-        $environment->addExtension(new LimitHeadingsExtension());
+        $environment->addExtension(new NormalizeHeadingsExtension());
 
         return $environment;
     }
