@@ -402,6 +402,38 @@ final class RegexHelperTest extends TestCase
         yield [8];
     }
 
+    /**
+     * @dataProvider dataForTestIsLinkPotentiallyUnsafe
+     */
+    #[DataProvider('dataForTestIsLinkPotentiallyUnsafe')]
+    public function testIsLinkPotentiallyUnsafe(string $url, bool $expected): void
+    {
+        $this->assertSame($expected, RegexHelper::isLinkPotentiallyUnsafe($url));
+    }
+
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public static function dataForTestIsLinkPotentiallyUnsafe(): iterable
+    {
+        return [
+            // Dangerous leading schemes are unsafe
+            ['javascript:alert(1)', true],
+            ['JAVASCRIPT:alert(1)', true],
+            ['vbscript:msgbox(1)', true],
+            ['file:///etc/passwd', true],
+            ['data:text/html,<script>alert(1)</script>', true],
+            ['data:image/svg+xml,<svg onload=alert(1)>', true],
+            // Safe data: images are allowed
+            ['data:image/png;base64,iVBORw0KGgo=', false],
+            // URLs merely containing those schemes elsewhere are safe
+            ['https://example.com/view?src=data:image/png', false],
+            ['https://example.com/download?to=file:report', false],
+            ['https://example.com/wiki/vbscript:_basics', false],
+            ['https://example.com/ok', false],
+        ];
+    }
+
     private function assertRegexMatches(string $pattern, string $string, string $message = ''): void
     {
         if (\method_exists($this, 'assertMatchesRegularExpression')) {
