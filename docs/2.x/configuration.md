@@ -85,7 +85,7 @@ Here's a list of the core configuration options available:
   - `allow` - Allow all HTML input as-is (default value; equivalent to `'safe' => false`)
   - `escape` - Escape all HTML
 - `allow_unsafe_links` - Remove risky link and image URLs by setting this to `false` (default: `true`)
-- `max_nesting_level` - The maximum nesting level for blocks (default: `PHP_INT_MAX`). Set this to `100` when parsing untrusted input to protect against long parse times and/or segfaults if blocks are too deeply-nested.
+- `max_nesting_level` - The maximum nesting level for blocks (default: `100`). Lower values can help protect against long parse times and/or segfaults if blocks are too deeply-nested.
 - `max_delimiters_per_line` - The maximum number of delimiters (e.g. `*` or `_`) allowed in a single line (default: `PHP_INT_MAX`). Setting this to a positive integer can help protect against long parse times and/or segfaults if lines are too long. Note that this option only applies to emphasis-style delimiters; it does not limit link or image brackets (`[` and `![`).
 - `xml` - Array of options for [rendering XML](/2.x/xml/)
   - `max_indentation_level` - The maximum depth to indent nested elements by when pretty-printing XML (default: `16`). Elements nested more deeply than this are still rendered, just without any additional indentation. Set this to `0` to disable indentation entirely.

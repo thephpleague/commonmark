@@ -71,9 +71,9 @@ To prevent these from being parsed and rendered, you should set the `allow_unsaf
 
 ## Nesting Level
 
-**No maximum nesting level is enforced by default.**  Markdown content which is too deeply-nested (like 10,000 nested blockquotes: '> > > > > ...') [could result in long render times or segfaults](https://github.com/thephpleague/commonmark/issues/243#issuecomment-217580285).
+**A maximum nesting level of 100 is enforced by default.**  Without a reasonable limit, deeply-nested Markdown (like 10,000 nested blockquotes: '> > > > > ...') [could result in long render times or segfaults](https://github.com/thephpleague/commonmark/issues/243#issuecomment-217580285).
 
-When parsing untrusted input, set `max_nesting_level` to `100`.  Once this nesting level is hit, any subsequent Markdown will be rendered as plain text.  The limit can be lowered for stricter protection or raised explicitly for trusted documents which legitimately require deeper nesting.
+This default is recommended when parsing untrusted input.  Once this nesting level is hit, any subsequent Markdown will be rendered as plain text.  The limit can be lowered for stricter protection or raised explicitly for trusted documents which legitimately require deeper nesting.
 
 ### Example - Prevent deep nesting
 

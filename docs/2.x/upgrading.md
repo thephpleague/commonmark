@@ -53,10 +53,11 @@ resolving the `[text][label]` form.  A label longer than 999 characters which co
 once its whitespace was normalized will no longer resolve, and is left as literal text instead.  This matches the
 behavior of the reference `cmark` implementation.
 
-### Recommended: Set a Maximum Nesting Level
+### A Maximum Nesting Level Is Now Enforced by Default
 
-If you're parsing untrusted input, we now recommend setting `max_nesting_level` to `100`.  See the
-[security documentation](/2.x/security/) for details.
+`max_nesting_level` now defaults to `100` instead of `PHP_INT_MAX`.  Blocks nested more deeply than that are rendered
+as plain text, so trusted documents which legitimately nest deeper than 100 levels need the limit raised explicitly.
+See the [security documentation](/2.x/security/) for details.
 
 ## Upgrading from 2.7 to 2.8
 

@@ -208,6 +208,9 @@ $cases = [
         'sizes' => [100, 1_000],
         'input' => static fn($n) => \str_repeat('> ', $n) . "a\n",
         'expected' => static fn($n) => \str_repeat("<blockquote>\n", $n) . "<p>a</p>\n" . \str_repeat("</blockquote>\n", $n),
+        'configuration' => [
+            'max_nesting_level' => 5_000,
+        ],
     ],
     'Backticks' => [
         'ref' => 'https://github.com/commonmark/commonmark.js/issues/129',
@@ -317,6 +320,9 @@ $cases = [
         'sizes' => [100, 1_000, 2_000, 3_000],
         'input' => static fn($n) => \str_repeat(">", $n) . \str_repeat(".", $n) . "\n",
         'expected' => static fn($n) => \str_repeat("<blockquote>\n", $n) . '<p>' . \str_repeat('.', $n) . "</p>\n" . \str_repeat("</blockquote>\n", $n),
+        'configuration' => [
+            'max_nesting_level' => 5_000,
+        ],
     ],
     'CVE-2023-24824 test 1' => [
         'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-66g8-4hjf-77xh',
@@ -334,13 +340,10 @@ $cases = [
             'max_nesting_level' => 500,
         ],
     ],
-    'Nested list markers with trailing blanks (limited nesting)' => [
+    'Nested list markers with trailing blanks (default config)' => [
         'ref' => 'https://github.com/thephpleague/commonmark/issues/243',
         'sizes' => [1_000, 10_000, 100_000],
         'input' => static fn($n) => \str_repeat('- ', $n) . "x\n" . \str_repeat("\n", $n),
-        'configuration' => [
-            'max_nesting_level' => 100,
-        ],
     ],
     'CVE-2023-26485 test 1' => [
         'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-r8vr-c48j-fcc5',
