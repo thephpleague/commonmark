@@ -237,6 +237,14 @@ $cases = [
             'max_nesting_level' => 500,
         ],
     ],
+    'Nested list markers with trailing blanks (limited nesting)' => [
+        'ref' => 'https://github.com/thephpleague/commonmark/issues/243',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => \str_repeat('- ', $n) . "x\n" . \str_repeat("\n", $n),
+        'configuration' => [
+            'max_nesting_level' => 100,
+        ],
+    ],
     'CVE-2023-26485 test 1' => [
         'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-r8vr-c48j-fcc5',
         'sizes' => [50, 500, 5_000], // ideally should be 1000, 10_000, 100_000 but recursive rendering makes large sizes fail
