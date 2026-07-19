@@ -13,6 +13,7 @@
 ini_set('memory_limit', '1024M');
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
@@ -42,6 +43,11 @@ $environment->addExtension(new CommonMarkCoreExtension());
 
 // Enable additional extensions if requested
 switch ($argv[2] ?? null) {
+    case 'commonmark':
+        break;
+    case 'autolink':
+        $environment->addExtension(new AutolinkExtension());
+        break;
     case 'table':
         $environment->addExtension(new TableExtension());
         break;

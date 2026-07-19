@@ -99,10 +99,8 @@ final class UrlAutolinkParser implements InlineParserInterface
             return false;
         }
 
-        // Check if we have a valid URL. The regex is anchored (the "A" modifier) and matched
-        // against the full line at the current byte offset rather than against a fresh copy of
-        // the remaining text. This avoids re-allocating and re-validating (the "u" modifier) the
-        // entire remainder on every prefix occurrence, which would otherwise be quadratic.
+        // Matching the original line at the current byte offset avoids copying and validating
+        // the complete remainder for every prefix. The A modifier anchors at that offset.
         if (! \preg_match($this->finalRegex, $cursor->getLine(), $matches, 0, $cursor->getBytePosition())) {
             return false;
         }

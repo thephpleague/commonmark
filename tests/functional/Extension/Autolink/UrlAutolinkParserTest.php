@@ -97,6 +97,7 @@ final class UrlAutolinkParserTest extends TestCase
         yield ['test text www. test https://commonmark.thephpleague.com/2.7/extensions/autolinks/ more text', '<p>test text www. test <a href="https://commonmark.thephpleague.com/2.7/extensions/autolinks/">https://commonmark.thephpleague.com/2.7/extensions/autolinks/</a> more text</p>'];
         yield ['www. example.com', '<p>www. example.com</p>'];
         yield ['www.  https://example.com', '<p>www.  <a href="https://example.com">https://example.com</a></p>'];
+        yield ['é www.  https://example.com/中', '<p>é www.  <a href="https://example.com/中">https://example.com/中</a></p>'];
     }
 
     public function testUrlAutolinksWithStrikethrough(): void
