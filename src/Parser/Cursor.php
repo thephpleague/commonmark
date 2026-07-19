@@ -19,11 +19,14 @@ class Cursor
 {
     public const INDENT_LEVEL = 4;
 
-    private const BYTE_OFFSET_CHECKPOINT_INTERVAL = 64;
-
-    // Native mbstring calls are faster for sparse access. The fixed cap keeps
-    // their combined worst-case cost linear before checkpoints take over.
-    private const NATIVE_MULTIBYTE_ACCESS_LIMIT = 128;
+    /**
+     * Interval (in characters) between recorded byte-offset checkpoints on multibyte lines.
+     * A larger interval uses less memory but makes random lookups walk further; a smaller one
+     * costs more memory but speeds random lookups. Sequential access is O(1) regardless, via the
+     * last-resolved-position cache, so this only trades memory against the cost of random jumps
+     * (backwards peeks, saveState/restoreState).
+     */
+    private const BYTE_OFFSET_CHECKPOINT_INTERVAL = 16;
 
     /** @psalm-readonly */
     private string $line;
@@ -59,22 +62,31 @@ class Cursor
     /** @psalm-readonly */
     private bool $isMultibyte;
 
-    private int $nativeMultibyteAccesses = 0;
-
     /**
-     * Lazily-built byte offsets for character positions at fixed intervals.
+     * Sparse lookup table mapping a checkpoint index (character index divided by
+     * BYTE_OFFSET_CHECKPOINT_INTERVAL) to the byte offset at which that character begins within
+     * $line. Only populated for multibyte lines, and only ever extended forwards. Recording one
+     * offset per interval - rather than one per character - bounds this map to O(n / interval)
+     * memory, so it can never become the dominant allocation on a long line. A lookup walks at most
+     * `interval` bytes from the nearest checkpoint (or O(1) from the last-resolved position for the
+     * sequential access that dominates parsing); this is what keeps character<->byte translation -
+     * and therefore every substring accessor - linear rather than O(n^2) on multibyte lines.
      *
      * @var array<int, int>
      */
     private array $byteOffsetCheckpoints = [];
 
+    /** Character index of the most recently resolved byte offset (paired with $lastByteOffset). */
     private int $lastByteOffsetPosition = 0;
 
+    /** Byte offset of the most recently resolved character index (paired with $lastByteOffsetPosition). */
     private int $lastByteOffset = 0;
 
     /**
-     * Cache of individually-read characters on multibyte lines, keyed by character index.
-     * This avoids re-slicing characters which are read repeatedly during delimiter scanning.
+     * Small cache of individually-read single characters on multibyte lines, keyed by
+     * character index. Only populated for characters actually read one-at-a-time (e.g.
+     * repeated peek() during delimiter scanning), so it stays tiny; substring accessors
+     * bypass it entirely. Avoids re-slicing the same character on every lookup.
      *
      * @var array<int, string>
      */
@@ -93,55 +105,43 @@ class Cursor
         $this->length          = \mb_strlen($line, 'UTF-8') ?: 0;
         $this->isMultibyte     = $this->length !== \strlen($line);
         $this->lastTabPosition = $this->isMultibyte ? \mb_strrpos($line, "\t", 0, 'UTF-8') : \strrpos($line, "\t");
+
+        if (! $this->isMultibyte) {
+            return;
+        }
+
+        // Seed the checkpoint map with the start of the line; it is extended on demand (see byteOffset()).
+        $this->byteOffsetCheckpoints = [0];
     }
 
     /**
-     * Use native multibyte operations while accesses are sparse, then switch permanently to checkpoints.
-     */
-    private function useNativeMultibyteFunctions(): bool
-    {
-        if ($this->byteOffsetCheckpoints !== []) {
-            return false;
-        }
-
-        if ($this->nativeMultibyteAccesses < self::NATIVE_MULTIBYTE_ACCESS_LIMIT) {
-            $this->nativeMultibyteAccesses++;
-
-            return true;
-        }
-
-        $this->byteOffsetCheckpoints  = [0];
-        $this->lastByteOffsetPosition = 0;
-        $this->lastByteOffset         = 0;
-
-        return false;
-    }
-
-    /**
-     * Translate a character position to a byte offset, extending the map forwards as needed.
+     * Translate a character index into its byte offset within $line.
+     *
+     * The scan starts from the closest known reference point - the last-resolved position when it
+     * sits between the target and the nearest earlier checkpoint (the common sequential case, O(1)),
+     * otherwise that checkpoint (at most `interval` characters away). It then walks forwards one
+     * character at a time, skipping UTF-8 continuation bytes (0b10xxxxxx) and recording a checkpoint
+     * every `interval` characters. Sequential access is therefore amortized O(1) and any random
+     * lookup is bounded by O(interval), all while the map itself stays O(n / interval) in memory.
      */
     private function byteOffset(int $index): int
     {
-        if ($this->byteOffsetCheckpoints === []) {
-            $this->byteOffsetCheckpoints  = [0];
-            $this->lastByteOffsetPosition = 0;
-            $this->lastByteOffset         = 0;
-        }
-
         if ($index === $this->lastByteOffsetPosition) {
             return $this->lastByteOffset;
         }
 
-        $checkpoint         = \intdiv($index, self::BYTE_OFFSET_CHECKPOINT_INTERVAL);
-        $checkpointPosition = $checkpoint * self::BYTE_OFFSET_CHECKPOINT_INTERVAL;
+        // Start from the checkpoint at or before $index, or - if we've not scanned that far yet -
+        // from the furthest checkpoint recorded so far.
+        $checkpoint = \intdiv($index, self::BYTE_OFFSET_CHECKPOINT_INTERVAL);
         if (! isset($this->byteOffsetCheckpoints[$checkpoint])) {
-            $checkpoint         = \count($this->byteOffsetCheckpoints) - 1;
-            $checkpointPosition = $checkpoint * self::BYTE_OFFSET_CHECKPOINT_INTERVAL;
+            $checkpoint = \count($this->byteOffsetCheckpoints) - 1;
         }
 
-        $position = $checkpointPosition;
+        $position = $checkpoint * self::BYTE_OFFSET_CHECKPOINT_INTERVAL;
         $byte     = $this->byteOffsetCheckpoints[$checkpoint];
 
+        // Prefer the last-resolved position when it is a closer starting point (ahead of the chosen
+        // checkpoint but not past the target). This makes sequential forward access O(1).
         if ($this->lastByteOffsetPosition > $position && $this->lastByteOffsetPosition <= $index) {
             $position = $this->lastByteOffsetPosition;
             $byte     = $this->lastByteOffset;
@@ -155,11 +155,9 @@ class Cursor
             }
 
             $position++;
-            if ($position % self::BYTE_OFFSET_CHECKPOINT_INTERVAL !== 0) {
-                continue;
+            if ($position % self::BYTE_OFFSET_CHECKPOINT_INTERVAL === 0) {
+                $this->byteOffsetCheckpoints[\intdiv($position, self::BYTE_OFFSET_CHECKPOINT_INTERVAL)] = $byte;
             }
-
-            $this->byteOffsetCheckpoints[\intdiv($position, self::BYTE_OFFSET_CHECKPOINT_INTERVAL)] = $byte;
         }
 
         $this->lastByteOffsetPosition = $index;
@@ -168,38 +166,10 @@ class Cursor
         return $byte;
     }
 
-    private function multibyteByteOffset(int $index): int
-    {
-        if ($this->useNativeMultibyteFunctions()) {
-            return \strlen(\mb_substr($this->line, 0, $index, 'UTF-8'));
-        }
-
-        return $this->byteOffset($index);
-    }
-
-    private function multibyteSubstring(int $start, ?int $length = null): string
-    {
-        // Preserve mb_substr() semantics for negative offsets and lengths.
-        if ($start < 0 || ($length !== null && $length < 0) || $this->useNativeMultibyteFunctions()) {
-            return \mb_substr($this->line, $start, $length, 'UTF-8');
-        }
-
-        if ($start >= $this->length) {
-            return '';
-        }
-
-        if ($length === null) {
-            return \substr($this->line, $this->byteOffset($start));
-        }
-
-        $startByte = $this->byteOffset($start);
-        $end       = $start + \min($length, $this->length - $start);
-
-        return \substr($this->line, $startByte, $this->byteOffset($end) - $startByte);
-    }
-
     /**
-     * Return and cache the multibyte character at the given position.
+     * Return the single multibyte character at $index, caching the sliced string so
+     * repeated reads of the same position (common during delimiter scanning) don't
+     * re-slice. Callers must ensure 0 <= $index < $length.
      */
     private function charAt(int $index): string
     {
@@ -207,7 +177,9 @@ class Cursor
             return $this->charCache[$index];
         }
 
-        return $this->charCache[$index] = $this->multibyteSubstring($index, 1);
+        $startByte = $this->byteOffset($index);
+
+        return $this->charCache[$index] = \substr($this->line, $startByte, $this->byteOffset($index + 1) - $startByte);
     }
 
     /**
@@ -225,13 +197,14 @@ class Cursor
 
         $cols = $this->column;
 
-        // Spaces and tabs are single-byte characters, so their character and byte positions
-        // advance together. This avoids repeatedly scanning a multibyte line from its start.
-        if (! $this->isMultibyte || $this->currentPosition === 0) {
-            $byteOffset = $this->currentPosition;
-        } else {
-            $byteOffset = $this->multibyteByteOffset($this->currentPosition);
-        }
+        // Spaces (0x20) and tabs (0x09) are single-byte ASCII characters which can
+        // never appear inside a multibyte UTF-8 sequence, so the leading run of
+        // spaces/tabs is always scanned at the byte level.  For multibyte lines this
+        // avoids calling mb_substr() once per character - each such call decodes from
+        // the start of the string (O(i)), making the scan O(n^2) over a long run of
+        // leading whitespace.  Because every character in the run occupies exactly one
+        // byte, the character index and byte offset advance together.
+        $byteOffset = $this->isMultibyte ? $this->byteOffset($this->currentPosition) : $this->currentPosition;
 
         for ($i = $this->currentPosition; $i < $this->length; $i++, $byteOffset++) {
             $c = $this->line[$byteOffset];
@@ -374,9 +347,13 @@ class Cursor
             return;
         }
 
-        $nextFewChars = $this->isMultibyte ?
-            $this->multibyteSubstring($this->currentPosition, $characters) :
-            \substr($this->line, $this->currentPosition, $characters);
+        if ($this->isMultibyte) {
+            $startByte    = $this->byteOffset($this->currentPosition);
+            $endByte      = $this->byteOffset(\min($this->currentPosition + $characters, $this->length));
+            $nextFewChars = \substr($this->line, $startByte, $endByte - $startByte);
+        } else {
+            $nextFewChars = \substr($this->line, $this->currentPosition, $characters);
+        }
 
         if ($characters === 1) {
             $asArray = [$nextFewChars];
@@ -516,7 +493,7 @@ class Cursor
         }
 
         $subString = $this->isMultibyte ?
-            $this->multibyteSubstring($position) :
+            \substr($this->line, $this->byteOffset($position)) :
             \substr($this->line, $position);
 
         return $prefix . $subString;
@@ -541,17 +518,64 @@ class Cursor
      */
     public function match(string $regex): ?string
     {
+        // When a tab has been partially consumed the remainder is reconstructed with the
+        // leftover tab expanded into spaces, so matching must run against that reconstructed
+        // string rather than the raw line. This is rare; use the copy-based path to preserve
+        // the exact column arithmetic.
+        if ($this->partiallyConsumedTab) {
+            return $this->matchViaRemainder($regex);
+        }
+
+        // Match against the persistent line at the current byte offset instead of allocating a
+        // fresh copy of the remainder on every call. A leading "^" is rewritten to "\G" so the
+        // pattern still anchors to the cursor - a bare "^" only matches at the true start of the
+        // subject when a non-zero offset is supplied. Patterns that intentionally scan ahead
+        // (e.g. the backtick closer search) carry no leading "^" and are left untouched. This
+        // keeps repeated match() calls - such as that backtick scan - linear rather than O(n^2),
+        // since each call no longer copies the entire remaining line.
+        if ($regex[1] === '^') {
+            $regex = $regex[0] . '\\G' . \substr($regex, 2);
+        }
+
+        $bytePosition = $this->isMultibyte ? $this->byteOffset($this->currentPosition) : $this->currentPosition;
+
+        if (! \preg_match($regex, $this->line, $matches, \PREG_OFFSET_CAPTURE, $bytePosition)) {
+            return null;
+        }
+
+        // $matches[0][0] contains the matched text; $matches[0][1] is its absolute byte offset in the line.
+        if ($this->isMultibyte) {
+            // Convert the byte offset to a character advance relative to the cursor. The scanned gap
+            // is only the distance from the cursor to the match (zero for anchored patterns), never
+            // the whole line, so this stays linear across repeated calls.
+            $offset      = \mb_strlen(\substr($this->line, $bytePosition, $matches[0][1] - $bytePosition), 'UTF-8');
+            $matchLength = \mb_strlen($matches[0][0], 'UTF-8');
+        } else {
+            $offset      = $matches[0][1] - $this->currentPosition;
+            $matchLength = \strlen($matches[0][0]);
+        }
+
+        $this->advanceBy($offset + $matchLength);
+
+        return $matches[0][0];
+    }
+
+    /**
+     * Slow path for match() used only when a tab has been partially consumed: match against a
+     * freshly-built remainder whose leftover tab is expanded into spaces, advancing by columns
+     * across that expansion. Kept separate so the common case avoids the remainder allocation.
+     *
+     * @psalm-param non-empty-string $regex
+     */
+    private function matchViaRemainder(string $regex): ?string
+    {
         $subject = $this->getRemainder();
 
         if (! \preg_match($regex, $subject, $matches, \PREG_OFFSET_CAPTURE)) {
             return null;
         }
 
-        // $matches[0][0] contains the matched text
-        // $matches[0][1] contains the index of that match
-
         if ($this->isMultibyte) {
-            // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
             $offset      = \mb_strlen(\substr($subject, 0, $matches[0][1]), 'UTF-8');
             $matchLength = \mb_strlen($matches[0][0], 'UTF-8');
         } else {
@@ -561,19 +585,17 @@ class Cursor
 
         $advance = $offset + $matchLength;
 
-        // The remainder we matched against had any partially-consumed tab expanded into spaces,
-        // so those columns must be advanced by column instead of by character
-        if ($this->partiallyConsumedTab) {
-            $charsToTab = 4 - ($this->column % 4);
-            if ($advance < $charsToTab) {
-                $this->advanceBy($advance, true);
+        // The remainder we matched against had the partially-consumed tab expanded into spaces,
+        // so those columns must be advanced by column instead of by character.
+        $charsToTab = 4 - ($this->column % 4);
+        if ($advance < $charsToTab) {
+            $this->advanceBy($advance, true);
 
-                return $matches[0][0];
-            }
-
-            $this->advanceBy($charsToTab, true);
-            $advance -= $charsToTab;
+            return $matches[0][0];
         }
+
+        $this->advanceBy($charsToTab, true);
+        $advance -= $charsToTab;
 
         $this->advanceBy($advance);
 
@@ -625,8 +647,8 @@ class Cursor
      * Returns the byte offset of the current position within the line.
      *
      * For single-byte lines this is identical to getPosition(). For multibyte
-     * lines sparse lookups use native multibyte functions before repeated
-     * lookups switch to lazily-built character-to-byte checkpoints.
+     * lines the offset comes from the lazily-built character->byte map, which
+     * makes this an amortized-O(1) lookup rather than O(position) per call.
      */
     public function getBytePosition(): int
     {
@@ -634,13 +656,15 @@ class Cursor
             return $this->currentPosition;
         }
 
-        return $this->multibyteByteOffset($this->currentPosition);
+        return $this->byteOffset($this->currentPosition);
     }
 
     public function getPreviousText(): string
     {
         if ($this->isMultibyte) {
-            return $this->multibyteSubstring($this->previousPosition, $this->currentPosition - $this->previousPosition);
+            $startByte = $this->byteOffset($this->previousPosition);
+
+            return \substr($this->line, $startByte, $this->byteOffset($this->currentPosition) - $startByte);
         }
 
         return \substr($this->line, $this->previousPosition, $this->currentPosition - $this->previousPosition);
@@ -649,7 +673,23 @@ class Cursor
     public function getSubstring(int $start, ?int $length = null): string
     {
         if ($this->isMultibyte) {
-            return $this->multibyteSubstring($start, $length);
+            // Negative offsets/lengths are rare (and never used internally); defer to mb_substr
+            // so its exact semantics are preserved.
+            if ($start < 0 || ($length !== null && $length < 0)) {
+                return \mb_substr($this->line, $start, $length, 'UTF-8');
+            }
+
+            if ($start >= $this->length) {
+                return '';
+            }
+
+            $startByte = $this->byteOffset($start);
+
+            if ($length === null) {
+                return \substr($this->line, $startByte);
+            }
+
+            return \substr($this->line, $startByte, $this->byteOffset($start + \min($length, $this->length - $start)) - $startByte);
         }
 
         if ($length !== null) {
