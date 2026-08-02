@@ -6,6 +6,21 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.9.0] - 2026-08-02
+
+This is a **security release** to address a denial of service vulnerability where Markdown lines containing at least one non-ASCII character could be parsed in quadratic time.
+
+### Added
+- Added `Cursor::getBytePosition()` for obtaining the cursor's current byte offset within the line
+
+### Changed
+- Optimized `Cursor` to translate character positions to byte offsets in constant time instead of re-decoding the line with `mb_substr()`
+- Optimized `Cursor::match()` to match against the line at the cursor's byte offset instead of copying the remaining line on every call
+- Optimized `InlineParserEngine` and `UrlAutolinkParser` to work with byte offsets directly
+
+### Fixed
+- Fixed quadratic parsing performance on lines containing multibyte characters, which could be abused to cause a denial of service (GHSA-2q4p-g7hv-5rgv)
+
 ## [2.8.3] - 2026-07-12
 
 ### Fixed
@@ -738,7 +753,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.8.3...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.9.0...HEAD
+[2.9.0]: https://github.com/thephpleague/commonmark/compare/2.8.3...2.9.0
 [2.8.3]: https://github.com/thephpleague/commonmark/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/thephpleague/commonmark/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/thephpleague/commonmark/compare/2.8.0...2.8.1
