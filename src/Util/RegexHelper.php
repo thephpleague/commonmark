@@ -238,6 +238,11 @@ final class RegexHelper
      */
     public static function isLinkPotentiallyUnsafe(string $url): bool
     {
+        // Browsers discard these bytes before resolving the scheme (see the WHATWG URL Standard's
+        // "basic URL parser", steps 1 and 3), so `java<TAB>script:` and `<0x01>javascript:` reach
+        // the user as `javascript:` and must be treated as such here too
+        $url = \ltrim(\str_replace(["\t", "\n", "\r"], '', $url), "\x00..\x20");
+
         return \preg_match(self::REGEX_UNSAFE_PROTOCOL, $url) !== 0 && \preg_match(self::REGEX_SAFE_DATA_PROTOCOL, $url) === 0;
     }
 }

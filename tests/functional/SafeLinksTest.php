@@ -17,6 +17,11 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional;
 
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Attributes\AttributesExtension;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\MarkdownConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class SafeLinksTest extends TestCase
@@ -41,5 +46,32 @@ final class SafeLinksTest extends TestCase
         $actualOutput = \trim((string) $converter->convert($input));
 
         $this->assertEquals($expectedOutput, $actualOutput);
+    }
+
+    /**
+     * @dataProvider dataForTestObfuscatedUnsafeSchemes
+     */
+    #[DataProvider('dataForTestObfuscatedUnsafeSchemes')]
+    public function testObfuscatedUnsafeSchemesInAttributes(string $url): void
+    {
+        $environment = new Environment(['allow_unsafe_links' => false]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AttributesExtension());
+
+        $converter    = new MarkdownConverter($environment);
+        $actualOutput = \trim((string) $converter->convert(\sprintf('[click me](javascript:alert(1)){href="%s"}', $url)));
+
+        $this->assertEquals('<p><a>click me</a></p>', $actualOutput);
+    }
+
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public static function dataForTestObfuscatedUnsafeSchemes(): iterable
+    {
+        yield 'tab within scheme' => ["java\tscript:alert(1)"];
+        yield 'line feed within scheme' => ["java\nscript:alert(1)"];
+        yield 'carriage return within scheme' => ["java\rscript:alert(1)"];
+        yield 'leading control character' => ["\x01javascript:alert(1)"];
     }
 }

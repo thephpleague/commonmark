@@ -431,6 +431,27 @@ final class RegexHelperTest extends TestCase
             ['https://example.com/download?to=file:report', false],
             ['https://example.com/wiki/vbscript:_basics', false],
             ['https://example.com/ok', false],
+            // Tabs and newlines within the scheme don't make it safe - browsers strip them
+            ["java\tscript:alert(1)", true],
+            ["java\nscript:alert(1)", true],
+            ["java\rscript:alert(1)", true],
+            ["j\ta\tv\ta\ts\tc\tr\ti\tp\tt:alert(1)", true],
+            ["JAVA\tSCRIPT:alert(1)", true],
+            ["vb\tscript:msgbox(1)", true],
+            ["fi\tle:///etc/passwd", true],
+            ["da\tta:text/html,<script>alert(1)</script>", true],
+            // Neither do leading control characters or spaces
+            ["\x01javascript:alert(1)", true],
+            ["\x00javascript:alert(1)", true],
+            [' javascript:alert(1)', true],
+            ["\t\njavascript:alert(1)", true],
+            // Safe data: images remain allowed regardless of that stripping
+            ["da\tta:image/png;base64,iVBORw0KGgo=", false],
+            ["\x01data:image/png;base64,iVBORw0KGgo=", false],
+            // Stripping must not create a dangerous scheme where there wasn't one
+            ["https://example.com/view?src=java\tscript:alert(1)", false],
+            ["./java\tscript:alert(1)", false],
+            ['not-javascript:alert(1)', false],
         ];
     }
 

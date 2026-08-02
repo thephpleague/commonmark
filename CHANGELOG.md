@@ -6,6 +6,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+This is a **security release** to address a potential cross-site scripting (XSS) vulnerability when using the `AttributesExtension` with untrusted user input.
+
+### Fixed
+- Fixed the unsafe link filter failing to detect dangerous schemes obfuscated with embedded tabs, newlines, or leading control characters (such as `java<TAB>script:`), which allowed the `allow_unsafe_links` protection to be bypassed via `href` and `src` attributes (GHSA-29pj-957v-52mc)
+
 ## [2.8.3] - 2026-07-12
 
 ### Fixed

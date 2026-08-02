@@ -263,5 +263,22 @@ final class AttributesHelperTest extends TestCase
             false,
             [],
         ];
+
+        // Can't use control characters within the scheme to bypass the unsafe link check
+        foreach (["java\tscript:alert(1)", "java\nscript:alert(1)", "java\rscript:alert(1)", "\x01javascript:alert(1)"] as $url) {
+            yield [
+                ['id' => 'foo', 'href' => $url],
+                [],
+                false,
+                ['id' => 'foo'],
+            ];
+
+            yield [
+                ['id' => 'foo', 'src' => $url],
+                ['id', 'src'],
+                false,
+                ['id' => 'foo'],
+            ];
+        }
     }
 }
