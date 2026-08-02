@@ -325,15 +325,16 @@ final class CursorTest extends TestCase
         $line   = \str_repeat('a', 63) . 'é中' . \str_repeat('b', 68) . '😀';
         $cursor = new Cursor($line);
 
-        // Exhaust the native-access budget in a non-monotonic order so the
-        // checkpoint transition cannot rely on the most recent native offset.
+        // Read in a non-monotonic order so lookups cannot rely on the last-resolved
+        // position and must walk from a checkpoint instead.
         $expected = '';
         $actual   = '';
         for ($i = 0; $i < 134; $i++) {
-            $index = ($i * 71) % 134;
+            $index     = ($i * 71) % 134;
             $expected .= \mb_substr($line, $index, 1, 'UTF-8');
             $actual   .= $cursor->getCharacter($index);
         }
+
         $this->assertSame($expected, $actual);
 
         $cursor->advanceBy(63);
@@ -361,15 +362,12 @@ final class CursorTest extends TestCase
      */
     public function testBytePositionMapHasBoundedMemoryOverhead(): void
     {
+        // Scanning the whole line populates a checkpoint every 16 characters. This limit is
+        // comfortably above that (~20 MB) but well below what one entry per character would need.
         \ini_set('memory_limit', '128M');
 
         $cursor = new Cursor('é' . \str_repeat('a', 5_000_000));
 
-        // Force checkpoint mode before the large lookup so this test continues
-        // to guard the checkpoint map's memory use, not only the native fast path.
-        for ($i = 0; $i < 256; $i++) {
-            $cursor->getBytePosition();
-        }
         $this->assertSame(0, $cursor->getBytePosition());
 
         $cursor->advanceToEnd();
