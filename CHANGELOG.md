@@ -6,7 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
-This is a **security release** to address four denial of service vulnerabilities where Markdown lines containing at least one non-ASCII character, documents containing duplicate footnote definitions, documents whose headings and inline footnotes repeatedly normalize to the same slug, or documents containing long runs of adjacent inline attributes, could be parsed in quadratic time, and a cross-site scripting (XSS) vulnerability where the unsafe link filter could be bypassed with obfuscated schemes.
+This is a **security release** to address five denial of service vulnerabilities - Markdown lines containing at least one non-ASCII character, documents containing duplicate footnote definitions, documents whose headings and inline footnotes repeatedly normalize to the same slug, and documents containing long runs of adjacent inline attributes could all be parsed in quadratic time, and deeply-nested documents were rendered as quadratically-sized XML - and a cross-site scripting (XSS) vulnerability where the unsafe link filter could be bypassed with obfuscated schemes.
 
 ### Added
 
@@ -15,6 +15,7 @@ This is a **security release** to address four denial of service vulnerabilities
     - `normalize_headings/rebase_to_min_level` - rebases each document so its headings begin at `min_level`
 - Added a new `footnote/enable_inline_footnotes` config option to disable the inline `^[Footnote text]` syntax (#1112)
 - Added `Cursor::getBytePosition()` for obtaining the cursor's current byte offset within the line
+- Added a new `xml/max_indentation_level` config option to control how far `XmlRenderer` indents nested elements (default: `16`; set to `0` for unindented output)
 
 ### Changed
 
@@ -33,6 +34,7 @@ This is a **security release** to address four denial of service vulnerabilities
 - Fixed a fatal error when one footnote label was a prefix of another, such as `[^a]` and `[^a.b]`
 - Fixed the unique slug normalizer restarting its suffix search from `1` on every collision, causing headings or inline footnotes which normalize to the same slug to be de-duplicated in quadratic time, which could be abused to cause a denial of service (GHSA-mh25-x5hq-wrqp)
 - Fixed the `AttributesExtension` scanning the remaining siblings of an inline attribute which can only apply to its parent block, causing long runs of adjacent inline attributes to be resolved in quadratic time, which could be abused to cause a denial of service (GHSA-g2gp-3wwq-f4ph)
+- Fixed `XmlRenderer` indenting every element by its full nesting depth without any upper bound, causing deeply-nested documents to render as quadratically-sized XML, which could be abused to cause a denial of service (GHSA-mj63-m3rc-8ppr)
 
 ## [2.8.3] - 2026-07-12
 

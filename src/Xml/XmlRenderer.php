@@ -36,6 +36,10 @@ final class XmlRenderer implements DocumentRendererInterface
     {
         $this->environment->dispatch(new DocumentPreRenderEvent($document, 'xml'));
 
+        // Indentation is purely cosmetic, so it's capped to keep the output size linear
+        // (rather than quadratic) with respect to the depth of the document.
+        $maxIndent = $this->getMaxIndentationLevel();
+
         $xml = '<?xml version="1.0" encoding="UTF-8"?>';
 
         $indent = 0;
@@ -52,7 +56,7 @@ final class XmlRenderer implements DocumentRendererInterface
             if ($event->isEntering()) {
                 $attrs = $renderer->getXmlAttributes($node);
 
-                $xml .= "\n" . \str_repeat(self::INDENTATION, $indent);
+                $xml .= "\n" . \str_repeat(self::INDENTATION, \min($indent, $maxIndent));
                 $xml .= self::tag($tagName, $attrs, $selfClosing);
 
                 if ($node instanceof StringContainerInterface) {
@@ -68,12 +72,17 @@ final class XmlRenderer implements DocumentRendererInterface
                 }
             } elseif (! $closeImmediately) {
                 $indent--;
-                $xml .= "\n" . \str_repeat(self::INDENTATION, $indent);
+                $xml .= "\n" . \str_repeat(self::INDENTATION, \min($indent, $maxIndent));
                 $xml .= self::tag('/' . $tagName);
             }
         }
 
         return new RenderedContent($document, $xml . "\n");
+    }
+
+    private function getMaxIndentationLevel(): int
+    {
+        return $this->environment->getConfiguration()->get('xml/max_indentation_level');
     }
 
     /**

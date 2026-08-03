@@ -53,6 +53,16 @@ Alternatively, if you already have a `Document` object you want to visualize in 
 
 Like with `CommonMarkConverter::convert()`, the `renderDocument()` actually returns an instance of `League\CommonMark\Output\RenderedContentInterface`.  You can cast this (implicitly, as shown above, or explicitly) to a `string` or call `getContent()` to get the final XML output.
 
+## Indentation
+
+Nested elements are indented by four spaces per level, up to the `xml/max_indentation_level` [configuration option](/2.x/configuration/) (default: `16`).  Elements nested more deeply than that are still rendered in full - they simply don't get indented any further, which keeps the size of the output proportional to the size of the document instead of growing quadratically with its depth.
+
+Set this option to `0` if you'd prefer compact output with no indentation at all:
+
+```php
+$environment = new Environment(['xml' => ['max_indentation_level' => 0]]);
+```
+
 ## Customizing the XML Output
 
 See the [rendering documentation](/2.x/customization/rendering/#xml-rendering) for information on customizing the XML output.

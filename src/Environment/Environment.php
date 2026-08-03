@@ -438,6 +438,9 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
                 'inner_separator' => Expect::string("\n"),
                 'soft_break' => Expect::string("\n"),
             ]),
+            'xml' => Expect::structure([
+                'max_indentation_level' => Expect::int()->min(0)->default(16),
+            ]),
             'slug_normalizer' => Expect::structure([
                 'instance' => Expect::type(TextNormalizerInterface::class)->default(new SlugNormalizer()),
                 'max_length' => Expect::int()->min(0)->default(255),

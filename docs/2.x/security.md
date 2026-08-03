@@ -22,6 +22,7 @@ In order to be fully compliant with the CommonMark spec, certain security settin
 - `allow_unsafe_links`: Whether unsafe links are permitted
 - `max_nesting_level`: Protect against long render times or segfaults
 - `max_delimiters_per_line`: Protect against long parse times or rendering segfaults
+- `xml/max_indentation_level`: Protect against oversized XML output (only relevant if you render XML)
 
 Further information about each option can be found below.
 
@@ -116,6 +117,16 @@ echo $converter->convert($markdown);
 
 // <p><em>a</em> **b *c <strong>d</strong> c* b**</p>
 ```
+
+## XML Indentation Level
+
+This only applies if you're [rendering XML](/2.x/xml/) instead of (or in addition to) HTML.
+
+Pretty-printed XML indents each element by one level per step of nesting depth, so a document which is *n* levels deep emits roughly *n<sup>2</sup>* characters of whitespace.  A few kilobytes of deeply-nested Markdown could therefore be amplified into many megabytes of XML.
+
+The `xml/max_indentation_level` option (default: `16`) caps how far elements are indented, which keeps the output size proportional to the size of the document.  Elements nested beyond that limit are still rendered in full - indentation is cosmetic, so the resulting XML remains well-formed and semantically identical.  Set the option to `0` for compact, unindented output.
+
+Note that `max_nesting_level` is *not* sufficient on its own here, as it only constrains how deeply **blocks** may nest - deeply-nested inlines (like `_______...`) can still produce a deep tree.
 
 ## Additional Filtering
 
