@@ -36,6 +36,10 @@ This is a **security release** to address five denial of service vulnerabilities
 - Fixed the `AttributesExtension` scanning the remaining siblings of an inline attribute which can only apply to its parent block, causing long runs of adjacent inline attributes to be resolved in quadratic time, which could be abused to cause a denial of service (GHSA-g2gp-3wwq-f4ph)
 - Fixed `XmlRenderer` indenting every element by its full nesting depth without any upper bound, causing deeply-nested documents to render as quadratically-sized XML, which could be abused to cause a denial of service (GHSA-mj63-m3rc-8ppr)
 
+### Fixed
+
+- Fixed `MarkDelimiterProcessor` not being declared as a `CacheableDelimiterProcessorInterface`, preventing the delimiter stack from caching the opener search for `==` runs (#1133)
+
 ## [2.8.3] - 2026-07-12
 
 ### Fixed
