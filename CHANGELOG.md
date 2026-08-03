@@ -6,7 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
-This is a **security release** to address two denial of service vulnerabilities where Markdown lines containing at least one non-ASCII character, or documents containing duplicate footnote definitions, could be parsed in quadratic time, and a cross-site scripting (XSS) vulnerability where the unsafe link filter could be bypassed with obfuscated schemes.
+This is a **security release** to address three denial of service vulnerabilities where Markdown lines containing at least one non-ASCII character, documents containing duplicate footnote definitions, or documents whose headings and inline footnotes repeatedly normalize to the same slug, could be parsed in quadratic time, and a cross-site scripting (XSS) vulnerability where the unsafe link filter could be bypassed with obfuscated schemes.
 
 ### Added
 
@@ -31,6 +31,7 @@ This is a **security release** to address two denial of service vulnerabilities 
 - Fixed duplicate footnote definitions each claiming the full list of backrefs for their label, causing a quadratic number of backrefs to be generated, which could be abused to cause a denial of service (GHSA-jfm3-95jq-q3rf)
 - Fixed footnote labels being treated as `.`/`/`-delimited key paths when storing backrefs, which allowed distinct labels such as `[^a.b]` and `[^a/b]` to share a single backref list (GHSA-jfm3-95jq-q3rf)
 - Fixed a fatal error when one footnote label was a prefix of another, such as `[^a]` and `[^a.b]`
+- Fixed the unique slug normalizer restarting its suffix search from `1` on every collision, causing headings or inline footnotes which normalize to the same slug to be de-duplicated in quadratic time, which could be abused to cause a denial of service (GHSA-mh25-x5hq-wrqp)
 
 ## [2.8.3] - 2026-07-12
 

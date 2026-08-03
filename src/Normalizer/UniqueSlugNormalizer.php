@@ -17,7 +17,11 @@ namespace League\CommonMark\Normalizer;
 final class UniqueSlugNormalizer implements UniqueSlugNormalizerInterface
 {
     private TextNormalizerInterface $innerNormalizer;
-    /** @var array<string, bool> */
+    /**
+     * Every slug we've handed out, mapped to the next numeric suffix to try for it
+     *
+     * @var array<string, int>
+     */
     private array $alreadyUsed = [];
 
     public function __construct(TextNormalizerInterface $innerNormalizer)
@@ -39,17 +43,21 @@ final class UniqueSlugNormalizer implements UniqueSlugNormalizerInterface
     {
         $normalized = $this->innerNormalizer->normalize($text, $context);
 
-        // If it's not unique, add an incremental number to the end until we get a unique version
-        if (\array_key_exists($normalized, $this->alreadyUsed)) {
-            $suffix = 0;
-            do {
+        // If it's not unique, add an incremental number to the end until we get a unique version.
+        // Suffixes are handed out in ascending order and are never given back, so we can pick up
+        // where the previous collision left off instead of re-checking suffixes we know are taken.
+        if (isset($this->alreadyUsed[$normalized])) {
+            $suffix = $this->alreadyUsed[$normalized];
+            while (isset($this->alreadyUsed["$normalized-$suffix"])) {
                 ++$suffix;
-            } while (\array_key_exists("$normalized-$suffix", $this->alreadyUsed));
+            }
+
+            $this->alreadyUsed[$normalized] = $suffix + 1;
 
             $normalized = "$normalized-$suffix";
         }
 
-        $this->alreadyUsed[$normalized] = true;
+        $this->alreadyUsed[$normalized] = 1;
 
         return $normalized;
     }

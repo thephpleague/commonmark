@@ -17,6 +17,7 @@ use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 
@@ -53,6 +54,9 @@ switch ($argv[2] ?? null) {
         break;
     case 'footnotes':
         $environment->addExtension(new FootnoteExtension());
+        break;
+    case 'heading-permalink':
+        $environment->addExtension(new HeadingPermalinkExtension());
         break;
     case 'gfm':
     default:

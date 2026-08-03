@@ -324,6 +324,16 @@ $cases = [
             return $refs . "\n\n" . $definitions;
         },
     ],
+    'Duplicate heading permalink slugs' => [
+        'extension' => 'heading-permalink',
+        'sizes' => [1_000, 4_000, 16_000],
+        'input' => static fn($n) => \str_repeat("# a\n\n", $n),
+    ],
+    'Duplicate inline footnote labels' => [
+        'extension' => 'footnotes',
+        'sizes' => [1_000, 4_000, 16_000],
+        'input' => static fn($n) => \str_repeat("^[a]\n\n", $n),
+    ],
 ];
 
 print("Running " . \count($cases) . " pathological test cases\n\n");
