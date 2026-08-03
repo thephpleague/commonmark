@@ -6,7 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
-This is a **security release** to address a denial of service vulnerability where Markdown lines containing at least one non-ASCII character could be parsed in quadratic time.
+This is a **security release** to address a denial of service vulnerability where Markdown lines containing at least one non-ASCII character could be parsed in quadratic time, and a cross-site scripting (XSS) vulnerability where the unsafe link filter could be bypassed with obfuscated schemes.
 
 ### Added
 
@@ -25,6 +25,7 @@ This is a **security release** to address a denial of service vulnerability wher
 ### Fixed
 
 - Fixed quadratic parsing performance on lines containing multibyte characters, which could be abused to cause a denial of service (GHSA-2q4p-g7hv-5rgv)
+- Fixed the unsafe link filter failing to detect dangerous schemes obfuscated with embedded tabs, newlines, or leading control characters (such as `java<TAB>script:`), which allowed the `allow_unsafe_links` protection to be bypassed via `href` and `src` attributes (GHSA-29pj-957v-52mc)
 
 ## [2.8.3] - 2026-07-12
 
