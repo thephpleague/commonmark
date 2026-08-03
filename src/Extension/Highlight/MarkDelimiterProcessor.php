@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Highlight;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
-use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Delimiter\Processor\CacheableDelimiterProcessorInterface;
 use League\CommonMark\Node\Inline\AbstractStringContainer;
 
-class MarkDelimiterProcessor implements DelimiterProcessorInterface
+class MarkDelimiterProcessor implements CacheableDelimiterProcessorInterface
 {
     public function getOpeningCharacter(): string
     {
