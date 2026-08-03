@@ -98,7 +98,12 @@ final class RegexHelper
             return false;
         }
 
-        return \preg_match('/[\pL]/u', $character) === 1;
+        // Fast path for ASCII (the common case in Markdown); ctype_alpha is locale-independent for single bytes
+        if (\strlen($character) === 1) {
+            return \ctype_alpha($character);
+        }
+
+        return \preg_match('/^\pL/u', $character) === 1;
     }
 
     /**
