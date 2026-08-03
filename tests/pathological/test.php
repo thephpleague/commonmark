@@ -29,6 +29,24 @@ $cases = [
         'input' => static fn($n) => "- a\n- b\r- c\r\n- d",
         'expected' => static fn($n) => "<ul>\n<li>a</li>\n<li>b</li>\n<li>c</li>\n<li>d</li>\n</ul>\n",
     ],
+    'Multibyte leading whitespace' => [
+        'extension' => 'commonmark',
+        'sizes' => [300_000],
+        'input' => static fn($n) => \str_repeat(' ', $n) . 'é',
+        'expected' => static fn($n) => '<pre><code>' . \str_repeat(' ', $n - 4) . "é\n</code></pre>\n",
+    ],
+    'Multibyte inline delimiters' => [
+        'extension' => 'commonmark',
+        'sizes' => [100_000],
+        'input' => static fn($n) => 'é' . \str_repeat('a_', $n),
+        'expected' => static fn($n) => '<p>é' . \str_repeat('a_', $n) . "</p>\n",
+    ],
+    'Repeated invalid autolink prefixes' => [
+        'extension' => 'autolink',
+        'sizes' => [160_000],
+        'input' => static fn($n) => 'é ' . \str_repeat('www. ', $n),
+        'expected' => static fn($n) => '<p>é ' . \str_repeat('www. ', $n - 1) . "www.</p>\n",
+    ],
     'Nested strong emphasis' => [
         'sizes' => [50, 500],
         'input' => static fn($n) => \str_repeat('*a **a ', $n) . 'b' . \str_repeat(' a** a*', $n),

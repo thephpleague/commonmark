@@ -6,12 +6,25 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+This is a **security release** to address a denial of service vulnerability where Markdown lines containing at least one non-ASCII character could be parsed in quadratic time.
+
 ### Added
 
 - Added a new `NormalizeHeadingsExtension` to constrain headings to a configured level range (#989)
     - Rewrites headings that skip levels so the resulting HTML is valid (#1115)
     - `normalize_headings/rebase_to_min_level` - rebases each document so its headings begin at `min_level`
 - Added a new `footnote/enable_inline_footnotes` config option to disable the inline `^[Footnote text]` syntax (#1112)
+- Added `Cursor::getBytePosition()` for obtaining the cursor's current byte offset within the line
+
+### Changed
+
+- Optimized `Cursor` to translate character positions to byte offsets in constant time instead of re-decoding the line with `mb_substr()`
+- Optimized `Cursor::match()` to match against the line at the cursor's byte offset instead of copying the remaining line on every call
+- Optimized `InlineParserEngine` and `UrlAutolinkParser` to work with byte offsets directly
+
+### Fixed
+
+- Fixed quadratic parsing performance on lines containing multibyte characters, which could be abused to cause a denial of service (GHSA-2q4p-g7hv-5rgv)
 
 ## [2.8.3] - 2026-07-12
 

@@ -80,6 +80,21 @@ final class InlineParserEngineTest extends TestCase
         $this->assertSame('The quick brown fox jumps over the lazy dog', $child->getLiteral());
     }
 
+    public function testParseWithMultipleMatchesAtMultibyteOffsets(): void
+    {
+        $parser = new FakeInlineParser(InlineParserMatch::oneOf('!', '?'));
+
+        $environment = new Environment();
+        $environment->addInlineParser($parser);
+
+        $engine    = new InlineParserEngine($environment, new ReferenceMap());
+        $paragraph = new Paragraph();
+        $engine->parse('é!中?😀!', $paragraph);
+
+        $this->assertSame(['!', '?', '!'], $parser->getMatches());
+        $this->assertSame('é!中?😀!', $paragraph->firstChild()->getLiteral());
+    }
+
     /**
      * @see https://github.com/thephpleague/commonmark/issues/951
      *

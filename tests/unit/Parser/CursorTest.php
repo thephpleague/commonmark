@@ -74,6 +74,16 @@ final class CursorTest extends TestCase
         ];
     }
 
+    public function testGetNextNonSpacePositionAfterMultibyteCharacter(): void
+    {
+        $cursor = new Cursor("é \t 中");
+        $cursor->advance();
+
+        $this->assertSame(4, $cursor->getNextNonSpacePosition());
+        $this->assertSame('中', $cursor->getNextNonSpaceCharacter());
+        $this->assertSame(4, $cursor->getIndent());
+    }
+
     /**
      * @dataProvider dataForGetIndentTest
      */
@@ -284,6 +294,106 @@ final class CursorTest extends TestCase
             ['тест', 9, 4],
             ["aa\t1234", 7, 7],
         ];
+    }
+
+    public function testBytePositionsAcrossMultibyteCharactersAndStateRestore(): void
+    {
+        $cursor = new Cursor('Aé中😀Z');
+
+        foreach ([0, 1, 3, 6, 10, 11] as $position => $bytePosition) {
+            $this->assertSame($bytePosition, $cursor->getBytePosition());
+            $cursor->advance();
+        }
+
+        $cursor = new Cursor('Aé中😀Z');
+        $cursor->advanceBy(2);
+        $state = $cursor->saveState();
+        $cursor->advanceBy(2);
+
+        $this->assertSame(10, $cursor->getBytePosition());
+        $this->assertSame('中😀', $cursor->getPreviousText());
+
+        $cursor->restoreState($state);
+
+        $this->assertSame(3, $cursor->getBytePosition());
+        $this->assertSame('中', $cursor->getCurrentCharacter());
+        $this->assertSame('中😀Z', $cursor->getRemainder());
+    }
+
+    public function testBytePositionsAcrossCheckpointBoundaries(): void
+    {
+        $line   = \str_repeat('a', 63) . 'é中' . \str_repeat('b', 68) . '😀';
+        $cursor = new Cursor($line);
+
+        // Read in a non-monotonic order so lookups cannot rely on the last-resolved
+        // position and must walk from a checkpoint instead.
+        $expected = '';
+        $actual   = '';
+        for ($i = 0; $i < 134; $i++) {
+            $index     = ($i * 71) % 134;
+            $expected .= \mb_substr($line, $index, 1, 'UTF-8');
+            $actual   .= $cursor->getCharacter($index);
+        }
+
+        $this->assertSame($expected, $actual);
+
+        $cursor->advanceBy(63);
+        $state = $cursor->saveState();
+
+        $this->assertSame(63, $cursor->getBytePosition());
+        $this->assertSame('é', $cursor->getCurrentCharacter());
+
+        $cursor->advanceBy(70);
+        $this->assertSame(136, $cursor->getBytePosition());
+        $this->assertSame('😀', $cursor->getCurrentCharacter());
+
+        $cursor->restoreState($state);
+        $this->assertSame(63, $cursor->getBytePosition());
+        $this->assertStringStartsWith('é中', $cursor->getRemainder());
+
+        $cursor->advance();
+        $this->assertSame(65, $cursor->getBytePosition());
+        $cursor->advance();
+        $this->assertSame(68, $cursor->getBytePosition());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testBytePositionMapHasBoundedMemoryOverhead(): void
+    {
+        // Scanning the whole line populates a checkpoint every 16 characters. This limit is
+        // comfortably above that (~20 MB) but well below what one entry per character would need.
+        \ini_set('memory_limit', '128M');
+
+        $cursor = new Cursor('é' . \str_repeat('a', 5_000_000));
+
+        $this->assertSame(0, $cursor->getBytePosition());
+
+        $cursor->advanceToEnd();
+
+        $this->assertSame(5_000_002, $cursor->getBytePosition());
+    }
+
+    public function testMultibyteRemainderWithPartiallyConsumedTab(): void
+    {
+        $cursor = new Cursor("é\t中");
+        $cursor->advance();
+        $cursor->advanceBy(2, true);
+
+        $this->assertSame(1, $cursor->getPosition());
+        $this->assertSame(3, $cursor->getColumn());
+        $this->assertSame(' 中', $cursor->getRemainder());
+
+        $state = $cursor->saveState();
+        $this->assertSame(' 中', $cursor->match('/^ 中/u'));
+        $this->assertTrue($cursor->isAtEnd());
+
+        $cursor->restoreState($state);
+        $this->assertSame(' ', $cursor->match('/^ /u'));
+        $this->assertSame(2, $cursor->getPosition());
+        $this->assertSame(4, $cursor->getColumn());
+        $this->assertSame('中', $cursor->getRemainder());
     }
 
     public function testAdvanceByZero(): void
@@ -503,6 +613,13 @@ final class CursorTest extends TestCase
         yield ['Hello', 0, 2, 'He'];
         yield ['Hello', 1, 3, 'ell'];
         yield ['Hello', 1, null, 'ello'];
+        yield ['Aé中😀Z', 1, null, 'é中😀Z'];
+        yield ['Aé中😀Z', 2, 99, '中😀Z'];
+        yield ['Aé中😀Z', 5, null, ''];
+        yield ['Aé中😀Z', 99, 2, ''];
+        yield ['Aé中😀Z', -2, null, '😀Z'];
+        yield ['Aé中😀Z', -4, 2, 'é中'];
+        yield ['Aé中😀Z', 1, -1, 'é中😀'];
         yield ['Это тест', 1, -1, 'то тес'];
     }
 }

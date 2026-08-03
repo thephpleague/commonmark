@@ -148,10 +148,16 @@ final class InlineParserEngine implements InlineParserEngineInterface
             }
 
             // For each part that matched...
+            $lastByteOffset = 0;
+            $lastCharOffset = 0;
             foreach ($matches as $match) {
                 if ($isMultibyte) {
-                    // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying
-                    $offset = \mb_strlen(\substr($contents, 0, $match[0][1]), 'UTF-8');
+                    // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying.
+                    // Matches are returned in ascending order, so convert incrementally from the previous position
+                    // instead of re-scanning from the start of the line for every match (which would be quadratic).
+                    $lastCharOffset += \mb_strlen(\substr($contents, $lastByteOffset, $match[0][1] - $lastByteOffset), 'UTF-8');
+                    $lastByteOffset  = $match[0][1];
+                    $offset          = $lastCharOffset;
                 } else {
                     $offset = \intval($match[0][1]);
                 }
