@@ -102,7 +102,7 @@ See the [configuration](/2.x/configuration/) section for more information.
 
 Similarly to the maximum nesting level, **no maximum number of delimiters per line is enforced by default.**  Delimiters can be nested (like `*a **b** c*`) or un-nested (like `*a* *b* *c*`) - in either case, having too many in a single line can result in long parse times. We therefore have a separate option to limit the number of delimiters per line.
 
-If you need to parse untrusted input, consider setting a reasonable `max_delimiters_per_line` (perhaps 100-1000) depending on your needs.  Once this level is hit, any subsequent delimiters on that line will be rendered as plain text.
+If you need to parse untrusted input, consider setting a reasonable `max_delimiters_per_line` (perhaps 100-1000) depending on your needs.  Once this level is hit, any subsequent delimiters on that line will be rendered as plain text.  Note that this option only applies to emphasis-style delimiters; link and image brackets (`[` and `![`) are not limited by it, so consider also enforcing input size or line length limits upstream.
 
 ### Example - Prevent too many delimiters
 
