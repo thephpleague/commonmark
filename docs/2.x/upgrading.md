@@ -16,6 +16,40 @@ redirect_from:
 
 # Upgrading to Newer Versions
 
+## Upgrading from 2.8 to 2.9
+
+There are no breaking API changes when upgrading from 2.8 to 2.9, but several security fixes change the output of
+certain inputs.
+
+### Obfuscated Link Schemes Are Now Blocked
+
+When `allow_unsafe_links` is `false`, the unsafe link filter now detects dangerous schemes obfuscated with embedded
+tabs, newlines, or leading control characters (such as `java<TAB>script:`).  Links which browsers would have executed
+but which previously slipped through the filter are now stripped.  No safe URL is affected by this change.
+
+### Duplicate Footnote Definitions Are Discarded
+
+If the same footnote label is defined more than once, only the first definition is used and the rest are removed from
+the document.  Previously every duplicate was rendered in place, and each one claimed the label's full list of
+backrefs.  This matches how duplicate link reference definitions are already resolved.
+
+### XML Output Is Indented Up to a Maximum Depth
+
+`XmlRenderer` now stops adding indentation beyond the new `xml/max_indentation_level` option (default: `16`).  Elements
+nested more deeply are still rendered in full, so the XML remains well-formed and semantically identical - only the
+leading whitespace differs.  Set the option to a large value to restore the old behavior, or to `0` for compact output.
+
+### Footnote Backrefs Moved to a Single Document Data Key
+
+`NumberFootnotesListener` now stores all footnote backrefs under a single `footnote/backrefs` key in the document data
+instead of writing one key per footnote destination.  This only matters if you were reading those keys directly; the
+rendered output is unchanged.
+
+### Recommended: Set a Maximum Nesting Level
+
+If you're parsing untrusted input, we now recommend setting `max_nesting_level` to `100`.  See the
+[security documentation](/2.x/security/) for details.
+
 ## Upgrading from 2.7 to 2.8
 
 There are no breaking changes when upgrading from 2.7 to 2.8.
