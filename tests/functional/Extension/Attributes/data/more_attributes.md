@@ -18,3 +18,7 @@ Paragraph with *emphasis*{.chello}
    {#par2}
 
 {#invalid} [Invalid](example.com)
+
+{#a}{#b}{.c}
+
+x {#a}y {#b}

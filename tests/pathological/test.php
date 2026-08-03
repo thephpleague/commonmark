@@ -334,6 +334,18 @@ $cases = [
         'sizes' => [1_000, 4_000, 16_000],
         'input' => static fn($n) => \str_repeat("^[a]\n\n", $n),
     ],
+    'Adjacent inline attributes at start of block' => [
+        'extension' => 'attributes',
+        'sizes' => [1_000, 4_000, 16_000],
+        'input' => static fn($n) => \str_repeat('{#a}', $n),
+        'expected' => static fn($n) => '<p id="a"></p>',
+    ],
+    'Adjacent inline attributes separated by text' => [
+        'extension' => 'attributes',
+        'sizes' => [1_000, 4_000, 16_000],
+        'input' => static fn($n) => \str_repeat('x {#a}', $n),
+        'expected' => static fn($n) => '<p id="a">' . \str_repeat('x', $n) . '</p>',
+    ],
 ];
 
 print("Running " . \count($cases) . " pathological test cases\n\n");

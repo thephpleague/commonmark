@@ -13,6 +13,7 @@
 ini_set('memory_limit', '1024M');
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Attributes\AttributesExtension;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
@@ -57,6 +58,9 @@ switch ($argv[2] ?? null) {
         break;
     case 'heading-permalink':
         $environment->addExtension(new HeadingPermalinkExtension());
+        break;
+    case 'attributes':
+        $environment->addExtension(new AttributesExtension());
         break;
     case 'gfm':
     default:
