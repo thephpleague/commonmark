@@ -6,7 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
-This is a **security release** to address a denial of service vulnerability where Markdown lines containing at least one non-ASCII character could be parsed in quadratic time, and a cross-site scripting (XSS) vulnerability where the unsafe link filter could be bypassed with obfuscated schemes.
+This is a **security release** to address two denial of service vulnerabilities where Markdown lines containing at least one non-ASCII character, or documents containing duplicate footnote definitions, could be parsed in quadratic time, and a cross-site scripting (XSS) vulnerability where the unsafe link filter could be bypassed with obfuscated schemes.
 
 ### Added
 
@@ -18,6 +18,8 @@ This is a **security release** to address a denial of service vulnerability wher
 
 ### Changed
 
+- The `FootnoteExtension` now uses only the first definition of a footnote label, removing any duplicate definitions instead of rendering them in place
+- `NumberFootnotesListener` now stores footnote backrefs under a single `footnote/backrefs` key in the document data instead of one key per footnote destination
 - Optimized `Cursor` to translate character positions to byte offsets in constant time instead of re-decoding the line with `mb_substr()`
 - Optimized `Cursor::match()` to match against the line at the cursor's byte offset instead of copying the remaining line on every call
 - Optimized `InlineParserEngine` and `UrlAutolinkParser` to work with byte offsets directly
@@ -26,6 +28,9 @@ This is a **security release** to address a denial of service vulnerability wher
 
 - Fixed quadratic parsing performance on lines containing multibyte characters, which could be abused to cause a denial of service (GHSA-2q4p-g7hv-5rgv)
 - Fixed the unsafe link filter failing to detect dangerous schemes obfuscated with embedded tabs, newlines, or leading control characters (such as `java<TAB>script:`), which allowed the `allow_unsafe_links` protection to be bypassed via `href` and `src` attributes (GHSA-29pj-957v-52mc)
+- Fixed duplicate footnote definitions each claiming the full list of backrefs for their label, causing a quadratic number of backrefs to be generated, which could be abused to cause a denial of service (GHSA-jfm3-95jq-q3rf)
+- Fixed footnote labels being treated as `.`/`/`-delimited key paths when storing backrefs, which allowed distinct labels such as `[^a.b]` and `[^a/b]` to share a single backref list (GHSA-jfm3-95jq-q3rf)
+- Fixed a fatal error when one footnote label was a prefix of another, such as `[^a]` and `[^a.b]`
 
 ## [2.8.3] - 2026-07-12
 

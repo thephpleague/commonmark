@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>Here</text>
+        <footnote_ref reference="a" />
+        <text> and here</text>
+        <footnote_ref reference="a__2" />
+        <text> and here</text>
+        <footnote_ref reference="b" />
+        <text>.</text>
+    </paragraph>
+    <footnote_container>
+        <footnote reference="a">
+            <paragraph>
+                <text>First definition</text>
+                <footnote_backref reference="a" />
+                <footnote_backref reference="a__2" />
+            </paragraph>
+        </footnote>
+        <footnote reference="b">
+            <paragraph>
+                <text>Bee</text>
+                <footnote_backref reference="b" />
+            </paragraph>
+        </footnote>
+    </footnote_container>
+</document>

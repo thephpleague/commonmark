@@ -293,6 +293,37 @@ $cases = [
         'input' => static fn($n) => \str_repeat("[^1]:\n", $n) . \str_repeat("\n", $n),
         'expected' => static fn($n) => '',
     ],
+    'Duplicate footnote definitions' => [
+        'extension' => 'footnotes',
+        'sizes' => [200, 2_000, 20_000],
+        'input' => static fn($n) => \str_repeat('[^a] ', $n) . "\n\n" . \str_repeat("[^a]: x\n\n", $n),
+    ],
+    'Footnote labels containing key path delimiters' => [
+        'extension' => 'footnotes',
+        'sizes' => [64, 256, 1_024],
+        // Every label below is a distinct spelling of the same "." / "/" separated path, so any
+        // implementation storing backrefs under a delimited key path collapses them onto a single
+        // shared entry and generates a quadratic number of backrefs.
+        'input' => static function ($n) {
+            $spell = static function (int $bits) {
+                $label = 'a';
+                for ($i = 0; $i < 10; $i++) {
+                    $label .= ($bits >> $i) & 1 ? '.' : '/';
+                    $label .= 'a';
+                }
+
+                return $label;
+            };
+
+            $refs = $definitions = '';
+            for ($i = 0; $i < $n; $i++) {
+                $refs        .= '[^' . $spell($i) . '] ';
+                $definitions .= '[^' . $spell($i) . "]: x\n\n";
+            }
+
+            return $refs . "\n\n" . $definitions;
+        },
+    ],
 ];
 
 print("Running " . \count($cases) . " pathological test cases\n\n");
