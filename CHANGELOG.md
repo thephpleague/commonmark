@@ -6,7 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
-This is a **security release** to address five denial of service vulnerabilities - Markdown lines containing at least one non-ASCII character, documents containing duplicate footnote definitions, documents whose headings and inline footnotes repeatedly normalize to the same slug, and documents containing long runs of adjacent inline attributes could all be parsed in quadratic time, and deeply-nested documents were rendered as quadratically-sized XML - and a cross-site scripting (XSS) vulnerability where the unsafe link filter could be bypassed with obfuscated schemes.
+This is a **security release** to address five denial of service vulnerabilities and one cross-site scripting (XSS) vulnerability.
 
 ### Added
 
