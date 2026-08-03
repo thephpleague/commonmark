@@ -78,7 +78,6 @@ final class InlineParserEngine implements InlineParserEngineInterface
             // We're now at a potential start - see which of the current parsers can handle it
             $parsed = false;
             foreach ($parsers as [$parser, $matches]) {
-                \assert($parser instanceof InlineParserInterface);
                 if ($parser->parse($inlineParserContext->withMatches($matches))) {
                     // A parser has successfully handled the text at the given position; don't consider any others at this position
                     $parsed = true;
