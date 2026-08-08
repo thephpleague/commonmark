@@ -103,6 +103,14 @@ $cases = [
         'input' => static fn($n) => \str_repeat('[', $n) . 'a' . \str_repeat(']', $n),
         'expected' => static fn($n) => '<p>' . \str_repeat('[', $n) . 'a' . \str_repeat(']', $n) . '</p>',
     ],
+    'Nested brackets with a reference definition' => [
+        // A single definition disables the empty-reference-map shortcut in ReferenceMap::get(),
+        // so every closing bracket would otherwise normalize the whole span it encloses.
+        'extension' => 'commonmark',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => "[x]: y\n\n" . \str_repeat('[', $n) . 'a' . \str_repeat(']', $n),
+        'expected' => static fn($n) => '<p>' . \str_repeat('[', $n) . 'a' . \str_repeat(']', $n) . '</p>',
+    ],
     'Backslash in link' => [
         'ref' => 'https://github.com/commonmark/commonmark.js/issues/157',
         'sizes' => [1_000, 10_000, 100_000],

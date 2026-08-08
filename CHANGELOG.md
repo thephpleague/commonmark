@@ -8,9 +8,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 This is a **security release** to address a potential cross-site scripting (XSS) vulnerability when using the `AttributesExtension` with untrusted user input.
 
+### Changed
+- Shortcut and collapsed reference links (`[label]` and `[label][]`) now apply the spec's 999-character link label limit when resolving the label, matching the limit already enforced when parsing reference definitions and when resolving the `[text][label]` form. A label longer than 999 characters which collapsed to a shorter, defined label once whitespace was normalized will no longer resolve; this matches cmark's behavior.
+
 ### Fixed
 - Fixed attribute names prefixed with a form feed (such as `{<FF>onclick="..."}`) bypassing both the `on*` event handler filter and the `allow_unsafe_links` protection, as browsers treat that byte as whitespace and parse the name as a genuine `onclick` or `href` (GHSA-f8fg-pg57-v4j8)
 - Fixed catastrophic backtracking in the fenced code block start pattern, causing a single line of backticks to be scanned in quadratic time, which could be abused to cause a denial of service (GHSA-j8pm-gj4c-rq4x)
+- Fixed shortcut reference link lookups normalizing arbitrarily long labels once a single reference definition is present, causing nested brackets to be resolved in quadratic time, which could be abused to cause a denial of service (GHSA-j8pm-gj4c-rq4x)
 
 ## [2.9.0] - 2026-08-03
 
