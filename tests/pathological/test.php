@@ -143,6 +143,14 @@ $cases = [
         'sizes' => [500, 1_000, 2_000, 4_000],
         'input' => static fn($n) => \implode('', \array_map(static fn($i) => 'e' . \str_repeat('`', $i), \range(1, $n))),
     ],
+    'Backtick fence with a backtick in the info string' => [
+        'extension' => 'commonmark',
+        'sizes' => [10_000, 40_000, 160_000],
+        // The trailing backtick is essential: it makes the "no backtick in the info string"
+        // check fail, which is what forces the fence-length matching to be retried.
+        'input' => static fn($n) => \str_repeat('`', $n / 2) . \str_repeat('a', $n / 2) . "`\n",
+        'expected' => static fn($n) => '<p>' . \str_repeat('`', $n / 2) . \str_repeat('a', $n / 2) . '`</p>',
+    ],
     'Many ref. definitions' => [
         'ref' => 'https://github.com/commonmark/commonmark.js/issues/129',
         'sizes' => [1_000, 10_000, 100_000],
