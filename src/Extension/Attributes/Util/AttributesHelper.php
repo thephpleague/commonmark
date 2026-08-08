@@ -27,6 +27,13 @@ final class AttributesHelper
     private const ATTRIBUTE_LIST   = '/^{:?(' . self::SINGLE_ATTRIBUTE . ')+}/i';
 
     /**
+     * PCRE's `\s` matches the form feed that PHP's default trim charlist omits, so the
+     * separators SINGLE_ATTRIBUTE accepts must be trimmed with this list instead - otherwise
+     * that byte survives inside an attribute name, where a browser reads it as a separator.
+     */
+    private const WHITESPACE = " \t\n\r\0\x0B\x0C";
+
+    /**
      * @return array<string, mixed>
      */
     public static function parseAttributes(Cursor $cursor): array
@@ -59,7 +66,7 @@ final class AttributesHelper
 
         /** @var array<string, mixed> $attributes */
         $attributes = [];
-        while ($attribute = \trim((string) $attributeCursor->match('/^' . self::SINGLE_ATTRIBUTE . '/i'))) {
+        while ($attribute = \trim((string) $attributeCursor->match('/^' . self::SINGLE_ATTRIBUTE . '/i'), self::WHITESPACE)) {
             if ($attribute[0] === '#') {
                 $attributes['id'] = \substr($attribute, 1);
 
@@ -86,12 +93,12 @@ final class AttributesHelper
                 $value = \substr($value, 1, -1);
             }
 
-            if (\strtolower(\trim($name)) === 'class') {
-                foreach (\array_filter(\explode(' ', \trim($value))) as $class) {
+            if (\strtolower(\trim($name, self::WHITESPACE)) === 'class') {
+                foreach (\array_filter(\explode(' ', \trim($value, self::WHITESPACE))) as $class) {
                     $attributes['class'][] = $class;
                 }
             } else {
-                $attributes[\trim($name)] = \trim($value);
+                $attributes[\trim($name, self::WHITESPACE)] = \trim($value, self::WHITESPACE);
             }
         }
 
@@ -151,7 +158,15 @@ final class AttributesHelper
         $allowList = \array_fill_keys($allowList, true);
 
         foreach ($attributes as $name => $value) {
-            $attrNameLower = \strtolower($name);
+            // The checks below compare against literal names, and the renderer emits names
+            // without escaping them, so anything that isn't a well-formed attribute name
+            // would slip past both
+            if (\preg_match('/^' . RegexHelper::PARTIAL_ATTRIBUTENAME . '$/i', (string) $name) !== 1) {
+                unset($attributes[$name]);
+                continue;
+            }
+
+            $attrNameLower = \strtolower((string) $name);
 
             // Remove any unsafe links
             if (! $allowUnsafeLinks && ($attrNameLower === 'href' || $attrNameLower === 'src') && \is_string($value) && RegexHelper::isLinkPotentiallyUnsafe($value)) {

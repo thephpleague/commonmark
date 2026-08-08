@@ -6,6 +6,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+This is a **security release** to address a potential cross-site scripting (XSS) vulnerability when using the `AttributesExtension` with untrusted user input.
+
+### Fixed
+- Fixed attribute names prefixed with a form feed (such as `{<FF>onclick="..."}`) bypassing both the `on*` event handler filter and the `allow_unsafe_links` protection, as browsers treat that byte as whitespace and parse the name as a genuine `onclick` or `href` (GHSA-f8fg-pg57-v4j8)
+
 ## [2.9.0] - 2026-08-03
 
 This is a **security release** to address five denial of service vulnerabilities and one cross-site scripting (XSS) vulnerability.

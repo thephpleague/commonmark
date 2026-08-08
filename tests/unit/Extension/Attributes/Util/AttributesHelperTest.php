@@ -280,5 +280,25 @@ final class AttributesHelperTest extends TestCase
                 ['id' => 'foo'],
             ];
         }
+
+        // Can't pad the name with bytes browsers treat as whitespace to bypass either check.
+        // A browser reads "\x0Conclick" as a genuine onclick and "\x0Chref" as a genuine href.
+        foreach (["\x0Conclick", "onclick\x0C", "\x0Bonclick", ' onclick'] as $name) {
+            yield [
+                ['id' => 'foo', $name => 'alert(1)'],
+                [],
+                false,
+                ['id' => 'foo'],
+            ];
+        }
+
+        foreach (["\x0Chref", "href\x0C"] as $name) {
+            yield [
+                ['id' => 'foo', $name => 'javascript:alert(1)'],
+                [],
+                false,
+                ['id' => 'foo'],
+            ];
+        }
     }
 }
