@@ -425,6 +425,36 @@ $cases = [
         'input' => static fn($n) => \str_repeat('x {#a}', $n),
         'expected' => static fn($n) => '<p id="a">' . \str_repeat('x', $n) . '</p>',
     ],
+    'Adjacent attribute blocks' => [
+        // The link reference definitions are load-bearing: they keep each attributes block at
+        // its default TARGET_NEXT while erasing themselves from the AST, welding the blocks
+        // into one contiguous sibling chain with nothing in it to stop a forward walk.
+        'extension' => 'attributes',
+        'sizes' => [1_000, 4_000, 16_000],
+        'input' => static fn($n) => \str_repeat("{#a}\n[a]: u\n", $n),
+        'expected' => static fn($n) => '',
+    ],
+    'Adjacent inline attribute classes at start of block' => [
+        // Unlike '#id', which overwrites a scalar, '.class' appends to a list which is then
+        // written to the target and read back by the next node.
+        'extension' => 'attributes',
+        'sizes' => [2_000, 8_000, 32_000],
+        'input' => static fn($n) => \str_repeat('{.c}', $n),
+        'expected' => static fn($n) => '<p class="' . \rtrim(\str_repeat('c ', $n)) . '"></p>',
+    ],
+    'Adjacent attribute blocks with classes' => [
+        'extension' => 'attributes',
+        'sizes' => [2_000, 8_000, 32_000],
+        'input' => static fn($n) => \str_repeat("{.c}\n\n", $n),
+        'expected' => static fn($n) => '',
+    ],
+    'Attribute block classes on consecutive lines' => [
+        // Every line is merged into the same block by AttributesBlockContinueParser.
+        'extension' => 'attributes',
+        'sizes' => [2_000, 8_000, 32_000],
+        'input' => static fn($n) => \str_repeat("{.c}\n", $n),
+        'expected' => static fn($n) => '',
+    ],
 ];
 
 print("Running " . \count($cases) . " pathological test cases\n\n");

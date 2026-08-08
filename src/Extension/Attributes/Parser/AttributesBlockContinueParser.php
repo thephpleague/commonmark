@@ -31,6 +31,15 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
     private bool $hasSubsequentLine = false;
 
     /**
+     * The first whole class list we saw, which is all that takes part in the per-line merges, plus
+     * the classes each later line adds. Merging the growing list on every line would be quadratic.
+     */
+    private ?string $class = null;
+
+    /** @var list<string> */
+    private array $additionalClasses = [];
+
+    /**
      * @param array<string, mixed> $attributes The attributes identified by the block start parser
      * @param AbstractBlock        $container  The node we were in when these attributes were discovered
      */
@@ -57,10 +66,26 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
         $cursor->advanceToNextNonSpaceOrTab();
         if ($cursor->isAtEnd() && $attributes !== []) {
             // It does! Merge them into what we parsed previously
-            $this->block->setAttributes(AttributesHelper::mergeAttributes(
+            $merged = AttributesHelper::mergeAttributes(
                 $this->block->getAttributes(),
                 $attributes
-            ));
+            );
+
+            if (isset($merged['class'])) {
+                if ($this->class === null) {
+                    $this->class = $merged['class'];
+                } else {
+                    // Only this line's own classes can have been added to the list, so record them
+                    // and put the short value the merge started from back in their place.
+                    foreach (AttributesHelper::classList($attributes['class'] ?? []) as $class) {
+                        $this->additionalClasses[] = $class;
+                    }
+
+                    $merged['class'] = $this->class;
+                }
+            }
+
+            $this->block->setAttributes($merged);
 
             // Tell the core parser we've consumed everything
             return BlockContinue::at($cursor);
@@ -77,6 +102,12 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
 
     public function closeBlock(): void
     {
+        if ($this->additionalClasses !== []) {
+            $attributes          = $this->block->getAttributes();
+            $attributes['class'] = \implode(' ', \array_merge([(string) $this->class], $this->additionalClasses));
+            $this->block->setAttributes($attributes);
+        }
+
         // Attributes appearing at the very end of the document won't have any last lines to check
         // so we can make that determination here
         if (! $this->hasSubsequentLine) {

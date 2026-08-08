@@ -44,12 +44,29 @@ final class AttributesListener
 
     public function processDocument(DocumentParsedEvent $event): void
     {
+        // Targets already worked out for attribute blocks we walked past; see findTargetAndDirection()
+        /** @var \SplObjectStorage<Attributes|AttributesInline, array<Node|string|null>> $resolved */
+        $resolved = new \SplObjectStorage();
+
+        /**
+         * Attributes waiting to be written to their target, keyed by target object ID.
+         *
+         * Everything is merged and filtered per node exactly as it would be if it were written
+         * straight to the target, except for the class list: only its first (whole) value takes
+         * part in the merges, with the classes contributed by later nodes recorded separately and
+         * joined once at the end. Feeding the growing list back through mergeAttributes() for
+         * every node would re-split and re-join all of it each time, which is quadratic.
+         *
+         * @var array<int, array{node: Node, attributes: array<string, mixed>, class: string|null, before: list<string>, after: list<string>}> $pending
+         */
+        $pending = [];
+
         foreach ($event->getDocument()->iterator() as $node) {
             if (! ($node instanceof Attributes || $node instanceof AttributesInline)) {
                 continue;
             }
 
-            [$target, $direction] = self::findTargetAndDirection($node);
+            [$target, $direction] = self::findTargetAndDirection($node, $resolved);
 
             if ($target instanceof Node) {
                 $parent = $target->parent();
@@ -57,29 +74,84 @@ final class AttributesListener
                     $target = $parent;
                 }
 
-                if ($direction === self::DIRECTION_SUFFIX) {
-                    $attributes = AttributesHelper::mergeAttributes($target, $node->getAttributes());
-                } else {
-                    $attributes = AttributesHelper::mergeAttributes($node->getAttributes(), $target);
+                $id = \spl_object_id($target);
+                if (! isset($pending[$id])) {
+                    /** @var array<string, mixed> $existing */
+                    $existing     = (array) $target->data->get('attributes');
+                    $pending[$id] = ['node' => $target, 'attributes' => $existing, 'class' => null, 'before' => [], 'after' => []];
                 }
 
-                $target->data->set('attributes', AttributesHelper::filterAttributes($attributes, $this->allowList, $this->allowUnsafeLinks));
+                $attributes = $node->getAttributes();
+                if ($direction === self::DIRECTION_SUFFIX) {
+                    $merged = AttributesHelper::mergeAttributes($pending[$id]['attributes'], $attributes);
+                } else {
+                    $merged = AttributesHelper::mergeAttributes($attributes, $pending[$id]['attributes']);
+                }
+
+                $merged = AttributesHelper::filterAttributes($merged, $this->allowList, $this->allowUnsafeLinks);
+
+                if (! isset($merged['class'])) {
+                    $pending[$id]['class']  = null;
+                    $pending[$id]['before'] = $pending[$id]['after'] = [];
+                } elseif ($pending[$id]['class'] === null) {
+                    $pending[$id]['class'] = $merged['class'];
+                } else {
+                    // Only this node's own classes can have been added to the list, so record them
+                    // and put the short value the merge started from back in their place.
+                    $added = AttributesHelper::classList($attributes['class'] ?? []);
+                    if ($direction === self::DIRECTION_SUFFIX) {
+                        foreach ($added as $class) {
+                            $pending[$id]['after'][] = $class;
+                        }
+                    } else {
+                        foreach (\array_reverse($added) as $class) {
+                            $pending[$id]['before'][] = $class;
+                        }
+                    }
+
+                    $merged['class'] = $pending[$id]['class'];
+                }
+
+                $pending[$id]['attributes'] = $merged;
             }
 
             $node->detach();
         }
+
+        foreach ($pending as $entry) {
+            $attributes = $entry['attributes'];
+            if ($entry['class'] !== null && ($entry['before'] !== [] || $entry['after'] !== [])) {
+                $classes   = \array_reverse($entry['before']);
+                $classes[] = $entry['class'];
+
+                $attributes['class'] = \implode(' ', \array_merge($classes, $entry['after']));
+            }
+
+            $entry['node']->data->set('attributes', $attributes);
+        }
     }
 
     /**
-     * @param Attributes|AttributesInline $node
+     * @param Attributes|AttributesInline                                             $node
+     * @param \SplObjectStorage<Attributes|AttributesInline, array<Node|string|null>> $resolved
      *
      * @return array<Node|string|null>
      */
-    private static function findTargetAndDirection($node): array
+    private static function findTargetAndDirection($node, \SplObjectStorage $resolved): array
     {
+        if (isset($resolved[$node])) {
+            $result = $resolved[$node];
+            // Each node is only ever resolved once, so don't keep it alive any longer
+            unset($resolved[$node]);
+
+            return $result;
+        }
+
         $target    = null;
         $direction = null;
         $previous  = $next = $node;
+        /** @var list<Attributes> $shared */
+        $shared = [];
         while (true) {
             $previous = self::getPrevious($previous);
             $next     = self::getNext($next);
@@ -119,9 +191,27 @@ final class AttributesListener
 
                 break;
             }
+
+            // Only a TARGET_NEXT block can have a sibling block to walk past, so if that's what
+            // we're looking at then we are one too, which means getPrevious() already returned
+            // null for us and will keep doing so. Neither of us can therefore pick anything up on
+            // the left, and what is left of this walk is the whole of that block's own walk: it
+            // must end up with the same target we do. Remember that instead of re-scanning the
+            // chain once per block.
+            if (! ($next instanceof Attributes) || $next->getTarget() !== Attributes::TARGET_NEXT) {
+                continue;
+            }
+
+            $shared[] = $next;
         }
 
-        return [$target, $direction];
+        /** @var array<Node|string|null> $result */
+        $result = [$target, $direction];
+        foreach ($shared as $sharedNode) {
+            $resolved[$sharedNode] = $result;
+        }
+
+        return $result;
     }
 
     /**

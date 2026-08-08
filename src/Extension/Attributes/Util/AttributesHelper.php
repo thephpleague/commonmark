@@ -126,11 +126,7 @@ final class AttributesHelper
             /** @var array<string, mixed> $arg */
             $arg = (array) $arg;
             if (isset($arg['class'])) {
-                if (\is_string($arg['class'])) {
-                    $arg['class'] = \array_filter(\explode(' ', \trim($arg['class'])));
-                }
-
-                foreach ($arg['class'] as $class) {
+                foreach (self::classList($arg['class']) as $class) {
                     $attributes['class'][] = $class;
                 }
 
@@ -145,6 +141,22 @@ final class AttributesHelper
         }
 
         return $attributes;
+    }
+
+    /**
+     * Split a `class` attribute value into the individual classes it contributes to a merge
+     *
+     * @param mixed $class
+     *
+     * @return list<string>
+     */
+    public static function classList($class): array
+    {
+        if (\is_string($class)) {
+            return \array_values(\array_filter(\explode(' ', \trim($class))));
+        }
+
+        return \array_values((array) $class);
     }
 
     /**

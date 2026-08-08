@@ -6,7 +6,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
-This is a **security release** to address a potential cross-site scripting (XSS) vulnerability when using the `AttributesExtension` with untrusted user input.
+This is a **security release** to address multiple denial of service vulnerabilities and one cross-site scripting (XSS) vulnerability.
 
 ### Changed
 - Shortcut and collapsed reference links (`[label]` and `[label][]`) now apply the spec's 999-character link label limit when resolving the label, matching the limit already enforced when parsing reference definitions and when resolving the `[text][label]` form. A label longer than 999 characters which collapsed to a shorter, defined label once whitespace was normalized will no longer resolve; this matches cmark's behavior.
@@ -17,6 +17,8 @@ This is a **security release** to address a potential cross-site scripting (XSS)
 - Fixed shortcut reference link lookups normalizing arbitrarily long labels once a single reference definition is present, causing nested brackets to be resolved in quadratic time, which could be abused to cause a denial of service (GHSA-j8pm-gj4c-rq4x)
 - Fixed delimiter processors keying the opener-search cache on the raw closer run length, leaving the cache key space unbounded and causing emphasis, strikethrough, and highlight runs to be processed in super-linear time, which could be abused to cause a denial of service (GHSA-j8pm-gj4c-rq4x)
 - Fixed the `SmartPunctExtension` recopying the whole preceding text node when replacing each unpaired quote, causing documents with many apostrophes to be processed in quadratic time, which could be abused to cause a denial of service (GHSA-jjv6-8j6v-6j52)
+- Fixed the `AttributesExtension` scanning the remaining siblings of every block-level attribute node, causing long runs of adjacent attribute blocks to be resolved in quadratic time, which could be abused to cause a denial of service - this completes the fix for GHSA-g2gp-3wwq-f4ph, which covered only inline attributes (GHSA-jjv6-8j6v-6j52)
+- Fixed the `AttributesExtension` rebuilding the accumulated class list on every merge, causing long runs of `.class` attributes to be resolved in quadratic time, which could be abused to cause a denial of service (GHSA-jjv6-8j6v-6j52)
 
 ## [2.9.0] - 2026-08-03
 
