@@ -402,6 +402,17 @@ $cases = [
         'sizes' => [1_000, 4_000, 16_000],
         'input' => static fn($n) => \str_repeat("^[a]\n\n", $n),
     ],
+    'Unpaired smart quotes' => [
+        // Every quote is preceded by a letter and followed by a space, making it can-close-only,
+        // so none of them ever pair up and all of them survive to ReplaceUnpairedQuotesListener.
+        // The long runs of text between them matter: the listener merges each replacement into
+        // its left neighbour, so the cost must depend on the bytes added, not on the bytes already
+        // accumulated in that neighbour.
+        'extension' => 'smartpunct',
+        'sizes' => [4_000, 16_000, 64_000],
+        'input' => static fn($n) => \str_repeat(\str_repeat('a', 63) . '" ', $n),
+        'expected' => static fn($n) => '<p>' . \str_repeat(\str_repeat('a', 63) . "\u{201C} ", $n - 1) . \str_repeat('a', 63) . "\u{201C}</p>",
+    ],
     'Adjacent inline attributes at start of block' => [
         'extension' => 'attributes',
         'sizes' => [1_000, 4_000, 16_000],
