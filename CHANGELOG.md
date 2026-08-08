@@ -15,6 +15,7 @@ This is a **security release** to address a potential cross-site scripting (XSS)
 - Fixed attribute names prefixed with a form feed (such as `{<FF>onclick="..."}`) bypassing both the `on*` event handler filter and the `allow_unsafe_links` protection, as browsers treat that byte as whitespace and parse the name as a genuine `onclick` or `href` (GHSA-f8fg-pg57-v4j8)
 - Fixed catastrophic backtracking in the fenced code block start pattern, causing a single line of backticks to be scanned in quadratic time, which could be abused to cause a denial of service (GHSA-j8pm-gj4c-rq4x)
 - Fixed shortcut reference link lookups normalizing arbitrarily long labels once a single reference definition is present, causing nested brackets to be resolved in quadratic time, which could be abused to cause a denial of service (GHSA-j8pm-gj4c-rq4x)
+- Fixed delimiter processors keying the opener-search cache on the raw closer run length, leaving the cache key space unbounded and causing emphasis, strikethrough, and highlight runs to be processed in super-linear time, which could be abused to cause a denial of service (GHSA-j8pm-gj4c-rq4x)
 
 ## [2.9.0] - 2026-08-03
 

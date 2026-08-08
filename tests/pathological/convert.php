@@ -19,6 +19,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\Extension\Highlight\HighlightExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 
@@ -61,6 +62,9 @@ switch ($argv[2] ?? null) {
         break;
     case 'attributes':
         $environment->addExtension(new AttributesExtension());
+        break;
+    case 'highlight':
+        $environment->addExtension(new HighlightExtension());
         break;
     case 'gfm':
     default:

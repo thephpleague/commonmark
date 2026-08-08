@@ -93,6 +93,50 @@ $cases = [
         'input' => static fn($n) => \str_repeat('*a_ ', $n),
         'expected' => static fn($n) => '<p>' . \str_repeat('*a_ ', $n - 1) . '*a_</p>',
     ],
+    'Emphasis closers with varying run lengths' => [
+        // A pile of openers that can never close, followed by closer runs of strictly
+        // increasing length. Each distinct length must not mint a new openersBottom cache
+        // key, otherwise every closer re-scans the entire pile.
+        'extension' => 'commonmark',
+        'sizes' => [25_000, 800_000],
+        'input' => static function ($n) {
+            $closers = '';
+            for ($i = 1, $d = (int) \sqrt($n / 4.5); $i <= $d; $i++) {
+                // Length 3i-1 keeps every closer at 2 (mod 3) so the "multiple of 3" rule
+                // rejects every opener in the pile.
+                $closers .= 'x' . \str_repeat('*', 3 * $i - 1) . 'y';
+            }
+
+            return \str_repeat('*a ', \intdiv($n - \strlen($closers), 3)) . $closers;
+        },
+    ],
+    'Strikethrough closers with varying run lengths' => [
+        // As above, but the pile is made of '*' openers which no '~' closer can ever match.
+        'sizes' => [25_000, 800_000],
+        'input' => static function ($n) {
+            $closers = '';
+            for ($l = 3, $k = (int) \sqrt(2 * $n / 3); $l < 3 + $k; $l++) {
+                $closers .= 'a' . \str_repeat('~', $l) . ' ';
+            }
+
+            return \str_repeat(' *a', \intdiv($n - \strlen($closers), 3)) . $closers;
+        },
+    ],
+    'Highlight closers with varying run lengths' => [
+        // As above, but the pile is made of '*' openers which no '=' closer can ever match.
+        // getDelimiterUse() returns 0 for every opener once the closer exceeds 2 characters,
+        // so the cache key must not distinguish those longer closers from each other.
+        'extension' => 'highlight',
+        'sizes' => [25_000, 800_000],
+        'input' => static function ($n) {
+            $closers = '';
+            for ($l = 3, $k = (int) \sqrt(2 * $n / 3); $l < 3 + $k; $l++) {
+                $closers .= 'a' . \str_repeat('=', $l) . ' ';
+            }
+
+            return \str_repeat(' *a', \intdiv($n - \strlen($closers), 3)) . $closers;
+        },
+    ],
     'Pattern [ (](' => [
         'sizes' => [500, 5_000, 50_000],
         'input' => static fn($n) => \str_repeat('[ (](', $n),
