@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.9.1] - 2026-08-09
+
 This is a **security release** to address multiple denial of service vulnerabilities and one cross-site scripting (XSS) vulnerability.
 
 ### Changed
@@ -785,7 +787,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.9.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.9.1...HEAD
+[2.9.1]: https://github.com/thephpleague/commonmark/compare/2.9.0...2.9.1
 [2.9.0]: https://github.com/thephpleague/commonmark/compare/2.8.3...2.9.0
 [2.8.3]: https://github.com/thephpleague/commonmark/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/thephpleague/commonmark/compare/2.8.1...2.8.2

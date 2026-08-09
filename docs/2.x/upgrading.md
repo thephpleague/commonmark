@@ -45,6 +45,14 @@ leading whitespace differs.  Set the option to a large value to restore the old 
 instead of writing one key per footnote destination.  This only matters if you were reading those keys directly; the
 rendered output is unchanged.
 
+### Very Long Shortcut Reference Links No Longer Resolve
+
+Shortcut and collapsed reference links (`[label]` and `[label][]`) now apply the spec's 999-character limit on link
+labels when resolving the label, matching the limit already enforced when parsing reference definitions and when
+resolving the `[text][label]` form.  A label longer than 999 characters which collapsed to a shorter, defined label
+once its whitespace was normalized will no longer resolve, and is left as literal text instead.  This matches the
+behavior of the reference `cmark` implementation.
+
 ### Recommended: Set a Maximum Nesting Level
 
 If you're parsing untrusted input, we now recommend setting `max_nesting_level` to `100`.  See the
