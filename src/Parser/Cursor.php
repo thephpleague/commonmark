@@ -28,6 +28,28 @@ class Cursor
      */
     private const BYTE_OFFSET_CHECKPOINT_INTERVAL = 16;
 
+    /**
+     * Matches one escape pair, or one character class including a leading "^" or "]".
+     * Removing both from a pattern leaves only its structural characters behind.
+     */
+    private const ESCAPES_AND_CHARACTER_CLASSES = '/\\\\.|\[\^?\]?(?:[^\]\\\\]|\\\\.)*\]/s';
+
+    /**
+     * Upper bound on the number of distinct patterns whose match() strategy is remembered.
+     * Far above any realistic parser registry (the built-in parsers contribute about sixteen
+     * patterns), so it exists only to bound the cache against a caller that interpolates
+     * variable text into a new pattern on every call.
+     */
+    private const MAX_MEMOIZED_PATTERNS = 1024;
+
+    /**
+     * Upper bound (in bytes) on the length of a pattern eligible for memoization. Cache keys
+     * are the pattern strings themselves, so together with MAX_MEMOIZED_PATTERNS this bounds
+     * the cache's worst-case memory at about 1MB. The longest built-in pattern is 174 bytes;
+     * an oversized pattern is still classified correctly on every call, just never cached.
+     */
+    private const MAX_MEMOIZED_PATTERN_LENGTH = 1024;
+
     /** @psalm-readonly */
     private string $line;
 
@@ -91,6 +113,13 @@ class Cursor
      * @var array<int, string>
      */
     private array $charCache = [];
+
+    /**
+     * Cached isRegexOffsetSafe() verdicts, keyed by pattern.
+     *
+     * @var array<string, bool>
+     */
+    private static array $regexOffsetSafetyCache = [];
 
     /**
      * @param string $line The line being parsed (ASCII or UTF-8)
@@ -548,9 +577,10 @@ class Cursor
     {
         // When a tab has been partially consumed the remainder is reconstructed with the
         // leftover tab expanded into spaces, so matching must run against that reconstructed
-        // string rather than the raw line. This is rare; use the copy-based path to preserve
-        // the exact column arithmetic.
-        if ($this->partiallyConsumedTab) {
+        // string rather than the raw line. Patterns that inspect what precedes the match start
+        // must also see a subject that begins at the cursor. Both are rare; use the copy-based
+        // path for them.
+        if ($this->partiallyConsumedTab || ! self::isRegexOffsetSafe($regex)) {
             return $this->matchViaRemainder($regex);
         }
 
@@ -589,9 +619,120 @@ class Cursor
     }
 
     /**
-     * Slow path for match() used only when a tab has been partially consumed: match against a
-     * freshly-built remainder whose leftover tab is expanded into spaces, advancing by columns
-     * across that expansion. Kept separate so the common case avoids the remainder allocation.
+     * Whether $regex means the same thing matched against the whole line at the cursor's byte
+     * offset as it does matched against a remainder that begins at the cursor.
+     *
+     * Matching at an offset leaves the text before the cursor visible to the pattern, so anything
+     * that inspects what precedes the match start would resolve against different context: "\b",
+     * "\B" and lookbehinds read the preceding character, "\A" and a "^" other than the leading
+     * anchor assert a subject start the cursor is not, and under "m" a leading "^" also matches at
+     * every later line start rather than only at the cursor.
+     *
+     * The test is conservative: a "\b" reachable only after the pattern has consumed input reads
+     * a character the two subjects share, and so is harmless, but proving that needs a real parse
+     * of the pattern. A pattern turned away simply keeps making the copy it always made.
+     *
+     * @psalm-param non-empty-string $regex
+     */
+    private static function isRegexOffsetSafe(string $regex): bool
+    {
+        // Patterns belong to parser classes rather than to the text being parsed, so this stays
+        // at a handful of entries; the count and length caps keep a caller that interpolates
+        // variable text into its patterns from growing it without bound.
+        if (isset(self::$regexOffsetSafetyCache[$regex])) {
+            return self::$regexOffsetSafetyCache[$regex];
+        }
+
+        $result = self::classifyRegexOffsetSafety($regex);
+
+        if (\strlen($regex) <= self::MAX_MEMOIZED_PATTERN_LENGTH && \count(self::$regexOffsetSafetyCache) < self::MAX_MEMOIZED_PATTERNS) {
+            self::$regexOffsetSafetyCache[$regex] = $result;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @see isRegexOffsetSafe()
+     *
+     * @psalm-param non-empty-string $regex
+     */
+    private static function classifyRegexOffsetSafety(string $regex): bool
+    {
+        // The scans below assume the closing delimiter equals the opener and that a "[" always
+        // opens a character class rather than delimiting the whole pattern. Bracket-style and
+        // "^" delimiters are rare enough to simply take the copy path.
+        $delimiter = $regex[0];
+        if ($delimiter === '(' || $delimiter === '{' || $delimiter === '[' || $delimiter === '<' || $delimiter === '^') {
+            return false;
+        }
+
+        // Extended (x) mode turns "#" into a comment opener, and a comment is zero-width yet may
+        // contain a "[" that the class stripper below would mistake for a real class opener,
+        // swallowing an anchor hidden inside the "class". Reject anything that could contain a
+        // comment: an x in the trailing modifiers, an "(?#...)" comment (legal in any mode), or
+        // an inline flag group enabling x mid-pattern.
+        $modifiers = self::regexModifiers($regex);
+        if ($modifiers === null || \strpos($modifiers, 'x') !== false) {
+            return false;
+        }
+
+        if ($regex[1] === '^' && \strpos($modifiers, 'm') !== false) {
+            return false;
+        }
+
+        if (
+            \strpos($regex, '\\b') !== false
+            || \strpos($regex, '\\B') !== false
+            || \strpos($regex, '\\A') !== false
+            || \strpos($regex, '(?<=') !== false
+            || \strpos($regex, '(?<!') !== false
+            || \strpos($regex, '(?#') !== false
+        ) {
+            return false;
+        }
+
+        // An inline flag group such as "(?x)", "(?imx:", or "(?^x)". A preg_match() failure is
+        // treated the same as a match: unanalyzable classifies as offset-sensitive.
+        if (\preg_match('/\(\?[a-zA-Z^-]*x/', $regex) !== 0) {
+            return false;
+        }
+
+        // Strip escape pairs and character classes, where a "^" is a literal rather than an
+        // anchor, then look for an anchor other than the leading one match() rewrites into "\G".
+        // A "^" that only becomes leading once something zero-width is stripped from in front of
+        // it (such as "\G") is still a real anchor, so only a "^" at the original position 1 is
+        // exempt from the scan. A null from the stripper means the pattern could not be analyzed,
+        // which must classify it as offset-sensitive rather than safe.
+        $anchorsOnly = \preg_replace(self::ESCAPES_AND_CHARACTER_CLASSES, '', $regex);
+        if ($anchorsOnly === null) {
+            return false;
+        }
+
+        return \strpos($anchorsOnly, '^', $regex[1] === '^' ? 2 : 1) === false;
+    }
+
+    /**
+     * Return the modifier characters trailing a delimited pattern, or null if the closing
+     * delimiter cannot be located. The delimiter must not be one of the bracket-style openers,
+     * whose closer differs from the opener.
+     *
+     * @psalm-param non-empty-string $regex
+     */
+    private static function regexModifiers(string $regex): ?string
+    {
+        $end = \strrpos($regex, $regex[0]);
+        if ($end === false) {
+            return null;
+        }
+
+        return \substr($regex, $end + 1);
+    }
+
+    /**
+     * Slow path for match(): build the remainder - with any partially-consumed tab expanded
+     * into spaces - and run the pattern against that copy, so the subject genuinely begins at
+     * the cursor. Kept separate so the common case avoids the remainder allocation.
      *
      * @psalm-param non-empty-string $regex
      */
@@ -613,17 +754,19 @@ class Cursor
 
         $advance = $offset + $matchLength;
 
-        // The remainder we matched against had the partially-consumed tab expanded into spaces,
+        // The remainder we matched against had any partially-consumed tab expanded into spaces,
         // so those columns must be advanced by column instead of by character.
-        $charsToTab = 4 - ($this->column % 4);
-        if ($advance < $charsToTab) {
-            $this->advanceBy($advance, true);
+        if ($this->partiallyConsumedTab) {
+            $charsToTab = 4 - ($this->column % 4);
+            if ($advance < $charsToTab) {
+                $this->advanceBy($advance, true);
 
-            return $matches[0][0];
+                return $matches[0][0];
+            }
+
+            $this->advanceBy($charsToTab, true);
+            $advance -= $charsToTab;
         }
-
-        $this->advanceBy($charsToTab, true);
-        $advance -= $charsToTab;
 
         $this->advanceBy($advance);
 

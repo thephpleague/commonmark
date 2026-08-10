@@ -595,6 +595,60 @@ final class CursorTest extends TestCase
     }
 
     /**
+     * @dataProvider dataForTestMatchAnchoring
+     */
+    #[DataProvider('dataForTestMatchAnchoring')]
+    public function testMatchTreatsTheCursorAsTheStartOfTheSubject(string $string, string $regex, int $initialPosition, int $expectedPosition, ?string $expectedResult): void
+    {
+        $cursor = new Cursor($string);
+        $cursor->advanceBy($initialPosition);
+
+        $this->assertSame($expectedResult, $cursor->match($regex));
+        $this->assertSame($expectedPosition, $cursor->getPosition());
+    }
+
+    /**
+     * Patterns may be matched against the full line at the cursor's offset rather than against a
+     * copy of the remainder, so anything that inspects what precedes the match start has to keep
+     * seeing the cursor as the beginning of the subject. Every case below sits at a non-zero
+     * position; none of the in-tree patterns exercises these constructs, so nothing else would
+     * catch a divergence.
+     *
+     * @return iterable<array<mixed>>
+     */
+    public static function dataForTestMatchAnchoring(): iterable
+    {
+        return [
+            'leading caret'              => ['abcdef', '/^bc/', 1, 3, 'bc'],
+            'caret inside a group'       => ['abcdef', '/(?:^)bc/', 1, 3, 'bc'],
+            'caret after an inline flag' => ['abcdef', '/(?i)^bc/', 1, 3, 'bc'],
+            'caret in a character class' => ['abcdef', '/^[^x]c?/', 1, 3, 'bc'],
+            'caret in an alternation'    => ['abcdef', '/^zz|^bc/', 1, 3, 'bc'],
+            'caret after a zero-width escape' => ['abcdef', '/\G^bc/', 1, 3, 'bc'],
+            'bracket-style delimiters'   => ['abcdef', '[^bc]', 1, 3, 'bc'],
+            'anchor after an x-mode comment hiding a bracket' => ['xbarz', "/#[\n^bar|]/x", 1, 4, 'bar'],
+            'anchor after an inline comment hiding a bracket' => ['xbarz', '/(?#[)^bar|]/', 1, 4, 'bar'],
+            'anchor after an inline x flag and comment'       => ['xbarz', "/(?x)#[\n^bar|]/", 1, 4, 'bar'],
+            'word boundary'              => ['abcdef', '/\bbc/', 1, 3, 'bc'],
+            'word boundary after leading caret' => ['foobar', '/^\b\w+/', 3, 6, 'bar'],
+            'word non-boundary'          => ['abcdef', '/\Bbc/', 1, 1, null],
+            'word boundary mid-word'     => ['aaa bbb', '/\b\w+/', 2, 3, 'a'],
+            'negative lookbehind'        => ['abcdef', '/(?<![a-z])bc/', 1, 3, 'bc'],
+            'positive lookbehind'        => ['abcdef', '/(?<=a)bc/', 1, 1, null],
+            'subject anchor'             => ['abcdef', '/\Abc/', 1, 3, 'bc'],
+            'named group'                => ['abcdef', '/^(?<n>bc)/', 1, 3, 'bc'],
+            'leading caret, multiline'   => ["ab\ncd", '/^cd/m', 1, 5, 'cd'],
+            'leading caret, multiline, from position zero' => ["ab\ncd", '/^cd/m', 0, 5, 'cd'],
+            'unanchored, multiline'      => ['abcdef', '/c{1,3}/m', 1, 3, 'c'],
+            'multibyte leading caret'    => ['Это тест', '/^то/u', 1, 3, 'то'],
+            'multibyte word boundary'    => ['Это тест', '/\bтест/u', 1, 8, 'тест'],
+            'multibyte subject anchor'   => ['ёxyz', '/\Axyz/u', 1, 4, 'xyz'],
+            'match spanning a tab'       => ["a\tbcd", '/\A\tbc/', 1, 4, "\tbc"],
+            'tab mid-match'              => ["ab\tcd", '/\Ab\tc/', 1, 4, "b\tc"],
+        ];
+    }
+
+    /**
      * @dataProvider dataForTestGetSubstring
      */
     #[DataProvider('dataForTestGetSubstring')]

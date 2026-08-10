@@ -13,6 +13,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Optimized inline link destination parsing to scan the line in place, so its cost follows the length of the destination rather than the length of everything left in the block
 
 ### Fixed
+- Fixed `Cursor::match()` treating text before the cursor as part of the match subject. Since 2.9.0 patterns were matched against the whole line at an offset, which silently changed the meaning of `\b`, `\B`, `\A`, lookbehinds, a `^` anywhere other than the very start of the pattern, and a leading `^` combined with the `m` modifier. No built-in parser was affected, but extensions supplying such patterns could see missed, spurious, or shifted matches
 - Fixed heading permalinks rendered with `aria-hidden="true"` remaining in the keyboard tab order; they are now also given `tabindex="-1"`, as a focusable element removed from the accessibility tree has no accessible name to announce when focused (WCAG 4.1.2)
 - Fixed cloning a node breaking the link from the original node's children back to their parent, silently corrupting the document that node belonged to; detaching or inserting around those children afterwards could drop nodes from the tree
 - Fixed cloned nodes sharing their `data` with the node they were cloned from, so that setting an attribute on either one also set it on the other

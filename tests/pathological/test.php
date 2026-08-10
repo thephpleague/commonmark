@@ -214,6 +214,14 @@ $cases = [
         'sizes' => [500, 1_000, 2_000, 4_000],
         'input' => static fn($n) => \implode('', \array_map(static fn($i) => 'e' . \str_repeat('`', $i), \range(1, $n))),
     ],
+    'Unclosable backtick opener followed by many runs' => [
+        // The leading two-backtick run can never be closed by any of the one-backtick runs that
+        // follow, so locating its closer has to walk every one of them. Unlike 'Backticks' above,
+        // whose input size grows much faster than its run count and so cannot be scaled far, this
+        // one stays linear in size, which is what makes the per-run cost visible.
+        'sizes' => [25_000, 100_000, 400_000],
+        'input' => static fn($n) => '`` ' . \str_repeat('`a ', $n),
+    ],
     'Backtick fence with a backtick in the info string' => [
         'extension' => 'commonmark',
         'sizes' => [10_000, 40_000, 160_000],
