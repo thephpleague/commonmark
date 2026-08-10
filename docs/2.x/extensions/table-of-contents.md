@@ -98,7 +98,7 @@ This `string` controls where in the document your table of contents will be plac
 
 If you'd like to customize this further, you can implement a [custom event listener](/2.x/customization/event-dispatcher/#registering-listeners) to locate the `TableOfContents` node and reposition it somewhere else in the document prior to rendering.
 
-In `'placeholder'` mode the table of contents is rendered once and that result is reused for every placeholder, so a [custom renderer](/2.x/customization/rendering/) for the `TableOfContents` node is not called once per placeholder and must return the same markup each time it is called for a given document.
+In `'placeholder'` mode the document contains a single `TableOfContents` node, which is the one the listener above will find, and the remaining placeholders reuse the result of rendering it.  A [custom renderer](/2.x/customization/rendering/) for that node is therefore not called once per placeholder, and must return the same markup each time it is called for a given document.
 
 ### `placeholder`
 
