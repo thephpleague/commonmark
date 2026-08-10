@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://commonmark.org/xml/1.0">
+    <paragraph>
+        <text>This TOC has two entries, so a budget of four covers exactly two of the three placeholders.</text>
+    </paragraph>
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#content-alpha" title="">
+                <text>Alpha</text>
+            </link>
+        </item>
+        <item>
+            <link destination="#content-bravo" title="">
+                <text>Bravo</text>
+            </link>
+        </item>
+    </table_of_contents>
+    <heading level="1">
+        <heading_permalink slug="alpha" />
+        <text>Alpha</text>
+    </heading>
+    <table_of_contents type="bullet" tight="false">
+        <item>
+            <link destination="#content-alpha" title="">
+                <text>Alpha</text>
+            </link>
+        </item>
+        <item>
+            <link destination="#content-bravo" title="">
+                <text>Bravo</text>
+            </link>
+        </item>
+    </table_of_contents>
+    <heading level="1">
+        <heading_permalink slug="bravo" />
+        <text>Bravo</text>
+    </heading>
+    <table_of_contents_placeholder />
+</document>
