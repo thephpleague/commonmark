@@ -9,6 +9,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 - Improved performance of reading single characters from multibyte lines
 - Improved performance of locating the next non-space character on lines without tabs
+- Optimized `Cursor::advanceToNextNonSpaceOrNewline()` to scan the line in place instead of copying everything left in the block on every call
+- Optimized inline link destination parsing to scan the line in place, so its cost follows the length of the destination rather than the length of everything left in the block
 
 ### Fixed
 - Fixed heading permalinks rendered with `aria-hidden="true"` remaining in the keyboard tab order; they are now also given `tabindex="-1"`, as a focusable element removed from the accessibility tree has no accessible name to announce when focused (WCAG 4.1.2)

@@ -188,6 +188,15 @@ $cases = [
         'input' => static fn($n) => \str_repeat('[a](b', $n),
         'expected' => static fn($n) => '<p>' . \str_repeat('[a](b', $n) . '</p>',
     ],
+    'Unclosed inline links with whitespace after the paren' => [
+        // The space is load-bearing: it routes each "(" through the whitespace skip in
+        // Cursor::advanceToNextNonSpaceOrNewline() as well as the destination scan in
+        // LinkParserHelper. Every other case here puts a non-space directly after the "(", so the
+        // destination scan is the only one they cover.
+        'sizes' => [10_000, 50_000, 200_000],
+        'input' => static fn($n) => \str_repeat('[a]( b', $n),
+        'expected' => static fn($n) => '<p>' . \str_repeat('[a]( b', $n) . '</p>',
+    ],
     'Unclosed inline links (3)' => [
         'ref' => 'https://github.com/commonmark/commonmark.js/issues/129',
         'sizes' => [1_000, 10_000, 100_000],

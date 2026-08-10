@@ -469,13 +469,22 @@ class Cursor
             return 0;
         }
 
-        $matches = [];
-        \preg_match('/^ *(?:\n *)?/', $this->getRemainder(), $matches, \PREG_OFFSET_CAPTURE);
+        // A partially-consumed tab leaves the cursor sitting on the tab itself, which the check
+        // above has already returned on, so only real spaces and newlines reach this point and no
+        // tab expansion is needed.
+        //
+        // Spaces and newlines are single-byte ASCII characters which can never appear inside a
+        // multibyte UTF-8 sequence, so the run is measured at the byte level and each byte
+        // consumed is exactly one character. Scanning the line in place keeps the cost of each
+        // call proportional to the run it consumes, rather than to the length of everything left
+        // in the block, which is what building the remainder first charged for.
+        $byteOffset = $this->isMultibyte ? $this->byteOffset($this->currentPosition) : $this->currentPosition;
 
-        // [0][0] contains the matched text
-        // [0][1] contains the index of that match
-        \assert(isset($matches[0]));
-        $increment = $matches[0][1] + \strlen($matches[0][0]);
+        $increment = \strspn($this->line, ' ', $byteOffset);
+        if (($this->line[$byteOffset + $increment] ?? '') === "\n") {
+            $increment++;
+            $increment += \strspn($this->line, ' ', $byteOffset + $increment);
+        }
 
         $this->advanceBy($increment);
 
