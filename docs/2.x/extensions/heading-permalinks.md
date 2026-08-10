@@ -137,6 +137,52 @@ This option sets the `aria-hidden` attribute on the `<a>` tag. This defaults to 
 
 Setting this option to false would render the `<a>` tag excluding the `aria-hidden` entirely.
 
+## Non-ASCII Headings
+
+Headings containing non-ASCII characters produce slugs that keep those characters as-is:
+
+```html
+<h1><a id="content-まとめ" href="#content-まとめ" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>まとめ</h1>
+```
+
+This matches how GitHub and most other Markdown renderers behave, and browsers resolve percent-encoded fragments (like the `#%E3%81%BE%E3%81%A8%E3%82%81` produced when parsing a Markdown link to that heading) against these unencoded `id` attributes just fine.
+
+If you'd prefer percent-encoded slugs anyway, wrap the built-in normalizer with one of your own and register it via the [`slug_normalizer/instance`](/2.x/customization/slug-normalizer/#instance) option:
+
+```php
+use League\CommonMark\Normalizer\SlugNormalizer;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
+use League\CommonMark\Util\UrlEncoder;
+
+final class PercentEncodedSlugNormalizer implements TextNormalizerInterface
+{
+    private SlugNormalizer $inner;
+
+    public function __construct()
+    {
+        $this->inner = new SlugNormalizer();
+    }
+
+    public function normalize(string $text, array $context = []): string
+    {
+        return UrlEncoder::unescapeAndEncode($this->inner->normalize($text, $context));
+    }
+}
+```
+
+```php
+$config = [
+    'slug_normalizer' => [
+        'instance' => new PercentEncodedSlugNormalizer(),
+    ],
+];
+```
+
+Two things to be aware of:
+
+- Encoding must happen *after* the inner normalizer has truncated the slug, as shown above.  Truncating an already-encoded string can split a percent escape in half and produce something like `%E3%8`.
+- Because of that ordering, `slug_normalizer/max_length` limits the length of the *unencoded* slug.  A single character can expand to as many as twelve once encoded, so the final `id` may be considerably longer than that limit.
+
 ## Example
 
 If you wanted to style your headings exactly like this documentation page does, try this configuration!
