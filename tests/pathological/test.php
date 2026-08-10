@@ -41,6 +41,16 @@ $cases = [
         'input' => static fn($n) => 'é' . \str_repeat('a_', $n),
         'expected' => static fn($n) => '<p>é' . \str_repeat('a_', $n) . "</p>\n",
     ],
+    'Multibyte text before a long link destination' => [
+        'ref' => 'https://github.com/thephpleague/commonmark/issues/1026',
+        // The leading 'é' is load-bearing: it puts the cursor on the multibyte path, so every
+        // character position within the destination must still translate to a byte offset in
+        // constant time.
+        'extension' => 'commonmark',
+        'sizes' => [50_000, 200_000, 800_000],
+        'input' => static fn($n) => 'é.![i](data:image/png;base64,' . \str_repeat('A', $n) . ')',
+        'expected' => static fn($n) => '<p>é.<img src="data:image/png;base64,' . \str_repeat('A', $n) . '" alt="i" /></p>',
+    ],
     'Repeated invalid autolink prefixes' => [
         'extension' => 'autolink',
         'sizes' => [160_000],
