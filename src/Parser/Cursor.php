@@ -170,6 +170,10 @@ class Cursor
      * Return the single multibyte character at $index, caching the sliced string so
      * repeated reads of the same position (common during delimiter scanning) don't
      * re-slice. Callers must ensure 0 <= $index < $length.
+     *
+     * Only call this when $isMultibyte is true. On a single-byte line the character is
+     * already reachable as $this->line[$index], which costs less than the byte-offset
+     * translation below; every caller guards on that flag for exactly that reason.
      */
     private function charAt(int $index): string
     {
@@ -179,7 +183,13 @@ class Cursor
 
         $startByte = $this->byteOffset($index);
 
-        return $this->charCache[$index] = \substr($this->line, $startByte, $this->byteOffset($index + 1) - $startByte);
+        // The line is known to be valid UTF-8 (the constructor rejects anything else), so the
+        // lead byte alone gives the character's width. Deriving it here avoids a second
+        // byteOffset() walk just to locate where the next character begins.
+        $lead  = \ord($this->line[$startByte]);
+        $width = $lead < 0x80 ? 1 : ($lead < 0xE0 ? 2 : ($lead < 0xF0 ? 3 : 4));
+
+        return $this->charCache[$index] = \substr($this->line, $startByte, $width);
     }
 
     /**
@@ -205,6 +215,15 @@ class Cursor
         // leading whitespace.  Because every character in the run occupies exactly one
         // byte, the character index and byte offset advance together.
         $byteOffset = $this->isMultibyte ? $this->byteOffset($this->currentPosition) : $this->currentPosition;
+
+        // Past the last tab (or on a line with none) every whitespace character is a space worth
+        // exactly one column, so the run length is both the character count and the indent, and
+        // strspn() can measure it in one call instead of a per-character loop.
+        if ($this->lastTabPosition === false || $this->currentPosition > $this->lastTabPosition) {
+            $this->indent = \strspn($this->line, ' ', $byteOffset);
+
+            return $this->nextNonSpaceCache = $this->currentPosition + $this->indent;
+        }
 
         for ($i = $this->currentPosition; $i < $this->length; $i++, $byteOffset++) {
             $c = $this->line[$byteOffset];
