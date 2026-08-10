@@ -16,6 +16,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Optimized inline link destination parsing to scan the line in place, so its cost follows the length of the destination rather than the length of everything left in the block
 - Changed the `TableOfContents` extension to render the table of contents once and share it across all placeholders instead of cloning it into each one (#1134)
     - A custom renderer registered for the `TableOfContents` node is no longer called once per placeholder, so it must return the same markup each time it is called for a given document (#1134)
+    - The first placeholder receives the table of contents itself, so a document still contains a `TableOfContents` node for listeners which locate and reposition it (#1143)
 
 ### Fixed
 - Fixed heading permalinks rendered with `aria-hidden="true"` remaining in the keyboard tab order; they are now also given `tabindex="-1"`, as a focusable element removed from the accessibility tree has no accessible name to announce when focused (WCAG 4.1.2)

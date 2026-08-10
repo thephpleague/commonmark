@@ -94,9 +94,10 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
     {
         $maxEntries = $this->config->get('table_of_contents/max_placeholder_entries');
         \assert(\is_int($maxEntries) || $maxEntries === null);
-        $perCopy = $maxEntries === null ? 0 : self::countEntries($toc);
-        $cache   = new TableOfContentsRenderCache();
-        $entries = 0;
+        $perCopy  = $maxEntries === null ? 0 : self::countEntries($toc);
+        $cache    = new TableOfContentsRenderCache();
+        $entries  = 0;
+        $anchored = false;
 
         foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
             // Add the block once we find a placeholder
@@ -109,7 +110,15 @@ final class TableOfContentsBuilder implements ConfigurationAwareInterface
                 continue;
             }
 
-            $node->replaceWith(new TableOfContentsReference($toc, $cache));
+            // The first placeholder receives the table of contents itself, so that it remains
+            // part of the document; the rest share the single result of rendering it
+            if ($anchored) {
+                $node->replaceWith(new TableOfContentsReference($toc, $cache));
+            } else {
+                $node->replaceWith($toc);
+                $anchored = true;
+            }
+
             $entries += $perCopy;
         }
     }
