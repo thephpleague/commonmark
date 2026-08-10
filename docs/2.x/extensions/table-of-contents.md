@@ -53,6 +53,7 @@ $config = [
         'max_heading_level' => 6,
         'normalize' => 'relative',
         'placeholder' => null,
+        'max_placeholder_entries' => null,
     ],
 ];
 
@@ -97,9 +98,19 @@ This `string` controls where in the document your table of contents will be plac
 
 If you'd like to customize this further, you can implement a [custom event listener](/2.x/customization/event-dispatcher/#registering-listeners) to locate the `TableOfContents` node and reposition it somewhere else in the document prior to rendering.
 
+In `'placeholder'` mode the table of contents is rendered once and that result is reused for every placeholder, so a [custom renderer](/2.x/customization/rendering/) for the `TableOfContents` node is not called once per placeholder and must return the same markup each time it is called for a given document.
+
 ### `placeholder`
 
 When combined with `'position' => 'placeholder'`, this setting tells the extension which placeholder content should be replaced with the Table of Contents.  For example, if you set this option to `[TOC]`, then any lines in your document consisting of that `[TOC]` placeholder will be replaced by the Table of Contents. Note that this option has no default value - you must provide this string yourself.
+
+### `max_placeholder_entries`
+
+When combined with `'position' => 'placeholder'`, this option limits how many table of contents entries a single document may render across all of its placeholders.  This defaults to `null`, meaning no limit is applied.  Setting an `int` is recommended when rendering untrusted input, as a document full of placeholders will otherwise repeat the entire table of contents at every one.
+
+The budget is spent in whole copies: placeholders are filled in document order until the next complete table of contents no longer fits, and the rest are left alone (rendering as an HTML comment, just like a placeholder with [no table of contents to insert](#placeholder)).  Nothing is ever truncated, so a limit smaller than a single table of contents renders none at all.
+
+Entries are counted as list items, which equals the number of linked headings under every [normalization strategy](#normalization-strategies) except `'as-is'` - that one adds empty items for skipped heading levels, and those count too.
 
 ### `style`
 
