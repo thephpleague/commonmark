@@ -137,12 +137,17 @@ This option sets the `aria-hidden` attribute on the `<a>` tag. This defaults to 
 
 Setting this option to false would render the `<a>` tag excluding the `aria-hidden` entirely.
 
+The link is also given `tabindex="-1"` whenever `aria-hidden="true"` is applied. A focusable element that has been
+removed from the accessibility tree can still be reached with the keyboard but has nothing to announce when it is,
+which fails [WCAG 4.1.2](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html), so the two attributes
+must travel together. Mouse and touch users are unaffected.
+
 ## Non-ASCII Headings
 
 Headings containing non-ASCII characters produce slugs that keep those characters as-is:
 
 ```html
-<h1><a id="content-まとめ" href="#content-まとめ" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>まとめ</h1>
+<h1><a id="content-まとめ" href="#content-まとめ" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">¶</a>まとめ</h1>
 ```
 
 This matches how GitHub and most other Markdown renderers behave, and browsers resolve percent-encoded fragments (like the `#%E3%81%BE%E3%81%A8%E3%82%81` produced when parsing a Markdown link to that heading) against these unencoded `id` attributes just fine.

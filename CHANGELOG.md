@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed heading permalinks rendered with `aria-hidden="true"` remaining in the keyboard tab order; they are now also given `tabindex="-1"`, as a focusable element removed from the accessibility tree has no accessible name to announce when focused (WCAG 4.1.2)
+
 ## [2.9.1] - 2026-08-09
 
 This is a **security release** to address multiple denial of service vulnerabilities and one cross-site scripting (XSS) vulnerability.
