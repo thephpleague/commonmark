@@ -208,4 +208,45 @@ final class NodeTest extends TestCase
             $this->assertSame('original', $event->getNode()->value);
         }
     }
+
+    public function testCloneLeavesTheOriginalChildrenAttached(): void
+    {
+        $root = new SimpleNode();
+        $root->appendChild($child = new SimpleNode());
+        $child->appendChild($grandChild1 = new SimpleNode());
+        $child->appendChild($grandChild2 = new SimpleNode());
+
+        $copy = clone $child;
+
+        // The original keeps its children, which still point back to it
+        $this->assertSame($root, $child->parent());
+        $this->assertSame($child, $grandChild1->parent());
+        $this->assertSame($child, $grandChild2->parent());
+
+        // The copy has its own children, which point back to the copy
+        $copiedChildren = $copy->children();
+        $this->assertNull($copy->parent());
+        $this->assertCount(2, $copiedChildren);
+        $this->assertNotSame($grandChild1, $copiedChildren[0]);
+        $this->assertNotSame($grandChild2, $copiedChildren[1]);
+        $this->assertSame($copy, $copiedChildren[0]->parent());
+        $this->assertSame($copy, $copiedChildren[1]->parent());
+    }
+
+    public function testCloneGivesEveryNodeInTheSubtreeItsOwnData(): void
+    {
+        $node = new SimpleNode();
+        $node->appendChild($child = new SimpleNode());
+        $node->data->set('attributes/class', 'original');
+        $child->data->set('attributes/class', 'original-child');
+
+        $copy = clone $node;
+        $copy->data->set('attributes/class', 'copy');
+        $copy->firstChild()->data->set('attributes/class', 'copy-child');
+
+        $this->assertSame('original', $node->data->get('attributes/class'));
+        $this->assertSame('original-child', $child->data->get('attributes/class'));
+        $this->assertSame('copy', $copy->data->get('attributes/class'));
+        $this->assertSame('copy-child', $copy->firstChild()->data->get('attributes/class'));
+    }
 }

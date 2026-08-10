@@ -12,6 +12,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Fixed
 - Fixed heading permalinks rendered with `aria-hidden="true"` remaining in the keyboard tab order; they are now also given `tabindex="-1"`, as a focusable element removed from the accessibility tree has no accessible name to announce when focused (WCAG 4.1.2)
+- Fixed cloning a node breaking the link from the original node's children back to their parent, silently corrupting the document that node belonged to; detaching or inserting around those children afterwards could drop nodes from the tree
+- Fixed cloned nodes sharing their `data` with the node they were cloned from, so that setting an attribute on either one also set it on the other
 
 ## [2.9.1] - 2026-08-09
 
