@@ -11,14 +11,22 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Added `Cursor::matchInPlace()`, which matches a regular expression at the cursor's position within the line using PCRE's native offset semantics instead of copying the remainder (#1145)
     - `\G` anchors at the cursor, `^` anchors at the start of the line, and lookbehinds and `\b` see the characters actually preceding the cursor; this keeps scanning loops linear and enables left-context assertions that `match()` cannot express
 - Added `RegexHelper::PARTIAL_LINK_TITLE_UNANCHORED` and `RegexHelper::PARTIAL_LINK_DESTINATION_BRACES`, unanchored fragments so each call site can supply its own anchor
+- Added a `default_attributes` configuration format which pairs the node attribute map with a new `strict_callables` option:  `['default_attributes' => ['attributes' => [...], 'strict_callables' => true]]`.  With `strict_callables` enabled, only closures and invokable objects are treated as callbacks, so strings and arrays are always used as literal attribute values.  Callbacks written as string or array callables can be wrapped with `Closure::fromCallable()`.  The original format - passing the node map directly - is still accepted, and defaults `strict_callables` to `false`.
 
 ### Changed
 - Changed the `TableOfContents` extension to render the table of contents once and share it across all placeholders instead of cloning it into each one (#1134)
     - A custom renderer registered for the `TableOfContents` node is no longer called once per placeholder, so it must return the same markup each time it is called for a given document (#1134)
     - The first placeholder receives the table of contents itself, so a document still contains a `TableOfContents` node for listeners which locate and reposition it (#1143)
+- `$environment->getConfiguration()->get('default_attributes')` now returns the normalized structure with `attributes` and `strict_callables` keys instead of the node map; read `default_attributes/attributes` to get the map.  Configuration written in either format continues to work unchanged.
 
 ### Deprecated
 - Deprecated `RegexHelper::PARTIAL_LINK_TITLE` and `RegexHelper::REGEX_LINK_DESTINATION_BRACES`; use the unanchored variants with an explicit anchor instead
+- Deprecated the `default_attributes` `strict_callables` option, which will be removed in 3.0 when only closures and invokable objects will ever be treated as callbacks.
+
+### Fixed
+- Fixed `default_attributes` values which happen to match the name of a PHP function - such as `'class' => 'link'`, `'header'`, `'key'`, `'range'`, or `'current'` - being invoked as callbacks, producing errors like `link() expects exactly 2 arguments, 1 given`.  Enable `strict_callables` to treat strings and arrays as literal attribute values (#1123)
+- Fixed the `DefaultAttributesExtension` re-testing every configured value with `is_callable()` once per matching node, which asked the autoloader whether the first element of each array value named a real class every single time
+- Fixed a `default_attributes` value which PHP treats as callable reporting its failure from inside whichever function it collided with; the error now names the attribute and node class responsible, and keeps the original error as its previous exception
 
 ## [2.9.2] - 2026-08-10
 
