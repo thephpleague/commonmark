@@ -212,6 +212,15 @@ class Cursor
         // byte, the character index and byte offset advance together.
         $byteOffset = $this->isMultibyte ? $this->byteOffset($this->currentPosition) : $this->currentPosition;
 
+        // Past the last tab (or on a line with none) every whitespace character is a space worth
+        // exactly one column, so the run length is both the character count and the indent, and
+        // strspn() can measure it in one call instead of a per-character loop.
+        if ($this->lastTabPosition === false || $this->currentPosition > $this->lastTabPosition) {
+            $this->indent = \strspn($this->line, ' ', $byteOffset);
+
+            return $this->nextNonSpaceCache = $this->currentPosition + $this->indent;
+        }
+
         for ($i = $this->currentPosition; $i < $this->length; $i++, $byteOffset++) {
             $c = $this->line[$byteOffset];
 
