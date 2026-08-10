@@ -78,7 +78,7 @@ final class NormalizeHeadingsExtensionTest extends AbstractLocalDataTestCase
         $expected = '<ul class="table-of-contents">
 <li><a href="#content-clamped-heading">Clamped Heading</a></li>
 </ul>
-<h2><a id="content-clamped-heading" href="#content-clamped-heading" class="heading-permalink" aria-hidden="true" title="Permalink">¶</a>Clamped Heading</h2>';
+<h2><a id="content-clamped-heading" href="#content-clamped-heading" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">¶</a>Clamped Heading</h2>';
 
         $this->assertSame($expected, \trim((string) $converter->convert($input)));
     }
