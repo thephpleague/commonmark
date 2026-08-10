@@ -455,6 +455,20 @@ final class RegexHelperTest extends TestCase
         ];
     }
 
+    /**
+     * These public constants are now composed from internal unanchored fragments (which the
+     * cursor-based call sites anchor with "\G" instead). The public values are part of the BC
+     * surface and must not change before 3.0, so pin them to their exact historical values.
+     */
+    public function testAnchoredConstantsKeepTheirHistoricalValues(): void
+    {
+        $this->assertSame(
+            '^(?:"(\\\\[!"#$%&\'()*+,.\\/:;<=>?@[\\\\\\]^_`{|}~-]|[^"\\x00])*+"|\'(\\\\[!"#$%&\'()*+,.\\/:;<=>?@[\\\\\\]^_`{|}~-]|[^\'\\x00])*+\'|\\((\\\\[!"#$%&\'()*+,.\\/:;<=>?@[\\\\\\]^_`{|}~-]|[^()\\x00])*+\\))',
+            RegexHelper::PARTIAL_LINK_TITLE
+        );
+        $this->assertSame('/^(?:<(?:[^<>\\n\\\\\\x00]|\\\\.)*>)/', RegexHelper::REGEX_LINK_DESTINATION_BRACES);
+    }
+
     private function assertRegexMatches(string $pattern, string $string, string $message = ''): void
     {
         if (\method_exists($this, 'assertMatchesRegularExpression')) {

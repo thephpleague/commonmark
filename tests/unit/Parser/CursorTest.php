@@ -595,6 +595,148 @@ final class CursorTest extends TestCase
     }
 
     /**
+     * @dataProvider dataForTestMatchAnchoring
+     */
+    #[DataProvider('dataForTestMatchAnchoring')]
+    public function testMatchTreatsTheCursorAsTheStartOfTheSubject(string $string, string $regex, int $initialPosition, int $expectedPosition, ?string $expectedResult): void
+    {
+        $cursor = new Cursor($string);
+        $cursor->advanceBy($initialPosition);
+
+        $this->assertSame($expectedResult, $cursor->match($regex));
+        $this->assertSame($expectedPosition, $cursor->getPosition());
+    }
+
+    /**
+     * match()'s subject begins at the cursor, so anything that inspects what precedes the match
+     * start must see the start of a subject there - never the actual preceding characters - and
+     * every flavor of subject-start anchor must anchor at the cursor. Every case below sits at a
+     * non-zero position; none of the in-tree patterns exercises these constructs, so nothing
+     * else would catch a divergence.
+     *
+     * @return iterable<array<mixed>>
+     */
+    public static function dataForTestMatchAnchoring(): iterable
+    {
+        return [
+            'leading caret'              => ['abcdef', '/^bc/', 1, 3, 'bc'],
+            'caret inside a group'       => ['abcdef', '/(?:^)bc/', 1, 3, 'bc'],
+            'caret after an inline flag' => ['abcdef', '/(?i)^bc/', 1, 3, 'bc'],
+            'caret in a character class' => ['abcdef', '/^[^x]c?/', 1, 3, 'bc'],
+            'caret in an alternation'    => ['abcdef', '/^zz|^bc/', 1, 3, 'bc'],
+            'caret after a zero-width escape' => ['abcdef', '/\G^bc/', 1, 3, 'bc'],
+            'bracket-style delimiters'   => ['abcdef', '[^bc]', 1, 3, 'bc'],
+            'word boundary'              => ['abcdef', '/\bbc/', 1, 3, 'bc'],
+            'word boundary after leading caret' => ['foobar', '/^\b\w+/', 3, 6, 'bar'],
+            'word non-boundary'          => ['abcdef', '/\Bbc/', 1, 1, null],
+            'word boundary mid-word'     => ['aaa bbb', '/\b\w+/', 2, 3, 'a'],
+            'negative lookbehind'        => ['abcdef', '/(?<![a-z])bc/', 1, 3, 'bc'],
+            'positive lookbehind'        => ['abcdef', '/(?<=a)bc/', 1, 1, null],
+            'subject anchor'             => ['abcdef', '/\Abc/', 1, 3, 'bc'],
+            'named group'                => ['abcdef', '/^(?<n>bc)/', 1, 3, 'bc'],
+            'leading caret, multiline'   => ["ab\ncd", '/^cd/m', 1, 5, 'cd'],
+            'leading caret, multiline, from position zero' => ["ab\ncd", '/^cd/m', 0, 5, 'cd'],
+            'unanchored, multiline'      => ['abcdef', '/c{1,3}/m', 1, 3, 'c'],
+            'multibyte leading caret'    => ['Это тест', '/^то/u', 1, 3, 'то'],
+            'multibyte word boundary'    => ['Это тест', '/\bтест/u', 1, 8, 'тест'],
+            'multibyte subject anchor'   => ['ёxyz', '/\Axyz/u', 1, 4, 'xyz'],
+            'match spanning a tab'       => ["a\tbcd", '/\A\tbc/', 1, 4, "\tbc"],
+            'tab mid-match'              => ["ab\tcd", '/\Ab\tc/', 1, 4, "b\tc"],
+            'x-mode comment hiding a bracket'   => ['xbarz', "/#[\n^bar|]/x", 1, 4, 'bar'],
+            'inline comment hiding a bracket'   => ['xbarz', '/(?#[)^bar|]/', 1, 4, 'bar'],
+            'quoted text resembling a class'    => ['xbc]', '/\Q[\E|^bc]/', 1, 4, 'bc]'],
+        ];
+    }
+
+    /**
+     * "\G" anchors at the cursor under both contracts - match()'s detached subject and
+     * matchInPlace()'s in-place matching - so cursor-anchored (and purely forward-looking)
+     * patterns must behave identically through either method.
+     *
+     * @dataProvider dataForTestMatchInPlace
+     */
+    #[DataProvider('dataForTestMatchInPlace')]
+    public function testMatchInPlaceMatchesLikeMatchForCursorAnchoredPatterns(string $string, string $regex, int $initialPosition, int $expectedPosition, ?string $expectedResult): void
+    {
+        $cursor = new Cursor($string);
+        $cursor->advanceBy($initialPosition);
+
+        $this->assertSame($expectedResult, $cursor->matchInPlace($regex));
+        $this->assertSame($expectedPosition, $cursor->getPosition());
+
+        $viaRemainder = new Cursor($string);
+        $viaRemainder->advanceBy($initialPosition);
+
+        $this->assertSame($expectedResult, $viaRemainder->match($regex));
+        $this->assertSame($expectedPosition, $viaRemainder->getPosition());
+    }
+
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public static function dataForTestMatchInPlace(): iterable
+    {
+        return [
+            'cursor anchor'             => ['abcdef', '/\Gbc/', 1, 3, 'bc'],
+            'cursor anchor, no match'   => ['abcdef', '/\Gzz/', 1, 1, null],
+            'caret in a character class' => ['x[foo]', '/\G\[(?:[^\\\\\[\]]|\\\\.){0,1000}\]/', 1, 6, '[foo]'],
+            'class ] and ^ literals'    => ['xa^b', '/\G[\]^_]/', 2, 3, '^'],
+            'end anchor'                => ['ab***', '/\G(?:\*[ \t]*){3,}$/', 2, 5, '***'],
+            'lookahead'                 => ['  ```php', '/\G[ \t]*(?:`{3,}+(?!.*`)|~{3,})/', 0, 5, '  ```'],
+            'unanchored scan ahead'     => ['a `` b', '/`{1,40}/m', 1, 4, '``'],
+            'unanchored, empty match'   => ['abc', '/z?/', 1, 1, ''],
+            'multibyte cursor anchor'   => ['Это тест', '/\Gто/u', 1, 3, 'то'],
+            'multibyte scan ahead'      => ['и `` б', '/`{1,40}/m', 1, 4, '``'],
+        ];
+    }
+
+    /**
+     * matchInPlace() uses PCRE's native offset semantics: the whole line is the subject and
+     * matching starts at the cursor, so "^" and "\A" anchor at the true start of the line and
+     * lookbehinds and "\b" see the characters actually preceding the cursor. (These are the very
+     * constructs whose meaning differs from match() - compare dataForTestMatchAnchoring.)
+     *
+     * @dataProvider dataForTestMatchInPlaceEngineNativeSemantics
+     */
+    #[DataProvider('dataForTestMatchInPlaceEngineNativeSemantics')]
+    public function testMatchInPlaceTreatsTheCursorAsAPositionWithinTheLine(string $string, string $regex, int $initialPosition, int $expectedPosition, ?string $expectedResult): void
+    {
+        $cursor = new Cursor($string);
+        $cursor->advanceBy($initialPosition);
+
+        $this->assertSame($expectedResult, $cursor->matchInPlace($regex));
+        $this->assertSame($expectedPosition, $cursor->getPosition());
+    }
+
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public static function dataForTestMatchInPlaceEngineNativeSemantics(): iterable
+    {
+        return [
+            'caret means start of line'          => ['abcdef', '/^bc/', 1, 1, null],
+            'subject anchor means start of line' => ['abcdef', '/\Abc/', 1, 1, null],
+            'caret under /m matches line starts' => ["ab\ncd", '/^cd/m', 1, 5, 'cd'],
+            'word boundary sees preceding char'  => ['foobar', '/\G\b\w+/', 3, 3, null],
+            'lookbehind sees preceding char'     => ['abcdef', '/(?<=a)bc/', 1, 3, 'bc'],
+        ];
+    }
+
+    /**
+     * A partially-consumed tab has no byte-offset representation, so matchInPlace() must fall
+     * back to remainder matching, where the leftover tab appears as its expanded spaces and
+     * "\G" still anchors at the cursor.
+     */
+    public function testMatchInPlaceWithPartiallyConsumedTab(): void
+    {
+        $cursor = new Cursor("\tfoo");
+        $cursor->advanceBy(1, true);
+
+        $this->assertSame('   f', $cursor->matchInPlace('/\G +f/'));
+        $this->assertSame(2, $cursor->getPosition());
+    }
+
+    /**
      * @dataProvider dataForTestGetSubstring
      */
     #[DataProvider('dataForTestGetSubstring')]

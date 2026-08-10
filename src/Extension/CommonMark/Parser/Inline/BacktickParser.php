@@ -110,7 +110,7 @@ final class BacktickParser implements InlineParserInterface
             return false;
         }
 
-        while ($ticks = $cursor->match('/`{1,' . self::MAX_BACKTICKS . '}/m')) {
+        while ($ticks = $cursor->matchInPlace('/`{1,' . self::MAX_BACKTICKS . '}/m')) {
             $numTicks = \strlen($ticks);
 
             // Did we find the closer?
