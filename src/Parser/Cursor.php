@@ -170,6 +170,10 @@ class Cursor
      * Return the single multibyte character at $index, caching the sliced string so
      * repeated reads of the same position (common during delimiter scanning) don't
      * re-slice. Callers must ensure 0 <= $index < $length.
+     *
+     * Only call this when $isMultibyte is true. On a single-byte line the character is
+     * already reachable as $this->line[$index], which costs less than the byte-offset
+     * translation below; every caller guards on that flag for exactly that reason.
      */
     private function charAt(int $index): string
     {
