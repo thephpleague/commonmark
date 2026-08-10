@@ -179,7 +179,13 @@ class Cursor
 
         $startByte = $this->byteOffset($index);
 
-        return $this->charCache[$index] = \substr($this->line, $startByte, $this->byteOffset($index + 1) - $startByte);
+        // The line is known to be valid UTF-8 (the constructor rejects anything else), so the
+        // lead byte alone gives the character's width. Deriving it here avoids a second
+        // byteOffset() walk just to locate where the next character begins.
+        $lead  = \ord($this->line[$startByte]);
+        $width = $lead < 0x80 ? 1 : ($lead < 0xE0 ? 2 : ($lead < 0xF0 ? 3 : 4));
+
+        return $this->charCache[$index] = \substr($this->line, $startByte, $width);
     }
 
     /**
