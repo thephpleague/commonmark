@@ -441,6 +441,20 @@ $cases = [
         'input' => static fn($n) => \str_repeat(\str_repeat('a', 63) . '" ', $n),
         'expected' => static fn($n) => '<p>' . \str_repeat(\str_repeat('a', 63) . "\u{201C} ", $n - 1) . \str_repeat('a', 63) . "\u{201C}</p>",
     ],
+    'Many attributes in one list' => [
+        // Sized just below the ~2,400-attribute boundary where the list exhausts pcre.backtrack_limit.
+        'extension' => 'attributes',
+        'sizes' => [500, 1_000, 2_000],
+        'input' => static fn($n) => '{' . \str_repeat('#a ', $n) . "}\nx",
+        'expected' => static fn($n) => '<p id="a">x</p>',
+    ],
+    'Oversized attribute list' => [
+        // Beyond that boundary the list must degrade quickly into a literal paragraph.
+        'extension' => 'attributes',
+        'sizes' => [20_000, 80_000],
+        'input' => static fn($n) => '{' . \str_repeat('#a ', $n) . "}\nx",
+        'expected' => static fn($n) => '<p>{' . \str_repeat('#a ', $n - 1) . "#a }\nx</p>",
+    ],
     'Adjacent inline attributes at start of block' => [
         'extension' => 'attributes',
         'sizes' => [1_000, 4_000, 16_000],
