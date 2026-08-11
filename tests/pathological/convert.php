@@ -22,6 +22,7 @@ use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\Highlight\HighlightExtension;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
 use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\MarkdownConverter;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
@@ -69,6 +70,10 @@ switch ($argv[2] ?? null) {
         break;
     case 'smartpunct':
         $environment->addExtension(new SmartPunctExtension());
+        break;
+    case 'table-of-contents':
+        $environment->addExtension(new HeadingPermalinkExtension());
+        $environment->addExtension(new TableOfContentsExtension());
         break;
     case 'gfm':
     default:

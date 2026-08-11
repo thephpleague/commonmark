@@ -425,6 +425,23 @@ $cases = [
         'sizes' => [1_000, 4_000, 16_000],
         'input' => static fn($n) => \str_repeat("# a\n\n", $n),
     ],
+    'Table of contents placeholders' => [
+        'ref' => 'https://github.com/thephpleague/commonmark/pull/1134',
+        // The entry cap is load-bearing: every placeholder legitimately renders its own copy of
+        // the table of contents, so with headings and placeholders both proportional to n the
+        // uncapped output is quadratic no matter how efficiently each copy is produced. The cap
+        // bounds the copies, so both time and output must stay linear in the input.
+        'extension' => 'table-of-contents',
+        'configuration' => [
+            'table_of_contents' => [
+                'position' => 'placeholder',
+                'placeholder' => '[TOC]',
+                'max_placeholder_entries' => 50_000,
+            ],
+        ],
+        'sizes' => [1_000, 4_000, 16_000],
+        'input' => static fn($n) => \str_repeat("# a\n\n", $n) . \str_repeat("[TOC]\n\n", $n),
+    ],
     'Duplicate inline footnote labels' => [
         'extension' => 'footnotes',
         'sizes' => [1_000, 4_000, 16_000],
