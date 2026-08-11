@@ -214,6 +214,15 @@ $cases = [
         'sizes' => [500, 1_000, 2_000, 4_000],
         'input' => static fn($n) => \implode('', \array_map(static fn($i) => 'e' . \str_repeat('`', $i), \range(1, $n))),
     ],
+    'Unclosable backtick opener followed by many runs' => [
+        // The leading two-backtick run can never be closed by any of the one-backtick runs that
+        // follow, so locating its closer has to walk every one of them. Unlike 'Backticks' above,
+        // whose input size grows much faster than its run count and so cannot be scaled far, this
+        // one stays linear in size, which is what makes the per-run cost visible: it times out if
+        // the closer scan ever copies the remainder per call instead of matching in place.
+        'sizes' => [25_000, 100_000, 400_000],
+        'input' => static fn($n) => '`` ' . \str_repeat('`a ', $n),
+    ],
     'Backtick fence with a backtick in the info string' => [
         'extension' => 'commonmark',
         'sizes' => [10_000, 40_000, 160_000],
@@ -431,6 +440,20 @@ $cases = [
         'sizes' => [4_000, 16_000, 64_000],
         'input' => static fn($n) => \str_repeat(\str_repeat('a', 63) . '" ', $n),
         'expected' => static fn($n) => '<p>' . \str_repeat(\str_repeat('a', 63) . "\u{201C} ", $n - 1) . \str_repeat('a', 63) . "\u{201C}</p>",
+    ],
+    'Many attributes in one list' => [
+        // Sized just below the ~2,400-attribute boundary where the list exhausts pcre.backtrack_limit.
+        'extension' => 'attributes',
+        'sizes' => [500, 1_000, 2_000],
+        'input' => static fn($n) => '{' . \str_repeat('#a ', $n) . "}\nx",
+        'expected' => static fn($n) => '<p id="a">x</p>',
+    ],
+    'Oversized attribute list' => [
+        // Beyond that boundary the list must degrade quickly into a literal paragraph.
+        'extension' => 'attributes',
+        'sizes' => [20_000, 80_000],
+        'input' => static fn($n) => '{' . \str_repeat('#a ', $n) . "}\nx",
+        'expected' => static fn($n) => '<p>{' . \str_repeat('#a ', $n - 1) . "#a }\nx</p>",
     ],
     'Adjacent inline attributes at start of block' => [
         'extension' => 'attributes',

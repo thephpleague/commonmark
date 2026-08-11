@@ -538,7 +538,12 @@ class Cursor
     }
 
     /**
-     * Try to match a regular expression
+     * Try to match a regular expression against the remainder of the line
+     *
+     * The subject begins at the cursor: text before the cursor is invisible to the pattern,
+     * so "^" and "\A" anchor at the cursor, and constructs which examine what precedes the
+     * match position (lookbehinds, "\b", "\B") see the start of a subject there rather than
+     * the characters actually preceding the cursor.
      *
      * Returns the matching text and advances to the end of that match
      *
@@ -546,23 +551,73 @@ class Cursor
      */
     public function match(string $regex): ?string
     {
-        // When a tab has been partially consumed the remainder is reconstructed with the
-        // leftover tab expanded into spaces, so matching must run against that reconstructed
-        // string rather than the raw line. This is rare; use the copy-based path to preserve
-        // the exact column arithmetic.
-        if ($this->partiallyConsumedTab) {
-            return $this->matchViaRemainder($regex);
+        $subject = $this->getRemainder();
+
+        if (! \preg_match($regex, $subject, $matches, \PREG_OFFSET_CAPTURE)) {
+            return null;
         }
 
-        // Match against the persistent line at the current byte offset instead of allocating a
-        // fresh copy of the remainder on every call. A leading "^" is rewritten to "\G" so the
-        // pattern still anchors to the cursor - a bare "^" only matches at the true start of the
-        // subject when a non-zero offset is supplied. Patterns that intentionally scan ahead
-        // (e.g. the backtick closer search) carry no leading "^" and are left untouched. This
-        // keeps repeated match() calls - such as that backtick scan - linear rather than O(n^2),
-        // since each call no longer copies the entire remaining line.
-        if ($regex[1] === '^') {
-            $regex = $regex[0] . '\\G' . \substr($regex, 2);
+        // $matches[0][0] contains the matched text; $matches[0][1] is its byte offset in the subject.
+        if ($this->isMultibyte) {
+            $offset      = \mb_strlen(\substr($subject, 0, $matches[0][1]), 'UTF-8');
+            $matchLength = \mb_strlen($matches[0][0], 'UTF-8');
+        } else {
+            $offset      = $matches[0][1];
+            $matchLength = \strlen($matches[0][0]);
+        }
+
+        $advance = $offset + $matchLength;
+
+        // The remainder we matched against had any partially-consumed tab expanded into spaces,
+        // so those columns must be advanced by column instead of by character.
+        if ($this->partiallyConsumedTab) {
+            $charsToTab = 4 - ($this->column % 4);
+            if ($advance < $charsToTab) {
+                $this->advanceBy($advance, true);
+
+                return $matches[0][0];
+            }
+
+            $this->advanceBy($charsToTab, true);
+            $advance -= $charsToTab;
+        }
+
+        $this->advanceBy($advance);
+
+        return $matches[0][0];
+    }
+
+    /**
+     * Try to match a regular expression at the cursor's position within the line, without
+     * copying the remainder
+     *
+     * Matches with PCRE's native offset semantics: the whole line is the subject, and matching
+     * starts at the cursor. "\G" anchors at the cursor; "^" anchors at the true start of the
+     * line (or after newlines under the "m" modifier); lookbehinds, "\b", and "\B" see the
+     * characters actually preceding the cursor. This differs from match(), whose subject begins
+     * at the cursor - a pattern written for match() migrates by replacing its leading "^" (or
+     * "\A") with "\G".
+     *
+     * Because no copy of the remainder is made, repeated calls stay linear: match() copies
+     * everything left in the line on every call, so scanning loops (such as the backtick closer
+     * search) would otherwise cost O(n^2).
+     *
+     * When a tab has been partially consumed, no position within the line can represent the
+     * cursor, so this falls back to matching the remainder with the leftover tab expanded into
+     * spaces; "\G" still anchors at the cursor there, but the line content before it is not
+     * visible in that case.
+     *
+     * @internal Planned to become public API in 2.10; until then the name and contract may
+     *           change without notice.
+     *
+     * @psalm-param non-empty-string $regex
+     */
+    public function matchInPlace(string $regex): ?string
+    {
+        // A partially-consumed tab means the remainder differs from the underlying line (the
+        // leftover tab expands into spaces), so no byte offset can represent the cursor.
+        if ($this->partiallyConsumedTab) {
+            return $this->match($regex);
         }
 
         $bytePosition = $this->isMultibyte ? $this->byteOffset($this->currentPosition) : $this->currentPosition;
@@ -584,48 +639,6 @@ class Cursor
         }
 
         $this->advanceBy($offset + $matchLength);
-
-        return $matches[0][0];
-    }
-
-    /**
-     * Slow path for match() used only when a tab has been partially consumed: match against a
-     * freshly-built remainder whose leftover tab is expanded into spaces, advancing by columns
-     * across that expansion. Kept separate so the common case avoids the remainder allocation.
-     *
-     * @psalm-param non-empty-string $regex
-     */
-    private function matchViaRemainder(string $regex): ?string
-    {
-        $subject = $this->getRemainder();
-
-        if (! \preg_match($regex, $subject, $matches, \PREG_OFFSET_CAPTURE)) {
-            return null;
-        }
-
-        if ($this->isMultibyte) {
-            $offset      = \mb_strlen(\substr($subject, 0, $matches[0][1]), 'UTF-8');
-            $matchLength = \mb_strlen($matches[0][0], 'UTF-8');
-        } else {
-            $offset      = $matches[0][1];
-            $matchLength = \strlen($matches[0][0]);
-        }
-
-        $advance = $offset + $matchLength;
-
-        // The remainder we matched against had the partially-consumed tab expanded into spaces,
-        // so those columns must be advanced by column instead of by character.
-        $charsToTab = 4 - ($this->column % 4);
-        if ($advance < $charsToTab) {
-            $this->advanceBy($advance, true);
-
-            return $matches[0][0];
-        }
-
-        $this->advanceBy($charsToTab, true);
-        $advance -= $charsToTab;
-
-        $this->advanceBy($advance);
 
         return $matches[0][0];
     }

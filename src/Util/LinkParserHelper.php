@@ -46,7 +46,7 @@ final class LinkParserHelper
 
     public static function parseLinkLabel(Cursor $cursor): int
     {
-        $match = $cursor->match('/^\[(?:[^\\\\\[\]]|\\\\.){0,1000}\]/');
+        $match = $cursor->matchInPlace('/\G\[(?:[^\\\\\[\]]|\\\\.){0,1000}\]/');
         if ($match === null) {
             return 0;
         }
@@ -62,7 +62,7 @@ final class LinkParserHelper
 
     public static function parsePartialLinkLabel(Cursor $cursor): ?string
     {
-        return $cursor->match('/^(?:[^\\\\\[\]]++|\\\\.?)*+/');
+        return $cursor->matchInPlace('/\G(?:[^\\\\\[\]]++|\\\\.?)*+/');
     }
 
     /**
@@ -72,7 +72,7 @@ final class LinkParserHelper
      */
     public static function parseLinkTitle(Cursor $cursor): ?string
     {
-        if ($title = $cursor->match('/' . RegexHelper::PARTIAL_LINK_TITLE . '/')) {
+        if ($title = $cursor->matchInPlace('/\G' . RegexHelper::PARTIAL_LINK_TITLE_UNANCHORED . '/')) {
             // Chop off quotes from title and unescape
             return RegexHelper::unescape(\substr($title, 1, -1));
         }
@@ -84,7 +84,7 @@ final class LinkParserHelper
     {
         $endDelimiter = \preg_quote($endDelimiter, '/');
         $regex        = \sprintf('/(%s|[^%s\x00])*(?:%s)?/', RegexHelper::PARTIAL_ESCAPED_CHAR, $endDelimiter, $endDelimiter);
-        if (($partialTitle = $cursor->match($regex)) === null) {
+        if (($partialTitle = $cursor->matchInPlace($regex)) === null) {
             return null;
         }
 
@@ -156,7 +156,7 @@ final class LinkParserHelper
             self::$lastCursor = \WeakReference::create($cursor);
         }
 
-        if ($res = $cursor->match(RegexHelper::REGEX_LINK_DESTINATION_BRACES)) {
+        if ($res = $cursor->matchInPlace('/\G' . RegexHelper::PARTIAL_LINK_DESTINATION_BRACES . '/')) {
             self::$lastCursorLacksClosingBrace = false;
 
             // Chop off surrounding <..>:
