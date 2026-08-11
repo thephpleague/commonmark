@@ -57,7 +57,8 @@ You can then call any of the following methods to parse the string within that `
 | `advanceToNextNonSpaceOrTab()`     | Advances forward past all spaces and tabs found, returning the number of such characters found                                  |
 | `advanceToNextNonSpaceOrNewline()` | Advances forward past all spaces and newlines found, returning the number of such characters found                              |
 | `advanceToEnd()`                   | Advances the position to the very end of the string, returning the number of such characters passed                             |
-| `match(string $regex)`             | Attempts to match the given `$regex`; returns `null` if matching fails, otherwise it advances past and returns the matched text |
+| `match(string $regex)`             | Attempts to match the given `$regex` against the remainder; returns `null` if matching fails, otherwise it advances past and returns the matched text |
+| `matchInPlace(string $regex)`      | Like `match()`, but matches at the cursor's position within the whole line instead of copying the remainder; see below          |
 | `getPreviousText()`                | Returns the text that was just advanced through during the last `advance__()` or `match()` operation                            |
 | `getRemainder()`                   | Returns the contents of the string from the current position through the end of the string                                      |
 | `isBlank()`                        | Returns whether the remainder is blank (we're at the end or only space characters remain)                                       |
@@ -65,3 +66,24 @@ You can then call any of the following methods to parse the string within that `
 | `saveState()`                      | Encapsulates the current state of the cursor into an `array` in case you need to `restoreState()` later                         |
 | `restoreState($state)`             | Pass the result of `saveState()` back into here to restore the original state of the `Cursor`                                   |
 | `getLine()`                        | Returns the entire string (not taking the position into account)                                                                |
+
+## Regular Expression Matching
+
+The `Cursor` offers two ways to match a regular expression at the current position.  They differ in what the pattern is matched against:
+
+- **`match()`** copies the remainder and matches against that copy, so the subject begins at the cursor.  `^` and `\A` anchor at the cursor, and constructs which examine what precedes the match position (lookbehinds, `\b`) see the start of the subject there — never the actual preceding characters.
+- **`matchInPlace()`** (available since 2.10) matches against the whole line starting at the cursor's position, using PCRE's native offset semantics.  `\G` anchors at the cursor, `^` means the start of the line, and lookbehinds and `\b` see the characters actually preceding the cursor.
+
+`matchInPlace()` has two advantages:
+
+- It avoids copying the remainder, so repeated calls (such as a scanning loop) stay fast instead of paying for a copy of everything left in the line on every call.
+- Because the text before the cursor stays visible to the pattern, it can answer contextual questions `match()` cannot — for example, `/(?<!\w)@\w+/` only matching a mention when the preceding character isn't a word character.
+
+One exception: when the cursor has partially consumed a tab, no position within the line can represent it, so `matchInPlace()` falls back to matching a copy of the remainder with the leftover tab expanded into spaces.  `\G` still anchors at the cursor there, but the text before the cursor is not visible to the pattern in that state.
+
+To migrate a pattern from `match()` to `matchInPlace()`, replace its leading `^` (or `\A`) with `\G`, and double-check that any `\b` or lookbehind still means what you want now that it can see the preceding text:
+
+```php
+$cursor->match('/^#+/');         // anchors at the cursor
+$cursor->matchInPlace('/\G#+/'); // equivalent, without copying the remainder
+```
