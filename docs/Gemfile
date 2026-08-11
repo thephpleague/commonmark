@@ -2,3 +2,7 @@ source 'https://rubygems.org'
 gem 'jekyll'
 gem 'jekyll-github-metadata'
 gem 'jekyll-redirect-from'
+
+# Faraday 2 unbundled its retry middleware, which Octokit (via jekyll-github-metadata)
+# expects when talking to the GitHub API.
+gem 'faraday-retry'
