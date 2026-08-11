@@ -118,7 +118,7 @@ Perhaps the page surrounding your rendered Markdown already uses certain HTML ID
 
 There are two different levers for avoiding this kind of collision:
 
-- The [`heading_permalink/id_prefix` option](/2.x/extensions/heading-permalinks/#id_prefix) prepends a prefix to **every** generated ID.  Its default value of `'content'` means generated IDs like `content-comments` can never collide with your page's own IDs - so if you keep that default, you're already protected and don't need this option.
+- The [`heading_permalink/id_prefix` option](/2.x/extensions/heading-permalinks/#id_prefix) prepends a prefix to **every** generated ID.  Its default value of `'content'` acts as a namespace: as long as nothing else on your page uses IDs starting with `content-`, generated IDs like `content-comments` cannot collide - so with the default prefix you typically don't need this option.
 - The `reserved` option protects only the **specific** slugs you list, leaving all other IDs clean and prefix-free.  This is useful when you've set `id_prefix` to an empty string because you want pretty anchors like `#introduction` instead of `#content-introduction`.
 
 The `reserved` option accepts a list of slugs that should be treated as if they were already used.  Any Markdown content that would normally generate one of these slugs will automatically receive an incremental numeric suffix instead, exactly as if a duplicate heading had appeared earlier in the document:
@@ -138,6 +138,6 @@ $config = [
 
 With this configuration, a `## Comments` heading would be given a slug of `comments-1` instead of `comments`, avoiding a collision with the page's own `id="comments"` element.
 
-Note that reserved slugs are compared against the final, normalized slug (before any `heading_permalink/id_prefix` is applied), so they should be listed in that same normalized form: `comments`, not `Comments!`.  This also means that if you do use an `id_prefix`, the prefix should not be included in the reserved entries.
+Note that reserved slugs are compared against the final, normalized slug (before any `heading_permalink/id_prefix` is applied), so they should be listed in that same normalized form: `comments`, not `Comments!`.  This also means that if you do use an `id_prefix`, the prefix should not be included in the reserved entries: if your page contains a prefixed ID like `content-comments` while using the default prefix, reserve the unprefixed slug instead: `'reserved' => ['comments']`.
 
 This option only applies when the `unique` option is enabled and the `instance` doesn't implement `UniqueSlugNormalizerInterface` itself.  (If you bring your own unique normalizer, honoring reserved slugs is up to your implementation.)
