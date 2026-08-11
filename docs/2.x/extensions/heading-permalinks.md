@@ -83,6 +83,8 @@ The value of this nested configuration option should be a `string` that you want
 
 This should be a `string` you want prepended to HTML IDs.  This prevents generating HTML ID attributes which might conflict with others in your stylesheet.  A dash separator (`-`) will be added between the prefix and the ID.  You can instead set this to an empty string (`''`) if you don't want a prefix.
 
+Note that removing the prefix means a heading like `## Comments` will generate the ID `comments`, which could collide with an existing `id="comments"` element elsewhere on your page.  If you only need to protect a handful of known IDs like that, the [`slug_normalizer/reserved` option](/2.x/customization/slug-normalizer/#reserved) is a more surgical lever for the same problem: it suffixes just the conflicting slugs while every other ID stays clean and prefix-free.
+
 ### `apply_id_to_heading`
 
 If this value is `true`, the `id` attributes will be written to the `<h>` tag instead of the `<a>`.

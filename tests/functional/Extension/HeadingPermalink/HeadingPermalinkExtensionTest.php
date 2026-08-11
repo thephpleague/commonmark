@@ -51,6 +51,54 @@ final class HeadingPermalinkExtensionTest extends TestCase
         yield ["# Hello World!\n\n# Hello World!", \sprintf("<h1><a id=\"content-hello-world\" href=\"#content-hello-world\" class=\"heading-permalink\" aria-hidden=\"true\" tabindex=\"-1\" title=\"Permalink\">%s</a>Hello World!</h1>\n<h1><a id=\"content-hello-world-1\" href=\"#content-hello-world-1\" class=\"heading-permalink\" aria-hidden=\"true\" tabindex=\"-1\" title=\"Permalink\">%s</a>Hello World!</h1>", HeadingPermalinkRenderer::DEFAULT_SYMBOL, HeadingPermalinkRenderer::DEFAULT_SYMBOL)];
     }
 
+    public function testHeadingPermalinksWithReservedSlugs(): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'symbol' => '',
+                'id_prefix' => '',
+                'fragment_prefix' => '',
+            ],
+            'slug_normalizer' => [
+                'reserved' => ['comments', 'site-logo'],
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $input = "## Comments\n\n## Site Logo\n\n## Comments\n\n## Something Else";
+
+        $expected = <<<'HTML'
+<h2><a id="comments-1" href="#comments-1" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink"></a>Comments</h2>
+<h2><a id="site-logo-1" href="#site-logo-1" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink"></a>Site Logo</h2>
+<h2><a id="comments-2" href="#comments-2" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink"></a>Comments</h2>
+<h2><a id="something-else" href="#something-else" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink"></a>Something Else</h2>
+HTML;
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
+    public function testHeadingPermalinksWithReservedSlugsAndDefaultIdPrefix(): void
+    {
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'reserved' => ['comments'],
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        // Reserved slugs are matched before the 'content' id_prefix is applied, so the
+        // suffix appears even though the prefixed ID never collided with 'comments' itself.
+        $expected = \sprintf('<h2><a id="content-comments-1" href="#content-comments-1" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">%s</a>Comments</h2>', HeadingPermalinkRenderer::DEFAULT_SYMBOL);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert('## Comments')));
+    }
+
     /**
      * @dataProvider dataProviderForTestHeadingPermalinksWithCustomOptions
      */

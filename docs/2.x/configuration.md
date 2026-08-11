@@ -93,6 +93,7 @@ Here's a list of the core configuration options available:
   - `instance` - An alternative normalizer to use (defaults to the included `SlugNormalizer`)
   - `max_length` - Limits the size of generated slugs (defaults to 255 characters)
   - `unique` - Controls whether slugs should be unique per `'document'` (default) or per `'environment'`; can be disabled with `false`
+  - `reserved` - List of slugs which should be treated as if they were already used, so colliding content receives a numeric suffix instead (defaults to `[]`)
 
 Additional configuration options are available for most of the [available extensions](/2.x/customization/extensions/) - refer to their individual documentation for more details.  For example, the CommonMark core extension offers these additional options:
 
