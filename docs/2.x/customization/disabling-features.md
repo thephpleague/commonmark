@@ -12,7 +12,6 @@ redirect_from:
   - /2.5/customization/disabling-features/
   - /2.6/customization/disabling-features/
   - /2.7/customization/disabling-features/
-- /customization/disabling-features/
 ---
 
 # Disabling Features

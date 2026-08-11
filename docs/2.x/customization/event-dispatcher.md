@@ -12,8 +12,7 @@ redirect_from:
   - /2.5/customization/event-dispatcher/
   - /2.6/customization/event-dispatcher/
   - /2.7/customization/event-dispatcher/
-- /customization/document-processing/
-- /customization/event-dispatcher/
+  - /customization/document-processing/
 ---
 
 # Event Dispatcher
