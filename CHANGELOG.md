@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
     - `\G` anchors at the cursor, `^` anchors at the start of the line, and lookbehinds and `\b` see the characters actually preceding the cursor; this keeps scanning loops linear and enables left-context assertions that `match()` cannot express
 - Added `RegexHelper::PARTIAL_LINK_TITLE_UNANCHORED` and `RegexHelper::PARTIAL_LINK_DESTINATION_BRACES`, unanchored fragments so each call site can supply its own anchor
 - Added a `default_attributes` configuration format which pairs the node attribute map with a new `strict_callables` option:  `['default_attributes' => ['attributes' => [...], 'strict_callables' => true]]`.  With `strict_callables` enabled, only closures and invokable objects are treated as callbacks, so strings and arrays are always used as literal attribute values.  Callbacks written as string or array callables can be wrapped with `Closure::fromCallable()`.  The original format - passing the node map directly - is still accepted, and defaults `strict_callables` to `false`.
+- Added a new `slug_normalizer/reserved` option which treats the given slugs as already-used, so colliding headings receive an incremental numeric suffix just like duplicate headings do (#1080)
 
 ### Changed
 - Changed the `TableOfContents` extension to render the table of contents once and share it across all placeholders instead of cloning it into each one (#1134)
@@ -27,6 +28,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed `default_attributes` values which happen to match the name of a PHP function - such as `'class' => 'link'`, `'header'`, `'key'`, `'range'`, or `'current'` - being invoked as callbacks, producing errors like `link() expects exactly 2 arguments, 1 given`.  Enable `strict_callables` to treat strings and arrays as literal attribute values (#1123)
 - Fixed the `DefaultAttributesExtension` re-testing every configured value with `is_callable()` once per matching node, which asked the autoloader whether the first element of each array value named a real class every single time
 - Fixed a `default_attributes` value which PHP treats as callable reporting its failure from inside whichever function it collided with; the error now names the attribute and node class responsible, and keeps the original error as its previous exception
+- Fixed custom `UniqueSlugNormalizerInterface` implementations being wrapped by the built-in `UniqueSlugNormalizer` and never receiving the documented `clearHistory()` calls, which caused slug history to leak across documents when `slug_normalizer/unique` was set to `'document'` (#1080)
+    - Custom implementations are now trusted to enforce uniqueness themselves, per the interface contract; the extra deduplication layer the wrapper used to provide is no longer applied on top of them
 
 ## [2.9.2] - 2026-08-10
 

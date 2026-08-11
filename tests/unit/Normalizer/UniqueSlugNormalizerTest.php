@@ -68,6 +68,38 @@ final class UniqueSlugNormalizerTest extends TestCase
         $this->assertSame('-2', $normalizer->normalize(''));
     }
 
+    public function testReservedSlugsAreTreatedAsAlreadyUsed(): void
+    {
+        $normalizer = new UniqueSlugNormalizer(new SlugNormalizer(), ['test', 'example']);
+
+        $this->assertSame('test-1', $normalizer->normalize('test'));
+        $this->assertSame('test-2', $normalizer->normalize('test'));
+        $this->assertSame('example-1', $normalizer->normalize('example'));
+        $this->assertSame('other', $normalizer->normalize('other'));
+    }
+
+    public function testReservedSlugWithSuffixIsSkippedOver(): void
+    {
+        $normalizer = new UniqueSlugNormalizer(new SlugNormalizer(), ['test-1']);
+
+        $this->assertSame('test', $normalizer->normalize('test'));
+        $this->assertSame('test-2', $normalizer->normalize('test'));
+        $this->assertSame('test-1-1', $normalizer->normalize('test 1'));
+    }
+
+    public function testReservedSlugsSurviveClearHistory(): void
+    {
+        $normalizer = new UniqueSlugNormalizer(new SlugNormalizer(), ['test']);
+
+        $this->assertSame('test-1', $normalizer->normalize('test'));
+        $this->assertSame('test-2', $normalizer->normalize('test'));
+
+        $normalizer->clearHistory();
+
+        $this->assertSame('test-1', $normalizer->normalize('test'));
+        $this->assertSame('test-2', $normalizer->normalize('test'));
+    }
+
     public function testClearHistoryForgetsPreviouslyUsedSuffixes(): void
     {
         $normalizer = new UniqueSlugNormalizer(new SlugNormalizer());

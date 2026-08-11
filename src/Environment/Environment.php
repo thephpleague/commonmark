@@ -400,11 +400,13 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
             \assert($normalizer instanceof TextNormalizerInterface);
             $this->injectEnvironmentAndConfigurationIfNeeded($normalizer);
 
-            if ($this->config->get('slug_normalizer/unique') !== UniqueSlugNormalizerInterface::DISABLED && ! $normalizer instanceof UniqueSlugNormalizer) {
-                $normalizer = new UniqueSlugNormalizer($normalizer);
+            if ($this->config->get('slug_normalizer/unique') !== UniqueSlugNormalizerInterface::DISABLED && ! $normalizer instanceof UniqueSlugNormalizerInterface) {
+                /** @var string[] $reserved */
+                $reserved   = $this->config->get('slug_normalizer/reserved');
+                $normalizer = new UniqueSlugNormalizer($normalizer, $reserved);
             }
 
-            if ($normalizer instanceof UniqueSlugNormalizer) {
+            if ($normalizer instanceof UniqueSlugNormalizerInterface) {
                 if ($this->config->get('slug_normalizer/unique') === UniqueSlugNormalizerInterface::PER_DOCUMENT) {
                     $this->addEventListener(DocumentParsedEvent::class, [$normalizer, 'clearHistory'], -1000);
                 }
@@ -445,6 +447,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
                 'instance' => Expect::type(TextNormalizerInterface::class)->default(new SlugNormalizer()),
                 'max_length' => Expect::int()->min(0)->default(255),
                 'unique' => Expect::anyOf(UniqueSlugNormalizerInterface::DISABLED, UniqueSlugNormalizerInterface::PER_ENVIRONMENT, UniqueSlugNormalizerInterface::PER_DOCUMENT)->default(UniqueSlugNormalizerInterface::PER_DOCUMENT),
+                'reserved' => Expect::listOf('string')->default([]),
             ]),
         ]);
     }

@@ -27,7 +27,10 @@ use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
+use League\CommonMark\Normalizer\UniqueSlugNormalizer;
+use League\CommonMark\Normalizer\UniqueSlugNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Block\SkipLinesStartingWithLettersParser;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
@@ -558,6 +561,116 @@ final class EnvironmentTest extends TestCase
         $this->assertSame('foo-3', $normalizer->normalize('Foo'));
         $this->assertSame('foo-4', $normalizer->normalize('Foo'));
         $this->assertSame('foo-5', $normalizer->normalize('Foo'));
+    }
+
+    public function testUniqueSlugNormalizerWithReservedSlugs(): void
+    {
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'reserved' => ['foo'],
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo-1', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-2', $normalizer->normalize('Foo'));
+        $this->assertSame('bar', $normalizer->normalize('Bar'));
+
+        $environment->dispatch(new DocumentParsedEvent(new Document()));
+
+        $this->assertSame('foo-1', $normalizer->normalize('Foo'));
+        $this->assertSame('bar', $normalizer->normalize('Bar'));
+    }
+
+    public function testReservedSlugsAreIgnoredWhenUniquenessIsDisabled(): void
+    {
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'unique' => false,
+                'reserved' => ['foo'],
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+    }
+
+    public function testReservedSlugsAreIgnoredWhenCustomUniqueNormalizerIsProvided(): void
+    {
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'instance' => new UniqueSlugNormalizer(new SlugNormalizer()),
+                'reserved' => ['foo'],
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-1', $normalizer->normalize('Foo'));
+    }
+
+    public function testReservedSlugsPerEnvironment(): void
+    {
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'unique' => 'environment',
+                'reserved' => ['foo'],
+            ],
+        ]);
+
+        $normalizer = $environment->getSlugNormalizer();
+        $this->assertSame('foo-1', $normalizer->normalize('Foo'));
+        $this->assertSame('foo-2', $normalizer->normalize('Foo'));
+
+        $environment->dispatch(new DocumentParsedEvent(new Document()));
+
+        $this->assertSame('foo-3', $normalizer->normalize('Foo'));
+    }
+
+    public function testCustomUniqueSlugNormalizerIsNotWrapped(): void
+    {
+        $normalizer = $this->createMock(UniqueSlugNormalizerInterface::class);
+
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'instance' => $normalizer,
+            ],
+        ]);
+
+        $this->assertSame($normalizer, $environment->getSlugNormalizer());
+    }
+
+    public function testCustomUniqueSlugNormalizerHistoryIsClearedPerDocument(): void
+    {
+        $normalizer = $this->createMock(UniqueSlugNormalizerInterface::class);
+        $normalizer->expects($this->once())->method('clearHistory');
+
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'instance' => $normalizer,
+                'unique' => 'document',
+            ],
+        ]);
+
+        $environment->getSlugNormalizer();
+        $environment->dispatch(new DocumentParsedEvent(new Document()));
+    }
+
+    public function testCustomUniqueSlugNormalizerHistoryIsNotClearedPerEnvironment(): void
+    {
+        $normalizer = $this->createMock(UniqueSlugNormalizerInterface::class);
+        $normalizer->expects($this->never())->method('clearHistory');
+
+        $environment = new Environment([
+            'slug_normalizer' => [
+                'instance' => $normalizer,
+                'unique' => 'environment',
+            ],
+        ]);
+
+        $environment->getSlugNormalizer();
+        $environment->dispatch(new DocumentParsedEvent(new Document()));
     }
 
     /**

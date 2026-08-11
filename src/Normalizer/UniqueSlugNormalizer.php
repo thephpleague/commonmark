@@ -17,21 +17,40 @@ namespace League\CommonMark\Normalizer;
 final class UniqueSlugNormalizer implements UniqueSlugNormalizerInterface
 {
     private TextNormalizerInterface $innerNormalizer;
+
+    /**
+     * Slugs claimed by the surrounding page (in final, normalized form), seeded as if they'd
+     * already been handed out once, so the first colliding slug gets a "-1" suffix.
+     * Unlike regular history, these survive clearHistory().
+     *
+     * @var array<string, int>
+     */
+    private array $reserved = [];
+
     /**
      * Every slug we've handed out, mapped to the next numeric suffix to try for it
      *
      * @var array<string, int>
      */
-    private array $alreadyUsed = [];
+    private array $alreadyUsed;
 
-    public function __construct(TextNormalizerInterface $innerNormalizer)
+    /**
+     * @param iterable<string> $reservedSlugs
+     */
+    public function __construct(TextNormalizerInterface $innerNormalizer, iterable $reservedSlugs = [])
     {
         $this->innerNormalizer = $innerNormalizer;
+
+        foreach ($reservedSlugs as $slug) {
+            $this->reserved[$slug] = 1;
+        }
+
+        $this->alreadyUsed = $this->reserved;
     }
 
     public function clearHistory(): void
     {
-        $this->alreadyUsed = [];
+        $this->alreadyUsed = $this->reserved;
     }
 
     /**
