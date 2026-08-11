@@ -16,6 +16,64 @@ redirect_from:
 
 # Upgrading to Newer Versions
 
+## Upgrading from 2.9 to 2.10
+
+There are no breaking API changes when upgrading from 2.9 to 2.10, but two constants were deprecated and a few
+behaviors changed for integrations which hook into the affected extensions.
+
+### The Table of Contents Is Rendered Once Per Document
+
+In `placeholder` mode the table of contents is now rendered a single time and that one result is shared across every
+placeholder, instead of the whole subtree being cloned into each of them.  A custom renderer registered for the
+`TableOfContents` node is therefore no longer called once per placeholder, and must return the same markup each time it
+is called for a given document.  The first placeholder still receives the `TableOfContents` node itself, so listeners
+which locate and reposition that node continue to work.
+
+### Recommended: Bound Table of Contents Placeholders
+
+Every placeholder legitimately renders its own copy of the table of contents, so a document with many headings and many
+placeholders can produce output far larger than its input.  If you're parsing untrusted input in `placeholder` mode, we
+now recommend setting the new `table_of_contents/max_placeholder_entries` option, which bounds the total number of
+entries rendered across all of a document's placeholders; placeholders beyond that budget are left as-is.  It defaults
+to `null` (unlimited) for backward compatibility.
+
+### `default_attributes` Accepts a New Configuration Shape
+
+`default_attributes` still accepts the node attribute map on its own, and now also accepts that map paired with a new
+`strict_callables` option:
+
+```php
+$config = [
+    'default_attributes' => [
+        'attributes' => [Paragraph::class => ['class' => 'text']],
+        'strict_callables' => true,
+    ],
+];
+```
+
+With `strict_callables` enabled only closures and invokable objects are treated as callbacks, so strings and arrays are
+always used as literal attribute values.  This keeps a value which happens to share its name with a PHP function - such
+as `'class' => 'link'`, `'header'`, `'key'`, `'range'`, or `'current'` - from being invoked instead of used.  A callback
+written as a string or array callable can be wrapped with `Closure::fromCallable()`.
+
+Reading the option back has changed shape to match: `$environment->getConfiguration()->get('default_attributes')` now
+returns the normalized structure, so read `default_attributes/attributes` to get the node map.  The `strict_callables`
+option is itself deprecated, and will be removed in 3.0 when only closures and invokable objects will ever be treated
+as callbacks.
+
+### Custom Unique Slug Normalizers Are No Longer Wrapped
+
+A custom `UniqueSlugNormalizerInterface` implementation is now used directly rather than being wrapped by the built-in
+`UniqueSlugNormalizer`.  Such implementations now receive the `clearHistory()` calls the interface documents - without
+which slug history leaked between documents when `slug_normalizer/unique` was set to `'document'` - and are trusted to
+enforce uniqueness themselves, so the extra deduplication the wrapper applied on top of them is no longer performed.
+
+### Deprecated: Anchored `RegexHelper` Constants
+
+`RegexHelper::PARTIAL_LINK_TITLE` and `RegexHelper::REGEX_LINK_DESTINATION_BRACES` are deprecated.  Use the new
+unanchored `RegexHelper::PARTIAL_LINK_TITLE_UNANCHORED` and `RegexHelper::PARTIAL_LINK_DESTINATION_BRACES` fragments
+with an anchor of your own choosing instead.
+
 ## Upgrading from 2.8 to 2.9
 
 There are no breaking API changes when upgrading from 2.8 to 2.9, but several security fixes change the output of

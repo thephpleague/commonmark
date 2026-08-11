@@ -128,6 +128,14 @@ The `xml/max_indentation_level` option (default: `16`) caps how far elements are
 
 Note that `max_nesting_level` is *not* sufficient on its own here, as it only constrains how deeply **blocks** may nest - deeply-nested inlines (like `_______...`) can still produce a deep tree.
 
+## Table of Contents Placeholders
+
+This only applies if you're using the [Table of Contents extension](/2.x/extensions/table-of-contents/) with `'position' => 'placeholder'`.
+
+In placeholder mode every placeholder renders its own copy of the table of contents, so a document containing many headings *and* many placeholders repeats that whole list at each one.  A small input can therefore produce output many times its size.
+
+The `table_of_contents/max_placeholder_entries` option bounds the total number of entries rendered across all of a document's placeholders; any placeholder beyond that budget is left as-is.  It defaults to `null` (no limit) for backward compatibility, so setting an `int` is recommended when rendering untrusted input.
+
 ## Additional Filtering
 
 Although this library does offer these security features out-of-the-box, some users may opt to also run the HTML output through additional filtering layers (like HTMLPurifier).  If you do this, make sure you **thoroughly** test your additional post-processing steps and configure them to work properly with the types of HTML elements and attributes that converted Markdown might produce, otherwise, you may end up with weird behavior like missing images, broken links, mismatched HTML tags, etc.

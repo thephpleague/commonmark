@@ -116,7 +116,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.10-dev"
+            "dev-main": "2.11-dev"
         }
     },
     "config": {
