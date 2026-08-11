@@ -56,7 +56,7 @@ final class BacktickParser implements InlineParserInterface
         if ($this->findMatchingTicks(\strlen($ticks), $cursor)) {
             $code = $cursor->getSubstring($currentPosition, $cursor->getPosition() - $currentPosition - \strlen($ticks));
 
-            $c = \preg_replace('/\n/m', ' ', $code) ?? '';
+            $c = \preg_replace('/\n/', ' ', $code) ?? '';
 
             if (
                 $c !== '' &&
@@ -110,7 +110,7 @@ final class BacktickParser implements InlineParserInterface
             return false;
         }
 
-        while ($ticks = $cursor->match('/`{1,' . self::MAX_BACKTICKS . '}/m')) {
+        while ($ticks = $cursor->matchInPlace('/`{1,' . self::MAX_BACKTICKS . '}/')) {
             $numTicks = \strlen($ticks);
 
             // Did we find the closer?

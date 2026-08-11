@@ -24,7 +24,7 @@ use League\CommonMark\Util\RegexHelper;
 final class AttributesHelper
 {
     private const SINGLE_ATTRIBUTE = '\s*([.]-?[_a-z][^\s.}]*|[#][^\s}]+|' . RegexHelper::PARTIAL_ATTRIBUTENAME . RegexHelper::PARTIAL_ATTRIBUTEVALUESPEC . ')\s*';
-    private const ATTRIBUTE_LIST   = '/^{:?(' . self::SINGLE_ATTRIBUTE . ')+}/i';
+    private const ATTRIBUTE_LIST   = '/\G{:?(' . self::SINGLE_ATTRIBUTE . ')+}/i';
 
     /**
      * PCRE's `\s` matches the form feed that PHP's default trim charlist omits, so the
@@ -53,7 +53,7 @@ final class AttributesHelper
         // matching individual attributes since they won't need to look ahead for the closing '}'
         // while dealing with the fact that attributes can technically contain curly braces.
         // So we'll just match the start and end braces up front.
-        $attributeExpression = $cursor->match(self::ATTRIBUTE_LIST);
+        $attributeExpression = $cursor->matchInPlace(self::ATTRIBUTE_LIST);
         if ($attributeExpression === null) {
             $cursor->restoreState($state);
 
@@ -66,7 +66,7 @@ final class AttributesHelper
 
         /** @var array<string, mixed> $attributes */
         $attributes = [];
-        while ($attribute = \trim((string) $attributeCursor->match('/^' . self::SINGLE_ATTRIBUTE . '/i'), self::WHITESPACE)) {
+        while ($attribute = \trim((string) $attributeCursor->matchInPlace('/\G' . self::SINGLE_ATTRIBUTE . '/i'), self::WHITESPACE)) {
             if ($attribute[0] === '#') {
                 $attributes['id'] = \substr($attribute, 1);
 

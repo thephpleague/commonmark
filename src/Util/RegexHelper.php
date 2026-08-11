@@ -61,9 +61,15 @@ final class RegexHelper
         self::PARTIAL_PROCESSINGINSTRUCTION . '|' . self::PARTIAL_DECLARATION . '|' . self::PARTIAL_CDATA . ')';
     public const PARTIAL_HTMLBLOCKOPEN         = '<(?:' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s\/>]|$)' . '|' .
         '\/' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s>]|$)' . '|' . '[?!])';
-    public const PARTIAL_LINK_TITLE            = '^(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*+"' .
+    /**
+     * @internal Unanchored so each call site can supply its own anchor ("^" against a detached
+     *           string, "\G" at a cursor position). PARTIAL_LINK_TITLE is composed from this
+     *           and must keep its value, so only this fragment should be used in new code.
+     */
+    public const PARTIAL_LINK_TITLE_UNANCHORED = '(?:"(' . self::PARTIAL_ESCAPED_CHAR . '|[^"\x00])*+"' .
         '|' . '\'(' . self::PARTIAL_ESCAPED_CHAR . '|[^\'\x00])*+\'' .
         '|' . '\((' . self::PARTIAL_ESCAPED_CHAR . '|[^()\x00])*+\))';
+    public const PARTIAL_LINK_TITLE            = '^' . self::PARTIAL_LINK_TITLE_UNANCHORED;
 
     public const REGEX_PUNCTUATION        = '/^[\p{P}\p{S}]/u';
     public const REGEX_UNSAFE_PROTOCOL    = '/^(?:javascript|vbscript|file|data):/i';
@@ -73,7 +79,14 @@ final class RegexHelper
     public const REGEX_WHITESPACE_CHAR         = '/^[ \t\n\x0b\x0c\x0d]/';
     public const REGEX_UNICODE_WHITESPACE_CHAR = '/^\pZ|\s/u';
     public const REGEX_THEMATIC_BREAK          = '/^(?:(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,})$/';
-    public const REGEX_LINK_DESTINATION_BRACES = '/^(?:<(?:[^<>\\n\\\\\\x00]|\\\\.)*>)/';
+    /**
+     * @internal Unanchored so each call site can supply its own anchor ("^" against a detached
+     *           string, "\G" at a cursor position). REGEX_LINK_DESTINATION_BRACES is composed
+     *           from this and must keep its value, so only this fragment should be used in new
+     *           code.
+     */
+    public const PARTIAL_LINK_DESTINATION_BRACES = '(?:<(?:[^<>\\n\\\\\\x00]|\\\\.)*>)';
+    public const REGEX_LINK_DESTINATION_BRACES   = '/^' . self::PARTIAL_LINK_DESTINATION_BRACES . '/';
 
     /**
      * @psalm-pure

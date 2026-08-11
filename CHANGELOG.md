@@ -10,15 +10,22 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Added a new `table_of_contents/max_placeholder_entries` option to limit how many table of contents entries a document may render across all of its placeholders (#1134)
 
 ### Changed
-- Improved performance of reading single characters from multibyte lines
-- Improved performance of locating the next non-space character on lines without tabs
-- Optimized `Cursor::advanceToNextNonSpaceOrNewline()` to scan the line in place instead of copying everything left in the block on every call
-- Optimized inline link destination parsing to scan the line in place, so its cost follows the length of the destination rather than the length of everything left in the block
 - Changed the `TableOfContents` extension to render the table of contents once and share it across all placeholders instead of cloning it into each one (#1134)
     - A custom renderer registered for the `TableOfContents` node is no longer called once per placeholder, so it must return the same markup each time it is called for a given document (#1134)
     - The first placeholder receives the table of contents itself, so a document still contains a `TableOfContents` node for listeners which locate and reposition it (#1143)
 
+## [2.9.2] - 2026-08-10
+
+This release fixes a regression introduced in 2.9.0 which changed the behavior of `Cursor::match()` for certain regular expression patterns.
+
+### Changed
+- Improved performance of reading single characters from multibyte lines
+- Improved performance of locating the next non-space character on lines without tabs
+- Optimized `Cursor::advanceToNextNonSpaceOrNewline()` to scan the line in place instead of copying everything left in the block on every call
+- Optimized inline link destination parsing to scan the line in place, so its cost follows the length of the destination rather than the length of everything left in the block
+
 ### Fixed
+- Fixed a regression introduced in 2.9.0 where `Cursor::match()` treated text before the cursor as part of the match subject (#1145). Patterns were matched against the whole line at an offset, which silently changed the meaning of `\b`, `\B`, `\A`, lookbehinds, a `^` anywhere other than the very start of the pattern, and a leading `^` combined with the `m` modifier. `match()` once again matches against the remainder, exactly as it did in 2.8; the core parsers keep the optimized in-place matching via a new internal method with PCRE's native offset semantics, anchoring their patterns at the cursor with `\G`
 - Fixed heading permalinks rendered with `aria-hidden="true"` remaining in the keyboard tab order; they are now also given `tabindex="-1"`, as a focusable element removed from the accessibility tree has no accessible name to announce when focused (WCAG 4.1.2)
 - Fixed cloning a node breaking the link from the original node's children back to their parent, silently corrupting the document that node belonged to; detaching or inserting around those children afterwards could drop nodes from the tree
 - Fixed cloned nodes sharing their `data` with the node they were cloned from, so that setting an attribute on either one also set it on the other
@@ -804,7 +811,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.9.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.9.2...HEAD
+[2.9.2]: https://github.com/thephpleague/commonmark/compare/2.9.1...2.9.2
 [2.9.1]: https://github.com/thephpleague/commonmark/compare/2.9.0...2.9.1
 [2.9.0]: https://github.com/thephpleague/commonmark/compare/2.8.3...2.9.0
 [2.8.3]: https://github.com/thephpleague/commonmark/compare/2.8.2...2.8.3
