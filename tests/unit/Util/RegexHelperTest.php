@@ -456,9 +456,8 @@ final class RegexHelperTest extends TestCase
     }
 
     /**
-     * These public constants are now composed from internal unanchored fragments (which the
-     * cursor-based call sites anchor with "\G" instead). The public values are part of the BC
-     * surface and must not change before 3.0, so pin them to their exact historical values.
+     * The deprecated anchored constants remain part of the BC surface until 3.0 and must keep
+     * their exact historical values, so pin them here.
      */
     public function testAnchoredConstantsKeepTheirHistoricalValues(): void
     {

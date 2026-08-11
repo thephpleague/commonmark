@@ -8,11 +8,17 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Added
 - Added a new `table_of_contents/max_placeholder_entries` option to limit how many table of contents entries a document may render across all of its placeholders (#1134)
+- Added `Cursor::matchInPlace()`, which matches a regular expression at the cursor's position within the line using PCRE's native offset semantics instead of copying the remainder (#1145)
+    - `\G` anchors at the cursor, `^` anchors at the start of the line, and lookbehinds and `\b` see the characters actually preceding the cursor; this keeps scanning loops linear and enables left-context assertions that `match()` cannot express
+- Added `RegexHelper::PARTIAL_LINK_TITLE_UNANCHORED` and `RegexHelper::PARTIAL_LINK_DESTINATION_BRACES`, unanchored fragments so each call site can supply its own anchor
 
 ### Changed
 - Changed the `TableOfContents` extension to render the table of contents once and share it across all placeholders instead of cloning it into each one (#1134)
     - A custom renderer registered for the `TableOfContents` node is no longer called once per placeholder, so it must return the same markup each time it is called for a given document (#1134)
     - The first placeholder receives the table of contents itself, so a document still contains a `TableOfContents` node for listeners which locate and reposition it (#1143)
+
+### Deprecated
+- Deprecated `RegexHelper::PARTIAL_LINK_TITLE` and `RegexHelper::REGEX_LINK_DESTINATION_BRACES`; use the unanchored variants with an explicit anchor instead
 
 ## [2.9.2] - 2026-08-10
 

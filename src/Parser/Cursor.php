@@ -607,9 +607,6 @@ class Cursor
      * spaces; "\G" still anchors at the cursor there, but the line content before it is not
      * visible in that case.
      *
-     * @internal Planned to become public API in 2.10; until then the name and contract may
-     *           change without notice.
-     *
      * @psalm-param non-empty-string $regex
      */
     public function matchInPlace(string $regex): ?string
