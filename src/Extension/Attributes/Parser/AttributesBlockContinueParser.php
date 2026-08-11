@@ -31,13 +31,25 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
     private bool $hasSubsequentLine = false;
 
     /**
-     * The first whole class list we saw, which is all that takes part in the per-line merges, plus
-     * the classes each later line adds. Merging the growing list on every line would be quadratic.
+     * Every attribute merged so far except the class list, which is accumulated separately and
+     * only takes the placeholder position recorded here. Re-merging the whole dict on every line
+     * would cost O(size of the dict) per line, so a document adding a key per line would be
+     * quadratic; folding each line in on its own is linear.
+     *
+     * @var array<string, mixed>
      */
-    private ?string $class = null;
+    private array $attributes = [];
 
     /** @var list<string> */
-    private array $additionalClasses = [];
+    private array $classes = [];
+
+    private bool $hasClass = false;
+
+    /**
+     * mergeAttributes() rebuilds the class list before anything else, so any line merged over an
+     * existing list moves it to the front of the result
+     */
+    private bool $classFirst = false;
 
     /**
      * @param array<string, mixed> $attributes The attributes identified by the block start parser
@@ -48,6 +60,8 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
         $this->block = new Attributes($attributes);
 
         $this->container = $container;
+
+        $this->absorb($attributes);
     }
 
     public function getBlock(): AbstractBlock
@@ -66,26 +80,9 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
         $cursor->advanceToNextNonSpaceOrTab();
         if ($cursor->isAtEnd() && $attributes !== []) {
             // It does! Merge them into what we parsed previously
-            $merged = AttributesHelper::mergeAttributes(
-                $this->block->getAttributes(),
-                $attributes
-            );
+            $this->classFirst = $this->classFirst || $this->hasClass;
 
-            if (isset($merged['class'])) {
-                if ($this->class === null) {
-                    $this->class = $merged['class'];
-                } else {
-                    // Only this line's own classes can have been added to the list, so record them
-                    // and put the short value the merge started from back in their place.
-                    foreach (AttributesHelper::classList($attributes['class'] ?? []) as $class) {
-                        $this->additionalClasses[] = $class;
-                    }
-
-                    $merged['class'] = $this->class;
-                }
-            }
-
-            $this->block->setAttributes($merged);
+            $this->absorb($attributes);
 
             // Tell the core parser we've consumed everything
             return BlockContinue::at($cursor);
@@ -100,13 +97,48 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
         return BlockContinue::none();
     }
 
+    /**
+     * Fold one line's attributes into what we've accumulated, in time proportional to that line
+     *
+     * @param array<string, mixed> $attributes
+     */
+    private function absorb(array $attributes): void
+    {
+        foreach ($attributes as $name => $value) {
+            if ($name !== 'class') {
+                $this->attributes[$name] = $value;
+
+                continue;
+            }
+
+            foreach (AttributesHelper::classList($value) as $class) {
+                $this->classes[] = $class;
+            }
+
+            if ($this->hasClass) {
+                continue;
+            }
+
+            // Hold the spot the joined list will occupy; closeBlock() writes the value
+            $this->attributes['class'] = null;
+            $this->hasClass            = true;
+        }
+    }
+
     public function closeBlock(): void
     {
-        if ($this->additionalClasses !== []) {
-            $attributes          = $this->block->getAttributes();
-            $attributes['class'] = \implode(' ', \array_merge([(string) $this->class], $this->additionalClasses));
-            $this->block->setAttributes($attributes);
+        $attributes = $this->attributes;
+        if ($this->hasClass) {
+            $class = \implode(' ', $this->classes);
+            if ($this->classFirst) {
+                unset($attributes['class']);
+                $attributes = \array_merge(['class' => $class], $attributes);
+            } else {
+                $attributes['class'] = $class;
+            }
         }
+
+        $this->block->setAttributes($attributes);
 
         // Attributes appearing at the very end of the document won't have any last lines to check
         // so we can make that determination here

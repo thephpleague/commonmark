@@ -30,6 +30,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed a `default_attributes` value which PHP treats as callable reporting its failure from inside whichever function it collided with; the error now names the attribute and node class responsible, and keeps the original error as its previous exception
 - Fixed custom `UniqueSlugNormalizerInterface` implementations being wrapped by the built-in `UniqueSlugNormalizer` and never receiving the documented `clearHistory()` calls, which caused slug history to leak across documents when `slug_normalizer/unique` was set to `'document'` (#1080)
     - Custom implementations are now trusted to enforce uniqueness themselves, per the interface contract; the extra deduplication layer the wrapper used to provide is no longer applied on top of them
+- Fixed the `AttributesExtension` re-merging and re-filtering everything a node had already collected each time another attribute node was applied to it, causing long runs of distinctly-named attributes to be resolved in quadratic time, which could be abused to cause a denial of service - this completes the fix for GHSA-jjv6-8j6v-6j52, which covered only the `class` attribute (GHSA-8rr7-cvq3-gmfh)
+- Fixed the `AttributesExtension` re-merging everything an attribute block had already collected on each of its continuation lines, causing long runs of distinctly-named attributes on consecutive lines to be resolved in quadratic time, which could be abused to cause a denial of service (GHSA-8rr7-cvq3-gmfh)
 
 ## [2.9.2] - 2026-08-10
 

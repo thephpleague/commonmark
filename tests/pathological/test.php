@@ -514,6 +514,32 @@ $cases = [
         'input' => static fn($n) => \str_repeat("{.c}\n", $n),
         'expected' => static fn($n) => '',
     ],
+    // The three cases below give every node a name of its own, so the set of attributes the
+    // target has collected grows by one on each of them. The '{#a}' and '{.c}' cases above
+    // cannot catch a cost that scales with that set: one overwrites a single key and the other
+    // only ever touches the class list.
+    'Adjacent inline attributes with distinct names' => [
+        'extension' => 'attributes',
+        'sizes' => [1_000, 4_000, 16_000],
+        // Quoting the values is load-bearing: an unquoted one swallows the '}{' that follows it,
+        // welding the whole run into a single node.
+        'input' => static fn($n) => \implode('', \array_map(static fn($i) => "{a$i=\"v\"}", \range(0, $n - 1))),
+        'expected' => static fn($n) => '<p ' . \implode(' ', \array_map(static fn($i) => "a$i=\"v\"", \range(0, $n - 1))) . '></p>',
+    ],
+    'Attribute block distinct names on consecutive lines' => [
+        'extension' => 'attributes',
+        'sizes' => [2_000, 8_000, 32_000],
+        'input' => static fn($n) => \implode('', \array_map(static fn($i) => "{a$i=v}\n", \range(0, $n - 1))),
+        'expected' => static fn($n) => '',
+    ],
+    'Adjacent attribute blocks with distinct names' => [
+        // As above, the link reference definitions keep every block at TARGET_NEXT, so all of
+        // them apply to the closing paragraph - which renders them in reverse.
+        'extension' => 'attributes',
+        'sizes' => [1_000, 4_000, 16_000],
+        'input' => static fn($n) => \implode('', \array_map(static fn($i) => "{a$i=v}\n[a]: u\n", \range(0, $n - 1))) . 'para',
+        'expected' => static fn($n) => '<p ' . \implode(' ', \array_map(static fn($i) => "a$i=\"v\"", \range($n - 1, 0))) . '>para</p>',
+    ],
 ];
 
 print("Running " . \count($cases) . " pathological test cases\n\n");
