@@ -29,6 +29,8 @@ final class AttributesListenerTest extends TestCase
      * A class value another extension already placed on the node takes part in the merges, and one
      * holding no classes at all must leave the node without a class rather than with an empty one.
      *
+     * @dataProvider dataForTestSeededClassWithoutAnyClasses
+     *
      * @param mixed $seededClass
      */
     #[DataProvider('dataForTestSeededClassWithoutAnyClasses')]
