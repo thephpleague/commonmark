@@ -110,6 +110,7 @@ final class RegexHelperTest extends TestCase
         $this->assertRegexMatches($regex, 'href');
         $this->assertRegexMatches($regex, 'class');
         $this->assertRegexMatches($regex, 'data-src');
+        $this->assertRegexMatches($regex, 'viewBox');
         $this->assertRegexDoesNotMatch($regex, '-key');
     }
 
@@ -177,6 +178,7 @@ final class RegexHelperTest extends TestCase
         $this->assertRegexMatches($regex, '<hr>');
         $this->assertRegexMatches($regex, '<a href="http://www.google.com">');
         $this->assertRegexMatches($regex, '<img src="http://www.google.com/logo.png" />');
+        $this->assertRegexMatches($regex, '<svg viewBox="0 0 4 4">');
         $this->assertRegexDoesNotMatch($regex, '</p>');
     }
 
