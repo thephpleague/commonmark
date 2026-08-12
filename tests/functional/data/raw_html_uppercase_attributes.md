@@ -1,0 +1,1 @@
+Icon: <svg viewBox="0 0 4 4"><path d="M0 0h4v4z"/></svg> end.
