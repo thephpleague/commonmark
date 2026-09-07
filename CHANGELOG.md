@@ -6,6 +6,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.10.1] - 2026-09-07
+
+### Fixed
+- Accept `unordered_list_markers` config in InlinesOnlyExtension (#1015, #1151)
+
 ## [2.10.0] - 2026-08-11
 
 This is a **security release** to address a denial of service vulnerability in the `AttributesExtension`.
@@ -834,7 +839,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.0...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.1...HEAD
+[2.10.1]: https://github.com/thephpleague/commonmark/compare/2.10.0...2.10.1
 [2.10.0]: https://github.com/thephpleague/commonmark/compare/2.9.2...2.10.0
 [2.9.2]: https://github.com/thephpleague/commonmark/compare/2.9.1...2.9.2
 [2.9.1]: https://github.com/thephpleague/commonmark/compare/2.9.0...2.9.1
