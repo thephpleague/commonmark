@@ -64,4 +64,20 @@ final class InlinesOnlyFunctionalTest extends TestCase
             [$markdown, $html],
         ];
     }
+
+    /**
+     * InlinesOnlyExtension reuses the shared 'commonmark' config schema, so the
+     * option must be accepted even though it renders no lists.
+     *
+     * @see https://github.com/thephpleague/commonmark/issues/1015
+     */
+    public function testUnorderedListMarkersConfigIsAccepted(): void
+    {
+        $environment = new Environment(['commonmark' => ['unordered_list_markers' => ['*']]]);
+        $environment->addExtension(new InlinesOnlyExtension());
+        $converter = new MarkdownConverter($environment);
+
+        $this->assertSame(['*'], $environment->getConfiguration()->get('commonmark/unordered_list_markers'));
+        $this->assertSame('<em>foo</em>', \trim($converter->convert('*foo*')->getContent()));
+    }
 }
