@@ -89,7 +89,7 @@ $environment->addRenderer(FencedCode::class, $myRenderer, 10);
 $environment->addRenderer(IndentedCode::class, $myRenderer, 20);
 ```
 
-Multiple renderers can be added per element type - when this happens, we use the result from the highest-priority renderer that returns a non-`null` result.
+Multiple renderers can be added per element type - when this happens, we use the result from the highest-priority renderer that returns a non-`null` result. If multiple renderers use the same priority, their relative order is not guaranteed; assign different priorities whenever execution order matters.
 
 ## Example
 

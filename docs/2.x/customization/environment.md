@@ -66,7 +66,7 @@ $environment->addExtension(new FootnoteExtension());
 public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0);
 ```
 
-Registers the given `BlockStartParserInterface` with the environment with the given priority (a higher number will be executed earlier).
+Registers the given `BlockStartParserInterface` with the environment with the given priority (a higher number will be executed earlier). See [Priority](#priority) for guidance on ordering and ties.
 
 See [Block Parsing](/2.x/customization/block-parsing/) for details.
 
@@ -76,7 +76,7 @@ See [Block Parsing](/2.x/customization/block-parsing/) for details.
 public function addInlineParser(InlineParserInterface $parser, int $priority = 0);
 ```
 
-Registers the given `InlineParserInterface` with the environment with the given priority (a higher number will be executed earlier).
+Registers the given `InlineParserInterface` with the environment with the given priority (a higher number will be executed earlier). See [Priority](#priority) for guidance on ordering and ties.
 
 See [Inline Parsing](/2.x/customization/inline-parsing/) for details.
 
@@ -96,7 +96,7 @@ See [Inline Parsing](/2.x/customization/delimiter-processing/) for details.
 public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0);
 ```
 
-Registers a `NodeRendererInterface` to handle a specific type of AST node (`$nodeClass`)  with the given priority (a higher number will be executed earlier).
+Registers a `NodeRendererInterface` to handle a specific type of AST node (`$nodeClass`) with the given priority (a higher number will be executed earlier). See [Priority](#priority) for guidance on ordering and ties.
 
 See [Rendering](/2.x/customization/rendering/) for details.
 
@@ -112,7 +112,13 @@ See [Event Dispatcher](/2.x/customization/event-dispatcher/) for details.
 
 ## Priority
 
-Several of these methods allows you to specify a numeric `$priority`.  In cases where multiple things are registered, the internal engine will attempt to use the higher-priority ones first, falling back to lower priority ones if the first one(s) were unable to handle things.
+Several of these methods allow you to specify a numeric `$priority`. Higher-priority components are attempted before lower-priority ones, with lower-priority components used as fallbacks when appropriate.
+
+For block start parsers, inline parsers, and renderers, do not rely on registration order when multiple components use the same priority. Their relative order is not part of the public contract and can differ depending on when extensions are initialized. If execution order matters, assign explicit, different priorities.
+
+The default priority is `0`. Custom components that must run before a default component should use a higher priority; components that must run afterward should use a lower priority.
+
+Event listeners are an exception: listeners with the same priority are called in registration order, as described in the [Event Dispatcher documentation](/2.x/customization/event-dispatcher/).
 
 ## Accessing the Environment and Configuration within parsers/renderers/etc
 
