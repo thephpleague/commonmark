@@ -66,7 +66,7 @@ $environment->addExtension(new FootnoteExtension());
 public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0);
 ```
 
-Registers the given `BlockStartParserInterface` with the environment with the given priority (a higher number will be executed earlier).
+Registers the given `BlockStartParserInterface` with the environment with the given [priority](#priority).
 
 See [Block Parsing](/2.x/customization/block-parsing/) for details.
 
@@ -76,7 +76,7 @@ See [Block Parsing](/2.x/customization/block-parsing/) for details.
 public function addInlineParser(InlineParserInterface $parser, int $priority = 0);
 ```
 
-Registers the given `InlineParserInterface` with the environment with the given priority (a higher number will be executed earlier).
+Registers the given `InlineParserInterface` with the environment with the given [priority](#priority).
 
 See [Inline Parsing](/2.x/customization/inline-parsing/) for details.
 
@@ -96,7 +96,7 @@ See [Inline Parsing](/2.x/customization/delimiter-processing/) for details.
 public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0);
 ```
 
-Registers a `NodeRendererInterface` to handle a specific type of AST node (`$nodeClass`)  with the given priority (a higher number will be executed earlier).
+Registers a `NodeRendererInterface` to handle a specific type of AST node (`$nodeClass`) with the given [priority](#priority).
 
 See [Rendering](/2.x/customization/rendering/) for details.
 
@@ -112,7 +112,15 @@ See [Event Dispatcher](/2.x/customization/event-dispatcher/) for details.
 
 ## Priority
 
-Several of these methods allows you to specify a numeric `$priority`.  In cases where multiple things are registered, the internal engine will attempt to use the higher-priority ones first, falling back to lower priority ones if the first one(s) were unable to handle things.
+Several of these methods allow you to specify a numeric `$priority`. Higher-priority components are attempted first, with lower-priority ones used as fallbacks when appropriate.
+
+**If execution order matters, always set an explicit priority.** Components sharing the same priority have no guaranteed order relative to each other, so don't rely on the order you registered them in. Choose the number relative to the component you need to outrank rather than to `0` - although `$priority` defaults to `0`, the built-in extensions span a wide range:
+
+- **Block start parsers** - `CommonMarkCoreExtension` uses `70` down to `-100`. Note the additional `250` threshold described in [Block Parsing](/2.x/customization/block-parsing/).
+- **Inline parsers** - `CommonMarkCoreExtension` uses `200` down to `10`.
+- **Renderers** - all core renderers are registered at `0`, so a priority of `1` is enough to take precedence.
+
+Registration order is especially unreliable when mixing direct calls with extensions: extensions don't register their components until the environment is first used, so anything added directly jumps ahead of them. This is why a custom renderer works when added via `addRenderer()` but silently does nothing when registered inside an extension. An explicit priority avoids the problem - including for [event listeners](/2.x/customization/event-dispatcher/), whose documented same-priority ordering is subject to the same deferral.
 
 ## Accessing the Environment and Configuration within parsers/renderers/etc
 
