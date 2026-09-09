@@ -66,7 +66,7 @@ $environment->addExtension(new FootnoteExtension());
 public function addBlockStartParser(BlockStartParserInterface $parser, int $priority = 0);
 ```
 
-Registers the given `BlockStartParserInterface` with the environment with the given priority (a higher number will be executed earlier). See [Priority](#priority) for guidance on ordering and ties.
+Registers the given `BlockStartParserInterface` with the environment with the given [priority](#priority).
 
 See [Block Parsing](/2.x/customization/block-parsing/) for details.
 
@@ -76,7 +76,7 @@ See [Block Parsing](/2.x/customization/block-parsing/) for details.
 public function addInlineParser(InlineParserInterface $parser, int $priority = 0);
 ```
 
-Registers the given `InlineParserInterface` with the environment with the given priority (a higher number will be executed earlier). See [Priority](#priority) for guidance on ordering and ties.
+Registers the given `InlineParserInterface` with the environment with the given [priority](#priority).
 
 See [Inline Parsing](/2.x/customization/inline-parsing/) for details.
 
@@ -96,7 +96,7 @@ See [Inline Parsing](/2.x/customization/delimiter-processing/) for details.
 public function addRenderer(string $nodeClass, NodeRendererInterface $renderer, int $priority = 0);
 ```
 
-Registers a `NodeRendererInterface` to handle a specific type of AST node (`$nodeClass`) with the given priority (a higher number will be executed earlier). See [Priority](#priority) for guidance on ordering and ties.
+Registers a `NodeRendererInterface` to handle a specific type of AST node (`$nodeClass`) with the given [priority](#priority).
 
 See [Rendering](/2.x/customization/rendering/) for details.
 
@@ -112,13 +112,15 @@ See [Event Dispatcher](/2.x/customization/event-dispatcher/) for details.
 
 ## Priority
 
-Several of these methods allow you to specify a numeric `$priority`. Higher-priority components are attempted before lower-priority ones, with lower-priority components used as fallbacks when appropriate.
+Several of these methods allow you to specify a numeric `$priority`. Higher-priority components are attempted first, with lower-priority ones used as fallbacks when appropriate.
 
-For block start parsers, inline parsers, and renderers, do not rely on registration order when multiple components use the same priority. Their relative order is not part of the public contract and can differ depending on when extensions are initialized. If execution order matters, assign explicit, different priorities.
+**If execution order matters, always set an explicit priority.** Components sharing the same priority have no guaranteed order relative to each other, so don't rely on the order you registered them in. Choose the number relative to the component you need to outrank rather than to `0` - although `$priority` defaults to `0`, the built-in extensions span a wide range:
 
-The default priority is `0`. Custom components that must run before a default component should use a higher priority; components that must run afterward should use a lower priority.
+- **Block start parsers** - `CommonMarkCoreExtension` uses `70` down to `-100`. Note the additional `250` threshold described in [Block Parsing](/2.x/customization/block-parsing/).
+- **Inline parsers** - `CommonMarkCoreExtension` uses `200` down to `10`.
+- **Renderers** - all core renderers are registered at `0`, so a priority of `1` is enough to take precedence.
 
-Event listeners are an exception: listeners with the same priority are called in registration order, as described in the [Event Dispatcher documentation](/2.x/customization/event-dispatcher/).
+Registration order is especially unreliable when mixing direct calls with extensions: extensions don't register their components until the environment is first used, so anything added directly jumps ahead of them. This is why a custom renderer works when added via `addRenderer()` but silently does nothing when registered inside an extension. An explicit priority avoids the problem - including for [event listeners](/2.x/customization/event-dispatcher/), whose documented same-priority ordering is subject to the same deferral.
 
 ## Accessing the Environment and Configuration within parsers/renderers/etc
 
