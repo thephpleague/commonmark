@@ -1,0 +1,42 @@
+.btn {
+    padding: .5rem 1rem;
+    margin-right: .25rem;
+    text-align: center;
+    border-radius: .25rem;
+    color: inherit;
+    text-decoration: inherit;
+    transition: 0.3s;
+}
+
+.btn-block {
+    display: block;
+    width: auto;
+}
+
+.btn-sm {
+    padding: .3rem .6rem;
+    font-size: .8rem;
+}
+
+.btn-black {
+    background-color: #222222;
+    color: #ffffff;
+}
+.btn-black:hover {
+    background-color: #333;
+    color: #ffffff;
+}
+
+.btn-pink {
+    background-color: #d53f8c;
+}
+.btn-pink:hover {
+    background-color: #d62b83;
+}
+
+.btn-green {
+    background-color: #38a169;
+}
+.btn-green:hover {
+    background-color: #28a160;
+}
