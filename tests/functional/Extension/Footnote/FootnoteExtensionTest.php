@@ -59,6 +59,19 @@ final class FootnoteExtensionTest extends TestCase
                 ['ref_id_prefix' => 'customfnref:', 'footnote_id_prefix' => 'customfn:'],
             ],
             [
+                // The configured prefixes are emitted verbatim in the ids, so the links must use them verbatim too
+                "Here[^note1]\n\n[^note1]: There",
+                '<p>Here<sup id="Fnref:note1"><a class="footnote-ref" href="#Fn:note1" role="doc-noteref">1</a></sup></p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="Fn:note1" role="doc-endnote"><p>There&nbsp;<a class="footnote-backref" rev="footnote" href="#Fnref:note1" role="doc-backlink">↩</a></p></li></ol></div>',
+                ['ref_id_prefix' => 'Fnref:', 'footnote_id_prefix' => 'Fn:'],
+            ],
+            [
+                // Labels are still lowercased on both halves of each link
+                "Here[^Note1]\n\n[^Note1]: There",
+                '<p>Here<sup id="fnref:note1"><a class="footnote-ref" href="#fn:note1" role="doc-noteref">1</a></sup></p>
+<div class="footnotes" role="doc-endnotes"><hr /><ol><li class="footnote" id="fn:note1" role="doc-endnote"><p>There&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:note1" role="doc-backlink">↩</a></p></li></ol></div>',
+            ],
+            [
                 // Only the first definition of a label is used, and the others are removed
                 "Here[^note1]\n\n[^note1]: First\n\n[^note1]: Second",
                 '<p>Here<sup id="fnref:note1"><a class="footnote-ref" href="#fn:note1" role="doc-noteref">1</a></sup></p>
