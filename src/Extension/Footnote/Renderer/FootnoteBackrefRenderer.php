@@ -45,8 +45,12 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, XmlNodeRen
         $attrs->append('class', $this->config->get('footnote/backref_class'));
         $attrs->set('rev', 'footnote');
         // The configured prefix is emitted verbatim in the target's id, so only lowercase the label.
-        $hrefPrefix = '#' . $this->config->get('footnote/ref_id_prefix');
-        $attrs->set('href', $hrefPrefix . \mb_strtolower(\substr($node->getReference()->getDestination(), \strlen($hrefPrefix)), 'UTF-8'));
+        $destination = $node->getReference()->getDestination();
+        $hrefPrefix  = '#' . $this->config->get('footnote/ref_id_prefix');
+        $href        = \strncmp($destination, $hrefPrefix, \strlen($hrefPrefix)) === 0
+            ? $hrefPrefix . \mb_strtolower(\substr($destination, \strlen($hrefPrefix)), 'UTF-8')
+            : \mb_strtolower($destination, 'UTF-8');
+        $attrs->set('href', $href);
         $attrs->set('role', 'doc-backlink');
 
         $symbol = $this->config->get('footnote/backref_symbol');
