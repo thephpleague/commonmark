@@ -92,6 +92,7 @@ final class RegexHelperTest extends TestCase
         $this->assertRegexMatches($regex, 'a');
         $this->assertRegexMatches($regex, 'img');
         $this->assertRegexMatches($regex, 'h1');
+        $this->assertRegexMatches($regex, 'Warning');
         $this->assertRegexDoesNotMatch($regex, '11');
     }
 
@@ -180,6 +181,8 @@ final class RegexHelperTest extends TestCase
         $this->assertRegexMatches($regex, '<a href="http://www.google.com">');
         $this->assertRegexMatches($regex, '<img src="http://www.google.com/logo.png" />');
         $this->assertRegexMatches($regex, '<svg viewBox="0 0 4 4">');
+        $this->assertRegexMatches($regex, '<Warning>');
+        $this->assertRegexMatches($regex, '<a HREF="http://www.google.com">');
         $this->assertRegexDoesNotMatch($regex, '</p>');
     }
 
@@ -188,6 +191,7 @@ final class RegexHelperTest extends TestCase
         $regex = '/^' . RegexHelper::PARTIAL_CLOSETAG . '$/';
         $this->assertRegexMatches($regex, '</p>');
         $this->assertRegexMatches($regex, '</a>');
+        $this->assertRegexMatches($regex, '</Warning>');
         $this->assertRegexDoesNotMatch($regex, '<hr>');
         $this->assertRegexDoesNotMatch($regex, '<img src="http://www.google.com/logo.png" />');
     }
