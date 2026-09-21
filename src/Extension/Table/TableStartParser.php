@@ -33,7 +33,15 @@ final class TableStartParser implements BlockStartParserInterface
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
         $paragraph = $parserState->getParagraphContent();
-        if ($paragraph === null || \strpos($paragraph, '|') === false) {
+        if ($paragraph === null) {
+            return BlockStart::none();
+        }
+
+        // Only the paragraph's last line can be the header row, so limit the quick check to it.
+        // Scanning the whole (growing) paragraph on every line would be quadratic.
+        $lastLineBreak = \strrpos($paragraph, "\n");
+        $lastLine      = $lastLineBreak === false ? $paragraph : \substr($paragraph, $lastLineBreak + 1);
+        if (\strpos($lastLine, '|') === false) {
             return BlockStart::none();
         }
 
@@ -41,9 +49,6 @@ final class TableStartParser implements BlockStartParserInterface
         if (\count($columns) === 0) {
             return BlockStart::none();
         }
-
-        $lastLineBreak = \strrpos($paragraph, "\n");
-        $lastLine      = $lastLineBreak === false ? $paragraph : \substr($paragraph, $lastLineBreak + 1);
 
         $headerCells = TableParser::split($lastLine);
         if (\count($headerCells) > \count($columns)) {

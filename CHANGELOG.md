@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed quadratic-time parsing of long paragraphs when the `Table` extension is enabled (GHSA-3q6v-r5mr-hxv8)
+
 ## [2.10.1] - 2026-09-07
 
 ### Fixed
