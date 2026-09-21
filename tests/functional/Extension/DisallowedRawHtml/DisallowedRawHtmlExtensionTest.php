@@ -47,6 +47,40 @@ HTML;
         $this->assertSame($expected, (string) $converter->convert($input));
     }
 
+    /**
+     * A line containing only a disallowed tag name opens an HTML block, and the raw HTML from the
+     * next block would then be parsed by the browser as that tag's attributes (GHSA-97jj-33gv-5xf9).
+     */
+    public function testBareTagNameEndingAnHtmlBlock(): void
+    {
+        $input = <<<'MD'
+<div>
+<script
+
+<span src="/evil.js">
+
+<iframe
+
+<span onload="alert(1)">
+MD;
+
+        $expected = <<<'HTML'
+<div>
+&lt;script
+<span src="/evil.js">
+&lt;iframe
+<span onload="alert(1)">
+
+HTML;
+
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new DisallowedRawHtmlExtension());
+        $converter = new MarkdownConverter($environment);
+
+        $this->assertSame($expected, (string) $converter->convert($input));
+    }
+
     public function testIndividualHtmlTagsAsBlocks(): void
     {
         $input = <<<'MD'

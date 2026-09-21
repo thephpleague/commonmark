@@ -80,6 +80,12 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         yield ["<script\r\n>", "&lt;script\r\n>"];
         yield ["<iframe\nwidth=\"560\">", "&lt;iframe\nwidth=\"560\">"];
 
+        // Bare tag name at the end of the rendered HTML (GHSA-97jj-33gv-5xf9)
+        yield ['<script', '&lt;script'];
+        yield ['</script', '&lt;/script'];
+        yield ["<div>\n<script", "<div>\n&lt;script"];
+        yield ["<div>\nfoo <iframe", "<div>\nfoo &lt;iframe"];
+
         // Ensure non-disallowed tags with similar names are NOT filtered
         yield ['<scriptfoo>', '<scriptfoo>'];
 
@@ -124,6 +130,7 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         yield ['<strong   >', '&lt;strong   >'];
         yield ["<strong\n>", "&lt;strong\n>"];
         yield ["<strong\t>", "&lt;strong\t>"];
+        yield ['<strong', '&lt;strong'];
 
         // Defaults that I didn't include in my custom config
         yield ['<title>', '<title>'];
