@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Fixed
 - Fixed footnote links and backlinks pointing at the wrong anchor when `footnote/footnote_id_prefix` or `footnote/ref_id_prefix` contains an uppercase character; the configured prefix is now emitted verbatim in the `href` as it already was in the matching `id` (#524)
+- Fixed inline raw HTML tags being escaped when the tag name or an attribute name contains an uppercase letter, such as `<svg viewBox="...">` or `<Warning>` (#1096)
 
 ## [2.10.2] - 2026-09-21
 
