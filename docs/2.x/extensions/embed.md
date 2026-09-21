@@ -86,6 +86,12 @@ It's extremely important that you only include websites you trust since they'll 
 
 Any subdomains of these domains will also be allowed. For example, `['youtube.com']` would allow embedding from `youtube.com` or `www.youtube.com`.
 
+This check is applied **only to the URL that appears in the Markdown**. It does not constrain the HTTP requests
+the `adapter` makes while fetching the embed. In particular, the `embed/embed` library will follow HTTP redirects and
+will fetch oEmbed endpoints advertised by the pages it loads, and those may live on other hosts. Listing a domain here
+therefore means trusting wherever that domain redirects to and whichever oEmbed endpoints it points at. If your
+application can reach internal services, see [Restricting outbound requests](#restricting-outbound-requests) below.
+
 As an additional safety measure, we recommend that you also use a [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 to prevent unexpected content from being embedded.
 
@@ -149,6 +155,39 @@ $config = [
 // Instantiate your CommonMark environment and converter like usual
 // ...
 ```
+
+#### Restricting outbound requests
+
+The `allowed_domains` option only checks the URL in the Markdown. Once a URL passes that check, `embed/embed` fetches it
+with its own HTTP client, which follows redirects by default and then requests any oEmbed endpoint discovered in the
+response. Both of those requests may target hosts that are not in `allowed_domains`.
+
+You can disable redirects by configuring the library's `CurlClient` and injecting it through a `Crawler`. Note that
+these settings must be applied to the `CurlClient` - passing them to `Embed::setSettings()` has no effect on the HTTP layer:
+
+```php
+use Embed\Embed;
+use Embed\Http\Crawler;
+use Embed\Http\CurlClient;
+use League\CommonMark\Extension\Embed\Bridge\OscaroteroEmbedAdapter;
+
+$client = new CurlClient();
+$client->setSettings([
+    'follow_location' => false, // or keep redirects but cap them with 'max_redirs' => 1
+    'ignored_errors' => [],     // don't swallow HTTP errors
+]);
+
+$embedLibrary = new Embed(new Crawler($client));
+
+$config = [
+    'adapter' => new OscaroteroEmbedAdapter($embedLibrary),
+];
+```
+
+Disabling redirects does **not** stop the separate oEmbed endpoint requests. To validate every outbound request
+(for example, to block private IP ranges or enforce your own allowlist on each hop), pass a
+[PSR-18](https://www.php-fig.org/psr/psr-18/) client that performs those checks to the `Crawler` instead of `CurlClient`.
+Network egress restrictions on the server remain the most robust defense regardless of library configuration.
 
 ### Custom Adapter
 

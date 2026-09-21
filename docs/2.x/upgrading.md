@@ -74,6 +74,16 @@ enforce uniqueness themselves, so the extra deduplication the wrapper applied on
 unanchored `RegexHelper::PARTIAL_LINK_TITLE_UNANCHORED` and `RegexHelper::PARTIAL_LINK_DESTINATION_BRACES` fragments
 with an anchor of your own choosing instead.
 
+### Table Header Rows Are Detected Per the GFM Spec
+
+Starting in 2.10.2, the `Table` extension follows the GFM spec and the reference `cmark-gfm` implementation more
+closely when deciding whether a paragraph line followed by a delimiter row starts a table:
+
+- The header row no longer needs to contain a `|` character.  A single-cell header such as `Name` followed by `|-|` is
+  now a one-column table; previously it remained a paragraph.
+- The header row must now have exactly the same number of cells as the delimiter row.  Previously a header with fewer
+  cells than the delimiter row was accepted and its missing cells were left empty; such input now remains a paragraph.
+
 ## Upgrading from 2.8 to 2.9
 
 There are no breaking API changes when upgrading from 2.8 to 2.9, but several security fixes change the output of

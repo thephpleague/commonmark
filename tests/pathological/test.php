@@ -284,7 +284,7 @@ $cases = [
         'extension' => 'table',
         'sizes' => [1_000, 10_000, 100_000],
         'input' => static fn($n) => "x\n| - |\n" . \str_repeat("|", $n) . "y\n",
-        'expected' => static fn($n) => "<p>x\n| - |\n" . \str_repeat('|', $n) . 'y</p>',
+        'expected' => static fn($n) => "<table>\n<thead>\n<tr>\n<th>x</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td></td>\n</tr>\n</tbody>\n</table>\n",
     ],
     'CVE-2023-22483 test 5 (autolink)' => [
         'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-29g3-96g3-jg6c',
@@ -381,6 +381,35 @@ $cases = [
         'extension' => 'table',
         'sizes' => [1_000, 10_000, 100_000],
         'input' => static fn($n) => '|' . \str_repeat('x|', $n) . "\n|" . \str_repeat('-|', $n) . "\n" . \str_repeat("a\n", $n),
+    ],
+    'GHSA-3q6v-r5mr-hxv8 test 1 (table start parser rescanning paragraph)' => [
+        'ref' => 'https://github.com/thephpleague/commonmark/security/advisories/GHSA-3q6v-r5mr-hxv8',
+        'extension' => 'table',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => \str_repeat("12345678\n", $n),
+        'expected' => static fn($n) => '<p>' . \str_repeat("12345678\n", $n - 1) . '12345678</p>',
+    ],
+    'GHSA-3q6v-r5mr-hxv8 test 2 (long delimiter row)' => [
+        'ref' => 'https://github.com/thephpleague/commonmark/security/advisories/GHSA-3q6v-r5mr-hxv8',
+        'extension' => 'table',
+        'sizes' => [1_000, 10_000, 100_000],
+        // The trailing double pipe makes the delimiter row invalid only once the whole line has been scanned
+        'input' => static fn($n) => "|\n" . \str_repeat('-|', $n) . "|\n",
+        'expected' => static fn($n) => "<p>|\n" . \str_repeat('-|', $n) . '|</p>',
+    ],
+    'GHSA-3q6v-r5mr-hxv8 test 3 (long delimiter row, multibyte)' => [
+        'ref' => 'https://github.com/thephpleague/commonmark/security/advisories/GHSA-3q6v-r5mr-hxv8',
+        'extension' => 'table',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => "|\n" . \str_repeat('-|', $n) . "\u{e9}\n",
+        'expected' => static fn($n) => "<p>|\n" . \str_repeat('-|', $n) . "\u{e9}</p>",
+    ],
+    'GHSA-3q6v-r5mr-hxv8 test 4 (long multibyte header row)' => [
+        'ref' => 'https://github.com/thephpleague/commonmark/security/advisories/GHSA-3q6v-r5mr-hxv8',
+        'extension' => 'table',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => "\u{e9}" . \str_repeat('a|', $n) . "\n|-|\n",
+        'expected' => static fn($n) => "<p>\u{e9}" . \str_repeat('a|', $n) . "\n|-|</p>",
     ],
     'CVE-2023-37463 test 3' => [
         'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-w4qg-3vf7-m9x5',
