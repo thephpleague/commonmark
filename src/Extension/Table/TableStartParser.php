@@ -37,21 +37,19 @@ final class TableStartParser implements BlockStartParserInterface
             return BlockStart::none();
         }
 
-        // Only the paragraph's last line can be the header row, so limit the quick check to it.
-        // Scanning the whole (growing) paragraph on every line would be quadratic.
-        $lastLineBreak = \strrpos($paragraph, "\n");
-        $lastLine      = $lastLineBreak === false ? $paragraph : \substr($paragraph, $lastLineBreak + 1);
-        if (\strpos($lastLine, '|') === false) {
-            return BlockStart::none();
-        }
-
+        // Check the (short) current line for a delimiter row before touching the paragraph content. Scanning the
+        // paragraph on every line would be quadratic, and GFM does not require a pipe in the header row anyway.
         $columns = self::parseSeparator($cursor);
         if (\count($columns) === 0) {
             return BlockStart::none();
         }
 
+        $lastLineBreak = \strrpos($paragraph, "\n");
+        $lastLine      = $lastLineBreak === false ? $paragraph : \substr($paragraph, $lastLineBreak + 1);
+
+        // Per the GFM spec, the header row must have the same number of cells as the delimiter row
         $headerCells = TableParser::split($lastLine);
-        if (\count($headerCells) > \count($columns)) {
+        if (\count($headerCells) !== \count($columns)) {
             return BlockStart::none();
         }
 

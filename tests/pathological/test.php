@@ -284,7 +284,7 @@ $cases = [
         'extension' => 'table',
         'sizes' => [1_000, 10_000, 100_000],
         'input' => static fn($n) => "x\n| - |\n" . \str_repeat("|", $n) . "y\n",
-        'expected' => static fn($n) => "<p>x\n| - |\n" . \str_repeat('|', $n) . 'y</p>',
+        'expected' => static fn($n) => "<table>\n<thead>\n<tr>\n<th>x</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td></td>\n</tr>\n</tbody>\n</table>\n",
     ],
     'CVE-2023-22483 test 5 (autolink)' => [
         'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-29g3-96g3-jg6c',

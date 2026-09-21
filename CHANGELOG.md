@@ -8,6 +8,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Fixed
 - Fixed quadratic-time parsing of long paragraphs when the `Table` extension is enabled (GHSA-3q6v-r5mr-hxv8)
+- Fixed table detection to match the GFM spec and reference implementation:
+  - Header rows no longer require a `|` character
+  - Header rows must now have the same number of cells as the delimiter row (previously, fewer cells were accepted)
 
 ## [2.10.1] - 2026-09-07
 
