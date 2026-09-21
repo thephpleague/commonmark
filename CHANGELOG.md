@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.10.2] - 2026-09-21
+
+This is a **security release** to address a denial of service vulnerability in the `Table` extension and a raw HTML filtering bypass in the `DisallowedRawHtml` extension.
+
 ### Changed
 - Improved performance of parsing table delimiter rows and splitting table rows into cells by scanning bytes directly instead of stepping a `Cursor` (roughly 4x faster for delimiter rows and 6x for cell splitting, and more on multibyte rows)
 
@@ -849,7 +853,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.1...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.2...HEAD
+[2.10.2]: https://github.com/thephpleague/commonmark/compare/2.10.1...2.10.2
 [2.10.1]: https://github.com/thephpleague/commonmark/compare/2.10.0...2.10.1
 [2.10.0]: https://github.com/thephpleague/commonmark/compare/2.9.2...2.10.0
 [2.9.2]: https://github.com/thephpleague/commonmark/compare/2.9.1...2.9.2
