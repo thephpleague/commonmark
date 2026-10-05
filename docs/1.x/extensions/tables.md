@@ -61,14 +61,14 @@ Result:
 <table>
 <thead>
 <tr>
-<th align="left">th</th>
+<th>th</th>
 <th align="center">th(center)</th>
-<th align="right">th(right)/th>
+<th align="right">th(right)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">td</td>
+<td>td</td>
 <td align="center">td</td>
 <td align="right">td</td>
 </tr>
