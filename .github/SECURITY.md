@@ -12,7 +12,7 @@ When a new **major** version is released (`1.0`, `2.0`, etc), the previous one (
 
 If you discover a security vulnerability within this package, please report it using any of the following methods:
 
-- [Open a private security advisory on GitHub](https://github.com/thephpleague/commonmark/security/advisories/new)
+- [Open a private security advisory on GitHub](https://github.com/thephpleague/commonmark/security/advisories/new) (preferred)
 - Use the [Tidelift security contact form](https://tidelift.com/security)
 - Email Colin O'Dell at <colinodell@gmail.com>
 
