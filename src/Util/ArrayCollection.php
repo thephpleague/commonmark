@@ -104,6 +104,8 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
      *
      * {@inheritDoc}
      *
+     * @return mixed|null
+     *
      * @phpstan-param int $offset
      *
      * @phpstan-return T|null
