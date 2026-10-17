@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Functional\Extension\HeadingPermalink;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Attributes\AttributesExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
@@ -334,5 +335,36 @@ XML;
         $document = (new MarkdownParser($environment))->parse($md);
 
         $this->assertSame($expectedXml, \rtrim((new XmlRenderer($environment))->renderDocument($document)->getContent()));
+    }
+
+    /**
+     * @dataProvider dataProviderFortestHeadingPermalinksWithAttributesExtension
+     */
+    #[DataProvider('dataProviderFortestHeadingPermalinksWithAttributesExtension')]
+    public function testHeadingPermalinksWithAttributesExtension(string $prefix, string $input, string $expected): void
+    {
+        $environment = new Environment([
+            'heading_permalink' => [
+                'id_prefix' => $prefix,
+                'fragment_prefix' => $prefix,
+                'apply_id_to_heading' => true,
+            ],
+            'attributes' => [
+                'allow' => ['id'],
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AttributesExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $this->assertEquals($expected, \trim((string) $converter->convert($input)));
+    }
+
+    public static function dataProviderFortestHeadingPermalinksWithAttributesExtension(): \Generator
+    {
+        yield ['', '## Test {#custom-id}', '<h2 id="custom-id"><a href="#custom-id" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">¶</a>Test</h2>'];
+        yield ['custom-prefix', '## Test {#custom-id}', '<h2 id="custom-prefix-custom-id"><a href="#custom-prefix-custom-id" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">¶</a>Test</h2>'];
     }
 }
