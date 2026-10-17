@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed Symfony `DebugClassLoader` deprecation notice about `ArrayCollection::offsetGet()` by adding an explicit `@return` annotation (#1158)
+
 ## [2.10.3] - 2026-09-21
 
 ### Fixed
