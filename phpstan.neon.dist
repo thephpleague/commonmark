@@ -26,6 +26,7 @@ parameters:
    - identifier: return.unusedType
    # PHPStan knows that variadic parameters are already lists, but Psalm doesn't, so we can't drop array_values()
    - identifier: arrayValues.list
+     reportUnmatched: false
   exceptions:
     uncheckedExceptionClasses:
       # Exceptions caused by bad developer logic that should always bubble up:

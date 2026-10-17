@@ -23,6 +23,7 @@ use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserEngine;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Tests\Unit\Parser\Inline\FakeInlineParser;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess as SeparateProcess;
 use PHPUnit\Framework\TestCase;
 
 final class InlineParserEngineTest extends TestCase
@@ -100,6 +101,7 @@ final class InlineParserEngineTest extends TestCase
      *
      * @runInSeparateProcess to avoid polluting the global environment
      */
+    #[SeparateProcess]
     public function testMultibyteDetectionRegressionFromIssue951(): void
     {
         \mb_internal_encoding('iso-8859-1'); // @phpstan-ignore-line
