@@ -89,7 +89,7 @@ Note that removing the prefix means a heading like `## Comments` will generate t
 
 If this value is `true`, the `id` attributes will be written to the `<h>` tag instead of the `<a>`.
 
-If the [Attributes extension](/2.x/extensions/attrivutes/) is also being used and is adding an `id` attribute to the `<h>` tag, setting this valud to `true` will result in using the `id` value from the Attributes extension instead of the automatically generated slug.
+If the [Attributes extension](/2.x/extensions/attributes/) is also being used and is adding an `id` attribute to the `<h>` tag, setting this value to `true` will result in using the `id` value from the Attributes extension instead of the automatically generated slug.
 
 ### `heading_class`
 

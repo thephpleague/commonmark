@@ -6,7 +6,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.10.4] - 2026-10-17
+
 ### Fixed
+- Fixed `HeadingPermalinkExtension` overwriting an `id` set on a heading by the `AttributesExtension` when `heading_permalink/apply_id_to_heading` is enabled; the existing `id` is now used (with the configured prefix) for both the heading and its permalink (#1159, #1160)
 - Fixed Symfony `DebugClassLoader` deprecation notice about `ArrayCollection::offsetGet()` by adding an explicit `@return` annotation (#1158)
 
 ## [2.10.3] - 2026-09-21
@@ -862,7 +865,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.3...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.4...HEAD
+[2.10.4]: https://github.com/thephpleague/commonmark/compare/2.10.3...2.10.4
 [2.10.3]: https://github.com/thephpleague/commonmark/compare/2.10.2...2.10.3
 [2.10.2]: https://github.com/thephpleague/commonmark/compare/2.10.1...2.10.2
 [2.10.1]: https://github.com/thephpleague/commonmark/compare/2.10.0...2.10.1
