@@ -16,6 +16,7 @@ namespace League\CommonMark\Tests\Unit\Parser;
 use League\CommonMark\Exception\UnexpectedEncodingException;
 use League\CommonMark\Parser\Cursor;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess as SeparateProcess;
 use PHPUnit\Framework\TestCase;
 
 final class CursorTest extends TestCase
@@ -360,6 +361,7 @@ final class CursorTest extends TestCase
     /**
      * @runInSeparateProcess
      */
+    #[SeparateProcess]
     public function testBytePositionMapHasBoundedMemoryOverhead(): void
     {
         // Scanning the whole line populates a checkpoint every 16 characters. This limit is
