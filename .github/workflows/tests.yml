@@ -57,6 +57,7 @@ jobs:
                   php-version: ${{ matrix.php }}
                   extensions: curl, mbstring, yaml
                   coverage: pcov
+                  ini-values: memory_limit=-1
                   tools: composer:v2
 
             - run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
