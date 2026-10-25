@@ -18,6 +18,7 @@ use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
+use League\CommonMark\Util\RegexHelper;
 
 final class TaskListItemMarkerParser implements InlineParserInterface
 {
@@ -40,7 +41,9 @@ final class TaskListItemMarkerParser implements InlineParserInterface
 
         $cursor->advanceBy(3);
 
-        if ($cursor->getNextNonSpaceCharacter() === null) {
+        // The marker must be followed by whitespace before any other content
+        $nextCharacter = $cursor->getCurrentCharacter();
+        if ($nextCharacter === null || ! RegexHelper::isWhitespace($nextCharacter) || $cursor->getNextNonSpaceCharacter() === null) {
             $cursor->restoreState($oldState);
 
             return false;

@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed task list items being recognized when the `[ ]` or `[x]` marker is directly followed by other content (`- [x]done`); the GFM spec requires whitespace after the marker
+
 ## [2.10.4] - 2026-10-17
 
 ### Fixed
