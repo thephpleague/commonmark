@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed the content indentation of a list item whose content is a single character after two to four spaces (`-  a`): it was computed as if one space followed the marker, so the next line could be read as part of the item, nesting a following item inside it
+
 ## [2.10.4] - 2026-10-17
 
 ### Fixed
