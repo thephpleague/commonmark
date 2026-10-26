@@ -14,6 +14,5 @@ If you discover a security vulnerability within this package, please report it u
 
 - [Open a private security advisory on GitHub](https://github.com/thephpleague/commonmark/security/advisories/new) (preferred)
 - Use the [Tidelift security contact form](https://tidelift.com/security)
-- Email Colin O'Dell at <colinodell@gmail.com>
 
 All security vulnerabilities will be promptly addressed. Please do not disclose security-related issues publicly until a fix has been announced.
