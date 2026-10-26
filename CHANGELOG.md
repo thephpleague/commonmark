@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed a table inside a block quote or list item absorbing the lines that follow it as table rows when those lines are lazy continuation lines (not prefixed with `>` or indented); they now end the container as in GitHub's `cmark-gfm`
+
 ## [2.10.4] - 2026-10-17
 
 ### Fixed
