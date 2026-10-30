@@ -97,9 +97,8 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
 
     public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
     {
-        // A line without a pipe can still become a row (unless it starts another block), but only when every
-        // container holding the table has been matched; we only get here in that case. Lines whose containers were
-        // not matched never call this method and must not be added to the table lazily.
+        // A line without a pipe can still become a row via lazy continuation. This is only reached when all
+        // enclosing containers matched; lines whose containers didn't match must not be added lazily.
         $this->canHaveLazyContinuationLines = \strpos($cursor->getLine(), '|') === false;
 
         if ($this->canHaveLazyContinuationLines) {

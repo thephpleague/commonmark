@@ -12,3 +12,19 @@ Not a table row
   | -------- |
   | cell 1.1 |
 Not a table row
+
+> | header 1 |
+> | -------- |
+> still a table row
+
+> > | header 1 |
+> > | -------- |
+> Not a table row
+
+> - | header 1 |
+>   | -------- |
+> Not a table row
+
+> | header 1 |
+> | -------- |
+<custom-tag>
