@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed link reference definitions keeping a partially parsed title when the title on the following line is never closed or is followed by other text; the definition now has no title, as the spec requires (#1162)
+
 ## [2.10.4] - 2026-10-17
 
 ### Fixed
