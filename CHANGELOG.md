@@ -7,7 +7,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ## [Unreleased][unreleased]
 
 ### Fixed
-- Fixed the content indentation of a list item whose content is a single character after two to four spaces (`-  a`): it was computed as if one space followed the marker, so the next line could be read as part of the item, nesting a following item inside it
+- Fixed link reference definitions keeping a partially parsed title when the title on the following line is never closed or is followed by other text; the definition now has no title, as the spec requires (#1162)
+- Fixed task list items being recognized when the `[ ]` or `[x]` marker is directly followed by other content (`- [x]done`); the GFM spec requires whitespace after the marker (#1164)
+- Fixed the content indentation of a list item whose content is a single character after two to four spaces (`-  a`): it was computed as if one space followed the marker, so the next line could be read as part of the item, nesting a following item inside it (#1163)
 
 ## [2.10.4] - 2026-10-17
 
