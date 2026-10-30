@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Fixed
 - Fixed link reference definitions keeping a partially parsed title when the title on the following line is never closed or is followed by other text; the definition now has no title, as the spec requires (#1162)
+- Fixed task list items being recognized when the `[ ]` or `[x]` marker is directly followed by other content (`- [x]done`); the GFM spec requires whitespace after the marker (#1164)
 
 ## [2.10.4] - 2026-10-17
 

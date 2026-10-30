@@ -44,6 +44,7 @@ Some examples which should not match:
  - Checkbox [x] in the middle
  - Checkbox at the end [ ]
  - [  ] too many spaces
+ - [x]no space after the marker
  - **[x] Checkbox inside of emphasis**
  - No text, as shown in these examples:
    - [x]
@@ -87,6 +88,7 @@ EOT;
 <li>Checkbox [x] in the middle</li>
 <li>Checkbox at the end [ ]</li>
 <li>[  ] too many spaces</li>
+<li>[x]no space after the marker</li>
 <li><strong>[x] Checkbox inside of emphasis</strong></li>
 <li>No text, as shown in these examples:
 <ul>
