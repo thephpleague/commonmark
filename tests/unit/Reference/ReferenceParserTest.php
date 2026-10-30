@@ -50,6 +50,19 @@ final class ReferenceParserTest extends TestCase
         $this->assertSame('"title" ok', $parser->getParagraphContent());
     }
 
+    public function testParenthesizedTitleCannotContainUnescapedOpeningParen(): void
+    {
+        $parser = new ReferenceParser();
+        $parser->parse('[foo]: /url');
+        $parser->parse('(foo(bar)');
+
+        $references = $this->getReferences($parser);
+
+        $this->assertCount(1, $references);
+        $this->assertSame('', $references[0]->getTitle());
+        $this->assertSame('(foo(bar)', $parser->getParagraphContent());
+    }
+
     public function testGettingReferencesKeepsATitleThatIsStillOpen(): void
     {
         $parser = new ReferenceParser();
