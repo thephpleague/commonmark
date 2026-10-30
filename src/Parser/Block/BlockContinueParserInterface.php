@@ -38,7 +38,11 @@ interface BlockContinueParserInterface
     public function isContainer(): bool;
 
     /**
-     * Return whether we are interested in possibly lazily parsing any subsequent lines
+     * Return whether the current line may be added to this block even though it wasn't continued by tryContinue()
+     *
+     * This is checked per line, after tryContinue() (which is skipped if an enclosing container did not match), so
+     * the answer may depend on the current line. Block start parsers may also consult it to decide whether a new
+     * block can interrupt this one.
      */
     public function canHaveLazyContinuationLines(): bool;
 
