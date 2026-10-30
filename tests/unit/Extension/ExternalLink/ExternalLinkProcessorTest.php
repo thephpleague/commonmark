@@ -14,10 +14,13 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Extension\ExternalLink;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkProcessor;
 use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Node\Block\Document;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -54,6 +57,81 @@ final class ExternalLinkProcessorTest extends TestCase
         $expected = '<p>Report <a href="javascript:alert(0);">xss</a> vulnerabilities by emailing <a href="mailto:colinodell@gmail.com">colinodell@gmail.com</a></p>';
 
         $this->assertEquals($expected, $this->parse($input));
+    }
+
+    public function testUrlsWithoutTwoSlashesInMarkdown(): void
+    {
+        $input = '[a](https:///evil.example) [b](http:evil.example) [c](///evil.example) [d](https:///mysite.com)';
+
+        $expected = '<p><a rel="noopener noreferrer" href="https:///evil.example">a</a> <a rel="noopener noreferrer" href="http:evil.example">b</a> <a rel="noopener noreferrer" href="///evil.example">c</a> <a href="https:///mysite.com">d</a></p>';
+
+        $this->assertEquals($expected, $this->parse($input, ['external_link' => ['internal_hosts' => 'mysite.com']]));
+    }
+
+    /**
+     * @dataProvider dataProviderForTestDetectsHostLikeABrowser
+     */
+    #[DataProvider('dataProviderForTestDetectsHostLikeABrowser')]
+    public function testDetectsHostLikeABrowser(string $url, ?bool $expectedExternal): void
+    {
+        $environment = new Environment(['external_link' => ['internal_hosts' => 'mysite.com']]);
+        $environment->addExtension(new ExternalLinkExtension());
+
+        $link     = new Link($url);
+        $document = new Document();
+        $document->appendChild($link);
+
+        $environment->dispatch(new DocumentParsedEvent($document));
+
+        $this->assertSame($expectedExternal, $link->data->has('external') ? $link->data->get('external') : null);
+    }
+
+    /**
+     * @return iterable<array{string, ?bool}>
+     */
+    public static function dataProviderForTestDetectsHostLikeABrowser(): iterable
+    {
+        yield ['https://evil.example', true];
+        yield ['https://mysite.com/page', false];
+        yield ['//evil.example', true];
+
+        // Browsers skip any number of slashes after a special scheme, or none at all
+        yield ['https:evil.example', true];
+        yield ['https:/evil.example', true];
+        yield ['https:///evil.example', true];
+        yield ['HTTPS:evil.example', true];
+        yield ['http:evil.example', true];
+        yield ['wss:evil.example', true];
+        yield ['https:///mysite.com', false];
+        yield ['///evil.example', true];
+
+        // Browsers treat backslashes like slashes in these URLs
+        yield ['https:\\\\evil.example', true];
+        yield ['/\\evil.example', true];
+        yield ['https://evil.example\\@mysite.com', true];
+
+        // Userinfo and ports aren't part of the host
+        yield ['https://mysite.com@evil.example', true];
+        yield ['https://evil.example#@mysite.com', true];
+        yield ['https://evil.example?@mysite.com', true];
+        yield ['https://user:pass@mysite.com:8080/page', false];
+        yield ['https://[::1]:8080/', true];
+
+        // Browsers strip surrounding whitespace and control characters, along with any tabs or newlines
+        yield [" https://evil.example\n", true];
+        yield ["https:/\t/evil.example", true];
+
+        // Other schemes are left as they were
+        yield ['foo://evil.example', true];
+        yield ['mailto:someone@evil.example', null];
+        yield ['javascript:alert(1)', null];
+
+        // Relative links have no host
+        yield ['/evil.example', null];
+        yield ['evil.example', null];
+        yield ['?q=evil.example', null];
+        yield ['#evil.example', null];
+        yield ['https://', null];
     }
 
     /**
