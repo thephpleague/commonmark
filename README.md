@@ -133,7 +133,7 @@ When a new **major** version is released (e.g. `1.6` -> `2.0`), the previous one
 
 ## 👷‍♀️ Contributing
 
-To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure with us.
+To report a security vulnerability, please see our [security policy](.github/SECURITY.md).
 
 If you encounter a bug in the spec, please report it to the [CommonMark] project.  Any resulting fix will eventually be implemented in this project as well.
 
