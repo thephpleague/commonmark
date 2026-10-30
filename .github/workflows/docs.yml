@@ -6,6 +6,14 @@ on:
     push:
         branches: [main]
     release:
+        # A bare `release:` fires once each for created, published and released,
+        # so every release started three builds at once (plus the push to main).
+        types: [published]
+
+# Every run force-pushes the built site to gh-pages, so never run two at once.
+concurrency:
+    group: docs-deploy
+    cancel-in-progress: false
 
 jobs:
     github-pages:

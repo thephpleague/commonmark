@@ -46,12 +46,17 @@ if [ "${GITHUB_REF}" = "refs/heads/${remote_branch}" ]; then
 fi
 
 echo "Publishing to ${GITHUB_REPOSITORY} on branch ${remote_branch}"
-echo "::debug ::Pushing to https://${JEKYLL_PAT}@github.com/${GITHUB_REPOSITORY}.git"
 
-remote_repo="https://${JEKYLL_PAT}@github.com/${GITHUB_REPOSITORY}.git" && \
+# Hand the token to git through a credential helper instead of embedding it in
+# the remote URL. When GitHub answers the push with a redirect, git re-reads
+# credentials from the redirected URL, drops the embedded token, then tries to
+# prompt for a username and fails ("could not read Username").
+export GIT_TERMINAL_PROMPT=0
+remote_repo="https://github.com/${GITHUB_REPOSITORY}.git" && \
 git init && \
 git config user.name "${GITHUB_ACTOR}" && \
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com" && \
+git config credential.helper '!f() { echo "username=x-access-token"; echo "password=${JEKYLL_PAT}"; }; f' && \
 git add . && \
 git commit -m "jekyll build from Action ${GITHUB_SHA}" && \
 git push --force $remote_repo master:$remote_branch && \
