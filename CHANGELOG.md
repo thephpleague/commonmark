@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed task list items being recognized when the `[ ]` or `[x]` marker is directly followed by other content (`- [x]done`); the GFM spec requires whitespace after the marker (#1164)
 - Fixed the content indentation of a list item whose content is a single character after two to four spaces (`-  a`): it was computed as if one space followed the marker, so the next line could be read as part of the item, nesting a following item inside it (#1163)
 - Fixed a table inside a block quote or list item absorbing the lines that follow it as table rows when those lines are lazy continuation lines (not prefixed with `>` or indented); they now end the container as in GitHub's `cmark-gfm` (#1165)
+- Fixed link reference definitions accepting an unescaped `(` inside a parenthesized title (#1168)
 
 ## [2.10.4] - 2026-10-17
 
