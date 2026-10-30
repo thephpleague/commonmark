@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed `ExternalLinkExtension` not treating some links as external when browsers would navigate to an external host, such as `https:///example.com`, `http:example.com`, or `///example.com`; hosts are now determined the way browsers do (#1169)
+
 ## [2.10.5] - 2026-10-30
 
 ### Fixed

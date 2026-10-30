@@ -43,9 +43,9 @@ final class ExternalLinkProcessor
                 continue;
             }
 
-            $host = \parse_url($link->getUrl(), PHP_URL_HOST);
-            if (! \is_string($host)) {
-                // Something is terribly wrong with this URL
+            $host = self::getHost($link->getUrl());
+            if ($host === null) {
+                // Relative links and non-network schemes like mailto: have no host to compare
                 continue;
             }
 
@@ -95,6 +95,28 @@ final class ExternalLinkProcessor
         if (! $link->data->has('attributes/rel')) {
             $link->data->set('attributes/rel', false);
         }
+    }
+
+    /**
+     * Determines which host a browser would navigate to, which parse_url() doesn't always agree with
+     * on its own (for example, it finds no host in "https:///example.com" or "///example.com")
+     */
+    private static function getHost(string $url): ?string
+    {
+        // Browsers ignore these characters, so links not created by the parser could use them to obscure the host
+        $url = \str_replace(["\t", "\n", "\r"], '', \trim($url, "\x00..\x20"));
+
+        // For these "special" schemes (and scheme-relative URLs), browsers accept any number of slashes before the
+        // host, even none, and treat "\" like "/". parse_url() needs exactly "//", so we rewrite the URL to match.
+        // Without slashes ("https:example.com") a browser may instead resolve the URL relative to the current page,
+        // but we can't know the page's scheme, so we assume the worst and treat it as a host.
+        if (\preg_match('~^(?:(?:https?|ftp|wss?):|(?=[/\\\\]{2}))~i', $url, $matches) === 1) {
+            $url = '//' . \ltrim(\strtr(\substr($url, \strlen($matches[0])), '\\', '/'), '/');
+        }
+
+        $host = \parse_url($url, PHP_URL_HOST);
+
+        return \is_string($host) && $host !== '' ? $host : null;
     }
 
     /**
