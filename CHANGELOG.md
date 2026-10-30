@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.10.6] - 2026-10-30
+
 ### Fixed
 - Fixed `ExternalLinkExtension` not treating some links as external when browsers would navigate to an external host, such as `https:///example.com`, `http:example.com`, or `///example.com`; hosts are now determined the way browsers do (#1169)
 
@@ -877,7 +879,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.5...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.6...HEAD
+[2.10.6]: https://github.com/thephpleague/commonmark/compare/2.10.5...2.10.6
 [2.10.5]: https://github.com/thephpleague/commonmark/compare/2.10.4...2.10.5
 [2.10.4]: https://github.com/thephpleague/commonmark/compare/2.10.3...2.10.4
 [2.10.3]: https://github.com/thephpleague/commonmark/compare/2.10.2...2.10.3
