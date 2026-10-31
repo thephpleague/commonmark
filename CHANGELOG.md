@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.10.7] - 2026-10-31
+
 ### Fixed
 - Fixed `AutolinkExtension` keeping trailing punctuation inside very long URLs containing long runs of punctuation, and removed the excessive regex backtracking that caused it (#1170)
 
@@ -882,7 +884,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.6...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.7...HEAD
+[2.10.7]: https://github.com/thephpleague/commonmark/compare/2.10.6...2.10.7
 [2.10.6]: https://github.com/thephpleague/commonmark/compare/2.10.5...2.10.6
 [2.10.5]: https://github.com/thephpleague/commonmark/compare/2.10.4...2.10.5
 [2.10.4]: https://github.com/thephpleague/commonmark/compare/2.10.3...2.10.4
