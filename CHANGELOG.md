@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed `AutolinkExtension` keeping trailing punctuation inside very long URLs containing long runs of punctuation, and removed the excessive regex backtracking that caused it (#1170)
+
 ## [2.10.6] - 2026-10-30
 
 ### Fixed

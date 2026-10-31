@@ -98,6 +98,11 @@ final class UrlAutolinkParserTest extends TestCase
         yield ['www. example.com', '<p>www. example.com</p>'];
         yield ['www.  https://example.com', '<p>www.  <a href="https://example.com">https://example.com</a></p>'];
         yield ['é www.  https://example.com/中', '<p>é www.  <a href="https://example.com/中">https://example.com/中</a></p>'];
+
+        // Trailing punctuation must still be stripped from long URLs full of punctuation
+        $path = 'a' . \str_repeat('.', 2000) . 'b';
+
+        yield ['https://example.com/' . $path . '.', '<p><a href="https://example.com/' . $path . '">https://example.com/' . $path . '</a>.</p>'];
     }
 
     public function testUrlAutolinksWithStrikethrough(): void
