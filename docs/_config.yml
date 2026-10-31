@@ -1,6 +1,9 @@
 ---
 repository: thephpleague/commonmark
+url: https://commonmark.thephpleague.com
+baseurl: ""
 permalink: pretty
 plugins:
   - jekyll-github-metadata
   - jekyll-redirect-from
+  - jekyll-sitemap
