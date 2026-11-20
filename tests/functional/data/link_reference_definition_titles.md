@@ -46,3 +46,7 @@ title"
 (next line)
 
 [next-line]
+
+[text-after]: /text-after [other]: /other
+
+[text-after] [other]

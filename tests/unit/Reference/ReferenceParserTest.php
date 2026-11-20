@@ -81,6 +81,15 @@ final class ReferenceParserTest extends TestCase
         $this->assertSame('', $parser->getParagraphContent());
     }
 
+    public function testTextAfterDestinationOnSameLineIsNotADefinition(): void
+    {
+        $parser = new ReferenceParser();
+        $parser->parse('[foo]: /url [bar]: /other');
+
+        $this->assertCount(0, $this->getReferences($parser));
+        $this->assertSame('[foo]: /url [bar]: /other', $parser->getParagraphContent());
+    }
+
     /**
      * @return ReferenceInterface[]
      */
