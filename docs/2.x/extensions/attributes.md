@@ -66,6 +66,22 @@ Output:
 <p>This is <em style="color: red">red</em>.</p>
 ```
 
+### Quoting Values
+
+Wrap a value in double or single quotes if it contains spaces, quotes, or a `}`:
+
+```markdown
+*Hover me*{title="A } brace" data-json='{"a": 1}'}
+```
+
+Output:
+
+```html
+<p><em title="A } brace" data-json="{&quot;a&quot;: 1}">Hover me</em></p>
+```
+
+In an unquoted value, a `}` ends the attribute list unless another `}` follows it in the same value. Attribute lists longer than 8,192 bytes are not parsed and are left as text.
+
 ## Installation
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:

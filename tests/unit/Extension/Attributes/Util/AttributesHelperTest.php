@@ -106,6 +106,23 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{: data-json="{1,2,3}" }'), ['data-json' => '{1,2,3}']];
         yield [new Cursor('{data-json={1,2,3}} test'), ['data-json' => '{1,2,3}'], ' test'];
 
+        // In an unquoted value, a '}' ends the list unless another '}' follows in the same value
+        yield [new Cursor('{a=b}}'), ['a' => 'b}']];
+        yield [new Cursor('{a=b} }'), ['a' => 'b'], ' }'];
+        yield [new Cursor('{a={1,2} #b}'), ['a' => '{1,2'], ' #b}'];
+        yield [new Cursor('{a=b}{c=d}'), ['a' => 'b'], '{c=d}'];
+
+        // Malformed lists are left alone entirely
+        yield [new Cursor('{.a =b}'), [], '{.a =b}'];
+        yield [new Cursor('{a=ba=b}'), [], '{a=ba=b}'];
+        yield [new Cursor('{:=b}'), [], '{:=b}'];
+
+        // Lists are limited to 8192 bytes
+        yield [new Cursor('{title="' . \str_repeat('x', 8182) . '"}'), ['title' => \str_repeat('x', 8182)]];
+        yield [new Cursor('{title="' . \str_repeat('x', 8183) . '"}'), [], '{title="' . \str_repeat('x', 8183) . '"}'];
+        yield [new Cursor('{title="' . \str_repeat('é', 4091) . '"}'), ['title' => \str_repeat('é', 4091)]];
+        yield [new Cursor('{title="' . \str_repeat('é', 4092) . '"}'), [], '{title="' . \str_repeat('é', 4092) . '"}'];
+
         // Avoid mustache style templating language being parsed as attributes
         yield [new Cursor('{{ foo }}'), [], '{{ foo }}'];
         yield [new Cursor(' {{ foo }}'), [], ' {{ foo }}'];

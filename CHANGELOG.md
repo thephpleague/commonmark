@@ -8,9 +8,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Changed
 - `max_delimiters_per_line` now counts each delimiter character instead of each run of delimiters, so `**` counts as 2 and a run of 50 underscores counts as 50; if you set a low limit, you may need to raise it
+- Attribute lists longer than 8192 bytes are no longer parsed by `AttributesExtension`
+- In an unquoted attribute value, a `}` now ends the attribute list unless another `}` follows in the same value; for example, `{a={1,2} #b}` now sets `a="{1,2"` and leaves ` #b}` as text. Quote values that contain `}`. Adjacent unquoted lists such as `{a=b}{c=d}` are now parsed as two lists instead of one
+- Malformed attribute lists such as `{a=ba=b}` and `{.a =b}` are now left as text; previously they were partially parsed and the rest silently dropped
 
 ### Fixed
 - Fixed `max_delimiters_per_line` not limiting long runs of delimiters, allowing a single pair of very long `_` or `*` runs to produce deeply-nested emphasis that takes quadratic time to render, which could be abused to cause a denial of service (GHSA-h4px-59g8-q37c)
+- Fixed the `AttributesExtension` backtracking excessively when a paragraph or line contains many `{` that don't form a valid attribute list, which could be abused to cause a denial of service (GHSA-8q9g-2c37-97xp)
 - Fixed a line such as `[foo]: /url [bar]: /other` being parsed as a link reference definition for `bar` instead of a paragraph (#1174)
 
 ## [2.10.7] - 2026-10-31

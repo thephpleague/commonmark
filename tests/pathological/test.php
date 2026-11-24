@@ -497,18 +497,45 @@ $cases = [
         'expected' => static fn($n) => '<p>' . \str_repeat(\str_repeat('a', 63) . "\u{201C} ", $n - 1) . \str_repeat('a', 63) . "\u{201C}</p>",
     ],
     'Many attributes in one list' => [
-        // Sized just below the ~2,400-attribute boundary where the list exhausts pcre.backtrack_limit.
+        // Sized to stay within MAX_ATTRIBUTE_LIST_BYTES (8192 bytes, ~2,700 attributes).
         'extension' => 'attributes',
         'sizes' => [500, 1_000, 2_000],
         'input' => static fn($n) => '{' . \str_repeat('#a ', $n) . "}\nx",
         'expected' => static fn($n) => '<p id="a">x</p>',
     ],
     'Oversized attribute list' => [
-        // Beyond that boundary the list must degrade quickly into a literal paragraph.
+        // Beyond that bound the list must degrade quickly into a literal paragraph.
         'extension' => 'attributes',
         'sizes' => [20_000, 80_000],
         'input' => static fn($n) => '{' . \str_repeat('#a ', $n) . "}\nx",
         'expected' => static fn($n) => '<p>{' . \str_repeat('#a ', $n - 1) . "#a }\nx</p>",
+    ],
+    'Unclosed attribute braces' => [
+        'extension' => 'attributes',
+        'sizes' => [25_000, 100_000, 400_000],
+        'input' => static fn($n) => \str_repeat('{', $n),
+        'expected' => static fn($n) => '<p>' . \str_repeat('{', $n) . '</p>',
+    ],
+    'Unclosed attribute lists after text' => [
+        'extension' => 'attributes',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => \str_repeat('a{#', $n),
+        'expected' => static fn($n) => '<p>' . \str_repeat('a{#', $n) . '</p>',
+    ],
+    'Ambiguous attribute tokens before an unreachable closing brace' => [
+        // '#a{#a' can be read as one id or several, so a list regex that backtracks tries
+        // exponentially many splits at every '{' before giving up; the ' "' makes the '}' unreachable.
+        'extension' => 'attributes',
+        'sizes' => [4_000, 16_000, 64_000],
+        'input' => static fn($n) => \str_repeat('{#a', $n) . ' "}',
+        'expected' => static fn($n) => '<p>' . \str_repeat('{#a', $n) . ' &quot;}</p>',
+    ],
+    'Ambiguous attribute tokens on consecutive lines' => [
+        // As above, but each line is a separate attempt by the block-level attributes parser.
+        'extension' => 'attributes',
+        'sizes' => [2_000, 8_000, 32_000],
+        'input' => static fn($n) => \str_repeat('{' . \str_repeat('#a', 18) . " \"}\n", $n),
+        'expected' => static fn($n) => '<p>' . \rtrim(\str_repeat('{' . \str_repeat('#a', 18) . " &quot;}\n", $n)) . '</p>',
     ],
     'Adjacent inline attributes at start of block' => [
         'extension' => 'attributes',
@@ -559,8 +586,7 @@ $cases = [
     'Adjacent inline attributes with distinct names' => [
         'extension' => 'attributes',
         'sizes' => [1_000, 4_000, 16_000],
-        // Quoting the values is load-bearing: an unquoted one swallows the '}{' that follows it,
-        // welding the whole run into a single node.
+        // Quoted so the case can't depend on how an unquoted value treats a following '}{'.
         'input' => static fn($n) => \implode('', \array_map(static fn($i) => "{a$i=\"v\"}", \range(0, $n - 1))),
         'expected' => static fn($n) => '<p ' . \implode(' ', \array_map(static fn($i) => "a$i=\"v\"", \range(0, $n - 1))) . '></p>',
     ],

@@ -23,8 +23,19 @@ use League\CommonMark\Util\RegexHelper;
  */
 final class AttributesHelper
 {
-    private const SINGLE_ATTRIBUTE = '\s*([.]-?[_a-z][^\s.}]*|[#][^\s}]+|' . RegexHelper::PARTIAL_ATTRIBUTENAME . RegexHelper::PARTIAL_ATTRIBUTEVALUESPEC . ')\s*';
-    private const ATTRIBUTE_LIST   = '/\G{:?(' . self::SINGLE_ATTRIBUTE . ')+}/i';
+    /**
+     * Each token can only be split from its neighbors one way, and the repeated parts are possessive,
+     * so a failed match can't backtrack exponentially. An unquoted value may contain '}' only if
+     * another '}' follows in the same run; the last one closes the list.
+     */
+    private const SINGLE_ATTRIBUTE = '\s*+(?:[.]-?[_a-z][^\s.}]*+|[#][^\s}]++|' . RegexHelper::PARTIAL_ATTRIBUTENAME . '\s*+=\s*+(?:(?:[^"\'=<>`\x00-\x20}]++|}(?=[^"\'=<>`\x00-\x20}]*+}))++|\'[^\']*+\'|"[^"]*+"))\s*+';
+    private const ATTRIBUTE_LIST   = '/^{:?+(?:' . self::SINGLE_ATTRIBUTE . ')++}/i';
+
+    /**
+     * Each '{' is a potential list, so the text examined for one must be bounded; otherwise a
+     * line with many of them costs quadratic time.
+     */
+    private const MAX_ATTRIBUTE_LIST_BYTES = 8192;
 
     /**
      * PCRE's `\s` matches the form feed that PHP's default trim charlist omits, so the
@@ -48,20 +59,21 @@ final class AttributesHelper
             return [];
         }
 
-        // Attempt to match the entire attribute list expression
-        // While this is less performant than checking for '{' now and '}' later, it simplifies
-        // matching individual attributes since they won't need to look ahead for the closing '}'
-        // while dealing with the fact that attributes can technically contain curly braces.
-        // So we'll just match the start and end braces up front.
-        $attributeExpression = $cursor->matchInPlace(self::ATTRIBUTE_LIST);
-        if ($attributeExpression === null) {
+        // Match the whole list up front, so nothing is consumed unless it's valid. The cursor is on
+        // the '{', so no partially-consumed tab can be pending.
+        $window = \substr($cursor->getLine(), $cursor->getBytePosition(), self::MAX_ATTRIBUTE_LIST_BYTES);
+        if (\preg_match(self::ATTRIBUTE_LIST, $window, $matches) !== 1) {
             $cursor->restoreState($state);
 
             return [];
         }
 
-        // Trim the leading '{' or '{:' and the trailing '}'
-        $attributeExpression = \ltrim(\substr($attributeExpression, 1, -1), ':');
+        $attributeExpression = $matches[0];
+        $cursor->advanceBy(\mb_strlen($attributeExpression, 'UTF-8'));
+
+        // Trim the leading '{' or '{:'; the closing '}' stays, since SINGLE_ATTRIBUTE needs it to
+        // decide whether a '}' belongs to an unquoted value
+        $attributeExpression = \ltrim(\substr($attributeExpression, 1), ':');
         $attributeCursor     = new Cursor($attributeExpression);
 
         /** @var array<string, mixed> $attributes */
