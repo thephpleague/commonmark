@@ -222,6 +222,10 @@ final class ReferenceParser
         } elseif ($advanced === 0) {
             // spec: The title must be separated from the link destination by whitespace
             return false;
+        } elseif (! \in_array($cursor->getCurrentCharacter(), ['"', "'", '('], true)) {
+            // Other text after the destination on the same line, so this is not a link reference definition
+            // (and not the start of another one either)
+            return false;
         }
 
         $this->state = self::START_TITLE;
