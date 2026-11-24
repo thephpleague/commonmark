@@ -94,23 +94,28 @@ final class AttributesHelper
             /** @psalm-suppress PossiblyUndefinedArrayOffset */
             [$name, $value] = \explode('=', $attribute, 2);
 
-            if ($value === 'true') {
+            $name      = \trim($name, self::WHITESPACE);
+            $lowerName = \strtolower($name);
+
+            // A bare `true` makes a boolean attribute, except where other code expects a string
+            if ($value === 'true' && $lowerName !== 'class' && $lowerName !== 'id') {
                 $attributes[$name] = true;
                 continue;
             }
 
+            $value = \trim($value, self::WHITESPACE);
             $first = $value[0];
             $last  = \substr($value, -1);
-            if (($first === '"' && $last === '"') || ($first === "'" && $last === "'") && \strlen($value) > 1) {
-                $value = \substr($value, 1, -1);
+            if (\strlen($value) > 1 && (($first === '"' && $last === '"') || ($first === "'" && $last === "'"))) {
+                $value = \trim(\substr($value, 1, -1), self::WHITESPACE);
             }
 
-            if (\strtolower(\trim($name, self::WHITESPACE)) === 'class') {
-                foreach (\array_filter(\explode(' ', \trim($value, self::WHITESPACE))) as $class) {
+            if ($lowerName === 'class') {
+                foreach (\array_filter(\explode(' ', $value)) as $class) {
                     $attributes['class'][] = $class;
                 }
             } else {
-                $attributes[\trim($name, self::WHITESPACE)] = \trim($value, self::WHITESPACE);
+                $attributes[$name] = $value;
             }
         }
 

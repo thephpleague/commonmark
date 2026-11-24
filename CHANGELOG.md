@@ -16,6 +16,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed `max_delimiters_per_line` not limiting long runs of delimiters, allowing a single pair of very long `_` or `*` runs to produce deeply-nested emphasis that takes quadratic time to render, which could be abused to cause a denial of service (GHSA-h4px-59g8-q37c)
 - Fixed the `AttributesExtension` backtracking excessively when a paragraph or line contains many `{` that don't form a valid attribute list, which could be abused to cause a denial of service (GHSA-8q9g-2c37-97xp)
 - Fixed a line such as `[foo]: /url [bar]: /other` being parsed as a link reference definition for `bar` instead of a paragraph (#1174)
+- Fixed `AttributesExtension` throwing an error or rendering `class="1"` when given `class=true`; `class=true` and `id=true` now set the literal value `true` instead of a boolean attribute
+- Fixed `AttributesExtension` dropping attributes written with a space before `=` (`{x =true}`), and keeping the quotes in a value written with a space after `=` (`{x= "a b"}`)
+- Fixed `HeadingPermalinkExtension` throwing a `TypeError` when `apply_id_to_heading` is enabled and a heading's existing `id` attribute is not a string; an empty or non-string `id` is now replaced with the generated slug
 
 ## [2.10.7] - 2026-10-31
 

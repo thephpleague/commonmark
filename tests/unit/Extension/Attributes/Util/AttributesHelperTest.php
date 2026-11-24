@@ -117,6 +117,25 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{a=ba=b}'), [], '{a=ba=b}'];
         yield [new Cursor('{:=b}'), [], '{:=b}'];
 
+        // A bare `true` makes a boolean attribute, except for `class` and `id`
+        yield [new Cursor('{x=true}'), ['x' => true]];
+        yield [new Cursor('{x =true}'), ['x' => true]];
+        yield [new Cursor('{x= true}'), ['x' => 'true']];
+        yield [new Cursor('{x="true"}'), ['x' => 'true']];
+        yield [new Cursor("{x='true'}"), ['x' => 'true']];
+        yield [new Cursor('{class=true}'), ['class' => 'true']];
+        yield [new Cursor('{.a class=true}'), ['class' => 'a true']];
+        yield [new Cursor('{class=true .a}'), ['class' => 'true a']];
+        yield [new Cursor('{class=true class="a"}'), ['class' => 'true a']];
+        yield [new Cursor('{CLASS=true .a}'), ['class' => 'true a']];
+        yield [new Cursor('{class =true}'), ['class' => 'true']];
+        yield [new Cursor('{id=true}'), ['id' => 'true']];
+        yield [new Cursor('{#a id=true}'), ['id' => 'true']];
+        yield [new Cursor('{id=true #a}'), ['id' => 'a']];
+
+        // Whitespace around '=' doesn't affect quoting
+        yield [new Cursor('{x= "a b"}'), ['x' => 'a b']];
+
         // Lists are limited to 8192 bytes
         yield [new Cursor('{title="' . \str_repeat('x', 8182) . '"}'), ['title' => \str_repeat('x', 8182)]];
         yield [new Cursor('{title="' . \str_repeat('x', 8183) . '"}'), [], '{title="' . \str_repeat('x', 8183) . '"}'];

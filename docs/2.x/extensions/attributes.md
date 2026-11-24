@@ -66,6 +66,34 @@ Output:
 <p>This is <em style="color: red">red</em>.</p>
 ```
 
+### Boolean Attributes
+
+An unquoted value of `true` produces an attribute without a value:
+
+```markdown
+[Download](report.pdf){download=true}
+```
+
+Output:
+
+```html
+<p><a download href="report.pdf">Download</a></p>
+```
+
+To set the literal string `true` instead, quote it. This matters for attributes like `aria-hidden`, where an empty value doesn't mean the same thing as `"true"`:
+
+```markdown
+*Decorative*{aria-hidden="true"}
+```
+
+Output:
+
+```html
+<p><em aria-hidden="true">Decorative</em></p>
+```
+
+`class` and `id` have no boolean form, so `class=true` and `id=true` always set the literal value `true`.
+
 ### Quoting Values
 
 Wrap a value in double or single quotes if it contains spaces, quotes, or a `}`:

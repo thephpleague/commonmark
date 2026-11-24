@@ -366,5 +366,7 @@ XML;
     {
         yield ['', '## Test {#custom-id}', '<h2 id="custom-id"><a href="#custom-id" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">¶</a>Test</h2>'];
         yield ['custom-prefix', '## Test {#custom-id}', '<h2 id="custom-prefix-custom-id"><a href="#custom-prefix-custom-id" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">¶</a>Test</h2>'];
+        yield ['', '## Test {id=true}', '<h2 id="true"><a href="#true" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">¶</a>Test</h2>'];
+        yield ['', '## Test {id=""}', '<h2 id="test"><a href="#test" class="heading-permalink" aria-hidden="true" tabindex="-1" title="Permalink">¶</a>Test</h2>'];
     }
 }

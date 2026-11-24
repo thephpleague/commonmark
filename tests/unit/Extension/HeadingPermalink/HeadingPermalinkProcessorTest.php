@@ -24,6 +24,7 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\Config\Exception\InvalidConfigurationException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class HeadingPermalinkProcessorTest extends TestCase
@@ -126,6 +127,42 @@ final class HeadingPermalinkProcessorTest extends TestCase
         $headingLink4 = $heading4->firstChild();
         \assert($headingLink4 instanceof HeadingPermalink);
         $this->assertSame('test-heading-2', $headingLink4->getSlug());
+    }
+
+    /**
+     * @dataProvider dataForTestExistingIdIsOnlyReusedWhenItIsANonEmptyString
+     *
+     * @param mixed $existingId
+     */
+    #[DataProvider('dataForTestExistingIdIsOnlyReusedWhenItIsANonEmptyString')]
+    public function testExistingIdIsOnlyReusedWhenItIsANonEmptyString($existingId, string $expectedSlug): void
+    {
+        $processor = new HeadingPermalinkProcessor();
+        $processor->setEnvironment($this->createEnvironment(['heading_permalink' => ['apply_id_to_heading' => true, 'id_prefix' => '']]));
+
+        $document = new Document();
+        $document->appendChild($heading = new Heading(1));
+        $heading->appendChild(new Text('Test Heading'));
+        $heading->data->set('attributes/id', $existingId);
+
+        $processor(new DocumentParsedEvent($document));
+
+        $headingLink = $heading->firstChild();
+        \assert($headingLink instanceof HeadingPermalink);
+        $this->assertSame($expectedSlug, $headingLink->getSlug());
+        $this->assertSame($expectedSlug, $heading->data->get('attributes/id'));
+    }
+
+    /**
+     * @return iterable<array{mixed, string}>
+     */
+    public static function dataForTestExistingIdIsOnlyReusedWhenItIsANonEmptyString(): iterable
+    {
+        yield ['custom', 'custom'];
+        yield ['', 'test-heading'];
+        yield [true, 'test-heading'];
+        yield [5, 'test-heading'];
+        yield [['a'], 'test-heading'];
     }
 
     /**
