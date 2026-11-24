@@ -50,3 +50,8 @@ title"
 [text-after]: /text-after [other]: /other
 
 [text-after] [other]
+
+[after-valid]: /after-valid
+[text-after-2]: /text-after-2 [other-2]: /other-2
+
+[after-valid] [text-after-2] [other-2]

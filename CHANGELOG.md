@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ## [Unreleased][unreleased]
 
 ### Fixed
-- Fixed a line like `[foo]: /url [bar]: /other` being read as a link reference definition for `bar` and removed from the output; text after the destination on the same line that is not a title means the line is not a definition
+- Fixed a line such as `[foo]: /url [bar]: /other` being parsed as a link reference definition for `bar` instead of a paragraph (#1174)
 
 ## [2.10.7] - 2026-10-31
 
