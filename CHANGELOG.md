@@ -6,7 +6,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+- `max_delimiters_per_line` now counts each delimiter character instead of each run of delimiters, so `**` counts as 2 and a run of 50 underscores counts as 50; if you set a low limit, you may need to raise it
+
 ### Fixed
+- Fixed `max_delimiters_per_line` not limiting long runs of delimiters, allowing a single pair of very long `_` or `*` runs to produce deeply-nested emphasis that takes quadratic time to render, which could be abused to cause a denial of service (GHSA-h4px-59g8-q37c)
 - Fixed a line such as `[foo]: /url [bar]: /other` being parsed as a link reference definition for `bar` instead of a paragraph (#1174)
 
 ## [2.10.7] - 2026-10-31

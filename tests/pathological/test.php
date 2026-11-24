@@ -357,6 +357,15 @@ $cases = [
         'input' => static fn($n) => \str_repeat('_', $n) . '.' . \str_repeat('_', $n) . "\n",
         'expected' => static fn($n) => '<p>' . \str_repeat('<strong>', $n/2) . '.' . \str_repeat('</strong>', $n/2) . '</p>',
     ],
+    'CVE-2023-26485 test 1 (limited delimiters)' => [
+        'ref' => 'https://github.com/thephpleague/commonmark/security/advisories/GHSA-h4px-59g8-q37c',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => \str_repeat('_', $n) . '.' . \str_repeat('_', $n) . "\n",
+        'expected' => static fn($n) => '<p>' . \str_repeat('_', $n) . '.' . \str_repeat('_', $n) . '</p>',
+        'configuration' => [
+            'max_delimiters_per_line' => 1_000,
+        ],
+    ],
     'CVE-2023-26485 test 2' => [
         'ref' => 'https://github.com/github/cmark-gfm/security/advisories/GHSA-r8vr-c48j-fcc5',
         'sizes' => [1_000, 10_000, 100_000],

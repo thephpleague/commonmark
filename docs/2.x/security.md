@@ -103,6 +103,8 @@ See the [configuration](/2.x/configuration/) section for more information.
 
 Similarly to the maximum nesting level, **no maximum number of delimiters per line is enforced by default.**  Delimiters can be nested (like `*a **b** c*`) or un-nested (like `*a* *b* *c*`) - in either case, having too many in a single line can result in long parse times. We therefore have a separate option to limit the number of delimiters per line.
 
+Each delimiter character counts towards the limit, so `**` counts as 2 and a run of 50 underscores counts as 50.  This also bounds how deeply emphasis can be nested, since a long run such as `______...` would otherwise produce one nested `<strong>` element for every two characters.
+
 If you need to parse untrusted input, consider setting a reasonable `max_delimiters_per_line` (perhaps 100-1000) depending on your needs.  Once this level is hit, any subsequent delimiters on that line will be rendered as plain text.  Note that this option only applies to emphasis-style delimiters; link and image brackets (`[` and `![`) are not limited by it, so consider also enforcing input size or line length limits upstream.
 
 ### Example - Prevent too many delimiters
@@ -110,9 +112,9 @@ If you need to parse untrusted input, consider setting a reasonable `max_delimit
 ```php
 use League\CommonMark\CommonMarkConverter;
 
-$markdown = '*a* **b *c **d** c* b**'; // 8 delimiters (* and **)
+$markdown = '*a* **b *c **d** c* b**'; // 12 delimiter characters
 
-$converter = new CommonMarkConverter(['max_delimiters_per_line' => 6]);
+$converter = new CommonMarkConverter(['max_delimiters_per_line' => 9]);
 echo $converter->convert($markdown);
 
 // <p><em>a</em> **b *c <strong>d</strong> c* b**</p>
@@ -126,7 +128,7 @@ Pretty-printed XML indents each element by one level per step of nesting depth, 
 
 The `xml/max_indentation_level` option (default: `16`) caps how far elements are indented, which keeps the output size proportional to the size of the document.  Elements nested beyond that limit are still rendered in full - indentation is cosmetic, so the resulting XML remains well-formed and semantically identical.  Set the option to `0` for compact, unindented output.
 
-Note that `max_nesting_level` is *not* sufficient on its own here, as it only constrains how deeply **blocks** may nest - deeply-nested inlines (like `_______...`) can still produce a deep tree.
+Note that `max_nesting_level` is *not* sufficient on its own here, as it only constrains how deeply **blocks** may nest - deeply-nested inlines (like `_______...`) can still produce a deep tree unless `max_delimiters_per_line` is also set.
 
 ## Table of Contents Placeholders
 
