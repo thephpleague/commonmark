@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.10.8] - 2026-11-24
+
 ### Changed
 - `max_delimiters_per_line` now counts each delimiter character instead of each run of delimiters, so `**` counts as 2 and a run of 50 underscores counts as 50; if you set a low limit, you may need to raise it
 - Attribute lists longer than 8192 bytes are no longer parsed by `AttributesExtension`
@@ -898,7 +900,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.7...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.8...HEAD
+[2.10.8]: https://github.com/thephpleague/commonmark/compare/2.10.7...2.10.8
 [2.10.7]: https://github.com/thephpleague/commonmark/compare/2.10.6...2.10.7
 [2.10.6]: https://github.com/thephpleague/commonmark/compare/2.10.5...2.10.6
 [2.10.5]: https://github.com/thephpleague/commonmark/compare/2.10.4...2.10.5
