@@ -24,7 +24,7 @@ In order to be fully compliant with the CommonMark spec, certain security settin
 - `max_delimiters_per_line`: Protect against long parse times or rendering segfaults
 - `xml/max_indentation_level`: Protect against oversized XML output (only relevant if you render XML)
 
-Further information about each option can be found below.
+Further information about each option can be found below.  Your PHP environment and the size of the input also matter; see [PCRE JIT and Input Size](#pcre-jit-and-input-size).
 
 ## HTML Input
 
@@ -137,6 +137,12 @@ This only applies if you're using the [Table of Contents extension](/2.x/extensi
 In placeholder mode every placeholder renders its own copy of the table of contents, so a document containing many headings *and* many placeholders repeats that whole list at each one.  A small input can therefore produce output many times its size.
 
 The `table_of_contents/max_placeholder_entries` option bounds the total number of entries rendered across all of a document's placeholders; any placeholder beyond that budget is left as-is.  It defaults to `null` (no limit) for backward compatibility, so setting an `int` is recommended when rendering untrusted input.
+
+## PCRE JIT and Input Size
+
+This library relies heavily on PHP's PCRE regular expression functions.  PCRE's JIT compiler is enabled by default and makes them much faster; some inputs can take far longer to parse without it.  Check that `ini_get('pcre.jit')` returns `"1"` and that `phpinfo()` shows "PCRE JIT Support => enabled" in the SAPI that actually serves requests (CLI and FPM can be configured differently).  If PHP logs "Allocation of JIT memory failed", typically on hosts that forbid executable memory, JIT is effectively disabled even though the setting is on.
+
+Parsing time also grows with the size of the input, and the size of each paragraph matters more than the length of each line.  When rendering untrusted Markdown, limit the size of the whole input to what your application needs; limiting line length alone is not enough.
 
 ## Additional Filtering
 
