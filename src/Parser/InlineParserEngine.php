@@ -188,8 +188,8 @@ final class InlineParserEngine implements InlineParserEngineInterface
         $slotCount   = $this->slotCount;
 
         // Marks the string as valid UTF-8, so that /u matches against it at an offset, such as those in
-        // HtmlInlineParser and UrlAutolinkParser, don't re-validate the whole line on every call. From PHP 8.3,
-        // mb_check_encoding() above already does this.
+        // HtmlInlineParser and UrlAutolinkParser, don't re-validate the whole line on every call. Only needed
+        // before PHP 8.3; newer versions don't repeat the validation here.
         \preg_match('//u', $contents);
 
         $ret            = [];
