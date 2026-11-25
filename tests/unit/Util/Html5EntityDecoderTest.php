@@ -45,7 +45,14 @@ final class Html5EntityDecoderTest extends TestCase
         yield ['&#xDFFF;', "\u{FFFD}"];
         yield ['&#57344;', "\u{E000}"];
         yield ['&#x1F600;', "\u{1F600}"];
+        yield ['&#x2FFFF;', "\u{2FFFF}"];
+        yield ['&#x30000;', "\u{30000}"];
+        yield ['&#xE0041;', "\u{E0041}"];
+        yield ['&#1114111;', "\u{10FFFF}"];
+        yield ['&#x10FFFF;', "\u{10FFFF}"];
         yield ['&#x110000;', "\u{FFFD}"];
+        yield ['&#9999999;', "\u{FFFD}"];
+        yield ['&#x1000000000000F000;', "\u{FFFD}"];
     }
 
     /**
