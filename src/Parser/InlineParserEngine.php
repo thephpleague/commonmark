@@ -108,7 +108,11 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
             // We're now at a potential start - see if this parser can handle it
             $parser = $this->parsers[$key % $this->slotCount >> 1][0];
-            $parsed = $parser->parse($inlineParserContext->withMatches(\is_array($matches) ? $matches : [$matches]));
+            foreach (self::matchSets($matches) as $set) {
+                if ($parsed = $parser->parse($inlineParserContext->withMatches($set))) {
+                    break;
+                }
+            }
         }
 
         if (! $parsed) {
@@ -130,6 +134,30 @@ final class InlineParserEngine implements InlineParserEngineInterface
         AdjacentTextMerger::mergeChildNodes($block);
     }
 
+    /**
+     * @param string|non-empty-array<string>|list<non-empty-array<string>> $matches
+     *
+     * @return list<non-empty-array<string>>
+     */
+    private static function matchSets($matches): array
+    {
+        if (! \is_array($matches)) {
+            return [[$matches]];
+        }
+
+        if (\is_array(\reset($matches))) {
+            /** @var list<non-empty-array<string>> $sets */
+            $sets = $matches;
+
+            return $sets;
+        }
+
+        /** @var non-empty-array<string> $set */
+        $set = $matches;
+
+        return [$set];
+    }
+
     private function addPlainText(string $text, AbstractBlock $container): void
     {
         $lastInline = $container->lastChild();
@@ -146,16 +174,13 @@ final class InlineParserEngine implements InlineParserEngineInterface
      * The resulting array is ordered by character position, then by parser priority. Each key is
      * `(position * $this->slotCount) + (parser index * 2)`, plus one for a second match by the same parser at the
      * same position; each value is what the parser's regex matched there: the
-     * matched text alone, or a preg_match()-style array if there were sub-matches.
+     * matched text alone, or a preg_match()-style array if there were sub-matches. For a regex
+     * using \K, which can match more than twice at one position, the value is a list of such arrays.
      *
      * Lines can have a potential match at nearly every character, so this deliberately avoids
-     * allocating any arrays per match, both here and in what PCRE hands back.
+     * keeping any arrays per match.
      *
-     * @return array<int, string|array<string>>
-     *
-     * @psalm-return array<int, string|non-empty-array<string>>
-     *
-     * @phpstan-return array<int, string|non-empty-array<string>>
+     * @return array<int, string|non-empty-array<string>|list<non-empty-array<string>>>
      */
     private function matchParsers(string $contents): array
     {
@@ -206,9 +231,19 @@ final class InlineParserEngine implements InlineParserEngineInterface
             return '';
         };
 
-        foreach ($this->parsers as $parserIndex => [$parser, $regex, $isRegexMultibyte]) {
+        foreach ($this->parsers as $parserIndex => [, $regex, $isRegexMultibyte]) {
             if ($isMultibyte || $isRegexMultibyte) {
                 $regex .= 'u';
+            }
+
+            // \K can report a match that starts before the previous one ended, which
+            // preg_replace_callback() can't handle, so such regexes are collected the old way
+            if (\strpos($regex, '\K') !== false) {
+                foreach ($this->collectWithMatchAll($regex, $contents, $isMultibyte, $parserIndex * 2) as $key => $sets) {
+                    $ret[$key] = $sets;
+                }
+
+                continue;
             }
 
             $slot           = $parserIndex * 2;
@@ -232,5 +267,36 @@ final class InlineParserEngine implements InlineParserEngineInterface
         \ksort($ret);
 
         return $ret;
+    }
+
+    /**
+     * @param non-empty-string $regex
+     *
+     * @return array<int, list<non-empty-array<string>>>
+     */
+    private function collectWithMatchAll(string $regex, string $contents, bool $isMultibyte, int $slot): array
+    {
+        $found = [];
+        if (! \preg_match_all($regex, $contents, $matches, \PREG_OFFSET_CAPTURE | \PREG_SET_ORDER)) {
+            return $found;
+        }
+
+        $lastByteOffset = 0;
+        $lastCharOffset = 0;
+        foreach ($matches as $match) {
+            if ($isMultibyte) {
+                $lastCharOffset += \mb_strlen(\substr($contents, $lastByteOffset, $match[0][1] - $lastByteOffset), 'UTF-8');
+                $lastByteOffset  = $match[0][1];
+                $offset          = $lastCharOffset;
+            } else {
+                $offset = \intval($match[0][1]);
+            }
+
+            $matched = \array_column($match, 0);
+            \assert($matched !== []);
+            $found[$offset * $this->slotCount + $slot][] = $matched;
+        }
+
+        return $found;
     }
 }

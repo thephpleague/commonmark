@@ -19,7 +19,9 @@ use League\CommonMark\Extension\CommonMark\Parser\Inline\CloseBracketParser;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\OpenBracketParser;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
+use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Parser\InlineParserEngine;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Tests\Unit\Parser\Inline\FakeInlineParser;
@@ -94,6 +96,41 @@ final class InlineParserEngineTest extends TestCase
 
         $this->assertSame(['!', '?', '!'], $parser->getMatches());
         $this->assertSame('é!中?😀!', $paragraph->firstChild()->getLiteral());
+    }
+
+    public function testRegexThatMatchesBeforeThePreviousMatchEnds(): void
+    {
+        // \K inside a lookbehind lets a match start before the previous one ended
+        if (@\preg_match('/(?<=\Kx)y/', '') === false) {
+            $this->markTestSkipped('This PCRE version does not allow \K in lookarounds');
+        }
+
+        $parser = new class () implements InlineParserInterface {
+            /** @var list<array{int, string}> */
+            public array $calls = [];
+
+            public function getMatchDefinition(): InlineParserMatch
+            {
+                return InlineParserMatch::regex('(?<=\Kx)y|(?=x)|x');
+            }
+
+            public function parse(InlineParserContext $inlineContext): bool
+            {
+                $this->calls[] = [$inlineContext->getCursor()->getPosition(), $inlineContext->getFullMatch()];
+
+                return false;
+            }
+        };
+
+        $environment = new Environment();
+        $environment->addInlineParser($parser);
+
+        $engine    = new InlineParserEngine($environment, new ReferenceMap());
+        $paragraph = new Paragraph();
+        $engine->parse('éxy', $paragraph);
+
+        $this->assertSame([[1, ''], [1, 'x'], [1, 'xy']], $parser->calls);
+        $this->assertSame('éxy', $paragraph->firstChild()->getLiteral());
     }
 
     /**
