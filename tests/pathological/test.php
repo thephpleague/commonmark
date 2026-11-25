@@ -75,6 +75,11 @@ $cases = [
         'input' => static fn($n) => 'é.![i](data:image/png;base64,' . \str_repeat('A', $n) . ')',
         'expected' => static fn($n) => '<p>é.<img src="data:image/png;base64,' . \str_repeat('A', $n) . '" alt="i" /></p>',
     ],
+    'URL autolink that exceeds PCRE limits, followed by more prefixes' => [
+        'extension' => 'autolink',
+        'sizes' => [100_000, 200_000, 400_000],
+        'input' => static fn($n) => 'http://a.b/' . \str_repeat('(www.a/%2f', $n),
+    ],
     'Repeated invalid autolink prefixes on an ASCII line' => [
         'extension' => 'autolink',
         'sizes' => [10_000, 40_000, 160_000],
