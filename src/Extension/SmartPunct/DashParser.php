@@ -28,9 +28,9 @@ final class DashParser implements InlineParserInterface
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        // Stop at every hyphen that starts a pair, so a run whose first hyphen was consumed by another
-        // parser (like a backslash escape) is still converted
-        return InlineParserMatch::regex('-(?=-)');
+        // Stop at the start of each run, and also right after an escaped hyphen: the escape consumes the
+        // first hyphen of its run, and the rest of that run can still form a dash
+        return InlineParserMatch::regex('(?<!-)-(?=-)|(?<=\\\\-)-(?=-)');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

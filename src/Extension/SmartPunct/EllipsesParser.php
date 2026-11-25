@@ -25,17 +25,28 @@ final class EllipsesParser implements InlineParserInterface
 {
     public function getMatchDefinition(): InlineParserMatch
     {
-        // Only match the first period so an ellipsis overlapping a skipped one (like in `\....`) is still found
-        return InlineParserMatch::regex('\.(?=\.\.| \. \.)');
+        // Stop at the first two periods of each run of periods or of spaced periods; an escape may consume
+        // the first one
+        return InlineParserMatch::regex('(?<!\.\.)\.(?=\.\.)|(?<!\. \. )\.(?= \. \.)');
     }
 
     public function parse(InlineParserContext $inlineContext): bool
     {
-        if ($inlineContext->getCursor()->matchInPlace('/\G(?:\.\.\.|\. \. \.)/') === null) {
+        $cursor = $inlineContext->getCursor();
+        $first  = $cursor->matchInPlace('/\G(?:\.\.\.|\. \. \.)/');
+        if ($first === null) {
             return false;
         }
 
-        $inlineContext->getContainer()->appendChild(new Text('…'));
+        // Later ellipses in the same run have no stops of their own, so convert them here too
+        [$next, $replacement] = $first === '...' ? ['/\G\.\.\./', '…'] : ['/\G \. \. \./', ' …'];
+
+        $text = '…';
+        while ($cursor->matchInPlace($next) !== null) {
+            $text .= $replacement;
+        }
+
+        $inlineContext->getContainer()->appendChild(new Text($text));
 
         return true;
     }

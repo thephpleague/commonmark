@@ -516,6 +516,11 @@ $cases = [
         'sizes' => [10_000, 40_000, 160_000],
         'input' => static fn($n) => 'a ' . \str_repeat('-', $n),
     ],
+    'Many spaced periods' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => 'a ' . \str_repeat('. ', $n),
+    ],
     'Escaped hyphens splitting dash runs' => [
         'extension' => 'smartpunct',
         'sizes' => [10_000, 40_000, 160_000],
