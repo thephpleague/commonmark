@@ -20,7 +20,6 @@ parameters:
    # Similarly, our `@psalm-pure` methods call functions like preg_match() which PHPStan cannot prove are pure
    # because of their by-reference parameters.
    - identifier: possiblyImpure.functionCall
-   - identifier: possiblyImpure.methodCall
    # Nullable return types are part of our public API, so implementations must keep them even if they never
    # actually return null themselves.
    - identifier: return.unusedType

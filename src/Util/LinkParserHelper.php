@@ -140,35 +140,32 @@ final class LinkParserHelper
         return $destination;
     }
 
-    /** @var \WeakReference<Cursor>|null */
-    private static ?\WeakReference $lastCursor       = null;
-    private static bool $lastCursorLacksClosingBrace = false;
-
     private static function parseDestinationBraces(Cursor $cursor): ?string
     {
-        // Optimization: If we've previously parsed this cursor and returned `null`, we know
-        // that no closing brace exists, so we can skip the regex entirely. This helps avoid
-        // certain pathological cases where the regex engine can take a very long time to
-        // determine that no match exists.
-        if (self::$lastCursor !== null && self::$lastCursor->get() === $cursor) {
-            if (self::$lastCursorLacksClosingBrace) {
+        // Scanned by hand: under PCRE JIT, a failed regex match here costs time proportional to the
+        // rest of the line, which makes many unclosed `<` destinations quadratic
+        $line  = $cursor->getLine();
+        $start = $cursor->getBytePosition();
+        $end   = $start + 1;
+
+        while (true) {
+            $end += \strcspn($line, "<>\n\\\x00", $end);
+            $char = $line[$end] ?? null;
+            if ($char === '>') {
+                break;
+            }
+
+            // A backslash escapes the next byte unless it's a line break; any other stop means no closing `>`
+            if ($char !== '\\' || ! isset($line[$end + 1]) || $line[$end + 1] === "\n") {
                 return null;
             }
-        } else {
-            self::$lastCursor = \WeakReference::create($cursor);
+
+            $end += 2;
         }
 
-        if ($res = $cursor->matchInPlace('/\G' . RegexHelper::PARTIAL_LINK_DESTINATION_BRACES . '/')) {
-            self::$lastCursorLacksClosingBrace = false;
+        $destination = \substr($line, $start + 1, $end - $start - 1);
+        $cursor->advanceBy(\mb_strlen($destination, 'UTF-8') + 2);
 
-            // Chop off surrounding <..>:
-            return UrlEncoder::unescapeAndEncode(
-                RegexHelper::unescape(\substr($res, 1, -1))
-            );
-        }
-
-        self::$lastCursorLacksClosingBrace = true;
-
-        return null;
+        return UrlEncoder::unescapeAndEncode(RegexHelper::unescape($destination));
     }
 }
