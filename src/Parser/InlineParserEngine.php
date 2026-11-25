@@ -187,6 +187,12 @@ final class InlineParserEngine implements InlineParserEngineInterface
         $isMultibyte = ! \mb_check_encoding($contents, 'ASCII');
         $slotCount   = $this->slotCount;
 
+        if ($isMultibyte) {
+            // Marks the string as valid UTF-8, so parsers that match it with /u at an offset don't
+            // re-validate the whole line on every call (preg_replace_callback() doesn't do this; PHP < 8.3)
+            \preg_match('//u', $contents);
+        }
+
         $ret            = [];
         $slot           = 0;
         $lastByteOffset = 0;
