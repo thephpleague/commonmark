@@ -14,6 +14,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Deprecated
 - Deprecated the `RegexHelper` constants that are no longer used: `PARTIAL_IN_DOUBLE_QUOTES`, `PARTIAL_IN_SINGLE_QUOTES`, `PARTIAL_IN_PARENS`, `PARTIAL_REG_CHAR`, `PARTIAL_IN_PARENS_NOSP`, `PARTIAL_BLOCKTAGNAME`, `PARTIAL_OPENBLOCKTAG`, `PARTIAL_CLOSEBLOCKTAG`, `PARTIAL_HTMLBLOCKOPEN` and `REGEX_THEMATIC_BREAK`
+- Deprecated `RegexHelper::PARTIAL_HTMLCOMMENT`, `PARTIAL_PROCESSINGINSTRUCTION`, `PARTIAL_CDATA`, `PARTIAL_HTMLTAG` and `PARTIAL_DECLARATION`, which are no longer used; matching any of the first four against a long string without an anchor takes quadratic time when PCRE's JIT is disabled
 
 ### Fixed
 - Fixed `AttributesExtension` allowing an attribute name written in a different case, such as `{REL=opener}`, `{TARGET=_self}` or `{HREF=...}`, to take precedence in browsers over the attribute set by a renderer or extension, such as the `href` of a link or footnote reference, the `src` of an image, or the `rel`, `target` and `id` set by `ExternalLinkExtension` and `HeadingPermalinkExtension` (#1176)
