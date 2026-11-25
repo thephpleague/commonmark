@@ -26,7 +26,9 @@ final class EmailAutolinkParser implements InlineParserInterface
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::regex(self::REGEX);
+        // Case-sensitive so that [A-Za-z] can't match non-ASCII letters such as the Kelvin sign, which
+        // would make the byte length used by parse() differ from the character length
+        return InlineParserMatch::regex(self::REGEX)->caseSensitive();
     }
 
     public function parse(InlineParserContext $inlineContext): bool
