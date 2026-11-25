@@ -17,7 +17,6 @@ use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
-use League\CommonMark\Util\RegexHelper;
 
 final class ThematicBreakStartParser implements BlockStartParserInterface
 {
@@ -27,8 +26,14 @@ final class ThematicBreakStartParser implements BlockStartParserInterface
             return BlockStart::none();
         }
 
-        $match = RegexHelper::matchAt(RegexHelper::REGEX_THEMATIC_BREAK, $cursor->getLine(), $cursor->getNextNonSpacePosition());
-        if ($match === null) {
+        // No regex here: a line of markers can be long enough to hit PCRE's limits
+        $rest   = \ltrim(\substr($cursor->getLine(), $cursor->getBytePosition()), " \t");
+        $marker = $rest[0] ?? '';
+        if ($marker !== '*' && $marker !== '-' && $marker !== '_') {
+            return BlockStart::none();
+        }
+
+        if (\strspn($rest, $marker . " \t") !== \strlen($rest) || \substr_count($rest, $marker) < 3) {
             return BlockStart::none();
         }
 

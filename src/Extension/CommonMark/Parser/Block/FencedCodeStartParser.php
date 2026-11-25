@@ -27,7 +27,8 @@ final class FencedCodeStartParser implements BlockStartParserInterface
         }
 
         $indent = $cursor->getIndent();
-        $fence  = $cursor->matchInPlace('/\G[ \t]*(?:`{3,}+(?!.*`)|~{3,})/');
+        // The lookahead is possessive so a long info string can't hit PCRE's backtrack limit
+        $fence = $cursor->matchInPlace('/\G[ \t]*+(?:`{3,}+(?![^`]*+`)|~{3,}+)/');
         if ($fence === null) {
             return BlockStart::none();
         }
