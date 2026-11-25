@@ -69,7 +69,7 @@ final class HtmlInlineParser implements InlineParserInterface
             $this->tagRegex = self::TAG_REGEX . (\mb_check_encoding($line, 'ASCII') ? '' : 'u');
         }
 
-        $next = $line[$start + 1];
+        $next = $line[$start + 1] ?? '';
         if ($next === '!' || $next === '?') {
             $inline = $this->matchUntilTerminator($line, $start);
         } elseif (\preg_match($this->tagRegex, $line, $m, 0, $start) === 1) {

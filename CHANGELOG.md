@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - The `attributes/allow` configuration option is now case-insensitive; previously an entry like `'ID'` or `'CLASS'` never matched `#id` or `.class` (#1176)
 - Real HTML tags that follow a backslash-escaped `<` or a code span are no longer rendered as text when the escaped `<` or the code span looked like the start of inline HTML; for example, in `\<!a<a href="x">` and `` `<!--` <b>x</b> --> `` the `<a href="x">` and `<b>` are now raw HTML, as the spec requires (GHSA-jj45-w5cj-2hc8)
 - A GFM URL autolink whose regex hits a PCRE backtracking or recursion limit (only realistic for URLs over about 1MB) is now left as text, along with any later URL autolinks in the same paragraph (GHSA-jj45-w5cj-2hc8)
+- The inline parser uses much less memory on lines where inline syntax could start at nearly every character, such as long runs of `[` or `*`; very large inputs of this kind can still exceed `memory_limit`
 
 ### Deprecated
 - Deprecated the `RegexHelper` constants that are no longer used: `PARTIAL_IN_DOUBLE_QUOTES`, `PARTIAL_IN_SINGLE_QUOTES`, `PARTIAL_IN_PARENS`, `PARTIAL_REG_CHAR`, `PARTIAL_IN_PARENS_NOSP`, `PARTIAL_BLOCKTAGNAME`, `PARTIAL_OPENBLOCKTAG`, `PARTIAL_CLOSEBLOCKTAG`, `PARTIAL_HTMLBLOCKOPEN` and `REGEX_THEMATIC_BREAK`
@@ -34,7 +35,6 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed a line with many `www.` or `http://` prefixes taking quadratic time with the GFM autolink extension on PHP versions before 8.3, which could be abused to cause a denial of service (GHSA-jj45-w5cj-2hc8)
 - Fixed long URL autolinks (from about 12KB with PCRE JIT enabled) being only partly linked, or later URL autolinks on the same line being left as text, when the URL regex exceeded PCRE's limits (GHSA-jj45-w5cj-2hc8)
 - Fixed GFM email autolinks treating non-ASCII letters that match `[A-Za-z]` case-insensitively, such as the Kelvin sign and long s, as part of the address and swallowing the text that follows; such characters are no longer part of an address
-- Fixed the inline parser using about 1KB of memory for every position on a line where inline syntax could start, such as each `<`, `[` or `*`; a few hundred kilobytes of such text could exceed the default `memory_limit`
 
 ## [2.10.8] - 2026-11-24
 

@@ -77,7 +77,7 @@ with an anchor of your own choosing instead.
 ### Deprecated: Unused `RegexHelper` Constants
 
 Starting in 2.10.9, the following `RegexHelper` constants are deprecated because the library no longer uses them. They
-will be removed in 3.0, and their values are unchanged until then:
+will be removed in 3.0, and they match the same strings until then:
 
 - `PARTIAL_IN_DOUBLE_QUOTES`, `PARTIAL_IN_SINGLE_QUOTES`, `PARTIAL_IN_PARENS`, `PARTIAL_REG_CHAR` and `PARTIAL_IN_PARENS_NOSP`
 - `PARTIAL_BLOCKTAGNAME`, `PARTIAL_OPENBLOCKTAG`, `PARTIAL_CLOSEBLOCKTAG` and `PARTIAL_HTMLBLOCKOPEN`

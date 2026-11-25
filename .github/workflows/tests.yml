@@ -117,7 +117,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # Oldest and newest supported versions; PCRE and string internals differ between them
+                # The oldest supported version and the newest stable one; PCRE and string internals differ between them
                 php: ['7.4', '8.4']
 
         steps:
