@@ -19,6 +19,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed front matter of about 1MB or more not being recognized, so it was rendered into the document as Markdown and `getFrontMatter()` returned `null` (#1177)
 - Fixed one very long `<…>` link destination or email autolink preventing later links or autolinks in the same line or paragraph from being parsed (#1177)
 - `DisallowedRawHtmlExtension` and `allow_unsafe_links` now treat a regular expression error as unsafe instead of falling back to unfiltered output (#1177)
+- Fixed a backslash-escaped backtick preventing the rest of its backtick run from opening a code span, so `` \``foo` `` rendered as literal text instead of `` `<code>foo</code> ``
+- Fixed SmartPunct not converting a dash or ellipsis whose first character was backslash-escaped, so `\---` and `\....` now render as `-–` and `.…`
 
 ## [2.10.8] - 2026-11-24
 
