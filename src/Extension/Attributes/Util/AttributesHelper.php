@@ -44,6 +44,12 @@ final class AttributesHelper
      */
     private const WHITESPACE = " \t\n\r\0\x0B\x0C";
 
+    /** @var list<string> */
+    private static array $allowListSource = [];
+
+    /** @var array<string, true> */
+    private static array $allowListLookup = [];
+
     /**
      * @return array<string, mixed>
      */
@@ -94,11 +100,13 @@ final class AttributesHelper
             /** @psalm-suppress PossiblyUndefinedArrayOffset */
             [$name, $value] = \explode('=', $attribute, 2);
 
-            $name      = \trim($name, self::WHITESPACE);
-            $lowerName = \strtolower($name);
+            // Browsers keep only the first of two names differing in case, and user attributes are
+            // rendered before those added by renderers and other extensions, so a mixed-case name
+            // would override them instead of being merged or overridden itself
+            $name = self::lowercase(\trim($name, self::WHITESPACE));
 
             // A bare `true` makes a boolean attribute, except where other code expects a string
-            if ($value === 'true' && $lowerName !== 'class' && $lowerName !== 'id') {
+            if ($value === 'true' && $name !== 'class' && $name !== 'id') {
                 $attributes[$name] = true;
                 continue;
             }
@@ -110,7 +118,7 @@ final class AttributesHelper
                 $value = \trim(\substr($value, 1, -1), self::WHITESPACE);
             }
 
-            if ($lowerName === 'class') {
+            if ($name === 'class') {
                 foreach (\array_filter(\explode(' ', $value)) as $class) {
                     $attributes['class'][] = $class;
                 }
@@ -184,7 +192,16 @@ final class AttributesHelper
      */
     public static function filterAttributes(array $attributes, array $allowList, bool $allowUnsafeLinks): array
     {
-        $allowList = \array_fill_keys($allowList, true);
+        // This runs once per attribute-bearing node, almost always with the same list
+        if ($allowList !== self::$allowListSource) {
+            self::$allowListSource = $allowList;
+            self::$allowListLookup = [];
+            foreach ($allowList as $allowedName) {
+                self::$allowListLookup[self::lowercase($allowedName)] = true;
+            }
+        }
+
+        $allowed = self::$allowListLookup;
 
         foreach ($attributes as $name => $value) {
             // The checks below compare against literal names, and the renderer emits names
@@ -195,7 +212,7 @@ final class AttributesHelper
                 continue;
             }
 
-            $attrNameLower = \strtolower((string) $name);
+            $attrNameLower = self::lowercase((string) $name);
 
             // Remove any unsafe links
             if (! $allowUnsafeLinks && ($attrNameLower === 'href' || $attrNameLower === 'src') && \is_string($value) && RegexHelper::isLinkPotentiallyUnsafe($value)) {
@@ -204,7 +221,7 @@ final class AttributesHelper
             }
 
             // No allowlist?
-            if ($allowList === []) {
+            if ($allowed === []) {
                 // Just remove JS event handlers
                 if (\str_starts_with($attrNameLower, 'on')) {
                     unset($attributes[$name]);
@@ -213,12 +230,20 @@ final class AttributesHelper
                 continue;
             }
 
-            // Remove any attributes not in that allowlist (case-sensitive)
-            if (! isset($allowList[$name])) {
+            if (! isset($allowed[$attrNameLower])) {
                 unset($attributes[$name]);
             }
         }
 
         return $attributes;
+    }
+
+    /**
+     * Lowercase ASCII letters only, like HTML does with attribute names; strtolower() also folds
+     * other bytes under some locales before PHP 8.2
+     */
+    private static function lowercase(string $name): string
+    {
+        return \strtr($name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz');
     }
 }

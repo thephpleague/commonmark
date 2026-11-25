@@ -133,6 +133,17 @@ final class AttributesHelperTest extends TestCase
         yield [new Cursor('{#a id=true}'), ['id' => 'true']];
         yield [new Cursor('{id=true #a}'), ['id' => 'a']];
 
+        // Names are lowercased, so ones differing only in case merge like repeated lowercase names
+        yield [new Cursor('{REL=opener}'), ['rel' => 'opener']];
+        yield [new Cursor('{Title=a title=b}'), ['title' => 'b']];
+        yield [new Cursor('{title=a TITLE=b}'), ['title' => 'b']];
+        yield [new Cursor('{ID=x #a}'), ['id' => 'a']];
+        yield [new Cursor('{#a ID=x}'), ['id' => 'x']];
+        yield [new Cursor('{ID=true}'), ['id' => 'true']];
+        yield [new Cursor('{DISABLED=true}'), ['disabled' => true]];
+        yield [new Cursor('{Class=a .b CLASS="c d"}'), ['class' => 'a b c d']];
+        yield [new Cursor('{Data-Foo_Bar:Baz.Q=V}'), ['data-foo_bar:baz.q' => 'V']];
+
         // Whitespace around '=' doesn't affect quoting
         yield [new Cursor('{x= "a b"}'), ['x' => 'a b']];
 
@@ -297,7 +308,22 @@ final class AttributesHelperTest extends TestCase
             ['ID' => 'foo', 'oNcLiCk' => 'alert("XSS")'],
             ['id', 'class'],
             false,
+            ['ID' => 'foo'],
+        ];
+
+        yield [
+            ['id' => 'foo', 'oNcLiCk' => 'alert("XSS")', 'HREF' => 'javascript:alert(1)', 'Src' => 'javascript:alert(1)'],
             [],
+            false,
+            ['id' => 'foo'],
+        ];
+
+        // The allow list is case-insensitive
+        yield [
+            ['id' => 'foo', 'class' => 'bar', 'title' => 'baz', 'data-x' => '1'],
+            ['ID', 'Class', 'DATA-X'],
+            false,
+            ['id' => 'foo', 'class' => 'bar', 'data-x' => '1'],
         ];
 
         // Can't use control characters within the scheme to bypass the unsafe link check

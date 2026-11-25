@@ -6,6 +6,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+- `AttributesExtension` now converts attribute names to lowercase, so names differing only in case are merged like repeated names instead of being output side by side; for example, `{Title=a title=b}` now produces `title="b"` instead of `Title="a" title="b"` (#1176)
+- The `attributes/allow` configuration option is now case-insensitive; previously an entry like `'ID'` or `'CLASS'` never matched `#id` or `.class` (#1176)
+
+### Fixed
+- Fixed `AttributesExtension` allowing an attribute name written in a different case, such as `{REL=opener}`, `{TARGET=_self}` or `{HREF=...}`, to take precedence in browsers over the attribute set by a renderer or extension, such as the `href` of a link or footnote reference, the `src` of an image, or the `rel`, `target` and `id` set by `ExternalLinkExtension` and `HeadingPermalinkExtension` (#1176)
+
 ## [2.10.8] - 2026-11-24
 
 ### Changed

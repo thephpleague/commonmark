@@ -110,6 +110,12 @@ Output:
 
 In an unquoted value, a `}` ends the attribute list unless another `}` follows it in the same value. Attribute lists longer than 8,192 bytes are not parsed and are left as text.
 
+### Attribute Names
+
+Attribute names are case-insensitive in HTML, so they are converted to lowercase: `{TITLE="A" Rel=nofollow}` produces `title="A" rel="nofollow"`. A name repeated in a different case is treated like any other repeated name, with the last value winning (or, for `class`, being added to the list).
+
+Attributes added by your own code or configuration (such as `default_attributes`) are not converted, so give them lowercase names if they need to merge with or take precedence over attributes from the document.
+
 ## Installation
 
 This extension is bundled with `league/commonmark`. This library can be installed via Composer:
@@ -155,6 +161,6 @@ As of version 2.7.0, this extension can be configured by providing a `attributes
 
 ### `allow`
 
-An array of allowed attributes. An empty array `[]` (default) allows virtually all attributes.
+An array of allowed attributes. An empty array `[]` (default) allows virtually all attributes. Entries are matched case-insensitively, so `'ID'` and `'id'` are equivalent.
 
 **Note:** Attributes starting with `on` (e.g. `onclick` or `onerror`) are capable of executing JavaScript code and are therefore **never allowed by default**. You must explicitly add them to the `allow` list if you want to use them.
