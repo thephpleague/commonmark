@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.10.9] - 2026-11-25
+
 ### Changed
 - `AttributesExtension` now converts attribute names to lowercase, so names differing only in case are merged like repeated names instead of being output side by side; for example, `{Title=a title=b}` now produces `title="b"` instead of `Title="a" title="b"` (#1176)
 - The `attributes/allow` configuration option is now case-insensitive; previously an entry like `'ID'` or `'CLASS'` never matched `#id` or `.class` (#1176)
@@ -930,7 +932,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.8...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.9...HEAD
+[2.10.9]: https://github.com/thephpleague/commonmark/compare/2.10.8...2.10.9
 [2.10.8]: https://github.com/thephpleague/commonmark/compare/2.10.7...2.10.8
 [2.10.7]: https://github.com/thephpleague/commonmark/compare/2.10.6...2.10.7
 [2.10.6]: https://github.com/thephpleague/commonmark/compare/2.10.5...2.10.6
