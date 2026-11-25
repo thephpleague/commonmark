@@ -10,6 +10,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - `AttributesExtension` now converts attribute names to lowercase, so names differing only in case are merged like repeated names instead of being output side by side; for example, `{Title=a title=b}` now produces `title="b"` instead of `Title="a" title="b"` (#1176)
 - The `attributes/allow` configuration option is now case-insensitive; previously an entry like `'ID'` or `'CLASS'` never matched `#id` or `.class` (#1176)
 
+### Deprecated
+- Deprecated the `RegexHelper` constants that are no longer used: `PARTIAL_IN_DOUBLE_QUOTES`, `PARTIAL_IN_SINGLE_QUOTES`, `PARTIAL_IN_PARENS`, `PARTIAL_REG_CHAR`, `PARTIAL_IN_PARENS_NOSP`, `PARTIAL_BLOCKTAGNAME`, `PARTIAL_OPENBLOCKTAG`, `PARTIAL_CLOSEBLOCKTAG`, `PARTIAL_HTMLBLOCKOPEN` and `REGEX_THEMATIC_BREAK`
+
 ### Fixed
 - Fixed `AttributesExtension` allowing an attribute name written in a different case, such as `{REL=opener}`, `{TARGET=_self}` or `{HREF=...}`, to take precedence in browsers over the attribute set by a renderer or extension, such as the `href` of a link or footnote reference, the `src` of an image, or the `rel`, `target` and `id` set by `ExternalLinkExtension` and `HeadingPermalinkExtension` (#1176)
 - Fixed very long lines being parsed differently depending on their length and on whether PCRE's JIT is enabled: when a regular expression hit a PCRE limit, the error was treated as "no match". Affected thematic breaks, link destinations in `<…>`, link reference definition titles, email autolinks, inline HTML, and fenced code info strings (#1177)
