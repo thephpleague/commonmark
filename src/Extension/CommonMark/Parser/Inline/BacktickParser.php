@@ -106,7 +106,7 @@ final class BacktickParser implements InlineParserInterface
         }
 
         // Return if we already know there's no closer
-        if ($this->lastCursorScanned && isset($this->seenBackticks[$openTickLength]) && $this->seenBackticks[$openTickLength] <= $cursor->getPosition()) {
+        if ($this->lastCursorScanned && ($this->seenBackticks[$openTickLength] ?? 0) <= $cursor->getPosition()) {
             return false;
         }
 
