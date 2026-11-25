@@ -9,7 +9,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 - `AttributesExtension` now converts attribute names to lowercase, so names differing only in case are merged like repeated names instead of being output side by side; for example, `{Title=a title=b}` now produces `title="b"` instead of `Title="a" title="b"` (#1176)
 - The `attributes/allow` configuration option is now case-insensitive; previously an entry like `'ID'` or `'CLASS'` never matched `#id` or `.class` (#1176)
-- Inline HTML that starts inside text already consumed by an earlier construct that turned out not to be HTML (such as a backslash-escaped `<`) is now recognized, as the spec requires; for example, in `\<!a<a href="x">` the `<a href="x">` is now raw HTML instead of text
+- Real HTML tags that follow a backslash-escaped `<` or a code span are no longer rendered as text when the escaped `<` or the code span looked like the start of inline HTML; for example, in `\<!a<a href="x">` and `` `<!--` <b>x</b> --> `` the `<a href="x">` and `<b>` are now raw HTML, as the spec requires
 - A GFM URL autolink whose regex hits a PCRE backtracking or recursion limit (only realistic for URLs over about 1MB) is now left as text, along with any later URL autolinks in the same paragraph
 
 ### Deprecated
@@ -29,9 +29,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed an ordered list starting at 1 but written with leading zeros, such as `01.`, not being able to interrupt a paragraph (#1179)
 - Fixed one `<…>` link destination that failed to parse, for example because it contained a `<` or a line break, preventing every later `<…>` destination in the same paragraph from being parsed (#1179)
 - Fixed inline HTML comments, processing instructions, CDATA sections, ATX heading closing sequences, GFM email and URL autolinks, and footnote references taking quadratic time on certain inputs when PCRE's JIT compiler is disabled (`pcre.jit=0`), which could be abused to cause a denial of service
-- Fixed an inline HTML declaration followed by a long run of letters taking about a minute to parse with default settings (PCRE JIT enabled), which could be abused to cause a denial of service
+- Fixed an inline HTML declaration followed by a long run of letters in a paragraph of about 500KB or more taking about a minute to parse with default settings (PCRE JIT enabled), which could be abused to cause a denial of service
 - Fixed long URL autolinks (from about 12KB with PCRE JIT enabled) being only partly linked, or later URL autolinks on the same line being left as text, when the URL regex exceeded PCRE's limits
-- Fixed a GFM email autolink containing a non-ASCII letter that matches `[A-Za-z]` case-insensitively, such as the Kelvin sign, swallowing the text that follows it
+- Fixed GFM email autolinks treating non-ASCII letters that match `[A-Za-z]` case-insensitively, such as the Kelvin sign and long s, as part of the address and swallowing the text that follows; such characters are no longer part of an address
 - Fixed the inline parser using about 1KB of memory for every position on a line where inline syntax could start, such as each `<`, `[` or `*`; a few hundred kilobytes of such text could exceed the default `memory_limit`
 
 ## [2.10.8] - 2026-11-24
