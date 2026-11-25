@@ -511,6 +511,21 @@ $cases = [
         'input' => static fn($n) => \str_repeat(\str_repeat('a', 63) . '" ', $n),
         'expected' => static fn($n) => '<p>' . \str_repeat(\str_repeat('a', 63) . "\u{201C} ", $n - 1) . \str_repeat('a', 63) . "\u{201C}</p>",
     ],
+    'Many hyphens' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => 'a ' . \str_repeat('-', $n),
+    ],
+    'Escaped hyphens splitting dash runs' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => \str_repeat('\\---', $n),
+    ],
+    'Escaped periods splitting ellipses' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => \str_repeat('\\....', $n),
+    ],
     'Many attributes in one list' => [
         // Sized to stay within MAX_ATTRIBUTE_LIST_BYTES (8192 bytes, ~2,700 attributes).
         'extension' => 'attributes',

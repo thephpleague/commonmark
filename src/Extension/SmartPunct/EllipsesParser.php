@@ -25,12 +25,16 @@ final class EllipsesParser implements InlineParserInterface
 {
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::oneOf('...', '. . .');
+        // Only match the first period so an ellipsis overlapping a skipped one (like in `\....`) is still found
+        return InlineParserMatch::regex('\.(?=\.\.| \. \.)');
     }
 
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $inlineContext->getCursor()->advanceBy($inlineContext->getFullMatchLength());
+        if ($inlineContext->getCursor()->matchInPlace('/\G(?:\.\.\.|\. \. \.)/') === null) {
+            return false;
+        }
+
         $inlineContext->getContainer()->appendChild(new Text('…'));
 
         return true;

@@ -50,5 +50,35 @@ final class SmartPunctFunctionalTest extends AbstractSpecTestCase
             'input'   => '"Plain quotes", “normal quotes”, and ”backwards quotes“',
             'output'  => "<p>“Plain quotes”, “normal quotes”, and ”backwards quotes“</p>\n",
         ];
+
+        yield 'escaped first hyphen of a dash' => [
+            'input'   => '\\---',
+            'output'  => "<p>-–</p>\n",
+        ];
+
+        yield 'escaped first hyphen of a longer dash' => [
+            'input'   => 'a\\-----b',
+            'output'  => "<p>a-––b</p>\n",
+        ];
+
+        yield 'escaped first period of an ellipsis' => [
+            'input'   => '\\....',
+            'output'  => "<p>.…</p>\n",
+        ];
+
+        yield 'escaped first period of a spaced ellipsis' => [
+            'input'   => '\\. . . .',
+            'output'  => "<p>. …</p>\n",
+        ];
+
+        yield 'escaped dash and ellipsis characters that leave nothing to convert' => [
+            'input'   => '\\-- \\... \\. . .',
+            'output'  => "<p>-- ... . . .</p>\n",
+        ];
+
+        yield 'extra periods and hyphens around unescaped ellipses and dashes' => [
+            'input'   => '..... . . . . a----b',
+            'output'  => "<p>….… . . a––b</p>\n",
+        ];
     }
 }
