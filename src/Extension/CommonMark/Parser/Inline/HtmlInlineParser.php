@@ -26,30 +26,34 @@ use League\CommonMark\Util\RegexHelper;
 final class HtmlInlineParser implements InlineParserInterface
 {
     /**
-     * Comments, processing instructions, CDATA sections and declarations may run to the end of
-     * the paragraph, so their ends are located with strpos() rather than a lazy regex, which costs
-     * O(n) per opener and is quadratic without PCRE JIT.
+     * Anchored at the cursor; without (*NO_START_OPT), PCRE would first search the rest of the
+     * line for the required ">" on every "<"
      */
-    private const TERMINATORS = ['<!--' => '-->', '<?' => '?>', '<![CDATA[' => ']]>', '<!A' => '>'];
-
-    /** @var \WeakReference<Cursor>|null */
-    private ?\WeakReference $cursor = null;
+    private const TAG_REGEX = '/(*NO_START_OPT)\G(?:' . RegexHelper::PARTIAL_OPENTAG . '|' . RegexHelper::PARTIAL_CLOSETAG . ')/';
 
     /**
-     * Byte offset of the last occurrence of each terminator in the cursor's line, so an opener
-     * with no terminator after it is rejected in O(1).
+     * State for the paragraph currently being parsed
+     *
+     * @var \WeakReference<Cursor>|null
+     */
+    private ?\WeakReference $cursor = null;
+
+    /** @psalm-var non-empty-string */
+    private string $tagRegex = self::TAG_REGEX;
+
+    /**
+     * Byte offset of the last occurrence of each terminator, so an opener with no terminator
+     * after it is rejected in O(1)
      *
      * @var array<string, int|false>
      */
     private array $lastTerminator = [];
 
-    private const TAG_REGEX = '/\\G(?:' . RegexHelper::PARTIAL_OPENTAG . '|' . RegexHelper::PARTIAL_CLOSETAG . ')/';
-
     public function getMatchDefinition(): InlineParserMatch
     {
-        // Only the "<" is matched here: preg_match_all() returns non-overlapping matches, so a
-        // longer match could hide a tag that starts inside it
-        return InlineParserMatch::regex('<(?=[A-Za-z\\/!?])');
+        // Only the "<" is matched: preg_match_all() returns non-overlapping matches, so a longer
+        // match could hide a tag that starts inside it
+        return InlineParserMatch::regex('<(?=[A-Za-z\/!?])')->caseSensitive();
     }
 
     public function parse(InlineParserContext $inlineContext): bool
@@ -57,12 +61,18 @@ final class HtmlInlineParser implements InlineParserInterface
         $cursor = $inlineContext->getCursor();
         $line   = $cursor->getLine();
         $start  = $cursor->getBytePosition();
-        $next   = $line[$start + 1] ?? '';
 
-        // Openers are recognized without a regex, so floods of them stay cheap
+        if ($this->cursor === null || $this->cursor->get() !== $cursor) {
+            $this->cursor         = \WeakReference::create($cursor);
+            $this->lastTerminator = [];
+            // As when the engine ran this regex, \s also matches Unicode whitespace on non-ASCII lines
+            $this->tagRegex = self::TAG_REGEX . (\mb_check_encoding($line, 'ASCII') ? '' : 'u');
+        }
+
+        $next = $line[$start + 1];
         if ($next === '!' || $next === '?') {
-            $inline = $this->matchUntilTerminator($cursor, $line, $start);
-        } elseif (\preg_match(self::TAG_REGEX, $line, $m, 0, $start) === 1) {
+            $inline = $this->matchUntilTerminator($line, $start);
+        } elseif (\preg_match($this->tagRegex, $line, $m, 0, $start) === 1) {
             $inline = $m[0];
         } else {
             $inline = null;
@@ -78,7 +88,12 @@ final class HtmlInlineParser implements InlineParserInterface
         return true;
     }
 
-    private function matchUntilTerminator(Cursor $cursor, string $line, int $start): ?string
+    /**
+     * Comments, processing instructions, CDATA sections and declarations may run to the end of the
+     * paragraph, so their ends are found with strpos(); a lazy regex would rescan the rest of the
+     * paragraph from every opener, which is quadratic without PCRE JIT
+     */
+    private function matchUntilTerminator(string $line, int $start): ?string
     {
         if (\substr_compare($line, '<!--', $start, 4) === 0) {
             foreach (['<!-->', '<!--->'] as $emptyComment) {
@@ -87,26 +102,19 @@ final class HtmlInlineParser implements InlineParserInterface
                 }
             }
 
-            $opener = '<!--';
+            [$openerLength, $terminator] = [4, '-->'];
         } elseif ($line[$start + 1] === '?') {
-            $opener = '<?';
+            [$openerLength, $terminator] = [2, '?>'];
         } elseif (\substr_compare($line, '<![CDATA[', $start, 9) === 0) {
-            $opener = '<![CDATA[';
+            [$openerLength, $terminator] = [9, ']]>'];
         } elseif (self::isAsciiLetter($line[$start + 2] ?? '')) {
-            $opener = '<!A';
+            // A declaration: "<!" and a letter
+            [$openerLength, $terminator] = [3, '>'];
         } else {
             return null;
         }
 
-        // Declarations are matched up to their first letter
-        $terminator = self::TERMINATORS[$opener];
-        $from       = $start + \strlen($opener);
-
-        if ($this->cursor === null || $this->cursor->get() !== $cursor) {
-            $this->cursor         = \WeakReference::create($cursor);
-            $this->lastTerminator = [];
-        }
-
+        $from = $start + $openerLength;
         $last = $this->lastTerminator[$terminator] ??= \strrpos($line, $terminator);
         if ($last === false || $last < $from) {
             return null;

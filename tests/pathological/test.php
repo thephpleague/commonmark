@@ -688,6 +688,10 @@ $cases = [
         'input' => static fn($n) => 'x <!A' . \str_repeat('a', $n),
         'expected' => static fn($n) => '<p>x &lt;!A' . \str_repeat('a', $n) . "</p>\n",
     ],
+    'Many inline tag starts' => [
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => 'é ' . \str_repeat('<a ', $n) . ">\n",
+    ],
     'Declaration opener without >' => [
         'sizes' => [1_000, 10_000, 100_000],
         'input' => static fn($n) => 'x ' . \str_repeat('<!A', $n) . "\n",

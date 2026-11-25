@@ -13,3 +13,5 @@ x <!-- <a title="--> <b>bold</b> y">
 é <!-- ü --> ö <?ä?>
 
 <a href="x">link</a> <b c='<!--'> </b >
+
+CJK <img src="x"　alt="y"> and <br />
