@@ -75,6 +75,11 @@ $cases = [
         'input' => static fn($n) => 'é.![i](data:image/png;base64,' . \str_repeat('A', $n) . ')',
         'expected' => static fn($n) => '<p>é.<img src="data:image/png;base64,' . \str_repeat('A', $n) . '" alt="i" /></p>',
     ],
+    'Repeated invalid autolink prefixes on an ASCII line' => [
+        'extension' => 'autolink',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => 'a' . \str_repeat(' www.', $n),
+    ],
     'Repeated invalid autolink prefixes' => [
         'extension' => 'autolink',
         'sizes' => [160_000],

@@ -187,11 +187,9 @@ final class InlineParserEngine implements InlineParserEngineInterface
         $isMultibyte = ! \mb_check_encoding($contents, 'ASCII');
         $slotCount   = $this->slotCount;
 
-        if ($isMultibyte) {
-            // Marks the string as valid UTF-8, so parsers that match it with /u at an offset don't
-            // re-validate the whole line on every call (preg_replace_callback() doesn't do this; PHP < 8.3)
-            \preg_match('//u', $contents);
-        }
+        // Marks the string as valid UTF-8, so that /u matches against it at an offset, such as those in
+        // HtmlInlineParser and UrlAutolinkParser, don't re-validate the whole line on every call (PHP < 8.3)
+        \preg_match('//u', $contents);
 
         $ret            = [];
         $slot           = 0;
@@ -238,7 +236,8 @@ final class InlineParserEngine implements InlineParserEngineInterface
         };
 
         foreach ($this->parsers as $parserIndex => [, $regex, $isRegexMultibyte]) {
-            if ($isMultibyte || $isRegexMultibyte) {
+            $isUtf8Regex = $isMultibyte || $isRegexMultibyte;
+            if ($isUtf8Regex) {
                 $regex .= 'u';
             }
 
@@ -249,6 +248,12 @@ final class InlineParserEngine implements InlineParserEngineInterface
                     $ret[$key] = $sets;
                 }
 
+                continue;
+            }
+
+            // preg_replace_callback() re-validates UTF-8 on every call, even for a line already known to be
+            // valid, so skip it when the regex can't match at all
+            if ($isUtf8Regex && \preg_match($regex, $contents) !== 1) {
                 continue;
             }
 
