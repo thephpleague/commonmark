@@ -62,7 +62,7 @@ class HeadingStartParser implements BlockStartParserInterface
         $str   = $cursor->getRemainder();
         $str   = \preg_replace('/^[ \t]*#+[ \t]*$/', '', $str);
         \assert(\is_string($str));
-        $str = \preg_replace('/[ \t]+#+[ \t]*$/', '', $str);
+        $str = \preg_replace('/(?<![ \t])[ \t]++#++[ \t]*+$/', '', $str);
         \assert(\is_string($str));
 
         return new HeadingParser($level, $str);

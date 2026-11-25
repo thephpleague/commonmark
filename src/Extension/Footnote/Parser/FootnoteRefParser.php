@@ -28,7 +28,7 @@ final class FootnoteRefParser implements InlineParserInterface, ConfigurationAwa
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::regex('\[\^([^\s\]]+)\]');
+        return InlineParserMatch::regex('\[\^([^\s\]]++)(?:\]|(*SKIP)(*FAIL))');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

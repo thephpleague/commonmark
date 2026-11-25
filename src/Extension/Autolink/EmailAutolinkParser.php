@@ -20,7 +20,9 @@ use League\CommonMark\Parser\InlineParserContext;
 
 final class EmailAutolinkParser implements InlineParserInterface
 {
-    private const REGEX = '[A-Za-z0-9.\-_+]+@[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_.]+';
+    // A local part can only start where a run of local-part characters starts, or where the previous
+    // match ended (\G), so each run is scanned once rather than once per character
+    private const REGEX = '(?:\G|(?<![A-Za-z0-9.\-_+]))[A-Za-z0-9.\-_+]++@[A-Za-z0-9\-_]++\.[A-Za-z0-9\-_.]++';
 
     public function getMatchDefinition(): InlineParserMatch
     {
