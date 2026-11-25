@@ -173,9 +173,9 @@ final class InlineParserEngine implements InlineParserEngineInterface
      *
      * The resulting array is ordered by character position, then by parser priority. Each key is
      * `(position * $this->slotCount) + (parser index * 2)`, plus one for a second match by the same parser at the
-     * same position; each value is what the parser's regex matched there: the
-     * matched text alone, or a preg_match()-style array if there were sub-matches. For a regex
-     * using \K, which can match more than twice at one position, the value is a list of such arrays.
+     * same position. Each value is what the parser's regex matched there: the matched text alone, or a
+     * preg_match()-style array if there were sub-matches. For a regex using \K, which can match more than twice at
+     * one position, the value is a list of such arrays.
      *
      * Lines can have a potential match at nearly every character, so this deliberately avoids
      * keeping any arrays per match.
@@ -188,7 +188,8 @@ final class InlineParserEngine implements InlineParserEngineInterface
         $slotCount   = $this->slotCount;
 
         // Marks the string as valid UTF-8, so that /u matches against it at an offset, such as those in
-        // HtmlInlineParser and UrlAutolinkParser, don't re-validate the whole line on every call (PHP < 8.3)
+        // HtmlInlineParser and UrlAutolinkParser, don't re-validate the whole line on every call. From PHP 8.3,
+        // mb_check_encoding() above already does this.
         \preg_match('//u', $contents);
 
         $ret            = [];
