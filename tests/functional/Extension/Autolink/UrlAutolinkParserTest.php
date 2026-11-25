@@ -99,6 +99,15 @@ final class UrlAutolinkParserTest extends TestCase
         yield ['www.  https://example.com', '<p>www.  <a href="https://example.com">https://example.com</a></p>'];
         yield ['é www.  https://example.com/中', '<p>é www.  <a href="https://example.com/中">https://example.com/中</a></p>'];
 
+        // A trailing entity reference is left out of the URL
+        yield ['http://example.com/a&amp;', '<p><a href="http://example.com/a">http://example.com/a</a>&amp;</p>'];
+        yield ['http://example.com/a&amp;b', '<p><a href="http://example.com/a&amp;amp;b">http://example.com/a&amp;amp;b</a></p>'];
+
+        // A long userinfo-like run must not stop later URLs on the line from being linked
+        $host = \str_repeat('a', 20000);
+
+        yield ['http://' . $host . ' http://c.d www.e.f', '<p><a href="http://' . $host . '">http://' . $host . '</a> <a href="http://c.d">http://c.d</a> <a href="http://www.e.f">www.e.f</a></p>'];
+
         // Trailing punctuation must still be stripped from long URLs full of punctuation
         $path = 'a' . \str_repeat('.', 2000) . 'b';
 
