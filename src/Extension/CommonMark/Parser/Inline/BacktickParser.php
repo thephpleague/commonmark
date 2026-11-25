@@ -41,9 +41,9 @@ final class BacktickParser implements InlineParserInterface
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        // Stop at the start of each run, and also right after an escaped backtick: the escape consumes the
-        // first backtick of its run, and the rest of that run can still open a code span
-        return InlineParserMatch::regex('(?<!`)`|(?<=\\\\`)`');
+        // Stop at the start of each run, and also right after a backtick escaped by one or three backslashes: the
+        // escape consumes the first backtick of its run, and the rest of that run can still open a code span
+        return InlineParserMatch::regex('(?<!`)`|(?<=(?<!\\\\)\\\\`|(?<!\\\\)\\\\\\\\\\\\`)`');
     }
 
     public function parse(InlineParserContext $inlineContext): bool

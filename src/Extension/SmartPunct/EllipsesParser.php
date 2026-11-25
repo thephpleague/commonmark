@@ -23,35 +23,15 @@ use League\CommonMark\Parser\InlineParserContext;
 
 final class EllipsesParser implements InlineParserInterface
 {
-    private const ELLIPSIS = '(?:\.\.\.|\. \. \.)';
-
     public function getMatchDefinition(): InlineParserMatch
     {
-        // Match whole ellipses like a plain scan would, except that an escaped period (after one or three
-        // backslashes) only matches itself: the escape consumes it, and an ellipsis may still start at the next period
-        return InlineParserMatch::regex('(?<=(?<!\\\\)\\\\|(?<!\\\\)\\\\\\\\\\\\)\.(?=\.\.| \. \.)|\.\.\.|\. \. \.');
+        return InlineParserMatch::oneOf('...', '. . .');
     }
 
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $cursor = $inlineContext->getCursor();
-        if ($cursor->matchInPlace('/\G' . self::ELLIPSIS . '/') === null) {
-            return false;
-        }
-
-        $text = '…';
-
-        // Reaching a lone escaped period means something other than an escape consumed the backslash, so the
-        // later matches in this run of periods and spaces are misaligned; convert the rest of the run here instead,
-        // finding each ellipsis the same way a plain left-to-right scan would
-        if ($inlineContext->getFullMatch() === '.') {
-            while (($gap = $cursor->matchInPlace('/\G[. ]*?(?=' . self::ELLIPSIS . ')/')) !== null) {
-                $cursor->matchInPlace('/\G' . self::ELLIPSIS . '/');
-                $text .= $gap . '…';
-            }
-        }
-
-        $inlineContext->getContainer()->appendChild(new Text($text));
+        $inlineContext->getCursor()->advanceBy($inlineContext->getFullMatchLength());
+        $inlineContext->getContainer()->appendChild(new Text('…'));
 
         return true;
     }
