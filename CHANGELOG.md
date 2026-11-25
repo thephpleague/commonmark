@@ -21,6 +21,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - `DisallowedRawHtmlExtension` and `allow_unsafe_links` now treat a regular expression error as unsafe instead of falling back to unfiltered output (#1177)
 - Fixed a backslash-escaped backtick preventing the rest of its backtick run from opening a code span, so `` \``foo` `` rendered as literal text instead of `` `<code>foo</code> ``
 - Fixed SmartPunct not converting a dash or ellipsis whose first character was backslash-escaped, so `\---` and `\....` now render as `-–` and `.…`
+- Fixed numeric character references to surrogate code points, such as `&#xD800;`, producing invalid UTF-8 instead of U+FFFD
 
 ## [2.10.8] - 2026-11-24
 
