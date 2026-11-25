@@ -64,7 +64,8 @@ final class QuoteParser implements InlineParserInterface
         $canOpen                        = $leftFlanking && ! $rightFlanking;
         $canClose                       = $rightFlanking;
 
-        $node = new Quote($char, ['delim' => true]);
+        // Kept so an unpaired double quote can still be turned into the right curly quote
+        $node = new Quote($char, ['delim' => true, 'can_close' => $canClose]);
         $inlineContext->getContainer()->appendChild($node);
 
         // Add entry to stack to this opener

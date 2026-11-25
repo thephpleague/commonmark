@@ -51,6 +51,26 @@ final class SmartPunctFunctionalTest extends AbstractSpecTestCase
             'output'  => "<p>“Plain quotes”, “normal quotes”, and ”backwards quotes“</p>\n",
         ];
 
+        yield 'unpaired double quote that can only close' => [
+            'input'   => 'a" b',
+            'output'  => "<p>a” b</p>\n",
+        ];
+
+        yield 'unpaired double quote after a digit' => [
+            'input'   => 'a 12" ruler',
+            'output'  => "<p>a 12” ruler</p>\n",
+        ];
+
+        yield 'unpaired double quote closing after emphasis' => [
+            'input'   => '*a*"',
+            'output'  => "<p><em>a</em>”</p>\n",
+        ];
+
+        yield 'unpaired double quote that can only open' => [
+            'input'   => 'a "b',
+            'output'  => "<p>a “b</p>\n",
+        ];
+
         yield 'escaped first hyphen of a dash' => [
             'input'   => '\\---',
             'output'  => "<p>-–</p>\n",

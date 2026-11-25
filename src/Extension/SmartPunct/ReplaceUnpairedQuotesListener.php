@@ -33,7 +33,7 @@ final class ReplaceUnpairedQuotesListener
             if ($literal === Quote::SINGLE_QUOTE) {
                 $literal = Quote::SINGLE_QUOTE_CLOSER;
             } elseif ($literal === Quote::DOUBLE_QUOTE) {
-                $literal = Quote::DOUBLE_QUOTE_OPENER;
+                $literal = $quote->data->get('can_close', false) ? Quote::DOUBLE_QUOTE_CLOSER : Quote::DOUBLE_QUOTE_OPENER;
             }
 
             $quote->replaceWith($new = new Text($literal));
