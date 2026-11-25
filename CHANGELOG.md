@@ -15,6 +15,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed SmartPunct quotes at the start of link text, or right after an emphasis delimiter, being paired incorrectly; for example, `['a'](u)` now renders `‘a’` instead of `’a’`
 - Fixed footnotes that are only referenced from unused or duplicate footnote definitions being listed, including inline footnotes with a backlink to a reference that was never rendered
 - Fixed an unused footnote sometimes being rendered outside the footnote list
+- Fixed an inline footnote whose generated label matched the label of another footnote, such as `^[x y]` and `[^x-y]` or `[^X-Y]`, losing its text and linking to the other footnote; inline footnotes now get a label no other footnote or reference uses, so an explicit `[^label]` no longer links to an inline footnote
 
 ## [2.10.9] - 2026-11-25
 
