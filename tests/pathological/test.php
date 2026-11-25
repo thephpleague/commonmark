@@ -22,9 +22,12 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 // linear regexes quadratic); `--pcre-jit=0` or `--pcre-jit=1` runs a single mode
 $jit = null;
 foreach (\array_slice($argv, 1) as $arg) {
-    if (\preg_match('/^--pcre-jit=([01])$/', $arg, $m) === 1) {
-        $jit = $m[1];
+    if (\preg_match('/^--pcre-jit=([01])$/', $arg, $m) !== 1) {
+        \fwrite(\STDERR, "Unknown argument: $arg\nUsage: test.php [--pcre-jit=0|--pcre-jit=1]\n");
+        exit(2);
     }
+
+    $jit = $m[1];
 }
 
 if ($jit === null) {
