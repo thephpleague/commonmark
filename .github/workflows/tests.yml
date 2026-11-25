@@ -111,15 +111,21 @@ jobs:
             - run: vendor/bin/psalm --no-progress --stats --threads=$(nproc) --output-format=github --shepherd
 
     pathological:
-        name: Pathological Tests
+        name: Pathological Tests on ${{ matrix.php }}
         runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                # Oldest and newest supported versions; PCRE and string internals differ between them
+                php: ['7.4', '8.4']
 
         steps:
             - uses: actions/checkout@v7
 
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: 8.4
+                  php-version: ${{ matrix.php }}
                   extensions: curl, mbstring, yaml
                   coverage: none
                   tools: composer:v2
