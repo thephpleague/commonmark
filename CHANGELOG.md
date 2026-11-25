@@ -21,11 +21,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - `DisallowedRawHtmlExtension` and `allow_unsafe_links` now treat a regular expression error as unsafe instead of falling back to unfiltered output (#1177)
 - Fixed a backslash-escaped backtick preventing the rest of its backtick run from opening a code span, so `` \``foo` `` rendered as literal text instead of `` `<code>foo</code> ``
 - Fixed SmartPunct not converting a dash or ellipsis whose first character was backslash-escaped, so `\---` and `\....` now render as `-–` and `.…`
-- Fixed numeric character references to surrogate code points, such as `&#xD800;`, producing invalid UTF-8 instead of U+FFFD
-- Fixed numeric character references to valid code points above U+2FFFF, such as `&#x30000;` or `&#xE0041;`, being replaced with U+FFFD instead of being decoded
-- Fixed an empty list item or an ordered list not starting at 1 interrupting a paragraph that contains only link reference definitions; for example, `[a]: /u` followed by `2. x` on the next line now produces a paragraph instead of a list
-- Fixed an ordered list starting at 1 but written with leading zeros, such as `01.`, not being able to interrupt a paragraph
-- Fixed one `<…>` link destination that failed to parse, for example because it contained a `<` or a line break, preventing every later `<…>` destination in the same paragraph from being parsed
+- Fixed numeric character references to surrogate code points, such as `&#xD800;`, producing invalid UTF-8 instead of U+FFFD (#1179)
+- Fixed numeric character references to valid code points above U+2FFFF, such as `&#x30000;` or `&#xE0041;`, being replaced with U+FFFD instead of being decoded (#1179)
+- Fixed an empty list item or an ordered list not starting at 1 interrupting a paragraph that contains only link reference definitions; for example, `[a]: /u` followed by `2. x` on the next line now produces a paragraph instead of a list (#1179)
+- Fixed an ordered list starting at 1 but written with leading zeros, such as `01.`, not being able to interrupt a paragraph (#1179)
+- Fixed one `<…>` link destination that failed to parse, for example because it contained a `<` or a line break, preventing every later `<…>` destination in the same paragraph from being parsed (#1179)
 
 ## [2.10.8] - 2026-11-24
 
