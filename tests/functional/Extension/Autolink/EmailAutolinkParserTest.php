@@ -53,6 +53,9 @@ final class EmailAutolinkParserTest extends TestCase
         yield ['a.b-c_d@a.b.', '<p><a href="mailto:a.b-c_d@a.b">a.b-c_d@a.b</a>.</p>'];
         yield ['a.b-c_d@a.b-', '<p>a.b-c_d@a.b-</p>'];
         yield ['a.b-c_d@a.b_', '<p>a.b-c_d@a.b_</p>'];
+        yield ["\u{212A}\u{212A}@a.b cde fgh", "<p>\u{212A}\u{212A}@a.b cde fgh</p>"];
+        yield ['a@b.c+d@e.f', '<p><a href="mailto:a@b.c">a@b.c</a><a href="mailto:+d@e.f">+d@e.f</a></p>'];
+        yield [\str_repeat('a.', 5000) . ' no at sign', '<p>' . \str_repeat('a.', 5000) . ' no at sign</p>'];
 
         // Regression: CommonMark autolinks should not be double-linked
         yield ['<foo@example.com>', '<p><a href="mailto:foo@example.com">foo@example.com</a></p>'];

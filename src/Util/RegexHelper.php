@@ -60,12 +60,17 @@ final class RegexHelper
     /** @deprecated since 2.10.9; no longer used. It will be removed in 3.0 */
     public const PARTIAL_OPENBLOCKTAG = '<' . self::PARTIAL_BLOCKTAGNAME . self::PARTIAL_ATTRIBUTE . '*+' . '\s*+\/?+>';
     /** @deprecated since 2.10.9; no longer used. It will be removed in 3.0 */
-    public const PARTIAL_CLOSEBLOCKTAG         = '<\/' . self::PARTIAL_BLOCKTAGNAME . '\s*+[>]';
-    public const PARTIAL_HTMLCOMMENT           = '(?:<!-->|<!--->|<!--[\s\S]*?-->)';
+    public const PARTIAL_CLOSEBLOCKTAG = '<\/' . self::PARTIAL_BLOCKTAGNAME . '\s*+[>]';
+    /** @deprecated since 2.10.9; no longer used, and matching it unanchored is quadratic without PCRE JIT. It will be removed in 3.0 */
+    public const PARTIAL_HTMLCOMMENT = '(?:<!-->|<!--->|<!--[\s\S]*?-->)';
+    /** @deprecated since 2.10.9; no longer used, and matching it unanchored is quadratic without PCRE JIT. It will be removed in 3.0 */
     public const PARTIAL_PROCESSINGINSTRUCTION = '[<][?][\s\S]*?[?][>]';
-    public const PARTIAL_DECLARATION           = '<![A-Za-z]+' . '[^>]*>';
-    public const PARTIAL_CDATA                 = '<!\[CDATA\[[\s\S]*?]\]>';
-    public const PARTIAL_HTMLTAG               = '(?:' . self::PARTIAL_OPENTAG . '|' . self::PARTIAL_CLOSETAG . '|' . self::PARTIAL_HTMLCOMMENT . '|' .
+    /** @deprecated since 2.10.9; no longer used. It will be removed in 3.0 */
+    public const PARTIAL_DECLARATION = '<![A-Za-z][^>]*+>';
+    /** @deprecated since 2.10.9; no longer used, and matching it unanchored is quadratic without PCRE JIT. It will be removed in 3.0 */
+    public const PARTIAL_CDATA = '<!\[CDATA\[[\s\S]*?]\]>';
+    /** @deprecated since 2.10.9; no longer used, and matching it unanchored is quadratic without PCRE JIT. It will be removed in 3.0 */
+    public const PARTIAL_HTMLTAG = '(?:' . self::PARTIAL_OPENTAG . '|' . self::PARTIAL_CLOSETAG . '|' . self::PARTIAL_HTMLCOMMENT . '|' .
         self::PARTIAL_PROCESSINGINSTRUCTION . '|' . self::PARTIAL_DECLARATION . '|' . self::PARTIAL_CDATA . ')';
     /** @deprecated since 2.10.9; no longer used. It will be removed in 3.0 */
     public const PARTIAL_HTMLBLOCKOPEN = '<(?:' . self::PARTIAL_BLOCKTAGNAME . '(?:[\s\/>]|$)' . '|' .

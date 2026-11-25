@@ -9,9 +9,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 - `AttributesExtension` now converts attribute names to lowercase, so names differing only in case are merged like repeated names instead of being output side by side; for example, `{Title=a title=b}` now produces `title="b"` instead of `Title="a" title="b"` (#1176)
 - The `attributes/allow` configuration option is now case-insensitive; previously an entry like `'ID'` or `'CLASS'` never matched `#id` or `.class` (#1176)
+- Real HTML tags that follow a backslash-escaped `<` or a code span are no longer rendered as text when the escaped `<` or the code span looked like the start of inline HTML; for example, in `\<!a<a href="x">` and `` `<!--` <b>x</b> --> `` the `<a href="x">` and `<b>` are now raw HTML, as the spec requires (GHSA-jj45-w5cj-2hc8)
+- A GFM URL autolink whose regex hits a PCRE backtracking or recursion limit (only realistic for URLs over about 1MB) is now left as text, along with any later URL autolinks in the same paragraph (GHSA-jj45-w5cj-2hc8)
+- The inline parser uses much less memory on lines where inline syntax could start at nearly every character, such as long runs of `[` or `*`; very large inputs of this kind can still exceed `memory_limit`
 
 ### Deprecated
 - Deprecated the `RegexHelper` constants that are no longer used: `PARTIAL_IN_DOUBLE_QUOTES`, `PARTIAL_IN_SINGLE_QUOTES`, `PARTIAL_IN_PARENS`, `PARTIAL_REG_CHAR`, `PARTIAL_IN_PARENS_NOSP`, `PARTIAL_BLOCKTAGNAME`, `PARTIAL_OPENBLOCKTAG`, `PARTIAL_CLOSEBLOCKTAG`, `PARTIAL_HTMLBLOCKOPEN` and `REGEX_THEMATIC_BREAK`
+- Deprecated `RegexHelper::PARTIAL_HTMLCOMMENT`, `PARTIAL_PROCESSINGINSTRUCTION`, `PARTIAL_CDATA`, `PARTIAL_HTMLTAG` and `PARTIAL_DECLARATION`, which are no longer used; matching any of the first four against a long string without an anchor takes quadratic time when PCRE's JIT is disabled
 
 ### Fixed
 - Fixed `AttributesExtension` allowing an attribute name written in a different case, such as `{REL=opener}`, `{TARGET=_self}` or `{HREF=...}`, to take precedence in browsers over the attribute set by a renderer or extension, such as the `href` of a link or footnote reference, the `src` of an image, or the `rel`, `target` and `id` set by `ExternalLinkExtension` and `HeadingPermalinkExtension` (#1176)
@@ -26,6 +30,11 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed an empty list item or an ordered list not starting at 1 interrupting a paragraph that contains only link reference definitions; for example, `[a]: /u` followed by `2. x` on the next line now produces a paragraph instead of a list (#1179)
 - Fixed an ordered list starting at 1 but written with leading zeros, such as `01.`, not being able to interrupt a paragraph (#1179)
 - Fixed one `<…>` link destination that failed to parse, for example because it contained a `<` or a line break, preventing every later `<…>` destination in the same paragraph from being parsed (#1179)
+- Fixed inline HTML comments, processing instructions, CDATA sections, ATX heading closing sequences, GFM email and URL autolinks, and footnote references taking quadratic time on certain inputs when PCRE's JIT compiler is disabled (`pcre.jit=0`), which could be abused to cause a denial of service (GHSA-jj45-w5cj-2hc8)
+- Fixed an inline HTML declaration followed by a long run of letters in a paragraph of about 500KB or more taking about a minute to parse with default settings (PCRE JIT enabled), which could be abused to cause a denial of service (GHSA-jj45-w5cj-2hc8)
+- Fixed a line with many `www.` or `http://` prefixes taking quadratic time with the GFM autolink extension on PHP versions before 8.3, which could be abused to cause a denial of service (GHSA-jj45-w5cj-2hc8)
+- Fixed long URL autolinks (from about 12KB with PCRE JIT enabled) being only partly linked, or later URL autolinks on the same line being left as text, when the URL regex exceeded PCRE's limits (GHSA-jj45-w5cj-2hc8)
+- Fixed GFM email autolinks treating non-ASCII letters that match `[A-Za-z]` case-insensitively, such as the Kelvin sign and long s, as part of the address and swallowing the text that follows; such characters are no longer part of an address
 
 ## [2.10.8] - 2026-11-24
 

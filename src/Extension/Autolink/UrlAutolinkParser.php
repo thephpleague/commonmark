@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Autolink;
 
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
 use League\CommonMark\Parser\InlineParserContext;
@@ -27,8 +28,8 @@ final class UrlAutolinkParser implements InlineParserInterface
         (
             # Must start with a supported scheme + auth, or "www"
             (?:
-                (?:%s)://                                                                            # protocol
-                (?:(?:(?:[\_\.\pL\pN-]|%%[0-9A-Fa-f]{2})+:)?((?:[\_\.\pL\pN-]|%%[0-9A-Fa-f]{2})+)@)? # basic auth
+                (?:%s)://                                                                                  # protocol
+                (?:(?:(?:[\_\.\pL\pN-]++|%%[0-9A-Fa-f]{2})++:)?((?:[\_\.\pL\pN-]++|%%[0-9A-Fa-f]{2})++)@)? # basic auth
             |www\.)
             (?:
                 (?:
@@ -45,10 +46,10 @@ final class UrlAutolinkParser implements InlineParserInterface
                     (?:(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-f]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,1}(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,2}(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,3}(?:(?:[0-9a-f]{1,4})))?::(?:(?:[0-9a-f]{1,4})):)(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,4}(?:(?:[0-9a-f]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,5}(?:(?:[0-9a-f]{1,4})))?::)(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,6}(?:(?:[0-9a-f]{1,4})))?::))))
                 \]  # an IPv6 address
             )
-            (?::[0-9]+)?                              # a port (optional)
-            (?:/ (?:[\pL\pN\-._\~!$&\'()*+,;=:@]|%%[0-9A-Fa-f]{2})* )*        # a path
-            (?:\? (?:[\pL\pN\-._\~!$&\'\[\]()*+,;=:@/?]|%%[0-9A-Fa-f]{2})* )? # a query (optional)
-            (?:\# (?:[\pL\pN\-._\~!$&\'()*+,;=:@/?]|%%[0-9A-Fa-f]{2})* )?     # a fragment (optional)
+            (?::[0-9]++)?                                                         # a port (optional)
+            (?:/ (?:[\pL\pN\-._\~!$&\'()*+,;=:@/]++|%%[0-9A-Fa-f]{2})*+ )?+       # a path
+            (?:\? (?:[\pL\pN\-._\~!$&\'\[\]()*+,;=:@/?]++|%%[0-9A-Fa-f]{2})*+ )?+ # a query (optional)
+            (?:\# (?:[\pL\pN\-._\~!$&\'()*+,;=:@/?]++|%%[0-9A-Fa-f]{2})*+ )?+     # a fragment (optional)
         )~ixuA';
 
     /**
@@ -66,6 +67,14 @@ final class UrlAutolinkParser implements InlineParserInterface
     private string $finalRegex;
 
     private string $defaultProtocol;
+
+    /**
+     * The cursor whose paragraph made PCRE give up (backtrack/recursion limit); later prefixes in that
+     * paragraph are not autolinked, since each would hit the same limit after another long scan
+     *
+     * @var \WeakReference<Cursor>|null
+     */
+    private ?\WeakReference $failedCursor = null;
 
     /**
      * @param array<int, string> $allowedProtocols
@@ -99,11 +108,20 @@ final class UrlAutolinkParser implements InlineParserInterface
             return false;
         }
 
+        if ($this->failedCursor !== null && $this->failedCursor->get() === $cursor) {
+            return false;
+        }
+
         // Check if we have a valid URL. The regex is anchored (the "A" modifier) and matched
         // against the full line at the current byte offset rather than against a fresh copy of
         // the remaining text. This avoids re-allocating and re-validating (the "u" modifier) the
         // entire remainder on every prefix occurrence, which would otherwise be quadratic.
-        if (! \preg_match($this->finalRegex, $cursor->getLine(), $matches, 0, $cursor->getBytePosition())) {
+        $result = \preg_match($this->finalRegex, $cursor->getLine(), $matches, 0, $cursor->getBytePosition());
+        if ($result === false) {
+            $this->failedCursor = \WeakReference::create($cursor);
+        }
+
+        if ($result !== 1) {
             return false;
         }
 
@@ -111,8 +129,8 @@ final class UrlAutolinkParser implements InlineParserInterface
         $url = \rtrim($matches[0], '?!.,:*_~');
 
         // Does the URL end with something that looks like an entity reference?
-        if (\preg_match('/(.+)(&[A-Za-z0-9]+;)$/', $url, $matches)) {
-            $url = $matches[1];
+        if (\substr($url, -1) === ';' && \preg_match('/&[A-Za-z0-9]++;$/D', $url, $matches, \PREG_OFFSET_CAPTURE) === 1 && $matches[0][1] > 0) {
+            $url = \substr($url, 0, $matches[0][1]);
         }
 
         // Does the URL need unmatched parens chopped off?

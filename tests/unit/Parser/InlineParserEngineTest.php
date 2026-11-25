@@ -19,7 +19,9 @@ use League\CommonMark\Extension\CommonMark\Parser\Inline\CloseBracketParser;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\OpenBracketParser;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;
+use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Parser\InlineParserEngine;
 use League\CommonMark\Reference\ReferenceMap;
 use League\CommonMark\Tests\Unit\Parser\Inline\FakeInlineParser;
@@ -94,6 +96,86 @@ final class InlineParserEngineTest extends TestCase
 
         $this->assertSame(['!', '?', '!'], $parser->getMatches());
         $this->assertSame('é!中?😀!', $paragraph->firstChild()->getLiteral());
+    }
+
+    public function testRegexThatMatchesBeforeThePreviousMatchEnds(): void
+    {
+        // \K inside a lookbehind lets a match start before the previous one ended
+        if (@\preg_match('/(?<=\Kx)y/', '') === false) {
+            $this->markTestSkipped('This PCRE version does not allow \K in lookarounds');
+        }
+
+        [$calls, $text] = self::parseWithRecordingParser('(?<=\Kx)y|(?=x)|x', 'éxy');
+
+        $this->assertSame([[1, ''], [1, 'x'], [1, 'xy']], $calls);
+        $this->assertSame('éxy', $text);
+    }
+
+    public function testRegexThatMatchesTwiceAtOnePosition(): void
+    {
+        [$calls, $text] = self::parseWithRecordingParser('(?=x)|x', 'éx');
+
+        $this->assertSame([[1, ''], [1, 'x']], $calls);
+        $this->assertSame('éx', $text);
+    }
+
+    public function testRegexThatFailsPartWayThroughTheLineIsIgnored(): void
+    {
+        $limit = \ini_get('pcre.backtrack_limit');
+        \ini_set('pcre.backtrack_limit', '100');
+
+        try {
+            // "a" matches before the regex hits the backtracking limit, but a regex that fails is ignored for the whole line
+            [$calls, $text] = self::parseWithRecordingParser('a|(?:x+x+)+y', 'a ' . \str_repeat('x', 30));
+        } finally {
+            \ini_set('pcre.backtrack_limit', (string) $limit);
+        }
+
+        $this->assertSame([], $calls);
+        $this->assertSame('a ' . \str_repeat('x', 30), $text);
+    }
+
+    /**
+     * Parses a line with one inline parser that records each call and never parses anything
+     *
+     * @return array{list<array{int, string}>, string} the [position, full match] of each call, and the resulting text
+     */
+    private static function parseWithRecordingParser(string $regex, string $line): array
+    {
+        $parser = new class ($regex) implements InlineParserInterface {
+            /** @var list<array{int, string}> */
+            public array $calls = [];
+
+            private string $regex;
+
+            public function __construct(string $regex)
+            {
+                $this->regex = $regex;
+            }
+
+            public function getMatchDefinition(): InlineParserMatch
+            {
+                return InlineParserMatch::regex($this->regex);
+            }
+
+            public function parse(InlineParserContext $inlineContext): bool
+            {
+                $this->calls[] = [$inlineContext->getCursor()->getPosition(), $inlineContext->getFullMatch()];
+
+                return false;
+            }
+        };
+
+        $environment = new Environment();
+        $environment->addInlineParser($parser);
+
+        $paragraph = new Paragraph();
+        (new InlineParserEngine($environment, new ReferenceMap()))->parse($line, $paragraph);
+
+        $text = $paragraph->firstChild();
+        \assert($text instanceof Text);
+
+        return [$parser->calls, $text->getLiteral()];
     }
 
     /**
