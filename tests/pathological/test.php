@@ -18,6 +18,27 @@ use Symfony\Component\Process\Process;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+// Every case runs with PCRE's JIT both enabled and disabled (some hosts disable it, which turns some
+// linear regexes quadratic); `--pcre-jit=0` or `--pcre-jit=1` runs a single mode
+$jit = null;
+foreach (\array_slice($argv, 1) as $arg) {
+    if (\preg_match('/^--pcre-jit=([01])$/', $arg, $m) === 1) {
+        $jit = $m[1];
+    }
+}
+
+if ($jit === null) {
+    $status = 0;
+    foreach (['1', '0'] as $mode) {
+        \passthru(\escapeshellarg(\PHP_BINARY) . ' ' . \escapeshellarg(__FILE__) . ' --pcre-jit=' . $mode, $code);
+        $status = $status !== 0 ? $status : $code;
+    }
+
+    exit($status);
+}
+
+$phpArgs = ['-d', 'pcre.jit=' . $jit];
+
 $cases = [
     'U+0000 in input' => [
         'sizes' => [1],
@@ -646,9 +667,67 @@ $cases = [
         'input' => static fn($n) => \implode('', \array_map(static fn($i) => "{a$i=v}\n[a]: u\n", \range(0, $n - 1))) . 'para',
         'expected' => static fn($n) => '<p ' . \implode(' ', \array_map(static fn($i) => "a$i=\"v\"", \range($n - 1, 0))) . '>para</p>',
     ],
+    'HTML comment opener with a later >' => [
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => 'x ' . \str_repeat('<!--', $n) . " >\n",
+        'expected' => static fn($n) => '<p>x ' . \str_repeat('&lt;!--', $n) . ' &gt;</p>',
+    ],
+    'Processing instruction opener with a later >' => [
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => 'x ' . \str_repeat('<?', $n) . " >\n",
+        'expected' => static fn($n) => '<p>x ' . \str_repeat('&lt;?', $n) . ' &gt;</p>',
+    ],
+    'CDATA opener with a later >' => [
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => 'x ' . \str_repeat('<![CDATA[', $n) . ">\n",
+        'expected' => static fn($n) => '<p>x ' . \str_repeat('&lt;![CDATA[', $n) . '&gt;</p>',
+    ],
+    'Unterminated HTML declaration' => [
+        'extension' => 'commonmark',
+        'sizes' => [100_000, 500_000, 1_000_000],
+        'input' => static fn($n) => 'x <!A' . \str_repeat('a', $n),
+        'expected' => static fn($n) => '<p>x &lt;!A' . \str_repeat('a', $n) . "</p>\n",
+    ],
+    'Declaration opener without >' => [
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => 'x ' . \str_repeat('<!A', $n) . "\n",
+        'expected' => static fn($n) => '<p>x ' . \str_repeat('&lt;!A', $n) . '</p>',
+    ],
+    'ATX heading with spaces before a non-closing #' => [
+        'sizes' => [10_000, 100_000, 1_000_000],
+        'input' => static fn($n) => '# a' . \str_repeat(' ', $n) . "a#b\n",
+        'expected' => static fn($n) => '<h1>a' . \str_repeat(' ', $n) . 'a#b</h1>',
+    ],
+    'Email autolink local part without @' => [
+        'extension' => 'autolink',
+        'sizes' => [10_000, 100_000, 1_000_000],
+        'input' => static fn($n) => \str_repeat('a.', $n) . "\n",
+        'expected' => static fn($n) => '<p>' . \str_repeat('a.', $n) . '</p>',
+    ],
+    'Unterminated footnote references' => [
+        'extension' => 'footnotes',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => \str_repeat('[^', $n) . " ]\n",
+    ],
+    'URL autolink ending in a semicolon' => [
+        'extension' => 'autolink',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => 'http://a.b/' . \str_repeat('a', $n) . ";\n",
+    ],
+    'URL autolink with long userinfo followed by more autolinks' => [
+        'extension' => 'autolink',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => 'http://' . \str_repeat('a', $n) . " http://c.d www.e.f\n",
+        'expected' => static fn($n) => '<p><a href="http://' . \str_repeat('a', $n) . '">http://' . \str_repeat('a', $n) . '</a> <a href="http://c.d">http://c.d</a> <a href="http://www.e.f">www.e.f</a></p>',
+    ],
+    'URL autolinks with long paths' => [
+        'extension' => 'autolink',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => \str_repeat('(http://a.b/', $n) . "\n",
+    ],
 ];
 
-print("Running " . \count($cases) . " pathological test cases\n\n");
+print("Running " . \count($cases) . " pathological test cases with pcre.jit=$jit\n\n");
 
 $failures = [];
 foreach ($cases as $name => $case) {
@@ -683,9 +762,9 @@ foreach ($cases as $name => $case) {
         }
 
         if (isset($_ENV['CI']) || isset($_SERVER['CI'])) {
-            $command = ['php', 'convert.php', \json_encode($case['configuration'] ?? [])];
+            $command = ['php', ...$phpArgs, 'convert.php', \json_encode($case['configuration'] ?? [])];
         } else {
-            $command = ['php', '-n', 'convert.php', \json_encode($case['configuration'] ?? [])];
+            $command = ['php', '-n', ...$phpArgs, 'convert.php', \json_encode($case['configuration'] ?? [])];
         }
 
         if (isset($case['extension'])) {
