@@ -66,6 +66,26 @@ final class SmartPunctFunctionalTest extends AbstractSpecTestCase
             'output'  => "<p>.…</p>\n",
         ];
 
+        yield 'escaped first period of a longer run' => [
+            'input'   => '\\......',
+            'output'  => "<p>.…..</p>\n",
+        ];
+
+        yield 'escaped first period of a run of two ellipses' => [
+            'input'   => '\\.......',
+            'output'  => "<p>.……</p>\n",
+        ];
+
+        yield 'escaped period after an escaped backslash' => [
+            'input'   => '\\\\\\....',
+            'output'  => "<p>\\.…</p>\n",
+        ];
+
+        yield 'unescaped periods after an escaped backslash' => [
+            'input'   => '\\\\......',
+            'output'  => "<p>\\……</p>\n",
+        ];
+
         yield 'escaped first period of a spaced ellipsis' => [
             'input'   => '\\. . . .',
             'output'  => "<p>. …</p>\n",
