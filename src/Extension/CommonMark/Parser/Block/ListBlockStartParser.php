@@ -17,6 +17,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListData;
 use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
+use League\CommonMark\Parser\Block\ParagraphParser;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
 use League\CommonMark\Util\RegexHelper;
@@ -46,7 +47,8 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
             return BlockStart::none();
         }
 
-        $listData = $this->parseList($cursor, $parserState->getParagraphContent() !== null);
+        // Even a paragraph left empty by reference definitions limits which lists may interrupt it
+        $listData = $this->parseList($cursor, $parserState->getLastMatchedBlockParser() instanceof ParagraphParser);
         if ($listData === null) {
             return BlockStart::none();
         }
@@ -82,7 +84,7 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
             $data->delimiter    = null;
             $data->bulletChar   = $rest[0];
             $markerLength       = 1;
-        } elseif (($matches = RegexHelper::matchFirst('/^(\d{1,9})([.)])/', $rest)) && (! $inParagraph || $matches[1] === '1')) {
+        } elseif (($matches = RegexHelper::matchFirst('/^(\d{1,9})([.)])/', $rest)) && (! $inParagraph || (int) $matches[1] === 1)) {
             $data               = new ListData();
             $data->markerOffset = $indent;
             $data->type         = ListBlock::TYPE_ORDERED;
