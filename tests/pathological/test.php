@@ -203,6 +203,13 @@ $cases = [
         'input' => static fn($n) => \str_repeat('[a](<b', $n),
         'expected' => static fn($n) => '<p>' . \str_repeat('[a](&lt;b', $n) . '</p>',
     ],
+    'Unclosed inline links (4)' => [
+        'ref' => 'https://github.com/commonmark/commonmark.js/issues/129',
+        'sizes' => [1_000, 10_000, 100_000],
+        'input' => static fn($n) => \str_repeat('[a](<b', $n) . '>',
+        // The final `<b>` is raw inline HTML
+        'expected' => static fn($n) => '<p>' . \str_repeat('[a](&lt;b', $n - 1) . '[a](<b></p>',
+    ],
     'Nested blockquotes' => [
         'ref' => 'https://github.com/commonmark/commonmark.js/issues/129',
         'sizes' => [100, 1_000],

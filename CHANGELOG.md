@@ -25,6 +25,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed numeric character references to valid code points above U+2FFFF, such as `&#x30000;` or `&#xE0041;`, being replaced with U+FFFD instead of being decoded
 - Fixed an empty list item or an ordered list not starting at 1 interrupting a paragraph that contains only link reference definitions; for example, `[a]: /u` followed by `2. x` on the next line now produces a paragraph instead of a list
 - Fixed an ordered list starting at 1 but written with leading zeros, such as `01.`, not being able to interrupt a paragraph
+- Fixed one `<…>` link destination that failed to parse, for example because it contained a `<` or a line break, preventing every later `<…>` destination in the same paragraph from being parsed
 
 ## [2.10.8] - 2026-11-24
 
