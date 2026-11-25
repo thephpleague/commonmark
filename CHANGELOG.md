@@ -9,8 +9,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 ### Changed
 - `AttributesExtension` now converts attribute names to lowercase, so names differing only in case are merged like repeated names instead of being output side by side; for example, `{Title=a title=b}` now produces `title="b"` instead of `Title="a" title="b"` (#1176)
 - The `attributes/allow` configuration option is now case-insensitive; previously an entry like `'ID'` or `'CLASS'` never matched `#id` or `.class` (#1176)
-- Inline HTML that starts after a backslash escape or code span is now recognized, as the spec requires; for example, in `\<!a<a href="x">` the `<a href="x">` is now raw HTML instead of text
-- A GFM URL autolink whose regex hits a PCRE backtracking or recursion limit (only realistic for URLs of several megabytes) is now left as text, along with any later URL autolinks in the same paragraph
+- Inline HTML that starts inside text already consumed by an earlier construct that turned out not to be HTML (such as a backslash-escaped `<`) is now recognized, as the spec requires; for example, in `\<!a<a href="x">` the `<a href="x">` is now raw HTML instead of text
+- A GFM URL autolink whose regex hits a PCRE backtracking or recursion limit (only realistic for URLs over about 1MB) is now left as text, along with any later URL autolinks in the same paragraph
 
 ### Deprecated
 - Deprecated the `RegexHelper` constants that are no longer used: `PARTIAL_IN_DOUBLE_QUOTES`, `PARTIAL_IN_SINGLE_QUOTES`, `PARTIAL_IN_PARENS`, `PARTIAL_REG_CHAR`, `PARTIAL_IN_PARENS_NOSP`, `PARTIAL_BLOCKTAGNAME`, `PARTIAL_OPENBLOCKTAG`, `PARTIAL_CLOSEBLOCKTAG`, `PARTIAL_HTMLBLOCKOPEN` and `REGEX_THEMATIC_BREAK`
@@ -30,7 +30,8 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed one `<…>` link destination that failed to parse, for example because it contained a `<` or a line break, preventing every later `<…>` destination in the same paragraph from being parsed (#1179)
 - Fixed inline HTML comments, processing instructions, CDATA sections, ATX heading closing sequences, GFM email and URL autolinks, and footnote references taking quadratic time on certain inputs when PCRE's JIT compiler is disabled (`pcre.jit=0`), which could be abused to cause a denial of service
 - Fixed an inline HTML declaration followed by a long run of letters taking about a minute to parse with default settings (PCRE JIT enabled), which could be abused to cause a denial of service
-- Fixed long URL autolinks (from about 12KB with PCRE JIT enabled) being truncated, or later URL autolinks on the same line being left as text, when the URL regex exceeded PCRE's limits
+- Fixed long URL autolinks (from about 12KB with PCRE JIT enabled) being only partly linked, or later URL autolinks on the same line being left as text, when the URL regex exceeded PCRE's limits
+- Fixed a GFM email autolink containing a non-ASCII letter that matches `[A-Za-z]` case-insensitively, such as the Kelvin sign, swallowing the text that follows it
 
 ## [2.10.8] - 2026-11-24
 
