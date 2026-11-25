@@ -144,6 +144,29 @@ final class DisallowedRawHtmlRendererTest extends TestCase
         yield ['<plaintext>', '<plaintext>'];
     }
 
+    public function testRegexErrorIsNotTreatedAsNoMatch(): void
+    {
+        $mockRenderer = $this->createMock(NodeRendererInterface::class);
+        $mockRenderer->method('render')->willReturn('<script>alert(1)</script>');
+
+        $renderer = new DisallowedRawHtmlRenderer($mockRenderer);
+        // A tag list no other test uses, so the regex is compiled fresh under the settings below
+        $renderer->setConfiguration($this->createConfiguration(['disallowed_raw_html' => ['disallowed_tags' => ['script', 'regex-error-test']]]));
+
+        $jit            = \ini_get('pcre.jit');
+        $backtrackLimit = \ini_get('pcre.backtrack_limit');
+        \ini_set('pcre.jit', '0');
+        \ini_set('pcre.backtrack_limit', '1');
+        try {
+            $output = $renderer->render($this->createMock(Node::class), new FakeChildNodeRenderer());
+        } finally {
+            \ini_set('pcre.jit', (string) $jit);
+            \ini_set('pcre.backtrack_limit', (string) $backtrackLimit);
+        }
+
+        $this->assertSame('&lt;script&gt;alert(1)&lt;/script&gt;', $output);
+    }
+
     /**
      * @param array<string, mixed> $values
      */

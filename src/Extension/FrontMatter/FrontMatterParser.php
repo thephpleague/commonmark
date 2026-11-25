@@ -23,8 +23,6 @@ final class FrontMatterParser implements FrontMatterParserInterface
     /** @psalm-readonly */
     private FrontMatterDataParserInterface $frontMatterParser;
 
-    private const REGEX_FRONT_MATTER = '/\G---\\R.*?\\R---\\R/s';
-
     public function __construct(FrontMatterDataParserInterface $frontMatterParser)
     {
         $this->frontMatterParser = $frontMatterParser;
@@ -38,10 +36,12 @@ final class FrontMatterParser implements FrontMatterParserInterface
         $cursor = new Cursor($markdownContent);
 
         // Locate the front matter
-        $frontMatter = $cursor->matchInPlace(self::REGEX_FRONT_MATTER);
+        $frontMatter = self::findFrontMatter($markdownContent);
         if ($frontMatter === null) {
             return new MarkdownInputWithFrontMatter($markdownContent);
         }
+
+        $cursor->advanceBy(\mb_strlen($frontMatter, 'UTF-8'));
 
         // Trim the last line (ending ---s and newline)
         $frontMatter = \preg_replace('/---\R$/', '', $frontMatter);
@@ -60,5 +60,50 @@ final class FrontMatterParser implements FrontMatterParserInterface
         $lineOffset = \preg_match_all('/\R/', $frontMatter . $trailingNewlines) + 1;
 
         return new MarkdownInputWithFrontMatter($cursor->getRemainder(), $lineOffset, $data);
+    }
+
+    /**
+     * Returns the leading `---` block, including its closing `---` line, or null if there isn't one
+     *
+     * Matches exactly what /\A---\R.*?\R---\R/s would, without the backtrack limit that regex hits at about 1MB
+     */
+    private static function findFrontMatter(string $content): ?string
+    {
+        $bodyStart = self::newlineLengthAt($content, 3);
+        if ($bodyStart === 0 || \strncmp($content, '---', 3) !== 0) {
+            return null;
+        }
+
+        $bodyStart += 3;
+        if ($bodyStart >= \strlen($content)) {
+            return null;
+        }
+
+        for ($pos = \strpos($content, '---', $bodyStart + 1); $pos !== false; $pos = \strpos($content, '---', $pos + 1)) {
+            // The closing `---` must start a line, and that line break can't be the one ending the opening `---`
+            if (self::newlineLengthAt($content, $pos - 1) === 0) {
+                continue;
+            }
+
+            $closingNewline = self::newlineLengthAt($content, $pos + 3);
+            if ($closingNewline > 0) {
+                return \substr($content, 0, $pos + 3 + $closingNewline);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns how many bytes PCRE's \R would match at the given offset (0 if none)
+     */
+    private static function newlineLengthAt(string $content, int $offset): int
+    {
+        $char = $content[$offset] ?? '';
+        if ($char === "\r") {
+            return ($content[$offset + 1] ?? '') === "\n" ? 2 : 1;
+        }
+
+        return $char !== '' && \strpos("\n\x0b\x0c\x85", $char) !== false ? 1 : 0;
     }
 }

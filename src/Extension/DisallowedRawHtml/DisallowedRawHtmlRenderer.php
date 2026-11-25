@@ -50,7 +50,8 @@ final class DisallowedRawHtmlRenderer implements NodeRendererInterface, Configur
         $regex = \sprintf('/<(\/?(?:%s)(?:[\s\/>]|$))/i', \implode('|', \array_map('preg_quote', $tags)));
 
         // Match these types of tags: <title> </title> <title x="sdf"> <title/> <title /> <title
-        return \preg_replace($regex, '&lt;$1', $rendered);
+        // A null here would let HtmlRenderer fall through to the unfiltered renderer
+        return \preg_replace($regex, '&lt;$1', $rendered) ?? \htmlspecialchars($rendered, \ENT_NOQUOTES);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void

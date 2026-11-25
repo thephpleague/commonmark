@@ -12,6 +12,10 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ### Fixed
 - Fixed `AttributesExtension` allowing an attribute name written in a different case, such as `{REL=opener}`, `{TARGET=_self}` or `{HREF=...}`, to take precedence in browsers over the attribute set by a renderer or extension, such as the `href` of a link or footnote reference, the `src` of an image, or the `rel`, `target` and `id` set by `ExternalLinkExtension` and `HeadingPermalinkExtension` (#1176)
+- Fixed very long lines being parsed differently depending on their length and on whether PCRE's JIT is enabled: when a regular expression hit a PCRE limit, the error was treated as "no match". Affected thematic breaks, link destinations in `<…>`, link reference definition titles, email autolinks, inline HTML, and fenced code info strings (#1177)
+- Fixed front matter of about 1MB or more not being recognized, so it was rendered into the document as Markdown and `getFrontMatter()` returned `null` (#1177)
+- Fixed one very long `<…>` link destination or email autolink preventing later links or autolinks in the same line or paragraph from being parsed (#1177)
+- `DisallowedRawHtmlExtension` and `allow_unsafe_links` now treat a regular expression error as unsafe instead of falling back to unfiltered output (#1177)
 
 ## [2.10.8] - 2026-11-24
 

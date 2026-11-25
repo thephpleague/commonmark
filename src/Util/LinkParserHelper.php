@@ -85,7 +85,7 @@ final class LinkParserHelper
         // spec: a parenthesized title may only contain `(` or `)` if backslash-escaped
         $excluded     = \preg_quote($endDelimiter === ')' ? '()' : $endDelimiter, '/');
         $endDelimiter = \preg_quote($endDelimiter, '/');
-        $regex        = \sprintf('/(%s|[^%s\x00])*(?:%s)?/', RegexHelper::PARTIAL_ESCAPED_CHAR, $excluded, $endDelimiter);
+        $regex        = \sprintf('/(?:%s|[^%s\x00\\\\]++|\\\\)*+(?:%s)?/', RegexHelper::PARTIAL_ESCAPED_CHAR, $excluded, $endDelimiter);
         if (($partialTitle = $cursor->matchInPlace($regex)) === null) {
             return null;
         }
