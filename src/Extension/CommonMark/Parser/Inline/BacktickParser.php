@@ -41,14 +41,18 @@ final class BacktickParser implements InlineParserInterface
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::regex('`+');
+        // Stop at the start of each run, and also right after a backtick escaped by one or three backslashes: the
+        // escape consumes the first backtick of its run, and the rest of that run can still open a code span
+        return InlineParserMatch::regex('(?<!`)`|(?<=(?<!\\\\)\\\\`|(?<!\\\\)\\\\\\\\\\\\`)`');
     }
 
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $ticks  = $inlineContext->getFullMatch();
         $cursor = $inlineContext->getCursor();
-        $cursor->advanceBy($inlineContext->getFullMatchLength());
+        $ticks  = $cursor->matchInPlace('/\\G`+/');
+        if ($ticks === null) {
+            return false;
+        }
 
         $currentPosition = $cursor->getPosition();
         $previousState   = $cursor->saveState();
@@ -106,7 +110,7 @@ final class BacktickParser implements InlineParserInterface
         }
 
         // Return if we already know there's no closer
-        if ($this->lastCursorScanned && isset($this->seenBackticks[$openTickLength]) && $this->seenBackticks[$openTickLength] <= $cursor->getPosition()) {
+        if ($this->lastCursorScanned && ($this->seenBackticks[$openTickLength] ?? 0) <= $cursor->getPosition()) {
             return false;
         }
 

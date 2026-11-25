@@ -223,6 +223,21 @@ $cases = [
         'sizes' => [25_000, 100_000, 400_000],
         'input' => static fn($n) => '`` ' . \str_repeat('`a ', $n),
     ],
+    'Escaped backticks splitting backtick runs' => [
+        // Each escape leaves a one-backtick opener inside a two-backtick run, so no run of that length
+        // is ever seen; the closer scan must remember there is none instead of rescanning every time.
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => \str_repeat('\\``', $n),
+        'expected' => static fn($n) => '<p>' . \str_repeat('``', $n) . '</p>',
+    ],
+    'Escaped backticks splitting space-separated backtick runs' => [
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => \str_repeat('\\`` ', $n),
+    ],
+    'Many backticks' => [
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => 'a ' . \str_repeat('`', $n),
+    ],
     'Backtick fence with a backtick in the info string' => [
         'extension' => 'commonmark',
         'sizes' => [10_000, 40_000, 160_000],
@@ -495,6 +510,26 @@ $cases = [
         'sizes' => [4_000, 16_000, 64_000],
         'input' => static fn($n) => \str_repeat(\str_repeat('a', 63) . '" ', $n),
         'expected' => static fn($n) => '<p>' . \str_repeat(\str_repeat('a', 63) . "\u{201C} ", $n - 1) . \str_repeat('a', 63) . "\u{201C}</p>",
+    ],
+    'Many hyphens' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => 'a ' . \str_repeat('-', $n),
+    ],
+    'Many spaced periods' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => 'a ' . \str_repeat('. ', $n),
+    ],
+    'Escaped hyphens splitting dash runs' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => \str_repeat('\\---', $n),
+    ],
+    'Escaped periods splitting ellipses' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 40_000, 160_000],
+        'input' => static fn($n) => \str_repeat('\\....', $n),
     ],
     'Many attributes in one list' => [
         // Sized to stay within MAX_ATTRIBUTE_LIST_BYTES (8192 bytes, ~2,700 attributes).

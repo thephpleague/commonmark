@@ -28,13 +28,19 @@ final class DashParser implements InlineParserInterface
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::regex('(?<!-)(-{2,})');
+        // Stop at the start of each run, and also right after a hyphen escaped by one or three backslashes: the
+        // escape consumes the first hyphen of its run, and the rest of that run can still form a dash
+        return InlineParserMatch::regex('(?<!-)-(?=-)|(?<=(?<!\\\\)\\\\-|(?<!\\\\)\\\\\\\\\\\\-)-(?=-)');
     }
 
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $count = $inlineContext->getFullMatchLength();
-        $inlineContext->getCursor()->advanceBy($count);
+        $dashes = $inlineContext->getCursor()->matchInPlace('/\\G-{2,}/');
+        if ($dashes === null) {
+            return false;
+        }
+
+        $count = \strlen($dashes);
 
         $enCount = 0;
         $emCount = 0;
