@@ -41,6 +41,16 @@ final class InlineParserEngine implements InlineParserEngineInterface
      */
     private array $parsers = [];
 
+    /**
+     * Multiplier used to pack a character position and a parser's slot into a single integer
+     *
+     * Each parser gets two slots, as a regex can match twice at one position: once empty, then once non-empty.
+     *
+     * @psalm-var positive-int
+     * @phpstan-var positive-int
+     */
+    private int $slotCount;
+
     public function __construct(EnvironmentInterface $environment, ReferenceMapInterface $referenceMap)
     {
         $this->environment  = $environment;
@@ -52,6 +62,8 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
             $this->parsers[] = [$parser, $regex, \strlen($regex) !== \mb_strlen($regex, 'UTF-8')];
         }
+
+        $this->slotCount = \max(1, \count($this->parsers) * 2);
     }
 
     public function parse(string $contents, AbstractBlock $block): void
@@ -62,34 +74,44 @@ final class InlineParserEngine implements InlineParserEngineInterface
         $inlineParserContext = new InlineParserContext($cursor, $block, $this->referenceMap, $this->environment->getConfiguration()->get('max_delimiters_per_line'));
 
         // Have all parsers look at the line to determine what they might want to parse and what positions they exist at
-        foreach ($this->matchParsers($contents) as $matchPosition => $parsers) {
-            $currentPosition = $cursor->getPosition();
-            // We've already gone past this point
-            if ($currentPosition > $matchPosition) {
-                continue;
-            }
+        $lastPosition = -1;
+        $parsed       = true;
+        foreach ($this->matchParsers($contents) as $key => $matches) {
+            $matchPosition = \intdiv($key, $this->slotCount);
 
-            // We've skipped over some uninteresting text that should be added as a plain text node
-            if ($currentPosition < $matchPosition) {
-                $cursor->advanceBy($matchPosition - $currentPosition);
-                $this->addPlainText($cursor->getPreviousText(), $block);
-            }
-
-            // We're now at a potential start - see which of the current parsers can handle it
-            $parsed = false;
-            foreach ($parsers as [$parser, $matches]) {
-                if ($parser->parse($inlineParserContext->withMatches($matches))) {
-                    // A parser has successfully handled the text at the given position; don't consider any others at this position
-                    $parsed = true;
-                    break;
+            if ($matchPosition !== $lastPosition) {
+                if (! $parsed) {
+                    // Despite potentially being interested, nothing actually parsed text at the previous position, so add that character and continue onwards
+                    $this->addPlainText((string) $cursor->getCurrentCharacter(), $block);
+                    $cursor->advance();
                 }
-            }
 
-            if ($parsed) {
+                $lastPosition    = $matchPosition;
+                $currentPosition = $cursor->getPosition();
+                // We've already gone past this point
+                if ($currentPosition > $matchPosition) {
+                    $parsed = true;
+                    continue;
+                }
+
+                // We've skipped over some uninteresting text that should be added as a plain text node
+                if ($currentPosition < $matchPosition) {
+                    $cursor->advanceBy($matchPosition - $currentPosition);
+                    $this->addPlainText($cursor->getPreviousText(), $block);
+                }
+
+                $parsed = false;
+            } elseif ($parsed) {
+                // A parser has successfully handled the text at this position; don't consider any others here
                 continue;
             }
 
-            // Despite potentially being interested, nothing actually parsed text here, so add the current character and continue onwards
+            // We're now at a potential start - see if this parser can handle it
+            $parser = $this->parsers[$key % $this->slotCount >> 1][0];
+            $parsed = $parser->parse($inlineParserContext->withMatches(\is_array($matches) ? $matches : [$matches]));
+        }
+
+        if (! $parsed) {
             $this->addPlainText((string) $cursor->getCurrentCharacter(), $block);
             $cursor->advance();
         }
@@ -121,56 +143,88 @@ final class InlineParserEngine implements InlineParserEngineInterface
     /**
      * Given the current line, ask all the parsers which parts of the text they would be interested in parsing.
      *
-     * The resulting array provides a list of character positions, which parsers are interested in trying to parse
-     * the text at those points, and (for convenience/optimization) what the matching text happened to be.
+     * The resulting array is ordered by character position, then by parser priority. Each key is
+     * `(position * $this->slotCount) + (parser index * 2)`, plus one for a second match by the same parser at the
+     * same position; each value is what the parser's regex matched there: the
+     * matched text alone, or a preg_match()-style array if there were sub-matches.
      *
-     * @return array<array<int, InlineParserInterface|string>>
+     * Lines can have a potential match at nearly every character, so this deliberately avoids
+     * allocating any arrays per match, both here and in what PCRE hands back.
      *
-     * @psalm-return array<int, list<array{0: InlineParserInterface, 1: non-empty-array<string>}>>
+     * @return array<int, string|array<string>>
      *
-     * @phpstan-return array<int, array<int, array{0: InlineParserInterface, 1: non-empty-array<string>}>>
+     * @psalm-return array<int, string|non-empty-array<string>>
+     *
+     * @phpstan-return array<int, string|non-empty-array<string>>
      */
     private function matchParsers(string $contents): array
     {
-        $contents    = \trim($contents);
         $isMultibyte = ! \mb_check_encoding($contents, 'ASCII');
+        $slotCount   = $this->slotCount;
 
-        $ret = [];
+        $ret            = [];
+        $slot           = 0;
+        $lastByteOffset = 0;
+        $lastCharOffset = 0;
+        $lastKey        = -1;
 
-        foreach ($this->parsers as [$parser, $regex, $isRegexMultibyte]) {
+        // preg_replace_callback() hands over one match at a time, unlike preg_match_all() which would build several arrays per match
+        $collect = static function (array $match) use (&$ret, &$slot, &$lastByteOffset, &$lastCharOffset, &$lastKey, $contents, $isMultibyte, $slotCount): string {
+            // With PREG_OFFSET_CAPTURE, each element is the matched text and its byte offset
+            /** @var array{string, int} $fullMatch */
+            $fullMatch = $match[0];
+
+            if ($isMultibyte) {
+                // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying.
+                // Matches arrive in ascending order, so convert incrementally from the previous position
+                // instead of re-scanning from the start of the line for every match (which would be quadratic).
+                $lastCharOffset += \mb_strlen(\substr($contents, $lastByteOffset, $fullMatch[1] - $lastByteOffset), 'UTF-8');
+                $lastByteOffset  = $fullMatch[1];
+                $offset          = $lastCharOffset;
+            } else {
+                $offset = $fullMatch[1];
+            }
+
+            $key = $offset * $slotCount + $slot;
+            if ($key === $lastKey) {
+                $key++;
+            }
+
+            $lastKey = $key;
+
+            if (\count($match) === 1) {
+                $ret[$key] = $fullMatch[0];
+
+                return '';
+            }
+
+            // Remove the offsets, keeping only the matched text
+            $matches = \array_column($match, 0);
+            \assert($matches !== []);
+            $ret[$key] = $matches;
+
+            return '';
+        };
+
+        foreach ($this->parsers as $parserIndex => [$parser, $regex, $isRegexMultibyte]) {
             if ($isMultibyte || $isRegexMultibyte) {
                 $regex .= 'u';
             }
 
-            // See if the parser's InlineParserMatch regex matched against any part of the string
-            if (! \preg_match_all($regex, $contents, $matches, \PREG_OFFSET_CAPTURE | \PREG_SET_ORDER)) {
+            $slot           = $parserIndex * 2;
+            $lastByteOffset = 0;
+            $lastCharOffset = 0;
+            $lastKey        = -1;
+
+            if (\preg_replace_callback($regex, $collect, $contents, -1, $count, \PREG_OFFSET_CAPTURE) !== null) {
                 continue;
             }
 
-            // For each part that matched...
-            $lastByteOffset = 0;
-            $lastCharOffset = 0;
-            foreach ($matches as $match) {
-                if ($isMultibyte) {
-                    // PREG_OFFSET_CAPTURE always returns the byte offset, not the char offset, which is annoying.
-                    // Matches are returned in ascending order, so convert incrementally from the previous position
-                    // instead of re-scanning from the start of the line for every match (which would be quadratic).
-                    $lastCharOffset += \mb_strlen(\substr($contents, $lastByteOffset, $match[0][1] - $lastByteOffset), 'UTF-8');
-                    $lastByteOffset  = $match[0][1];
-                    $offset          = $lastCharOffset;
-                } else {
-                    $offset = \intval($match[0][1]);
+            // The regex failed part-way through the line, so ignore this parser entirely
+            foreach ($ret as $key => $unused) {
+                if ($key % $slotCount >> 1 === $parserIndex) {
+                    unset($ret[$key]);
                 }
-
-                // Remove the offsets, keeping only the matched text
-                $m = \array_column($match, 0);
-
-                if ($m === []) {
-                    continue;
-                }
-
-                // Add this match to the list of character positions to stop at
-                $ret[$offset][] = [$parser, $m];
             }
         }
 

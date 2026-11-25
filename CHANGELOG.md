@@ -32,6 +32,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed an inline HTML declaration followed by a long run of letters taking about a minute to parse with default settings (PCRE JIT enabled), which could be abused to cause a denial of service
 - Fixed long URL autolinks (from about 12KB with PCRE JIT enabled) being only partly linked, or later URL autolinks on the same line being left as text, when the URL regex exceeded PCRE's limits
 - Fixed a GFM email autolink containing a non-ASCII letter that matches `[A-Za-z]` case-insensitively, such as the Kelvin sign, swallowing the text that follows it
+- Fixed the inline parser using about 1KB of memory for every position on a line where inline syntax could start, such as each `<`, `[` or `*`; a few hundred kilobytes of such text could exceed the default `memory_limit`
 
 ## [2.10.8] - 2026-11-24
 
