@@ -97,15 +97,13 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
 
     public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
     {
-        // A line without a pipe can still become a row via lazy continuation. This is only reached when all
-        // enclosing containers matched; lines whose containers didn't match must not be added lazily.
-        $this->canHaveLazyContinuationLines = \strpos($cursor->getLine(), '|') === false;
+        // Every row is added as a lazy continuation line, like a paragraph line. This lets any line that starts
+        // another block (a block quote, list, heading, fence, ...) end the table, even if it contains a pipe.
+        // This is only reached when all enclosing containers matched; lines whose containers didn't match must
+        // not be added lazily.
+        $this->canHaveLazyContinuationLines = true;
 
-        if ($this->canHaveLazyContinuationLines) {
-            return BlockContinue::none();
-        }
-
-        return BlockContinue::at($cursor);
+        return BlockContinue::none();
     }
 
     public function addLine(string $line): void
