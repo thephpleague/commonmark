@@ -16,11 +16,19 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Parser;
 
+use League\CommonMark\Delimiter\DelimiterParser;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Exception\UnexpectedEncodingException;
+use League\CommonMark\Extension\Autolink\EmailAutolinkParser;
+use League\CommonMark\Extension\Autolink\UrlAutolinkParser;
+use League\CommonMark\Extension\CommonMark\Parser\Inline as CoreInlineParser;
+use League\CommonMark\Extension\TaskList\TaskListItemMarkerParser;
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
+use League\CommonMark\Parser\Inline\NewlineParser;
 use League\CommonMark\Reference\ReferenceMapInterface;
 
 /**
@@ -41,43 +49,55 @@ final class InlineParserEngine implements InlineParserEngineInterface
      */
     private array $parsers = [];
 
-    /**
-     * Multiplier used to pack a character position and a parser's slot into a single integer
-     *
-     * Each parser gets two slots, as a regex can match twice at one position: once empty, then once non-empty.
-     *
-     * @psalm-var positive-int
-     * @phpstan-var positive-int
-     */
-    private int $slotCount;
+    // Required syntax for the parsers recognized by hasKnownTrigger().
+    private const INLINE_TRIGGER = '~[\n\\\\&<\[\]`*_@\~]|www\.|://~i';
+
+    private bool $canSkipPlainText;
 
     public function __construct(EnvironmentInterface $environment, ReferenceMapInterface $referenceMap)
     {
-        $this->environment  = $environment;
-        $this->referenceMap = $referenceMap;
+        $this->environment      = $environment;
+        $this->referenceMap     = $referenceMap;
+        $this->canSkipPlainText = $environment instanceof Environment;
 
         foreach ($environment->getInlineParsers() as $parser) {
             \assert($parser instanceof InlineParserInterface);
             $regex = $parser->getMatchDefinition()->getRegex();
 
+            if ($this->canSkipPlainText && ! self::hasKnownTrigger($parser)) {
+                $this->canSkipPlainText = false;
+            }
+
             $this->parsers[] = [$parser, $regex, \strlen($regex) !== \mb_strlen($regex, 'UTF-8')];
         }
-
-        $this->slotCount = \max(1, \count($this->parsers) * 2);
     }
 
     public function parse(string $contents, AbstractBlock $block): void
     {
         $contents = \trim($contents);
-        $cursor   = new Cursor($contents);
+
+        if ($this->canSkipPlainText && $block->firstChild() === null && \preg_match(self::INLINE_TRIGGER, $contents) === 0) {
+            if (! \mb_check_encoding($contents, 'UTF-8')) {
+                throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
+            }
+
+            if ($contents !== '') {
+                $block->appendChild(new Text($contents));
+            }
+
+            return;
+        }
+
+        $cursor = new Cursor($contents);
 
         $inlineParserContext = new InlineParserContext($cursor, $block, $this->referenceMap, $this->environment->getConfiguration()->get('max_delimiters_per_line'));
 
         // Have all parsers look at the line to determine what they might want to parse and what positions they exist at
+        $slotCount    = \max(1, \count($this->parsers) * 2);
         $lastPosition = -1;
         $parsed       = true;
-        foreach ($this->matchParsers($contents) as $key => $matches) {
-            $matchPosition = \intdiv($key, $this->slotCount);
+        foreach ($this->matchParsers($contents, $slotCount) as $key => $matches) {
+            $matchPosition = \intdiv($key, $slotCount);
 
             if ($matchPosition !== $lastPosition) {
                 if (! $parsed) {
@@ -107,7 +127,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
             }
 
             // We're now at a potential start - see if this parser can handle it
-            $parser = $this->parsers[$key % $this->slotCount >> 1][0];
+            $parser = $this->parsers[$key % $slotCount >> 1][0];
             foreach (self::matchSets($matches) as $set) {
                 if ($parsed = $parser->parse($inlineParserContext->withMatches($set))) {
                     break;
@@ -132,6 +152,33 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
         // Combine adjacent text notes into one
         AdjacentTextMerger::mergeChildNodes($block);
+    }
+
+    /**
+     * Use exact classes because subclasses can provide different match definitions.
+     */
+    private static function hasKnownTrigger(InlineParserInterface $parser): bool
+    {
+        // phpcs:ignore SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall -- PHP 7.4 compatibility.
+        switch (\get_class($parser)) {
+            case CoreInlineParser\AutolinkParser::class:
+            case CoreInlineParser\BacktickParser::class:
+            case CoreInlineParser\BangParser::class:
+            case CoreInlineParser\CloseBracketParser::class:
+            case CoreInlineParser\EntityParser::class:
+            case CoreInlineParser\EscapableParser::class:
+            case CoreInlineParser\HtmlInlineParser::class:
+            case CoreInlineParser\OpenBracketParser::class:
+            case EmailAutolinkParser::class:
+            case UrlAutolinkParser::class:
+            case TaskListItemMarkerParser::class:
+            case NewlineParser::class:
+                return true;
+            case DelimiterParser::class:
+                return $parser->hasOnlyStandardCharacters();
+            default:
+                return false;
+        }
     }
 
     /**
@@ -172,7 +219,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
      * Given the current line, ask all the parsers which parts of the text they would be interested in parsing.
      *
      * The resulting array is ordered by character position, then by parser priority. Each key is
-     * `(position * $this->slotCount) + (parser index * 2)`, plus one for a second match by the same parser at the
+     * `(position * $slotCount) + (parser index * 2)`, plus one for a second match by the same parser at the
      * same position. Each value is what the parser's regex matched there: the matched text alone, or a
      * preg_match()-style array if there were sub-matches. For a regex using \K, which can match more than twice at
      * one position, the value is a list of such arrays.
@@ -180,12 +227,13 @@ final class InlineParserEngine implements InlineParserEngineInterface
      * Lines can have a potential match at nearly every character, so this deliberately avoids
      * keeping any arrays per match.
      *
+     * @param positive-int $slotCount
+     *
      * @return array<int, string|non-empty-array<string>|list<non-empty-array<string>>>
      */
-    private function matchParsers(string $contents): array
+    private function matchParsers(string $contents, int $slotCount): array
     {
         $isMultibyte = ! \mb_check_encoding($contents, 'ASCII');
-        $slotCount   = $this->slotCount;
 
         // Marks the string as valid UTF-8, so that /u matches against it at an offset, such as those in
         // HtmlInlineParser and UrlAutolinkParser, don't re-validate the whole line on every call. Only needed
@@ -245,7 +293,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
             // \K can report a match that starts before the previous one ended, which
             // preg_replace_callback() can't handle, so such regexes are collected the old way
             if (\strpos($regex, '\K') !== false) {
-                foreach ($this->collectWithMatchAll($regex, $contents, $isMultibyte, $parserIndex * 2) as $key => $sets) {
+                foreach ($this->collectWithMatchAll($regex, $contents, $isMultibyte, $parserIndex * 2, $slotCount) as $key => $sets) {
                     $ret[$key] = $sets;
                 }
 
@@ -283,10 +331,11 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
     /**
      * @param non-empty-string $regex
+     * @param positive-int     $slotCount
      *
      * @return array<int, list<non-empty-array<string>>>
      */
-    private function collectWithMatchAll(string $regex, string $contents, bool $isMultibyte, int $slot): array
+    private function collectWithMatchAll(string $regex, string $contents, bool $isMultibyte, int $slot, int $slotCount): array
     {
         $found = [];
         if (! \preg_match_all($regex, $contents, $matches, \PREG_OFFSET_CAPTURE | \PREG_SET_ORDER)) {
@@ -306,7 +355,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
             $matched = \array_column($match, 0);
             \assert($matched !== []);
-            $found[$offset * $this->slotCount + $slot][] = $matched;
+            $found[$offset * $slotCount + $slot][] = $matched;
         }
 
         return $found;
