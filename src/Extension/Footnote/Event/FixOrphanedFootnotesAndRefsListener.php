@@ -16,7 +16,6 @@ namespace League\CommonMark\Extension\Footnote\Event;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
-use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Inline\Text;
 
 final class FixOrphanedFootnotesAndRefsListener
@@ -24,45 +23,64 @@ final class FixOrphanedFootnotesAndRefsListener
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
-        $map      = $this->buildMapOfKnownFootnotesAndRefs($document);
 
-        foreach ($map['_flat'] as $node) {
-            if ($node instanceof FootnoteRef && ! isset($map[Footnote::class][$node->getReference()->getLabel()])) {
-                // Found an orphaned FootnoteRef without a corresponding Footnote
-                // Restore the original footnote ref text
-                $node->replaceWith(new Text(\sprintf('[^%s]', $node->getReference()->getLabel())));
-            }
+        /** @var array<string, Footnote> $definitions First definition of each label */
+        $definitions = [];
+        /** @var array<int, list<FootnoteRef>> $refsIn References, by ID of the innermost enclosing footnote (0 for none) */
+        $refsIn = [];
+        /** @var list<Footnote> $footnotes */
+        $footnotes = [];
 
-            // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-            if ($node instanceof Footnote && ! isset($map[FootnoteRef::class][$node->getReference()->getLabel()])) {
-                // Found an orphaned Footnote without a corresponding FootnoteRef
-                // Remove the footnote
-                $node->detach();
-            }
-        }
-    }
-
-    /** @phpstan-ignore-next-line */
-    private function buildMapOfKnownFootnotesAndRefs(Document $document): array // @phpcs:ignore
-    {
-        $map = [
-            Footnote::class => [],
-            FootnoteRef::class => [],
-            '_flat' => [],
-        ];
-
-        foreach ($document->iterator() as $node) {
+        /** @var array<int, int> $outer ID of the footnote each footnote is defined in (0 for none) */
+        $outer     = [];
+        $enclosing = [0];
+        $walker    = $document->walker();
+        while ($walkerEvent = $walker->next()) {
+            $node = $walkerEvent->getNode();
             if ($node instanceof Footnote) {
-                $map[Footnote::class][$node->getReference()->getLabel()] = true;
+                if (! $walkerEvent->isEntering()) {
+                    \array_pop($enclosing);
+                    continue;
+                }
 
-                $map['_flat'][] = $node;
-            } elseif ($node instanceof FootnoteRef) {
-                $map[FootnoteRef::class][$node->getReference()->getLabel()] = true;
-
-                $map['_flat'][] = $node;
+                $outer[\spl_object_id($node)]                     = \end($enclosing);
+                $enclosing[]                                      = \spl_object_id($node);
+                $footnotes[]                                      = $node;
+                $definitions[$node->getReference()->getLabel()] ??= $node;
+            } elseif ($node instanceof FootnoteRef && $walkerEvent->isEntering()) {
+                $refsIn[\end($enclosing)][] = $node;
             }
         }
 
-        return $map;
+        // A footnote is used when it is referenced from the body or from another used footnote
+        $used  = [];
+        $queue = [0];
+        while (($id = \array_pop($queue)) !== null) {
+            foreach ($refsIn[$id] ?? [] as $ref) {
+                $label    = $ref->getReference()->getLabel();
+                $footnote = $definitions[$label] ?? null;
+                if ($footnote === null) {
+                    $ref->replaceWith(new Text(\sprintf('[^%s]', $label)));
+                    continue;
+                }
+
+                $footnoteId = \spl_object_id($footnote);
+                if (isset($used[$footnoteId])) {
+                    continue;
+                }
+
+                $used[$footnoteId] = true;
+                $queue[]           = $footnoteId;
+            }
+        }
+
+        foreach ($footnotes as $footnote) {
+            if (! isset($used[\spl_object_id($footnote)])) {
+                $footnote->detach();
+            } elseif (($o = $outer[\spl_object_id($footnote)]) !== 0 && ! isset($used[$o])) {
+                // Keep a used footnote that was defined inside an unused one
+                $document->appendChild($footnote);
+            }
+        }
     }
 }

@@ -17,10 +17,10 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\SmartPunct;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
-use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Delimiter\Processor\NonWrappingDelimiterProcessorInterface;
 use League\CommonMark\Node\Inline\AbstractStringContainer;
 
-final class QuoteProcessor implements DelimiterProcessorInterface
+final class QuoteProcessor implements NonWrappingDelimiterProcessorInterface
 {
     /** @psalm-readonly */
     private string $normalizedCharacter;

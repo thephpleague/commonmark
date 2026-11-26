@@ -71,6 +71,16 @@ final class SmartPunctFunctionalTest extends AbstractSpecTestCase
             'output'  => "<p>a “b</p>\n",
         ];
 
+        yield 'emphasis removes a quote opener between its delimiters' => [
+            'input'   => "*'90s*'",
+            'output'  => "<p><em>’90s</em>’</p>\n",
+        ];
+
+        yield 'quote pair at the start of link text' => [
+            'input'   => "['a'](u)",
+            'output'  => "<p><a href=\"u\">‘a’</a></p>\n",
+        ];
+
         yield 'escaped first hyphen of a dash' => [
             'input'   => '\\---',
             'output'  => "<p>-–</p>\n",

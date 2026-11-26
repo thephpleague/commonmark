@@ -181,6 +181,24 @@ $cases = [
             return \str_repeat(' *a', \intdiv($n - \strlen($closers), 3)) . $closers;
         },
     ],
+    'Nested smart quotes' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 100_000, 500_000],
+        'input' => static function ($n) {
+            $k = \intdiv($n, 6);
+
+            return \str_repeat("'a ", $k) . \str_repeat("a' ", $k);
+        },
+    ],
+    'Smart quote pairs around emphasis openers' => [
+        'extension' => 'smartpunct',
+        'sizes' => [10_000, 100_000, 500_000],
+        'input' => static function ($n) {
+            $k = \intdiv($n, 15);
+
+            return \str_repeat("'a \"a ", $k) . \str_repeat('*a ', $k) . \str_repeat("a' a\" ", $k);
+        },
+    ],
     'Pattern [ (](' => [
         'sizes' => [500, 5_000, 50_000],
         'input' => static fn($n) => \str_repeat('[ (](', $n),

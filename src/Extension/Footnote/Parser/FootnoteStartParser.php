@@ -19,32 +19,22 @@ use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
 use League\CommonMark\Reference\Reference;
-use League\CommonMark\Util\RegexHelper;
 
 final class FootnoteStartParser implements BlockStartParserInterface
 {
+    private const REGEX_DEFINITION = '/^\[\^([^\s^\]]+)\]\:(?:\s|$)/';
+
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
         if ($cursor->isIndented() || $parserState->getLastMatchedBlockParser()->canHaveLazyContinuationLines()) {
             return BlockStart::none();
         }
 
-        $match = RegexHelper::matchFirst(
-            '/^\[\^([^\s^\]]+)\]\:(?:\s|$)/',
-            $cursor->getLine(),
-            $cursor->getNextNonSpacePosition()
-        );
-
-        if (! $match) {
-            return BlockStart::none();
-        }
-
         $cursor->advanceToNextNonSpaceOrTab();
-        $cursor->advanceBy(\strlen($match[0]));
-        $str = $cursor->getRemainder();
-        \preg_replace('/^\[\^([^\s^\]]+)\]\:(?:\s|$)/', '', $str);
 
-        if (\preg_match('/^\[\^([^\s^\]]+)\]\:(?:\s|$)/', $match[0], $matches) !== 1) {
+        // Cursor positions count characters, not bytes, so let the cursor advance past the match itself
+        $match = $cursor->match(self::REGEX_DEFINITION);
+        if ($match === null || \preg_match(self::REGEX_DEFINITION, $match, $matches) !== 1) {
             return BlockStart::none();
         }
 
