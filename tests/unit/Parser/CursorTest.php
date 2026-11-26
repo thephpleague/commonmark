@@ -398,6 +398,30 @@ final class CursorTest extends TestCase
         $this->assertSame('中', $cursor->getRemainder());
     }
 
+    public function testAdvanceByColumnsAcrossMultibyteCharactersAndTabs(): void
+    {
+        $cursor = new Cursor(\str_repeat('é', 17) . "\t中🙂\tZ");
+        $cursor->advanceBy(18, true);
+
+        $this->assertSame(17, $cursor->getPosition());
+        $this->assertSame(34, $cursor->getBytePosition());
+        $this->assertSame(18, $cursor->getColumn());
+        $this->assertSame("  中🙂\tZ", $cursor->getRemainder());
+
+        $cursor->advanceBy(5, true);
+
+        $this->assertSame(20, $cursor->getPosition());
+        $this->assertSame(42, $cursor->getBytePosition());
+        $this->assertSame(23, $cursor->getColumn());
+        $this->assertSame(' Z', $cursor->getRemainder());
+
+        $cursor->advanceBy(10);
+
+        $this->assertTrue($cursor->isAtEnd());
+        $this->assertSame(44, $cursor->getBytePosition());
+        $this->assertSame(25, $cursor->getColumn());
+    }
+
     public function testAdvanceByZero(): void
     {
         $cursor = new Cursor('foo bar');

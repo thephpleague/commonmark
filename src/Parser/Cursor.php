@@ -366,49 +366,80 @@ class Cursor
             return;
         }
 
-        if ($this->isMultibyte) {
-            $startByte    = $this->byteOffset($this->currentPosition);
-            $endByte      = $this->byteOffset(\min($this->currentPosition + $characters, $this->length));
-            $nextFewChars = \substr($this->line, $startByte, $endByte - $startByte);
-        } else {
-            $nextFewChars = \substr($this->line, $this->currentPosition, $characters);
+        $byte      = $this->isMultibyte ? $this->byteOffset($this->currentPosition) : $this->currentPosition;
+        $lineBytes = \strlen($this->line);
+
+        if ($characters < 0) {
+            // Preserve the previous substr() boundary for negative lengths. Such
+            // an advance processes at most the first character of the slice.
+            $sliceLength = $this->isMultibyte ? $this->byteOffset($this->currentPosition + $characters) - $byte : $characters;
+            if ($sliceLength === 0 || $lineBytes + $sliceLength <= $byte) {
+                return;
+            }
         }
 
-        if ($characters === 1) {
-            $asArray = [$nextFewChars];
-        } elseif ($this->isMultibyte) {
-            /** @var list<string> $asArray */
-            $asArray = \mb_str_split($nextFewChars, 1, 'UTF-8');
-        } else {
-            $asArray = \str_split($nextFewChars);
-        }
-
-        foreach ($asArray as $c) {
-            if ($c === "\t") {
-                $charsToTab = 4 - ($this->column % 4);
-                if ($advanceByColumns) {
-                    $this->partiallyConsumedTab = $charsToTab > $characters;
-                    $charsToAdvance             = $charsToTab > $characters ? $characters : $charsToTab;
-                    $this->column              += $charsToAdvance;
-                    $this->currentPosition     += $this->partiallyConsumedTab ? 0 : 1;
-                    $characters                -= $charsToAdvance;
-                } else {
+        while ($byte < $lineBytes) {
+            if (! $this->isMultibyte && $characters > 4) {
+                // Consume runs of ordinary ASCII characters in one step.
+                $run = \strcspn($this->line, "\t", $byte, $characters);
+                if ($run > 0) {
                     $this->partiallyConsumedTab = false;
-                    $this->column              += $charsToTab;
-                    $this->currentPosition++;
-                    $characters--;
+                    $this->currentPosition     += $run;
+                    $this->column              += $run;
+                    $characters                -= $run;
+                    $byte                      += $run;
+
+                    if ($characters === 0 || $byte === $lineBytes) {
+                        break;
+                    }
                 }
+            }
+
+            $character = $this->line[$byte];
+            if ($character === "\t") {
+                $charsToTab = 4 - ($this->column % 4);
+                if ($advanceByColumns && $charsToTab > $characters) {
+                    $this->partiallyConsumedTab = true;
+                    $this->column              += $characters;
+
+                    break;
+                }
+
+                $this->column += $charsToTab;
+                $characters   -= $advanceByColumns ? $charsToTab : 1;
             } else {
-                $this->partiallyConsumedTab = false;
-                $this->currentPosition++;
                 $this->column++;
                 $characters--;
+            }
+
+            $this->partiallyConsumedTab = false;
+            $this->currentPosition++;
+
+            if ($this->isMultibyte) {
+                // The constructor validates UTF-8, so the lead byte gives the width.
+                $lead  = \ord($character);
+                $byte += $lead < 0x80 ? 1 : ($lead < 0xE0 ? 2 : ($lead < 0xF0 ? 3 : 4));
+
+                if ($this->currentPosition % self::BYTE_OFFSET_CHECKPOINT_INTERVAL === 0) {
+                    $checkpoint                                 = \intdiv($this->currentPosition, self::BYTE_OFFSET_CHECKPOINT_INTERVAL);
+                    $this->byteOffsetCheckpoints[$checkpoint] ??= $byte;
+                }
+            } else {
+                $byte++;
             }
 
             if ($characters <= 0) {
                 break;
             }
         }
+
+        if (! $this->isMultibyte) {
+            return;
+        }
+
+        // Reuse the scan for the next byte lookup.
+        $this->lastByteOffsetPosition = $this->currentPosition;
+        $this->lastByteOffset         = $byte;
     }
 
     /**
