@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Tests\Unit\Parser;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\CloseBracketParser;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\OpenBracketParser;
@@ -81,6 +82,24 @@ final class InlineParserEngineTest extends TestCase
         $child = $paragraph->firstChild();
         $this->assertTrue($child instanceof Text);
         $this->assertSame('The quick brown fox jumps over the lazy dog', $child->getLiteral());
+    }
+
+    public function testBuiltInParsersFlagUnmatchedTextDelimiters(): void
+    {
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $engine = new InlineParserEngine($environment, new ReferenceMap());
+
+        foreach (['*literal', '[literal', '![literal'] as $markdown) {
+            $paragraph = new Paragraph();
+            $engine->parse($markdown, $paragraph);
+
+            $text = $paragraph->firstChild();
+            $this->assertInstanceOf(Text::class, $text);
+            $this->assertSame($markdown, $text->getLiteral());
+            $this->assertTrue($text->isDelimiter);
+            $this->assertFalse($text->data->has('delim'));
+        }
     }
 
     public function testParseWithMultipleMatchesAtMultibyteOffsets(): void

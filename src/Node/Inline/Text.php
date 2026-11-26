@@ -18,6 +18,12 @@ namespace League\CommonMark\Node\Inline;
 
 final class Text extends AbstractStringContainer
 {
+    /**
+     * Marks a potential delimiter so the inline parser keeps its text separate.
+     * Custom inline parsers should set this property in place of data['delim'].
+     */
+    public bool $isDelimiter = false;
+
     public function append(string $literal): void
     {
         $this->literal .= $literal;
