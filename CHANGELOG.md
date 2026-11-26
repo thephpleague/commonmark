@@ -6,18 +6,20 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+## [2.10.10] - 2026-11-26
+
 ### Changed
-- Improved SmartPunct performance by no longer merging the text between each pair of quotes, which quotes never move
+- Improved SmartPunct performance by no longer merging the text between each pair of quotes, which quotes never move (#1181)
 
 ### Fixed
-- Fixed a table row that starts another block, such as `> quote | text`, `- item | text` or `# heading | text`, being added to the table instead of ending it; now any block that can start there ends the table, as in GFM
-- Fixed SmartPunct turning an unpaired `"` that can only close into an opening quote; for example, `a 12" ruler` now renders `12”` instead of `12“`
-- Fixed SmartPunct quotes at the start of link text, or right after an emphasis delimiter, being paired incorrectly; for example, `['a'](u)` now renders `‘a’` instead of `’a’`
-- Fixed footnotes that are only referenced from unused or duplicate footnote definitions being listed, including inline footnotes with a backlink to a reference that was never rendered
-- Fixed an unused footnote sometimes being rendered outside the footnote list
-- Fixed an inline footnote whose generated label matched the label of another footnote, such as `^[x y]` and `[^x-y]` or `[^X-Y]`, losing its text and linking to the other footnote; inline footnotes now get a label no other footnote or reference uses, so an explicit `[^label]` no longer links to an inline footnote
-- Fixed a footnote definition whose label contains non-ASCII characters, such as `[^Über]: word`, losing the first characters of its text
-- Fixed a footnote defined inside another footnote getting a backlink to its parent's reference instead of its own, and the parent getting none
+- Fixed a table row that starts another block, such as `> quote | text`, `- item | text` or `# heading | text`, being added to the table instead of ending it; now any block that can start there ends the table, as in GFM (#1180)
+- Fixed SmartPunct turning an unpaired `"` that can only close into an opening quote; for example, `a 12" ruler` now renders `12”` instead of `12“` (#1182)
+- Fixed SmartPunct quotes at the start of link text, or right after an emphasis delimiter, being paired incorrectly; for example, `['a'](u)` now renders `‘a’` instead of `’a’` (#1181)
+- Fixed footnotes that are only referenced from unused or duplicate footnote definitions being listed, including inline footnotes with a backlink to a reference that was never rendered (#1181)
+- Fixed an unused footnote sometimes being rendered outside the footnote list (#1181)
+- Fixed an inline footnote whose generated label matched the label of another footnote, such as `^[x y]` and `[^x-y]` or `[^X-Y]`, losing its text and linking to the other footnote; inline footnotes now get a label no other footnote or reference uses, so an explicit `[^label]` no longer links to an inline footnote (#1181)
+- Fixed a footnote definition whose label contains non-ASCII characters, such as `[^Über]: word`, losing the first characters of its text (#1181)
+- Fixed a footnote defined inside another footnote getting a backlink to its parent's reference instead of its own, and the parent getting none (#1181)
 
 ## [2.10.9] - 2026-11-25
 
@@ -945,7 +947,8 @@ No changes were introduced since the previous release.
     - Alternative 1: Use `CommonMarkConverter` or `GithubFlavoredMarkdownConverter` if you don't need to customize the environment
     - Alternative 2: Instantiate a new `Environment` and add the necessary extensions yourself
 
-[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.9...HEAD
+[unreleased]: https://github.com/thephpleague/commonmark/compare/2.10.10...HEAD
+[2.10.10]: https://github.com/thephpleague/commonmark/compare/2.10.9...2.10.10
 [2.10.9]: https://github.com/thephpleague/commonmark/compare/2.10.8...2.10.9
 [2.10.8]: https://github.com/thephpleague/commonmark/compare/2.10.7...2.10.8
 [2.10.7]: https://github.com/thephpleague/commonmark/compare/2.10.6...2.10.7

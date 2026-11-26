@@ -5,6 +5,7 @@
  - [ ] Confirm what is actually unreleased with `git log <last-tag>..origin/main` - release branches get merged back into `main`, so commit order alone is misleading.
  - [ ] Ensure all tests are passing (check GitHub workflows).
  - [ ] Ensure changes are documented in `CHANGELOG.md`. Release titles should be linked to GitHub.
+ - [ ] Ensure every pending changelog entry ends with a reference to the PR, issue and/or GHSA it came from where one exists, such as `(#1234)` or `(GHSA-xxxx-xxxx-xxxx)`. Use `git log <last-tag>..origin/main` to find the PR behind each entry.
  - [ ] If breaking changes or deprecations are introduced, document the upgrade process in the doc site's upgrade page.
  - [ ] Bump the `branch-alias` in `composer.json` if needed.
  - [ ] Ensure all changes above make it into the `main` branch
