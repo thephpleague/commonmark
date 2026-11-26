@@ -6,6 +6,9 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Fixed
+- Fixed a table row that starts another block, such as `> quote | text`, `- item | text` or `# heading | text`, being added to the table instead of ending it; now any block that can start there ends the table, as in GFM
+
 ## [2.10.9] - 2026-11-25
 
 ### Changed
