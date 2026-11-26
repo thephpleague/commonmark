@@ -384,10 +384,10 @@ class Cursor
                 $run = \strcspn($this->line, "\t", $byte, $characters);
                 if ($run > 0) {
                     $this->partiallyConsumedTab = false;
-                    $this->currentPosition += $run;
-                    $this->column += $run;
-                    $characters -= $run;
-                    $byte += $run;
+                    $this->currentPosition     += $run;
+                    $this->column              += $run;
+                    $characters                -= $run;
+                    $byte                      += $run;
 
                     if ($characters === 0 || $byte === $lineBytes) {
                         break;
@@ -400,13 +400,13 @@ class Cursor
                 $charsToTab = 4 - ($this->column % 4);
                 if ($advanceByColumns && $charsToTab > $characters) {
                     $this->partiallyConsumedTab = true;
-                    $this->column += $characters;
+                    $this->column              += $characters;
 
                     break;
                 }
 
                 $this->column += $charsToTab;
-                $characters -= $advanceByColumns ? $charsToTab : 1;
+                $characters   -= $advanceByColumns ? $charsToTab : 1;
             } else {
                 $this->column++;
                 $characters--;
@@ -417,11 +417,11 @@ class Cursor
 
             if ($this->isMultibyte) {
                 // The constructor validates UTF-8, so the lead byte gives the width.
-                $lead = \ord($character);
+                $lead  = \ord($character);
                 $byte += $lead < 0x80 ? 1 : ($lead < 0xE0 ? 2 : ($lead < 0xF0 ? 3 : 4));
 
                 if ($this->currentPosition % self::BYTE_OFFSET_CHECKPOINT_INTERVAL === 0) {
-                    $checkpoint = \intdiv($this->currentPosition, self::BYTE_OFFSET_CHECKPOINT_INTERVAL);
+                    $checkpoint                                 = \intdiv($this->currentPosition, self::BYTE_OFFSET_CHECKPOINT_INTERVAL);
                     $this->byteOffsetCheckpoints[$checkpoint] ??= $byte;
                 }
             } else {
@@ -433,11 +433,13 @@ class Cursor
             }
         }
 
-        if ($this->isMultibyte) {
-            // Reuse the scan for the next byte lookup.
-            $this->lastByteOffsetPosition = $this->currentPosition;
-            $this->lastByteOffset         = $byte;
+        if (! $this->isMultibyte) {
+            return;
         }
+
+        // Reuse the scan for the next byte lookup.
+        $this->lastByteOffsetPosition = $this->currentPosition;
+        $this->lastByteOffset         = $byte;
     }
 
     /**
