@@ -550,7 +550,7 @@ $cases = [
         'extension' => 'smartpunct',
         'sizes' => [4_000, 16_000, 64_000],
         'input' => static fn($n) => \str_repeat(\str_repeat('a', 63) . '" ', $n),
-        'expected' => static fn($n) => '<p>' . \str_repeat(\str_repeat('a', 63) . "\u{201C} ", $n - 1) . \str_repeat('a', 63) . "\u{201C}</p>",
+        'expected' => static fn($n) => '<p>' . \str_repeat(\str_repeat('a', 63) . "\u{201D} ", $n - 1) . \str_repeat('a', 63) . "\u{201D}</p>",
     ],
     'Many hyphens' => [
         'extension' => 'smartpunct',
