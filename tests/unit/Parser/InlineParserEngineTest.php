@@ -15,9 +15,9 @@ namespace League\CommonMark\Tests\Unit\Parser;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
-use League\CommonMark\GithubFlavoredMarkdownConverter;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\CloseBracketParser;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\OpenBracketParser;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserInterface;

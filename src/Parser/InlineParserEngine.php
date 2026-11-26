@@ -154,9 +154,12 @@ final class InlineParserEngine implements InlineParserEngineInterface
         AdjacentTextMerger::mergeChildNodes($block);
     }
 
-    // Use exact classes because subclasses can provide different match definitions.
+    /**
+     * Use exact classes because subclasses can provide different match definitions.
+     */
     private static function hasKnownTrigger(InlineParserInterface $parser): bool
     {
+        // phpcs:ignore SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall -- PHP 7.4 compatibility.
         switch (\get_class($parser)) {
             case CoreInlineParser\AutolinkParser::class:
             case CoreInlineParser\BacktickParser::class:
@@ -328,7 +331,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
     /**
      * @param non-empty-string $regex
-     * @param positive-int $slotCount
+     * @param positive-int     $slotCount
      *
      * @return array<int, list<non-empty-array<string>>>
      */
