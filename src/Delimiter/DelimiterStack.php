@@ -21,6 +21,7 @@ namespace League\CommonMark\Delimiter;
 
 use League\CommonMark\Delimiter\Processor\CacheableDelimiterProcessorInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
+use League\CommonMark\Delimiter\Processor\NonWrappingDelimiterProcessorInterface;
 use League\CommonMark\Node\Inline\AdjacentTextMerger;
 use League\CommonMark\Node\Node;
 
@@ -319,7 +320,11 @@ final class DelimiterStack
             $this->removeDelimitersBetween($opener, $closer);
             // The delimiter processor can re-parent the nodes between opener and closer,
             // so make sure they're contiguous already. Exclusive because we want to keep opener/closer themselves.
-            AdjacentTextMerger::mergeTextNodesBetweenExclusive($openerNode, $closerNode);
+            // Not needed when the processor never moves the nodes between them.
+            if (! $delimiterProcessor instanceof NonWrappingDelimiterProcessorInterface) {
+                AdjacentTextMerger::mergeTextNodesBetweenExclusive($openerNode, $closerNode);
+            }
+
             $delimiterProcessor->process($openerNode, $closerNode, $useDelims);
 
             // No delimiter characters left to process, so we can remove delimiter and the now empty node.

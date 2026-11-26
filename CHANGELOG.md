@@ -6,9 +6,13 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 
 ## [Unreleased][unreleased]
 
+### Changed
+- Improved SmartPunct performance by no longer merging the text between each pair of quotes, which quotes never move
+
 ### Fixed
 - Fixed a table row that starts another block, such as `> quote | text`, `- item | text` or `# heading | text`, being added to the table instead of ending it; now any block that can start there ends the table, as in GFM
 - Fixed SmartPunct turning an unpaired `"` that can only close into an opening quote; for example, `a 12" ruler` now renders `12”` instead of `12“`
+- Fixed SmartPunct quotes at the start of link text, or right after an emphasis delimiter, being paired incorrectly; for example, `['a'](u)` now renders `‘a’` instead of `’a’`
 
 ## [2.10.9] - 2026-11-25
 
