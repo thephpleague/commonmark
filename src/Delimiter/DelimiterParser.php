@@ -31,6 +31,23 @@ final class DelimiterParser implements InlineParserInterface
         return InlineParserMatch::oneOf(...$this->collection->getDelimiterCharacters());
     }
 
+    /** @internal */
+    public function hasOnlyStandardCharacters(): bool
+    {
+        $characters = $this->collection->getDelimiterCharacters();
+        if ($characters === []) {
+            return false;
+        }
+
+        foreach ($characters as $character) {
+            if ($character !== '*' && $character !== '_' && $character !== '~') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function parse(InlineParserContext $inlineContext): bool
     {
         $character = $inlineContext->getFullMatch();

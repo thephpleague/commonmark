@@ -15,6 +15,7 @@ namespace League\CommonMark\Tests\Unit\Parser;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\CloseBracketParser;
 use League\CommonMark\Extension\CommonMark\Parser\Inline\OpenBracketParser;
 use League\CommonMark\Node\Block\Paragraph;
@@ -81,6 +82,25 @@ final class InlineParserEngineTest extends TestCase
         $child = $paragraph->firstChild();
         $this->assertTrue($child instanceof Text);
         $this->assertSame('The quick brown fox jumps over the lazy dog', $child->getLiteral());
+    }
+
+    public function testPlainUtf8ParagraphAndGfmAutolinks(): void
+    {
+        $converter = new GithubFlavoredMarkdownConverter();
+
+        $this->assertSame("<p>Обычный текст. 漢字</p>\n", (string) $converter->convert('Обычный текст. 漢字'));
+        $this->assertSame(
+            "<p>Почта <a href=\"mailto:a@example.com\">a@example.com</a></p>\n",
+            (string) $converter->convert('Почта a@example.com')
+        );
+        $this->assertSame(
+            "<p>Сайт <a href=\"http://www.example.com\">www.example.com</a></p>\n",
+            (string) $converter->convert('Сайт www.example.com')
+        );
+        $this->assertSame(
+            "<p>Сайт <a href=\"https://example.com\">https://example.com</a></p>\n",
+            (string) $converter->convert('Сайт https://example.com')
+        );
     }
 
     public function testParseWithMultipleMatchesAtMultibyteOffsets(): void
