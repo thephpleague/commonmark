@@ -75,11 +75,6 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
                 // Footnote call is missing, append footnote at the end
                 $footnotes[\PHP_INT_MAX] = $node;
             }
-
-            $key = '#' . $this->config->get('footnote/footnote_id_prefix') . $node->getReference()->getDestination();
-            if (isset($backrefs[$key])) {
-                $this->createBackrefs($node, $backrefs[$key]);
-            }
         }
 
         foreach ($discarded as $duplicate) {
@@ -96,6 +91,14 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
         \ksort($footnotes);
         foreach ($footnotes as $footnote) {
             $container->appendChild($footnote);
+        }
+
+        // Backrefs go on a footnote's last child, so nested footnotes must have been moved out first
+        foreach ($definitions as $node) {
+            $key = '#' . $this->config->get('footnote/footnote_id_prefix') . $node->getReference()->getDestination();
+            if (isset($backrefs[$key])) {
+                $this->createBackrefs($node, $backrefs[$key]);
+            }
         }
     }
 

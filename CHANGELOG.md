@@ -17,6 +17,7 @@ Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) princi
 - Fixed an unused footnote sometimes being rendered outside the footnote list
 - Fixed an inline footnote whose generated label matched the label of another footnote, such as `^[x y]` and `[^x-y]` or `[^X-Y]`, losing its text and linking to the other footnote; inline footnotes now get a label no other footnote or reference uses, so an explicit `[^label]` no longer links to an inline footnote
 - Fixed a footnote definition whose label contains non-ASCII characters, such as `[^Über]: word`, losing the first characters of its text
+- Fixed a footnote defined inside another footnote getting a backlink to its parent's reference instead of its own, and the parent getting none
 
 ## [2.10.9] - 2026-11-25
 
